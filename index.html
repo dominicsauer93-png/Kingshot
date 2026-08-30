@@ -207,7 +207,7 @@
 
   <!-- SIGNATURE: DUST GATE -->
   <section>
-    <div class="sechead"><span class="num">01</span><h2>The Gate — T11 Archer Unlock</h2><span class="hint">your one real bottleneck</span></div>
+    <div class="sechead"><span class="num">01</span><h2>The Gate — T11 Unlocks</h2><span class="hint">Archer now · Infantry Phase 2</span></div>
     <div class="gate">
       <div class="gate-top">
         <div class="gate-title">Truegold Dust <small>Everything else you have in abundance. This is what T11 waits on.</small></div>
@@ -226,10 +226,20 @@
       <p class="unlock-note">Exact remaining to unlock T11 Archer: <b>6,028 Dust · 2.01M Gold · 134M bread/wood · ~147d research</b>. Arrows is <b>MAXED</b> — only Vests (3 lvls) and Legionaries (5 lvls) left, then the unlock node. <span id="goldNote"></span></p>
 
       <div class="nodes" id="nodes"></div>
-      <p class="unlock-note" style="margin-top:14px;border-top:1px solid var(--line);padding-top:12px">
-        <b style="color:var(--gold)">Phase 2 — Infantry T11 (tank line):</b> 8,468 Dust · 2.68M Gold · ~182d research (Mauls 5 · Plating 5 · Legionaries 6 · unlock). <b>Do Archer first</b> — it's nearly there; Infantry is the next commitment, not a parallel one.<br>
-        <b style="color:var(--muted)">Both combined:</b> 14,496 Dust · 4.69M Gold · ~329d research. Cavalry skipped.
-      </p>
+      <p class="unlock-note" style="margin-top:14px"><b style="color:var(--muted)">Do Archer first</b> — it's nearly there. Infantry below is Phase 2, the next commitment, not a parallel one.</p>
+    </div>
+
+    <div class="gate" style="margin-top:16px">
+      <div class="gate-top">
+        <div class="gate-title">Phase 2 — Infantry T11 <small>Tank line. Same Dust pool — start only after Archer T11.</small></div>
+        <span class="gap-badge" id="infGapBadge" style="color:var(--muted);border-color:var(--line);background:transparent">PHASE 2</span>
+      </div>
+      <div class="dustline">
+        <span class="of mono">Dust needed (auto):</span>
+        <span class="big mono" id="infTgtVal" style="font-size:22px">—</span>
+      </div>
+      <div class="nodes" id="infNodes"></div>
+      <p class="unlock-note" id="infNote"></p>
     </div>
   </section>
 
@@ -407,9 +417,26 @@
     </div>
   </section>
 
+  <!-- GOVERNOR GEAR -->
+  <section>
+    <div class="sechead"><span class="num">13</span><h2>Governor Gear</h2><span class="hint">lowest-leverage · set bonus needs all 6 at same tier</span></div>
+    <div class="card">
+      <p class="sub">Your weakest system, so this is a "spend spare mats" tracker, not a priority. Set each piece's current tier and a shared target — it totals the <b>Satin / Gilded Threads / Artisan's Vision</b> still needed. Level all six <em>evenly</em> to keep the set bonus.</p>
+      <div class="field" style="margin-bottom:14px"><label>Target tier (all pieces)</label><select id="govTarget" class="sigsel" style="padding-right:24px;min-width:150px"></select></div>
+      <table><thead><tr><th style="width:45%">Piece</th><th>Current tier</th></tr></thead>
+      <tbody id="govBody"></tbody></table>
+      <div class="gate-inputs" style="margin-top:16px">
+        <div class="field"><label>Satin needed</label><div class="mono" id="govSatin" style="font-size:14px;color:var(--gold);padding:6px 0">—</div></div>
+        <div class="field"><label>Gilded Threads</label><div class="mono" id="govThreads" style="font-size:14px;color:var(--gold);padding:6px 0">—</div></div>
+        <div class="field"><label>Artisan's Vision</label><div class="mono" id="govVision" style="font-size:14px;color:var(--gold);padding:6px 0">—</div></div>
+      </div>
+      <p class="unlock-note" id="govNote"></p>
+    </div>
+  </section>
+
   <!-- DATA & SYNC -->
   <section>
-    <div class="sechead"><span class="num">13</span><h2>Data, Sync &amp; Import</h2><span class="hint">back up · sync · import CSV</span></div>
+    <div class="sechead"><span class="num">14</span><h2>Data, Sync &amp; Import</h2><span class="hint">back up · sync · import CSV</span></div>
     <div class="card" style="margin-bottom:16px">
       <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px">Import from CSV <span style="font-family:'JetBrains Mono';font-size:10px;color:var(--faint)">(Truegold research export)</span></h3>
       <p class="sub">Paste a Truegold research CSV (or pick the file). It reads the remaining Dust/Gold and your archer node levels, shows you what it found, and applies only when you confirm.</p>
@@ -482,6 +509,12 @@ const SEED = {
     {name:"Legionaries (Rally)", cur:7,  max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
     {name:"Vests (Defense)",     cur:9,  max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
     {name:"Truegold Archers (unlock)", cur:0, max:1, costs:[2236]}
+  ],
+  infNodes:[
+    {name:"Mauls (Attack)",      cur:7, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Plating (Defense)",   cur:7, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Legionaries (Rally)", cur:6, max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
+    {name:"Truegold Infantry (unlock)", cur:0, max:1, costs:[2236]}
   ],
   trackNow:[
     {t:"Finish the T10 transition (promote T9 → T10)", d:false},
@@ -563,6 +596,10 @@ const SEED = {
     {k:"Radiant Spire (ALL stats — full power)", v:"163"}
   ],
   tg:{ have:0, need:9757, ttgHave:0, ttgNeed:781 },
+  govGear:{ targetIdx:14, pieces:[
+    {name:"Piece 1", cur:0},{name:"Piece 2", cur:0},{name:"Piece 3", cur:0},
+    {name:"Piece 4", cur:0},{name:"Piece 5", cur:0},{name:"Piece 6", cur:0}
+  ]},
   farm:[
     {k:"Town Center", v:"TC 22–29 (confirm)"},
     {k:"Storehouse level", v:"— (keep LOW while feeding)"},
@@ -715,8 +752,11 @@ function buildId(){
 const NODE_COSTS={
   arrows:[54,66,81,97,118,145,178,216,270,324,388,480],
   vests:[54,66,81,97,118,145,178,216,270,324,388,480],
+  mauls:[54,66,81,97,118,145,178,216,270,324,388,480],
+  plating:[54,66,81,97,118,145,178,216,270,324,388,480],
   legionaries:[83,102,125,150,184,225,276,334,418,502,602,744],
-  archers:[2236]
+  archers:[2236],
+  infantry:[2236]
 };
 function nodeCosts(nd){ if(Array.isArray(nd.costs)&&nd.costs.length) return nd.costs;
   const k=Object.keys(NODE_COSTS).find(x=>nd.name.toLowerCase().includes(x)); return k?NODE_COSTS[k]:[]; }
@@ -767,6 +807,91 @@ function buildGate(){
     };
     host.appendChild(d);
   });
+}
+
+/* ---------- governor gear ---------- */
+const GOV_TIERS=[
+ ["Green 0★",1500,15,0],["Green 1★",3800,40,0],
+ ["Blue 0★",7000,70,0],["Blue 1★",9700,95,0],["Blue 2★",1000,10,45],["Blue 3★",1000,10,50],
+ ["Purple 0★",1500,15,60],["Purple 1★",1500,15,70],["Purple 2★",6500,65,40],["Purple 3★",8000,80,50],
+ ["Purple T10★",10000,95,60],["Purple T11★",11000,110,70],["Purple T12★",13000,130,85],["Purple T13★",15000,160,100],
+ ["Gold 0★",22000,220,40],["Gold 1★",23000,230,40],["Gold 2★",25000,250,45],["Gold 3★",26000,260,45],
+ ["Gold T10★",28000,280,45],["Gold T11★",30000,300,55],["Gold T12★",32000,320,55],["Gold T13★",35000,340,55],
+ ["Gold T20★",38000,360,55],["Gold T21★",43000,430,75],["Gold T22★",45000,460,80],["Gold T23★",48000,500,85],
+ ["Gold T30★",60000,600,120],["Gold T31★",70000,700,140],["Gold T32★",80000,800,160],["Gold T33★",90000,900,180],
+ ["Red 0★",108000,1080,220],["Red 1★",114000,1140,230],["Red 2★",121000,1210,240],["Red 3★",128000,1280,250],
+ ["Red T10★",154000,1540,300],["Red T11★",163000,1630,320],["Red T12★",173000,1730,340],["Red T13★",183000,1830,360],
+ ["Red T20★",220000,2200,430],["Red T21★",233000,2330,460],["Red T22★",247000,2470,490],["Red T23★",264000,2640,520],
+ ["Red T30★",288000,2880,570],["Red T31★",302000,3020,600],["Red T32★",317000,3170,630],["Red T33★",333000,3330,660],
+ ["Red T40★",358000,3580,720],["Red T41★",384000,3840,770],["Red T42★",403000,4030,810],["Red T43★",423000,4230,850],
+ ["Red T50★",451000,4510,910],["Red T51★",479000,4790,970],["Red T52★",507000,5070,1030],["Red T53★",535000,5350,1090],
+ ["Red T60★",548000,5480,1110],["Red T61★",565000,5650,1140],["Red T62★",582000,5820,1170],["Red T63★",599000,5990,1210]
+];
+function govRem(curIdx,tgtIdx){ let s=0,t=0,v=0; for(let i=Math.max(0,curIdx+1);i<=tgtIdx;i++){ const r=GOV_TIERS[i]; if(r){s+=r[1];t+=r[2];v+=r[3];} } return {s,t,v}; }
+function paintGov(){
+  const g=state.govGear, tgt=g.targetIdx;
+  let s=0,t=0,v=0; g.pieces.forEach(p=>{ const r=govRem(p.cur,tgt); s+=r.s; t+=r.t; v+=r.v; });
+  document.getElementById("govSatin").textContent=fmt(s);
+  document.getElementById("govThreads").textContent=fmt(t);
+  document.getElementById("govVision").textContent=fmt(v);
+  const atTgt=g.pieces.filter(p=>p.cur>=tgt).length;
+  const note=document.getElementById("govNote");
+  note.innerHTML=`Target: <b style="color:var(--gold)">${GOV_TIERS[tgt][0]}</b> · ${atTgt}/6 pieces there. `+
+    (atTgt===6?`Set complete — full set bonus active.`:`Set bonus needs all 6 at the same tier — level the laggards first.`);
+}
+function buildGovGear(){
+  if(!state.govGear) return;
+  const tSel=document.getElementById("govTarget");
+  tSel.innerHTML=GOV_TIERS.map((r,i)=>`<option value="${i}">${r[0]}</option>`).join("");
+  tSel.value=state.govGear.targetIdx;
+  tSel.onchange=()=>{ state.govGear.targetIdx=parseInt(tSel.value,10); paintGov(); scheduleSave(); };
+  const body=document.getElementById("govBody"); body.innerHTML="";
+  state.govGear.pieces.forEach(p=>{
+    const tr=document.createElement("tr");
+    const opts=GOV_TIERS.map((r,i)=>`<option value="${i}">${r[0]}</option>`).join("");
+    tr.innerHTML=`<td><input value="${(p.name||'').replace(/"/g,'&quot;')}"></td>
+      <td><select class="sigsel" style="padding-right:24px">${opts}</select></td>`;
+    const ni=tr.querySelector("input"), sel=tr.querySelector("select");
+    sel.value=p.cur;
+    ni.oninput=()=>{ p.name=ni.value; scheduleSave(); };
+    sel.onchange=()=>{ p.cur=parseInt(sel.value,10); paintGov(); scheduleSave(); };
+    body.appendChild(tr);
+  });
+  paintGov();
+}
+
+/* ---------- infantry (Phase 2) ---------- */
+function paintInf(){
+  const t=(state.infNodes||[]).reduce((s,n)=>s+nodeRem(n),0);
+  const el=document.getElementById("infTgtVal"); if(el) el.textContent=fmt(Math.round(t));
+  const note=document.getElementById("infNote");
+  if(note){
+    const archer=(state.nodes||[]).reduce((s,n)=>s+nodeRem(n),0);
+    note.innerHTML=`Infantry remaining: <b style="color:var(--gold)">${fmt(Math.round(t))} Dust</b> · ~182d research. `+
+      `Archer + Infantry combined: <b>${fmt(Math.round(archer+t))} Dust</b>. Cavalry skipped.`;
+  }
+}
+function buildInfantry(){
+  if(!Array.isArray(state.infNodes)) return;
+  const host=document.getElementById("infNodes"); if(!host) return; host.innerHTML="";
+  state.infNodes.forEach((nd)=>{
+    const mx=nd.max||12;
+    const d=document.createElement("div"); d.className="node";
+    const segs=Array.from({length:mx},(_,i)=>`<div class="seg ${i<nd.cur?'on':''}" data-i="${i}"></div>`).join("");
+    d.innerHTML=`<div class="nname">${nd.name}</div>
+      <div class="lvl"><input inputmode="numeric" value="${nd.cur}"><span class="max">/ ${mx}</span></div>
+      <div class="segbar">${segs}</div>
+      <div class="cost">${nd.cur>=mx?'DONE ✓':'left · '+fmt(nodeRem(nd))+' dust'}</div>`;
+    const inp=d.querySelector("input"), cost=d.querySelector(".cost");
+    inp.oninput=()=>{
+      let v=Math.max(0,Math.min(mx,num(inp.value))); nd.cur=v;
+      d.querySelectorAll(".seg").forEach((s,i)=>s.classList.toggle("on",i<v));
+      cost.textContent = v>=mx?'DONE ✓':'left · '+fmt(nodeRem(nd))+' dust';
+      paintInf(); scheduleSave();
+    };
+    host.appendChild(d);
+  });
+  paintInf();
 }
 
 /* ---------- checklists ---------- */
@@ -991,20 +1116,31 @@ function analyzeCSV(rows){
         ownedCol=find("owned","current"), targetCol=find("target"), levelsCol=find("levelstoresearch","levelsto","levels");
   if(!dustCol&&!nameCol) return {ok:false,msg:"Doesn't look like a Kingshot research CSV (no Dust/Tech columns found)."};
   const N=v=>{const n=parseFloat(String(v||"").replace(/[^0-9.\-]/g,""));return isNaN(n)?0:n;};
-  let remDust=0, remGold=0, rowsCounted=0; const nodes={};
+  const allNames=rows.map(r=>(nameCol?String(r[nameCol]):"").toLowerCase()).join("|");
+  const hasArcher=/arrows|bows|bracers/.test(allNames), hasInf=/mauls|blades|shields|plating/.test(allNames);
+  let remDust=0, remGold=0, rowsCounted=0; const targets=[]; const warnings=[];
   rows.forEach(r=>{
     const owned=ownedCol?N(r[ownedCol]):null, target=targetCol?N(r[targetCol]):null;
     let levels=levelsCol?N(r[levelsCol]):(owned!=null&&target!=null?Math.max(0,target-owned):null);
     const remaining = levels==null ? true : levels>0;
-    const rowDust = dustCol ? N(r[dustCol]) : 0;
-    if(remaining){ remDust+=rowDust; if(goldCol) remGold+=N(r[goldCol]); rowsCounted++; }
-    if(nameCol){ const nm=(r[nameCol]||"").toLowerCase(); const rd=remaining?rowDust:0;
-      if(nm.includes("arrows")) nodes["Arrows (Attack)"]={cur:owned,rem:rd};
-      else if(nm.includes("vests")) nodes["Vests (Defense)"]={cur:owned,rem:rd};
-      else if(nm.includes("legionaries")) nodes["Legionaries (Rally)"]={cur:owned,rem:rd};
-      else if(nm.includes("archers")) nodes["Truegold Archers (unlock)"]={cur:owned,rem:rd}; }
+    if(remaining){ if(dustCol) remDust+=N(r[dustCol]); if(goldCol) remGold+=N(r[goldCol]); rowsCounted++; }
+    if(owned==null || !nameCol) return;
+    const nm=String(r[nameCol]).toLowerCase();
+    const push=(scope,name)=>targets.push({scope,name,cur:owned});
+    if(nm.includes("arrows")) push("nodes","Arrows (Attack)");
+    else if(nm.includes("vests")) push("nodes","Vests (Defense)");
+    else if(nm.includes("mauls")) push("infNodes","Mauls (Attack)");
+    else if(nm.includes("plating")) push("infNodes","Plating (Defense)");
+    else if(nm.includes("archers")) push("nodes","Truegold Archers (unlock)");
+    else if(nm.includes("infantry") && !/healing|aid|training/.test(nm)) push("infNodes","Truegold Infantry (unlock)");
+    else if(nm.includes("legionaries")){
+      if(hasArcher && !hasInf) push("nodes","Legionaries (Rally)");
+      else if(hasInf && !hasArcher) push("infNodes","Legionaries (Rally)");
+      else warnings.push("Legionaries skipped — multi-tree CSV can't tell which; set it by hand.");
+    }
   });
-  return {ok:true, remDust, remGold, nodes, rowsCounted};
+  const tree = hasArcher&&hasInf ? "Archer + Infantry" : hasInf ? "Infantry" : "Archer";
+  return {ok:true, remDust, remGold, rowsCounted, targets, warnings, tree};
 }
 function buildImport(){
   const box=document.getElementById("csvBox"), file=document.getElementById("csvFile");
@@ -1021,28 +1157,31 @@ function buildImport(){
     if(!a.ok){ status.textContent=a.msg; status.className="syncstat err"; show(status,true); return; }
     pendingImport=a;
     show(status,false);
-    const nodeList=Object.entries(a.nodes);
+    const nodeList=a.targets;
     pbody.innerHTML=
-      `<b style="color:var(--gold)">Detected from ${a.rowsCounted} unfinished rows:</b><br>`+
-      `• Remaining Dust: <b class="mono">${fmt(a.remDust)}</b> → sets your Dust target<br>`+
+      `<b style="color:var(--gold)">Detected: ${a.tree} tree</b> · ${a.rowsCounted} unfinished rows<br>`+
+      `• Remaining Dust: <b class="mono">${fmt(a.remDust)}</b><br>`+
       (a.remGold?`• Remaining Gold: <b class="mono">${fmt(a.remGold)}</b> (info only)<br>`:"")+
-      (nodeList.length?`• Node levels: ${nodeList.map(([k,v])=>`${k.replace(/ \(.*/,'')} → ${v.cur!=null?v.cur:'?'}`).join(" · ")}<br>`:"• No node levels matched<br>")+
-      `<span style="color:var(--faint);font-size:11px">Applies to the Dust Gate. Other fields stay as-is.</span>`;
+      (nodeList.length?`• Will set: ${nodeList.map(t=>`${t.name.replace(/ \(.*/,'')} → ${t.cur}`).join(" · ")}<br>`:"• No node levels matched<br>")+
+      (a.warnings.length?`<span style="color:var(--amber)">⚠ ${a.warnings.join(" ")}</span><br>`:"")+
+      `<span style="color:var(--faint);font-size:11px">Remaining Dust recomputes exactly from the levels above.</span>`;
     show(preview,true);
   };
   document.getElementById("csvCancel").onclick=()=>{ pendingImport=null; show(preview,false); };
   document.getElementById("csvApply").onclick=()=>{
     if(!pendingImport) return;
-    Object.entries(pendingImport.nodes).forEach(([name,val])=>{
-      const nd=state.nodes.find(n=>n.name===name) || state.nodes.find(n=>n.name.toLowerCase().includes(name.toLowerCase().split(" ")[0]));
-      if(nd){ const mx=nd.max||12; if(val.cur!=null) nd.cur=Math.max(0,Math.min(mx,val.cur)); }
+    (pendingImport.targets||[]).forEach(t=>{
+      const arr = t.scope==="infNodes" ? state.infNodes : state.nodes;
+      if(!Array.isArray(arr)) return;
+      const nd=arr.find(n=>n.name===t.name) || arr.find(n=>n.name.toLowerCase().includes(t.name.toLowerCase().split(" ")[0]));
+      if(nd){ const mx=nd.max||12; if(t.cur!=null) nd.cur=Math.max(0,Math.min(mx,t.cur)); }
     });
     computeTarget();
     renderAll(); scheduleSave();
     pendingImport=null;
     document.getElementById("csvBox").value="";
     show(preview,false);
-    status.textContent="Applied ✓ — node levels and exact remaining Dust updated."; status.className="syncstat ok"; show(status,true);
+    status.textContent="Applied ✓ — levels and exact remaining Dust updated."; status.className="syncstat ok"; show(status,true);
   };
 }
 
@@ -1081,7 +1220,7 @@ function buildNotes(){
 
 /* ---------- render all ---------- */
 function renderAll(){
-  buildId(); buildGate(); paintGate();
+  buildId(); buildGate(); paintGate(); buildInfantry(); buildGovGear();
   buildChecks("trackNow",state.trackNow); buildChecks("trackFarm",state.trackFarm);
   buildChecks("step1",state.step1); buildChecks("step2",state.step2);
   buildPillars(); buildCombat(); buildRes(); buildMast();
@@ -1104,6 +1243,14 @@ function renderAll(){
     if(!state.nodes.some(n=>/unlock/i.test(n.name)))
       state.nodes.push({name:"Truegold Archers (unlock)",cur:0,max:1,costs:[2236]});
   }
+  if(!Array.isArray(state.infNodes)||!state.infNodes.length){
+    state.infNodes=structuredClone(SEED.infNodes);
+  } else {
+    state.infNodes.forEach(n=>{ if(n.max==null) n.max=/unlock/i.test(n.name)?1:12;
+      if(!Array.isArray(n.costs)||!n.costs.length){ const k=Object.keys(NODE_COSTS).find(x=>n.name.toLowerCase().includes(x)); if(k) n.costs=NODE_COSTS[k].slice(); }
+      delete n.rem; delete n.next; });
+  }
+  if(!state.govGear||!Array.isArray(state.govGear.pieces)) state.govGear=structuredClone(SEED.govGear);
   renderAll();
   const dot=document.getElementById("saveDot"), txt=document.getElementById("saveTxt");
   const persists = hasStore || lsSet("__probe__","1");
