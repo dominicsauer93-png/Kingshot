@@ -1,0 +1,996 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kingshot Command Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0F131A; --panel:#161C26; --panel-2:#1B2330; --line:#2A3444;
+    --text:#E9E7E0; --muted:#8B94A5; --faint:#5C6576;
+    --gold:#F0C05A; --gold-2:#C8892E; --gold-deep:#8A5A1C;
+    --green:#4FBF7B; --amber:#E4A63D; --red:#E4574B; --blue:#5AA8E0;
+    --shadow:0 1px 0 rgba(255,255,255,.03), 0 12px 30px -18px rgba(0,0,0,.7);
+    --r:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 78% -8%, rgba(240,192,90,.10), transparent 60%),
+      radial-gradient(900px 500px at 5% 110%, rgba(90,168,224,.06), transparent 55%),
+      var(--ink);
+    color:var(--text);
+    font-family:"Inter",system-ui,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding:22px 16px 80px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+  .disp{font-family:"Chakra Petch",sans-serif;letter-spacing:.02em}
+
+  /* ---- top bar ---- */
+  .topbar{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .brand{display:flex;flex-direction:column;gap:2px}
+  .brand .kicker{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);opacity:.85}
+  .brand h1{font-family:"Chakra Petch";font-weight:700;font-size:clamp(24px,4vw,34px);margin:0;letter-spacing:.01em}
+  .savechip{font-family:"JetBrains Mono";font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  .dot.warn{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+  .btn{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer;transition:.15s}
+  .btn:hover{color:var(--text);border-color:var(--gold-2)}
+
+  /* ---- identity strip ---- */
+  .idstrip{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:22px;box-shadow:var(--shadow)}
+  .idcell{background:var(--panel);padding:12px 14px;display:flex;flex-direction:column;gap:3px;min-width:0}
+  .idcell label{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .idcell input{font-family:"Chakra Petch";font-weight:600;font-size:16px;color:var(--text);background:transparent;border:0;border-bottom:1px dashed transparent;padding:1px 0;width:100%;min-width:0}
+  .idcell input:hover{border-bottom-color:var(--line)}
+  .idcell input:focus{outline:none;border-bottom-color:var(--gold)}
+
+  section{margin-bottom:20px}
+  .sechead{display:flex;align-items:center;gap:12px;margin:0 2px 12px}
+  .sechead .num{font-family:"JetBrains Mono";font-size:11px;color:var(--gold-2);border:1px solid var(--line);border-radius:6px;padding:3px 7px}
+  .sechead h2{font-family:"Chakra Petch";font-weight:600;font-size:15px;letter-spacing:.14em;text-transform:uppercase;margin:0;color:var(--text)}
+  .sechead .hint{font-size:12px;color:var(--faint);margin-left:auto}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}.idstrip{grid-template-columns:repeat(2,1fr)}}
+
+  /* ---- dust gate signature ---- */
+  .gate{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .gate::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 200px at 90% 0%,rgba(240,192,90,.12),transparent 60%);pointer-events:none}
+  .gate-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;position:relative}
+  .gate-title{font-family:"Chakra Petch";font-weight:700;font-size:18px}
+  .gate-title small{display:block;font-family:"Inter";font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+  .dustline{margin:16px 0 6px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .dustline .big{font-family:"JetBrains Mono";font-weight:700;font-size:30px;color:var(--gold)}
+  .dustline .of{font-family:"JetBrains Mono";color:var(--muted)}
+  .gap-badge{font-family:"JetBrains Mono";font-size:12px;font-weight:700;color:var(--red);background:rgba(228,87,75,.12);border:1px solid rgba(228,87,75,.35);border-radius:999px;padding:4px 10px;margin-left:auto}
+  .meter{height:16px;border-radius:999px;background:#0C0F15;border:1px solid var(--line);overflow:hidden;position:relative}
+  .meter .fill{height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold-2) 45%,var(--gold));border-radius:999px;position:relative;transition:width .5s ease}
+  @media(prefers-reduced-motion:no-preference){
+    .meter .fill::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-100%);animation:shimmer 2.6s infinite}
+    @keyframes shimmer{to{transform:translateX(220%)}}
+  }
+  .gate-inputs{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+  .field{display:flex;flex-direction:column;gap:4px}
+  .field label{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .field input{font-family:"JetBrains Mono";font-size:14px;color:var(--text);background:#0C0F15;border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:130px}
+  .field input:focus{outline:none;border-color:var(--gold)}
+  .unlock-note{font-size:12px;color:var(--muted);margin-top:12px;position:relative}
+  .unlock-note b{color:var(--gold)}
+
+  /* ---- node meters ---- */
+  .nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;position:relative}
+  @media(max-width:620px){.nodes{grid-template-columns:1fr}}
+  .node{background:#0F141C;border:1px solid var(--line);border-radius:10px;padding:12px}
+  .node .nname{font-family:"JetBrains Mono";font-size:11px;color:var(--muted);letter-spacing:.06em;margin-bottom:8px}
+  .node .lvl{display:flex;align-items:baseline;gap:6px}
+  .node .lvl input{width:44px;font-family:"JetBrains Mono";font-weight:700;font-size:18px;color:var(--gold);background:transparent;border:0;border-bottom:1px dashed var(--line);text-align:center}
+  .node .lvl input:focus{outline:none;border-bottom-color:var(--gold)}
+  .node .lvl .max{font-family:"JetBrains Mono";color:var(--faint);font-size:14px}
+  .node .segbar{display:flex;gap:2px;margin-top:9px}
+  .seg{flex:1;height:6px;border-radius:2px;background:#20293A}
+  .seg.on{background:linear-gradient(90deg,var(--gold-2),var(--gold))}
+  .node .cost{font-family:"JetBrains Mono";font-size:10px;color:var(--faint);margin-top:8px}
+
+  /* ---- pillars ---- */
+  .pillar{display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+  .pillar:last-child{border-bottom:0}
+  .pillar .pname{font-size:13px;font-weight:500}
+  .pbar{height:9px;border-radius:999px;background:#0C0F15;border:1px solid var(--line);overflow:hidden;position:relative}
+  .pbar .pfill{height:100%;border-radius:999px;transition:width .4s}
+  .bench{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--text);opacity:.55}
+  .pmeta{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+  .pmeta .pv{font-family:"JetBrains Mono";font-size:11px;color:var(--muted)}
+  .pmeta input{width:96px;font-family:"JetBrains Mono";font-size:11px;color:var(--text);background:#0C0F15;border:1px solid var(--line);border-radius:6px;padding:4px 6px;text-align:right}
+  .pmeta input.benchin{width:88px;color:var(--muted)}
+  .pmeta input:focus{outline:none;border-color:var(--gold)}
+  .grade{font-family:"Chakra Petch";font-weight:700;font-size:12px;width:34px;text-align:center;border-radius:6px;padding:3px 0;border:1px solid var(--line)}
+  .g-SS,.g-S{color:var(--green);border-color:rgba(79,191,123,.4);background:rgba(79,191,123,.08)}
+  .g-A{color:var(--amber);border-color:rgba(228,166,61,.4);background:rgba(228,166,61,.08)}
+  .g-B{color:var(--amber)}
+  .g-C,.g-D{color:var(--red);border-color:rgba(228,87,75,.4);background:rgba(228,87,75,.08)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-top:12px}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .swatch{width:10px;height:10px;border-radius:3px}
+
+  /* ---- checklists ---- */
+  .track h3{font-family:"Chakra Petch";font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .track .sub{font-size:12px;color:var(--muted);margin:0 0 12px}
+  .badge-now{color:var(--green)} .badge-farm{color:var(--gold)}
+  ul.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+  ul.checks li{display:flex;gap:10px;align-items:flex-start;font-size:13px}
+  .cbx{appearance:none;-webkit-appearance:none;width:17px;height:17px;min-width:17px;margin-top:1px;border:1px solid var(--faint);border-radius:5px;background:#0C0F15;cursor:pointer;position:relative;transition:.15s}
+  .cbx:checked{background:linear-gradient(180deg,var(--gold),var(--gold-2));border-color:var(--gold-2)}
+  .cbx:checked::after{content:"";position:absolute;left:5px;top:1.5px;width:4px;height:9px;border:solid #0C0F15;border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .cbx:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  ul.checks li.done span{color:var(--faint);text-decoration:line-through}
+  ul.checks li span{cursor:text}
+
+  .kvk{margin-top:14px;background:rgba(90,168,224,.07);border:1px solid rgba(90,168,224,.28);border-radius:10px;padding:12px 14px;font-size:12.5px;color:#CFE3F2}
+  .kvk b{color:var(--blue)}
+
+  /* ---- tables ---- */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);text-align:left;padding:0 8px 10px;font-weight:500}
+  td{padding:9px 8px;border-top:1px solid var(--line);vertical-align:middle}
+  td input{width:100%;font-family:"Inter";font-size:13px;color:var(--text);background:transparent;border:0;border-bottom:1px dashed transparent;padding:2px 0}
+  td input:hover{border-bottom-color:var(--line)}
+  td input:focus{outline:none;border-bottom-color:var(--gold)}
+  td .mono-in{font-family:"JetBrains Mono"}
+  .tag{font-family:"JetBrains Mono";font-size:10px;padding:2px 7px;border-radius:999px;border:1px solid var(--line)}
+  .tag.scarce{color:var(--red);border-color:rgba(228,87,75,.4)}
+  .tag.rich{color:var(--green);border-color:rgba(79,191,123,.4)}
+  .tag.ok{color:var(--muted)}
+  .tag{cursor:pointer;user-select:none}
+  .sigsel{appearance:none;-webkit-appearance:none;font-family:"JetBrains Mono";font-size:10px;padding:4px 22px 4px 10px;border-radius:999px;background:#0C0F15 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'><path d='M2 3l3 3 3-3' stroke='%238B94A5' stroke-width='1.4' fill='none'/></svg>") no-repeat right 8px center;border:1px solid var(--line);cursor:pointer}
+  .sigsel:focus{outline:none;border-color:var(--gold)}
+  .sigsel.rich{color:var(--green);border-color:rgba(79,191,123,.4)}
+  .sigsel.scarce{color:var(--red);border-color:rgba(228,87,75,.4)}
+  .sigsel.ok{color:var(--muted)}
+  .sigsel option{background:#161C26;color:var(--text)}
+  .additem{font-family:"JetBrains Mono";font-size:11px;color:var(--faint);background:transparent;border:1px dashed var(--line);border-radius:7px;padding:6px 10px;cursor:pointer;transition:.15s;margin-top:4px}
+  .additem:hover{color:var(--gold);border-color:var(--gold-2)}
+  .del{font-family:"JetBrains Mono";font-size:15px;line-height:1;color:var(--faint);background:transparent;border:0;cursor:pointer;padding:0 2px;opacity:.5;transition:.15s}
+  .del:hover{color:var(--red);opacity:1}
+  ul.checks li .del{margin-left:auto}
+  td.delcell{width:28px;text-align:center}
+
+  .combat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:620px){.combat-grid{grid-template-columns:1fr}}
+  .stat{background:#0F141C;border:1px solid var(--line);border-radius:10px;padding:14px}
+  .stat .lab{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .stat .val{font-family:"Chakra Petch";font-weight:700;font-size:26px;margin-top:4px}
+  .wl{display:flex;gap:10px;margin-top:8px;font-family:"JetBrains Mono";font-size:12px;color:var(--muted)}
+  .wl input{width:56px;font-family:"JetBrains Mono";background:#0C0F15;border:1px solid var(--line);border-radius:6px;color:var(--text);padding:4px 6px;text-align:center}
+  .wl input:focus{outline:none;border-color:var(--gold)}
+
+  textarea.notes{width:100%;min-height:90px;background:#0C0F15;border:1px solid var(--line);border-radius:10px;color:var(--text);font-family:"Inter";font-size:13px;padding:12px;resize:vertical}
+  textarea.notes:focus{outline:none;border-color:var(--gold)}
+
+  .donotfund{font-size:12.5px;color:var(--muted);margin-top:14px;padding:10px 12px;border-left:2px solid var(--gold-2);background:rgba(240,192,90,.05);border-radius:0 8px 8px 0}
+  .donotfund b{color:var(--gold)}
+  .foot{text-align:center;font-family:"JetBrains Mono";font-size:11px;color:var(--faint);margin-top:30px}
+  .syncgrid{display:flex;gap:10px;flex-wrap:wrap}
+  .syncgrid .field input{width:120px}
+  .synctoggle{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);margin-top:12px;cursor:pointer}
+  .synctoggle input{width:16px;height:16px;accent-color:var(--gold)}
+  .syncstat{font-family:"JetBrains Mono";font-size:11px;color:var(--muted);margin-top:12px;padding:8px 10px;background:#0C0F15;border:1px solid var(--line);border-radius:8px}
+  .syncstat.ok{color:var(--green);border-color:rgba(79,191,123,.35)}
+  .syncstat.err{color:var(--red);border-color:rgba(228,87,75,.35)}
+  .syncstat.warn{color:var(--amber);border-color:rgba(228,166,61,.35)}
+  .synchelp{margin-top:12px;font-size:12px;color:var(--muted)}
+  .synchelp summary{cursor:pointer;color:var(--gold-2);font-family:"JetBrains Mono";font-size:11px;letter-spacing:.06em}
+  .synchelp ol{margin:10px 0;padding-left:18px;line-height:1.7}
+  .synchelp li{margin-bottom:4px}
+  .synchelp b{color:var(--text)}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <span class="kicker">Truegold Command Console</span>
+      <h1>Account Audit &amp; Priorities</h1>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn" id="resetBtn">Reset to baseline</button>
+      <span class="savechip"><span class="dot" id="saveDot"></span><span id="saveTxt">Saved</span></span>
+    </div>
+  </div>
+
+  <!-- identity -->
+  <div class="idstrip" id="idstrip"></div>
+
+  <!-- SIGNATURE: DUST GATE -->
+  <section>
+    <div class="sechead"><span class="num">01</span><h2>The Gate — T11 Archer Unlock</h2><span class="hint">your one real bottleneck</span></div>
+    <div class="gate">
+      <div class="gate-top">
+        <div class="gate-title">Truegold Dust <small>Everything else you have in abundance. This is what T11 waits on.</small></div>
+        <span class="gap-badge" id="gapBadge">GAP</span>
+      </div>
+      <div class="dustline">
+        <span class="big mono" id="dustCurEcho">84</span>
+        <span class="of mono" id="dustTgtEcho">/ 2,200</span>
+      </div>
+      <div class="meter"><div class="fill" id="dustFill" style="width:4%"></div></div>
+      <div class="gate-inputs">
+        <div class="field"><label>Dust in hand</label><input class="mono" id="dustCur" inputmode="numeric"></div>
+        <div class="field"><label>Dust needed (optimizer)</label><input class="mono" id="dustTgt" inputmode="numeric"></div>
+        <div class="field"><label>Gold in hand</label><input class="mono" id="goldCur" inputmode="numeric"></div>
+      </div>
+      <p class="unlock-note">Exact remaining to unlock T11 Archer: <b>6,028 Dust · 2.01M Gold · 134M bread/wood · ~147d research</b>. Arrows is <b>MAXED</b> — only Vests (3 lvls) and Legionaries (5 lvls) left, then the unlock node. <span id="goldNote"></span></p>
+
+      <div class="nodes" id="nodes"></div>
+      <p class="unlock-note" style="margin-top:14px;border-top:1px solid var(--line);padding-top:12px">
+        <b style="color:var(--gold)">Phase 2 — Infantry T11 (tank line):</b> 8,468 Dust · 2.68M Gold · ~182d research (Mauls 5 · Plating 5 · Legionaries 6 · unlock). <b>Do Archer first</b> — it's nearly there; Infantry is the next commitment, not a parallel one.<br>
+        <b style="color:var(--muted)">Both combined:</b> 14,496 Dust · 4.69M Gold · ~329d research. Cavalry skipped.
+      </p>
+    </div>
+  </section>
+
+  <!-- PRIORITIES -->
+  <section>
+    <div class="sechead"><span class="num">02</span><h2>Priorities — Two Parallel Tracks</h2></div>
+    <div class="grid2">
+      <div class="card track">
+        <h3><span class="badge-now">▸ Execute now</span></h3>
+        <p class="sub">Where resources go <em>first</em> — but paced by your gather rate, not a quick win. Gated by resource income.</p>
+        <ul class="checks" id="trackNow"></ul>
+      </div>
+      <div class="card track">
+        <h3><span class="badge-farm">◈ Farm quietly</span></h3>
+        <p class="sub">Long-horizon, currency-gated. Don’t let it distract from T10.</p>
+        <ul class="checks" id="trackFarm"></ul>
+      </div>
+    </div>
+    <div class="donotfund">Ahead of benchmark — <b>do not fund:</b> Heroes, Charms, Tech, Pets, Buildings.</div>
+  </section>
+
+  <!-- TROOP PLAN -->
+  <section>
+    <div class="sechead"><span class="num">03</span><h2>Troop Plan</h2></div>
+    <div class="grid2">
+      <div class="card track">
+        <h3>Step 1 — Finish T10 <span class="tag ok" style="margin-left:auto">ONGOING</span></h3>
+        <p class="sub">Promoting T9 → T10 (staged this KvK) — the base T11 promotes from. A slow grind: a full T10 army costs far more than you can stockpile, so it's paced by gather rate.</p>
+        <ul class="checks" id="step1"></ul>
+        <div class="kvk"><b>KvK timing:</b> promote Day 1–2, let timers run, claim ~Day 4 — banks the power as event points and saves 2–3 days of speedups.</div>
+      </div>
+      <div class="card track">
+        <h3>Step 2 — T11 Archers <span class="tag ok" style="margin-left:auto">AFTER T10</span></h3>
+        <p class="sub">Chosen because fewest research levels left AND your strongest type (245 atk / 360 lethality).</p>
+        <ul class="checks" id="step2"></ul>
+        <div class="kvk" style="background:rgba(240,192,90,.06);border-color:rgba(240,192,90,.3);color:#EAD9AE"><b style="color:var(--gold)">Dust farm:</b> the KvK you’re in is your best source — take Truegold/Dust in the Kingdom of Power shop over anything cosmetic.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POWER GRADES -->
+  <section>
+    <div class="sechead"><span class="num">04</span><h2>Power Grades — All Pillars</h2><span class="hint">value vs benchmark · tick = kingdom benchmark</span></div>
+    <div class="card">
+      <div id="pillars"></div>
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--green)"></span>Ahead — leave it</span>
+        <span><span class="swatch" style="background:var(--amber)"></span>Slightly behind</span>
+        <span><span class="swatch" style="background:var(--red)"></span>Well behind</span>
+        <span><span class="swatch" style="background:var(--text);opacity:.6"></span>Benchmark line</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBAT -->
+  <section>
+    <div class="sechead"><span class="num">05</span><h2>Combat Quality</h2><span class="hint">offense is the weakness</span></div>
+    <div class="card">
+      <div class="combat-grid">
+        <div class="stat">
+          <div class="lab">Attacker win rate</div>
+          <div class="val" id="attPct" style="color:var(--red)">43%</div>
+          <div class="wl">W <input id="attW" inputmode="numeric"> &nbsp;L <input id="attL" inputmode="numeric"></div>
+        </div>
+        <div class="stat">
+          <div class="lab">Defender win rate</div>
+          <div class="val" id="defPct" style="color:var(--green)">92%</div>
+          <div class="wl">W <input id="defW" inputmode="numeric"> &nbsp;L <input id="defL" inputmode="numeric"></div>
+        </div>
+        <div class="stat">
+          <div class="lab">Squads’ Lethality</div>
+          <div class="val" id="lethEcho" style="color:var(--amber)">66.5%</div>
+          <div class="wl"><input id="leth" inputmode="decimal" style="width:80px"> % — low vs 285% atk/def</div>
+        </div>
+        <div class="stat">
+          <div class="lab">Squads’ Health</div>
+          <div class="val" id="hpEcho" style="color:var(--red)">49.0%</div>
+          <div class="wl"><input id="hp" inputmode="decimal" style="width:80px"> % — raise via Battle Tier VI</div>
+        </div>
+      </div>
+      <div class="kvk" style="margin-top:16px"><b>Troop status:</b> <input id="troopStatus" style="width:100%;font-family:Inter;font-size:12.5px;color:#CFE3F2;background:transparent;border:0;border-bottom:1px dashed var(--line)"></div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section>
+    <div class="sechead"><span class="num">06</span><h2>Resources &amp; Speedups</h2><span class="hint">rich in troops, poor in research + dust</span></div>
+    <div class="card">
+      <table><thead><tr><th style="width:40%">Item</th><th>Held</th><th style="width:120px">Signal</th><th></th></tr></thead>
+      <tbody id="resBody"></tbody></table>
+      <button class="additem" id="addRes">+ add material</button>
+    </div>
+  </section>
+
+  <!-- MASTERS -->
+  <section>
+    <div class="sechead"><span class="num">07</span><h2>Masters</h2><span class="hint">Pan &amp; Valora carry it — grade is cosmetic</span></div>
+    <div class="card">
+      <table><thead><tr><th style="width:22%">Master</th><th style="width:70px">Lv</th><th>Note</th><th></th></tr></thead>
+      <tbody id="mastBody"></tbody></table>
+      <button class="additem" id="addMast">+ add master</button>
+    </div>
+  </section>
+
+  <!-- DUST SOURCES -->
+  <section>
+    <div class="sechead"><span class="num">08</span><h2>Dust Farming Routine</h2></div>
+    <div class="card">
+      <ul class="checks" id="dustSrc" style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px"></ul>
+    </div>
+  </section>
+
+  <!-- BUILD ORDER -->
+  <section>
+    <div class="sechead"><span class="num">09</span><h2>Build Order — TG6→TG8</h2><span class="hint">targeted push, not a full sweep</span></div>
+    <div class="gate" style="margin-bottom:14px">
+      <div class="gate-top">
+        <div class="gate-title">Truegold budget <small>Tempered Truegold is the real speed cap — weekly-gated, can't be bought.</small></div>
+      </div>
+      <div class="gate-inputs">
+        <div class="field"><label>TG in hand</label><input class="mono" id="tgHave" inputmode="numeric"></div>
+        <div class="field"><label>TG needed (all)</label><input class="mono" id="tgNeed" inputmode="numeric"></div>
+        <div class="field"><label>TTG in hand</label><input class="mono" id="ttgHave" inputmode="numeric"></div>
+        <div class="field"><label>TTG needed (all)</label><input class="mono" id="ttgNeed" inputmode="numeric"></div>
+      </div>
+      <p class="unlock-note" id="tgNote"></p>
+    </div>
+    <div class="card">
+      <p class="sub" style="margin:0 0 12px"><b>Lockstep cycle, not a queue:</b> raise <b>Town Center</b> one tier → spend the freed cap + TTG on the buildings below in order (<b>Range → War Academy → Embassy/Command Center → Barracks</b>, defer Stable/Infirmary) → raise TC again. TC is the metronome; the ranks below are how you spend each tier it opens. Battle research Tier VI runs in parallel (no TG cost).</p>
+      <table><thead><tr><th style="width:20%">Building</th><th>Tier</th><th>TG</th><th>TTG</th><th>Time</th><th></th></tr></thead>
+      <tbody id="buildBody"></tbody></table>
+      <button class="additem" id="addBuild">+ add building</button>
+    </div>
+  </section>
+
+  <!-- FARM ACCOUNT -->
+  <section>
+    <div class="sechead"><span class="num">10</span><h2>Farm Account</h2><span class="hint">feeder now · possible main later</span></div>
+    <div class="grid2">
+      <div class="card">
+        <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 12px">Farm snapshot</h3>
+        <table><tbody id="farmBody"></tbody></table>
+        <p class="sub" style="margin:12px 0 0"><b>Dual-goal rule:</b> grow the slow stuff (buildings, research, heroes) now; keep the fast, farm-blocking stuff (<b>Storehouse, army</b>) LOW until you flip it to a main.</p>
+      </div>
+      <div class="card track">
+        <h3>Plunder-day checklist</h3>
+        <p class="sub">No trade button — transfer = attack your own farm. Batch it; time to main's needs.</p>
+        <ul class="checks" id="farmChecks"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MYSTIC TRIALS -->
+  <section>
+    <div class="sechead"><span class="num">11</span><h2>Mystic Trials</h2><span class="hint">each zone isolates ONE system · rank = that system's strength (lower better)</span></div>
+    <div class="card">
+      <table><thead><tr><th style="width:55%">Zone</th><th>Rank</th><th></th></tr></thead>
+      <tbody id="mysticBody"></tbody></table>
+      <button class="additem" id="addMystic">+ add zone</button>
+    </div>
+  </section>
+
+  <!-- OPEN DATA + NOTES -->
+  <section>
+    <div class="sechead"><span class="num">12</span><h2>Open Data &amp; Notes</h2></div>
+    <div class="grid2">
+      <div class="card track">
+        <h3 style="margin-bottom:10px">Numbers to pull</h3>
+        <ul class="checks" id="openData"></ul>
+      </div>
+      <div class="card">
+        <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 10px">Log</h3>
+        <textarea class="notes" id="notes" placeholder="Session notes, KvK dates, Dust drops, decisions…"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA & SYNC -->
+  <section>
+    <div class="sechead"><span class="num">13</span><h2>Data &amp; Sync</h2><span class="hint">back up · move between devices</span></div>
+    <div class="grid2">
+      <div class="card">
+        <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px">File backup</h3>
+        <p class="sub">Works everywhere, no token. Export the JSON, commit it via GitHub Desktop, pull on another device, import.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn" id="exportBtn" style="color:var(--gold);border-color:var(--gold-2)">⭳ Export JSON</button>
+          <button class="btn" id="importBtn">⭱ Import JSON</button>
+          <input type="file" id="importFile" accept="application/json,.json" style="display:none">
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px">GitHub auto-sync <span style="font-family:'JetBrains Mono';font-size:10px;color:var(--faint)">(optional)</span></h3>
+        <p class="sub">Reads/writes a JSON in your repo. <b>Runs on GitHub Pages or a local browser — not in this chat preview.</b> Token stays on this device, is never committed.</p>
+        <div class="syncgrid">
+          <div class="field"><label>Owner</label><input id="scOwner" placeholder="your-username"></div>
+          <div class="field"><label>Repo</label><input id="scRepo" placeholder="digital-twin"></div>
+          <div class="field"><label>Branch</label><input id="scBranch" placeholder="main"></div>
+          <div class="field" style="flex:1"><label>File path</label><input id="scPath" placeholder="kingshot/console-data.json"></div>
+        </div>
+        <div class="field" style="margin-top:10px"><label>Fine-grained token (Contents: Read+Write, this repo only)</label><input id="scTok" type="password" placeholder="github_pat_…" style="width:100%"></div>
+        <label class="synctoggle"><input type="checkbox" id="scOn"> Auto-push my edits to GitHub</label>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+          <button class="btn" id="scSave" style="color:var(--green);border-color:rgba(79,191,123,.4)">Save &amp; connect</button>
+          <button class="btn" id="scPull">⭳ Pull now</button>
+          <button class="btn" id="scPush">⭱ Push now</button>
+          <button class="btn" id="scForget" style="color:var(--red);border-color:rgba(228,87,75,.4)">Forget token</button>
+        </div>
+        <div class="syncstat" id="syncStatus">Not connected</div>
+        <details class="synchelp"><summary>Setup steps</summary>
+          <ol>
+            <li>GitHub → Settings → Developer settings → <b>Fine-grained tokens</b> → Generate.</li>
+            <li>Repository access: <b>only your Digital Twin repo</b>. Permissions: <b>Contents → Read and write</b>. Nothing else.</li>
+            <li>Paste owner / repo / branch / path + token above → <b>Save &amp; connect</b> → <b>Push now</b> to create the file.</li>
+            <li>On your other device, open the same hosted page, paste the same details + token, <b>Pull now</b>.</li>
+          </ol>
+          <p>Security: worst case a leaked token can only edit this one repo's contents. Rotate it anytime; use <b>Forget token</b> on shared machines.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">Baseline · Day 425 · TC Truegold 6 — local autosave + optional GitHub sync.</div>
+</div>
+
+<script>
+"use strict";
+
+/* ---------- seed (the whole chat, structured) ---------- */
+const SEED = {
+  account:{ tc:"Truegold Lv. 6", day:"425", power:"242,423,358", vip:"8", spender:"Low–mid", goal:"All-round" },
+  dust:{ current:274, target:6028, gold:218000 },
+  nodes:[
+    {name:"Arrows (Attack)",     cur:12, next:0},
+    {name:"Legionaries (Rally)", cur:7,  next:2600},
+    {name:"Vests (Defense)",     cur:9,  next:1192}
+  ],
+  trackNow:[
+    {t:"Finish the T10 transition (promote T9 → T10)", d:false},
+    {t:"Battle research Tier VI — lifts Lethality / Health off the V→VI wall", d:false}
+  ],
+  trackFarm:[
+    {t:"Farm Truegold Dust toward the T11 Archer unlock", d:false},
+    {t:"Push Pan 90 → 100 (Ways-and-Means / Falconer skills)", d:false},
+    {t:"Slowly level the 4 laggard masters to lift the grade", d:false}
+  ],
+  step1:[
+    {t:"Promote staged T9 → T10 across the army", d:false},
+    {t:"Time promotions to the KvK ‘Increase Power’ stage", d:false},
+    {t:"Complete a full T10 base before chasing T11", d:false}
+  ],
+  step2:[
+    {t:"Grind Archer node A to 12 (+6)", d:false},
+    {t:"Finish Archer node B to 12 (+2)", d:false},
+    {t:"Finish Archer node C to 12 (+3)", d:false},
+    {t:"Buy final unlock node (2,200 Dust + 1M Gold)", d:false},
+    {t:"Promote T10 Archers → T11 on a KvK power stage", d:false}
+  ],
+  pillars:[
+    {name:"Building",      v:8430563,   b:7687198,   g:"S"},
+    {name:"Troop",         v:133235265, b:164531870, g:"A"},
+    {name:"Hero",          v:26297916,  b:21305631,  g:"SS"},
+    {name:"Hero Gear",     v:9921154,   b:10062833,  g:"S"},
+    {name:"Governor Gear", v:7013520,   b:7831641,   g:"A"},
+    {name:"Governor Charm",v:10120000,  b:8258400,   g:"SS"},
+    {name:"Tech",          v:17625620,  b:11141492,  g:"SS"},
+    {name:"Pet",           v:19643520,  b:20673792,  g:"S"},
+    {name:"Master",        v:10135800,  b:25148000,  g:"C"}
+  ],
+  combat:{ attW:160, attL:211, defW:672, defL:55, leth:66.5, hp:49.0,
+    troopStatus:"T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot." },
+  resources:[
+    {n:"Soldier Training speedup", h:"~11 days", s:"rich"},
+    {n:"General speedup",          h:"~9.5 days", s:"rich"},
+    {n:"Soldier Healing speedup",  h:"~7.5 days", s:"ok"},
+    {n:"Construction speedup",     h:"~2 days", s:"ok"},
+    {n:"Research speedup",         h:"~11 hours", s:"scarce"},
+    {n:"Bread",  h:"2.29B", s:"rich"},
+    {n:"Wood",   h:"2.29B", s:"rich"},
+    {n:"Stone",  h:"275.77M", s:"ok"},
+    {n:"Iron",   h:"215.72M", s:"ok"},
+    {n:"Gold",   h:"218K", s:"scarce"},
+    {n:"Mithril (hero gear)", h:"10", s:"ok"},
+    {n:"Research Speed (stat)", h:"61.2%", s:"scarce"}
+  ],
+  masters:[
+    {n:"Pan",       l:"90", note:"Best master — push to 100; Ways-and-Means / Falconer"},
+    {n:"Valora",    l:"80", note:"Good — rally / bear value"},
+    {n:"Roman",     l:"60", note:"Laggard"},
+    {n:"Wilson",    l:"40", note:"Laggard"},
+    {n:"Cassia",    l:"30", note:"Laggard"},
+    {n:"Guinevere", l:"30", note:"Laggard"}
+  ],
+  dustSrc:[
+    {t:"Redeem Truegold + Gold → Dust in the War Academy", d:false},
+    {t:"Truegold Crucible event", d:false},
+    {t:"Kingdom of Power (KvK) shop", d:false},
+    {t:"Watchtower Intel missions (TC30+)", d:false},
+    {t:"Gift codes (check optimizer’s codes page)", d:false},
+    {t:"Dust pack — best single-spend value", d:false}
+  ],
+  openData:[
+    {t:"Exact Dust total for Archer unlock (optimizer planner)", d:false},
+    {t:"Current Truegold balance (for Dust conversion math)", d:false},
+    {t:"T10 Archer count available to promote", d:false}
+  ],
+  notes:"",
+  mysticTrials:[
+    {k:"Mystic Trial (overall)", v:"170"},
+    {k:"Coliseum (Heroes + Hero Gear)", v:"157"},
+    {k:"Forest of Life (Pets)", v:"90"},
+    {k:"Crystal Cave (Charms)", v:"139"},
+    {k:"Knowledge Nexus (Techs)", v:"174"},
+    {k:"Molten Fort (Gov Gear)", v:"280"},
+    {k:"Radiant Spire (ALL stats — full power)", v:"163"}
+  ],
+  tg:{ have:0, need:9757, ttgHave:0, ttgNeed:781 },
+  farm:[
+    {k:"Town Center", v:"TC 22–29 (confirm)"},
+    {k:"Storehouse level", v:"— (keep LOW while feeding)"},
+    {k:"VIP", v:"— (target VIP 6 for extra march)"},
+    {k:"Troop count", v:"— (minimal — only for gathering)"},
+    {k:"Alliance", v:"— (sister/NAP, NOT main's alliance)"},
+    {k:"Same kingdom as main?", v:"— (required)"}
+  ],
+  farmChecks:[
+    {t:"Teleport farm next to main", d:false},
+    {t:"Open all unprotected resource packs in farm bag", d:false},
+    {t:"Empty troops — send gathering / garrison a shielded ally", d:false},
+    {t:"Switch to main → attack farm until resources are home", d:false},
+    {t:"Switch back → heal any hurt farm troops", d:false},
+    {t:"(Weekly) Bear Hunt rallies + Eternity's Reach tokens", d:false}
+  ],
+  buildings:[
+    {n:"Town Center",    t:"per tier", tg:2160, ttg:210, time:"73d",     note:"METRONOME — raise one tier to uncap the rest, then repeat", d:false},
+    {n:"Range",          t:"TG6→TG8", tg:972,  ttg:91,  time:"10d 22h", note:"Archer line — your main combat", d:false},
+    {n:"War Academy",    t:"TG5→TG8", tg:1377, ttg:116, time:"20d 8h",  note:"Research speed + T11 gate", d:false},
+    {n:"Embassy",        t:"TG6→TG8", tg:540,  ttg:49,  time:"48d 4h",  note:"Rally/garrison capacity — events", d:false},
+    {n:"Command Center", t:"TG5→TG8", tg:612,  ttg:54,  time:"12d 5h",  note:"March capacity — rally contribution", d:false},
+    {n:"Barracks",       t:"TG6→TG8", tg:972,  ttg:91,  time:"10d 22h", note:"Infantry tanks", d:false},
+    {n:"Stable",         t:"TG5→TG8", tg:1377, ttg:116, time:"15d 6h",  note:"Cavalry (off-focus) — defer", d:false},
+    {n:"Infirmary",      t:"5→TG8",   tg:1747, ttg:54,  time:"40d 1h",  note:"Healing sustain — defer, big", d:false}
+  ]
+};
+
+/* ---------- storage: tiered (window.storage → localStorage → memory) ---------- */
+const KEY="kingshot-console-v1";
+const CFG_KEY="kingshot-sync-cfg";
+const TOK_KEY="kingshot-sync-token";
+let mem=null;
+const hasStore = typeof window!=="undefined" && window.storage && typeof window.storage.set==="function";
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); return true; }catch(e){ return false; } }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+
+async function load(){
+  if(hasStore){ try{ const r=await window.storage.get(KEY,false); if(r&&r.value) return JSON.parse(r.value); }catch(e){} }
+  const ls=lsGet(KEY); if(ls){ try{ return JSON.parse(ls); }catch(e){} }
+  return mem?JSON.parse(mem):null;
+}
+async function persistLocal(){
+  const payload=JSON.stringify(state);
+  let ok=false;
+  if(hasStore){ try{ await window.storage.set(KEY,payload,false); ok=true; }catch(e){} }
+  if(lsSet(KEY,payload)) ok=true;
+  if(!ok) mem=payload;
+  return ok;
+}
+
+/* ---------- sync config + token (device-local only; token never synced) ---------- */
+function loadCfg(){ const s=lsGet(CFG_KEY); if(s){ try{ return JSON.parse(s); }catch(e){} } return {owner:"",repo:"",branch:"main",path:"kingshot/console-data.json",on:false}; }
+function saveCfg(c){ lsSet(CFG_KEY,JSON.stringify(c)); }
+function loadTok(){ return lsGet(TOK_KEY)||""; }
+function saveTok(t){ if(t) lsSet(TOK_KEY,t); else lsDel(TOK_KEY); }
+let syncCfg=loadCfg();
+let remoteSha=null;
+
+/* ---------- GitHub API ---------- */
+function ghUrl(cfg,withRef){
+  const p=cfg.path.split("/").map(encodeURIComponent).join("/");
+  return `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${p}`+(withRef?`?ref=${encodeURIComponent(cfg.branch)}`:"");
+}
+async function ghGet(cfg,tok){
+  const r=await fetch(ghUrl(cfg,true),{headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json"}});
+  if(r.status===404) return {sha:null,data:null};
+  if(!r.ok) throw new Error("GitHub read failed ("+r.status+")");
+  const j=await r.json();
+  const json=decodeURIComponent(escape(atob((j.content||"").replace(/\n/g,""))));
+  return {sha:j.sha,data:json?JSON.parse(json):null};
+}
+async function ghPut(cfg,tok,sha){
+  const content=btoa(unescape(encodeURIComponent(JSON.stringify(state,null,2))));
+  const body={message:`console update ${new Date().toISOString()}`,content,branch:cfg.branch};
+  if(sha) body.sha=sha;
+  let r=await fetch(ghUrl(cfg,false),{method:"PUT",headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:JSON.stringify(body)});
+  if((r.status===409||r.status===422)&&sha!==null){ // stale sha — refetch and retry once
+    const cur=await ghGet(cfg,tok); body.sha=cur.sha||undefined;
+    r=await fetch(ghUrl(cfg,false),{method:"PUT",headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:JSON.stringify(body)});
+  }
+  if(!r.ok) throw new Error("GitHub write failed ("+r.status+")");
+  const j=await r.json(); return j.content.sha;
+}
+function syncStatus(msg,cls){ const el=document.getElementById("syncStatus"); if(el){ el.textContent=msg; el.className="syncstat "+(cls||""); } }
+async function syncPull(silent){
+  const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok){ if(!silent) syncStatus("Fill in repo + token first","err"); return; }
+  syncStatus("Pulling…");
+  try{ const {sha,data}=await ghGet(syncCfg,tok); remoteSha=sha;
+    if(data){ state=Object.assign(structuredClone(SEED),data); renderAll(); await persistLocal(); syncStatus("Pulled ✓ "+new Date().toLocaleTimeString(),"ok"); }
+    else syncStatus("No remote file yet — Push to create it","warn");
+  }catch(e){ syncStatus(e.message,"err"); }
+}
+async function syncPush(silent){
+  const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok){ if(!silent) syncStatus("Fill in repo + token first","err"); return; }
+  syncStatus("Pushing…");
+  try{ remoteSha=await ghPut(syncCfg,tok,remoteSha); syncStatus("Synced ✓ "+new Date().toLocaleTimeString(),"ok"); }
+  catch(e){ syncStatus(e.message,"err"); }
+}
+let syncTimer=null;
+function scheduleSyncPush(){ if(!syncCfg.on) return; clearTimeout(syncTimer); syncTimer=setTimeout(()=>syncPush(true),2500); }
+
+/* ---------- local save (drives both local persistence + optional sync) ---------- */
+let saveTimer=null;
+function scheduleSave(){
+  const dot=document.getElementById("saveDot"), txt=document.getElementById("saveTxt");
+  dot.className="dot warn"; txt.textContent="Saving…";
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(async()=>{
+    const ok=await persistLocal();
+    dot.className="dot"; txt.textContent = ok ? "Saved" : "Session only";
+    scheduleSyncPush();
+  },400);
+}
+
+/* ---------- export / import ---------- */
+function exportData(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="kingshot-console-data.json"; a.click(); URL.revokeObjectURL(a.href);
+  syncStatus("Exported JSON ✓","ok");
+}
+function importData(file){
+  const rd=new FileReader();
+  rd.onload=()=>{ try{ const data=JSON.parse(rd.result); state=Object.assign(structuredClone(SEED),data); renderAll(); scheduleSave(); syncStatus("Imported ✓","ok"); }
+    catch(e){ syncStatus("Import failed: bad JSON","err"); } };
+  rd.readAsText(file);
+}
+
+/* ---------- state ---------- */
+let state=structuredClone(SEED);
+const fmt=n=>Number(n).toLocaleString("en-US");
+const num=v=>{ const n=parseFloat(String(v).replace(/[^0-9.\-]/g,"")); return isNaN(n)?0:n; };
+
+/* ---------- identity strip ---------- */
+const idFields=[["tc","Town Center"],["day","Kingdom Day"],["power","Total Power"],["vip","VIP"],["spender","Spender"],["goal","Goal"]];
+function buildId(){
+  const el=document.getElementById("idstrip"); el.innerHTML="";
+  idFields.forEach(([k,lab])=>{
+    const c=document.createElement("div"); c.className="idcell";
+    c.innerHTML=`<label>${lab}</label>`;
+    const i=document.createElement("input"); i.value=state.account[k]||"";
+    i.oninput=()=>{ state.account[k]=i.value; scheduleSave(); };
+    c.appendChild(i); el.appendChild(c);
+  });
+}
+
+/* ---------- dust gate ---------- */
+function paintGate(){
+  const cur=num(state.dust.current), tgt=Math.max(1,num(state.dust.target));
+  document.getElementById("dustCurEcho").textContent=fmt(cur);
+  document.getElementById("dustTgtEcho").textContent="/ "+fmt(tgt);
+  const pct=Math.min(100,cur/tgt*100);
+  document.getElementById("dustFill").style.width=pct.toFixed(1)+"%";
+  const gap=Math.max(0,tgt-cur);
+  const gb=document.getElementById("gapBadge");
+  gb.textContent = gap>0 ? "GAP "+fmt(gap)+" DUST" : "TARGET MET";
+  gb.style.color = gap>0 ? "var(--red)" : "var(--green)";
+  const gold=num(state.dust.gold);
+  document.getElementById("goldNote").innerHTML = gold<2013000
+    ? `You’re <b style="color:var(--red)">${fmt(2013000-gold)}</b> gold short of the 2.01M unlock-path total.`
+    : `Gold covers the 2.01M unlock path.`;
+}
+function buildGate(){
+  const dc=document.getElementById("dustCur"), dt=document.getElementById("dustTgt"), gc=document.getElementById("goldCur");
+  dc.value=state.dust.current; dt.value=state.dust.target; gc.value=state.dust.gold;
+  dc.oninput=()=>{ state.dust.current=num(dc.value); paintGate(); scheduleSave(); };
+  dt.oninput=()=>{ state.dust.target=num(dt.value); paintGate(); scheduleSave(); };
+  gc.oninput=()=>{ state.dust.gold=num(gc.value); paintGate(); scheduleSave(); };
+  const host=document.getElementById("nodes"); host.innerHTML="";
+  state.nodes.forEach((nd,idx)=>{
+    const d=document.createElement("div"); d.className="node";
+    const segs=Array.from({length:12},(_,i)=>`<div class="seg ${i<nd.cur?'on':''}" data-i="${i}"></div>`).join("");
+    d.innerHTML=`<div class="nname">${nd.name}</div>
+      <div class="lvl"><input inputmode="numeric" value="${nd.cur}"><span class="max">/ 12</span></div>
+      <div class="segbar">${segs}</div>
+      <div class="cost">${nd.cur>=12?'MAX ✓':'to max · '+fmt(nd.next)+' dust'}</div>`;
+    const inp=d.querySelector("input");
+    inp.oninput=()=>{ let v=Math.max(0,Math.min(12,num(inp.value))); nd.cur=v;
+      d.querySelectorAll(".seg").forEach((s,i)=>s.classList.toggle("on",i<v)); scheduleSave(); };
+    host.appendChild(d);
+  });
+}
+
+/* ---------- checklists ---------- */
+function buildChecks(hostId,arr){
+  const host=document.getElementById(hostId); host.innerHTML="";
+  arr.forEach(item=>{
+    const li=document.createElement("li"); if(item.d) li.classList.add("done");
+    const cb=document.createElement("input"); cb.type="checkbox"; cb.className="cbx"; cb.checked=!!item.d;
+    const sp=document.createElement("span"); sp.contentEditable="true"; sp.textContent=item.t;
+    const del=document.createElement("button"); del.className="del"; del.title="Remove"; del.textContent="×";
+    cb.onchange=()=>{ item.d=cb.checked; li.classList.toggle("done",cb.checked); scheduleSave(); };
+    sp.oninput=()=>{ item.t=sp.textContent; scheduleSave(); };
+    del.onclick=()=>{ const i=arr.indexOf(item); if(i>-1){ arr.splice(i,1); buildChecks(hostId,arr); scheduleSave(); } };
+    li.append(cb,sp,del); host.appendChild(li);
+  });
+  const addLi=document.createElement("li");
+  const add=document.createElement("button"); add.className="additem"; add.textContent="+ add item";
+  add.onclick=()=>{ arr.push({t:"New item",d:false}); buildChecks(hostId,arr); scheduleSave();
+    const spans=host.querySelectorAll('li span[contenteditable]'); const last=spans[spans.length-1];
+    if(last){ last.focus(); document.getSelection().selectAllChildren(last); } };
+  addLi.appendChild(add); host.appendChild(addLi);
+}
+
+/* ---------- pillars ---------- */
+function pillarPaint(row,p){
+  const ratio=p.b>0?p.v/p.b:1;
+  const col = ratio>=1?"var(--green)":ratio>=0.85?"var(--amber)":"var(--red)";
+  const fill=row.querySelector(".pfill"), bench=row.querySelector(".bench");
+  fill.style.width=Math.min(100,ratio*100)+"%";
+  fill.style.background=col;
+  bench.style.left=(p.b/Math.max(p.v,p.b)*100).toFixed(1)+"%";
+}
+function buildPillars(){
+  const host=document.getElementById("pillars"); host.innerHTML="";
+  state.pillars.forEach(p=>{
+    const row=document.createElement("div"); row.className="pillar";
+    row.innerHTML=`<div class="pname">${p.name}</div>
+      <div class="pbar"><div class="pfill"></div><div class="bench"></div></div>
+      <div class="pmeta">
+        <input class="mono" value="${fmt(p.v)}">
+        <span class="pv">/ <input class="mono benchin" value="${fmt(p.b)}"></span>
+        <span class="grade g-${p.g}">${p.g}</span>
+      </div>`;
+    pillarPaint(row,p);
+    const [inp,binp]=row.querySelectorAll("input");
+    inp.oninput=()=>{ p.v=num(inp.value); pillarPaint(row,p); scheduleSave(); };
+    binp.oninput=()=>{ p.b=num(binp.value); pillarPaint(row,p); scheduleSave(); };
+    host.appendChild(row);
+  });
+}
+
+/* ---------- combat ---------- */
+function paintCombat(){
+  const c=state.combat;
+  const ap = (c.attW+c.attL)>0 ? c.attW/(c.attW+c.attL)*100 : 0;
+  const dp = (c.defW+c.defL)>0 ? c.defW/(c.defW+c.defL)*100 : 0;
+  const a=document.getElementById("attPct"), d=document.getElementById("defPct");
+  a.textContent=ap.toFixed(0)+"%"; a.style.color = ap>=60?"var(--green)":ap>=50?"var(--amber)":"var(--red)";
+  d.textContent=dp.toFixed(0)+"%"; d.style.color = dp>=60?"var(--green)":dp>=50?"var(--amber)":"var(--red)";
+  document.getElementById("lethEcho").textContent=(+c.leth).toFixed(1)+"%";
+  document.getElementById("hpEcho").textContent=(+c.hp).toFixed(1)+"%";
+}
+function buildCombat(){
+  const c=state.combat, map={attW:"attW",attL:"attL",defW:"defW",defL:"defL"};
+  Object.keys(map).forEach(k=>{ const el=document.getElementById(k); el.value=c[k];
+    el.oninput=()=>{ c[k]=num(el.value); paintCombat(); scheduleSave(); }; });
+  const leth=document.getElementById("leth"), hp=document.getElementById("hp"), ts=document.getElementById("troopStatus");
+  leth.value=c.leth; hp.value=c.hp; ts.value=c.troopStatus;
+  leth.oninput=()=>{ c.leth=num(leth.value); paintCombat(); scheduleSave(); };
+  hp.oninput=()=>{ c.hp=num(hp.value); paintCombat(); scheduleSave(); };
+  ts.oninput=()=>{ c.troopStatus=ts.value; scheduleSave(); };
+  paintCombat();
+}
+
+/* ---------- resources ---------- */
+const TAG_CYCLE=["rich","ok","scarce"], TAG_LABEL={rich:"Abundant",scarce:"Scarce",ok:"OK"};
+function buildRes(){
+  const b=document.getElementById("resBody"); b.innerHTML="";
+  state.resources.forEach(r=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td><input value="${r.n.replace(/"/g,'&quot;')}"></td>
+      <td><input class="mono-in" value="${String(r.h).replace(/"/g,'&quot;')}"></td>
+      <td><select class="sigsel ${r.s}">
+        <option value="rich">Abundant</option>
+        <option value="ok">OK</option>
+        <option value="scarce">Scarce</option>
+      </select></td>
+      <td class="delcell"><button class="del" title="Remove">×</button></td>`;
+    const [ni,hi]=tr.querySelectorAll("input");
+    const sel=tr.querySelector(".sigsel"), del=tr.querySelector(".del");
+    sel.value=r.s;
+    ni.oninput=()=>{ r.n=ni.value; scheduleSave(); };
+    hi.oninput=()=>{ r.h=hi.value; scheduleSave(); };
+    sel.onchange=()=>{ r.s=sel.value; sel.className="sigsel "+r.s; scheduleSave(); };
+    del.onclick=()=>{ const i=state.resources.indexOf(r); if(i>-1){ state.resources.splice(i,1); buildRes(); scheduleSave(); } };
+    b.appendChild(tr);
+  });
+  document.getElementById("addRes").onclick=()=>{
+    state.resources.push({n:"New material",h:"0",s:"ok"}); buildRes(); scheduleSave();
+    const rows=b.querySelectorAll("tr input"); const first=rows[rows.length-3]; if(first){first.focus();first.select();} };
+}
+
+/* ---------- masters ---------- */
+function buildMast(){
+  const b=document.getElementById("mastBody"); b.innerHTML="";
+  state.masters.forEach(m=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td><input value="${m.n.replace(/"/g,'&quot;')}"></td>
+      <td><input class="mono-in" value="${String(m.l).replace(/"/g,'&quot;')}"></td>
+      <td><input value="${m.note.replace(/"/g,'&quot;')}"></td>
+      <td class="delcell"><button class="del" title="Remove">×</button></td>`;
+    const [ni,li,oi]=tr.querySelectorAll("input");
+    ni.oninput=()=>{ m.n=ni.value; scheduleSave(); };
+    li.oninput=()=>{ m.l=li.value; scheduleSave(); };
+    oi.oninput=()=>{ m.note=oi.value; scheduleSave(); };
+    tr.querySelector(".del").onclick=()=>{ const i=state.masters.indexOf(m); if(i>-1){ state.masters.splice(i,1); buildMast(); scheduleSave(); } };
+    b.appendChild(tr);
+  });
+  document.getElementById("addMast").onclick=()=>{
+    state.masters.push({n:"New master",l:"0",note:""}); buildMast(); scheduleSave();
+    const rows=b.querySelectorAll("tr input"); const first=rows[rows.length-3]; if(first){first.focus();first.select();} };
+}
+
+/* ---------- build order + TG budget ---------- */
+function paintTG(){
+  const t=state.tg;
+  const gapTG=Math.max(0,num(t.need)-num(t.have)), gapTTG=Math.max(0,num(t.ttgNeed)-num(t.ttgHave));
+  document.getElementById("tgNote").innerHTML=
+    `Still need <b style="color:${gapTG>0?'var(--red)':'var(--green)'}">${fmt(gapTG)} TG</b> and `+
+    `<b style="color:${gapTTG>0?'var(--red)':'var(--green)'}">${fmt(gapTTG)} Tempered TG</b> to clear every building to TG8. `+
+    `TTG is the true long pole — run Super Refinement every week.`;
+}
+function buildBuildings(){
+  const b=document.getElementById("buildBody"); b.innerHTML="";
+  state.buildings.forEach((bl,idx)=>{
+    const tr=document.createElement("tr"); if(bl.d) tr.style.opacity=".5";
+    tr.innerHTML=`<td><span class="mono" style="color:var(--gold-2);font-size:11px">${idx+1}.</span> <input value="${bl.n.replace(/"/g,'&quot;')}" style="width:auto;min-width:80px"></td>
+      <td><input class="mono-in" value="${bl.t}" style="width:78px"></td>
+      <td><input class="mono-in" value="${bl.tg}" style="width:52px"></td>
+      <td><input class="mono-in" value="${bl.ttg}" style="width:44px"></td>
+      <td><input class="mono-in" value="${bl.time}" style="width:70px"></td>
+      <td class="delcell"><input type="checkbox" class="cbx" ${bl.d?'checked':''} title="Done"> <button class="del" title="Remove">×</button></td>`;
+    const ins=tr.querySelectorAll("input"); const [ni,ti,tgi,ttgi,tmi,cb]=ins;
+    ni.oninput=()=>{ bl.n=ni.value; scheduleSave(); };
+    ti.oninput=()=>{ bl.t=ti.value; scheduleSave(); };
+    tgi.oninput=()=>{ bl.tg=num(tgi.value); scheduleSave(); };
+    ttgi.oninput=()=>{ bl.ttg=num(ttgi.value); scheduleSave(); };
+    tmi.oninput=()=>{ bl.time=tmi.value; scheduleSave(); };
+    cb.onchange=()=>{ bl.d=cb.checked; tr.style.opacity=cb.checked?".5":"1"; scheduleSave(); };
+    tr.querySelector(".del").onclick=()=>{ const i=state.buildings.indexOf(bl); if(i>-1){ state.buildings.splice(i,1); buildBuildings(); scheduleSave(); } };
+    b.appendChild(tr);
+  });
+  document.getElementById("addBuild").onclick=()=>{
+    state.buildings.push({n:"New building",t:"TG6→TG8",tg:0,ttg:0,time:"",note:"",d:false}); buildBuildings(); scheduleSave(); };
+}
+function buildTGbudget(){
+  const map={tgHave:"have",tgNeed:"need",ttgHave:"ttgHave",ttgNeed:"ttgNeed"};
+  Object.entries(map).forEach(([id,key])=>{ const el=document.getElementById(id); el.value=state.tg[key];
+    el.oninput=()=>{ state.tg[key]=num(el.value); paintTG(); scheduleSave(); }; });
+  paintTG();
+}
+
+/* ---------- farm ---------- */
+function buildFarm(){
+  const b=document.getElementById("farmBody"); b.innerHTML="";
+  state.farm.forEach(f=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td style="width:44%;color:var(--muted)"><input value="${f.k.replace(/"/g,'&quot;')}" style="color:var(--muted)"></td>
+      <td><input value="${f.v.replace(/"/g,'&quot;')}"></td>
+      <td class="delcell"><button class="del" title="Remove">×</button></td>`;
+    const [ki,vi]=tr.querySelectorAll("input");
+    ki.oninput=()=>{ f.k=ki.value; scheduleSave(); };
+    vi.oninput=()=>{ f.v=vi.value; scheduleSave(); };
+    tr.querySelector(".del").onclick=()=>{ const i=state.farm.indexOf(f); if(i>-1){ state.farm.splice(i,1); buildFarm(); scheduleSave(); } };
+    b.appendChild(tr);
+  });
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td colspan="3"><button class="additem" id="addFarm">+ add field</button></td>`;
+  b.appendChild(tr);
+  document.getElementById("addFarm").onclick=()=>{ state.farm.push({k:"New field",v:"—"}); buildFarm(); scheduleSave(); };
+}
+
+/* ---------- mystic trials ---------- */
+function buildMystic(){
+  const b=document.getElementById("mysticBody"); b.innerHTML="";
+  state.mysticTrials.forEach(f=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td style="width:55%"><input value="${(f.k||'').replace(/"/g,'&quot;')}"></td>
+      <td><input class="mono-in" value="${(f.v||'').replace(/"/g,'&quot;')}" inputmode="numeric" style="color:var(--gold);font-weight:700"></td>
+      <td class="delcell"><button class="del" title="Remove">×</button></td>`;
+    const [ki,vi]=tr.querySelectorAll("input");
+    ki.oninput=()=>{ f.k=ki.value; scheduleSave(); };
+    vi.oninput=()=>{ f.v=vi.value; scheduleSave(); };
+    tr.querySelector(".del").onclick=()=>{ const i=state.mysticTrials.indexOf(f); if(i>-1){ state.mysticTrials.splice(i,1); buildMystic(); scheduleSave(); } };
+    b.appendChild(tr);
+  });
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td colspan="3"><button class="additem" id="addMystic">+ add zone</button></td>`;
+  b.appendChild(tr);
+  document.getElementById("addMystic").onclick=()=>{ state.mysticTrials.push({k:"New zone",v:"0"}); buildMystic(); scheduleSave(); };
+}
+
+/* ---------- sync UI ---------- */
+function buildSync(){
+  document.getElementById("exportBtn").onclick=exportData;
+  const fileInp=document.getElementById("importFile");
+  document.getElementById("importBtn").onclick=()=>fileInp.click();
+  fileInp.onchange=()=>{ if(fileInp.files[0]) importData(fileInp.files[0]); fileInp.value=""; };
+
+  const o=document.getElementById("scOwner"), rp=document.getElementById("scRepo"),
+        br=document.getElementById("scBranch"), pa=document.getElementById("scPath"),
+        tk=document.getElementById("scTok"), on=document.getElementById("scOn");
+  o.value=syncCfg.owner; rp.value=syncCfg.repo; br.value=syncCfg.branch||"main"; pa.value=syncCfg.path; on.checked=!!syncCfg.on;
+  if(loadTok()) tk.placeholder="•••••• (saved on this device)";
+
+  document.getElementById("scSave").onclick=()=>{
+    syncCfg={owner:o.value.trim(),repo:rp.value.trim(),branch:(br.value.trim()||"main"),path:(pa.value.trim()||"kingshot/console-data.json"),on:on.checked};
+    saveCfg(syncCfg);
+    if(tk.value.trim()){ saveTok(tk.value.trim()); tk.value=""; tk.placeholder="•••••• (saved on this device)"; }
+    syncStatus(loadTok()?"Connected — try Pull or Push":"Saved config — add a token to connect", loadTok()?"ok":"warn");
+  };
+  on.onchange=()=>{ syncCfg.on=on.checked; saveCfg(syncCfg); };
+  document.getElementById("scPull").onclick=()=>syncPull(false);
+  document.getElementById("scPush").onclick=()=>syncPush(false);
+  document.getElementById("scForget").onclick=()=>{ saveTok(""); tk.value=""; tk.placeholder="github_pat_…"; syncStatus("Token removed from this device","warn"); };
+
+  if(!syncCfg.owner||!loadTok()) syncStatus("Not connected — file backup works without this","");
+}
+
+/* ---------- notes ---------- */
+function buildNotes(){
+  const n=document.getElementById("notes"); n.value=state.notes||"";
+  n.oninput=()=>{ state.notes=n.value; scheduleSave(); };
+}
+
+/* ---------- render all ---------- */
+function renderAll(){
+  buildId(); buildGate(); paintGate();
+  buildChecks("trackNow",state.trackNow); buildChecks("trackFarm",state.trackFarm);
+  buildChecks("step1",state.step1); buildChecks("step2",state.step2);
+  buildPillars(); buildCombat(); buildRes(); buildMast();
+  buildChecks("dustSrc",state.dustSrc); buildChecks("openData",state.openData);
+  buildTGbudget(); buildBuildings();
+  buildFarm(); buildChecks("farmChecks",state.farmChecks);
+  buildMystic();
+  buildNotes(); buildSync();
+}
+
+/* ---------- boot ---------- */
+(async function(){
+  const saved=await load();
+  if(saved) state=Object.assign(structuredClone(SEED),saved);
+  renderAll();
+  const dot=document.getElementById("saveDot"), txt=document.getElementById("saveTxt");
+  const persists = hasStore || lsSet("__probe__","1");
+  if(!persists){ dot.className="dot warn"; txt.textContent="Session only"; }
+  document.getElementById("resetBtn").onclick=()=>{
+    if(confirm("Reset every field back to the Day 425 baseline? Your edits will be cleared.")){
+      state=structuredClone(SEED); renderAll(); scheduleSave();
+    }
+  };
+  // if GitHub sync is on and a token exists, pull remote as source of truth
+  if(syncCfg.on && syncCfg.owner && loadTok()){ syncPull(true); }
+})();
+</script>
