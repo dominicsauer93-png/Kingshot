@@ -220,7 +220,7 @@
       <div class="meter"><div class="fill" id="dustFill" style="width:4%"></div></div>
       <div class="gate-inputs">
         <div class="field"><label>Dust in hand</label><input class="mono" id="dustCur" inputmode="numeric"></div>
-        <div class="field"><label>Dust needed (optimizer)</label><input class="mono" id="dustTgt" inputmode="numeric"></div>
+        <div class="field"><label>Dust needed (auto)</label><div class="mono" id="dustTgtVal" style="font-size:14px;color:var(--gold);padding:8px 0">—</div></div>
         <div class="field"><label>Gold in hand</label><input class="mono" id="goldCur" inputmode="numeric"></div>
       </div>
       <p class="unlock-note">Exact remaining to unlock T11 Archer: <b>6,028 Dust · 2.01M Gold · 134M bread/wood · ~147d research</b>. Arrows is <b>MAXED</b> — only Vests (3 lvls) and Legionaries (5 lvls) left, then the unlock node. <span id="goldNote"></span></p>
@@ -409,7 +409,23 @@
 
   <!-- DATA & SYNC -->
   <section>
-    <div class="sechead"><span class="num">13</span><h2>Data &amp; Sync</h2><span class="hint">back up · move between devices</span></div>
+    <div class="sechead"><span class="num">13</span><h2>Data, Sync &amp; Import</h2><span class="hint">back up · sync · import CSV</span></div>
+    <div class="card" style="margin-bottom:16px">
+      <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px">Import from CSV <span style="font-family:'JetBrains Mono';font-size:10px;color:var(--faint)">(Truegold research export)</span></h3>
+      <p class="sub">Paste a Truegold research CSV (or pick the file). It reads the remaining Dust/Gold and your archer node levels, shows you what it found, and applies only when you confirm.</p>
+      <textarea id="csvBox" placeholder="Paste CSV text here…" style="min-height:80px;font-size:11px"></textarea>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+        <button class="btn" id="csvFileBtn">⭱ Pick .csv file</button>
+        <input type="file" id="csvFile" accept=".csv,text/csv" style="display:none">
+        <button class="btn g" id="csvParse">Parse &amp; preview</button>
+      </div>
+      <div class="syncstat" id="csvStatus" style="display:none;margin-top:12px"></div>
+      <div id="csvPreview" style="display:none;margin-top:12px;background:#0C0F15;border:1px solid var(--line);border-radius:10px;padding:14px">
+        <div id="csvPreviewBody" style="font-size:12.5px;line-height:1.7"></div>
+        <button class="btn grn" id="csvApply" style="margin-top:12px">✓ Apply to console</button>
+        <button class="btn" id="csvCancel" style="margin-top:12px">Cancel</button>
+      </div>
+    </div>
     <div class="grid2">
       <div class="card">
         <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px">File backup</h3>
@@ -462,9 +478,10 @@ const SEED = {
   account:{ tc:"Truegold Lv. 6", day:"425", power:"242,423,358", vip:"8", spender:"Low–mid", goal:"All-round" },
   dust:{ current:274, target:6028, gold:218000 },
   nodes:[
-    {name:"Arrows (Attack)",     cur:12, next:0},
-    {name:"Legionaries (Rally)", cur:7,  next:2600},
-    {name:"Vests (Defense)",     cur:9,  next:1192}
+    {name:"Arrows (Attack)",     cur:12, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Legionaries (Rally)", cur:7,  max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
+    {name:"Vests (Defense)",     cur:9,  max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Truegold Archers (unlock)", cur:0, max:1, costs:[2236]}
   ],
   trackNow:[
     {t:"Finish the T10 transition (promote T9 → T10)", d:false},
@@ -695,10 +712,26 @@ function buildId(){
 }
 
 /* ---------- dust gate ---------- */
+const NODE_COSTS={
+  arrows:[54,66,81,97,118,145,178,216,270,324,388,480],
+  vests:[54,66,81,97,118,145,178,216,270,324,388,480],
+  legionaries:[83,102,125,150,184,225,276,334,418,502,602,744],
+  archers:[2236]
+};
+function nodeCosts(nd){ if(Array.isArray(nd.costs)&&nd.costs.length) return nd.costs;
+  const k=Object.keys(NODE_COSTS).find(x=>nd.name.toLowerCase().includes(x)); return k?NODE_COSTS[k]:[]; }
+function nodeRem(nd){ return nodeCosts(nd).slice(Math.max(0,nd.cur||0)).reduce((s,x)=>s+x,0); }
+function computeTarget(){
+  const t=state.nodes.reduce((s,n)=>s+nodeRem(n),0);
+  state.dust.target=Math.round(t);
+  return state.dust.target;
+}
 function paintGate(){
-  const cur=num(state.dust.current), tgt=Math.max(1,num(state.dust.target));
+  const tgt=Math.max(1,computeTarget());
+  const cur=num(state.dust.current);
   document.getElementById("dustCurEcho").textContent=fmt(cur);
   document.getElementById("dustTgtEcho").textContent="/ "+fmt(tgt);
+  const tgEl=document.getElementById("dustTgtVal"); if(tgEl) tgEl.textContent=fmt(tgt);
   const pct=Math.min(100,cur/tgt*100);
   document.getElementById("dustFill").style.width=pct.toFixed(1)+"%";
   const gap=Math.max(0,tgt-cur);
@@ -711,22 +744,27 @@ function paintGate(){
     : `Gold covers the 2.01M unlock path.`;
 }
 function buildGate(){
-  const dc=document.getElementById("dustCur"), dt=document.getElementById("dustTgt"), gc=document.getElementById("goldCur");
-  dc.value=state.dust.current; dt.value=state.dust.target; gc.value=state.dust.gold;
+  const dc=document.getElementById("dustCur"), gc=document.getElementById("goldCur");
+  dc.value=state.dust.current; gc.value=state.dust.gold;
   dc.oninput=()=>{ state.dust.current=num(dc.value); paintGate(); scheduleSave(); };
-  dt.oninput=()=>{ state.dust.target=num(dt.value); paintGate(); scheduleSave(); };
   gc.oninput=()=>{ state.dust.gold=num(gc.value); paintGate(); scheduleSave(); };
   const host=document.getElementById("nodes"); host.innerHTML="";
-  state.nodes.forEach((nd,idx)=>{
+  state.nodes.forEach((nd)=>{
+    const mx=nd.max||12;
     const d=document.createElement("div"); d.className="node";
-    const segs=Array.from({length:12},(_,i)=>`<div class="seg ${i<nd.cur?'on':''}" data-i="${i}"></div>`).join("");
+    const segs=Array.from({length:mx},(_,i)=>`<div class="seg ${i<nd.cur?'on':''}" data-i="${i}"></div>`).join("");
     d.innerHTML=`<div class="nname">${nd.name}</div>
-      <div class="lvl"><input inputmode="numeric" value="${nd.cur}"><span class="max">/ 12</span></div>
+      <div class="lvl"><input inputmode="numeric" value="${nd.cur}"><span class="max">/ ${mx}</span></div>
       <div class="segbar">${segs}</div>
-      <div class="cost">${nd.cur>=12?'MAX ✓':'to max · '+fmt(nd.next)+' dust'}</div>`;
-    const inp=d.querySelector("input");
-    inp.oninput=()=>{ let v=Math.max(0,Math.min(12,num(inp.value))); nd.cur=v;
-      d.querySelectorAll(".seg").forEach((s,i)=>s.classList.toggle("on",i<v)); scheduleSave(); };
+      <div class="cost">${nd.cur>=mx?'DONE ✓':'left · '+fmt(nodeRem(nd))+' dust'}</div>`;
+    const inp=d.querySelector("input"), cost=d.querySelector(".cost");
+    inp.oninput=()=>{
+      let v=Math.max(0,Math.min(mx,num(inp.value)));
+      nd.cur=v;
+      d.querySelectorAll(".seg").forEach((s,i)=>s.classList.toggle("on",i<v));
+      cost.textContent = v>=mx?'DONE ✓':'left · '+fmt(nodeRem(nd))+' dust';
+      paintGate(); scheduleSave();
+    };
     host.appendChild(d);
   });
 }
@@ -931,6 +969,83 @@ function buildMystic(){
   document.getElementById("addMystic").onclick=()=>{ state.mysticTrials.push({k:"New zone",v:"0"}); buildMystic(); scheduleSave(); };
 }
 
+/* ---------- CSV import ---------- */
+function parseCSV(text){
+  const lines=text.replace(/\uFEFF/g,"").trim().split(/\r?\n/).filter(l=>l.trim());
+  if(!lines.length) return [];
+  const parseLine=l=>{ const out=[]; let cur="",q=false;
+    for(let i=0;i<l.length;i++){ const c=l[i];
+      if(q){ if(c==='"'){ if(l[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+      else { if(c==='"') q=true; else if(c===","){out.push(cur);cur="";} else cur+=c; } }
+    out.push(cur); return out; };
+  const headers=parseLine(lines[0]).map(h=>h.trim());
+  return lines.slice(1).map(l=>{ const cells=parseLine(l); const o={}; headers.forEach((h,i)=>o[h]=(cells[i]||"").trim()); return o; });
+}
+let pendingImport=null;
+function analyzeCSV(rows){
+  if(!rows.length) return {ok:false,msg:"No rows found in that CSV."};
+  const cols=Object.keys(rows[0]);
+  const find=(...ns)=>cols.find(c=>{const k=c.toLowerCase().replace(/[^a-z]/g,"");return ns.some(n=>k.includes(n));});
+  const nameCol=find("tech","building","name"), dustCol=find("dust"),
+        goldCol=cols.find(c=>c.toLowerCase().replace(/[^a-z]/g,"")==="gold"),
+        ownedCol=find("owned","current"), targetCol=find("target"), levelsCol=find("levelstoresearch","levelsto","levels");
+  if(!dustCol&&!nameCol) return {ok:false,msg:"Doesn't look like a Kingshot research CSV (no Dust/Tech columns found)."};
+  const N=v=>{const n=parseFloat(String(v||"").replace(/[^0-9.\-]/g,""));return isNaN(n)?0:n;};
+  let remDust=0, remGold=0, rowsCounted=0; const nodes={};
+  rows.forEach(r=>{
+    const owned=ownedCol?N(r[ownedCol]):null, target=targetCol?N(r[targetCol]):null;
+    let levels=levelsCol?N(r[levelsCol]):(owned!=null&&target!=null?Math.max(0,target-owned):null);
+    const remaining = levels==null ? true : levels>0;
+    const rowDust = dustCol ? N(r[dustCol]) : 0;
+    if(remaining){ remDust+=rowDust; if(goldCol) remGold+=N(r[goldCol]); rowsCounted++; }
+    if(nameCol){ const nm=(r[nameCol]||"").toLowerCase(); const rd=remaining?rowDust:0;
+      if(nm.includes("arrows")) nodes["Arrows (Attack)"]={cur:owned,rem:rd};
+      else if(nm.includes("vests")) nodes["Vests (Defense)"]={cur:owned,rem:rd};
+      else if(nm.includes("legionaries")) nodes["Legionaries (Rally)"]={cur:owned,rem:rd};
+      else if(nm.includes("archers")) nodes["Truegold Archers (unlock)"]={cur:owned,rem:rd}; }
+  });
+  return {ok:true, remDust, remGold, nodes, rowsCounted};
+}
+function buildImport(){
+  const box=document.getElementById("csvBox"), file=document.getElementById("csvFile");
+  const status=document.getElementById("csvStatus"), preview=document.getElementById("csvPreview"), pbody=document.getElementById("csvPreviewBody");
+  const show=(el,on)=>el.style.display=on?"block":"none";
+  document.getElementById("csvFileBtn").onclick=()=>file.click();
+  file.onchange=()=>{ if(file.files[0]){ const rd=new FileReader(); rd.onload=()=>{ box.value=rd.result; }; rd.readAsText(file.files[0]); } file.value=""; };
+  document.getElementById("csvParse").onclick=()=>{
+    show(preview,false);
+    const text=box.value.trim();
+    if(!text){ status.textContent="Paste some CSV text or pick a file first."; status.className="syncstat warn"; show(status,true); return; }
+    let rows; try{ rows=parseCSV(text); }catch(e){ status.textContent="Could not parse that CSV."; status.className="syncstat err"; show(status,true); return; }
+    const a=analyzeCSV(rows);
+    if(!a.ok){ status.textContent=a.msg; status.className="syncstat err"; show(status,true); return; }
+    pendingImport=a;
+    show(status,false);
+    const nodeList=Object.entries(a.nodes);
+    pbody.innerHTML=
+      `<b style="color:var(--gold)">Detected from ${a.rowsCounted} unfinished rows:</b><br>`+
+      `• Remaining Dust: <b class="mono">${fmt(a.remDust)}</b> → sets your Dust target<br>`+
+      (a.remGold?`• Remaining Gold: <b class="mono">${fmt(a.remGold)}</b> (info only)<br>`:"")+
+      (nodeList.length?`• Node levels: ${nodeList.map(([k,v])=>`${k.replace(/ \(.*/,'')} → ${v.cur!=null?v.cur:'?'}`).join(" · ")}<br>`:"• No node levels matched<br>")+
+      `<span style="color:var(--faint);font-size:11px">Applies to the Dust Gate. Other fields stay as-is.</span>`;
+    show(preview,true);
+  };
+  document.getElementById("csvCancel").onclick=()=>{ pendingImport=null; show(preview,false); };
+  document.getElementById("csvApply").onclick=()=>{
+    if(!pendingImport) return;
+    Object.entries(pendingImport.nodes).forEach(([name,val])=>{
+      const nd=state.nodes.find(n=>n.name===name) || state.nodes.find(n=>n.name.toLowerCase().includes(name.toLowerCase().split(" ")[0]));
+      if(nd){ const mx=nd.max||12; if(val.cur!=null) nd.cur=Math.max(0,Math.min(mx,val.cur)); }
+    });
+    computeTarget();
+    renderAll(); scheduleSave();
+    pendingImport=null;
+    document.getElementById("csvBox").value="";
+    show(preview,false);
+    status.textContent="Applied ✓ — node levels and exact remaining Dust updated."; status.className="syncstat ok"; show(status,true);
+  };
+}
+
 /* ---------- sync UI ---------- */
 function buildSync(){
   document.getElementById("exportBtn").onclick=exportData;
@@ -974,13 +1089,21 @@ function renderAll(){
   buildTGbudget(); buildBuildings();
   buildFarm(); buildChecks("farmChecks",state.farmChecks);
   buildMystic();
-  buildNotes(); buildSync();
+  buildNotes(); buildSync(); buildImport();
 }
 
 /* ---------- boot ---------- */
 (async function(){
   const saved=await load();
   if(saved) state=Object.assign(structuredClone(SEED),saved);
+  // migrate nodes to {cur,max,rem} and ensure the unlock node exists
+  if(Array.isArray(state.nodes)){
+    state.nodes.forEach(n=>{ if(n.max==null) n.max=/unlock/i.test(n.name)?1:12;
+      if(!Array.isArray(n.costs)||!n.costs.length){ const k=Object.keys(NODE_COSTS).find(x=>n.name.toLowerCase().includes(x)); if(k) n.costs=NODE_COSTS[k].slice(); }
+      delete n.rem; delete n.next; });
+    if(!state.nodes.some(n=>/unlock/i.test(n.name)))
+      state.nodes.push({name:"Truegold Archers (unlock)",cur:0,max:1,costs:[2236]});
+  }
   renderAll();
   const dot=document.getElementById("saveDot"), txt=document.getElementById("saveTxt");
   const persists = hasStore || lsSet("__probe__","1");
