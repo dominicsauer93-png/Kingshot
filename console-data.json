@@ -10,7 +10,7 @@
   "dust": {
     "current": 25,
     "target": 3134,
-    "gold": 218000
+    "gold": 369.4
   },
   "nodes": [
     {
@@ -27,6 +27,73 @@
       "name": "Vests (Defense)",
       "cur": 10,
       "next": 1192
+    }
+  ],
+  "infNodes": [
+    {
+      "name": "Mauls (Attack)",
+      "cur": 7,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Plating (Defense)",
+      "cur": 7,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Legionaries (Rally)",
+      "cur": 6,
+      "max": 12,
+      "costs": [
+        83,
+        102,
+        125,
+        150,
+        184,
+        225,
+        276,
+        334,
+        418,
+        502,
+        602,
+        744
+      ]
+    },
+    {
+      "name": "Truegold Infantry (unlock)",
+      "cur": 0,
+      "max": 1,
+      "costs": [
+        2236
+      ]
     }
   ],
   "trackNow": [
@@ -324,6 +391,35 @@
     "need": 9757,
     "ttgHave": 0,
     "ttgNeed": 781
+  },
+  "govGear": {
+    "targetIdx": 14,
+    "pieces": [
+      {
+        "name": "Piece 1",
+        "cur": 0
+      },
+      {
+        "name": "Piece 2",
+        "cur": 0
+      },
+      {
+        "name": "Piece 3",
+        "cur": 0
+      },
+      {
+        "name": "Piece 4",
+        "cur": 0
+      },
+      {
+        "name": "Piece 5",
+        "cur": 0
+      },
+      {
+        "name": "Piece 6",
+        "cur": 0
+      }
+    ]
   },
   "farm": [
     {
