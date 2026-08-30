@@ -1,0 +1,454 @@
+{
+  "account": {
+    "tc": "Truegold Lv. 6",
+    "day": "425",
+    "power": "242,423,358",
+    "vip": "8",
+    "spender": "Low–mid",
+    "goal": "All-round"
+  },
+  "dust": {
+    "current": 274,
+    "target": 6028,
+    "gold": 218000
+  },
+  "nodes": [
+    {
+      "name": "Arrows (Attack)",
+      "cur": 12,
+      "next": 0
+    },
+    {
+      "name": "Legionaries (Rally)",
+      "cur": 7,
+      "next": 2600
+    },
+    {
+      "name": "Vests (Defense)",
+      "cur": 9,
+      "next": 1192
+    }
+  ],
+  "trackNow": [
+    {
+      "t": "Finish the T10 transition (promote T9 → T10)",
+      "d": false
+    },
+    {
+      "t": "Battle research Tier VI — lifts Lethality / Health off the V→VI wall",
+      "d": false
+    }
+  ],
+  "trackFarm": [
+    {
+      "t": "Farm Truegold Dust toward the T11 Archer unlock",
+      "d": false
+    },
+    {
+      "t": "Push Pan 90 → 100 (Ways-and-Means / Falconer skills)",
+      "d": false
+    },
+    {
+      "t": "Slowly level the 4 laggard masters to lift the grade",
+      "d": false
+    }
+  ],
+  "step1": [
+    {
+      "t": "Promote staged T9 → T10 across the army",
+      "d": false
+    },
+    {
+      "t": "Time promotions to the KvK ‘Increase Power’ stage",
+      "d": false
+    },
+    {
+      "t": "Complete a full T10 base before chasing T11",
+      "d": false
+    }
+  ],
+  "step2": [
+    {
+      "t": "Grind Archer node A to 12 (+6)",
+      "d": false
+    },
+    {
+      "t": "Finish Archer node B to 12 (+2)",
+      "d": false
+    },
+    {
+      "t": "Finish Archer node C to 12 (+3)",
+      "d": false
+    },
+    {
+      "t": "Buy final unlock node (2,200 Dust + 1M Gold)",
+      "d": false
+    },
+    {
+      "t": "Promote T10 Archers → T11 on a KvK power stage",
+      "d": false
+    }
+  ],
+  "pillars": [
+    {
+      "name": "Building",
+      "v": 8430563,
+      "b": 7687198,
+      "g": "S"
+    },
+    {
+      "name": "Troop",
+      "v": 133235265,
+      "b": 164531870,
+      "g": "A"
+    },
+    {
+      "name": "Hero",
+      "v": 26297916,
+      "b": 21305631,
+      "g": "SS"
+    },
+    {
+      "name": "Hero Gear",
+      "v": 9921154,
+      "b": 10062833,
+      "g": "S"
+    },
+    {
+      "name": "Governor Gear",
+      "v": 7013520,
+      "b": 7831641,
+      "g": "A"
+    },
+    {
+      "name": "Governor Charm",
+      "v": 10120000,
+      "b": 8258400,
+      "g": "SS"
+    },
+    {
+      "name": "Tech",
+      "v": 17625620,
+      "b": 11141492,
+      "g": "SS"
+    },
+    {
+      "name": "Pet",
+      "v": 19643520,
+      "b": 20673792,
+      "g": "S"
+    },
+    {
+      "name": "Master",
+      "v": 10135800,
+      "b": 25148000,
+      "g": "C"
+    }
+  ],
+  "combat": {
+    "attW": 160,
+    "attL": 211,
+    "defW": 672,
+    "defL": 55,
+    "leth": 66.5,
+    "hp": 49,
+    "troopStatus": "T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot."
+  },
+  "resources": [
+    {
+      "n": "Soldier Training speedup",
+      "h": "~11 days",
+      "s": "rich"
+    },
+    {
+      "n": "General speedup",
+      "h": "~9.5 days",
+      "s": "rich"
+    },
+    {
+      "n": "Soldier Healing speedup",
+      "h": "~7.5 days",
+      "s": "ok"
+    },
+    {
+      "n": "Construction speedup",
+      "h": "~2 days",
+      "s": "ok"
+    },
+    {
+      "n": "Research speedup",
+      "h": "~11 hours",
+      "s": "scarce"
+    },
+    {
+      "n": "Bread",
+      "h": "2.29B",
+      "s": "rich"
+    },
+    {
+      "n": "Wood",
+      "h": "2.29B",
+      "s": "rich"
+    },
+    {
+      "n": "Stone",
+      "h": "275.77M",
+      "s": "ok"
+    },
+    {
+      "n": "Iron",
+      "h": "215.72M",
+      "s": "ok"
+    },
+    {
+      "n": "Gold",
+      "h": "218K",
+      "s": "scarce"
+    },
+    {
+      "n": "Mithril (hero gear)",
+      "h": "10",
+      "s": "ok"
+    },
+    {
+      "n": "Research Speed (stat)",
+      "h": "61.2%",
+      "s": "scarce"
+    }
+  ],
+  "masters": [
+    {
+      "n": "Pan",
+      "l": "90",
+      "note": "Best master — push to 100; Ways-and-Means / Falconer"
+    },
+    {
+      "n": "Valora",
+      "l": "80",
+      "note": "Good — rally / bear value"
+    },
+    {
+      "n": "Roman",
+      "l": "60",
+      "note": "Laggard"
+    },
+    {
+      "n": "Wilson",
+      "l": "40",
+      "note": "Laggard"
+    },
+    {
+      "n": "Cassia",
+      "l": "30",
+      "note": "Laggard"
+    },
+    {
+      "n": "Guinevere",
+      "l": "30",
+      "note": "Laggard"
+    }
+  ],
+  "dustSrc": [
+    {
+      "t": "Redeem Truegold + Gold → Dust in the War Academy",
+      "d": false
+    },
+    {
+      "t": "Truegold Crucible event",
+      "d": false
+    },
+    {
+      "t": "Kingdom of Power (KvK) shop",
+      "d": false
+    },
+    {
+      "t": "Watchtower Intel missions (TC30+)",
+      "d": false
+    },
+    {
+      "t": "Gift codes (check optimizer’s codes page)",
+      "d": false
+    },
+    {
+      "t": "Dust pack — best single-spend value",
+      "d": false
+    }
+  ],
+  "openData": [
+    {
+      "t": "Exact Dust total for Archer unlock (optimizer planner)",
+      "d": false
+    },
+    {
+      "t": "Current Truegold balance (for Dust conversion math)",
+      "d": false
+    },
+    {
+      "t": "T10 Archer count available to promote",
+      "d": false
+    }
+  ],
+  "notes": "",
+  "mysticTrials": [
+    {
+      "k": "Mystic Trial (overall)",
+      "v": "170"
+    },
+    {
+      "k": "Coliseum (Heroes + Hero Gear)",
+      "v": "157"
+    },
+    {
+      "k": "Forest of Life (Pets)",
+      "v": "90"
+    },
+    {
+      "k": "Crystal Cave (Charms)",
+      "v": "139"
+    },
+    {
+      "k": "Knowledge Nexus (Techs)",
+      "v": "174"
+    },
+    {
+      "k": "Molten Fort (Gov Gear)",
+      "v": "280"
+    },
+    {
+      "k": "Radiant Spire (ALL stats — full power)",
+      "v": "163"
+    }
+  ],
+  "tg": {
+    "have": 0,
+    "need": 9757,
+    "ttgHave": 0,
+    "ttgNeed": 781
+  },
+  "farm": [
+    {
+      "k": "Town Center",
+      "v": "TC 22–29 (confirm)"
+    },
+    {
+      "k": "Storehouse level",
+      "v": "— (keep LOW while feeding)"
+    },
+    {
+      "k": "VIP",
+      "v": "— (target VIP 6 for extra march)"
+    },
+    {
+      "k": "Troop count",
+      "v": "— (minimal — only for gathering)"
+    },
+    {
+      "k": "Alliance",
+      "v": "— (sister/NAP, NOT main's alliance)"
+    },
+    {
+      "k": "Same kingdom as main?",
+      "v": "— (required)"
+    }
+  ],
+  "farmChecks": [
+    {
+      "t": "Teleport farm next to main",
+      "d": false
+    },
+    {
+      "t": "Open all unprotected resource packs in farm bag",
+      "d": false
+    },
+    {
+      "t": "Empty troops — send gathering / garrison a shielded ally",
+      "d": false
+    },
+    {
+      "t": "Switch to main → attack farm until resources are home",
+      "d": false
+    },
+    {
+      "t": "Switch back → heal any hurt farm troops",
+      "d": false
+    },
+    {
+      "t": "(Weekly) Bear Hunt rallies + Eternity's Reach tokens",
+      "d": false
+    }
+  ],
+  "buildings": [
+    {
+      "n": "Town Center",
+      "t": "per tier",
+      "tg": 2160,
+      "ttg": 210,
+      "time": "73d",
+      "note": "METRONOME — raise one tier to uncap the rest, then repeat",
+      "d": false
+    },
+    {
+      "n": "Range",
+      "t": "TG6→TG8",
+      "tg": 972,
+      "ttg": 91,
+      "time": "10d 22h",
+      "note": "Archer line — your main combat",
+      "d": false
+    },
+    {
+      "n": "War Academy",
+      "t": "TG5→TG8",
+      "tg": 1377,
+      "ttg": 116,
+      "time": "20d 8h",
+      "note": "Research speed + T11 gate",
+      "d": false
+    },
+    {
+      "n": "Embassy",
+      "t": "TG6→TG8",
+      "tg": 540,
+      "ttg": 49,
+      "time": "48d 4h",
+      "note": "Rally/garrison capacity — events",
+      "d": false
+    },
+    {
+      "n": "Command Center",
+      "t": "TG5→TG8",
+      "tg": 612,
+      "ttg": 54,
+      "time": "12d 5h",
+      "note": "March capacity — rally contribution",
+      "d": false
+    },
+    {
+      "n": "Barracks",
+      "t": "TG6→TG8",
+      "tg": 972,
+      "ttg": 91,
+      "time": "10d 22h",
+      "note": "Infantry tanks",
+      "d": false
+    },
+    {
+      "n": "Stable",
+      "t": "TG5→TG8",
+      "tg": 1377,
+      "ttg": 116,
+      "time": "15d 6h",
+      "note": "Cavalry (off-focus) — defer",
+      "d": false
+    },
+    {
+      "n": "Infirmary",
+      "t": "5→TG8",
+      "tg": 1747,
+      "ttg": 54,
+      "time": "40d 1h",
+      "note": "Healing sustain — defer, big",
+      "d": false
+    }
+  ]
+}
