@@ -8,7 +8,7 @@
     "goal": "All-round"
   },
   "dust": {
-    "current": 274,
+    "current": 25,
     "target": 6028,
     "gold": 218000
   },
@@ -20,7 +20,7 @@
     },
     {
       "name": "Legionaries (Rally)",
-      "cur": 7,
+      "cur": 8,
       "next": 2600
     },
     {
