@@ -421,6 +421,42 @@
       }
     ]
   },
+  "forecast": {
+    "log": []
+  },
+  "today": {
+    "routineDate": "2026-08-31",
+    "kvkDate": "",
+    "bearDate": "",
+    "kvkPeriod": 14,
+    "bearPeriod": 2,
+    "routine": [
+      {
+        "t": "Intel Missions → collect Hunting Arrows",
+        "d": false
+      },
+      {
+        "t": "Gathering marches all out",
+        "d": false
+      },
+      {
+        "t": "Overfeed the Truegold Crucible",
+        "d": false
+      },
+      {
+        "t": "Super Refine — daily discounted Tier 2 (TTG)",
+        "d": false
+      },
+      {
+        "t": "Claim house / suppression gold",
+        "d": false
+      }
+    ]
+  },
+  "ui": {
+    "tab": "Home",
+    "collapsed": {}
+  },
   "farm": [
     {
       "k": "Town Center",
