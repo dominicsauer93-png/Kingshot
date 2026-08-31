@@ -175,6 +175,33 @@
   .donotfund{font-size:12.5px;color:var(--muted);margin-top:14px;padding:10px 12px;border-left:2px solid var(--gold-2);background:rgba(240,192,90,.05);border-radius:0 8px 8px 0}
   .donotfund b{color:var(--gold)}
   .foot{text-align:center;font-family:"JetBrains Mono";font-size:11px;color:var(--faint);margin-top:30px}
+  .today{background:linear-gradient(180deg,rgba(240,192,90,.08),var(--panel));border:1px solid var(--gold-2);border-radius:var(--r);padding:18px;margin-bottom:22px;box-shadow:var(--shadow)}  .today-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .today-kicker{font-family:"Chakra Petch";font-weight:700;font-size:18px;letter-spacing:.02em;color:var(--gold);margin-right:10px}
+  .today-date{font-size:12px;color:var(--muted)}
+  .today-status{font-size:13.5px;line-height:1.7;background:#0C0F15;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+  .today-status b{color:var(--gold)}
+  .today-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:640px){.today-grid{grid-template-columns:1fr}}
+  .today-label{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+  .today-flag{font-size:12.5px;margin-bottom:6px;padding-left:16px;position:relative}
+  .today-flag::before{content:"▸";position:absolute;left:0;color:var(--gold-2)}
+  .today-flag.warn::before{color:var(--red)}
+  .cd-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);margin-bottom:6px}
+  .cd-row span:first-child{width:110px}
+  .cd-input{background:#0C0F15;border:1px solid var(--line);border-radius:6px;color:var(--text);font-family:"JetBrains Mono";font-size:11px;padding:4px 6px}
+  .cd-input:focus{outline:none;border-color:var(--gold)}
+  .cd-out{color:var(--gold)}
+  .today-decide{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+  #decOut{font-size:12.5px;line-height:1.7}
+  #tabnav{position:sticky;top:0;z-index:30;display:flex;gap:6px;overflow-x:auto;padding:10px 2px;margin-bottom:18px;background:linear-gradient(180deg,var(--ink) 70%,transparent);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  #tabnav::-webkit-scrollbar{display:none}
+  .tab{font-family:"Chakra Petch";font-weight:600;font-size:13px;letter-spacing:.05em;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;white-space:nowrap;transition:.15s}
+  .tab:hover{color:var(--text);border-color:var(--gold-2)}
+  .tab.active{color:var(--ink);background:linear-gradient(180deg,var(--gold),var(--gold-2));border-color:var(--gold-2)}
+  .sechead{cursor:pointer;user-select:none}
+  .sechead .chev{margin-left:auto;color:var(--faint);font-size:11px;transition:transform .2s;padding-left:8px}
+  section.collapsed .chev{transform:rotate(-90deg)}
+  section.collapsed > :not(.sechead){display:none!important}
   .syncgrid{display:flex;gap:10px;flex-wrap:wrap}
   .syncgrid .field input{width:120px}
   .synctoggle{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);margin-top:12px;cursor:pointer}
@@ -199,6 +226,40 @@
     <div style="display:flex;gap:10px;align-items:center">
       <button class="btn" id="resetBtn">Reset to baseline</button>
       <span class="savechip"><span class="dot" id="saveDot"></span><span id="saveTxt">Saved</span></span>
+    </div>
+  </div>
+
+  <nav id="tabnav"></nav>
+
+  <!-- TODAY -->
+  <div class="today" id="todayPanel">
+    <div class="today-head">
+      <div><span class="today-kicker">Today</span><span class="today-date mono" id="todayDate"></span></div>
+      <button class="btn" id="todayRefresh" title="Recompute">↻</button>
+    </div>
+    <div class="today-status" id="todayStatus"></div>
+    <div class="today-grid">
+      <div class="today-col">
+        <div class="today-label">Daily routine</div>
+        <ul class="checks" id="todayRoutine"></ul>
+      </div>
+      <div class="today-col">
+        <div class="today-label">Flags</div>
+        <div id="todayFlags"></div>
+        <div class="today-label" style="margin-top:14px">Countdowns</div>
+        <div class="cd-row"><span>KvK</span><input type="date" id="cdKvk" class="cd-input">every <input type="number" id="cdKvkP" class="cd-input" style="width:46px" min="1">d<span class="cd-out mono" id="cdKvkOut"></span></div>
+        <div class="cd-row"><span>Bear Hunt</span><input type="date" id="cdBear" class="cd-input">every <input type="number" id="cdBearP" class="cd-input" style="width:46px" min="1">d<span class="cd-out mono" id="cdBearOut"></span></div>
+      </div>
+    </div>
+    <div class="today-decide">
+      <div class="today-label">Spare-resource helper</div>
+      <p class="sub" style="margin:2px 0 8px">Got spare to spend? See where it goes furthest against your gaps.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+        <div class="field"><label>Spare Dust</label><input class="mono" id="decDust" inputmode="numeric" placeholder="0"></div>
+        <div class="field"><label>Spare Gold</label><input class="mono" id="decGold" inputmode="numeric" placeholder="0"></div>
+        <button class="btn g" id="decGo">Where should it go?</button>
+      </div>
+      <div id="decOut" style="margin-top:10px"></div>
     </div>
   </div>
 
@@ -240,6 +301,17 @@
       </div>
       <div class="nodes" id="infNodes"></div>
       <p class="unlock-note" id="infNote"></p>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px">Forecast — T11 Archer unlock date</h3>
+      <p class="sub">Tap once per check-in to snapshot your current Dust + Gold. After two, it projects your unlock date from your real rate. It counts gains and ignores spends.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <button class="btn g" id="fcLog">＋ Log today's Dust + Gold</button>
+        <span class="syncstat" id="fcMsg" style="display:none"></span>
+      </div>
+      <div id="fcOut" style="margin-top:14px"></div>
+      <div id="fcHistory" style="margin-top:12px"></div>
     </div>
   </section>
 
@@ -596,10 +668,18 @@ const SEED = {
     {k:"Radiant Spire (ALL stats — full power)", v:"163"}
   ],
   tg:{ have:0, need:9757, ttgHave:0, ttgNeed:781 },
-  govGear:{ targetIdx:14, pieces:[
-    {name:"Piece 1", cur:0},{name:"Piece 2", cur:0},{name:"Piece 3", cur:0},
-    {name:"Piece 4", cur:0},{name:"Piece 5", cur:0},{name:"Piece 6", cur:0}
+  govGear:{ targetIdx:19, pieces:[
+    {name:"Cav 1", cur:10},{name:"Cav 2", cur:10},{name:"Inf 1", cur:10},
+    {name:"Inf 2", cur:12},{name:"Archer 1", cur:11},{name:"Archer 2", cur:19}
   ]},
+  forecast:{ log:[] },
+  today:{ routineDate:"", kvkDate:"", bearDate:"", kvkPeriod:14, bearPeriod:2, routine:[    {t:"Intel Missions → collect Hunting Arrows", d:false},
+    {t:"Gathering marches all out", d:false},
+    {t:"Overfeed the Truegold Crucible", d:false},
+    {t:"Super Refine — daily discounted Tier 2 (TTG)", d:false},
+    {t:"Claim house / suppression gold", d:false}
+  ]},
+  ui:{ tab:"Home", collapsed:{} },
   farm:[
     {k:"Town Center", v:"TC 22–29 (confirm)"},
     {k:"Storehouse level", v:"— (keep LOW while feeding)"},
@@ -690,7 +770,7 @@ async function syncPull(silent){
   const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok){ if(!silent) syncStatus("Fill in repo + token first","err"); return; }
   syncStatus("Pulling…");
   try{ const {sha,data}=await ghGet(syncCfg,tok); remoteSha=sha;
-    if(data){ state=Object.assign(structuredClone(SEED),data); renderAll(); await persistLocal(); syncStatus("Pulled ✓ "+new Date().toLocaleTimeString(),"ok"); }
+    if(data){ state=Object.assign(structuredClone(SEED),data); renderAll(); if(typeof buildLayout==="function") buildLayout(); await persistLocal(); syncStatus("Pulled ✓ "+new Date().toLocaleTimeString(),"ok"); }
     else syncStatus("No remote file yet — Push to create it","warn");
   }catch(e){ syncStatus(e.message,"err"); }
 }
@@ -809,23 +889,174 @@ function buildGate(){
   });
 }
 
+/* ---------- today view ---------- */
+function recurUntil(anchorStr, period){
+  if(!anchorStr) return null;
+  const day=86400000;
+  const a=new Date(anchorStr+"T00:00:00"), t=new Date(fcToday()+"T00:00:00");
+  const diff=Math.round((t-a)/day);
+  const rem=((diff%period)+period)%period;
+  return rem===0 ? 0 : (period-rem);
+}
+function closestNode(){
+  const open=(state.nodes||[]).filter(n=>n.cur<(n.max||12)).map(n=>({n,rem:nodeRem(n)})).filter(x=>x.rem>0);
+  if(!open.length) return null;
+  open.sort((a,b)=>a.rem-b.rem); return open[0];
+}
+function buildToday(){
+  const t=state.today; if(!t) return;
+  document.getElementById("todayDate").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"short"});
+  // daily reset
+  const today=fcToday();
+  if(t.routineDate!==today){ t.routine.forEach(r=>r.d=false); t.routineDate=today; scheduleSave(); }
+  // status
+  const gate=computeTarget(), curDust=num(state.dust.current), gap=Math.max(0,gate-curDust);
+  const cn=closestNode();
+  const f=forecastCalc();
+  let unlockTxt="log two check-ins for a date";
+  if(f){ const dDays=f.dustRate>0?(gate-curDust)/f.dustRate:Infinity, gGap=Math.max(0,2013000-num(state.dust.gold)),
+      gDays=f.goldRate>0?gGap/f.goldRate:Infinity, both=Math.max(isFinite(dDays)?dDays:0,isFinite(gDays)?gDays:0);
+    unlockTxt=(gap<=0&&gGap<=0)?"gates met — start research":(isFinite(both)?"~"+addDays(both):"stalled — rate too low"); }
+  document.getElementById("todayStatus").innerHTML=
+    `<b>T11 Archer:</b> ${gap>0?fmt(gap)+" Dust to the gate":"Dust gate met"}. `+
+    (cn?`Closest node: <b>${cn.n.name.replace(/ \(.*/,'')}</b> (${fmt(cn.rem)} dust).`:`All prereq nodes done — buy the unlock.`)+
+    `<br><b>Forecast:</b> unlock ${unlockTxt}. `+
+    `<b>Do first:</b> Battle research Tier VI (lethality/health), then feed the archer grind.`;
+  // routine
+  buildChecks("todayRoutine", t.routine);
+  // flags
+  const flags=[];
+  const gGap=Math.max(0,2013000-num(state.dust.gold));
+  if(gGap>0) flags.push({w:true, t:`Gold gate: ${fmt(gGap)} short of 2.01M — bank gold, don't burn it on Dust exchange.`});
+  if(state.govGear){ const tgt=state.govGear.targetIdx, lag=state.govGear.pieces.filter(p=>p.cur<tgt).length;
+    if(lag) flags.push({w:false, t:`Gov Gear: ${lag}/6 pieces below target — level laggards evenly for the set bonus.`}); }
+  const rs=(state.resources||[]).find(r=>/research speed/i.test(r.n));
+  if(rs) flags.push({w:false, t:`Research speed ${rs.h} — every % shortens the ~329d T11 horizon.`});
+  flags.push({w:false, t:`Farm account is your biggest force-multiplier — keep it feeding.`});
+  if(recurUntil(state.today.bearDate,state.today.bearPeriod||2)===0) flags.unshift({w:false, t:`🐻 Bear Hunt is live today — join a rally leader (Lethality &gt; Attack, archers heavy).`});
+  document.getElementById("todayFlags").innerHTML=flags.map(f=>`<div class="today-flag ${f.w?'warn':''}">${f.t}</div>`).join("");
+  // countdowns (both recurring with editable periods)
+  if(t.kvkPeriod==null) t.kvkPeriod=14; if(t.bearPeriod==null) t.bearPeriod=2;
+  const kv=document.getElementById("cdKvk"), be=document.getElementById("cdBear");
+  const kvp=document.getElementById("cdKvkP"), bep=document.getElementById("cdBearP");
+  kv.value=t.kvkDate||""; be.value=t.bearDate||""; kvp.value=t.kvkPeriod; bep.value=t.bearPeriod;
+  const cdRecur=(val,period,outId)=>{ const el=document.getElementById(outId);
+    const u=recurUntil(val,Math.max(1,period)); if(u==null){el.textContent="—";el.style.color="var(--muted)";return;}
+    if(u===0){ el.textContent="today"; el.style.color="var(--green)"; return; }
+    el.style.color="var(--gold)";
+    const next=new Date(new Date(fcToday()+"T00:00:00").getTime()+u*86400000);
+    el.textContent=`in ${u}d · ${ymd(next).slice(5)}`;
+  };
+  const repaintCd=()=>{ cdRecur(t.kvkDate,t.kvkPeriod,"cdKvkOut"); cdRecur(t.bearDate,t.bearPeriod,"cdBearOut"); };
+  repaintCd();
+  kv.onchange=()=>{ t.kvkDate=kv.value; repaintCd(); scheduleSave(); };
+  be.onchange=()=>{ t.bearDate=be.value; buildToday(); scheduleSave(); };
+  kvp.oninput=()=>{ t.kvkPeriod=Math.max(1,num(kvp.value)); repaintCd(); scheduleSave(); };
+  bep.oninput=()=>{ t.bearPeriod=Math.max(1,num(bep.value)); buildToday(); scheduleSave(); };
+  document.getElementById("todayRefresh").onclick=()=>{ renderAll(); };
+  // decision helper
+  const dgo=document.getElementById("decGo");
+  dgo.onclick=()=>{
+    const sd=num(document.getElementById("decDust").value), sg=num(document.getElementById("decGold").value);
+    const out=document.getElementById("decOut"); const rec=[];
+    if(sd>0){ const cn2=closestNode();
+      if(cn2){ const done=Math.min(cn2.rem,sd);
+        rec.push(`<b>${fmt(sd)} Dust →</b> ${cn2.n.name.replace(/ \(.*/,'')} (needs ${fmt(cn2.rem)}). ${sd>=cn2.rem?`Finishes it ✓ with ${fmt(sd-cn2.rem)} left over.`:`Covers ${(done/cn2.rem*100).toFixed(0)}% of it.`}`); }
+      else rec.push(`<b>${fmt(sd)} Dust →</b> buy the Truegold Archers unlock node.`);
+    }
+    if(sg>0){ const gGap2=Math.max(0,2013000-num(state.dust.gold));
+      rec.push(`<b>${fmt(sg)} Gold →</b> ${gGap2>0?`bank toward the 2.01M unlock gate (${fmt(gGap2)} to go). Don't convert to Dust.`:`gate covered — save for buildings/TG8.`}`);
+    }
+    if(!rec.length) rec.push("Enter spare Dust and/or Gold above.");
+    out.innerHTML=rec.map(r=>`<div class="today-flag">${r}</div>`).join("");
+  };
+}
+
+/* ---------- forecast ---------- */
+function ymd(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function fcToday(){ return ymd(new Date()); }
+function forecastCalc(){
+  const log=(state.forecast&&state.forecast.log)||[];
+  if(log.length<2) return null;
+  const s=[...log].sort((a,b)=>a.d.localeCompare(b.d));
+  let dustGain=0, goldGain=0, days=0;
+  for(let i=1;i<s.length;i++){
+    const dd=(new Date(s[i].d)-new Date(s[i-1].d))/86400000;
+    if(dd<=0) continue; days+=dd;
+    const ad=s[i].dust-s[i-1].dust; if(ad>0) dustGain+=ad;
+    const ag=s[i].gold-s[i-1].gold; if(ag>0) goldGain+=ag;
+  }
+  if(days<=0) return null;
+  return { dustRate:dustGain/days, goldRate:goldGain/days, days, latest:s[s.length-1] };
+}
+function addDays(n){ const d=new Date(); d.setDate(d.getDate()+Math.ceil(n)); return ymd(d); }
+function paintForecast(){
+  const out=document.getElementById("fcOut"); if(!out) return;
+  const f=forecastCalc();
+  if(!f){ out.innerHTML=`<span class="sub">Log at least two check-ins on different days to see a projection.</span>`; return; }
+  const dustTgt=computeTarget(), goldTgt=2013000;
+  const curDust=num(state.dust.current), curGold=num(state.dust.gold);
+  const dNeed=Math.max(0,dustTgt-curDust), gNeed=Math.max(0,goldTgt-curGold);
+  const dDays = f.dustRate>0 ? dNeed/f.dustRate : Infinity;
+  const gDays = f.goldRate>0 ? gNeed/f.goldRate : Infinity;
+  const line=(label,rate,need,dys)=>{
+    const rateTxt=rate>0?fmt(Math.round(rate))+"/day":"no gain logged";
+    const when = need<=0 ? `<b style="color:var(--green)">already met</b>` : (isFinite(dys)?`~<b>${addDays(dys)}</b> (${Math.ceil(dys)}d)`:`<b style="color:var(--red)">never at current rate</b>`);
+    return `<div style="margin-bottom:4px">${label}: ${rateTxt} · ${when}</div>`;
+  };
+  let html=`<div class="mono" style="font-size:12.5px">`;
+  html+=line("Dust",f.dustRate,dNeed,dDays);
+  html+=line("Gold",f.goldRate,gNeed,gDays);
+  const both=Math.max(isFinite(dDays)?dDays:0, isFinite(gDays)?gDays:0);
+  const blocked=(!isFinite(dDays)&&dNeed>0)||(!isFinite(gDays)&&gNeed>0);
+  html+=`</div>`;
+  html+=`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line)">`;
+  if(dNeed<=0&&gNeed<=0) html+=`<b style="color:var(--green)">Both gates met — start the research.</b>`;
+  else if(blocked) html+=`<b style="color:var(--amber)">One gate isn't growing — log more, or lift that rate.</b>`;
+  else html+=`<b style="color:var(--gold)">T11 Archer unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
+  html+=`<br><span class="sub">Then ~147d research on top (runs once you start it). Based on ${f.days.toFixed(0)}d of history.</span></div>`;
+  out.innerHTML=html;
+}
+function buildForecast(){
+  if(!state.forecast) state.forecast={log:[]};
+  const msg=document.getElementById("fcMsg");
+  const btn=document.getElementById("fcLog");
+  if(btn) btn.onclick=()=>{
+    const today=fcToday();
+    const entry={d:today, dust:num(state.dust.current), gold:num(state.dust.gold)};
+    const ex=state.forecast.log.findIndex(e=>e.d===today);
+    if(ex>=0) state.forecast.log[ex]=entry; else state.forecast.log.push(entry);
+    if(msg){ msg.textContent="Logged "+fmt(entry.dust)+" dust · "+fmt(entry.gold)+" gold"; msg.className="syncstat ok"; msg.style.display="inline-block"; }
+    buildForecast(); paintForecast(); scheduleSave();
+  };
+  const h=document.getElementById("fcHistory"); if(h){
+    const log=[...(state.forecast.log||[])].sort((a,b)=>b.d.localeCompare(a.d)).slice(0,6);
+    h.innerHTML = log.length? `<div class="sub" style="margin-bottom:4px">Recent check-ins:</div>`+log.map(e=>
+      `<div class="mono" style="font-size:11px;color:var(--muted);display:flex;gap:10px;align-items:center">
+        <span style="width:88px">${e.d}</span><span style="width:90px">${fmt(e.dust)} dust</span><span>${fmt(e.gold)} gold</span>
+        <button class="del" data-d="${e.d}" title="Remove">×</button></div>`).join("") : "";
+    h.querySelectorAll(".del").forEach(b=>b.onclick=()=>{ state.forecast.log=state.forecast.log.filter(e=>e.d!==b.dataset.d); buildForecast(); paintForecast(); scheduleSave(); });
+  }
+  paintForecast();
+}
+
 /* ---------- governor gear ---------- */
 const GOV_TIERS=[
  ["Green 0★",1500,15,0],["Green 1★",3800,40,0],
  ["Blue 0★",7000,70,0],["Blue 1★",9700,95,0],["Blue 2★",1000,10,45],["Blue 3★",1000,10,50],
  ["Purple 0★",1500,15,60],["Purple 1★",1500,15,70],["Purple 2★",6500,65,40],["Purple 3★",8000,80,50],
- ["Purple T10★",10000,95,60],["Purple T11★",11000,110,70],["Purple T12★",13000,130,85],["Purple T13★",15000,160,100],
+ ["Purple T1 0★",10000,95,60],["Purple T1 1★",11000,110,70],["Purple T1 2★",13000,130,85],["Purple T1 3★",15000,160,100],
  ["Gold 0★",22000,220,40],["Gold 1★",23000,230,40],["Gold 2★",25000,250,45],["Gold 3★",26000,260,45],
- ["Gold T10★",28000,280,45],["Gold T11★",30000,300,55],["Gold T12★",32000,320,55],["Gold T13★",35000,340,55],
- ["Gold T20★",38000,360,55],["Gold T21★",43000,430,75],["Gold T22★",45000,460,80],["Gold T23★",48000,500,85],
- ["Gold T30★",60000,600,120],["Gold T31★",70000,700,140],["Gold T32★",80000,800,160],["Gold T33★",90000,900,180],
+ ["Gold T1 0★",28000,280,45],["Gold T1 1★",30000,300,55],["Gold T1 2★",32000,320,55],["Gold T1 3★",35000,340,55],
+ ["Gold T2 0★",38000,360,55],["Gold T2 1★",43000,430,75],["Gold T2 2★",45000,460,80],["Gold T2 3★",48000,500,85],
+ ["Gold T3 0★",60000,600,120],["Gold T3 1★",70000,700,140],["Gold T3 2★",80000,800,160],["Gold T3 3★",90000,900,180],
  ["Red 0★",108000,1080,220],["Red 1★",114000,1140,230],["Red 2★",121000,1210,240],["Red 3★",128000,1280,250],
- ["Red T10★",154000,1540,300],["Red T11★",163000,1630,320],["Red T12★",173000,1730,340],["Red T13★",183000,1830,360],
- ["Red T20★",220000,2200,430],["Red T21★",233000,2330,460],["Red T22★",247000,2470,490],["Red T23★",264000,2640,520],
- ["Red T30★",288000,2880,570],["Red T31★",302000,3020,600],["Red T32★",317000,3170,630],["Red T33★",333000,3330,660],
- ["Red T40★",358000,3580,720],["Red T41★",384000,3840,770],["Red T42★",403000,4030,810],["Red T43★",423000,4230,850],
- ["Red T50★",451000,4510,910],["Red T51★",479000,4790,970],["Red T52★",507000,5070,1030],["Red T53★",535000,5350,1090],
- ["Red T60★",548000,5480,1110],["Red T61★",565000,5650,1140],["Red T62★",582000,5820,1170],["Red T63★",599000,5990,1210]
+ ["Red T1 0★",154000,1540,300],["Red T1 1★",163000,1630,320],["Red T1 2★",173000,1730,340],["Red T1 3★",183000,1830,360],
+ ["Red T2 0★",220000,2200,430],["Red T2 1★",233000,2330,460],["Red T2 2★",247000,2470,490],["Red T2 3★",264000,2640,520],
+ ["Red T3 0★",288000,2880,570],["Red T3 1★",302000,3020,600],["Red T3 2★",317000,3170,630],["Red T3 3★",333000,3330,660],
+ ["Red T4 0★",358000,3580,720],["Red T4 1★",384000,3840,770],["Red T4 2★",403000,4030,810],["Red T4 3★",423000,4230,850],
+ ["Red T5 0★",451000,4510,910],["Red T5 1★",479000,4790,970],["Red T5 2★",507000,5070,1030],["Red T5 3★",535000,5350,1090],
+ ["Red T6 0★",548000,5480,1110],["Red T6 1★",565000,5650,1140],["Red T6 2★",582000,5820,1170],["Red T6 3★",599000,5990,1210]
 ];
 function govRem(curIdx,tgtIdx){ let s=0,t=0,v=0; for(let i=Math.max(0,curIdx+1);i<=tgtIdx;i++){ const r=GOV_TIERS[i]; if(r){s+=r[1];t+=r[2];v+=r[3];} } return {s,t,v}; }
 function paintGov(){
@@ -1114,8 +1345,15 @@ function analyzeCSV(rows){
   const nameCol=find("tech","building","name"), dustCol=find("dust"),
         goldCol=cols.find(c=>c.toLowerCase().replace(/[^a-z]/g,"")==="gold"),
         ownedCol=find("owned","current"), targetCol=find("target"), levelsCol=find("levelstoresearch","levelsto","levels");
-  if(!dustCol&&!nameCol) return {ok:false,msg:"Doesn't look like a Kingshot research CSV (no Dust/Tech columns found)."};
+  if(!dustCol&&!nameCol) return {ok:false,msg:"Doesn't look like a Kingshot CSV (no recognised columns)."};
   const N=v=>{const n=parseFloat(String(v||"").replace(/[^0-9.\-]/g,""));return isNaN(n)?0:n;};
+  // building-plan CSV branch (has Truegold + TTG columns, no Dust)
+  const tgCol=cols.find(c=>{const k=c.toLowerCase().replace(/[^a-z]/g,"");return k==="truegold";});
+  const ttgCol=cols.find(c=>{const k=c.toLowerCase().replace(/[^a-z]/g,"");return k==="ttg"||k.includes("tempered");});
+  if(!dustCol && tgCol && ttgCol){
+    let tg=0,ttg=0; rows.forEach(r=>{ tg+=N(r[tgCol]); ttg+=N(r[ttgCol]); });
+    return {ok:true, kind:"building", tg, ttg, rowsCounted:rows.length, tree:"Buildings (TG8)"};
+  }
   const allNames=rows.map(r=>(nameCol?String(r[nameCol]):"").toLowerCase()).join("|");
   const hasArcher=/arrows|bows|bracers/.test(allNames), hasInf=/mauls|blades|shields|plating/.test(allNames);
   let remDust=0, remGold=0, rowsCounted=0; const targets=[]; const warnings=[];
@@ -1157,6 +1395,13 @@ function buildImport(){
     if(!a.ok){ status.textContent=a.msg; status.className="syncstat err"; show(status,true); return; }
     pendingImport=a;
     show(status,false);
+    if(a.kind==="building"){
+      pbody.innerHTML=`<b style="color:var(--gold)">Detected: Building plan (TG6→TG8)</b> · ${a.rowsCounted} buildings<br>`+
+        `• Total Truegold: <b class="mono">${fmt(a.tg)}</b><br>`+
+        `• Total Tempered Truegold: <b class="mono">${fmt(a.ttg)}</b><br>`+
+        `<span style="color:var(--faint);font-size:11px">Sets the TG budget "needed" totals in the Build Order section.</span>`;
+      show(preview,true); return;
+    }
     const nodeList=a.targets;
     pbody.innerHTML=
       `<b style="color:var(--gold)">Detected: ${a.tree} tree</b> · ${a.rowsCounted} unfinished rows<br>`+
@@ -1170,6 +1415,13 @@ function buildImport(){
   document.getElementById("csvCancel").onclick=()=>{ pendingImport=null; show(preview,false); };
   document.getElementById("csvApply").onclick=()=>{
     if(!pendingImport) return;
+    if(pendingImport.kind==="building"){
+      state.tg.need=Math.round(pendingImport.tg); state.tg.ttgNeed=Math.round(pendingImport.ttg);
+      renderAll(); scheduleSave(); pendingImport=null;
+      document.getElementById("csvBox").value=""; show(preview,false);
+      status.textContent="Applied ✓ — TG budget totals updated."; status.className="syncstat ok"; show(status,true);
+      return;
+    }
     (pendingImport.targets||[]).forEach(t=>{
       const arr = t.scope==="infNodes" ? state.infNodes : state.nodes;
       if(!Array.isArray(arr)) return;
@@ -1219,8 +1471,46 @@ function buildNotes(){
 }
 
 /* ---------- render all ---------- */
+/* ---------- layout: tabs + collapse ---------- */
+const TAB_ORDER=["Home","T11","Plan","Stats","Supply","Data"];
+const HEAD_TAB=[
+  ["the gate","T11"],["priorities","Plan"],["troop plan","Plan"],["build order","Plan"],
+  ["power grades","Stats"],["combat","Stats"],["mystic trials","Stats"],["governor gear","Stats"],
+  ["resources","Supply"],["masters","Supply"],["dust farming","Supply"],["farm account","Supply"],
+  ["open data","Data"],["data, sync","Data"]
+];
+function tabForHeading(txt){ const t=(txt||"").toLowerCase(); for(const [k,v] of HEAD_TAB){ if(t.includes(k)) return v; } return "Data"; }
+function setTab(tab){
+  if(!TAB_ORDER.includes(tab)) tab="Home";
+  state.ui.tab=tab;
+  document.querySelectorAll("#tabnav .tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+  document.querySelectorAll(".wrap > section, #todayPanel, #idstrip").forEach(el=>{ el.style.display = el.dataset.tab===tab ? "" : "none"; });
+  scheduleSave();
+}
+function buildLayout(){
+  if(!state.ui) state.ui={tab:"Home",collapsed:{}};
+  const today=document.getElementById("todayPanel"), ids=document.getElementById("idstrip");
+  if(today) today.dataset.tab="Home"; if(ids) ids.dataset.tab="Home";
+  const sections=[...document.querySelectorAll(".wrap > section")];
+  sections.forEach(s=>{ const h=s.querySelector(".sechead h2"); s.dataset.tab = h ? tabForHeading(h.textContent) : "Data";
+    const head=s.querySelector(".sechead");
+    if(head && !head.dataset.wired){ head.dataset.wired="1";
+      const key=(h?h.textContent.trim():""); s.dataset.key=key;
+      if(!head.querySelector(".chev")){ const c=document.createElement("span"); c.className="chev"; c.textContent="▾"; head.appendChild(c); }
+      head.addEventListener("click",()=>{ s.classList.toggle("collapsed"); state.ui.collapsed[key]=s.classList.contains("collapsed"); scheduleSave(); });
+      if(state.ui.collapsed[key]) s.classList.add("collapsed");
+    }
+  });
+  const nav=document.getElementById("tabnav");
+  if(nav && !nav.dataset.built){ nav.dataset.built="1";
+    nav.innerHTML=TAB_ORDER.map(t=>`<button class="tab" data-tab="${t}">${t}</button>`).join("");
+    nav.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{ setTab(b.dataset.tab); window.scrollTo({top:0,behavior:"smooth"}); });
+  }
+  setTab(state.ui.tab||"Home");
+}
+
 function renderAll(){
-  buildId(); buildGate(); paintGate(); buildInfantry(); buildGovGear();
+  buildToday(); buildId(); buildGate(); paintGate(); buildInfantry(); buildForecast(); buildGovGear();
   buildChecks("trackNow",state.trackNow); buildChecks("trackFarm",state.trackFarm);
   buildChecks("step1",state.step1); buildChecks("step2",state.step2);
   buildPillars(); buildCombat(); buildRes(); buildMast();
@@ -1251,13 +1541,18 @@ function renderAll(){
       delete n.rem; delete n.next; });
   }
   if(!state.govGear||!Array.isArray(state.govGear.pieces)) state.govGear=structuredClone(SEED.govGear);
-  renderAll();
+  else if(state.govGear.pieces.length===6 && state.govGear.pieces.every((p,i)=>Number(p.cur)===0 && p.name==="Piece "+(i+1))) state.govGear=structuredClone(SEED.govGear);
+  if(!state.forecast||!Array.isArray(state.forecast.log)) state.forecast={log:[]};
+  if(!state.today||!Array.isArray(state.today.routine)) state.today=structuredClone(SEED.today);
+  if(!state.ui||typeof state.ui!=="object") state.ui={tab:"Home",collapsed:{}};
+  if(!state.ui.collapsed) state.ui.collapsed={};
+  renderAll(); buildLayout();
   const dot=document.getElementById("saveDot"), txt=document.getElementById("saveTxt");
   const persists = hasStore || lsSet("__probe__","1");
   if(!persists){ dot.className="dot warn"; txt.textContent="Session only"; }
   document.getElementById("resetBtn").onclick=()=>{
     if(confirm("Reset every field back to the Day 425 baseline? Your edits will be cleared.")){
-      state=structuredClone(SEED); renderAll(); scheduleSave();
+      state=structuredClone(SEED); renderAll(); buildLayout(); scheduleSave();
     }
   };
   // if GitHub sync is on and a token exists, pull remote as source of truth
