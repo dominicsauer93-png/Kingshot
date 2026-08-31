@@ -215,8 +215,8 @@
   "combat": {
     "attW": 168,
     "attL": 265,
-    "defW": 672,
-    "defL": 55,
+    "defW": 682,
+    "defL": 57,
     "leth": 66.5,
     "hp": 49,
     "troopStatus": "T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot."
