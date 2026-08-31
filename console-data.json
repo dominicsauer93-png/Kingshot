@@ -455,7 +455,9 @@
   },
   "ui": {
     "tab": "Stats",
-    "collapsed": {}
+    "collapsed": {
+      "Combat Quality": false
+    }
   },
   "farm": [
     {
