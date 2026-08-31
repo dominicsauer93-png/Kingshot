@@ -137,7 +137,7 @@
   "step2": [
     {
       "t": "Grind Archer node A to 12 (+6)",
-      "d": false
+      "d": true
     },
     {
       "t": "Finish Archer node B to 12 (+2)",
