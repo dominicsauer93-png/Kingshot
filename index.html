@@ -101,8 +101,8 @@
   .pillar{display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
   .pillar:last-child{border-bottom:0}
   .pillar .pname{font-size:13px;font-weight:500}
-  .pbar{height:9px;border-radius:999px;background:#0C0F15;border:1px solid var(--line);overflow:hidden;position:relative}
-  .pbar .pfill{height:100%;border-radius:999px;transition:width .4s}
+  .pbar{height:13px;border-radius:999px;background:#0C0F15;border:1px solid var(--line);overflow:hidden;position:relative}
+  .pbar .pfill{height:100%;border-radius:999px;transition:width .4s;box-shadow:inset 0 -1px 2px rgba(0,0,0,.25)}
   .bench{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--text);opacity:.55}
   .pmeta{display:flex;align-items:center;gap:8px;justify-content:flex-end}
   .pmeta .pv{font-family:"JetBrains Mono";font-size:11px;color:var(--muted)}
@@ -202,6 +202,15 @@
   .sechead .chev{margin-left:auto;color:var(--faint);font-size:11px;transition:transform .2s;padding-left:8px}
   section.collapsed .chev{transform:rotate(-90deg)}
   section.collapsed > :not(.sechead){display:none!important}
+  .minibar{height:8px;border-radius:999px;background:#0C0F15;border:1px solid var(--line);overflow:hidden;margin-top:6px}
+  .minibar .mf{height:100%;border-radius:999px;transition:width .4s}
+  .metric-row{margin:10px 0}
+  .metric-top{display:flex;justify-content:space-between;align-items:baseline;font-family:"JetBrains Mono";font-size:11px;color:var(--muted)}
+  .metric-top b{color:var(--gold)}
+  .lvlbar{height:6px;border-radius:999px;background:#20293A;overflow:hidden;margin-top:5px;max-width:160px}
+  .lvlbar .lf{height:100%;background:linear-gradient(90deg,var(--gold-2),var(--gold));border-radius:999px}
+  .tnum{width:96px;background:#0C0F15;border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:12px;padding:4px 6px;text-align:right}
+  .tnum:focus{outline:none;border-color:var(--gold)}
   .syncgrid{display:flex;gap:10px;flex-wrap:wrap}
   .syncgrid .field input{width:120px}
   .synctoggle{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);margin-top:12px;cursor:pointer}
@@ -224,7 +233,11 @@
       <h1>Account Audit &amp; Priorities</h1>
     </div>
     <div style="display:flex;gap:10px;align-items:center">
-      <button class="btn" id="resetBtn">Reset to baseline</button>
+      <span id="quickSync" style="display:none;align-items:center;gap:6px">
+        <button class="btn" id="quickPull" title="Pull from GitHub">⭳ Pull</button>
+        <button class="btn" id="quickPush" title="Push to GitHub">⭱ Push</button>
+        <span class="mono" id="quickSyncMsg" style="font-size:10px;color:var(--muted)"></span>
+      </span>
       <span class="savechip"><span class="dot" id="saveDot"></span><span id="saveTxt">Saved</span></span>
     </div>
   </div>
@@ -336,6 +349,11 @@
   <!-- TROOP PLAN -->
   <section>
     <div class="sechead"><span class="num">03</span><h2>Troop Plan</h2></div>
+    <div class="card" style="margin-bottom:16px">
+      <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px">Troop targets</h3>
+      <p class="sub">Aiming for ~1.5M Infantry and Archers, fewer Cavalry. Enter current count and target — bars fill toward goal.</p>
+      <div id="troopBody"></div>
+    </div>
     <div class="grid2">
       <div class="card track">
         <h3>Step 1 — Finish T10 <span class="tag ok" style="margin-left:auto">ONGOING</span></h3>
@@ -374,11 +392,13 @@
         <div class="stat">
           <div class="lab">Attacker win rate</div>
           <div class="val" id="attPct" style="color:var(--red)">43%</div>
+          <div class="minibar"><div class="mf" id="attBar" style="width:43%;background:var(--red)"></div></div>
           <div class="wl">W <input id="attW" inputmode="numeric"> &nbsp;L <input id="attL" inputmode="numeric"></div>
         </div>
         <div class="stat">
           <div class="lab">Defender win rate</div>
           <div class="val" id="defPct" style="color:var(--green)">92%</div>
+          <div class="minibar"><div class="mf" id="defBar" style="width:92%;background:var(--green)"></div></div>
           <div class="wl">W <input id="defW" inputmode="numeric"> &nbsp;L <input id="defL" inputmode="numeric"></div>
         </div>
         <div class="stat">
@@ -438,6 +458,14 @@
         <div class="field"><label>TTG needed (all)</label><input class="mono" id="ttgNeed" inputmode="numeric"></div>
       </div>
       <p class="unlock-note" id="tgNote"></p>
+      <div class="metric-row">
+        <div class="metric-top"><span>Truegold</span><span id="tgMeterTxt"></span></div>
+        <div class="meter"><div class="fill" id="tgFill" style="width:0%"></div></div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-top"><span>Tempered Truegold <span style="color:var(--faint)">(the real wall)</span></span><span id="ttgMeterTxt"></span></div>
+        <div class="meter"><div class="fill" id="ttgFill" style="width:0%"></div></div>
+      </div>
     </div>
     <div class="card">
       <p class="sub" style="margin:0 0 12px"><b>Lockstep cycle, not a queue:</b> raise <b>Town Center</b> one tier → spend the freed cap + TTG on the buildings below in order (<b>Range → War Academy → Embassy/Command Center → Barracks</b>, defer Stable/Infirmary) → raise TC again. TC is the metronome; the ranks below are how you spend each tier it opens. Battle research Tier VI runs in parallel (no TG cost).</p>
@@ -502,6 +530,14 @@
         <div class="field"><label>Gilded Threads</label><div class="mono" id="govThreads" style="font-size:14px;color:var(--gold);padding:6px 0">—</div></div>
         <div class="field"><label>Artisan's Vision</label><div class="mono" id="govVision" style="font-size:14px;color:var(--gold);padding:6px 0">—</div></div>
       </div>
+      <div class="gate-inputs" style="margin-top:10px">
+        <div class="field"><label>Satin in hand</label><input class="mono" id="govSatinHave" inputmode="numeric" style="width:110px"></div>
+        <div class="field"><label>Threads in hand</label><input class="mono" id="govThreadsHave" inputmode="numeric" style="width:110px"></div>
+        <div class="field"><label>Vision in hand</label><input class="mono" id="govVisionHave" inputmode="numeric" style="width:110px"></div>
+      </div>
+      <div class="metric-row"><div class="metric-top"><span>Satin</span><span id="govSatinTxt"></span></div><div class="meter"><div class="fill" id="govSatinFill" style="width:0%"></div></div></div>
+      <div class="metric-row"><div class="metric-top"><span>Gilded Threads</span><span id="govThreadsTxt"></span></div><div class="meter"><div class="fill" id="govThreadsFill" style="width:0%"></div></div></div>
+      <div class="metric-row"><div class="metric-top"><span>Artisan's Vision</span><span id="govVisionTxt"></span></div><div class="meter"><div class="fill" id="govVisionFill" style="width:0%"></div></div></div>
       <p class="unlock-note" id="govNote"></p>
     </div>
   </section>
@@ -668,7 +704,7 @@ const SEED = {
     {k:"Radiant Spire (ALL stats — full power)", v:"163"}
   ],
   tg:{ have:0, need:9757, ttgHave:0, ttgNeed:781 },
-  govGear:{ targetIdx:19, pieces:[
+  govGear:{ targetIdx:19, have:{satin:0,threads:0,vision:0}, pieces:[
     {name:"Cav 1", cur:10},{name:"Cav 2", cur:10},{name:"Inf 1", cur:10},
     {name:"Inf 2", cur:12},{name:"Archer 1", cur:11},{name:"Archer 2", cur:19}
   ]},
@@ -680,6 +716,7 @@ const SEED = {
     {t:"Claim house / suppression gold", d:false}
   ]},
   ui:{ tab:"Home", collapsed:{} },
+  troopCounts:{ inf:{cur:0,tgt:1500000}, arc:{cur:0,tgt:1500000}, cav:{cur:0,tgt:500000} },
   farm:[
     {k:"Town Center", v:"TC 22–29 (confirm)"},
     {k:"Storehouse level", v:"— (keep LOW while feeding)"},
@@ -765,7 +802,8 @@ async function ghPut(cfg,tok,sha){
   if(!r.ok) throw new Error("GitHub write failed ("+r.status+")");
   const j=await r.json(); return j.content.sha;
 }
-function syncStatus(msg,cls){ const el=document.getElementById("syncStatus"); if(el){ el.textContent=msg; el.className="syncstat "+(cls||""); } }
+function syncStatus(msg,cls){ const el=document.getElementById("syncStatus"); if(el){ el.textContent=msg; el.className="syncstat "+(cls||""); }
+  const q=document.getElementById("quickSyncMsg"); if(q){ q.textContent=msg.length>22?msg.slice(0,22)+"…":msg; q.style.color=cls==="ok"?"var(--green)":cls==="err"?"var(--red)":cls==="warn"?"var(--amber)":"var(--muted)"; } }
 async function syncPull(silent){
   const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok){ if(!silent) syncStatus("Fill in repo + token first","err"); return; }
   syncStatus("Pulling…");
@@ -886,6 +924,27 @@ function buildGate(){
       paintGate(); scheduleSave();
     };
     host.appendChild(d);
+  });
+}
+
+/* ---------- troop targets ---------- */
+function buildTroops(){
+  if(!state.troopCounts) state.troopCounts=structuredClone(SEED.troopCounts);
+  const host=document.getElementById("troopBody"); if(!host) return; host.innerHTML="";
+  [["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]].forEach(([k,label])=>{
+    const t=state.troopCounts[k]||{cur:0,tgt:0};
+    const pct=num(t.tgt)>0?Math.min(100,num(t.cur)/num(t.tgt)*100):0;
+    const done=num(t.cur)>=num(t.tgt)&&num(t.tgt)>0;
+    const row=document.createElement("div"); row.className="metric-row";
+    row.innerHTML=`<div class="metric-top"><span>${label}</span>
+      <span><input class="mono tnum" data-f="cur" value="${t.cur}" inputmode="numeric"> / <input class="mono tnum" data-f="tgt" value="${t.tgt}" inputmode="numeric"></span></div>
+      <div class="meter"><div class="fill" style="width:${pct}%;${done?'background:linear-gradient(90deg,#3e9e63,var(--green));':''}"></div></div>`;
+    const [ci,ti]=row.querySelectorAll("input"); const fill=row.querySelector(".fill");
+    const repaint=()=>{ const p=num(t.tgt)>0?Math.min(100,num(t.cur)/num(t.tgt)*100):0; fill.style.width=p.toFixed(1)+"%";
+      fill.style.background=(num(t.cur)>=num(t.tgt)&&num(t.tgt)>0)?"linear-gradient(90deg,#3e9e63,var(--green))":""; };
+    ci.oninput=()=>{ t.cur=num(ci.value); state.troopCounts[k]=t; repaint(); scheduleSave(); };
+    ti.oninput=()=>{ t.tgt=num(ti.value); state.troopCounts[k]=t; repaint(); scheduleSave(); };
+    host.appendChild(row);
   });
 }
 
@@ -1061,10 +1120,19 @@ const GOV_TIERS=[
 function govRem(curIdx,tgtIdx){ let s=0,t=0,v=0; for(let i=Math.max(0,curIdx+1);i<=tgtIdx;i++){ const r=GOV_TIERS[i]; if(r){s+=r[1];t+=r[2];v+=r[3];} } return {s,t,v}; }
 function paintGov(){
   const g=state.govGear, tgt=g.targetIdx;
+  if(!g.have) g.have={satin:0,threads:0,vision:0};
   let s=0,t=0,v=0; g.pieces.forEach(p=>{ const r=govRem(p.cur,tgt); s+=r.s; t+=r.t; v+=r.v; });
   document.getElementById("govSatin").textContent=fmt(s);
   document.getElementById("govThreads").textContent=fmt(t);
   document.getElementById("govVision").textContent=fmt(v);
+  const meter=(need,have,fillId,txtId)=>{
+    const pct=need>0?Math.min(100,have/need*100):100;
+    const fl=document.getElementById(fillId); if(fl) fl.style.width=pct.toFixed(1)+"%";
+    const tx=document.getElementById(txtId); if(tx) tx.innerHTML=`<b>${fmt(have)}</b> / ${fmt(need)}`;
+  };
+  meter(s,num(g.have.satin),"govSatinFill","govSatinTxt");
+  meter(t,num(g.have.threads),"govThreadsFill","govThreadsTxt");
+  meter(v,num(g.have.vision),"govVisionFill","govVisionTxt");
   const atTgt=g.pieces.filter(p=>p.cur>=tgt).length;
   const note=document.getElementById("govNote");
   note.innerHTML=`Target: <b style="color:var(--gold)">${GOV_TIERS[tgt][0]}</b> · ${atTgt}/6 pieces there. `+
@@ -1072,20 +1140,26 @@ function paintGov(){
 }
 function buildGovGear(){
   if(!state.govGear) return;
+  if(!state.govGear.have) state.govGear.have={satin:0,threads:0,vision:0};
   const tSel=document.getElementById("govTarget");
   tSel.innerHTML=GOV_TIERS.map((r,i)=>`<option value="${i}">${r[0]}</option>`).join("");
   tSel.value=state.govGear.targetIdx;
-  tSel.onchange=()=>{ state.govGear.targetIdx=parseInt(tSel.value,10); paintGov(); scheduleSave(); };
+  tSel.onchange=()=>{ state.govGear.targetIdx=parseInt(tSel.value,10); buildGovGear(); paintGov(); scheduleSave(); };
+  [["govSatinHave","satin"],["govThreadsHave","threads"],["govVisionHave","vision"]].forEach(([id,k])=>{
+    const el=document.getElementById(id); if(el){ el.value=state.govGear.have[k]||0; el.oninput=()=>{ state.govGear.have[k]=num(el.value); paintGov(); scheduleSave(); }; }
+  });
   const body=document.getElementById("govBody"); body.innerHTML="";
+  const tgt=state.govGear.targetIdx;
   state.govGear.pieces.forEach(p=>{
     const tr=document.createElement("tr");
-    const opts=GOV_TIERS.map((r,i)=>`<option value="${i}">${r[0]}</option>`).join("");
-    tr.innerHTML=`<td><input value="${(p.name||'').replace(/"/g,'&quot;')}"></td>
+    const opts=GOV_TIERS.map((r,i)=>`<option value="${i}"${i===p.cur?' selected':''}>${r[0]}</option>`).join("");
+    const pct=tgt>0?Math.min(100,Math.max(0,p.cur/tgt*100)):100;
+    const done=p.cur>=tgt;
+    tr.innerHTML=`<td><input value="${(p.name||'').replace(/"/g,'&quot;')}"><div class="lvlbar" style="max-width:200px"><div class="lf" style="width:${pct}%;background:${done?'var(--green)':'linear-gradient(90deg,var(--gold-2),var(--gold))'}"></div></div></td>
       <td><select class="sigsel" style="padding-right:24px">${opts}</select></td>`;
     const ni=tr.querySelector("input"), sel=tr.querySelector("select");
-    sel.value=p.cur;
     ni.oninput=()=>{ p.name=ni.value; scheduleSave(); };
-    sel.onchange=()=>{ p.cur=parseInt(sel.value,10); paintGov(); scheduleSave(); };
+    sel.onchange=()=>{ p.cur=parseInt(sel.value,10); buildGovGear(); paintGov(); scheduleSave(); };
     body.appendChild(tr);
   });
   paintGov();
@@ -1180,8 +1254,12 @@ function paintCombat(){
   const ap = (c.attW+c.attL)>0 ? c.attW/(c.attW+c.attL)*100 : 0;
   const dp = (c.defW+c.defL)>0 ? c.defW/(c.defW+c.defL)*100 : 0;
   const a=document.getElementById("attPct"), d=document.getElementById("defPct");
-  a.textContent=ap.toFixed(0)+"%"; a.style.color = ap>=60?"var(--green)":ap>=50?"var(--amber)":"var(--red)";
-  d.textContent=dp.toFixed(0)+"%"; d.style.color = dp>=60?"var(--green)":dp>=50?"var(--amber)":"var(--red)";
+  const col=p=>p>=60?"var(--green)":p>=50?"var(--amber)":"var(--red)";
+  a.textContent=ap.toFixed(0)+"%"; a.style.color=col(ap);
+  d.textContent=dp.toFixed(0)+"%"; d.style.color=col(dp);
+  const ab=document.getElementById("attBar"), db=document.getElementById("defBar");
+  if(ab){ ab.style.width=ap.toFixed(0)+"%"; ab.style.background=col(ap); }
+  if(db){ db.style.width=dp.toFixed(0)+"%"; db.style.background=col(dp); }
   document.getElementById("lethEcho").textContent=(+c.leth).toFixed(1)+"%";
   document.getElementById("hpEcho").textContent=(+c.hp).toFixed(1)+"%";
 }
@@ -1230,13 +1308,14 @@ function buildMast(){
   const b=document.getElementById("mastBody"); b.innerHTML="";
   state.masters.forEach(m=>{
     const tr=document.createElement("tr");
+    const pct=Math.min(100,Math.max(0,num(m.l)/100*100));
     tr.innerHTML=`<td><input value="${m.n.replace(/"/g,'&quot;')}"></td>
-      <td><input class="mono-in" value="${String(m.l).replace(/"/g,'&quot;')}"></td>
+      <td><input class="mono-in" value="${String(m.l).replace(/"/g,'&quot;')}" style="width:44px"><div class="lvlbar"><div class="lf" style="width:${pct}%"></div></div></td>
       <td><input value="${m.note.replace(/"/g,'&quot;')}"></td>
       <td class="delcell"><button class="del" title="Remove">×</button></td>`;
-    const [ni,li,oi]=tr.querySelectorAll("input");
+    const [ni,li,oi]=tr.querySelectorAll("input"); const lf=tr.querySelector(".lf");
     ni.oninput=()=>{ m.n=ni.value; scheduleSave(); };
-    li.oninput=()=>{ m.l=li.value; scheduleSave(); };
+    li.oninput=()=>{ m.l=li.value; lf.style.width=Math.min(100,Math.max(0,num(li.value)))+"%"; scheduleSave(); };
     oi.oninput=()=>{ m.note=oi.value; scheduleSave(); };
     tr.querySelector(".del").onclick=()=>{ const i=state.masters.indexOf(m); if(i>-1){ state.masters.splice(i,1); buildMast(); scheduleSave(); } };
     b.appendChild(tr);
@@ -1254,6 +1333,14 @@ function paintTG(){
     `Still need <b style="color:${gapTG>0?'var(--red)':'var(--green)'}">${fmt(gapTG)} TG</b> and `+
     `<b style="color:${gapTTG>0?'var(--red)':'var(--green)'}">${fmt(gapTTG)} Tempered TG</b> to clear every building to TG8. `+
     `TTG is the true long pole — run Super Refinement every week.`;
+  const meter=(haveId,needId,fillId,txtId)=>{
+    const have=num(state.tg[haveId]), need=Math.max(1,num(state.tg[needId]));
+    const pct=Math.min(100,have/need*100);
+    const fl=document.getElementById(fillId); if(fl) fl.style.width=pct.toFixed(1)+"%";
+    const tx=document.getElementById(txtId); if(tx) tx.innerHTML=`<b>${fmt(have)}</b> / ${fmt(num(state.tg[needId]))}`;
+  };
+  meter("have","need","tgFill","tgMeterTxt");
+  meter("ttgHave","ttgNeed","ttgFill","ttgMeterTxt");
 }
 function buildBuildings(){
   const b=document.getElementById("buildBody"); b.innerHTML="";
@@ -1462,6 +1549,15 @@ function buildSync(){
   document.getElementById("scForget").onclick=()=>{ saveTok(""); tk.value=""; tk.placeholder="github_pat_…"; syncStatus("Token removed from this device","warn"); };
 
   if(!syncCfg.owner||!loadTok()) syncStatus("Not connected — file backup works without this","");
+  // top-bar quick sync
+  const qs=document.getElementById("quickSync");
+  if(qs){
+    const connected=!!(syncCfg.owner && syncCfg.repo && loadTok());
+    qs.style.display = connected ? "inline-flex" : "none";
+    const qpull=document.getElementById("quickPull"), qpush=document.getElementById("quickPush");
+    if(qpull) qpull.onclick=()=>syncPull(false);
+    if(qpush) qpush.onclick=()=>syncPush(false);
+  }
 }
 
 /* ---------- notes ---------- */
@@ -1472,10 +1568,11 @@ function buildNotes(){
 
 /* ---------- render all ---------- */
 /* ---------- layout: tabs + collapse ---------- */
-const TAB_ORDER=["Home","T11","Plan","Stats","Supply","Data"];
+const TAB_ORDER=["Home","T11","Build","Stats","Plan","Supply","Data"];
 const HEAD_TAB=[
-  ["the gate","T11"],["priorities","Plan"],["troop plan","Plan"],["build order","Plan"],
-  ["power grades","Stats"],["combat","Stats"],["mystic trials","Stats"],["governor gear","Stats"],
+  ["the gate","T11"],["build order","Build"],
+  ["power grades","Stats"],["mystic trials","Stats"],["governor gear","Stats"],
+  ["priorities","Plan"],["troop plan","Plan"],["combat","Plan"],
   ["resources","Supply"],["masters","Supply"],["dust farming","Supply"],["farm account","Supply"],
   ["open data","Data"],["data, sync","Data"]
 ];
@@ -1510,7 +1607,7 @@ function buildLayout(){
 }
 
 function renderAll(){
-  buildToday(); buildId(); buildGate(); paintGate(); buildInfantry(); buildForecast(); buildGovGear();
+  buildToday(); buildTroops(); buildId(); buildGate(); paintGate(); buildInfantry(); buildForecast(); buildGovGear();
   buildChecks("trackNow",state.trackNow); buildChecks("trackFarm",state.trackFarm);
   buildChecks("step1",state.step1); buildChecks("step2",state.step2);
   buildPillars(); buildCombat(); buildRes(); buildMast();
@@ -1546,15 +1643,12 @@ function renderAll(){
   if(!state.today||!Array.isArray(state.today.routine)) state.today=structuredClone(SEED.today);
   if(!state.ui||typeof state.ui!=="object") state.ui={tab:"Home",collapsed:{}};
   if(!state.ui.collapsed) state.ui.collapsed={};
+  if(!state.troopCounts) state.troopCounts=structuredClone(SEED.troopCounts);
   renderAll(); buildLayout();
   const dot=document.getElementById("saveDot"), txt=document.getElementById("saveTxt");
   const persists = hasStore || lsSet("__probe__","1");
   if(!persists){ dot.className="dot warn"; txt.textContent="Session only"; }
-  document.getElementById("resetBtn").onclick=()=>{
-    if(confirm("Reset every field back to the Day 425 baseline? Your edits will be cleared.")){
-      state=structuredClone(SEED); renderAll(); buildLayout(); scheduleSave();
-    }
-  };
+
   // if GitHub sync is on and a token exists, pull remote as source of truth
   if(syncCfg.on && syncCfg.owner && loadTok()){ syncPull(true); }
 })();
