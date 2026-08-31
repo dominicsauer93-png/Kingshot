@@ -344,7 +344,7 @@
   "openData": [
     {
       "t": "Exact Dust total for Archer unlock (optimizer planner)",
-      "d": false
+      "d": true
     },
     {
       "t": "Current Truegold balance (for Dust conversion math)",
