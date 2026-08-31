@@ -465,7 +465,7 @@
     ]
   },
   "ui": {
-    "tab": "Supply",
+    "tab": "Data",
     "collapsed": {
       "Combat Quality": false
     }
