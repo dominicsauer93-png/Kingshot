@@ -348,11 +348,11 @@
     },
     {
       "t": "Current Truegold balance (for Dust conversion math)",
-      "d": false
+      "d": true
     },
     {
       "t": "T10 Archer count available to promote",
-      "d": false
+      "d": true
     }
   ],
   "notes": "",
