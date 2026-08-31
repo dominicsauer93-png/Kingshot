@@ -213,8 +213,8 @@
     }
   ],
   "combat": {
-    "attW": 160,
-    "attL": 211,
+    "attW": 168,
+    "attL": 26,
     "defW": 672,
     "defL": 55,
     "leth": 66.5,
