@@ -419,7 +419,12 @@
         "name": "Piece 6",
         "cur": 0
       }
-    ]
+    ],
+    "have": {
+      "satin": 0,
+      "threads": 0,
+      "vision": 0
+    }
   },
   "forecast": {
     "log": [
@@ -463,6 +468,20 @@
     "tab": "Stats",
     "collapsed": {
       "Combat Quality": false
+    }
+  },
+  "troopCounts": {
+    "inf": {
+      "cur": 0,
+      "tgt": 1500000
+    },
+    "arc": {
+      "cur": 0,
+      "tgt": 1500000
+    },
+    "cav": {
+      "cur": 0,
+      "tgt": 500000
     }
   },
   "farm": [
