@@ -8,7 +8,7 @@
     "goal": "All-round"
   },
   "dust": {
-    "current": 89,
+    "current": 102,
     "target": 2716,
     "gold": 460980
   },
@@ -465,7 +465,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "T11",
     "collapsed": {
       "Combat Quality": false
     }
