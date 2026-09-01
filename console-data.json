@@ -8,9 +8,9 @@
     "goal": "All-round"
   },
   "dust": {
-    "current": 889,
+    "current": 102,
     "target": 2716,
-    "gold": 550690
+    "gold": 460980
   },
   "nodes": [
     {
@@ -465,7 +465,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Data",
     "collapsed": {
       "Combat Quality": false
     }
