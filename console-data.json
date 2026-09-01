@@ -387,9 +387,9 @@
     }
   ],
   "tg": {
-    "have": 496,
+    "have": 485,
     "need": 9757,
-    "ttgHave": 39,
+    "ttgHave": 42,
     "ttgNeed": 781
   },
   "govGear": {
@@ -397,33 +397,33 @@
     "pieces": [
       {
         "name": "Piece 1",
-        "cur": 0
+        "cur": 6
       },
       {
         "name": "Piece 2",
-        "cur": 0
+        "cur": 6
       },
       {
         "name": "Piece 3",
-        "cur": 0
+        "cur": 12
       },
       {
         "name": "Piece 4",
-        "cur": 0
+        "cur": 11
       },
       {
         "name": "Piece 5",
-        "cur": 0
+        "cur": 12
       },
       {
         "name": "Piece 6",
-        "cur": 0
+        "cur": 19
       }
     ],
     "have": {
-      "satin": 0,
-      "threads": 0,
-      "vision": 0
+      "satin": 28451,
+      "threads": 262,
+      "vision": 88
     }
   },
   "forecast": {
@@ -460,7 +460,7 @@
       },
       {
         "t": "Claim house / suppression gold",
-        "d": false
+        "d": true
       }
     ]
   },
