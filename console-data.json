@@ -460,7 +460,7 @@
       },
       {
         "t": "Claim house / suppression gold",
-        "d": false
+        "d": true
       }
     ]
   },
