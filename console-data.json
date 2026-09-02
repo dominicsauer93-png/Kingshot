@@ -436,7 +436,7 @@
     ]
   },
   "today": {
-    "routineDate": "2026-09-01",
+    "routineDate": "2026-09-02",
     "kvkDate": "",
     "bearDate": "2026-09-01",
     "kvkPeriod": 14,
@@ -452,20 +452,20 @@
       },
       {
         "t": "Overfeed the Truegold Crucible",
-        "d": true
+        "d": false
       },
       {
         "t": "Super Refine — daily discounted Tier 2 (TTG)",
-        "d": true
+        "d": false
       },
       {
         "t": "Claim house / suppression gold",
-        "d": true
+        "d": false
       }
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "T11",
     "collapsed": {
       "Combat Quality": false
     }
