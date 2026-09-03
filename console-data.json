@@ -171,7 +171,7 @@
     },
     {
       "name": "Master",
-      "v": 11135400,
+      "v": 11405400,
       "b": 25148000,
       "g": "C"
     }
@@ -434,7 +434,7 @@
     ]
   },
   "ui": {
-    "tab": "Stats",
+    "tab": "Supply",
     "collapsed": {
       "Combat Quality": false
     }
