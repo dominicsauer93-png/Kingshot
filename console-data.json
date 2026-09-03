@@ -8,7 +8,7 @@
     "goal": "All-round"
   },
   "dust": {
-    "current": 1075,
+    "current": 1023,
     "target": 2716,
     "gold": 550690
   },
@@ -387,7 +387,7 @@
     }
   ],
   "tg": {
-    "have": 520,
+    "have": 52,
     "need": 9757,
     "ttgHave": 42,
     "ttgNeed": 781
