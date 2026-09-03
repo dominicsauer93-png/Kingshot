@@ -211,6 +211,16 @@
   .lvlbar .lf{height:100%;background:linear-gradient(90deg,var(--gold-2),var(--gold));border-radius:999px}
   .tnum{width:96px;background:#0C0F15;border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:12px;padding:4px 6px;text-align:right}
   .tnum:focus{outline:none;border-color:var(--gold)}
+  body.compact .card{padding:12px}
+  body.compact section{margin-bottom:12px}
+  body.compact .today{padding:13px;margin-bottom:14px}
+  body.compact .sechead{margin-bottom:8px}
+  body.compact .sechead h2{font-size:13px}
+  body.compact .metric-row{margin:7px 0}
+  body.compact .gate{padding:13px}
+  body.compact td,body.compact th{padding:5px 6px}
+  body.compact .sub{font-size:11.5px;margin-bottom:8px}
+  @media(min-width:760px){ body.compact .wrap{max-width:1180px} }
   .syncgrid{display:flex;gap:10px;flex-wrap:wrap}
   .syncgrid .field input{width:120px}
   .synctoggle{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);margin-top:12px;cursor:pointer}
@@ -229,10 +239,11 @@
 <div class="wrap">
   <div class="topbar">
     <div class="brand">
-      <span class="kicker">Truegold Command Console</span>
+      <span class="kicker">Kingshot Console</span>
       <h1>Account Audit &amp; Priorities</h1>
     </div>
     <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn" id="densityBtn" title="Toggle density">⇅ View</button>
       <span id="quickSync" style="display:none;align-items:center;gap:6px">
         <button class="btn" id="quickPull" title="Pull from GitHub">⭳ Pull</button>
         <button class="btn" id="quickPush" title="Push to GitHub">⭱ Push</button>
@@ -264,16 +275,6 @@
         <div class="cd-row"><span>Bear Hunt</span><input type="date" id="cdBear" class="cd-input">every <input type="number" id="cdBearP" class="cd-input" style="width:46px" min="1">d<span class="cd-out mono" id="cdBearOut"></span></div>
       </div>
     </div>
-    <div class="today-decide">
-      <div class="today-label">Spare-resource helper</div>
-      <p class="sub" style="margin:2px 0 8px">Got spare to spend? See where it goes furthest against your gaps.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
-        <div class="field"><label>Spare Dust</label><input class="mono" id="decDust" inputmode="numeric" placeholder="0"></div>
-        <div class="field"><label>Spare Gold</label><input class="mono" id="decGold" inputmode="numeric" placeholder="0"></div>
-        <button class="btn g" id="decGo">Where should it go?</button>
-      </div>
-      <div id="decOut" style="margin-top:10px"></div>
-    </div>
   </div>
 
   <!-- identity -->
@@ -300,6 +301,19 @@
       <p class="unlock-note">Exact remaining to unlock T11 Archer: <b>6,028 Dust · 2.01M Gold · 134M bread/wood · ~147d research</b>. Arrows is <b>MAXED</b> — only Vests (3 lvls) and Legionaries (5 lvls) left, then the unlock node. <span id="goldNote"></span></p>
 
       <div class="nodes" id="nodes"></div>
+      <div style="margin-top:14px;background:#0C0F15;border:1px solid var(--gold-2);border-radius:10px;padding:14px">
+        <div class="disp" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Everything to reach T11 Archers — in one hit</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px">
+          <div>Dust <b style="color:var(--gold)">6,028</b></div>
+          <div>Gold <b style="color:var(--gold)">2.01M</b></div>
+          <div>Research <b style="color:var(--gold)">~147d</b></div>
+          <div>Bread <b>134M</b></div>
+          <div>Wood <b>134M</b></div>
+          <div>Stone <b>26.6M</b></div>
+          <div>Iron <b>6.64M</b></div>
+        </div>
+        <div class="sub" style="margin-top:8px">Vests 9→12 · Legionaries 7→12 · Truegold Archers unlock. Arrows already MAXED.</div>
+      </div>
       <p class="unlock-note" style="margin-top:14px"><b style="color:var(--muted)">Do Archer first</b> — it's nearly there. Infantry below is Phase 2, the next commitment, not a parallel one.</p>
     </div>
 
@@ -354,20 +368,6 @@
       <p class="sub">Aiming for ~1.5M Infantry and Archers, fewer Cavalry. Enter current count and target — bars fill toward goal.</p>
       <div id="troopBody"></div>
     </div>
-    <div class="grid2">
-      <div class="card track">
-        <h3>Step 1 — Finish T10 <span class="tag ok" style="margin-left:auto">ONGOING</span></h3>
-        <p class="sub">Promoting T9 → T10 (staged this KvK) — the base T11 promotes from. A slow grind: a full T10 army costs far more than you can stockpile, so it's paced by gather rate.</p>
-        <ul class="checks" id="step1"></ul>
-        <div class="kvk"><b>KvK timing:</b> promote Day 1–2, let timers run, claim ~Day 4 — banks the power as event points and saves 2–3 days of speedups.</div>
-      </div>
-      <div class="card track">
-        <h3>Step 2 — T11 Archers <span class="tag ok" style="margin-left:auto">AFTER T10</span></h3>
-        <p class="sub">Chosen because fewest research levels left AND your strongest type (245 atk / 360 lethality).</p>
-        <ul class="checks" id="step2"></ul>
-        <div class="kvk" style="background:rgba(240,192,90,.06);border-color:rgba(240,192,90,.3);color:#EAD9AE"><b style="color:var(--gold)">Dust farm:</b> the KvK you’re in is your best source — take Truegold/Dust in the Kingdom of Power shop over anything cosmetic.</div>
-      </div>
-    </div>
   </section>
 
   <!-- POWER GRADES -->
@@ -413,6 +413,42 @@
         </div>
       </div>
       <div class="kvk" style="margin-top:16px"><b>Troop status:</b> <input id="troopStatus" style="width:100%;font-family:Inter;font-size:12.5px;color:#CFE3F2;background:transparent;border:0;border-bottom:1px dashed var(--line)"></div>
+    </div>
+  </section>
+
+  <!-- BEAR HUNT -->
+  <section>
+    <div class="sechead"><span class="num">15</span><h2>Bear Hunt</h2><span class="hint">every 2 days · rally leader carries the rally</span></div>
+    <div class="card">
+      <div class="rules">
+        <div class="rule"><h4>My lineup</h4><ul>
+          <li>Captain: <b>Yang</b> (lvl 8 widget, archer)</li>
+          <li>Lineup: Yang (P3) · Amadeus (P1) · Petra (P2)</li>
+          <li>Joining? Send <b>Amadeus</b> only — never Petra</li>
+        </ul></div>
+        <div class="rule"><h4>Formation</h4><ul>
+          <li>Ratio <b>1/10/89</b> Inf/Cav/Archer</li>
+          <li>Keep a <b>5,000 infantry floor</b></li>
+          <li><b>Lethality &gt; Attack.</b> Ignore def/health</li>
+          <li>Save it as a formation preset</li>
+        </ul></div>
+        <div class="rule"><h4>Rally rules</h4><ul>
+          <li>Leaders open on a clean timer (&lt;40s march)</li>
+          <li>Joiners fill the <b>biggest open rally</b>, not solo</li>
+          <li>Only 4 joiner skills count — no weak overwrite</li>
+        </ul></div>
+        <div class="rule"><h4>Daily (all)</h4><ul>
+          <li>Intel Missions → Hunting Arrows</li>
+          <li>Donate arrows → Pitfall (+5% atk/level)</li>
+          <li>1,900 arrows maxes it (Lv5)</li>
+        </ul></div>
+      </div>
+      <div class="gate-inputs" style="margin-top:14px">
+        <div class="field"><label>Pitfall arrows donated</label><input class="mono" id="bearArrows" inputmode="numeric" style="width:120px"></div>
+        <div class="field"><label>Alliance members</label><input class="mono" id="bearMembers" inputmode="numeric" style="width:100px"></div>
+      </div>
+      <div class="metric-row"><div class="metric-top"><span>Pitfall (to Lv5)</span><span id="bearArrowTxt"></span></div><div class="meter"><div class="fill" id="bearArrowFill" style="width:0%"></div></div></div>
+      <p class="unlock-note" id="bearNote"></p>
     </div>
   </section>
 
@@ -468,7 +504,14 @@
       </div>
     </div>
     <div class="card">
-      <p class="sub" style="margin:0 0 12px"><b>Lockstep cycle, not a queue:</b> raise <b>Town Center</b> one tier → spend the freed cap + TTG on the buildings below in order (<b>Range → War Academy → Embassy/Command Center → Barracks</b>, defer Stable/Infirmary) → raise TC again. TC is the metronome; the ranks below are how you spend each tier it opens. Battle research Tier VI runs in parallel (no TG cost).</p>
+      <p class="sub" style="margin:0 0 12px"><b>Raise TC one tier, then spend the freed cap + TTG in the order below. Repeat. Defer Stable &amp; Infirmary.</b></p>
+      <div style="background:#0C0F15;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px">
+        <div class="disp" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-2);margin-bottom:8px">Total supplies to TG8 (all buildings)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px">
+          <div>Wood <b>4.89B</b></div><div>Bread <b>4.89B</b></div><div>Stone <b>982M</b></div>
+          <div>Iron <b>245M</b></div><div>Truegold <b style="color:var(--gold)">9,757</b></div><div>Tempered TG <b style="color:var(--gold)">781</b></div>
+        </div>
+      </div>
       <table><thead><tr><th style="width:20%">Building</th><th>Tier</th><th>TG</th><th>TTG</th><th>Time</th><th></th></tr></thead>
       <tbody id="buildBody"></tbody></table>
       <button class="additem" id="addBuild">+ add building</button>
@@ -542,6 +585,55 @@
     </div>
   </section>
 
+  <!-- HERO GEAR -->
+  <section>
+    <div class="sechead"><span class="num">16</span><h2>Hero Gear</h2><span class="hint">upgrade plan · need vs have</span></div>
+    <div class="card">
+      <p class="sub">Your target upgrade plan (from the optimizer). Each piece shows current → target and its cost. Enter resources in hand; the summary shows what you're short.</p>
+      <div class="gate-inputs" style="margin-bottom:12px">
+        <div class="field"><label>XP in hand</label><input class="mono" id="hgXp" inputmode="numeric" style="width:110px"></div>
+        <div class="field"><label>Forgehammers</label><input class="mono" id="hgFh" inputmode="numeric" style="width:90px"></div>
+        <div class="field"><label>Mythic Gear</label><input class="mono" id="hgMg" inputmode="numeric" style="width:80px"></div>
+        <div class="field"><label>Mithril</label><input class="mono" id="hgMith" inputmode="numeric" style="width:80px"></div>
+      </div>
+      <div id="hgSummary" style="margin-bottom:14px"></div>
+      <div id="hgBody"></div>
+      <button class="additem" id="addHg">+ add upgrade</button>
+    </div>
+  </section>
+
+  <!-- CHARMS -->
+  <section>
+    <div class="sechead"><span class="num">17</span><h2>Charms</h2><span class="hint">Charm Designs are the bottleneck</span></div>
+    <div class="card">
+      <p class="sub">Set each charm's level and a shared target. It totals the Charm Guides &amp; Charm Designs still needed vs what you hold. Prioritise Designs.</p>
+      <div class="field" style="margin-bottom:12px"><label>Target level (all charms)</label><select id="charmTarget" class="sigsel" style="padding-right:24px;min-width:110px"></select></div>
+      <div class="gate-inputs" style="margin-bottom:10px">
+        <div class="field"><label>Charm Guides in hand</label><input class="mono" id="charmGuidesHave" inputmode="numeric" style="width:120px"></div>
+        <div class="field"><label>Charm Designs in hand</label><input class="mono" id="charmDesignsHave" inputmode="numeric" style="width:120px"></div>
+      </div>
+      <div class="metric-row"><div class="metric-top"><span>Charm Guides</span><span id="charmGuidesTxt"></span></div><div class="meter"><div class="fill" id="charmGuidesFill" style="width:0%"></div></div></div>
+      <div class="metric-row"><div class="metric-top"><span>Charm Designs <span style="color:var(--faint)">(bottleneck)</span></span><span id="charmDesignsTxt"></span></div><div class="meter"><div class="fill" id="charmDesignsFill" style="width:0%"></div></div></div>
+      <table><thead><tr><th style="width:55%">Charm</th><th>Level</th><th></th></tr></thead><tbody id="charmBody"></tbody></table>
+      <button class="additem" id="addCharm">+ add charm</button>
+    </div>
+  </section>
+
+  <!-- WIDGETS -->
+  <section>
+    <div class="sechead"><span class="num">18</span><h2>Widgets</h2><span class="hint">exclusive gear · 275 mats to max each</span></div>
+    <div class="card">
+      <p class="sub">The widget is a hero's top-value gear. Each maxes at level 10 (275 mats total: 5,10,15…50). Set each hero's level; it totals mats still needed.</p>
+      <div class="gate-inputs" style="margin-bottom:10px">
+        <div class="field"><label>Widget mats in hand</label><input class="mono" id="widHave" inputmode="numeric" style="width:120px"></div>
+        <div class="field"><label>Total needed</label><div class="mono" id="widNeed" style="font-size:14px;color:var(--gold);padding:6px 0">—</div></div>
+      </div>
+      <div class="metric-row"><div class="metric-top"><span>Widget mats</span><span id="widMeterTxt"></span></div><div class="meter"><div class="fill" id="widFill" style="width:0%"></div></div></div>
+      <table><thead><tr><th style="width:45%">Hero</th><th>Widget lvl</th><th>To max</th><th></th></tr></thead><tbody id="widBody"></tbody></table>
+      <button class="additem" id="addWid">+ add hero</button>
+    </div>
+  </section>
+
   <!-- DATA & SYNC -->
   <section>
     <div class="sechead"><span class="num">14</span><h2>Data, Sync &amp; Import</h2><span class="hint">back up · sync · import CSV</span></div>
@@ -602,7 +694,7 @@
     </div>
   </section>
 
-  <div class="foot">Baseline · Day 425 · TC Truegold 6 — local autosave + optional GitHub sync.</div>
+  <div style="height:20px"></div>
 </div>
 
 <script>
@@ -625,25 +717,12 @@ const SEED = {
     {name:"Truegold Infantry (unlock)", cur:0, max:1, costs:[2236]}
   ],
   trackNow:[
-    {t:"Finish the T10 transition (promote T9 → T10)", d:false},
     {t:"Battle research Tier VI — lifts Lethality / Health off the V→VI wall", d:false}
   ],
   trackFarm:[
     {t:"Farm Truegold Dust toward the T11 Archer unlock", d:false},
     {t:"Push Pan 90 → 100 (Ways-and-Means / Falconer skills)", d:false},
     {t:"Slowly level the 4 laggard masters to lift the grade", d:false}
-  ],
-  step1:[
-    {t:"Promote staged T9 → T10 across the army", d:false},
-    {t:"Time promotions to the KvK ‘Increase Power’ stage", d:false},
-    {t:"Complete a full T10 base before chasing T11", d:false}
-  ],
-  step2:[
-    {t:"Grind Archer node A to 12 (+6)", d:false},
-    {t:"Finish Archer node B to 12 (+2)", d:false},
-    {t:"Finish Archer node C to 12 (+3)", d:false},
-    {t:"Buy final unlock node (2,200 Dust + 1M Gold)", d:false},
-    {t:"Promote T10 Archers → T11 on a KvK power stage", d:false}
   ],
   pillars:[
     {name:"Building",      v:8430563,   b:7687198,   g:"S"},
@@ -715,8 +794,30 @@ const SEED = {
     {t:"Super Refine — daily discounted Tier 2 (TTG)", d:false},
     {t:"Claim house / suppression gold", d:false}
   ]},
-  ui:{ tab:"Home", collapsed:{} },
+  ui:{ tab:"Home", collapsed:{}, density:"comfortable" },
   troopCounts:{ inf:{cur:0,tgt:1500000}, arc:{cur:0,tgt:1500000}, cav:{cur:0,tgt:500000} },
+  bear:{ arrows:0, members:85 },
+  heroGear:{
+    have:{ xp:0, fh:133, mg:10, mith:3 },
+    rows:[
+      {type:"Infantry", slot:"Helm (Lethality)",  lvC:104, lvT:120, mC:10, mT:11, xp:45000,  fh:110, mg:4,  mith:10},
+      {type:"Infantry", slot:"Gloves (Health)",   lvC:104, lvT:159, mC:10, mT:12, xp:212200, fh:230, mg:11, mith:30},
+      {type:"Infantry", slot:"Chest (Health)",    lvC:106, lvT:179, mC:11, mT:13, xp:328450, fh:250, mg:18, mith:60},
+      {type:"Infantry", slot:"Boots (Lethality)", lvC:101, lvT:125, mC:10, mT:11, xp:70400,  fh:110, mg:4,  mith:10},
+      {type:"Cavalry",  slot:"Helm (Lethality)",  lvC:119, lvT:139, mC:10, mT:11, xp:74100,  fh:110, mg:4,  mith:10},
+      {type:"Cavalry",  slot:"Gloves (Health)",   lvC:80,  lvT:101, mC:7,  mT:10, xp:38500,  fh:270, mg:2,  mith:0},
+      {type:"Cavalry",  slot:"Chest (Health)",    lvC:80,  lvT:120, mC:7,  mT:11, xp:91150,  fh:380, mg:6,  mith:10},
+      {type:"Cavalry",  slot:"Boots (Lethality)", lvC:101, lvT:139, mC:10, mT:11, xp:126750, fh:110, mg:4,  mith:10},
+      {type:"Archer",   slot:"Helm (Lethality)",  lvC:139, lvT:139, mC:11, mT:11, xp:0,      fh:0,   mg:0,  mith:0},
+      {type:"Archer",   slot:"Gloves (Health)",   lvC:90,  lvT:120, mC:6,  mT:11, xp:74400,  fh:450, mg:6,  mith:10},
+      {type:"Archer",   slot:"Chest (Health)",    lvC:90,  lvT:120, mC:6,  mT:11, xp:74400,  fh:450, mg:6,  mith:10},
+      {type:"Archer",   slot:"Boots (Lethality)", lvC:119, lvT:179, mC:10, mT:13, xp:288800, fh:360, mg:19, mith:60}
+    ]
+  },
+  charms:{ targetLvl:22, have:{guides:0,designs:0}, rows:[
+    {n:"Infantry Charm", lvl:0},{n:"Cavalry Charm", lvl:0},{n:"Archer Charm", lvl:0}
+  ]},
+  widgets:{ have:0, rows:[ {hero:"Yang", lvl:2}, {hero:"Amadeus", lvl:2}, {hero:"Petra", lvl:2} ] },
   farm:[
     {k:"Town Center", v:"TC 22–29 (confirm)"},
     {k:"Storehouse level", v:"— (keep LOW while feeding)"},
@@ -1013,22 +1114,6 @@ function buildToday(){
   kvp.oninput=()=>{ t.kvkPeriod=Math.max(1,num(kvp.value)); repaintCd(); scheduleSave(); };
   bep.oninput=()=>{ t.bearPeriod=Math.max(1,num(bep.value)); buildToday(); scheduleSave(); };
   document.getElementById("todayRefresh").onclick=()=>{ renderAll(); };
-  // decision helper
-  const dgo=document.getElementById("decGo");
-  dgo.onclick=()=>{
-    const sd=num(document.getElementById("decDust").value), sg=num(document.getElementById("decGold").value);
-    const out=document.getElementById("decOut"); const rec=[];
-    if(sd>0){ const cn2=closestNode();
-      if(cn2){ const done=Math.min(cn2.rem,sd);
-        rec.push(`<b>${fmt(sd)} Dust →</b> ${cn2.n.name.replace(/ \(.*/,'')} (needs ${fmt(cn2.rem)}). ${sd>=cn2.rem?`Finishes it ✓ with ${fmt(sd-cn2.rem)} left over.`:`Covers ${(done/cn2.rem*100).toFixed(0)}% of it.`}`); }
-      else rec.push(`<b>${fmt(sd)} Dust →</b> buy the Truegold Archers unlock node.`);
-    }
-    if(sg>0){ const gGap2=Math.max(0,2013000-num(state.dust.gold));
-      rec.push(`<b>${fmt(sg)} Gold →</b> ${gGap2>0?`bank toward the 2.01M unlock gate (${fmt(gGap2)} to go). Don't convert to Dust.`:`gate covered — save for buildings/TG8.`}`);
-    }
-    if(!rec.length) rec.push("Enter spare Dust and/or Gold above.");
-    out.innerHTML=rec.map(r=>`<div class="today-flag">${r}</div>`).join("");
-  };
 }
 
 /* ---------- forecast ---------- */
@@ -1097,6 +1182,152 @@ function buildForecast(){
     h.querySelectorAll(".del").forEach(b=>b.onclick=()=>{ state.forecast.log=state.forecast.log.filter(e=>e.d!==b.dataset.d); buildForecast(); paintForecast(); scheduleSave(); });
   }
   paintForecast();
+}
+
+/* ---------- bear hunt ---------- */
+function buildBear(){
+  if(!state.bear) state.bear={arrows:0,members:85};
+  const ar=document.getElementById("bearArrows"), me=document.getElementById("bearMembers");
+  if(!ar) return;
+  ar.value=state.bear.arrows; me.value=state.bear.members;
+  const paint=()=>{ const MAX=1900, cur=Math.min(MAX,num(state.bear.arrows)), members=num(state.bear.members);
+    document.getElementById("bearArrowFill").style.width=(cur/MAX*100).toFixed(1)+"%";
+    document.getElementById("bearArrowTxt").innerHTML=`<b>${fmt(cur)}</b> / 1,900`;
+    const daily=members*24, left=Math.max(0,MAX-cur), days=daily>0?Math.ceil(left/daily):"∞";
+    document.getElementById("bearNote").innerHTML=left===0?`Pitfall maxed — +25% attack for everyone.`:
+      `At ${fmt(daily)} arrows/day (all donating), maxed in <b>${days} day${days===1?"":"s"}</b>. Every member's daily Intel Missions matter.`; };
+  ar.oninput=()=>{ state.bear.arrows=num(ar.value); paint(); scheduleSave(); };
+  me.oninput=()=>{ state.bear.members=num(me.value); paint(); scheduleSave(); };
+  paint();
+}
+
+/* ---------- hero gear (upgrade planner) ---------- */
+const HG_TYPES=["Infantry","Cavalry","Archer"];
+function buildHeroGear(){
+  if(!state.heroGear||!Array.isArray(state.heroGear.rows)) state.heroGear=structuredClone(SEED.heroGear);
+  const hg=state.heroGear; if(!hg.have) hg.have={xp:0,fh:0,mg:0,mith:0};
+  const host=document.getElementById("hgBody"); if(!host) return;
+  // have inputs
+  [["hgXp","xp"],["hgFh","fh"],["hgMg","mg"],["hgMith","mith"]].forEach(([id,k])=>{
+    const el=document.getElementById(id); if(el){ el.value=hg.have[k]||0; el.oninput=()=>{ hg.have[k]=num(el.value); paintHgSummary(); scheduleSave(); }; }
+  });
+  host.innerHTML="";
+  hg.rows.forEach(r=>{
+    const noUp = num(r.xp)+num(r.fh)+num(r.mg)+num(r.mith)===0;
+    const row=document.createElement("div");
+    row.style.cssText="background:#0F141C;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px";
+    row.innerHTML=`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">
+        <select class="sigsel hgtype" style="padding-right:22px">${HG_TYPES.map(t=>`<option${t===r.type?' selected':''}>${t}</option>`).join("")}</select>
+        <input class="hgslot" value="${(r.slot||'').replace(/"/g,'&quot;')}" style="flex:1;min-width:120px;font-size:12.5px;background:transparent;border:0;border-bottom:1px dashed var(--line);color:var(--text)">
+        <button class="del hgdel" title="Remove">×</button>
+      </div>
+      <div class="mono" style="font-size:11px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px">
+        <span>Lv <input class="tnum hgf" data-f="lvC" value="${r.lvC}" style="width:52px">→<input class="tnum hgf" data-f="lvT" value="${r.lvT}" style="width:52px"></span>
+        <span>M <input class="tnum hgf" data-f="mC" value="${r.mC}" style="width:40px">→<input class="tnum hgf" data-f="mT" value="${r.mT}" style="width:40px"></span>
+      </div>
+      ${noUp?`<div class="mono" style="font-size:11px;color:var(--faint)">No upgrade needed</div>`:
+      `<div class="mono" style="font-size:11px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap">
+        <span>XP <input class="tnum hgf" data-f="xp" value="${r.xp}" style="width:72px"></span>
+        <span>FH <input class="tnum hgf" data-f="fh" value="${r.fh}" style="width:52px"></span>
+        <span>Myth <input class="tnum hgf" data-f="mg" value="${r.mg}" style="width:44px"></span>
+        <span>Mith <input class="tnum hgf" data-f="mith" value="${r.mith}" style="width:44px"></span>
+      </div>`}`;
+    row.querySelector(".hgtype").onchange=e=>{ r.type=e.target.value; scheduleSave(); };
+    row.querySelector(".hgslot").oninput=e=>{ r.slot=e.target.value; scheduleSave(); };
+    row.querySelectorAll(".hgf").forEach(inp=>{ inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); paintHgSummary(); scheduleSave(); }; });
+    row.querySelector(".hgdel").onclick=()=>{ const i=hg.rows.indexOf(r); if(i>-1){ hg.rows.splice(i,1); buildHeroGear(); scheduleSave(); } };
+    host.appendChild(row);
+  });
+  const add=document.getElementById("addHg");
+  if(add) add.onclick=()=>{ hg.rows.push({type:"Archer",slot:"New (stat)",lvC:0,lvT:0,mC:0,mT:0,xp:0,fh:0,mg:0,mith:0}); buildHeroGear(); scheduleSave(); };
+  paintHgSummary();
+}
+function paintHgSummary(){
+  const hg=state.heroGear; if(!hg) return;
+  const need={xp:0,fh:0,mg:0,mith:0};
+  hg.rows.forEach(r=>{ need.xp+=num(r.xp); need.fh+=num(r.fh); need.mg+=num(r.mg); need.mith+=num(r.mith); });
+  const el=document.getElementById("hgSummary"); if(!el) return;
+  const short=["xp","fh","mg","mith"].some(k=>num(hg.have[k])<need[k]);
+  const rowHtml=(label,k)=>{ const n=need[k], h=num(hg.have[k]), d=h-n;
+    return `<tr><td>${label}</td><td class="mono">${fmt(n)}</td><td class="mono">${fmt(h)}</td><td class="mono" style="color:${d<0?'var(--red)':'var(--green)'}">${d<0?'':'+'}${fmt(d)}</td></tr>`; };
+  el.innerHTML=`<div style="background:${short?'rgba(228,87,75,.08)':'rgba(79,191,123,.06)'};border:1px solid ${short?'rgba(228,87,75,.35)':'rgba(79,191,123,.35)'};border-radius:10px;padding:12px">
+    <div class="disp" style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:${short?'var(--red)':'var(--green)'};margin-bottom:8px">${short?'Not enough resources':'Plan covered'}</div>
+    <table style="width:100%;font-size:12px"><thead><tr><th>Resource</th><th>Need</th><th>Have</th><th>Diff</th></tr></thead><tbody>
+      ${rowHtml("XP","xp")}${rowHtml("Forgehammers","fh")}${rowHtml("Mythic Gear","mg")}${rowHtml("Mithril","mith")}
+    </tbody></table></div>`;
+}
+
+/* ---------- charms ---------- */
+const CHARM_COSTS=[
+ [5,5],[40,15],[60,40],[80,100],[100,200],[120,300],[140,400],[200,400],[300,400],[420,420],
+ [560,420],[580,600],[610,780],[645,960],[685,1140],[730,1320],[780,1500],[835,1680],[895,1860],[960,2040],
+ [1030,2220],[1105,2400]
+];
+function charmRem(cur,tgt){ let g=0,d=0; for(let i=Math.max(0,cur);i<Math.min(22,tgt);i++){ g+=CHARM_COSTS[i][0]; d+=CHARM_COSTS[i][1]; } return {g,d}; }
+function buildCharms(){
+  if(!state.charms||!Array.isArray(state.charms.rows)) state.charms=structuredClone(SEED.charms);
+  const c=state.charms; if(!c.have) c.have={guides:0,designs:0}; if(c.targetLvl==null) c.targetLvl=22;
+  const tSel=document.getElementById("charmTarget"); if(!tSel) return;
+  tSel.innerHTML=Array.from({length:22},(_,i)=>`<option value="${i+1}"${(i+1)===c.targetLvl?' selected':''}>Lv ${i+1}</option>`).join("");
+  tSel.onchange=()=>{ c.targetLvl=parseInt(tSel.value,10); buildCharms(); scheduleSave(); };
+  [["charmGuidesHave","guides"],["charmDesignsHave","designs"]].forEach(([id,k])=>{
+    const el=document.getElementById(id); if(el){ el.value=c.have[k]||0; el.oninput=()=>{ c.have[k]=num(el.value); paintCharms(); scheduleSave(); }; }
+  });
+  const b=document.getElementById("charmBody"); b.innerHTML="";
+  c.rows.forEach(r=>{
+    const tr=document.createElement("tr");
+    const pct=Math.min(100,Math.max(0,r.lvl/c.targetLvl*100));
+    const done=r.lvl>=c.targetLvl;
+    tr.innerHTML=`<td><input value="${(r.n||'').replace(/"/g,'&quot;')}"><div class="lvlbar" style="max-width:200px"><div class="lf" style="width:${pct}%;background:${done?'var(--green)':'linear-gradient(90deg,var(--gold-2),var(--gold))'}"></div></div></td>
+      <td><input class="mono-in" value="${r.lvl}" style="width:44px" inputmode="numeric"></td>
+      <td class="delcell"><button class="del" title="Remove">×</button></td>`;
+    const [ni,li]=tr.querySelectorAll("input");
+    ni.oninput=()=>{ r.n=ni.value; scheduleSave(); };
+    li.oninput=()=>{ r.lvl=Math.max(0,Math.min(22,num(li.value))); buildCharms(); scheduleSave(); };
+    tr.querySelector(".del").onclick=()=>{ const i=c.rows.indexOf(r); if(i>-1){ c.rows.splice(i,1); buildCharms(); scheduleSave(); } };
+    b.appendChild(tr);
+  });
+  document.getElementById("addCharm").onclick=()=>{ c.rows.push({n:"New charm",lvl:0}); buildCharms(); scheduleSave(); };
+  paintCharms();
+}
+function paintCharms(){
+  const c=state.charms; if(!c) return;
+  let g=0,d=0; c.rows.forEach(r=>{ const rem=charmRem(r.lvl,c.targetLvl); g+=rem.g; d+=rem.d; });
+  const meter=(need,have,fillId,txtId)=>{ const pct=need>0?Math.min(100,have/need*100):100;
+    const fl=document.getElementById(fillId); if(fl) fl.style.width=pct.toFixed(1)+"%";
+    const tx=document.getElementById(txtId); if(tx) tx.innerHTML=`<b>${fmt(have)}</b> / ${fmt(need)}`; };
+  meter(g,num(c.have.guides),"charmGuidesFill","charmGuidesTxt");
+  meter(d,num(c.have.designs),"charmDesignsFill","charmDesignsTxt");
+}
+
+/* ---------- widgets ---------- */
+const WID_COSTS=[5,10,15,20,25,30,35,40,45,50];
+const WID_HEROES=["Yang","Amadeus","Petra","Chenko","Yeonwoo","Amane","Zoe","Jabel","Marlin","Quinn","Vivian","Thrud","Eric","Saul","Helga","Hilde","Jaeger","Ava","Other"];
+function widRem(lvl){ return WID_COSTS.slice(Math.max(0,Math.min(10,lvl))).reduce((s,x)=>s+x,0); }
+function buildWidgets(){
+  if(!state.widgets||!Array.isArray(state.widgets.rows)) state.widgets=structuredClone(SEED.widgets);
+  const w=state.widgets;
+  const have=document.getElementById("widHave"); if(!have) return; have.value=w.have||0;
+  const total=w.rows.reduce((s,r)=>s+widRem(r.lvl),0);
+  document.getElementById("widNeed").textContent=fmt(total);
+  const pct=total>0?Math.min(100,num(w.have)/total*100):100;
+  document.getElementById("widFill").style.width=pct.toFixed(1)+"%";
+  document.getElementById("widMeterTxt").innerHTML=`<b>${fmt(num(w.have))}</b> / ${fmt(total)}`;
+  have.oninput=()=>{ w.have=num(have.value); buildWidgets(); scheduleSave(); };
+  const b=document.getElementById("widBody"); b.innerHTML="";
+  w.rows.forEach(r=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td><select class="sigsel" style="padding-right:22px">${WID_HEROES.map(h=>`<option${h===r.hero?' selected':''}>${h}</option>`).join("")}</select></td>
+      <td><input class="mono-in" value="${r.lvl}" style="width:44px" inputmode="numeric"></td>
+      <td class="mono" style="color:var(--gold);font-size:12px">${r.lvl>=10?'MAX':fmt(widRem(r.lvl))}</td>
+      <td class="delcell"><button class="del" title="Remove">×</button></td>`;
+    const sel=tr.querySelector("select"), li=tr.querySelector("input");
+    sel.onchange=()=>{ r.hero=sel.value; scheduleSave(); };
+    li.oninput=()=>{ r.lvl=Math.max(0,Math.min(10,num(li.value))); buildWidgets(); scheduleSave(); };
+    tr.querySelector(".del").onclick=()=>{ const i=w.rows.indexOf(r); if(i>-1){ w.rows.splice(i,1); buildWidgets(); scheduleSave(); } };
+    b.appendChild(tr);
+  });
+  document.getElementById("addWid").onclick=()=>{ w.rows.push({hero:"Other",lvl:0}); buildWidgets(); scheduleSave(); };
 }
 
 /* ---------- governor gear ---------- */
@@ -1568,12 +1799,14 @@ function buildNotes(){
 
 /* ---------- render all ---------- */
 /* ---------- layout: tabs + collapse ---------- */
-const TAB_ORDER=["Home","T11","Build","Stats","Plan","Supply","Data"];
+const TAB_ORDER=["Home","Troops","Build","Gear","Stats","Supply","Data"];
 const HEAD_TAB=[
-  ["the gate","T11"],["build order","Build"],
-  ["power grades","Stats"],["mystic trials","Stats"],["governor gear","Stats"],
-  ["priorities","Plan"],["troop plan","Plan"],["combat","Plan"],
-  ["resources","Supply"],["masters","Supply"],["dust farming","Supply"],["farm account","Supply"],
+  ["priorities","Home"],
+  ["the gate","Troops"],["troop plan","Troops"],["combat","Troops"],["bear hunt","Troops"],["masters","Troops"],
+  ["build order","Build"],
+  ["governor gear","Gear"],["hero gear","Gear"],["charms","Gear"],["widgets","Gear"],
+  ["power grades","Stats"],["mystic trials","Stats"],
+  ["resources","Supply"],["dust farming","Supply"],["farm account","Supply"],
   ["open data","Data"],["data, sync","Data"]
 ];
 function tabForHeading(txt){ const t=(txt||"").toLowerCase(); for(const [k,v] of HEAD_TAB){ if(t.includes(k)) return v; } return "Data"; }
@@ -1583,6 +1816,12 @@ function setTab(tab){
   document.querySelectorAll("#tabnav .tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
   document.querySelectorAll(".wrap > section, #todayPanel, #idstrip").forEach(el=>{ el.style.display = el.dataset.tab===tab ? "" : "none"; });
   scheduleSave();
+}
+function applyDensity(){
+  if(!state.ui) state.ui={tab:"Home",collapsed:{},density:"comfortable"};
+  const compact=state.ui.density==="compact";
+  document.body.classList.toggle("compact",compact);
+  const b=document.getElementById("densityBtn"); if(b) b.textContent = compact ? "⇅ Comfort" : "⇅ Compact";
 }
 function buildLayout(){
   if(!state.ui) state.ui={tab:"Home",collapsed:{}};
@@ -1604,12 +1843,16 @@ function buildLayout(){
     nav.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{ setTab(b.dataset.tab); window.scrollTo({top:0,behavior:"smooth"}); });
   }
   setTab(state.ui.tab||"Home");
+  applyDensity();
+  const db=document.getElementById("densityBtn");
+  if(db && !db.dataset.wired){ db.dataset.wired="1";
+    db.onclick=()=>{ state.ui.density = state.ui.density==="compact" ? "comfortable" : "compact"; applyDensity(); scheduleSave(); }; }
 }
 
 function renderAll(){
   buildToday(); buildTroops(); buildId(); buildGate(); paintGate(); buildInfantry(); buildForecast(); buildGovGear();
+  buildBear(); buildHeroGear(); buildCharms(); buildWidgets();
   buildChecks("trackNow",state.trackNow); buildChecks("trackFarm",state.trackFarm);
-  buildChecks("step1",state.step1); buildChecks("step2",state.step2);
   buildPillars(); buildCombat(); buildRes(); buildMast();
   buildChecks("dustSrc",state.dustSrc); buildChecks("openData",state.openData);
   buildTGbudget(); buildBuildings();
@@ -1644,6 +1887,11 @@ function renderAll(){
   if(!state.ui||typeof state.ui!=="object") state.ui={tab:"Home",collapsed:{}};
   if(!state.ui.collapsed) state.ui.collapsed={};
   if(!state.troopCounts) state.troopCounts=structuredClone(SEED.troopCounts);
+  if(!state.bear) state.bear=structuredClone(SEED.bear);
+  if(!state.heroGear||!Array.isArray(state.heroGear.rows)) state.heroGear=structuredClone(SEED.heroGear);
+  if(!state.charms||!Array.isArray(state.charms.rows)) state.charms=structuredClone(SEED.charms);
+  if(!state.widgets||!Array.isArray(state.widgets.rows)) state.widgets=structuredClone(SEED.widgets);
+  if(!state.ui.density) state.ui.density="comfortable";
   renderAll(); buildLayout();
   const dot=document.getElementById("saveDot"), txt=document.getElementById("saveTxt");
   const persists = hasStore || lsSet("__probe__","1");
