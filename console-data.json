@@ -646,6 +646,10 @@
       {
         "hero": "Ava",
         "lvl": 0
+      },
+      {
+        "hero": "Other",
+        "lvl": 0
       }
     ]
   },
