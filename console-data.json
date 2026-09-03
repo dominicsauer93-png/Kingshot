@@ -465,7 +465,7 @@
     ]
   },
   "ui": {
-    "tab": "Build",
+    "tab": "Stats",
     "collapsed": {
       "Combat Quality": false
     }
