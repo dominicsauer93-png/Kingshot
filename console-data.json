@@ -434,7 +434,7 @@
     ]
   },
   "ui": {
-    "tab": "Troops",
+    "tab": "Build",
     "collapsed": {
       "Combat Quality": false
     }
