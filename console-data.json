@@ -2,7 +2,7 @@
   "account": {
     "tc": "Truegold Lv. 6",
     "day": "443",
-    "power": "254,620,509",
+    "power": "257,712,855",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "All-round"
@@ -434,7 +434,7 @@
     ]
   },
   "ui": {
-    "tab": "Build",
+    "tab": "Home",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": true,
