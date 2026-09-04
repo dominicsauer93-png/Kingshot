@@ -351,7 +351,7 @@
     }
   ],
   "tg": {
-    "have": 618,
+    "have": 667,
     "need": 9757,
     "ttgHave": 44,
     "ttgNeed": 781
@@ -434,7 +434,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Build",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": true,
