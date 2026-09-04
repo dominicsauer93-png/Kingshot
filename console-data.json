@@ -434,7 +434,7 @@
     ]
   },
   "ui": {
-    "tab": "Stats",
+    "tab": "Home",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": true,
