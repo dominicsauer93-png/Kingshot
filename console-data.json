@@ -2,15 +2,15 @@
   "account": {
     "tc": "Truegold Lv. 6",
     "day": "443",
-    "power": "257,712,855",
+    "power": "254,620,509",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "All-round"
   },
   "dust": {
-    "current": 1125,
+    "current": 1075,
     "target": 2716,
-    "gold": 773270
+    "gold": 550690
   },
   "nodes": [
     {
@@ -120,6 +120,42 @@
       "d": false
     }
   ],
+  "step1": [
+    {
+      "t": "Promote staged T9 → T10 across the army",
+      "d": false
+    },
+    {
+      "t": "Time promotions to the KvK ‘Increase Power’ stage",
+      "d": false
+    },
+    {
+      "t": "Complete a full T10 base before chasing T11",
+      "d": false
+    }
+  ],
+  "step2": [
+    {
+      "t": "Grind Archer node A to 12 (+6)",
+      "d": true
+    },
+    {
+      "t": "Finish Archer node B to 12 (+2)",
+      "d": false
+    },
+    {
+      "t": "Finish Archer node C to 12 (+3)",
+      "d": false
+    },
+    {
+      "t": "Buy final unlock node (2,200 Dust + 1M Gold)",
+      "d": false
+    },
+    {
+      "t": "Promote T10 Archers → T11 on a KvK power stage",
+      "d": false
+    }
+  ],
   "pillars": [
     {
       "name": "Building",
@@ -129,19 +165,19 @@
     },
     {
       "name": "Troop",
-      "v": 141232265,
+      "v": 139932210,
       "b": 164531870,
       "g": "A"
     },
     {
       "name": "Hero",
-      "v": 27734342,
+      "v": 27659047,
       "b": 21305631,
       "g": "SS"
     },
     {
       "name": "Hero Gear",
-      "v": 11248312,
+      "v": 10951814,
       "b": 10062833,
       "g": "S"
     },
@@ -159,7 +195,7 @@
     },
     {
       "name": "Tech",
-      "v": 18569220,
+      "v": 18557820,
       "b": 11141492,
       "g": "SS"
     },
@@ -171,7 +207,7 @@
     },
     {
       "name": "Master",
-      "v": 11405400,
+      "v": 11135400,
       "b": 25148000,
       "g": "C"
     }
@@ -339,11 +375,11 @@
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "171"
+      "v": "174"
     },
     {
       "k": "Molten Fort (Gov Gear)",
-      "v": "256"
+      "v": "281"
     },
     {
       "k": "Radiant Spire (ALL stats — full power)",
@@ -351,21 +387,21 @@
     }
   ],
   "tg": {
-    "have": 667,
+    "have": 520,
     "need": 9757,
-    "ttgHave": 44,
+    "ttgHave": 42,
     "ttgNeed": 781
   },
   "govGear": {
-    "targetIdx": 19,
+    "targetIdx": 14,
     "pieces": [
       {
         "name": "Piece 1",
-        "cur": 10
+        "cur": 6
       },
       {
         "name": "Piece 2",
-        "cur": 10
+        "cur": 6
       },
       {
         "name": "Piece 3",
@@ -385,7 +421,7 @@
       }
     ],
     "have": {
-      "satin": 29659,
+      "satin": 28451,
       "threads": 262,
       "vision": 88
     }
@@ -396,16 +432,11 @@
         "d": "2026-08-31",
         "dust": 89,
         "gold": 412110
-      },
-      {
-        "d": "2026-09-03",
-        "dust": 1075,
-        "gold": 550690
       }
     ]
   },
   "today": {
-    "routineDate": "2026-09-04",
+    "routineDate": "2026-09-05",
     "kvkDate": "",
     "bearDate": "2026-09-01",
     "kvkPeriod": 14,
@@ -434,13 +465,9 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Stats",
     "collapsed": {
-      "Combat Quality": false,
-      "Hero Gear": true,
-      "Charms": true,
-      "Widgets": true,
-      "Build Order — TG6→TG8": false
+      "Combat Quality": false
     }
   },
   "troopCounts": {
@@ -449,213 +476,13 @@
       "tgt": 1000000
     },
     "arc": {
-      "cur": 636147,
+      "cur": 630551,
       "tgt": 1000000
     },
     "cav": {
       "cur": 343992,
       "tgt": 500000
     }
-  },
-  "bear": {
-    "arrows": 0,
-    "members": 85
-  },
-  "heroGear": {
-    "have": {
-      "xp": 0,
-      "fh": 133,
-      "mg": 10,
-      "mith": 3
-    },
-    "rows": [
-      {
-        "type": "Infantry",
-        "slot": "Helm (Lethality)",
-        "lvC": 104,
-        "lvT": 120,
-        "mC": 10,
-        "mT": 11,
-        "xp": 45000,
-        "fh": 110,
-        "mg": 4,
-        "mith": 10
-      },
-      {
-        "type": "Infantry",
-        "slot": "Gloves (Health)",
-        "lvC": 104,
-        "lvT": 159,
-        "mC": 10,
-        "mT": 12,
-        "xp": 212200,
-        "fh": 230,
-        "mg": 11,
-        "mith": 30
-      },
-      {
-        "type": "Infantry",
-        "slot": "Chest (Health)",
-        "lvC": 106,
-        "lvT": 179,
-        "mC": 11,
-        "mT": 13,
-        "xp": 328450,
-        "fh": 250,
-        "mg": 18,
-        "mith": 60
-      },
-      {
-        "type": "Infantry",
-        "slot": "Boots (Lethality)",
-        "lvC": 101,
-        "lvT": 125,
-        "mC": 10,
-        "mT": 11,
-        "xp": 70400,
-        "fh": 110,
-        "mg": 4,
-        "mith": 10
-      },
-      {
-        "type": "Cavalry",
-        "slot": "Helm (Lethality)",
-        "lvC": 119,
-        "lvT": 139,
-        "mC": 10,
-        "mT": 11,
-        "xp": 74100,
-        "fh": 110,
-        "mg": 4,
-        "mith": 10
-      },
-      {
-        "type": "Cavalry",
-        "slot": "Gloves (Health)",
-        "lvC": 80,
-        "lvT": 101,
-        "mC": 7,
-        "mT": 10,
-        "xp": 38500,
-        "fh": 270,
-        "mg": 2,
-        "mith": 0
-      },
-      {
-        "type": "Cavalry",
-        "slot": "Chest (Health)",
-        "lvC": 80,
-        "lvT": 120,
-        "mC": 7,
-        "mT": 11,
-        "xp": 91150,
-        "fh": 380,
-        "mg": 6,
-        "mith": 10
-      },
-      {
-        "type": "Cavalry",
-        "slot": "Boots (Lethality)",
-        "lvC": 101,
-        "lvT": 139,
-        "mC": 10,
-        "mT": 11,
-        "xp": 126750,
-        "fh": 110,
-        "mg": 4,
-        "mith": 10
-      },
-      {
-        "type": "Archer",
-        "slot": "Helm (Lethality)",
-        "lvC": 139,
-        "lvT": 139,
-        "mC": 11,
-        "mT": 11,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
-      },
-      {
-        "type": "Archer",
-        "slot": "Gloves (Health)",
-        "lvC": 90,
-        "lvT": 120,
-        "mC": 6,
-        "mT": 11,
-        "xp": 74400,
-        "fh": 450,
-        "mg": 6,
-        "mith": 10
-      },
-      {
-        "type": "Archer",
-        "slot": "Chest (Health)",
-        "lvC": 90,
-        "lvT": 120,
-        "mC": 6,
-        "mT": 11,
-        "xp": 74400,
-        "fh": 450,
-        "mg": 6,
-        "mith": 10
-      },
-      {
-        "type": "Archer",
-        "slot": "Boots (Lethality)",
-        "lvC": 119,
-        "lvT": 179,
-        "mC": 10,
-        "mT": 13,
-        "xp": 288800,
-        "fh": 360,
-        "mg": 19,
-        "mith": 60
-      }
-    ]
-  },
-  "charms": {
-    "targetLvl": 10,
-    "have": {
-      "guides": 340,
-      "designs": 534
-    },
-    "rows": [
-      {
-        "n": "Infantry Charm",
-        "lvl": 0
-      },
-      {
-        "n": "Cavalry Charm",
-        "lvl": 0
-      },
-      {
-        "n": "Archer Charm",
-        "lvl": 0
-      }
-    ]
-  },
-  "widgets": {
-    "have": 45,
-    "rows": [
-      {
-        "hero": "Yang",
-        "lvl": 8
-      },
-      {
-        "hero": "Amadeus",
-        "lvl": 3
-      },
-      {
-        "hero": "Ava",
-        "lvl": 0
-      },
-      {
-        "hero": "Petra",
-        "lvl": 2
-      }
-    ]
   },
   "farm": [
     {
@@ -775,47 +602,11 @@
     },
     {
       "n": "Infirmary",
-      "t": "TG5→TG8",
+      "t": "5→TG8",
       "tg": 1747,
       "ttg": 54,
       "time": "40d 1h",
       "note": "Healing sustain — defer, big",
-      "d": false
-    }
-  ],
-  "step1": [
-    {
-      "t": "Promote staged T9 → T10 across the army",
-      "d": false
-    },
-    {
-      "t": "Time promotions to the KvK ‘Increase Power’ stage",
-      "d": false
-    },
-    {
-      "t": "Complete a full T10 base before chasing T11",
-      "d": false
-    }
-  ],
-  "step2": [
-    {
-      "t": "Grind Archer node A to 12 (+6)",
-      "d": true
-    },
-    {
-      "t": "Finish Archer node B to 12 (+2)",
-      "d": false
-    },
-    {
-      "t": "Finish Archer node C to 12 (+3)",
-      "d": false
-    },
-    {
-      "t": "Buy final unlock node (2,200 Dust + 1M Gold)",
-      "d": false
-    },
-    {
-      "t": "Promote T10 Archers → T11 on a KvK power stage",
       "d": false
     }
   ]
