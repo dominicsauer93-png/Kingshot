@@ -432,7 +432,8 @@
     "tab": "Gear",
     "collapsed": {
       "Combat Quality": false,
-      "Hero Gear": false
+      "Hero Gear": false,
+      "Charms": false
     }
   },
   "troopCounts": {
