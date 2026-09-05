@@ -431,7 +431,8 @@
   "ui": {
     "tab": "Gear",
     "collapsed": {
-      "Combat Quality": false
+      "Combat Quality": false,
+      "Hero Gear": false
     }
   },
   "troopCounts": {
