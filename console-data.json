@@ -353,7 +353,7 @@
   "tg": {
     "have": 881,
     "need": 9757,
-    "ttgHave": 44,
+    "ttgHave": 46,
     "ttgNeed": 781
   },
   "govGear": {
@@ -429,7 +429,7 @@
     ]
   },
   "ui": {
-    "tab": "Build",
+    "tab": "Troops",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": false,
