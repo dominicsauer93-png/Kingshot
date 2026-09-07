@@ -8,9 +8,9 @@
     "goal": "All-round"
   },
   "dust": {
-    "current": 1330,
-    "target": 2716,
-    "gold": 1030000
+    "current": 425,
+    "target": 1346,
+    "gold": 810000
   },
   "nodes": [
     {
@@ -20,12 +20,12 @@
     },
     {
       "name": "Legionaries (Rally)",
-      "cur": 9,
+      "cur": 10,
       "next": 2600
     },
     {
       "name": "Vests (Defense)",
-      "cur": 10,
+      "cur": 12,
       "next": 1192
     }
   ],
