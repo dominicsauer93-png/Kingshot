@@ -99,7 +99,7 @@
   "trackNow": [
     {
       "t": "Finish the T10 transition (promote T9 → T10)",
-      "d": true
+      "d": false
     },
     {
       "t": "Battle research Tier VI — lifts Lethality / Health off the V→VI wall",
