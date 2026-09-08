@@ -745,7 +745,8 @@
       "ttg": 210,
       "time": "73d",
       "note": "METRONOME — raise one tier to uncap the rest, then repeat",
-      "d": false
+      "d": false,
+      "stepIdx": 0
     },
     {
       "n": "Range",
