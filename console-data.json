@@ -364,9 +364,9 @@
   ],
   "tg": {
     "have": 108,
-    "need": 6777,
+    "need": 6561,
     "ttgHave": 1,
-    "ttgNeed": 642
+    "ttgNeed": 624
   },
   "govGear": {
     "targetIdx": 14,
@@ -782,7 +782,8 @@
       "ttg": 54,
       "time": "12d 5h",
       "note": "March capacity — rally contribution",
-      "d": false
+      "d": false,
+      "stepIdx": 5
     },
     {
       "n": "Barracks",
