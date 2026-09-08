@@ -6,10 +6,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0F131A; --panel:#161C26; --panel-2:#1B2330; --line:#2A3444;
-    --text:#E9E7E0; --muted:#8B94A5; --faint:#5C6576;
-    --gold:#F0C05A; --gold-2:#C8892E; --gold-deep:#8A5A1C;
+    --ink:#0F1620; --panel:#172230; --panel-2:#1E2C3C; --line:#37485C;
+    --text:#E8EEF5; --muted:#8FA3B5; --faint:#6E8194;
+    --gold:#4FC3E0; --gold-2:#2C7C93; --gold-deep:#1E5A6E;
     --green:#4FBF7B; --amber:#E4A63D; --red:#E4574B; --blue:#5AA8E0;
+    --field:#21303F; --field-line:#3A4C60;
     --shadow:0 1px 0 rgba(255,255,255,.03), 0 12px 30px -18px rgba(0,0,0,.7);
     --r:14px;
   }
@@ -69,7 +70,7 @@
   .dustline .big{font-family:"JetBrains Mono";font-weight:700;font-size:30px;color:var(--gold)}
   .dustline .of{font-family:"JetBrains Mono";color:var(--muted)}
   .gap-badge{font-family:"JetBrains Mono";font-size:12px;font-weight:700;color:var(--red);background:rgba(228,87,75,.12);border:1px solid rgba(228,87,75,.35);border-radius:999px;padding:4px 10px;margin-left:auto}
-  .meter{height:16px;border-radius:999px;background:#0C0F15;border:1px solid var(--line);overflow:hidden;position:relative}
+  .meter{height:16px;border-radius:999px;background:var(--field);border:1px solid var(--line);overflow:hidden;position:relative}
   .meter .fill{height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold-2) 45%,var(--gold));border-radius:999px;position:relative;transition:width .5s ease}
   @media(prefers-reduced-motion:no-preference){
     .meter .fill::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:translateX(-100%);animation:shimmer 2.6s infinite}
@@ -78,7 +79,7 @@
   .gate-inputs{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
   .field{display:flex;flex-direction:column;gap:4px}
   .field label{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
-  .field input{font-family:"JetBrains Mono";font-size:14px;color:var(--text);background:#0C0F15;border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:130px}
+  .field input{font-family:"JetBrains Mono";font-size:14px;color:var(--text);background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:130px}
   .field input:focus{outline:none;border-color:var(--gold)}
   .unlock-note{font-size:12px;color:var(--muted);margin-top:12px;position:relative}
   .unlock-note b{color:var(--gold)}
@@ -86,7 +87,7 @@
   /* ---- node meters ---- */
   .nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;position:relative}
   @media(max-width:620px){.nodes{grid-template-columns:1fr}}
-  .node{background:#0F141C;border:1px solid var(--line);border-radius:10px;padding:12px}
+  .node{background:#1A2836;border:1px solid var(--line);border-radius:10px;padding:12px}
   .node .nname{font-family:"JetBrains Mono";font-size:11px;color:var(--muted);letter-spacing:.06em;margin-bottom:8px}
   .node .lvl{display:flex;align-items:baseline;gap:6px}
   .node .lvl input{width:44px;font-family:"JetBrains Mono";font-weight:700;font-size:18px;color:var(--gold);background:transparent;border:0;border-bottom:1px dashed var(--line);text-align:center}
@@ -101,12 +102,12 @@
   .pillar{display:grid;grid-template-columns:130px 1fr auto;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
   .pillar:last-child{border-bottom:0}
   .pillar .pname{font-size:13px;font-weight:500}
-  .pbar{height:13px;border-radius:999px;background:#0C0F15;border:1px solid var(--line);overflow:hidden;position:relative}
+  .pbar{height:13px;border-radius:999px;background:var(--field);border:1px solid var(--line);overflow:hidden;position:relative}
   .pbar .pfill{height:100%;border-radius:999px;transition:width .4s;box-shadow:inset 0 -1px 2px rgba(0,0,0,.25)}
   .bench{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--text);opacity:.55}
   .pmeta{display:flex;align-items:center;gap:8px;justify-content:flex-end}
   .pmeta .pv{font-family:"JetBrains Mono";font-size:11px;color:var(--muted)}
-  .pmeta input{width:96px;font-family:"JetBrains Mono";font-size:11px;color:var(--text);background:#0C0F15;border:1px solid var(--line);border-radius:6px;padding:4px 6px;text-align:right}
+  .pmeta input{width:96px;font-family:"JetBrains Mono";font-size:11px;color:var(--text);background:var(--field);border:1px solid var(--line);border-radius:6px;padding:4px 6px;text-align:right}
   .pmeta input.benchin{width:88px;color:var(--muted)}
   .pmeta input:focus{outline:none;border-color:var(--gold)}
   .grade{font-family:"Chakra Petch";font-weight:700;font-size:12px;width:34px;text-align:center;border-radius:6px;padding:3px 0;border:1px solid var(--line)}
@@ -124,9 +125,9 @@
   .badge-now{color:var(--green)} .badge-farm{color:var(--gold)}
   ul.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
   ul.checks li{display:flex;gap:10px;align-items:flex-start;font-size:13px}
-  .cbx{appearance:none;-webkit-appearance:none;width:17px;height:17px;min-width:17px;margin-top:1px;border:1px solid var(--faint);border-radius:5px;background:#0C0F15;cursor:pointer;position:relative;transition:.15s}
+  .cbx{appearance:none;-webkit-appearance:none;width:17px;height:17px;min-width:17px;margin-top:1px;border:1px solid var(--faint);border-radius:5px;background:var(--field);cursor:pointer;position:relative;transition:.15s}
   .cbx:checked{background:linear-gradient(180deg,var(--gold),var(--gold-2));border-color:var(--gold-2)}
-  .cbx:checked::after{content:"";position:absolute;left:5px;top:1.5px;width:4px;height:9px;border:solid #0C0F15;border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .cbx:checked::after{content:"";position:absolute;left:5px;top:1.5px;width:4px;height:9px;border:solid var(--field);border-width:0 2px 2px 0;transform:rotate(45deg)}
   .cbx:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   ul.checks li.done span{color:var(--faint);text-decoration:line-through}
   ul.checks li span{cursor:text}
@@ -147,7 +148,8 @@
   .tag.rich{color:var(--green);border-color:rgba(79,191,123,.4)}
   .tag.ok{color:var(--muted)}
   .tag{cursor:pointer;user-select:none}
-  .sigsel{appearance:none;-webkit-appearance:none;font-family:"JetBrains Mono";font-size:10px;padding:4px 22px 4px 10px;border-radius:999px;background:#0C0F15 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'><path d='M2 3l3 3 3-3' stroke='%238B94A5' stroke-width='1.4' fill='none'/></svg>") no-repeat right 8px center;border:1px solid var(--line);cursor:pointer}
+  .sigsel{appearance:none;-webkit-appearance:none;font-family:"JetBrains Mono";font-size:11px;color:var(--text);padding:6px 24px 6px 11px;border-radius:8px;background:var(--field) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'><path d='M2 3l3 3 3-3' stroke='%238FA3B5' stroke-width='1.4' fill='none'/></svg>") no-repeat right 8px center;border:1px solid var(--field-line);cursor:pointer}
+  .sigsel option{background:#172230;color:var(--text)}
   .sigsel:focus{outline:none;border-color:var(--gold)}
   .sigsel.rich{color:var(--green);border-color:rgba(79,191,123,.4)}
   .sigsel.scarce{color:var(--red);border-color:rgba(228,87,75,.4)}
@@ -162,14 +164,14 @@
 
   .combat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   @media(max-width:620px){.combat-grid{grid-template-columns:1fr}}
-  .stat{background:#0F141C;border:1px solid var(--line);border-radius:10px;padding:14px}
+  .stat{background:#1A2836;border:1px solid var(--line);border-radius:10px;padding:14px}
   .stat .lab{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
   .stat .val{font-family:"Chakra Petch";font-weight:700;font-size:26px;margin-top:4px}
   .wl{display:flex;gap:10px;margin-top:8px;font-family:"JetBrains Mono";font-size:12px;color:var(--muted)}
-  .wl input{width:56px;font-family:"JetBrains Mono";background:#0C0F15;border:1px solid var(--line);border-radius:6px;color:var(--text);padding:4px 6px;text-align:center}
+  .wl input{width:56px;font-family:"JetBrains Mono";background:var(--field);border:1px solid var(--line);border-radius:6px;color:var(--text);padding:4px 6px;text-align:center}
   .wl input:focus{outline:none;border-color:var(--gold)}
 
-  textarea.notes{width:100%;min-height:90px;background:#0C0F15;border:1px solid var(--line);border-radius:10px;color:var(--text);font-family:"Inter";font-size:13px;padding:12px;resize:vertical}
+  textarea.notes{width:100%;min-height:90px;background:var(--field);border:1px solid var(--line);border-radius:10px;color:var(--text);font-family:"Inter";font-size:13px;padding:12px;resize:vertical}
   textarea.notes:focus{outline:none;border-color:var(--gold)}
 
   .donotfund{font-size:12.5px;color:var(--muted);margin-top:14px;padding:10px 12px;border-left:2px solid var(--gold-2);background:rgba(240,192,90,.05);border-radius:0 8px 8px 0}
@@ -178,7 +180,7 @@
   .today{background:linear-gradient(180deg,rgba(240,192,90,.08),var(--panel));border:1px solid var(--gold-2);border-radius:var(--r);padding:18px;margin-bottom:22px;box-shadow:var(--shadow)}  .today-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
   .today-kicker{font-family:"Chakra Petch";font-weight:700;font-size:18px;letter-spacing:.02em;color:var(--gold);margin-right:10px}
   .today-date{font-size:12px;color:var(--muted)}
-  .today-status{font-size:13.5px;line-height:1.7;background:#0C0F15;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+  .today-status{font-size:13.5px;line-height:1.7;background:var(--field);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:14px}
   .today-status b{color:var(--gold)}
   .today-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   @media(max-width:640px){.today-grid{grid-template-columns:1fr}}
@@ -188,7 +190,7 @@
   .today-flag.warn::before{color:var(--red)}
   .cd-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);margin-bottom:6px}
   .cd-row span:first-child{width:110px}
-  .cd-input{background:#0C0F15;border:1px solid var(--line);border-radius:6px;color:var(--text);font-family:"JetBrains Mono";font-size:11px;padding:4px 6px}
+  .cd-input{background:var(--field);border:1px solid var(--line);border-radius:6px;color:var(--text);font-family:"JetBrains Mono";font-size:11px;padding:4px 6px}
   .cd-input:focus{outline:none;border-color:var(--gold)}
   .cd-out{color:var(--gold)}
   .today-decide{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
@@ -202,14 +204,14 @@
   .sechead .chev{margin-left:auto;color:var(--faint);font-size:11px;transition:transform .2s;padding-left:8px}
   section.collapsed .chev{transform:rotate(-90deg)}
   section.collapsed > :not(.sechead){display:none!important}
-  .minibar{height:8px;border-radius:999px;background:#0C0F15;border:1px solid var(--line);overflow:hidden;margin-top:6px}
+  .minibar{height:8px;border-radius:999px;background:var(--field);border:1px solid var(--line);overflow:hidden;margin-top:6px}
   .minibar .mf{height:100%;border-radius:999px;transition:width .4s}
   .metric-row{margin:10px 0}
   .metric-top{display:flex;justify-content:space-between;align-items:baseline;font-family:"JetBrains Mono";font-size:11px;color:var(--muted)}
   .metric-top b{color:var(--gold)}
   .lvlbar{height:6px;border-radius:999px;background:#20293A;overflow:hidden;margin-top:5px;max-width:160px}
   .lvlbar .lf{height:100%;background:linear-gradient(90deg,var(--gold-2),var(--gold));border-radius:999px}
-  .tnum{width:96px;background:#0C0F15;border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:12px;padding:4px 6px;text-align:right}
+  .tnum{width:96px;background:var(--field);border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:12px;padding:4px 6px;text-align:right}
   .tnum:focus{outline:none;border-color:var(--gold)}
   body.compact .card{padding:12px}
   body.compact section{margin-bottom:12px}
@@ -225,7 +227,7 @@
   .syncgrid .field input{width:120px}
   .synctoggle{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);margin-top:12px;cursor:pointer}
   .synctoggle input{width:16px;height:16px;accent-color:var(--gold)}
-  .syncstat{font-family:"JetBrains Mono";font-size:11px;color:var(--muted);margin-top:12px;padding:8px 10px;background:#0C0F15;border:1px solid var(--line);border-radius:8px}
+  .syncstat{font-family:"JetBrains Mono";font-size:11px;color:var(--muted);margin-top:12px;padding:8px 10px;background:var(--field);border:1px solid var(--line);border-radius:8px}
   .syncstat.ok{color:var(--green);border-color:rgba(79,191,123,.35)}
   .syncstat.err{color:var(--red);border-color:rgba(228,87,75,.35)}
   .syncstat.warn{color:var(--amber);border-color:rgba(228,166,61,.35)}
@@ -301,18 +303,18 @@
       <p class="unlock-note">Exact remaining to unlock T11 Archer: <b>6,028 Dust · 2.01M Gold · 134M bread/wood · ~147d research</b>. Arrows is <b>MAXED</b> — only Vests (3 lvls) and Legionaries (5 lvls) left, then the unlock node. <span id="goldNote"></span></p>
 
       <div class="nodes" id="nodes"></div>
-      <div style="margin-top:14px;background:#0C0F15;border:1px solid var(--gold-2);border-radius:10px;padding:14px">
+      <div style="margin-top:14px;background:var(--field);border:1px solid var(--gold-2);border-radius:10px;padding:14px">
         <div class="disp" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Everything to reach T11 Archers — in one hit</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px">
-          <div>Dust <b style="color:var(--gold)">6,028</b></div>
-          <div>Gold <b style="color:var(--gold)">2.01M</b></div>
-          <div>Research <b style="color:var(--gold)">~147d</b></div>
-          <div>Bread <b>134M</b></div>
-          <div>Wood <b>134M</b></div>
-          <div>Stone <b>26.6M</b></div>
-          <div>Iron <b>6.64M</b></div>
+          <div>Dust <b style="color:var(--gold)" id="t11Dust">—</b></div>
+          <div>Gold <b style="color:var(--gold)" id="t11Gold">—</b></div>
+          <div>Research <b style="color:var(--gold)" id="t11Time">—</b></div>
+          <div>Bread <b id="t11Bread">—</b></div>
+          <div>Wood <b id="t11Wood">—</b></div>
+          <div>Stone <b id="t11Stone">—</b></div>
+          <div>Iron <b id="t11Iron">—</b></div>
         </div>
-        <div class="sub" style="margin-top:8px">Vests 9→12 · Legionaries 7→12 · Truegold Archers unlock. Arrows already MAXED.</div>
+        <div class="sub" style="margin-top:8px" id="t11Note">Auto-computed from your archer node levels.</div>
       </div>
       <p class="unlock-note" style="margin-top:14px"><b style="color:var(--muted)">Do Archer first</b> — it's nearly there. Infantry below is Phase 2, the next commitment, not a parallel one.</p>
     </div>
@@ -454,9 +456,9 @@
 
   <!-- RESOURCES -->
   <section>
-    <div class="sechead"><span class="num">06</span><h2>Resources &amp; Speedups</h2><span class="hint">rich in troops, poor in research + dust</span></div>
+    <div class="sechead"><span class="num">06</span><h2>Resources &amp; Speedups</h2><span class="hint">amount you hold · what it's for</span></div>
     <div class="card">
-      <table><thead><tr><th style="width:40%">Item</th><th>Held</th><th style="width:120px">Signal</th><th></th></tr></thead>
+      <table><thead><tr><th style="width:34%">Item</th><th style="width:80px">Amount</th><th>Use case</th><th></th></tr></thead>
       <tbody id="resBody"></tbody></table>
       <button class="additem" id="addRes">+ add material</button>
     </div>
@@ -489,9 +491,9 @@
       </div>
       <div class="gate-inputs">
         <div class="field"><label>TG in hand</label><input class="mono" id="tgHave" inputmode="numeric"></div>
-        <div class="field"><label>TG needed (all)</label><input class="mono" id="tgNeed" inputmode="numeric"></div>
+        <div class="field"><label>TG needed (auto)</label><div class="mono" id="bldTG" style="font-size:14px;color:var(--gold);padding:8px 0">—</div></div>
         <div class="field"><label>TTG in hand</label><input class="mono" id="ttgHave" inputmode="numeric"></div>
-        <div class="field"><label>TTG needed (all)</label><input class="mono" id="ttgNeed" inputmode="numeric"></div>
+        <div class="field"><label>TTG needed (auto)</label><div class="mono" id="bldTTG" style="font-size:14px;color:var(--gold);padding:8px 0">—</div></div>
       </div>
       <p class="unlock-note" id="tgNote"></p>
       <div class="metric-row">
@@ -505,33 +507,16 @@
     </div>
     <div class="card">
       <p class="sub" style="margin:0 0 12px"><b>Raise TC one tier, then spend the freed cap + TTG in the order below. Repeat. Defer Stable &amp; Infirmary.</b></p>
-      <div style="background:#0C0F15;border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px">
-        <div class="disp" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-2);margin-bottom:8px">Total supplies to TG8 (all buildings)</div>
+      <div style="background:var(--field);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px">
+        <div class="disp" style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-2);margin-bottom:8px">Total supplies remaining (all buildings → TG8)</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12px">
-          <div>Wood <b>4.89B</b></div><div>Bread <b>4.89B</b></div><div>Stone <b>982M</b></div>
-          <div>Iron <b>245M</b></div><div>Truegold <b style="color:var(--gold)">9,757</b></div><div>Tempered TG <b style="color:var(--gold)">781</b></div>
+          <div>Wood <b id="bldWood">—</b></div><div>Bread <b id="bldBread">—</b></div><div>Stone <b id="bldStone">—</b></div>
+          <div>Iron <b id="bldIron">—</b></div><div>Truegold <b style="color:var(--gold)" id="bldTGb">—</b></div><div>Tempered TG <b style="color:var(--gold)" id="bldTTGb">—</b></div>
         </div>
       </div>
-      <table><thead><tr><th style="width:20%">Building</th><th>Tier</th><th>TG</th><th>TTG</th><th>Time</th><th></th></tr></thead>
+      <table><thead><tr><th style="width:20%">Building</th><th>Currently at</th><th>TG</th><th>TTG</th><th>Resources</th><th></th></tr></thead>
       <tbody id="buildBody"></tbody></table>
       <button class="additem" id="addBuild">+ add building</button>
-    </div>
-  </section>
-
-  <!-- FARM ACCOUNT -->
-  <section>
-    <div class="sechead"><span class="num">10</span><h2>Farm Account</h2><span class="hint">feeder now · possible main later</span></div>
-    <div class="grid2">
-      <div class="card">
-        <h3 class="disp" style="font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 12px">Farm snapshot</h3>
-        <table><tbody id="farmBody"></tbody></table>
-        <p class="sub" style="margin:12px 0 0"><b>Dual-goal rule:</b> grow the slow stuff (buildings, research, heroes) now; keep the fast, farm-blocking stuff (<b>Storehouse, army</b>) LOW until you flip it to a main.</p>
-      </div>
-      <div class="card track">
-        <h3>Plunder-day checklist</h3>
-        <p class="sub">No trade button — transfer = attack your own farm. Batch it; time to main's needs.</p>
-        <ul class="checks" id="farmChecks"></ul>
-      </div>
     </div>
   </section>
 
@@ -606,7 +591,7 @@
   <section>
     <div class="sechead"><span class="num">17</span><h2>Charms</h2><span class="hint">Charm Designs are the bottleneck</span></div>
     <div class="card">
-      <p class="sub">Set each charm's level and a shared target. It totals the Charm Guides &amp; Charm Designs still needed vs what you hold. Prioritise Designs.</p>
+      <p class="sub">18 charms, 6 per troop type. Set each level; it totals Guides &amp; Designs needed vs what you hold. Designs are the bottleneck.</p>
       <div class="field" style="margin-bottom:12px"><label>Target level (all charms)</label><select id="charmTarget" class="sigsel" style="padding-right:24px;min-width:110px"></select></div>
       <div class="gate-inputs" style="margin-bottom:10px">
         <div class="field"><label>Charm Guides in hand</label><input class="mono" id="charmGuidesHave" inputmode="numeric" style="width:120px"></div>
@@ -614,8 +599,12 @@
       </div>
       <div class="metric-row"><div class="metric-top"><span>Charm Guides</span><span id="charmGuidesTxt"></span></div><div class="meter"><div class="fill" id="charmGuidesFill" style="width:0%"></div></div></div>
       <div class="metric-row"><div class="metric-top"><span>Charm Designs <span style="color:var(--faint)">(bottleneck)</span></span><span id="charmDesignsTxt"></span></div><div class="meter"><div class="fill" id="charmDesignsFill" style="width:0%"></div></div></div>
-      <table><thead><tr><th style="width:55%">Charm</th><th>Level</th><th></th></tr></thead><tbody id="charmBody"></tbody></table>
-      <button class="additem" id="addCharm">+ add charm</button>
+      <div style="display:flex;gap:8px;align-items:center;margin:14px 0 4px">
+        <span class="today-label" style="margin:0">Set all to</span>
+        <select id="charmSetAll" class="sigsel" style="padding-right:24px"></select>
+        <button class="btn" id="charmApplyAll">Apply</button>
+      </div>
+      <div id="charmBody"></div>
     </div>
   </section>
 
@@ -630,6 +619,7 @@
       </div>
       <div class="metric-row"><div class="metric-top"><span>Widget mats</span><span id="widMeterTxt"></span></div><div class="meter"><div class="fill" id="widFill" style="width:0%"></div></div></div>
       <table><thead><tr><th style="width:45%">Hero</th><th>Widget lvl</th><th>To max</th><th></th></tr></thead><tbody id="widBody"></tbody></table>
+      <datalist id="widHeroList"></datalist>
       <button class="additem" id="addWid">+ add hero</button>
     </div>
   </section>
@@ -647,7 +637,7 @@
         <button class="btn g" id="csvParse">Parse &amp; preview</button>
       </div>
       <div class="syncstat" id="csvStatus" style="display:none;margin-top:12px"></div>
-      <div id="csvPreview" style="display:none;margin-top:12px;background:#0C0F15;border:1px solid var(--line);border-radius:10px;padding:14px">
+      <div id="csvPreview" style="display:none;margin-top:12px;background:var(--field);border:1px solid var(--line);border-radius:10px;padding:14px">
         <div id="csvPreviewBody" style="font-size:12.5px;line-height:1.7"></div>
         <button class="btn grn" id="csvApply" style="margin-top:12px">✓ Apply to console</button>
         <button class="btn" id="csvCancel" style="margin-top:12px">Cancel</button>
@@ -702,7 +692,7 @@
 
 /* ---------- seed (the whole chat, structured) ---------- */
 const SEED = {
-  account:{ tc:"Truegold Lv. 6", day:"425", power:"242,423,358", vip:"8", spender:"Low–mid", goal:"All-round" },
+  account:{ tc:"Truegold Lv. 7", day:"443", power:"242,423,358", vip:"8", spender:"Low–mid", goal:"All-round" },
   dust:{ current:274, target:6028, gold:218000 },
   nodes:[
     {name:"Arrows (Attack)",     cur:12, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
@@ -738,18 +728,18 @@ const SEED = {
   combat:{ attW:160, attL:211, defW:672, defL:55, leth:66.5, hp:49.0,
     troopStatus:"T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot." },
   resources:[
-    {n:"Soldier Training speedup", h:"~11 days", s:"rich"},
-    {n:"General speedup",          h:"~9.5 days", s:"rich"},
-    {n:"Soldier Healing speedup",  h:"~7.5 days", s:"ok"},
-    {n:"Construction speedup",     h:"~2 days", s:"ok"},
-    {n:"Research speedup",         h:"~11 hours", s:"scarce"},
-    {n:"Bread",  h:"2.29B", s:"rich"},
-    {n:"Wood",   h:"2.29B", s:"rich"},
-    {n:"Stone",  h:"275.77M", s:"ok"},
-    {n:"Iron",   h:"215.72M", s:"ok"},
-    {n:"Gold",   h:"218K", s:"scarce"},
-    {n:"Mithril (hero gear)", h:"10", s:"ok"},
-    {n:"Research Speed (stat)", h:"61.2%", s:"scarce"}
+    {n:"Soldier Training speedup", h:"", use:"Promote T10→T11 Archers (on a KvK power stage)"},
+    {n:"General speedup",          h:"", use:"Flex to whatever's gating T11 right now"},
+    {n:"Soldier Healing speedup",  h:"", use:"Heal fast after Bear/KvK — keep archers firing"},
+    {n:"Construction speedup",     h:"", use:"War Academy → Range first, then the TC cycle"},
+    {n:"Research speedup",         h:"", use:"Battle Tier VI first, then T11 archer research"},
+    {n:"Bread",  h:"", use:"Overfeed the Crucible (→TG) + troop training"},
+    {n:"Wood",   h:"", use:"Crucible feed + building upgrades"},
+    {n:"Stone",  h:"", use:"Building upgrades toward TG8"},
+    {n:"Iron",   h:"", use:"Building upgrades toward TG8"},
+    {n:"Gold",   h:"", use:"Bank for the 2.01M T11 unlock — don't convert to Dust"},
+    {n:"Mithril (hero gear)", h:"", use:"Hero gear only — low priority, spend spare"},
+    {n:"Research Speed (stat)", h:"", use:"Raise it — compounds across the ~329d T11 grind"}
   ],
   masters:[
     {n:"Pan",       l:"90", note:"Best master — push to 100; Ways-and-Means / Falconer"},
@@ -815,7 +805,9 @@ const SEED = {
     ]
   },
   charms:{ targetLvl:22, have:{guides:0,designs:0}, rows:[
-    {n:"Infantry Charm", lvl:0},{n:"Cavalry Charm", lvl:0},{n:"Archer Charm", lvl:0}
+    {type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},
+    {type:"Infantry", lvl:6},{type:"Infantry", lvl:5},{type:"Infantry", lvl:5},{type:"Infantry", lvl:5},{type:"Infantry", lvl:5},{type:"Infantry", lvl:5},
+    {type:"Archer", lvl:6},{type:"Archer", lvl:6},{type:"Archer", lvl:6},{type:"Archer", lvl:9},{type:"Archer", lvl:6},{type:"Archer", lvl:6}
   ]},
   widgets:{ have:0, rows:[ {hero:"Yang", lvl:2}, {hero:"Amadeus", lvl:2}, {hero:"Petra", lvl:2} ] },
   farm:[
@@ -835,14 +827,14 @@ const SEED = {
     {t:"(Weekly) Bear Hunt rallies + Eternity's Reach tokens", d:false}
   ],
   buildings:[
-    {n:"Town Center",    t:"per tier", tg:2160, ttg:210, time:"73d",     note:"METRONOME — raise one tier to uncap the rest, then repeat", d:false},
-    {n:"Range",          t:"TG6→TG8", tg:972,  ttg:91,  time:"10d 22h", note:"Archer line — your main combat", d:false},
-    {n:"War Academy",    t:"TG5→TG8", tg:1377, ttg:116, time:"20d 8h",  note:"Research speed + T11 gate", d:false},
-    {n:"Embassy",        t:"TG6→TG8", tg:540,  ttg:49,  time:"48d 4h",  note:"Rally/garrison capacity — events", d:false},
-    {n:"Command Center", t:"TG5→TG8", tg:612,  ttg:54,  time:"12d 5h",  note:"March capacity — rally contribution", d:false},
-    {n:"Barracks",       t:"TG6→TG8", tg:972,  ttg:91,  time:"10d 22h", note:"Infantry tanks", d:false},
-    {n:"Stable",         t:"TG5→TG8", tg:1377, ttg:116, time:"15d 6h",  note:"Cavalry (off-focus) — defer", d:false},
-    {n:"Infirmary",      t:"5→TG8",   tg:1747, ttg:54,  time:"40d 1h",  note:"Healing sustain — defer, big", d:false}
+    {n:"Town Center",    stepIdx:0, note:"METRONOME — raise one tier to uncap the rest", d:false},
+    {n:"Range",          stepIdx:0, note:"Archer line — your main combat", d:false},
+    {n:"War Academy",    stepIdx:0, note:"Research speed + T11 gate", d:false},
+    {n:"Embassy",        stepIdx:0, note:"Rally/garrison capacity — events", d:false},
+    {n:"Command Center", stepIdx:0, note:"March capacity — rally contribution", d:false},
+    {n:"Barracks",       stepIdx:0, note:"Infantry tanks", d:false},
+    {n:"Stable",         stepIdx:0, note:"Cavalry (off-focus) — defer", d:false},
+    {n:"Infirmary",      stepIdx:0, note:"Healing sustain — defer, big", d:false}
   ]
 };
 
@@ -953,14 +945,37 @@ function importData(file){
 let state=structuredClone(SEED);
 const fmt=n=>Number(n).toLocaleString("en-US");
 const num=v=>{ const n=parseFloat(String(v).replace(/[^0-9.\-]/g,"")); return isNaN(n)?0:n; };
+function fmtInputs(){
+  document.querySelectorAll("input").forEach(el=>{
+    if(el===document.activeElement || el.type==="date" || el.type==="password" || el.type==="checkbox") return;
+    const v=(el.value||"").replace(/,/g,"");
+    if(/^\d{4,}$/.test(v)) el.value=Number(v).toLocaleString("en-US");
+  });
+}
+function initCommaFormatting(){
+  document.addEventListener("focusin",e=>{ const t=e.target; if(t&&t.tagName==="INPUT"&&/^[\d,]+$/.test(t.value)) t.value=t.value.replace(/,/g,""); });
+  document.addEventListener("focusout",e=>{ const t=e.target; if(t&&t.tagName==="INPUT"&&t.type!=="date"&&t.type!=="password"){ const v=(t.value||"").replace(/,/g,""); if(/^\d{4,}$/.test(v)) t.value=Number(v).toLocaleString("en-US"); } });
+}
 
 /* ---------- identity strip ---------- */
 const idFields=[["tc","Town Center"],["day","Kingdom Day"],["power","Total Power"],["vip","VIP"],["spender","Spender"],["goal","Goal"]];
+function kingdomDay(){
+  if(!state.account.dayAnchor) return state.account.day||"—";
+  const a=new Date(state.account.dayAnchor+"T00:00:00Z");
+  const n=new Date(); const utc=Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate());
+  return Math.floor((utc-a.getTime())/86400000)+1;
+}
 function buildId(){
   const el=document.getElementById("idstrip"); el.innerHTML="";
   idFields.forEach(([k,lab])=>{
     const c=document.createElement("div"); c.className="idcell";
     c.innerHTML=`<label>${lab}</label>`;
+    if(k==="day"){
+      const d=document.createElement("input"); d.value=kingdomDay();
+      d.title="Auto-updates daily (UTC). Type the correct day to re-anchor if it drifts.";
+      d.onchange=()=>{ const n=parseInt(String(d.value).replace(/,/g,"")); if(n>0){ const a=new Date(); a.setUTCDate(a.getUTCDate()-(n-1)); state.account.dayAnchor=a.toISOString().slice(0,10); state.account.day=String(n); scheduleSave(); } d.value=kingdomDay(); };
+      c.appendChild(d); el.appendChild(c); return;
+    }
     const i=document.createElement("input"); i.value=state.account[k]||"";
     i.oninput=()=>{ state.account[k]=i.value; scheduleSave(); };
     c.appendChild(i); el.appendChild(c);
@@ -985,6 +1000,28 @@ function computeTarget(){
   state.dust.target=Math.round(t);
   return state.dust.target;
 }
+/* per-level resource ladders (gold, bread=wood, stone, iron, days) for the T11 panel */
+const _ags={gold:[15000,18000,22000,27000,33000,40000,49000,60000,75000,90000,100000,130000],res:[700000,860000,1000000,1200000,1500000,1800000,2300000,2800000,3500000,4200000,5000000,6200000],stone:[140000,170000,210000,250000,300000,370000,460000,560000,700000,840000,1000000,1200000],iron:[35000,43000,52000,63000,77000,94000,110000,140000,170000,210000,250000,310000],days:[0.79,0.97,1.17,1.42,1.71,2.13,2.58,3.13,3.92,4.71,5.67,7.0]};
+const NODE_RES={
+  arrows:_ags, vests:_ags,
+  legionaries:{gold:[23000,28000,34000,41000,51000,62000,76000,93000,110000,130000,160000,200000],res:[1000000,1300000,1600000,1900000,2300000,2900000,3500000,4300000,5400000,6500000,7800000,9600000],stone:[210000,260000,320000,390000,470000,580000,710000,860000,1000000,1300000,1500000,1900000],iron:[54000,66000,81000,97000,110000,140000,170000,210000,270000,320000,390000,480000],days:[1.21,1.5,1.83,2.17,2.67,3.29,4.0,4.88,6.08,7.33,8.79,10.88]},
+  archers:{gold:[1000000],res:[85000000],stone:[17000000],iron:[4200000],days:[91.33]}
+};
+function nodeResKey(nd){ return Object.keys(NODE_RES).find(x=>nd.name.toLowerCase().includes(x)); }
+function fmtBig(n){ n=Math.round(n); if(n>=1e9) return (n/1e9).toFixed(2).replace(/\.?0+$/,"")+"B"; if(n>=1e6) return (n/1e6).toFixed(1).replace(/\.0$/,"")+"M"; if(n>=1e3) return Number(n).toLocaleString("en-US"); return String(n); }
+function paintT11(){
+  if(!document.getElementById("t11Dust")) return;
+  let gold=0,res=0,stone=0,iron=0,days=0;
+  state.nodes.forEach(nd=>{ const k=nodeResKey(nd); if(!k) return; const R=NODE_RES[k]; const mx=nd.max||12;
+    for(let i=Math.max(0,nd.cur);i<mx;i++){ if(R.gold[i]!=null){ gold+=R.gold[i]; res+=R.res[i]; stone+=R.stone[i]; iron+=R.iron[i]; days+=R.days[i]; } } });
+  document.getElementById("t11Dust").textContent=fmt(computeTarget());
+  document.getElementById("t11Gold").textContent=fmtBig(gold);
+  document.getElementById("t11Bread").textContent=fmtBig(res);
+  document.getElementById("t11Wood").textContent=fmtBig(res);
+  document.getElementById("t11Stone").textContent=fmtBig(stone);
+  document.getElementById("t11Iron").textContent=fmtBig(iron);
+  document.getElementById("t11Time").textContent="~"+Math.round(days)+"d";
+}
 function paintGate(){
   const tgt=Math.max(1,computeTarget());
   const cur=num(state.dust.current);
@@ -1001,6 +1038,7 @@ function paintGate(){
   document.getElementById("goldNote").innerHTML = gold<2013000
     ? `You’re <b style="color:var(--red)">${fmt(2013000-gold)}</b> gold short of the 2.01M unlock-path total.`
     : `Gold covers the 2.01M unlock path.`;
+  paintT11();
 }
 function buildGate(){
   const dc=document.getElementById("dustCur"), gc=document.getElementById("goldCur");
@@ -1201,42 +1239,46 @@ function buildBear(){
   paint();
 }
 
-/* ---------- hero gear (upgrade planner) ---------- */
+/* ---------- hero gear (collapsible groups → compact table) ---------- */
 const HG_TYPES=["Infantry","Cavalry","Archer"];
 function buildHeroGear(){
   if(!state.heroGear||!Array.isArray(state.heroGear.rows)) state.heroGear=structuredClone(SEED.heroGear);
-  const hg=state.heroGear; if(!hg.have) hg.have={xp:0,fh:0,mg:0,mith:0};
+  const hg=state.heroGear; if(!hg.have) hg.have={xp:0,fh:0,mg:0,mith:0}; if(!hg.open) hg.open={Infantry:true,Cavalry:true,Archer:true};
   const host=document.getElementById("hgBody"); if(!host) return;
-  // have inputs
   [["hgXp","xp"],["hgFh","fh"],["hgMg","mg"],["hgMith","mith"]].forEach(([id,k])=>{
     const el=document.getElementById(id); if(el){ el.value=hg.have[k]||0; el.oninput=()=>{ hg.have[k]=num(el.value); paintHgSummary(); scheduleSave(); }; }
   });
   host.innerHTML="";
-  hg.rows.forEach(r=>{
-    const noUp = num(r.xp)+num(r.fh)+num(r.mg)+num(r.mith)===0;
-    const row=document.createElement("div");
-    row.style.cssText="background:#0F141C;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px";
-    row.innerHTML=`<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px">
-        <select class="sigsel hgtype" style="padding-right:22px">${HG_TYPES.map(t=>`<option${t===r.type?' selected':''}>${t}</option>`).join("")}</select>
-        <input class="hgslot" value="${(r.slot||'').replace(/"/g,'&quot;')}" style="flex:1;min-width:120px;font-size:12.5px;background:transparent;border:0;border-bottom:1px dashed var(--line);color:var(--text)">
-        <button class="del hgdel" title="Remove">×</button>
-      </div>
-      <div class="mono" style="font-size:11px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px">
-        <span>Lv <input class="tnum hgf" data-f="lvC" value="${r.lvC}" style="width:52px">→<input class="tnum hgf" data-f="lvT" value="${r.lvT}" style="width:52px"></span>
-        <span>M <input class="tnum hgf" data-f="mC" value="${r.mC}" style="width:40px">→<input class="tnum hgf" data-f="mT" value="${r.mT}" style="width:40px"></span>
-      </div>
-      ${noUp?`<div class="mono" style="font-size:11px;color:var(--faint)">No upgrade needed</div>`:
-      `<div class="mono" style="font-size:11px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap">
-        <span>XP <input class="tnum hgf" data-f="xp" value="${r.xp}" style="width:72px"></span>
-        <span>FH <input class="tnum hgf" data-f="fh" value="${r.fh}" style="width:52px"></span>
-        <span>Myth <input class="tnum hgf" data-f="mg" value="${r.mg}" style="width:44px"></span>
-        <span>Mith <input class="tnum hgf" data-f="mith" value="${r.mith}" style="width:44px"></span>
-      </div>`}`;
-    row.querySelector(".hgtype").onchange=e=>{ r.type=e.target.value; scheduleSave(); };
-    row.querySelector(".hgslot").oninput=e=>{ r.slot=e.target.value; scheduleSave(); };
-    row.querySelectorAll(".hgf").forEach(inp=>{ inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); paintHgSummary(); scheduleSave(); }; });
-    row.querySelector(".hgdel").onclick=()=>{ const i=hg.rows.indexOf(r); if(i>-1){ hg.rows.splice(i,1); buildHeroGear(); scheduleSave(); } };
-    host.appendChild(row);
+  HG_TYPES.forEach(type=>{
+    const pieces=hg.rows.filter(r=>r.type===type); if(!pieces.length) return;
+    const open=hg.open[type]!==false;
+    const head=document.createElement("div");
+    head.style.cssText="display:flex;justify-content:space-between;align-items:center;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:8px 0 0;cursor:pointer";
+    head.innerHTML=`<span style="font-weight:600;font-size:13px">${open?'▾':'▸'} ${type} <span style="color:var(--muted);font-weight:400;font-size:11px">${pieces.length} pieces</span></span>`;
+    head.onclick=()=>{ hg.open[type]=!open; buildHeroGear(); scheduleSave(); };
+    host.appendChild(head);
+    if(!open) return;
+    const wrap=document.createElement("div"); wrap.style.cssText="overflow-x:auto;margin-top:6px";
+    const tbl=document.createElement("table"); tbl.style.cssText="width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap";
+    tbl.innerHTML=`<thead><tr style="color:var(--faint);text-align:left"><th style="padding:3px 8px 5px 0">Slot</th><th style="padding:3px 6px">Lv</th><th style="padding:3px 6px">M</th><th style="padding:3px 6px">XP</th><th style="padding:3px 6px">FH</th><th style="padding:3px 6px">Myth</th><th style="padding:3px 6px">Mith</th><th></th></tr></thead><tbody></tbody>`;
+    const tb=tbl.querySelector("tbody");
+    pieces.forEach(r=>{
+      const noUp=num(r.xp)+num(r.fh)+num(r.mg)+num(r.mith)===0;
+      const tr=document.createElement("tr"); tr.style.borderTop="1px solid var(--line)"; if(noUp) tr.style.opacity=".55";
+      tr.innerHTML=`<td style="padding:5px 8px 5px 0"><input class="hgslot" value="${(r.slot||'').replace(/"/g,'&quot;')}" style="width:120px;background:transparent;border:0;color:var(--text);font-family:inherit;font-size:11px"></td>
+        <td style="padding:5px 6px"><input class="tnum hgf" data-f="lvC" value="${r.lvC}" style="width:44px">→<input class="tnum hgf" data-f="lvT" value="${r.lvT}" style="width:44px"></td>
+        <td style="padding:5px 6px"><input class="tnum hgf" data-f="mC" value="${r.mC}" style="width:34px">→<input class="tnum hgf" data-f="mT" value="${r.mT}" style="width:34px"></td>
+        <td style="padding:5px 6px"><input class="tnum hgf" data-f="xp" value="${r.xp}" style="width:66px"></td>
+        <td style="padding:5px 6px"><input class="tnum hgf" data-f="fh" value="${r.fh}" style="width:46px"></td>
+        <td style="padding:5px 6px"><input class="tnum hgf" data-f="mg" value="${r.mg}" style="width:38px"></td>
+        <td style="padding:5px 6px"><input class="tnum hgf" data-f="mith" value="${r.mith}" style="width:38px"></td>
+        <td style="padding:5px 0"><button class="del" title="Remove">×</button></td>`;
+      tr.querySelectorAll(".hgf").forEach(inp=>{ inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); paintHgSummary(); scheduleSave(); }; });
+      const slotInp=tr.querySelector(".hgslot"); slotInp.oninput=()=>{ r.slot=slotInp.value; scheduleSave(); };
+      tr.querySelector(".del").onclick=()=>{ const i=hg.rows.indexOf(r); if(i>-1){ hg.rows.splice(i,1); buildHeroGear(); scheduleSave(); } };
+      tb.appendChild(tr);
+    });
+    wrap.appendChild(tbl); host.appendChild(wrap);
   });
   const add=document.getElementById("addHg");
   if(add) add.onclick=()=>{ hg.rows.push({type:"Archer",slot:"New (stat)",lvC:0,lvT:0,mC:0,mT:0,xp:0,fh:0,mg:0,mith:0}); buildHeroGear(); scheduleSave(); };
@@ -1273,21 +1315,29 @@ function buildCharms(){
   [["charmGuidesHave","guides"],["charmDesignsHave","designs"]].forEach(([id,k])=>{
     const el=document.getElementById(id); if(el){ el.value=c.have[k]||0; el.oninput=()=>{ c.have[k]=num(el.value); paintCharms(); scheduleSave(); }; }
   });
-  const b=document.getElementById("charmBody"); b.innerHTML="";
-  c.rows.forEach(r=>{
-    const tr=document.createElement("tr");
-    const pct=Math.min(100,Math.max(0,r.lvl/c.targetLvl*100));
-    const done=r.lvl>=c.targetLvl;
-    tr.innerHTML=`<td><input value="${(r.n||'').replace(/"/g,'&quot;')}"><div class="lvlbar" style="max-width:200px"><div class="lf" style="width:${pct}%;background:${done?'var(--green)':'linear-gradient(90deg,var(--gold-2),var(--gold))'}"></div></div></td>
-      <td><input class="mono-in" value="${r.lvl}" style="width:44px" inputmode="numeric"></td>
-      <td class="delcell"><button class="del" title="Remove">×</button></td>`;
-    const [ni,li]=tr.querySelectorAll("input");
-    ni.oninput=()=>{ r.n=ni.value; scheduleSave(); };
-    li.oninput=()=>{ r.lvl=Math.max(0,Math.min(22,num(li.value))); buildCharms(); scheduleSave(); };
-    tr.querySelector(".del").onclick=()=>{ const i=c.rows.indexOf(r); if(i>-1){ c.rows.splice(i,1); buildCharms(); scheduleSave(); } };
-    b.appendChild(tr);
+  const lvlOpts=(sel)=>Array.from({length:23},(_,i)=>`<option value="${i}"${i===sel?' selected':''}>Lv ${i}</option>`).join("");
+  const setAll=document.getElementById("charmSetAll");
+  if(setAll){ setAll.innerHTML=lvlOpts(c.targetLvl); 
+    document.getElementById("charmApplyAll").onclick=()=>{ const v=parseInt(setAll.value,10); c.rows.forEach(r=>r.lvl=v); buildCharms(); scheduleSave(); }; }
+  const host=document.getElementById("charmBody"); host.innerHTML="";
+  ["Cavalry","Infantry","Archer"].forEach(type=>{
+    const rows=c.rows.filter(r=>(r.type||"")===type); if(!rows.length) return;
+    const head=document.createElement("div"); head.className="today-label"; head.style.cssText="margin:12px 0 6px;color:var(--gold)";
+    head.textContent=type;
+    host.appendChild(head);
+    const grid=document.createElement("div"); grid.style.cssText="display:grid;grid-template-columns:repeat(3,1fr);gap:8px";
+    rows.forEach(r=>{
+      const rem=charmRem(r.lvl,c.targetLvl); const done=r.lvl>=c.targetLvl;
+      const cell=document.createElement("div"); cell.style.cssText="background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px";
+      cell.innerHTML=`<select class="sigsel" style="width:100%;padding-right:24px">${lvlOpts(r.lvl)}</select>
+        <div class="lvlbar" style="max-width:none;margin-top:6px"><div class="lf" style="width:${Math.min(100,r.lvl/c.targetLvl*100)}%;background:${done?'var(--green)':'linear-gradient(90deg,var(--gold-2),var(--gold))'}"></div></div>
+        <div class="mono" style="font-size:9px;color:var(--muted);margin-top:4px">${done?'✓ at target':'G '+fmtBig(rem.g)+' · D '+fmtBig(rem.d)}</div>`;
+      const sel=cell.querySelector("select");
+      sel.onchange=()=>{ r.lvl=parseInt(sel.value,10); buildCharms(); scheduleSave(); };
+      grid.appendChild(cell);
+    });
+    host.appendChild(grid);
   });
-  document.getElementById("addCharm").onclick=()=>{ c.rows.push({n:"New charm",lvl:0}); buildCharms(); scheduleSave(); };
   paintCharms();
 }
 function paintCharms(){
@@ -1302,7 +1352,7 @@ function paintCharms(){
 
 /* ---------- widgets ---------- */
 const WID_COSTS=[5,10,15,20,25,30,35,40,45,50];
-const WID_HEROES=["Yang","Amadeus","Petra","Chenko","Yeonwoo","Amane","Zoe","Jabel","Marlin","Quinn","Vivian","Thrud","Eric","Saul","Helga","Hilde","Jaeger","Ava","Other"];
+const WID_HEROES=["Yang","Amadeus","Petra","Chenko","Yeonwoo","Amane","Zoe","Jabel","Marlin","Quinn","Vivian","Thrud","Eric","Saul","Helga","Hilde","Jaeger","Ava","Margot","Wee & Woo","Seo-yul","Gwen","Norah","Cyra","Reina","Bahar","Wilson","Roman","Cassia","Guinevere","Valora","Pan"];
 function widRem(lvl){ return WID_COSTS.slice(Math.max(0,Math.min(10,lvl))).reduce((s,x)=>s+x,0); }
 function buildWidgets(){
   if(!state.widgets||!Array.isArray(state.widgets.rows)) state.widgets=structuredClone(SEED.widgets);
@@ -1314,20 +1364,22 @@ function buildWidgets(){
   document.getElementById("widFill").style.width=pct.toFixed(1)+"%";
   document.getElementById("widMeterTxt").innerHTML=`<b>${fmt(num(w.have))}</b> / ${fmt(total)}`;
   have.oninput=()=>{ w.have=num(have.value); buildWidgets(); scheduleSave(); };
+  const dl=document.getElementById("widHeroList"); if(dl) dl.innerHTML=WID_HEROES.map(h=>`<option value="${h}">`).join("");
   const b=document.getElementById("widBody"); b.innerHTML="";
   w.rows.forEach(r=>{
     const tr=document.createElement("tr");
-    tr.innerHTML=`<td><select class="sigsel" style="padding-right:22px">${WID_HEROES.map(h=>`<option${h===r.hero?' selected':''}>${h}</option>`).join("")}</select></td>
+    tr.innerHTML=`<td><input list="widHeroList" value="${(r.hero||'').replace(/"/g,'&quot;')}" placeholder="hero" style="width:100%;background:var(--field);border:1px solid var(--field-line);border-radius:8px;color:var(--text);font-size:12px;padding:6px 8px"></td>
       <td><input class="mono-in" value="${r.lvl}" style="width:44px" inputmode="numeric"></td>
       <td class="mono" style="color:var(--gold);font-size:12px">${r.lvl>=10?'MAX':fmt(widRem(r.lvl))}</td>
       <td class="delcell"><button class="del" title="Remove">×</button></td>`;
-    const sel=tr.querySelector("select"), li=tr.querySelector("input");
-    sel.onchange=()=>{ r.hero=sel.value; scheduleSave(); };
+    const [hi,li]=tr.querySelectorAll("input");
+    hi.oninput=()=>{ r.hero=hi.value; scheduleSave(); };
     li.oninput=()=>{ r.lvl=Math.max(0,Math.min(10,num(li.value))); buildWidgets(); scheduleSave(); };
     tr.querySelector(".del").onclick=()=>{ const i=w.rows.indexOf(r); if(i>-1){ w.rows.splice(i,1); buildWidgets(); scheduleSave(); } };
     b.appendChild(tr);
   });
-  document.getElementById("addWid").onclick=()=>{ w.rows.push({hero:"Other",lvl:0}); buildWidgets(); scheduleSave(); };
+  document.getElementById("addWid").onclick=()=>{ w.rows.push({hero:"",lvl:0}); buildWidgets(); scheduleSave();
+    const inps=b.querySelectorAll("tr input[list]"); const last=inps[inps.length-1]; if(last) last.focus(); };
 }
 
 /* ---------- governor gear ---------- */
@@ -1511,26 +1563,21 @@ const TAG_CYCLE=["rich","ok","scarce"], TAG_LABEL={rich:"Abundant",scarce:"Scarc
 function buildRes(){
   const b=document.getElementById("resBody"); b.innerHTML="";
   state.resources.forEach(r=>{
+    if(r.use===undefined) r.use=r.s?"":"";
     const tr=document.createElement("tr");
     tr.innerHTML=`<td><input value="${r.n.replace(/"/g,'&quot;')}"></td>
-      <td><input class="mono-in" value="${String(r.h).replace(/"/g,'&quot;')}"></td>
-      <td><select class="sigsel ${r.s}">
-        <option value="rich">Abundant</option>
-        <option value="ok">OK</option>
-        <option value="scarce">Scarce</option>
-      </select></td>
+      <td><input class="mono-in" value="${String(r.h||'').replace(/"/g,'&quot;')}" placeholder="—" style="width:76px"></td>
+      <td><input value="${String(r.use||'').replace(/"/g,'&quot;')}" placeholder="what it's for…" style="color:var(--muted)"></td>
       <td class="delcell"><button class="del" title="Remove">×</button></td>`;
-    const [ni,hi]=tr.querySelectorAll("input");
-    const sel=tr.querySelector(".sigsel"), del=tr.querySelector(".del");
-    sel.value=r.s;
+    const [ni,hi,ui]=tr.querySelectorAll("input");
     ni.oninput=()=>{ r.n=ni.value; scheduleSave(); };
     hi.oninput=()=>{ r.h=hi.value; scheduleSave(); };
-    sel.onchange=()=>{ r.s=sel.value; sel.className="sigsel "+r.s; scheduleSave(); };
-    del.onclick=()=>{ const i=state.resources.indexOf(r); if(i>-1){ state.resources.splice(i,1); buildRes(); scheduleSave(); } };
+    ui.oninput=()=>{ r.use=ui.value; scheduleSave(); };
+    tr.querySelector(".del").onclick=()=>{ const i=state.resources.indexOf(r); if(i>-1){ state.resources.splice(i,1); buildRes(); scheduleSave(); } };
     b.appendChild(tr);
   });
   document.getElementById("addRes").onclick=()=>{
-    state.resources.push({n:"New material",h:"0",s:"ok"}); buildRes(); scheduleSave();
+    state.resources.push({n:"New material",h:"",use:""}); buildRes(); scheduleSave();
     const rows=b.querySelectorAll("tr input"); const first=rows[rows.length-3]; if(first){first.focus();first.select();} };
 }
 
@@ -1573,54 +1620,71 @@ function paintTG(){
   meter("have","need","tgFill","tgMeterTxt");
   meter("ttgHave","ttgNeed","ttgFill","ttgMeterTxt");
 }
+/* per-tier building ladders: each step = reaching the next sub-tier {to,w(=bread),s,i,tg,ttg}. Wood=Bread. */
+function _bstep(to,w,s,i,tg,ttg){ return {to,w,s,i,tg,ttg}; }
+function _band(from,arr){ return arr; }
+const _troop=[ // Barracks/Stable/Range, from TG6
+  _bstep("TG 6.1",38e6,7.6e6,1.9e6,108,6),_bstep("TG 6.2",38e6,7.6e6,1.9e6,108,6),_bstep("TG 6.3",38e6,7.6e6,1.9e6,108,6),_bstep("TG 6.4",38e6,7.6e6,1.9e6,108,6),
+  _bstep("TG 7",38e6,7.6e6,1.9e6,54,13),
+  _bstep("TG 7.1",46e6,9.3e6,2.3e6,108,9),_bstep("TG 7.2",46e6,9.3e6,2.3e6,108,9),_bstep("TG 7.3",46e6,9.3e6,2.3e6,108,9),_bstep("TG 7.4",46e6,9.3e6,2.3e6,108,9),
+  _bstep("TG 8",46e6,9.3e6,2.3e6,54,18)];
+const BUILD_TIERS={
+  "Town Center":{from:"TG 7",steps:[_bstep("TG 7.1",130e6,26e6,6.6e6,240,20),_bstep("TG 7.2",130e6,26e6,6.6e6,240,20),_bstep("TG 7.3",130e6,26e6,6.6e6,240,20),_bstep("TG 7.4",130e6,26e6,6.6e6,240,20),_bstep("TG 8",130e6,26e6,6.6e6,120,40)]},
+  "Barracks":{from:"TG 6",steps:_troop}, "Stable":{from:"TG 6",steps:_troop}, "Range":{from:"TG 6",steps:_troop},
+  "Infirmary":{from:"TG 6",steps:[_bstep("TG 6.1",27e6,5.4e6,1.3e6,48,3),_bstep("TG 6.2",27e6,5.4e6,1.3e6,48,3),_bstep("TG 6.3",27e6,5.4e6,1.3e6,48,3),_bstep("TG 6.4",27e6,5.4e6,1.3e6,48,3),_bstep("TG 7",27e6,5.4e6,1.3e6,24,6),_bstep("TG 7.1",33e6,6.6e6,1.6e6,48,4),_bstep("TG 7.2",33e6,6.6e6,1.6e6,48,4),_bstep("TG 7.3",33e6,6.6e6,1.6e6,48,4),_bstep("TG 7.4",33e6,6.6e6,1.6e6,48,4),_bstep("TG 8",33e6,6.6e6,1.6e6,24,8)]},
+  "Command Center":{from:"TG 6",steps:[_bstep("TG 6.1",32e6,6.5e6,1.6e6,48,3),_bstep("TG 6.2",32e6,6.5e6,1.6e6,48,3),_bstep("TG 6.3",32e6,6.5e6,1.6e6,48,3),_bstep("TG 6.4",32e6,6.5e6,1.6e6,48,3),_bstep("TG 7",32e6,6.5e6,1.6e6,24,6),_bstep("TG 7.1",39e6,7.9e6,1.9e6,48,4),_bstep("TG 7.2",39e6,7.9e6,1.9e6,48,4),_bstep("TG 7.3",39e6,7.9e6,1.9e6,48,4),_bstep("TG 7.4",39e6,7.9e6,1.9e6,48,4),_bstep("TG 8",39e6,7.9e6,1.9e6,24,8)]},
+  "War Academy":{from:"TG 5",steps:[_bstep("TG 5.1",48e6,9.6e6,2.4e6,90,4),_bstep("TG 5.2",48e6,9.6e6,2.4e6,90,4),_bstep("TG 5.3",48e6,9.6e6,2.4e6,90,4),_bstep("TG 5.4",48e6,9.6e6,2.4e6,90,4),_bstep("TG 6",48e6,9.6e6,2.4e6,45,9),_bstep("TG 6.1",54e6,10e6,2.7e6,108,6),_bstep("TG 6.2",54e6,10e6,2.7e6,108,6),_bstep("TG 6.3",54e6,10e6,2.7e6,108,6),_bstep("TG 6.4",54e6,10e6,2.7e6,108,6),_bstep("TG 7",54e6,10e6,2.7e6,54,13),_bstep("TG 7.1",66e6,13e6,3.3e6,108,9),_bstep("TG 7.2",66e6,13e6,3.3e6,108,9),_bstep("TG 7.3",66e6,13e6,3.3e6,108,9),_bstep("TG 7.4",66e6,13e6,3.3e6,108,9),_bstep("TG 8",66e6,13e6,3.3e6,54,18)]},
+  "Embassy":{from:"TG 6",steps:[_bstep("TG 6.1",21e6,4.3e6,1.0e6,60,3),_bstep("TG 6.2",21e6,4.3e6,1.0e6,60,3),_bstep("TG 6.3",21e6,4.3e6,1.0e6,60,3),_bstep("TG 6.4",21e6,4.3e6,1.0e6,60,3),_bstep("TG 7",21e6,4.3e6,1.0e6,30,7),_bstep("TG 7.1",26e6,5.3e6,1.3e6,60,5),_bstep("TG 7.2",26e6,5.3e6,1.3e6,60,5),_bstep("TG 7.3",26e6,5.3e6,1.3e6,60,5),_bstep("TG 7.4",26e6,5.3e6,1.3e6,60,5),_bstep("TG 8",26e6,5.3e6,1.3e6,30,10)]}
+};
+function bldRem(bl){
+  const B=BUILD_TIERS[bl.n]; if(!B||bl.d) return {w:0,s:0,i:0,tg:0,ttg:0,cur:bl.d?"Done":"—"};
+  const idx=Math.max(0,Math.min(B.steps.length,bl.stepIdx||0));
+  let w=0,s=0,i=0,tg=0,ttg=0;
+  for(let k=idx;k<B.steps.length;k++){ const st=B.steps[k]; w+=st.w; s+=st.s; i+=st.i; tg+=st.tg; ttg+=st.ttg; }
+  const cur = idx===0 ? B.from : B.steps[idx-1].to;
+  return {w,s,i,tg,ttg,cur};
+}
 function buildBuildings(){
   const b=document.getElementById("buildBody"); b.innerHTML="";
   state.buildings.forEach((bl,idx)=>{
+    const B=BUILD_TIERS[bl.n]; const rem=bldRem(bl);
     const tr=document.createElement("tr"); if(bl.d) tr.style.opacity=".5";
+    let tierCell="";
+    if(B){ const opts=[`<option value="0">${B.from} (start)</option>`].concat(B.steps.map((st,k)=>`<option value="${k+1}"${(bl.stepIdx||0)===k+1?' selected':''}>at ${st.to}</option>`)).join("");
+      tierCell=`<select class="sigsel bstep">${opts}</select>`;
+    } else { tierCell=`<input class="mono-in" value="${(bl.t||'').replace(/"/g,'&quot;')}" style="width:78px">`; }
     tr.innerHTML=`<td><span class="mono" style="color:var(--gold-2);font-size:11px">${idx+1}.</span> <input value="${bl.n.replace(/"/g,'&quot;')}" style="width:auto;min-width:80px"></td>
-      <td><input class="mono-in" value="${bl.t}" style="width:78px"></td>
-      <td><input class="mono-in" value="${bl.tg}" style="width:52px"></td>
-      <td><input class="mono-in" value="${bl.ttg}" style="width:44px"></td>
-      <td><input class="mono-in" value="${bl.time}" style="width:70px"></td>
+      <td>${tierCell}</td>
+      <td class="mono" style="color:var(--gold)">${bl.d?'—':fmt(rem.tg)}</td>
+      <td class="mono" style="color:var(--gold)">${bl.d?'—':fmt(rem.ttg)}</td>
+      <td class="mono" style="font-size:10px;color:var(--muted)">${bl.d?'':'W '+fmtBig(rem.w)+' · S '+fmtBig(rem.s)+' · I '+fmtBig(rem.i)}</td>
       <td class="delcell"><input type="checkbox" class="cbx" ${bl.d?'checked':''} title="Done"> <button class="del" title="Remove">×</button></td>`;
-    const ins=tr.querySelectorAll("input"); const [ni,ti,tgi,ttgi,tmi,cb]=ins;
+    const ni=tr.querySelector("td input"); const cb=tr.querySelector(".cbx");
     ni.oninput=()=>{ bl.n=ni.value; scheduleSave(); };
-    ti.oninput=()=>{ bl.t=ti.value; scheduleSave(); };
-    tgi.oninput=()=>{ bl.tg=num(tgi.value); scheduleSave(); };
-    ttgi.oninput=()=>{ bl.ttg=num(ttgi.value); scheduleSave(); };
-    tmi.oninput=()=>{ bl.time=tmi.value; scheduleSave(); };
-    cb.onchange=()=>{ bl.d=cb.checked; tr.style.opacity=cb.checked?".5":"1"; scheduleSave(); };
-    tr.querySelector(".del").onclick=()=>{ const i=state.buildings.indexOf(bl); if(i>-1){ state.buildings.splice(i,1); buildBuildings(); scheduleSave(); } };
+    const sel=tr.querySelector(".bstep");
+    if(sel) sel.onchange=()=>{ bl.stepIdx=parseInt(sel.value,10); buildBuildings(); paintTG(); scheduleSave(); };
+    cb.onchange=()=>{ bl.d=cb.checked; buildBuildings(); paintTG(); scheduleSave(); };
+    tr.querySelector(".del").onclick=()=>{ const i=state.buildings.indexOf(bl); if(i>-1){ state.buildings.splice(i,1); buildBuildings(); paintTG(); scheduleSave(); } };
     b.appendChild(tr);
   });
   document.getElementById("addBuild").onclick=()=>{
-    state.buildings.push({n:"New building",t:"TG6→TG8",tg:0,ttg:0,time:"",note:"",d:false}); buildBuildings(); scheduleSave(); };
+    state.buildings.push({n:"New building",stepIdx:0,note:"",d:false}); buildBuildings(); scheduleSave(); };
+  paintBuildTotals();
+}
+function paintBuildTotals(){
+  let w=0,s=0,i=0,tg=0,ttg=0;
+  state.buildings.forEach(bl=>{ const r=bldRem(bl); w+=r.w; s+=r.s; i+=r.i; tg+=r.tg; ttg+=r.ttg; });
+  state.tg.need=Math.round(tg); state.tg.ttgNeed=Math.round(ttg);
+  const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
+  set("bldWood",fmtBig(w)); set("bldBread",fmtBig(w)); set("bldStone",fmtBig(s)); set("bldIron",fmtBig(i));
+  set("bldTG",fmt(tg)); set("bldTTG",fmt(ttg)); set("bldTGb",fmt(tg)); set("bldTTGb",fmt(ttg));
+  if(typeof paintTG==="function") paintTG();
 }
 function buildTGbudget(){
-  const map={tgHave:"have",tgNeed:"need",ttgHave:"ttgHave",ttgNeed:"ttgNeed"};
-  Object.entries(map).forEach(([id,key])=>{ const el=document.getElementById(id); el.value=state.tg[key];
-    el.oninput=()=>{ state.tg[key]=num(el.value); paintTG(); scheduleSave(); }; });
+  const map={tgHave:"have",ttgHave:"ttgHave"};
+  Object.entries(map).forEach(([id,key])=>{ const el=document.getElementById(id); if(el){ el.value=state.tg[key];
+    el.oninput=()=>{ state.tg[key]=num(el.value); paintTG(); scheduleSave(); }; }});
   paintTG();
-}
-
-/* ---------- farm ---------- */
-function buildFarm(){
-  const b=document.getElementById("farmBody"); b.innerHTML="";
-  state.farm.forEach(f=>{
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td style="width:44%;color:var(--muted)"><input value="${f.k.replace(/"/g,'&quot;')}" style="color:var(--muted)"></td>
-      <td><input value="${f.v.replace(/"/g,'&quot;')}"></td>
-      <td class="delcell"><button class="del" title="Remove">×</button></td>`;
-    const [ki,vi]=tr.querySelectorAll("input");
-    ki.oninput=()=>{ f.k=ki.value; scheduleSave(); };
-    vi.oninput=()=>{ f.v=vi.value; scheduleSave(); };
-    tr.querySelector(".del").onclick=()=>{ const i=state.farm.indexOf(f); if(i>-1){ state.farm.splice(i,1); buildFarm(); scheduleSave(); } };
-    b.appendChild(tr);
-  });
-  const tr=document.createElement("tr");
-  tr.innerHTML=`<td colspan="3"><button class="additem" id="addFarm">+ add field</button></td>`;
-  b.appendChild(tr);
-  document.getElementById("addFarm").onclick=()=>{ state.farm.push({k:"New field",v:"—"}); buildFarm(); scheduleSave(); };
 }
 
 /* ---------- mystic trials ---------- */
@@ -1806,7 +1870,7 @@ const HEAD_TAB=[
   ["build order","Build"],
   ["governor gear","Gear"],["hero gear","Gear"],["charms","Gear"],["widgets","Gear"],
   ["power grades","Stats"],["mystic trials","Stats"],
-  ["resources","Supply"],["dust farming","Supply"],["farm account","Supply"],
+  ["resources","Supply"],["dust farming","Supply"],
   ["open data","Data"],["data, sync","Data"]
 ];
 function tabForHeading(txt){ const t=(txt||"").toLowerCase(); for(const [k,v] of HEAD_TAB){ if(t.includes(k)) return v; } return "Data"; }
@@ -1856,9 +1920,9 @@ function renderAll(){
   buildPillars(); buildCombat(); buildRes(); buildMast();
   buildChecks("dustSrc",state.dustSrc); buildChecks("openData",state.openData);
   buildTGbudget(); buildBuildings();
-  buildFarm(); buildChecks("farmChecks",state.farmChecks);
   buildMystic();
   buildNotes(); buildSync(); buildImport();
+  fmtInputs();
 }
 
 /* ---------- boot ---------- */
@@ -1889,10 +1953,17 @@ function renderAll(){
   if(!state.troopCounts) state.troopCounts=structuredClone(SEED.troopCounts);
   if(!state.bear) state.bear=structuredClone(SEED.bear);
   if(!state.heroGear||!Array.isArray(state.heroGear.rows)) state.heroGear=structuredClone(SEED.heroGear);
-  if(!state.charms||!Array.isArray(state.charms.rows)) state.charms=structuredClone(SEED.charms);
+  if(!state.charms||!Array.isArray(state.charms.rows)||!state.charms.rows[0]||state.charms.rows[0].type===undefined) state.charms=structuredClone(SEED.charms);
   if(!state.widgets||!Array.isArray(state.widgets.rows)) state.widgets=structuredClone(SEED.widgets);
+  if(Array.isArray(state.resources)) state.resources.forEach(r=>{ if(r.use===undefined){ const sd=SEED.resources.find(x=>x.n===r.n); r.use=sd?sd.use:""; } delete r.s; });
+  if(Array.isArray(state.buildings)) state.buildings.forEach(bl=>{ if(bl.stepIdx===undefined) bl.stepIdx=0; delete bl.t; delete bl.tg; delete bl.ttg; delete bl.time; });
   if(!state.ui.density) state.ui.density="comfortable";
-  renderAll(); buildLayout();
+  if(state.account && !state.account.dayAnchor){
+    const d=parseInt(state.account.day)||443;
+    const a=new Date(); a.setUTCDate(a.getUTCDate()-(d-1));
+    state.account.dayAnchor=a.toISOString().slice(0,10);
+  }
+  renderAll(); buildLayout(); initCommaFormatting();
   const dot=document.getElementById("saveDot"), txt=document.getElementById("saveTxt");
   const persists = hasStore || lsSet("__probe__","1");
   if(!persists){ dot.className="dot warn"; txt.textContent="Session only"; }
