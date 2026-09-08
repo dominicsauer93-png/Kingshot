@@ -189,62 +189,74 @@
     {
       "n": "Soldier Training speedup",
       "h": "~13 days",
-      "s": "rich"
+      "s": "rich",
+      "use": ""
     },
     {
       "n": "General speedup",
       "h": "~40 days",
-      "s": "rich"
+      "s": "rich",
+      "use": ""
     },
     {
       "n": "Soldier Healing speedup",
       "h": "~10 days",
-      "s": "ok"
+      "s": "ok",
+      "use": ""
     },
     {
       "n": "Construction speedup",
       "h": "~4 days",
-      "s": "ok"
+      "s": "ok",
+      "use": ""
     },
     {
       "n": "Research speedup",
       "h": "~1 day",
-      "s": "scarce"
+      "s": "scarce",
+      "use": ""
     },
     {
       "n": "Bread",
       "h": "2.29B",
-      "s": "rich"
+      "s": "rich",
+      "use": ""
     },
     {
       "n": "Wood",
       "h": "2.29B",
-      "s": "rich"
+      "s": "rich",
+      "use": ""
     },
     {
       "n": "Stone",
       "h": "275.77M",
-      "s": "ok"
+      "s": "ok",
+      "use": ""
     },
     {
       "n": "Iron",
       "h": "215.72M",
-      "s": "ok"
+      "s": "ok",
+      "use": ""
     },
     {
       "n": "Gold",
       "h": "218K",
-      "s": "scarce"
+      "s": "scarce",
+      "use": ""
     },
     {
       "n": "Mithril (hero gear)",
       "h": "2",
-      "s": "ok"
+      "s": "ok",
+      "use": ""
     },
     {
       "n": "Research Speed (stat)",
       "h": "56.2%",
-      "s": "scarce"
+      "s": "scarce",
+      "use": ""
     }
   ],
   "masters": [
@@ -352,9 +364,9 @@
   ],
   "tg": {
     "have": 711,
-    "need": 9757,
+    "need": 6777,
     "ttgHave": 74,
-    "ttgNeed": 781
+    "ttgNeed": 642
   },
   "govGear": {
     "targetIdx": 14,
@@ -429,7 +441,7 @@
     ]
   },
   "ui": {
-    "tab": "Supply",
+    "tab": "Troops",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": false,
@@ -608,7 +620,12 @@
         "mg": 19,
         "mith": 60
       }
-    ]
+    ],
+    "open": {
+      "Infantry": true,
+      "Cavalry": true,
+      "Archer": true
+    }
   },
   "charms": {
     "targetLvl": 10,
