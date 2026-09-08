@@ -647,6 +647,10 @@
       {
         "hero": "Other",
         "lvl": 2
+      },
+      {
+        "hero": "Other",
+        "lvl": 0
       }
     ]
   },
