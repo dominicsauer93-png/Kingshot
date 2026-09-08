@@ -441,7 +441,7 @@
     ]
   },
   "ui": {
-    "tab": "Supply",
+    "tab": "Troops",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": false,
