@@ -213,6 +213,12 @@
   .lvlbar .lf{height:100%;background:linear-gradient(90deg,var(--gold-2),var(--gold));border-radius:999px}
   .tnum{width:96px;background:var(--field);border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:12px;padding:4px 6px;text-align:right}
   .tnum:focus{outline:none;border-color:var(--gold)}
+  .resname{background:transparent;border:0;border-bottom:1px dashed transparent;color:var(--text);font-family:"Inter";font-weight:500;font-size:13px;padding:2px 0;flex:1;min-width:0;margin-right:10px}
+  .resname:hover{border-bottom-color:var(--line)}
+  .resname:focus{outline:none;border-bottom-color:var(--gold)}
+  .res-row .metric-top{align-items:center}
+  .res-row .res-inputs{display:flex;align-items:center;gap:6px;flex:none}
+  .res-gap{margin-top:5px;font-size:11px;font-family:"JetBrains Mono"}
   body.compact .card{padding:12px}
   body.compact section{margin-bottom:12px}
   body.compact .today{padding:13px;margin-bottom:14px}
@@ -456,10 +462,16 @@
 
   <!-- RESOURCES -->
   <section>
-    <div class="sechead"><span class="num">06</span><h2>Resources &amp; Speedups</h2><span class="hint">amount you hold · what it's for</span></div>
+    <div class="sechead"><span class="num">06</span><h2>Resources &amp; Speedups</h2><span class="hint">have vs. what the push needs</span></div>
+    <div class="card" style="margin-bottom:12px">
+      <div class="field" style="width:100%">
+        <label>Current push</label>
+        <input class="mono" id="resGoal" style="width:100%" placeholder="e.g. T11 Archer promote — next 14 days">
+      </div>
+      <p class="sub" style="margin:8px 0 0">Set <b>Need</b> to what that push costs in each item — the bar shows how much more you have to gather or save.</p>
+    </div>
     <div class="card">
-      <table><thead><tr><th style="width:34%">Item</th><th style="width:80px">Amount</th><th>Use case</th><th></th></tr></thead>
-      <tbody id="resBody"></tbody></table>
+      <div id="resBody"></div>
       <button class="additem" id="addRes">+ add material</button>
     </div>
   </section>
@@ -527,6 +539,13 @@
       <table><thead><tr><th style="width:55%">Zone</th><th>Rank</th><th></th></tr></thead>
       <tbody id="mysticBody"></tbody></table>
       <button class="additem" id="addMystic">+ add zone</button>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+        <h3 style="margin:0;font-family:'Chakra Petch';font-size:13px;letter-spacing:.1em;text-transform:uppercase">Zone progression</h3>
+        <span class="sub" style="font-size:11px">rank auto-logs by date when you edit it · up = improving (rank falling)</span>
+      </div>
+      <div id="mysticChartWrap"></div>
     </div>
   </section>
 
@@ -727,19 +746,20 @@ const SEED = {
   ],
   combat:{ attW:160, attL:211, defW:672, defL:55, leth:66.5, hp:49.0,
     troopStatus:"T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot." },
+  resGoal:"T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
   resources:[
-    {n:"Soldier Training speedup", h:"", use:"Promote T10→T11 Archers (on a KvK power stage)"},
-    {n:"General speedup",          h:"", use:"Flex to whatever's gating T11 right now"},
-    {n:"Soldier Healing speedup",  h:"", use:"Heal fast after Bear/KvK — keep archers firing"},
-    {n:"Construction speedup",     h:"", use:"War Academy → Range first, then the TC cycle"},
-    {n:"Research speedup",         h:"", use:"Battle Tier VI first, then T11 archer research"},
-    {n:"Bread",  h:"", use:"Overfeed the Crucible (→TG) + troop training"},
-    {n:"Wood",   h:"", use:"Crucible feed + building upgrades"},
-    {n:"Stone",  h:"", use:"Building upgrades toward TG8"},
-    {n:"Iron",   h:"", use:"Building upgrades toward TG8"},
-    {n:"Gold",   h:"", use:"Bank for the 2.01M T11 unlock — don't convert to Dust"},
-    {n:"Mithril (hero gear)", h:"", use:"Hero gear only — low priority, spend spare"},
-    {n:"Research Speed (stat)", h:"", use:"Raise it — compounds across the ~329d T11 grind"}
+    {n:"Soldier Training speedup (hrs)", h:"564.35", need:""},
+    {n:"General speedup (hrs)",          h:"766.48", need:""},
+    {n:"Soldier Healing speedup (hrs)",  h:"28.28", need:""},
+    {n:"Construction speedup (hrs)",     h:"13.75", need:""},
+    {n:"Research speedup (hrs)",         h:"46.5", need:""},
+    {n:"Bread",  h:"2850000000", need:"1680000000"},
+    {n:"Wood",   h:"2900000000", need:"2490000000"},
+    {n:"Stone",  h:"300190000", need:"416640000"},
+    {n:"Iron",   h:"223480000", need:"134380000"},
+    {n:"Gold",   h:"879210", need:"2013000"},
+    {n:"Mithril (hero gear)", h:"", need:""},
+    {n:"Research Speed (stat)", h:"", need:""}
   ],
   masters:[
     {n:"Pan",       l:"90", note:"Best master — push to 100; Ways-and-Means / Falconer"},
@@ -764,13 +784,13 @@ const SEED = {
   ],
   notes:"",
   mysticTrials:[
-    {k:"Mystic Trial (overall)", v:"170"},
-    {k:"Coliseum (Heroes + Hero Gear)", v:"157"},
-    {k:"Forest of Life (Pets)", v:"90"},
-    {k:"Crystal Cave (Charms)", v:"139"},
-    {k:"Knowledge Nexus (Techs)", v:"174"},
-    {k:"Molten Fort (Gov Gear)", v:"280"},
-    {k:"Radiant Spire (ALL stats — full power)", v:"163"}
+    {k:"Mystic Trial (overall)", v:"170", log:[]},
+    {k:"Coliseum (Heroes + Hero Gear)", v:"157", log:[]},
+    {k:"Forest of Life (Pets)", v:"90", log:[]},
+    {k:"Crystal Cave (Charms)", v:"139", log:[]},
+    {k:"Knowledge Nexus (Techs)", v:"174", log:[]},
+    {k:"Molten Fort (Gov Gear)", v:"280", log:[]},
+    {k:"Radiant Spire (ALL stats — full power)", v:"163", log:[]}
   ],
   tg:{ have:0, need:9757, ttgHave:0, ttgNeed:781 },
   govGear:{ targetIdx:19, have:{satin:0,threads:0,vision:0}, pieces:[
@@ -1559,26 +1579,52 @@ function buildCombat(){
 }
 
 /* ---------- resources ---------- */
-const TAG_CYCLE=["rich","ok","scarce"], TAG_LABEL={rich:"Abundant",scarce:"Scarce",ok:"OK"};
+function resGapPaint(row,r){
+  const have=num(r.h), need=num(r.need);
+  const pct = need>0 ? Math.min(100, have/need*100) : 0;
+  const fill=row.querySelector(".fill");
+  const met = need>0 && have>=need;
+  fill.style.width=pct.toFixed(1)+"%";
+  fill.style.background = met ? "linear-gradient(90deg,#3e9e63,var(--green))" : "";
+  const gap=row.querySelector(".res-gap");
+  if(need<=0){ gap.textContent="Set a need to see the gap"; gap.style.color="var(--faint)"; }
+  else if(met){ gap.textContent="Target met · "+fmt(have)+" / "+fmt(need); gap.style.color="var(--green)"; }
+  else { gap.textContent="Short by "+fmt(need-have)+" · "+pct.toFixed(0)+"% there"; gap.style.color="var(--red)"; }
+}
+function buildResGoal(){
+  const el=document.getElementById("resGoal"); if(!el) return;
+  el.value=state.resGoal||"";
+  el.oninput=()=>{ state.resGoal=el.value; scheduleSave(); };
+}
 function buildRes(){
+  buildResGoal();
   const b=document.getElementById("resBody"); b.innerHTML="";
   state.resources.forEach(r=>{
-    if(r.use===undefined) r.use=r.s?"":"";
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td><input value="${r.n.replace(/"/g,'&quot;')}"></td>
-      <td><input class="mono-in" value="${String(r.h||'').replace(/"/g,'&quot;')}" placeholder="—" style="width:76px"></td>
-      <td><input value="${String(r.use||'').replace(/"/g,'&quot;')}" placeholder="what it's for…" style="color:var(--muted)"></td>
-      <td class="delcell"><button class="del" title="Remove">×</button></td>`;
-    const [ni,hi,ui]=tr.querySelectorAll("input");
+    if(r.need===undefined) r.need="";
+    const row=document.createElement("div"); row.className="metric-row res-row";
+    row.innerHTML=`<div class="metric-top">
+        <input class="resname" value="${(r.n||'').replace(/"/g,'&quot;')}">
+        <span class="res-inputs">
+          <input class="tnum" data-f="h" inputmode="numeric" value="${String(r.h||'').replace(/"/g,'&quot;')}" placeholder="have">
+          <span style="color:var(--faint)">/</span>
+          <input class="tnum" data-f="need" inputmode="numeric" value="${String(r.need||'').replace(/"/g,'&quot;')}" placeholder="need">
+          <button class="del" title="Remove">×</button>
+        </span>
+      </div>
+      <div class="meter"><div class="fill" style="width:0%"></div></div>
+      <div class="res-gap"></div>`;
+    const ni=row.querySelector(".resname");
+    const [hi,ti]=row.querySelectorAll(".tnum");
+    resGapPaint(row,r);
     ni.oninput=()=>{ r.n=ni.value; scheduleSave(); };
-    hi.oninput=()=>{ r.h=hi.value; scheduleSave(); };
-    ui.oninput=()=>{ r.use=ui.value; scheduleSave(); };
-    tr.querySelector(".del").onclick=()=>{ const i=state.resources.indexOf(r); if(i>-1){ state.resources.splice(i,1); buildRes(); scheduleSave(); } };
-    b.appendChild(tr);
+    hi.oninput=()=>{ r.h=hi.value; resGapPaint(row,r); scheduleSave(); };
+    ti.oninput=()=>{ r.need=ti.value; resGapPaint(row,r); scheduleSave(); };
+    row.querySelector(".del").onclick=()=>{ const i=state.resources.indexOf(r); if(i>-1){ state.resources.splice(i,1); buildRes(); scheduleSave(); } };
+    b.appendChild(row);
   });
   document.getElementById("addRes").onclick=()=>{
-    state.resources.push({n:"New material",h:"",use:""}); buildRes(); scheduleSave();
-    const rows=b.querySelectorAll("tr input"); const first=rows[rows.length-3]; if(first){first.focus();first.select();} };
+    state.resources.push({n:"New material",h:"",need:""}); buildRes(); scheduleSave();
+    const inputs=b.querySelectorAll(".res-row .resname"); const first=inputs[inputs.length-1]; if(first){first.focus();first.select();} };
 }
 
 /* ---------- masters ---------- */
@@ -1688,6 +1734,69 @@ function buildTGbudget(){
 }
 
 /* ---------- mystic trials ---------- */
+function mysticLogEntry(zone){
+  const val=parseFloat(zone.v); if(!isFinite(val)) return;
+  const d=fcToday();
+  if(!Array.isArray(zone.log)) zone.log=[];
+  const ex=zone.log.findIndex(e=>e.d===d);
+  if(ex>=0) zone.log[ex]={d,v:val}; else zone.log.push({d,v:val});
+}
+function mysticColor(i){
+  const P=["#4FC3E0","#4FBF7B","#E4A63D","#E4574B","#5AA8E0","#C77DFF","#F0779A","#8FA3B5"];
+  return P[i%P.length];
+}
+function paintMysticChart(){
+  const wrap=document.getElementById("mysticChartWrap"); if(!wrap) return;
+  const zones=(state.mysticTrials||[]).map((z,i)=>({
+    z,i,log:(Array.isArray(z.log)?z.log:[]).slice().sort((a,b)=>a.d.localeCompare(b.d))
+  })).filter(x=>x.log.length);
+  if(!zones.length){
+    wrap.innerHTML=`<span class="sub">Edit a zone's rank to start logging — the trend builds here as you update it over time.</span>`;
+    return;
+  }
+  const allDates=[...new Set(zones.flatMap(x=>x.log.map(e=>e.d)))].sort();
+  const allVals=zones.flatMap(x=>x.log.map(e=>e.v));
+  const minV=Math.min(...allVals), maxV=Math.max(...allVals);
+  const vPad=(maxV-minV)*0.08 || Math.max(5,maxV*0.08,1);
+  const lo=minV-vPad, hi=maxV+vPad;
+  const t0=new Date(allDates[0]).getTime(), t1=new Date(allDates[allDates.length-1]).getTime();
+  const W=640,H=220,padL=8,padR=8,padT=10,padB=26;
+  const plotW=W-padL-padR, plotH=H-padT-padB;
+  const xFor=d=>(t1===t0) ? padL+plotW/2 : padL+((new Date(d).getTime()-t0)/(t1-t0))*plotW;
+  const yFor=v=>(hi===lo) ? padT+plotH/2 : padT+((v-lo)/(hi-lo))*plotH;
+
+  let svg=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">`;
+  for(let g=0; g<=3; g++){ const y=padT+plotH*g/3; svg+=`<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W-padR}" y2="${y.toFixed(1)}" stroke="var(--line)" stroke-width="1" opacity=".5"/>`; }
+  zones.forEach(({z,i,log})=>{
+    const col=mysticColor(i);
+    if(log.length>1){
+      const pts=log.map(e=>`${xFor(e.d).toFixed(1)},${yFor(e.v).toFixed(1)}`).join(" ");
+      svg+=`<polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>`;
+    }
+    log.forEach(e=>{ svg+=`<circle cx="${xFor(e.d).toFixed(1)}" cy="${yFor(e.v).toFixed(1)}" r="3" fill="${col}"/>`; });
+  });
+  svg+=`<text x="${padL}" y="${H-6}" font-family="JetBrains Mono" font-size="9" fill="var(--faint)">${allDates[0]}</text>`;
+  svg+=`<text x="${W-padR}" y="${H-6}" text-anchor="end" font-family="JetBrains Mono" font-size="9" fill="var(--faint)">${allDates[allDates.length-1]}</text>`;
+  svg+=`</svg>`;
+
+  const legend=zones.map(({z,i,log})=>{
+    const col=mysticColor(i);
+    const last=log[log.length-1].v, first=log[0].v, delta=last-first;
+    const deltaTxt = log.length>1
+      ? (delta===0 ? `<span class="mono" style="color:var(--faint)">±0</span>`
+        : delta<0 ? `<span class="mono" style="color:var(--green)">${delta}</span>`
+        : `<span class="mono" style="color:var(--red)">+${delta}</span>`)
+      : "";
+    return `<div style="display:flex;align-items:center;gap:6px;font-size:12px">
+      <span style="width:9px;height:9px;border-radius:50%;background:${col};flex:none"></span>
+      <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${(z.k||'').replace(/</g,'&lt;')}</span>
+      <span class="mono" style="color:var(--gold);font-weight:700">${fmt(last)}</span>
+      ${deltaTxt}
+    </div>`;
+  }).join("");
+
+  wrap.innerHTML = svg + `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px 14px;margin-top:12px">${legend}</div>`;
+}
 function buildMystic(){
   const b=document.getElementById("mysticBody"); b.innerHTML="";
   state.mysticTrials.forEach(f=>{
@@ -1696,15 +1805,17 @@ function buildMystic(){
       <td><input class="mono-in" value="${(f.v||'').replace(/"/g,'&quot;')}" inputmode="numeric" style="color:var(--gold);font-weight:700"></td>
       <td class="delcell"><button class="del" title="Remove">×</button></td>`;
     const [ki,vi]=tr.querySelectorAll("input");
-    ki.oninput=()=>{ f.k=ki.value; scheduleSave(); };
+    ki.oninput=()=>{ f.k=ki.value; paintMysticChart(); scheduleSave(); };
     vi.oninput=()=>{ f.v=vi.value; scheduleSave(); };
+    vi.addEventListener("change",()=>{ mysticLogEntry(f); paintMysticChart(); scheduleSave(); });
     tr.querySelector(".del").onclick=()=>{ const i=state.mysticTrials.indexOf(f); if(i>-1){ state.mysticTrials.splice(i,1); buildMystic(); scheduleSave(); } };
     b.appendChild(tr);
   });
   const tr=document.createElement("tr");
   tr.innerHTML=`<td colspan="3"><button class="additem" id="addMystic">+ add zone</button></td>`;
   b.appendChild(tr);
-  document.getElementById("addMystic").onclick=()=>{ state.mysticTrials.push({k:"New zone",v:"0"}); buildMystic(); scheduleSave(); };
+  document.getElementById("addMystic").onclick=()=>{ state.mysticTrials.push({k:"New zone",v:"0",log:[]}); buildMystic(); scheduleSave(); };
+  paintMysticChart();
 }
 
 /* ---------- CSV import ---------- */
@@ -1947,6 +2058,10 @@ function renderAll(){
   if(!state.govGear||!Array.isArray(state.govGear.pieces)) state.govGear=structuredClone(SEED.govGear);
   else if(state.govGear.pieces.length===6 && state.govGear.pieces.every((p,i)=>Number(p.cur)===0 && p.name==="Piece "+(i+1))) state.govGear=structuredClone(SEED.govGear);
   if(!state.forecast||!Array.isArray(state.forecast.log)) state.forecast={log:[]};
+  if(Array.isArray(state.mysticTrials)) state.mysticTrials.forEach(z=>{
+    if(!Array.isArray(z.log)) z.log=[];
+    if(!z.log.length){ const val=parseFloat(z.v); if(isFinite(val)) z.log.push({d:fcToday(), v:val}); }
+  });
   if(!state.today||!Array.isArray(state.today.routine)) state.today=structuredClone(SEED.today);
   if(!state.ui||typeof state.ui!=="object") state.ui={tab:"Home",collapsed:{}};
   if(!state.ui.collapsed) state.ui.collapsed={};
@@ -1955,7 +2070,8 @@ function renderAll(){
   if(!state.heroGear||!Array.isArray(state.heroGear.rows)) state.heroGear=structuredClone(SEED.heroGear);
   if(!state.charms||!Array.isArray(state.charms.rows)||!state.charms.rows[0]||state.charms.rows[0].type===undefined) state.charms=structuredClone(SEED.charms);
   if(!state.widgets||!Array.isArray(state.widgets.rows)) state.widgets=structuredClone(SEED.widgets);
-  if(Array.isArray(state.resources)) state.resources.forEach(r=>{ if(r.use===undefined){ const sd=SEED.resources.find(x=>x.n===r.n); r.use=sd?sd.use:""; } delete r.s; });
+  if(Array.isArray(state.resources)) state.resources.forEach(r=>{ if(r.need===undefined) r.need=""; delete r.s; delete r.use; });
+  if(state.resGoal===undefined) state.resGoal=SEED.resGoal||"";
   if(Array.isArray(state.buildings)) state.buildings.forEach(bl=>{ if(bl.stepIdx===undefined) bl.stepIdx=0; delete bl.t; delete bl.tg; delete bl.ttg; delete bl.time; });
   if(!state.ui.density) state.ui.density="comfortable";
   if(state.account && !state.account.dayAnchor){
