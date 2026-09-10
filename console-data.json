@@ -1,16 +1,16 @@
 {
   "account": {
-    "tc": "Truegold Lv. 7",
+    "tc": "Truegold Lv. 6",
     "day": "443",
-    "power": "254,620,509",
+    "power": "257,712,855",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "All-round"
   },
   "dust": {
-    "current": 710,
-    "target": 1346,
-    "gold": 879630
+    "current": 1125,
+    "target": 2716,
+    "gold": 773270
   },
   "nodes": [
     {
@@ -20,12 +20,12 @@
     },
     {
       "name": "Legionaries (Rally)",
-      "cur": 10,
+      "cur": 9,
       "next": 2600
     },
     {
       "name": "Vests (Defense)",
-      "cur": 12,
+      "cur": 10,
       "next": 1192
     }
   ],
@@ -120,58 +120,94 @@
       "d": false
     }
   ],
+  "step1": [
+    {
+      "t": "Promote staged T9 → T10 across the army",
+      "d": false
+    },
+    {
+      "t": "Time promotions to the KvK ‘Increase Power’ stage",
+      "d": false
+    },
+    {
+      "t": "Complete a full T10 base before chasing T11",
+      "d": false
+    }
+  ],
+  "step2": [
+    {
+      "t": "Grind Archer node A to 12 (+6)",
+      "d": true
+    },
+    {
+      "t": "Finish Archer node B to 12 (+2)",
+      "d": false
+    },
+    {
+      "t": "Finish Archer node C to 12 (+3)",
+      "d": false
+    },
+    {
+      "t": "Buy final unlock node (2,200 Dust + 1M Gold)",
+      "d": false
+    },
+    {
+      "t": "Promote T10 Archers → T11 on a KvK power stage",
+      "d": false
+    }
+  ],
   "pillars": [
     {
       "name": "Building",
-      "v": 8924043,
+      "v": 8633363,
       "b": 7687198,
       "g": "S"
     },
     {
       "name": "Troop",
-      "v": 144845327,
+      "v": 141232265,
       "b": 164531870,
       "g": "A"
     },
     {
       "name": "Hero",
-      "v": 28222832,
+      "v": 27734342,
       "b": 21305631,
       "g": "SS"
     },
     {
       "name": "Hero Gear",
-      "v": 11012449,
+      "v": 11248312,
       "b": 10062833,
       "g": "S"
     },
     {
       "name": "Governor Gear",
-      "v": 7552080,
+      "v": 7482720,
       "b": 7831641,
       "g": "A"
     },
     {
       "name": "Governor Charm",
-      "v": 11112000,
+      "v": 10864000,
       "b": 8258400,
       "g": "SS"
     },
     {
       "name": "Tech",
-      "v": 19007320,
+      "v": 18569220,
       "b": 11141492,
       "g": "SS"
     },
     {
       "name": "Pet",
-      "v": 20791560,
+      "v": 20521080,
       "b": 20673792,
       "g": "S"
     },
     {
       "name": "Master",
-      "v": 11859400,
+      "v": 11405400,
       "b": 25148000,
       "g": "C"
     }
@@ -185,91 +221,66 @@
     "hp": 51.3,
     "troopStatus": "T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot."
   },
-  "resGoal": "T11 Archer promote — next 14 days",
   "resources": [
     {
       "n": "Soldier Training speedup",
       "h": "~13 days",
-      "s": "rich",
-      "use": "",
-      "need": "17"
+      "s": "rich"
     },
     {
       "n": "General speedup",
       "h": "~40 days",
-      "s": "rich",
-      "use": "",
-      "need": ""
+      "s": "rich"
     },
     {
       "n": "Soldier Healing speedup",
       "h": "~10 days",
-      "s": "ok",
-      "use": "",
-      "need": ""
+      "s": "ok"
     },
     {
       "n": "Construction speedup",
       "h": "~4 days",
-      "s": "ok",
-      "use": "",
-      "need": ""
+      "s": "ok"
     },
     {
       "n": "Research speedup",
       "h": "~1 day",
-      "s": "scarce",
-      "use": "",
-      "need": ""
+      "s": "scarce"
     },
     {
       "n": "Bread",
       "h": "2.29B",
-      "s": "rich",
-      "use": "",
-      "need": ""
+      "s": "rich"
     },
     {
       "n": "Wood",
       "h": "2.29B",
-      "s": "rich",
-      "use": "",
-      "need": ""
+      "s": "rich"
     },
     {
       "n": "Stone",
       "h": "275.77M",
-      "s": "ok",
-      "use": "",
-      "need": ""
+      "s": "ok"
     },
     {
       "n": "Iron",
       "h": "215.72M",
-      "s": "ok",
-      "use": "",
-      "need": ""
+      "s": "ok"
     },
     {
       "n": "Gold",
       "h": "218K",
-      "s": "scarce",
-      "use": "",
-      "need": ""
+      "s": "scarce"
     },
     {
       "n": "Mithril (hero gear)",
       "h": "2",
-      "s": "ok",
-      "use": "",
-      "need": ""
+      "s": "ok"
     },
     {
       "n": "Research Speed (stat)",
       "h": "56.2%",
-      "s": "scarce",
-      "use": "",
-      "need": ""
+      "s": "scarce"
     }
   ],
   "masters": [
@@ -364,11 +375,11 @@
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "174"
+      "v": "171"
     },
     {
       "k": "Molten Fort (Gov Gear)",
-      "v": "281"
+      "v": "256"
     },
     {
       "k": "Radiant Spire (ALL stats — full power)",
@@ -376,13 +387,13 @@
     }
   ],
   "tg": {
-    "have": 108,
-    "need": 6777,
-    "ttgHave": 3,
-    "ttgNeed": 642
+    "have": 667,
+    "need": 9757,
+    "ttgHave": 44,
+    "ttgNeed": 781
   },
   "govGear": {
-    "targetIdx": 14,
+    "targetIdx": 19,
     "pieces": [
       {
         "name": "Piece 1",
@@ -390,15 +401,15 @@
       },
       {
         "name": "Piece 2",
-        "cur": 11
+        "cur": 10
       },
       {
         "name": "Piece 3",
-        "cur": 11
+        "cur": 12
       },
       {
         "name": "Piece 4",
-        "cur": 12
+        "cur": 11
       },
       {
         "name": "Piece 5",
@@ -410,9 +421,9 @@
       }
     ],
     "have": {
-      "satin": 20869,
-      "threads": 161,
-      "vision": 36
+      "satin": 29659,
+      "threads": 262,
+      "vision": 88
     }
   },
   "forecast": {
@@ -421,11 +432,16 @@
         "d": "2026-08-31",
         "dust": 89,
         "gold": 412110
+      },
+      {
+        "d": "2026-09-03",
+        "dust": 1075,
+        "gold": 550690
       }
     ]
   },
   "today": {
-    "routineDate": "2026-09-09",
+    "routineDate": "2026-09-10",
     "kvkDate": "",
     "bearDate": "2026-09-01",
     "kvkPeriod": 14,
@@ -454,29 +470,155 @@
     ]
   },
   "ui": {
-    "tab": "Supply",
+    "tab": "Home",
     "collapsed": {
       "Combat Quality": false,
-      "Hero Gear": false,
-      "Charms": false,
-      "The Gate — T11 Unlocks": false,
-      "Masters": false
+      "Hero Gear": true,
+      "Charms": true,
+      "Widgets": true,
+      "Build Order — TG6→TG8": false
     }
   },
   "troopCounts": {
     "inf": {
-      "cur": 460434,
+      "cur": 456287,
       "tgt": 1000000
     },
     "arc": {
-      "cur": 638923,
+      "cur": 636147,
       "tgt": 1000000
     },
     "cav": {
-      "cur": 346130,
+      "cur": 343992,
       "tgt": 500000
     }
   },
+  "farm": [
+    {
+      "k": "Town Center",
+      "v": "30"
+    },
+    {
+      "k": "Storehouse level",
+      "v": "— (keep LOW while feeding)"
+    },
+    {
+      "k": "VIP",
+      "v": "— (target VIP 6 for extra march)"
+    },
+    {
+      "k": "Troop count",
+      "v": "— (minimal — only for gathering)"
+    },
+    {
+      "k": "Alliance",
+      "v": "— (sister/NAP, NOT main's alliance)"
+    },
+    {
+      "k": "Same kingdom as main?",
+      "v": "— (required)"
+    }
+  ],
+  "farmChecks": [
+    {
+      "t": "Teleport farm next to main",
+      "d": false
+    },
+    {
+      "t": "Open all unprotected resource packs in farm bag",
+      "d": false
+    },
+    {
+      "t": "Empty troops — send gathering / garrison a shielded ally",
+      "d": false
+    },
+    {
+      "t": "Switch to main → attack farm until resources are home",
+      "d": false
+    },
+    {
+      "t": "Switch back → heal any hurt farm troops",
+      "d": false
+    },
+    {
+      "t": "(Weekly) Bear Hunt rallies + Eternity's Reach tokens",
+      "d": false
+    }
+  ],
+  "buildings": [
+    {
+      "n": "Town Center",
+      "t": "per tier",
+      "tg": 2160,
+      "ttg": 210,
+      "time": "73d",
+      "note": "METRONOME — raise one tier to uncap the rest, then repeat",
+      "d": false
+    },
+    {
+      "n": "Range",
+      "t": "TG6→TG8",
+      "tg": 972,
+      "ttg": 91,
+      "time": "10d 22h",
+      "note": "Archer line — your main combat",
+      "d": false
+    },
+    {
+      "n": "War Academy",
+      "t": "TG5→TG8",
+      "tg": 1377,
+      "ttg": 116,
+      "time": "20d 8h",
+      "note": "Research speed + T11 gate",
+      "d": false
+    },
+    {
+      "n": "Embassy",
+      "t": "TG6→TG8",
+      "tg": 540,
+      "ttg": 49,
+      "time": "48d 4h",
+      "note": "Rally/garrison capacity — events",
+      "d": false
+    },
+    {
+      "n": "Command Center",
+      "t": "TG5→TG8",
+      "tg": 612,
+      "ttg": 54,
+      "time": "12d 5h",
+      "note": "March capacity — rally contribution",
+      "d": false
+    },
+    {
+      "n": "Barracks",
+      "t": "TG6→TG8",
+      "tg": 972,
+      "ttg": 91,
+      "time": "10d 22h",
+      "note": "Infantry tanks",
+      "d": false
+    },
+    {
+      "n": "Stable",
+      "t": "TG5→TG8",
+      "tg": 1377,
+      "ttg": 116,
+      "time": "15d 6h",
+      "note": "Cavalry (off-focus) — defer",
+      "d": false
+    },
+    {
+      "n": "Infirmary",
+      "t": "TG5→TG8",
+      "tg": 1747,
+      "ttg": 54,
+      "time": "40d 1h",
+      "note": "Healing sustain — defer, big",
+      "d": false
+    }
+  ],
   "bear": {
     "arrows": 0,
     "members": 85
@@ -484,9 +626,9 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 155,
+      "fh": 133,
       "mg": 10,
-      "mith": 9
+      "mith": 3
     },
     "rows": [
       {
@@ -516,7 +658,7 @@
       {
         "type": "Infantry",
         "slot": "Chest (Health)",
-        "lvC": 119,
+        "lvC": 106,
         "lvT": 179,
         "mC": 11,
         "mT": 13,
@@ -600,7 +742,7 @@
       {
         "type": "Archer",
         "slot": "Gloves (Health)",
-        "lvC": 85,
+        "lvC": 90,
         "lvT": 120,
         "mC": 6,
         "mT": 11,
@@ -612,7 +754,7 @@
       {
         "type": "Archer",
         "slot": "Chest (Health)",
-        "lvC": 88,
+        "lvC": 90,
         "lvT": 120,
         "mC": 6,
         "mT": 11,
@@ -633,48 +775,31 @@
         "mg": 19,
         "mith": 60
       }
-    ],
-    "open": {
-      "Infantry": true,
-      "Cavalry": true,
-      "Archer": true
-    }
+    ]
   },
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 222,
-      "designs": 232
+      "guides": 340,
+      "designs": 534
     },
     "rows": [
       {
-        "n": "Infantry Charm 1",
+        "n": "Infantry Charm",
         "lvl": 0
       },
       {
-        "n": "Cavalry Charm 1",
+        "n": "Cavalry Charm",
         "lvl": 0
       },
       {
         "n": "Archer Charm",
         "lvl": 0
-      },
-      {
-        "n": "Infantry Charm 2",
-        "lvl": 0
-      },
-      {
-        "n": "Cavalry Charm 1",
-        "lvl": 0
-      },
-      {
-        "n": "New charm",
-        "lvl": 0
       }
     ]
   },
   "widgets": {
-    "have": 0,
+    "have": 45,
     "rows": [
       {
         "hero": "Yang",
@@ -682,184 +807,16 @@
       },
       {
         "hero": "Amadeus",
-        "lvl": 2
-      },
-      {
-        "hero": "Petra",
-        "lvl": 2
+        "lvl": 3
       },
       {
         "hero": "Ava",
         "lvl": 0
       },
       {
-        "hero": "Long Fei",
-        "lvl": 4
+        "hero": "Petra",
+        "lvl": 2
       }
     ]
-  },
-  "farm": [
-    {
-      "k": "Town Center",
-      "v": "30"
-    },
-    {
-      "k": "Storehouse level",
-      "v": "— (keep LOW while feeding)"
-    },
-    {
-      "k": "VIP",
-      "v": "— (target VIP 6 for extra march)"
-    },
-    {
-      "k": "Troop count",
-      "v": "— (minimal — only for gathering)"
-    },
-    {
-      "k": "Alliance",
-      "v": "— (sister/NAP, NOT main's alliance)"
-    },
-    {
-      "k": "Same kingdom as main?",
-      "v": "— (required)"
-    }
-  ],
-  "farmChecks": [
-    {
-      "t": "Teleport farm next to main",
-      "d": false
-    },
-    {
-      "t": "Open all unprotected resource packs in farm bag",
-      "d": false
-    },
-    {
-      "t": "Empty troops — send gathering / garrison a shielded ally",
-      "d": false
-    },
-    {
-      "t": "Switch to main → attack farm until resources are home",
-      "d": false
-    },
-    {
-      "t": "Switch back → heal any hurt farm troops",
-      "d": false
-    },
-    {
-      "t": "(Weekly) Bear Hunt rallies + Eternity's Reach tokens",
-      "d": false
-    }
-  ],
-  "buildings": [
-    {
-      "n": "Town Center",
-      "t": "per tier",
-      "tg": 2160,
-      "ttg": 210,
-      "time": "73d",
-      "note": "METRONOME — raise one tier to uncap the rest, then repeat",
-      "d": false,
-      "stepIdx": 0
-    },
-    {
-      "n": "Range",
-      "t": "TG6→TG8",
-      "tg": 972,
-      "ttg": 91,
-      "time": "10d 22h",
-      "note": "Archer line — your main combat",
-      "d": false
-    },
-    {
-      "n": "War Academy",
-      "t": "TG5→TG8",
-      "tg": 1377,
-      "ttg": 116,
-      "time": "20d 8h",
-      "note": "Research speed + T11 gate",
-      "d": false
-    },
-    {
-      "n": "Embassy",
-      "t": "TG6→TG8",
-      "tg": 540,
-      "ttg": 49,
-      "time": "48d 4h",
-      "note": "Rally/garrison capacity — events",
-      "d": false
-    },
-    {
-      "n": "Command Center",
-      "t": "TG5→TG8",
-      "tg": 612,
-      "ttg": 54,
-      "time": "12d 5h",
-      "note": "March capacity — rally contribution",
-      "d": false,
-      "stepIdx": 0
-    },
-    {
-      "n": "Barracks",
-      "t": "TG6→TG8",
-      "tg": 972,
-      "ttg": 91,
-      "time": "10d 22h",
-      "note": "Infantry tanks",
-      "d": false
-    },
-    {
-      "n": "Stable",
-      "t": "TG5→TG8",
-      "tg": 1377,
-      "ttg": 116,
-      "time": "15d 6h",
-      "note": "Cavalry (off-focus) — defer",
-      "d": false
-    },
-    {
-      "n": "Infirmary",
-      "t": "5→TG8",
-      "tg": 1747,
-      "ttg": 54,
-      "time": "40d 1h",
-      "note": "Healing sustain — defer, big",
-      "d": false
-    }
-  ],
-  "step1": [
-    {
-      "t": "Promote staged T9 → T10 across the army",
-      "d": false
-    },
-    {
-      "t": "Time promotions to the KvK ‘Increase Power’ stage",
-      "d": false
-    },
-    {
-      "t": "Complete a full T10 base before chasing T11",
-      "d": false
-    }
-  ],
-  "step2": [
-    {
-      "t": "Grind Archer node A to 12 (+6)",
-      "d": true
-    },
-    {
-      "t": "Finish Archer node B to 12 (+2)",
-      "d": false
-    },
-    {
-      "t": "Finish Archer node C to 12 (+3)",
-      "d": false
-    },
-    {
-      "t": "Buy final unlock node (2,200 Dust + 1M Gold)",
-      "d": false
-    },
-    {
-      "t": "Promote T10 Archers → T11 on a KvK power stage",
-      "d": false
-    }
-  ]
+  }
 }
