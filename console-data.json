@@ -352,7 +352,13 @@
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "168"
+      "v": "168",
+      "log": [
+        {
+          "d": "2026-09-11",
+          "v": 168
+        }
+      ]
     },
     {
       "k": "Molten Fort (Gov Gear)",
