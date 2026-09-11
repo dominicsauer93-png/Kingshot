@@ -643,15 +643,15 @@
     "rows": [
       {
         "n": "Infantry Charm",
-        "lvl": 10
+        "lvl": 6
       },
       {
         "n": "Cavalry Charm",
-        "lvl": 10
+        "lvl": 6
       },
       {
         "n": "Archer Charm",
-        "lvl": 10
+        "lvl": 6
       }
     ]
   },
