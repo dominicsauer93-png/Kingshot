@@ -477,7 +477,7 @@
     ]
   },
   "ui": {
-    "tab": "Troops",
+    "tab": "Data",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": false,
