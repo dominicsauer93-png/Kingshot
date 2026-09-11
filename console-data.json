@@ -685,6 +685,10 @@
       {
         "hero": "Vivian",
         "lvl": 4
+      },
+      {
+        "hero": "Triton",
+        "lvl": 0
       }
     ]
   },
