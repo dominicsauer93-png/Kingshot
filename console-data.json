@@ -346,7 +346,13 @@
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "158"
+      "v": "147",
+      "log": [
+        {
+          "d": "2026-09-11",
+          "v": 147
+        }
+      ]
     },
     {
       "k": "Forest of Life (Pets)",
