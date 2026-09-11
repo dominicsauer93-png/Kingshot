@@ -123,55 +123,55 @@
   "pillars": [
     {
       "name": "Building",
-      "v": 8924043,
+      "v": 8633363,
       "b": 7687198,
       "g": "S"
     },
     {
       "name": "Troop",
-      "v": 145940652,
+      "v": 141232265,
       "b": 164531870,
       "g": "A"
     },
     {
       "name": "Hero",
-      "v": 28229042,
+      "v": 27734342,
       "b": 21305631,
       "g": "SS"
     },
     {
       "name": "Hero Gear",
-      "v": 11159248,
-      "b": 14161916,
+      "v": 11248312,
+      "b": 10062833,
       "g": "S"
     },
     {
       "name": "Governor Gear",
-      "v": 7552080,
+      "v": 7482720,
       "b": 7831641,
       "g": "A"
     },
     {
       "name": "Governor Charm",
-      "v": 11236000,
+      "v": 10864000,
       "b": 8258400,
       "g": "SS"
     },
     {
       "name": "Tech",
-      "v": 19007320,
+      "v": 18569220,
       "b": 11141492,
       "g": "SS"
     },
     {
       "name": "Pet",
-      "v": 20791560,
+      "v": 20521080,
       "b": 20673792,
       "g": "S"
     },
     {
       "name": "Master",
-      "v": 11859400,
+      "v": 11405400,
       "b": 25148000,
       "g": "C"
     }
@@ -255,7 +255,7 @@
     },
     {
       "n": "Research Speed (stat)",
-      "h": "66.2",
+      "h": "56.2%",
       "s": "scarce",
       "need": ""
     }
@@ -336,53 +336,23 @@
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
-      "v": "153",
-      "log": [
-        {
-          "d": "2026-09-11",
-          "v": 153
-        }
-      ]
+      "v": "169"
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "147",
-      "log": [
-        {
-          "d": "2026-09-11",
-          "v": 147
-        }
-      ]
+      "v": "158"
     },
     {
       "k": "Forest of Life (Pets)",
-      "v": "80",
-      "log": [
-        {
-          "d": "2026-09-11",
-          "v": 80
-        }
-      ]
+      "v": "90"
     },
     {
       "k": "Crystal Cave (Charms)",
-      "v": "126",
-      "log": [
-        {
-          "d": "2026-09-11",
-          "v": 126
-        }
-      ]
+      "v": "139"
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "168",
-      "log": [
-        {
-          "d": "2026-09-11",
-          "v": 168
-        }
-      ]
+      "v": "171"
     },
     {
       "k": "Molten Fort (Gov Gear)",
@@ -394,43 +364,43 @@
     }
   ],
   "tg": {
-    "have": 215,
+    "have": 667,
     "need": 6777,
-    "ttgHave": 8,
+    "ttgHave": 44,
     "ttgNeed": 642
   },
   "govGear": {
     "targetIdx": 19,
     "pieces": [
       {
-        "name": "CAV 1",
+        "name": "Piece 1",
         "cur": 10
       },
       {
-        "name": "CAV 2",
-        "cur": 11
+        "name": "Piece 2",
+        "cur": 10
       },
       {
-        "name": "INF 1",
-        "cur": 11
-      },
-      {
-        "name": "INF 2",
+        "name": "Piece 3",
         "cur": 12
       },
       {
-        "name": "ARCHER 1",
+        "name": "Piece 4",
+        "cur": 11
+      },
+      {
+        "name": "Piece 5",
         "cur": 12
       },
       {
-        "name": "ARCHER 2",
+        "name": "Piece 6",
         "cur": 19
       }
     ],
     "have": {
-      "satin": 31185,
-      "threads": 300,
-      "vision": 53
+      "satin": 29659,
+      "threads": 262,
+      "vision": 88
     }
   },
   "forecast": {
@@ -477,14 +447,13 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Troops",
     "collapsed": {
       "Combat Quality": false,
-      "Hero Gear": false,
-      "Charms": false,
-      "Widgets": false,
-      "Build Order — TG6→TG8": false,
-      "Power Grades — All Pillars": false
+      "Hero Gear": true,
+      "Charms": true,
+      "Widgets": true,
+      "Build Order — TG6→TG8": false
     },
     "density": "compact"
   },
@@ -508,10 +477,10 @@
   },
   "heroGear": {
     "have": {
-      "xp": 28940,
-      "fh": 24,
-      "mg": 6,
-      "mith": 9
+      "xp": 0,
+      "fh": 133,
+      "mg": 10,
+      "mith": 3
     },
     "rows": [
       {
@@ -520,34 +489,34 @@
         "lvC": 104,
         "lvT": 120,
         "mC": 10,
-        "mT": 12,
-        "xp": 44410,
-        "fh": 230,
-        "mg": 6,
+        "mT": 11,
+        "xp": 45000,
+        "fh": 110,
+        "mg": 4,
         "mith": 10
       },
       {
         "type": "Infantry",
         "slot": "Gloves (Health)",
-        "lvC": 139,
+        "lvC": 104,
         "lvT": 159,
-        "mC": 12,
+        "mC": 10,
         "mT": 12,
-        "xp": 92300,
-        "fh": 0,
-        "mg": 5,
-        "mith": 20
+        "xp": 212200,
+        "fh": 230,
+        "mg": 11,
+        "mith": 30
       },
       {
         "type": "Infantry",
         "slot": "Chest (Health)",
-        "lvC": 119,
+        "lvC": 106,
         "lvT": 179,
         "mC": 11,
-        "mT": 12,
-        "xp": 285700,
-        "fh": 120,
-        "mg": 15,
+        "mT": 13,
+        "xp": 328450,
+        "fh": 250,
+        "mg": 18,
         "mith": 60
       },
       {
@@ -556,10 +525,10 @@
         "lvC": 101,
         "lvT": 125,
         "mC": 10,
-        "mT": 12,
-        "xp": 68340,
-        "fh": 230,
-        "mg": 6,
+        "mT": 11,
+        "xp": 70400,
+        "fh": 110,
+        "mg": 4,
         "mith": 10
       },
       {
@@ -568,22 +537,22 @@
         "lvC": 119,
         "lvT": 139,
         "mC": 10,
-        "mT": 12,
-        "xp": 73300,
-        "fh": 230,
-        "mg": 6,
+        "mT": 11,
+        "xp": 74100,
+        "fh": 110,
+        "mg": 4,
         "mith": 10
       },
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 75,
+        "lvC": 80,
         "lvT": 101,
         "mC": 7,
-        "mT": 12,
-        "xp": 47120,
-        "fh": 500,
-        "mg": 5,
+        "mT": 10,
+        "xp": 38500,
+        "fh": 270,
+        "mg": 2,
         "mith": 0
       },
       {
@@ -592,10 +561,10 @@
         "lvC": 80,
         "lvT": 120,
         "mC": 7,
-        "mT": 12,
+        "mT": 11,
         "xp": 91150,
-        "fh": 500,
-        "mg": 8,
+        "fh": 380,
+        "mg": 6,
         "mith": 10
       },
       {
@@ -604,10 +573,10 @@
         "lvC": 101,
         "lvT": 139,
         "mC": 10,
-        "mT": 12,
-        "xp": 121270,
-        "fh": 230,
-        "mg": 6,
+        "mT": 11,
+        "xp": 126750,
+        "fh": 110,
+        "mg": 4,
         "mith": 10
       },
       {
@@ -616,34 +585,34 @@
         "lvC": 139,
         "lvT": 139,
         "mC": 11,
-        "mT": 12,
+        "mT": 11,
         "xp": 0,
-        "fh": 120,
-        "mg": 2,
+        "fh": 0,
+        "mg": 0,
         "mith": 0
       },
       {
         "type": "Archer",
         "slot": "Gloves (Health)",
-        "lvC": 85,
+        "lvC": 90,
         "lvT": 120,
-        "mC": 7,
-        "mT": 12,
-        "xp": 83400,
-        "fh": 500,
-        "mg": 8,
+        "mC": 6,
+        "mT": 11,
+        "xp": 74400,
+        "fh": 450,
+        "mg": 6,
         "mith": 10
       },
       {
         "type": "Archer",
         "slot": "Chest (Health)",
-        "lvC": 85,
+        "lvC": 90,
         "lvT": 120,
-        "mC": 7,
-        "mT": 12,
-        "xp": 83400,
-        "fh": 500,
-        "mg": 8,
+        "mC": 6,
+        "mT": 11,
+        "xp": 74400,
+        "fh": 450,
+        "mg": 6,
         "mith": 10
       },
       {
@@ -652,10 +621,10 @@
         "lvC": 119,
         "lvT": 179,
         "mC": 10,
-        "mT": 12,
-        "xp": 285700,
-        "fh": 230,
-        "mg": 16,
+        "mT": 13,
+        "xp": 288800,
+        "fh": 360,
+        "mg": 19,
         "mith": 60
       }
     ],
@@ -674,18 +643,15 @@
     "rows": [
       {
         "n": "Infantry Charm",
-        "lvl": 6,
-        "tgt": 10
+        "lvl": 0
       },
       {
         "n": "Cavalry Charm",
-        "lvl": 6,
-        "tgt": 10
+        "lvl": 0
       },
       {
         "n": "Archer Charm",
-        "lvl": 6,
-        "tgt": 10
+        "lvl": 0
       }
     ]
   },
@@ -694,11 +660,11 @@
     "rows": [
       {
         "hero": "Yang",
-        "lvl": 9
+        "lvl": 8
       },
       {
         "hero": "Amadeus",
-        "lvl": 4
+        "lvl": 3
       },
       {
         "hero": "Ava",
@@ -706,22 +672,6 @@
       },
       {
         "hero": "Petra",
-        "lvl": 2
-      },
-      {
-        "hero": "Long Fei",
-        "lvl": 4
-      },
-      {
-        "hero": "Sophia",
-        "lvl": 2
-      },
-      {
-        "hero": "Vivian",
-        "lvl": 4
-      },
-      {
-        "hero": "Triton",
         "lvl": 2
       }
     ]
