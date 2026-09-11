@@ -366,7 +366,13 @@
     },
     {
       "k": "Crystal Cave (Charms)",
-      "v": "126"
+      "v": "126",
+      "log": [
+        {
+          "d": "2026-09-11",
+          "v": 126
+        }
+      ]
     },
     {
       "k": "Knowledge Nexus (Techs)",
