@@ -454,7 +454,8 @@
       "Charms": true,
       "Widgets": true,
       "Build Order — TG6→TG8": false
-    }
+    },
+    "density": "compact"
   },
   "troopCounts": {
     "inf": {
