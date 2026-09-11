@@ -451,7 +451,7 @@
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": false,
-      "Charms": true,
+      "Charms": false,
       "Widgets": true,
       "Build Order — TG6→TG8": false
     },
