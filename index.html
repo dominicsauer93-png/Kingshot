@@ -610,8 +610,8 @@
   <section>
     <div class="sechead"><span class="num">17</span><h2>Charms</h2><span class="hint">Charm Designs are the bottleneck</span></div>
     <div class="card">
-      <p class="sub">18 charms, 6 per troop type. Set each level; it totals Guides &amp; Designs needed vs what you hold. Designs are the bottleneck.</p>
-      <div class="field" style="margin-bottom:12px"><label>Target level (all charms)</label><select id="charmTarget" class="sigsel" style="padding-right:24px;min-width:110px"></select></div>
+      <p class="sub">18 charms, 6 per troop type — each has its own current level and its own target. Totals sum every charm's own gap to its own target. Designs are the bottleneck.</p>
+      <div class="field" style="margin-bottom:12px"><label>Default target (new charms · bulk-set below)</label><select id="charmTarget" class="sigsel" style="padding-right:24px;min-width:110px"></select></div>
       <div class="gate-inputs" style="margin-bottom:10px">
         <div class="field"><label>Charm Guides in hand</label><input class="mono" id="charmGuidesHave" inputmode="numeric" style="width:120px"></div>
         <div class="field"><label>Charm Designs in hand</label><input class="mono" id="charmDesignsHave" inputmode="numeric" style="width:120px"></div>
@@ -619,7 +619,7 @@
       <div class="metric-row"><div class="metric-top"><span>Charm Guides</span><span id="charmGuidesTxt"></span></div><div class="meter"><div class="fill" id="charmGuidesFill" style="width:0%"></div></div></div>
       <div class="metric-row"><div class="metric-top"><span>Charm Designs <span style="color:var(--faint)">(bottleneck)</span></span><span id="charmDesignsTxt"></span></div><div class="meter"><div class="fill" id="charmDesignsFill" style="width:0%"></div></div></div>
       <div style="display:flex;gap:8px;align-items:center;margin:14px 0 4px">
-        <span class="today-label" style="margin:0">Set all to</span>
+        <span class="today-label" style="margin:0">Set all targets to</span>
         <select id="charmSetAll" class="sigsel" style="padding-right:24px"></select>
         <button class="btn" id="charmApplyAll">Apply</button>
       </div>
@@ -825,9 +825,9 @@ const SEED = {
     ]
   },
   charms:{ targetLvl:22, have:{guides:0,designs:0}, rows:[
-    {type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},{type:"Cavalry", lvl:4},
-    {type:"Infantry", lvl:6},{type:"Infantry", lvl:5},{type:"Infantry", lvl:5},{type:"Infantry", lvl:5},{type:"Infantry", lvl:5},{type:"Infantry", lvl:5},
-    {type:"Archer", lvl:6},{type:"Archer", lvl:6},{type:"Archer", lvl:6},{type:"Archer", lvl:9},{type:"Archer", lvl:6},{type:"Archer", lvl:6}
+    {type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},
+    {type:"Infantry", lvl:6, tgt:22},{type:"Infantry", lvl:5, tgt:22},{type:"Infantry", lvl:5, tgt:22},{type:"Infantry", lvl:5, tgt:22},{type:"Infantry", lvl:5, tgt:22},{type:"Infantry", lvl:5, tgt:22},
+    {type:"Archer", lvl:6, tgt:22},{type:"Archer", lvl:6, tgt:22},{type:"Archer", lvl:6, tgt:22},{type:"Archer", lvl:9, tgt:22},{type:"Archer", lvl:6, tgt:22},{type:"Archer", lvl:6, tgt:22}
   ]},
   widgets:{ have:0, rows:[ {hero:"Yang", lvl:2}, {hero:"Amadeus", lvl:2}, {hero:"Petra", lvl:2} ] },
   farm:[
@@ -1259,6 +1259,51 @@ function buildBear(){
   paint();
 }
 
+/* ---------- hero gear cost tables (kingshotoptimizer.com) ---------- */
+// XP: exact at every listed level; the site's own table only samples every 5th level past 10,
+// so between two knots we linearly interpolate (flagged ~ in the UI) — not a guess, a defined,
+// reproducible calc using the site's own checkpoints.
+const HG_XP_KNOTS=[[0,0],[1,10],[2,25],[3,45],[4,70],[5,100],[6,135],[7,175],[8,220],[9,270],[10,325],
+ [15,675],[20,1150],[25,1750],[30,2480],[35,3430],[40,4640],[45,6290],[50,8440],[55,11090],[60,14250],
+ [65,18100],[70,22710],[75,28260],[80,34820],[85,42570],[90,51570],[95,61820],[100,73320],[105,83620],
+ [110,97620],[115,112870],[120,125970],[125,143720],[130,162720],[135,182970],[140,200070],[145,222820],
+ [150,246820],[155,272070],[160,293170],[165,321670],[170,352670],[175,386170],[180,414770],[185,453270],
+ [190,494270],[195,537770],[200,574370]];
+function hgXpCumulative(lv){
+  lv=Math.max(0,Math.min(200,lv));
+  for(let i=0;i<HG_XP_KNOTS.length-1;i++){
+    const [l0,c0]=HG_XP_KNOTS[i], [l1,c1]=HG_XP_KNOTS[i+1];
+    if(lv>=l0&&lv<=l1){
+      if(lv===l0) return {v:c0,exact:true};
+      if(lv===l1) return {v:c1,exact:true};
+      const t=(lv-l0)/(l1-l0);
+      return {v:c0+t*(c1-c0), exact:false};
+    }
+  }
+  return {v:HG_XP_KNOTS[HG_XP_KNOTS.length-1][1], exact:true};
+}
+// Forgehammers: exact formula, Mastery 0-20 → 10 per level, verified against the site's table (cumulative 2100 @ M20).
+function hgFhCumulative(m){ m=Math.max(0,Math.min(20,m)); return 10*m*(m+1)/2; }
+// Mythic Gear from Mastery 11-20: exact, matches the site's table (cumulative 55 @ M20).
+function hgMythFromMastery(m){ m=Math.max(0,Math.min(20,m)); return m<=10?0:(m-10)*(m-9)/2; }
+// Red Gear ascension (Lv100+): exact milestone table, every 20-level step listed on the site.
+const HG_ASCEND_STEPS=[ {lv:100,mith:0,myth:2}, {lv:120,mith:10,myth:3}, {lv:140,mith:20,myth:5}, {lv:160,mith:30,myth:5}, {lv:180,mith:40,myth:10}, {lv:200,mith:50,myth:10} ];
+function hgAscendCost(curLv,tgtLv){
+  let mith=0,myth=0;
+  HG_ASCEND_STEPS.forEach(s=>{ if(s.lv>curLv && s.lv<=tgtLv){ mith+=s.mith; myth+=s.myth; } });
+  return {mith,myth};
+}
+function hgCalcCost(r){
+  const lvC=num(r.lvC), lvT=num(r.lvT), mC=num(r.mC), mT=num(r.mT);
+  const xpLo=hgXpCumulative(lvC), xpHi=hgXpCumulative(lvT);
+  const xp=Math.max(0,Math.round(xpHi.v-xpLo.v));
+  const xpExact=xpLo.exact&&xpHi.exact;
+  const fh=Math.max(0, hgFhCumulative(mT)-hgFhCumulative(mC));
+  const mythM=Math.max(0, hgMythFromMastery(mT)-hgMythFromMastery(mC));
+  const asc=hgAscendCost(lvC,lvT);
+  return { xp, xpExact, fh, mg: mythM+asc.myth, mith: asc.mith };
+}
+
 /* ---------- hero gear (collapsible groups → compact table) ---------- */
 const HG_TYPES=["Infantry","Cavalry","Archer"];
 function buildHeroGear(){
@@ -1283,17 +1328,19 @@ function buildHeroGear(){
     tbl.innerHTML=`<thead><tr style="color:var(--faint);text-align:left"><th style="padding:3px 8px 5px 0">Slot</th><th style="padding:3px 6px">Lv</th><th style="padding:3px 6px">M</th><th style="padding:3px 6px">XP</th><th style="padding:3px 6px">FH</th><th style="padding:3px 6px">Myth</th><th style="padding:3px 6px">Mith</th><th></th></tr></thead><tbody></tbody>`;
     const tb=tbl.querySelector("tbody");
     pieces.forEach(r=>{
-      const noUp=num(r.xp)+num(r.fh)+num(r.mg)+num(r.mith)===0;
+      const cost=hgCalcCost(r);
+      r.xp=cost.xp; r.fh=cost.fh; r.mg=cost.mg; r.mith=cost.mith;
+      const noUp=cost.xp+cost.fh+cost.mg+cost.mith===0;
       const tr=document.createElement("tr"); tr.style.borderTop="1px solid var(--line)"; if(noUp) tr.style.opacity=".55";
       tr.innerHTML=`<td style="padding:5px 8px 5px 0"><input class="hgslot" value="${(r.slot||'').replace(/"/g,'&quot;')}" style="width:120px;background:transparent;border:0;color:var(--text);font-family:inherit;font-size:11px"></td>
         <td style="padding:5px 6px"><input class="tnum hgf" data-f="lvC" value="${r.lvC}" style="width:44px">→<input class="tnum hgf" data-f="lvT" value="${r.lvT}" style="width:44px"></td>
         <td style="padding:5px 6px"><input class="tnum hgf" data-f="mC" value="${r.mC}" style="width:34px">→<input class="tnum hgf" data-f="mT" value="${r.mT}" style="width:34px"></td>
-        <td style="padding:5px 6px"><input class="tnum hgf" data-f="xp" value="${r.xp}" style="width:66px"></td>
-        <td style="padding:5px 6px"><input class="tnum hgf" data-f="fh" value="${r.fh}" style="width:46px"></td>
-        <td style="padding:5px 6px"><input class="tnum hgf" data-f="mg" value="${r.mg}" style="width:38px"></td>
-        <td style="padding:5px 6px"><input class="tnum hgf" data-f="mith" value="${r.mith}" style="width:38px"></td>
+        <td style="padding:5px 6px;color:var(--gold)" title="${cost.xpExact?'exact':'interpolated between reference-table checkpoints'}">${cost.xpExact?'':'~'}${fmt(cost.xp)}</td>
+        <td style="padding:5px 6px;color:var(--gold)">${fmt(cost.fh)}</td>
+        <td style="padding:5px 6px;color:var(--gold)">${fmt(cost.mg)}</td>
+        <td style="padding:5px 6px;color:var(--gold)">${fmt(cost.mith)}</td>
         <td style="padding:5px 0"><button class="del" title="Remove">×</button></td>`;
-      tr.querySelectorAll(".hgf").forEach(inp=>{ inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); paintHgSummary(); scheduleSave(); }; });
+      tr.querySelectorAll(".hgf").forEach(inp=>{ inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); buildHeroGear(); scheduleSave(); }; });
       const slotInp=tr.querySelector(".hgslot"); slotInp.oninput=()=>{ r.slot=slotInp.value; scheduleSave(); };
       tr.querySelector(".del").onclick=()=>{ const i=hg.rows.indexOf(r); if(i>-1){ hg.rows.splice(i,1); buildHeroGear(); scheduleSave(); } };
       tb.appendChild(tr);
@@ -1329,16 +1376,17 @@ function charmRem(cur,tgt){ let g=0,d=0; for(let i=Math.max(0,cur);i<Math.min(22
 function buildCharms(){
   if(!state.charms||!Array.isArray(state.charms.rows)) state.charms=structuredClone(SEED.charms);
   const c=state.charms; if(!c.have) c.have={guides:0,designs:0}; if(c.targetLvl==null) c.targetLvl=22;
+  c.rows.forEach(r=>{ if(r.tgt==null) r.tgt=c.targetLvl; });
   const tSel=document.getElementById("charmTarget"); if(!tSel) return;
   tSel.innerHTML=Array.from({length:22},(_,i)=>`<option value="${i+1}"${(i+1)===c.targetLvl?' selected':''}>Lv ${i+1}</option>`).join("");
-  tSel.onchange=()=>{ c.targetLvl=parseInt(tSel.value,10); buildCharms(); scheduleSave(); };
+  tSel.onchange=()=>{ c.targetLvl=parseInt(tSel.value,10); scheduleSave(); };
   [["charmGuidesHave","guides"],["charmDesignsHave","designs"]].forEach(([id,k])=>{
     const el=document.getElementById(id); if(el){ el.value=c.have[k]||0; el.oninput=()=>{ c.have[k]=num(el.value); paintCharms(); scheduleSave(); }; }
   });
   const lvlOpts=(sel)=>Array.from({length:23},(_,i)=>`<option value="${i}"${i===sel?' selected':''}>Lv ${i}</option>`).join("");
   const setAll=document.getElementById("charmSetAll");
-  if(setAll){ setAll.innerHTML=lvlOpts(c.targetLvl); 
-    document.getElementById("charmApplyAll").onclick=()=>{ const v=parseInt(setAll.value,10); c.rows.forEach(r=>r.lvl=v); buildCharms(); scheduleSave(); }; }
+  if(setAll){ setAll.innerHTML=lvlOpts(c.targetLvl);
+    document.getElementById("charmApplyAll").onclick=()=>{ const v=parseInt(setAll.value,10); c.rows.forEach(r=>r.tgt=v); buildCharms(); scheduleSave(); }; }
   const host=document.getElementById("charmBody"); host.innerHTML="";
   ["Cavalry","Infantry","Archer"].forEach(type=>{
     const rows=c.rows.filter(r=>(r.type||"")===type); if(!rows.length) return;
@@ -1347,13 +1395,18 @@ function buildCharms(){
     host.appendChild(head);
     const grid=document.createElement("div"); grid.style.cssText="display:grid;grid-template-columns:repeat(3,1fr);gap:8px";
     rows.forEach(r=>{
-      const rem=charmRem(r.lvl,c.targetLvl); const done=r.lvl>=c.targetLvl;
+      const rem=charmRem(r.lvl,r.tgt); const done=r.lvl>=r.tgt;
       const cell=document.createElement("div"); cell.style.cssText="background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px";
-      cell.innerHTML=`<select class="sigsel" style="width:100%;padding-right:24px">${lvlOpts(r.lvl)}</select>
-        <div class="lvlbar" style="max-width:none;margin-top:6px"><div class="lf" style="width:${Math.min(100,r.lvl/c.targetLvl*100)}%;background:${done?'var(--green)':'linear-gradient(90deg,var(--gold-2),var(--gold))'}"></div></div>
+      cell.innerHTML=`<div style="display:flex;align-items:center;gap:4px">
+          <select class="sigsel curSel" style="flex:1;min-width:0;padding-right:22px">${lvlOpts(r.lvl)}</select>
+          <span style="color:var(--faint);font-size:11px">→</span>
+          <select class="sigsel tgtSel" style="flex:1;min-width:0;padding-right:22px">${lvlOpts(r.tgt)}</select>
+        </div>
+        <div class="lvlbar" style="max-width:none;margin-top:6px"><div class="lf" style="width:${r.tgt>0?Math.min(100,r.lvl/r.tgt*100):100}%;background:${done?'var(--green)':'linear-gradient(90deg,var(--gold-2),var(--gold))'}"></div></div>
         <div class="mono" style="font-size:9px;color:var(--muted);margin-top:4px">${done?'✓ at target':'G '+fmtBig(rem.g)+' · D '+fmtBig(rem.d)}</div>`;
-      const sel=cell.querySelector("select");
-      sel.onchange=()=>{ r.lvl=parseInt(sel.value,10); buildCharms(); scheduleSave(); };
+      const curSel=cell.querySelector(".curSel"), tgtSel=cell.querySelector(".tgtSel");
+      curSel.onchange=()=>{ r.lvl=parseInt(curSel.value,10); buildCharms(); scheduleSave(); };
+      tgtSel.onchange=()=>{ r.tgt=parseInt(tgtSel.value,10); buildCharms(); scheduleSave(); };
       grid.appendChild(cell);
     });
     host.appendChild(grid);
@@ -1362,7 +1415,7 @@ function buildCharms(){
 }
 function paintCharms(){
   const c=state.charms; if(!c) return;
-  let g=0,d=0; c.rows.forEach(r=>{ const rem=charmRem(r.lvl,c.targetLvl); g+=rem.g; d+=rem.d; });
+  let g=0,d=0; c.rows.forEach(r=>{ const rem=charmRem(r.lvl,r.tgt!=null?r.tgt:c.targetLvl); g+=rem.g; d+=rem.d; });
   const meter=(need,have,fillId,txtId)=>{ const pct=need>0?Math.min(100,have/need*100):100;
     const fl=document.getElementById(fillId); if(fl) fl.style.width=pct.toFixed(1)+"%";
     const tx=document.getElementById(txtId); if(tx) tx.innerHTML=`<b>${fmt(have)}</b> / ${fmt(need)}`; };
