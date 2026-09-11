@@ -336,7 +336,13 @@
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
-      "v": "153"
+      "v": "153",
+      "log": [
+        {
+          "d": "2026-09-11",
+          "v": 153
+        }
+      ]
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
