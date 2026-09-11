@@ -356,7 +356,13 @@
     },
     {
       "k": "Forest of Life (Pets)",
-      "v": "90"
+      "v": "80",
+      "log": [
+        {
+          "d": "2026-09-11",
+          "v": 80
+        }
+      ]
     },
     {
       "k": "Crystal Cave (Charms)",
