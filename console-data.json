@@ -398,9 +398,9 @@
       }
     ],
     "have": {
-      "satin": 29659,
-      "threads": 262,
-      "vision": 88
+      "satin": 31185,
+      "threads": 300,
+      "vision": 53
     }
   },
   "forecast": {
@@ -450,7 +450,7 @@
     "tab": "Gear",
     "collapsed": {
       "Combat Quality": false,
-      "Hero Gear": true,
+      "Hero Gear": false,
       "Charms": true,
       "Widgets": true,
       "Build Order — TG6→TG8": false
