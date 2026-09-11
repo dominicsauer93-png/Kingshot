@@ -9,7 +9,7 @@
   },
   "dust": {
     "current": 182,
-    "target": 2716,
+    "target": 744,
     "gold": 773270
   },
   "nodes": [
@@ -20,12 +20,12 @@
     },
     {
       "name": "Legionaries (Rally)",
-      "cur": 9,
+      "cur": 11,
       "next": 2600
     },
     {
       "name": "Vests (Defense)",
-      "cur": 10,
+      "cur": 12,
       "next": 1192
     }
   ],
