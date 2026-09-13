@@ -546,11 +546,11 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 7,
+        "lvC": 75,
         "lvT": 101,
         "mC": 7,
         "mT": 10,
-        "xp": 75205,
+        "xp": 47120,
         "fh": 270,
         "mg": 2,
         "mith": 0
@@ -558,11 +558,11 @@
       {
         "type": "Cavalry",
         "slot": "Chest (Health)",
-        "lvC": 80,
+        "lvC": 7,
         "lvT": 120,
         "mC": 7,
         "mT": 11,
-        "xp": 91150,
+        "xp": 125795,
         "fh": 380,
         "mg": 6,
         "mith": 10
