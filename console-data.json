@@ -631,7 +631,7 @@
     "open": {
       "Infantry": true,
       "Cavalry": true,
-      "Archer": false
+      "Archer": true
     }
   },
   "charms": {
