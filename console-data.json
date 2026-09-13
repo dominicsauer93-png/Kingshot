@@ -447,7 +447,7 @@
     ]
   },
   "ui": {
-    "tab": "Supply",
+    "tab": "Troops",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": true,
@@ -455,7 +455,7 @@
       "Widgets": false,
       "Build Order — TG6→TG8": false
     },
-    "density": "compact"
+    "density": "comfortable"
   },
   "troopCounts": {
     "inf": {
