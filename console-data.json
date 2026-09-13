@@ -365,9 +365,9 @@
   ],
   "tg": {
     "have": 188,
-    "need": 6777,
+    "need": 6717,
     "ttgHave": 4,
-    "ttgNeed": 642
+    "ttgNeed": 639
   },
   "govGear": {
     "targetIdx": 19,
@@ -766,7 +766,8 @@
       "ttg": 49,
       "time": "48d 4h",
       "note": "Rally/garrison capacity — events",
-      "d": false
+      "d": false,
+      "stepIdx": 1
     },
     {
       "n": "Command Center",
