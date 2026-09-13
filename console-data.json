@@ -447,7 +447,7 @@
     ]
   },
   "ui": {
-    "tab": "Build",
+    "tab": "Troops",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": true,
