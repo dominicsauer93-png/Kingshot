@@ -452,7 +452,7 @@
       "Combat Quality": false,
       "Hero Gear": true,
       "Charms": true,
-      "Widgets": true,
+      "Widgets": false,
       "Build Order — TG6→TG8": false
     },
     "density": "compact"
