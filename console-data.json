@@ -594,11 +594,11 @@
       {
         "type": "Archer",
         "slot": "Gloves (Health)",
-        "lvC": 90,
+        "lvC": 8,
         "lvT": 120,
         "mC": 7,
         "mT": 11,
-        "xp": 74400,
+        "xp": 125750,
         "fh": 380,
         "mg": 6,
         "mith": 10
