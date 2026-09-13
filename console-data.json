@@ -606,13 +606,13 @@
       {
         "type": "Archer",
         "slot": "Chest (Health)",
-        "lvC": 10,
+        "lvC": 100,
         "lvT": 120,
         "mC": 6,
         "mT": 11,
-        "xp": 125645,
+        "xp": 52650,
         "fh": 450,
-        "mg": 6,
+        "mg": 4,
         "mith": 10
       },
       {
