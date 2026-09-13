@@ -546,11 +546,11 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 80,
+        "lvC": 7,
         "lvT": 101,
         "mC": 7,
         "mT": 10,
-        "xp": 40560,
+        "xp": 75205,
         "fh": 270,
         "mg": 2,
         "mith": 0
