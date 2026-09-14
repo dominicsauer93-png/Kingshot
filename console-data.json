@@ -489,7 +489,7 @@
     ]
   },
   "ui": {
-    "tab": "Stats",
+    "tab": "Troops",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": true,
