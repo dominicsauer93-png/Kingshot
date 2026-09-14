@@ -489,10 +489,10 @@
     ]
   },
   "ui": {
-    "tab": "Build",
+    "tab": "Gear",
     "collapsed": {
       "Combat Quality": false,
-      "Hero Gear": true,
+      "Hero Gear": false,
       "Charms": false,
       "Widgets": false,
       "Build Order — TG6→TG8": false
