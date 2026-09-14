@@ -490,7 +490,7 @@
     ]
   },
   "ui": {
-    "tab": "Supply",
+    "tab": "Stats",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": false,
