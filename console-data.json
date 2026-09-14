@@ -386,7 +386,13 @@
     },
     {
       "k": "Molten Fort (Gov Gear)",
-      "v": "256"
+      "v": "263",
+      "log": [
+        {
+          "d": "2026-09-14",
+          "v": 263
+        }
+      ]
     },
     {
       "k": "Radiant Spire (ALL stats — full power)",
