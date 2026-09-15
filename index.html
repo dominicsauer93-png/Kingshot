@@ -569,6 +569,7 @@
     <div class="sechead"><span class="num">13</span><h2>Governor Gear</h2><span class="hint">lowest-leverage · set bonus needs all 6 at same tier</span></div>
     <div class="card">
       <p class="sub">Your weakest system, so this is a "spend spare mats" tracker, not a priority. Set each piece's current tier and a shared target — it totals the <b>Satin / Gilded Threads / Artisan's Vision</b> still needed. Level all six <em>evenly</em> to keep the set bonus.</p>
+      <p class="sub" style="color:var(--muted)">Queued next batch (from the optimizer, not yet spent): Infantry 1 → Purple T1 2★ → 3★ → Gold 0★, Cavalry 1 → Purple T1 1★. Costs 61,000 Satin / 620 Threads / 295 Visions. Recheck before pulling the trigger, closer to KvK.</p>
       <div class="field" style="margin-bottom:14px"><label>Target tier (all pieces)</label><select id="govTarget" class="sigsel" style="padding-right:24px;min-width:150px"></select></div>
       <table><thead><tr><th style="width:45%">Piece</th><th>Current tier</th></tr></thead>
       <tbody id="govBody"></tbody></table>
@@ -757,7 +758,7 @@ const SEED = {
     {n:"Wood",   h:"2900000000", need:"2490000000"},
     {n:"Stone",  h:"300190000", need:"416640000"},
     {n:"Iron",   h:"223480000", need:"134380000"},
-    {n:"Gold",   h:"879210", need:"2013000"},
+    {n:"Gold",   h:"879210", need:"1000000"},
     {n:"Mithril (hero gear)", h:"", need:""},
     {n:"Research Speed (stat)", h:"", need:""}
   ],
@@ -793,8 +794,8 @@ const SEED = {
     {k:"Radiant Spire (ALL stats — full power)", v:"163", log:[]}
   ],
   tg:{ have:0, need:9757, ttgHave:0, ttgNeed:781 },
-  govGear:{ targetIdx:19, have:{satin:0,threads:0,vision:0}, pieces:[
-    {name:"Cav 1", cur:10},{name:"Cav 2", cur:10},{name:"Inf 1", cur:10},
+  govGear:{ targetIdx:19, have:{satin:67518,threads:656,vision:322}, pieces:[
+    {name:"Cav 1", cur:10},{name:"Cav 2", cur:10},{name:"Inf 1", cur:11},
     {name:"Inf 2", cur:12},{name:"Archer 1", cur:11},{name:"Archer 2", cur:19}
   ]},
   forecast:{ log:[] },
@@ -810,18 +811,18 @@ const SEED = {
   heroGear:{
     have:{ xp:0, fh:133, mg:10, mith:3 },
     rows:[
-      {type:"Infantry", slot:"Helm (Lethality)",  lvC:104, lvT:120, mC:10, mT:11, xp:45000,  fh:110, mg:4,  mith:10},
-      {type:"Infantry", slot:"Gloves (Health)",   lvC:104, lvT:159, mC:10, mT:12, xp:212200, fh:230, mg:11, mith:30},
-      {type:"Infantry", slot:"Chest (Health)",    lvC:106, lvT:179, mC:11, mT:13, xp:328450, fh:250, mg:18, mith:60},
-      {type:"Infantry", slot:"Boots (Lethality)", lvC:101, lvT:125, mC:10, mT:11, xp:70400,  fh:110, mg:4,  mith:10},
-      {type:"Cavalry",  slot:"Helm (Lethality)",  lvC:119, lvT:139, mC:10, mT:11, xp:74100,  fh:110, mg:4,  mith:10},
-      {type:"Cavalry",  slot:"Gloves (Health)",   lvC:80,  lvT:101, mC:7,  mT:10, xp:38500,  fh:270, mg:2,  mith:0},
-      {type:"Cavalry",  slot:"Chest (Health)",    lvC:80,  lvT:120, mC:7,  mT:11, xp:91150,  fh:380, mg:6,  mith:10},
-      {type:"Cavalry",  slot:"Boots (Lethality)", lvC:101, lvT:139, mC:10, mT:11, xp:126750, fh:110, mg:4,  mith:10},
-      {type:"Archer",   slot:"Helm (Lethality)",  lvC:139, lvT:139, mC:11, mT:11, xp:0,      fh:0,   mg:0,  mith:0},
-      {type:"Archer",   slot:"Gloves (Health)",   lvC:90,  lvT:120, mC:6,  mT:11, xp:74400,  fh:450, mg:6,  mith:10},
-      {type:"Archer",   slot:"Chest (Health)",    lvC:90,  lvT:120, mC:6,  mT:11, xp:74400,  fh:450, mg:6,  mith:10},
-      {type:"Archer",   slot:"Boots (Lethality)", lvC:119, lvT:179, mC:10, mT:13, xp:288800, fh:360, mg:19, mith:60}
+      {type:"Infantry", slot:"Helm (Lethality)",  lvC:104, lvT:104, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
+      {type:"Infantry", slot:"Gloves (Health)",   lvC:104, lvT:104, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
+      {type:"Infantry", slot:"Chest (Health)",    lvC:119, lvT:139, mC:11, mT:11, xp:0, fh:0, mg:0, mith:0},
+      {type:"Infantry", slot:"Boots (Lethality)", lvC:101, lvT:101, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
+      {type:"Cavalry",  slot:"Helm (Lethality)",  lvC:119, lvT:119, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
+      {type:"Cavalry",  slot:"Gloves (Health)",   lvC:75,  lvT:70,  mC:7,  mT:7,  xp:0, fh:0, mg:0, mith:0},
+      {type:"Cavalry",  slot:"Chest (Health)",    lvC:75,  lvT:71,  mC:7,  mT:7,  xp:0, fh:0, mg:0, mith:0},
+      {type:"Cavalry",  slot:"Boots (Lethality)", lvC:101, lvT:101, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
+      {type:"Archer",   slot:"Helm (Lethality)",  lvC:139, lvT:139, mC:11, mT:11, xp:0, fh:0, mg:0, mith:0},
+      {type:"Archer",   slot:"Gloves (Health)",   lvC:97,  lvT:82,  mC:6,  mT:6,  xp:0, fh:0, mg:0, mith:0},
+      {type:"Archer",   slot:"Chest (Health)",    lvC:100, lvT:82,  mC:7,  mT:8,  xp:0, fh:0, mg:0, mith:0},
+      {type:"Archer",   slot:"Boots (Lethality)", lvC:119, lvT:119, mC:10, mT:11, xp:0, fh:0, mg:0, mith:0}
     ]
   },
   charms:{ targetLvl:22, have:{guides:0,designs:0}, rows:[
@@ -1055,9 +1056,9 @@ function paintGate(){
   gb.textContent = gap>0 ? "GAP "+fmt(gap)+" DUST" : "TARGET MET";
   gb.style.color = gap>0 ? "var(--red)" : "var(--green)";
   const gold=num(state.dust.gold);
-  document.getElementById("goldNote").innerHTML = gold<2013000
-    ? `You’re <b style="color:var(--red)">${fmt(2013000-gold)}</b> gold short of the 2.01M unlock-path total.`
-    : `Gold covers the 2.01M unlock path.`;
+  document.getElementById("goldNote").innerHTML = gold<1000000
+    ? `You’re <b style="color:var(--red)">${fmt(1000000-gold)}</b> gold short of the 1M unlock-path total.`
+    : `Gold covers the 1M unlock path.`;
   paintT11();
 }
 function buildGate(){
@@ -1132,7 +1133,7 @@ function buildToday(){
   const cn=closestNode();
   const f=forecastCalc();
   let unlockTxt="log two check-ins for a date";
-  if(f){ const dDays=f.dustRate>0?(gate-curDust)/f.dustRate:Infinity, gGap=Math.max(0,2013000-num(state.dust.gold)),
+  if(f){ const dDays=f.dustRate>0?(gate-curDust)/f.dustRate:Infinity, gGap=Math.max(0,1000000-num(state.dust.gold)),
       gDays=f.goldRate>0?gGap/f.goldRate:Infinity, both=Math.max(isFinite(dDays)?dDays:0,isFinite(gDays)?gDays:0);
     unlockTxt=(gap<=0&&gGap<=0)?"gates met — start research":(isFinite(both)?"~"+addDays(both):"stalled — rate too low"); }
   document.getElementById("todayStatus").innerHTML=
@@ -1144,8 +1145,8 @@ function buildToday(){
   buildChecks("todayRoutine", t.routine);
   // flags
   const flags=[];
-  const gGap=Math.max(0,2013000-num(state.dust.gold));
-  if(gGap>0) flags.push({w:true, t:`Gold gate: ${fmt(gGap)} short of 2.01M — bank gold, don't burn it on Dust exchange.`});
+  const gGap=Math.max(0,1000000-num(state.dust.gold));
+  if(gGap>0) flags.push({w:true, t:`Gold gate: ${fmt(gGap)} short of 1M — bank gold, don't burn it on Dust exchange.`});
   if(state.govGear){ const tgt=state.govGear.targetIdx, lag=state.govGear.pieces.filter(p=>p.cur<tgt).length;
     if(lag) flags.push({w:false, t:`Gov Gear: ${lag}/6 pieces below target — level laggards evenly for the set bonus.`}); }
   const rs=(state.resources||[]).find(r=>/research speed/i.test(r.n));
@@ -1196,7 +1197,7 @@ function paintForecast(){
   const out=document.getElementById("fcOut"); if(!out) return;
   const f=forecastCalc();
   if(!f){ out.innerHTML=`<span class="sub">Log at least two check-ins on different days to see a projection.</span>`; return; }
-  const dustTgt=computeTarget(), goldTgt=2013000;
+  const dustTgt=computeTarget(), goldTgt=1000000;
   const curDust=num(state.dust.current), curGold=num(state.dust.gold);
   const dNeed=Math.max(0,dustTgt-curDust), gNeed=Math.max(0,goldTgt-curGold);
   const dDays = f.dustRate>0 ? dNeed/f.dustRate : Infinity;
