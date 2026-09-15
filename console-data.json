@@ -680,10 +680,10 @@
         "slot": "Boots (Lethality)",
         "lvC": 119,
         "lvT": 119,
-        "mC": 10,
+        "mC": 1,
         "mT": 11,
         "xp": 0,
-        "fh": 110,
+        "fh": 650,
         "mg": 1,
         "mith": 0
       }
