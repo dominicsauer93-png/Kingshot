@@ -461,7 +461,7 @@
     ]
   },
   "today": {
-    "routineDate": "2026-09-14",
+    "routineDate": "2026-09-15",
     "kvkDate": "",
     "bearDate": "2026-09-01",
     "kvkPeriod": 14,
@@ -490,7 +490,7 @@
     ]
   },
   "ui": {
-    "tab": "Stats",
+    "tab": "Data",
     "collapsed": {
       "Combat Quality": false,
       "Hero Gear": false,
