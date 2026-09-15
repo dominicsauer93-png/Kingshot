@@ -695,7 +695,7 @@
     }
   },
   "charms": {
-    "targetLvl": 22,
+    "targetLvl": 10,
     "have": {
       "guides": 566,
       "designs": 289
