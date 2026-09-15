@@ -667,7 +667,7 @@
         "type": "Archer",
         "slot": "Chest (Health)",
         "lvC": 100,
-        "lvT": 1,
+        "lvT": 100,
         "mC": 7,
         "mT": 8,
         "xp": 0,
