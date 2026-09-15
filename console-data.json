@@ -515,7 +515,7 @@
   "ui": {
     "tab": "Home",
     "collapsed": {},
-    "density": "comfortable"
+    "density": "compact"
   },
   "troopCounts": {
     "inf": {
