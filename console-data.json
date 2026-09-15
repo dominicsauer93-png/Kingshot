@@ -442,9 +442,9 @@
   ],
   "tg": {
     "have": 416,
-    "need": 6777,
+    "need": 6717,
     "ttgHave": 7,
-    "ttgNeed": 642
+    "ttgNeed": 639
   },
   "govGear": {
     "targetIdx": 19,
@@ -883,7 +883,7 @@
     },
     {
       "n": "Embassy",
-      "stepIdx": 0,
+      "stepIdx": 1,
       "note": "Rally/garrison capacity — events",
       "d": false
     },
