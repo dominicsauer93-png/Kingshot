@@ -733,22 +733,22 @@
       },
       {
         "type": "Infantry",
+        "lvl": 5,
+        "tgt": 22
+      },
+      {
+        "type": "Infantry",
+        "lvl": 5,
+        "tgt": 22
+      },
+      {
+        "type": "Infantry",
+        "lvl": 5,
+        "tgt": 22
+      },
+      {
+        "type": "Infantry",
         "lvl": 6,
-        "tgt": 22
-      },
-      {
-        "type": "Infantry",
-        "lvl": 5,
-        "tgt": 22
-      },
-      {
-        "type": "Infantry",
-        "lvl": 5,
-        "tgt": 22
-      },
-      {
-        "type": "Infantry",
-        "lvl": 5,
         "tgt": 22
       },
       {
