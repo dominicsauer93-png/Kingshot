@@ -287,7 +287,7 @@
     {
       "n": "Mithril (hero gear)",
       "h": "11",
-      "need": ""
+      "need": "10"
     },
     {
       "n": "Research Speed (stat)",
@@ -513,7 +513,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Supply",
     "collapsed": {},
     "density": "comfortable"
   },
