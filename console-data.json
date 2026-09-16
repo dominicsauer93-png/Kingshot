@@ -513,11 +513,8 @@
     ]
   },
   "ui": {
-    "tab": "Troops",
-    "collapsed": {
-      "The Gate — T11 Unlocks": false,
-      "Widgets": false
-    },
+    "tab": "Data",
+    "collapsed": {},
     "density": "comfortable"
   },
   "troopCounts": {
