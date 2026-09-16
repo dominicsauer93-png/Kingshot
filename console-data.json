@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-30"
   },
   "dust": {
-    "current": 323,
+    "current": 513,
     "target": 2236,
     "gold": 885780
   },
@@ -515,7 +515,7 @@
   "ui": {
     "tab": "Troops",
     "collapsed": {},
-    "density": "compact"
+    "density": "comfortable"
   },
   "troopCounts": {
     "inf": {
