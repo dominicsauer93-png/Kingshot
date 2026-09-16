@@ -519,7 +519,7 @@
   "tg": {
     "have": 477,
     "need": 6717,
-    "ttgHave": 7,
+    "ttgHave": 10,
     "ttgNeed": 639
   },
   "govGear": {
@@ -589,7 +589,7 @@
     ]
   },
   "ui": {
-    "tab": "Build",
+    "tab": "Power",
     "collapsed": {},
     "density": "comfortable"
   },
