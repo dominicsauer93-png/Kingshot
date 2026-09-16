@@ -301,13 +301,8 @@
   },
   "resources": [
     {
-      "n": "Soldier Training speedup (hrs)",
-      "h": "954.14",
-      "need": ""
-    },
-    {
       "n": "General speedup (hrs)",
-      "h": "100.38",
+      "h": "1004.38",
       "need": ""
     },
     {
