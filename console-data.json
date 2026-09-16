@@ -147,6 +147,73 @@
       ]
     }
   ],
+  "cavNodes": [
+    {
+      "name": "Lances (Attack)",
+      "cur": 12,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Platecraft (Defense)",
+      "cur": 12,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Legionaries (Rally)",
+      "cur": 12,
+      "max": 12,
+      "costs": [
+        83,
+        102,
+        125,
+        150,
+        184,
+        225,
+        276,
+        334,
+        418,
+        502,
+        602,
+        744
+      ]
+    },
+    {
+      "name": "Truegold Cavalry (unlock)",
+      "cur": 0,
+      "max": 1,
+      "costs": [
+        2236
+      ]
+    }
+  ],
   "trackNow": [
     {
       "t": "Battle research Tier VI — lifts Lethality / Health off the V→VI wall",
@@ -232,7 +299,6 @@
     "hp": 54.7,
     "troopStatus": "T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot."
   },
-  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
   "resources": [
     {
       "n": "Soldier Training speedup (hrs)",
@@ -325,6 +391,16 @@
       "n": "Guinevere",
       "l": "30",
       "note": "Laggard"
+    },
+    {
+      "n": "Aena",
+      "l": "0",
+      "note": "Lethality research — +15% Atk/Lethality at Kindred Soul"
+    },
+    {
+      "n": "Isnor",
+      "l": "0",
+      "note": "Attack research — +15% Lethality/Health at Kindred Soul"
     }
   ],
   "dustSrc": [
@@ -798,15 +874,18 @@
     "rows": [
       {
         "hero": "Yang",
-        "lvl": 9
+        "lvl": 9,
+        "have": 0
       },
       {
         "hero": "Amadeus",
-        "lvl": 4
+        "lvl": 4,
+        "have": 0
       },
       {
         "hero": "Ava",
-        "lvl": 2
+        "lvl": 2,
+        "have": 0
       }
     ]
   },
@@ -911,5 +990,6 @@
       "note": "Healing sustain — defer, big",
       "d": false
     }
-  ]
+  ],
+  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup"
 }
