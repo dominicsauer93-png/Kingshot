@@ -515,7 +515,8 @@
   "ui": {
     "tab": "Gear",
     "collapsed": {
-      "The Gate — T11 Unlocks": false
+      "The Gate — T11 Unlocks": false,
+      "Widgets": false
     },
     "density": "comfortable"
   },
