@@ -638,10 +638,10 @@
       {
         "type": "Infantry",
         "slot": "Gloves (Health)",
-        "lvC": 104,
-        "lvT": 104,
-        "mC": 10,
-        "mT": 10,
+        "lvC": 139,
+        "lvT": 139,
+        "mC": 12,
+        "mT": 12,
         "xp": 0,
         "fh": 0,
         "mg": 0,
@@ -650,13 +650,13 @@
       {
         "type": "Infantry",
         "slot": "Chest (Health)",
-        "lvC": 119,
+        "lvC": 3,
         "lvT": 139,
         "mC": 11,
         "mT": 11,
-        "xp": 73300,
+        "xp": 196605,
         "fh": 0,
-        "mg": 3,
+        "mg": 5,
         "mith": 10
       },
       {
