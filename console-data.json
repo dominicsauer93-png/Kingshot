@@ -11,7 +11,7 @@
   "dust": {
     "current": 661,
     "target": 2236,
-    "gold": 946530
+    "gold": 1
   },
   "nodes": [
     {
@@ -617,7 +617,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Army",
     "collapsed": {
       "Hero Gear": false
     },
