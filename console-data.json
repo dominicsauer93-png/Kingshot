@@ -650,14 +650,14 @@
       {
         "type": "Infantry",
         "slot": "Chest (Health)",
-        "lvC": 3,
+        "lvC": 139,
         "lvT": 139,
         "mC": 11,
         "mT": 11,
-        "xp": 196605,
+        "xp": 0,
         "fh": 0,
-        "mg": 5,
-        "mith": 10
+        "mg": 0,
+        "mith": 0
       },
       {
         "type": "Infantry",
