@@ -618,7 +618,9 @@
   },
   "ui": {
     "tab": "Gear",
-    "collapsed": {},
+    "collapsed": {
+      "Hero Gear": false
+    },
     "density": "comfortable"
   },
   "troopCounts": {
@@ -641,7 +643,7 @@
   },
   "heroGear": {
     "have": {
-      "xp": 0,
+      "xp": 190,
       "fh": 68,
       "mg": 10,
       "mith": 1
