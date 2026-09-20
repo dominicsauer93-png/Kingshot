@@ -590,9 +590,9 @@
   ],
   "tg": {
     "have": 91,
-    "need": 6393,
+    "need": 6231,
     "ttgHave": 2,
-    "ttgNeed": 621
+    "ttgNeed": 602
   },
   "govGear": {
     "targetIdx": 18,
@@ -1024,7 +1024,7 @@
     },
     {
       "n": "Range",
-      "stepIdx": 3,
+      "stepIdx": 5,
       "note": "Archer line — your main combat",
       "d": false
     },
