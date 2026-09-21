@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-30"
   },
   "dust": {
-    "current": 1408,
+    "current": 14,
     "target": 2236,
     "gold": 1130000
   },
@@ -665,7 +665,7 @@
     ]
   },
   "ui": {
-    "tab": "Power",
+    "tab": "Army",
     "collapsed": {
       "Hero Gear": false
     },
