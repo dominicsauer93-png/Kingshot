@@ -527,7 +527,7 @@
     }
   ],
   "tg": {
-    "have": 74,
+    "have": 152,
     "need": 6141,
     "ttgHave": 5,
     "ttgNeed": 598
@@ -599,7 +599,7 @@
     ]
   },
   "ui": {
-    "tab": "Troops",
+    "tab": "Build",
     "collapsed": {
       "Hero Gear": false
     },
