@@ -665,7 +665,7 @@
     ]
   },
   "ui": {
-    "tab": "Build",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false
     },
@@ -692,7 +692,7 @@
   "heroGear": {
     "have": {
       "xp": 190,
-      "fh": 1,
+      "fh": 132,
       "mg": 11,
       "mith": 1
     },
