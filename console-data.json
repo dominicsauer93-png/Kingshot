@@ -147,6 +147,73 @@
       ]
     }
   ],
+  "cavNodes": [
+    {
+      "name": "Lances (Attack)",
+      "cur": 12,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Platecraft (Defense)",
+      "cur": 12,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Legionaries (Rally)",
+      "cur": 12,
+      "max": 12,
+      "costs": [
+        83,
+        102,
+        125,
+        150,
+        184,
+        225,
+        276,
+        334,
+        418,
+        502,
+        602,
+        744
+      ]
+    },
+    {
+      "name": "Truegold Cavalry (unlock)",
+      "cur": 0,
+      "max": 1,
+      "costs": [
+        2236
+      ]
+    }
+  ],
   "trackNow": [
     {
       "t": "Battle research Tier VI — lifts Lethality / Health off the V→VI wall",
@@ -232,7 +299,6 @@
     "hp": 54.7,
     "troopStatus": "T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot."
   },
-  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
   "resources": [
     {
       "n": "Soldier Training speedup (min)",
@@ -293,6 +359,26 @@
       "n": "Research Speed (stat)",
       "h": "",
       "need": ""
+    },
+    {
+      "n": "Soldier Training speedup (hrs)",
+      "h": "564.35"
+    },
+    {
+      "n": "General speedup (hrs)",
+      "h": "766.48"
+    },
+    {
+      "n": "Soldier Healing speedup (hrs)",
+      "h": "28.28"
+    },
+    {
+      "n": "Construction speedup (hrs)",
+      "h": "13.75"
+    },
+    {
+      "n": "Research speedup (hrs)",
+      "h": "46.5"
     }
   ],
   "masters": [
@@ -599,7 +685,7 @@
     ]
   },
   "ui": {
-    "tab": "Troops",
+    "tab": "Army",
     "collapsed": {
       "Hero Gear": false
     },
@@ -1003,71 +1089,5 @@
       "d": false
     }
   ],
-  "cavNodes": [
-    {
-      "name": "Lances (Attack)",
-      "cur": 12,
-      "max": 12,
-      "costs": [
-        54,
-        66,
-        81,
-        97,
-        118,
-        145,
-        178,
-        216,
-        270,
-        324,
-        388,
-        480
-      ]
-    },
-    {
-      "name": "Platecraft (Defense)",
-      "cur": 12,
-      "max": 12,
-      "costs": [
-        54,
-        66,
-        81,
-        97,
-        118,
-        145,
-        178,
-        216,
-        270,
-        324,
-        388,
-        480
-      ]
-    },
-    {
-      "name": "Legionaries (Rally)",
-      "cur": 12,
-      "max": 12,
-      "costs": [
-        83,
-        102,
-        125,
-        150,
-        184,
-        225,
-        276,
-        334,
-        418,
-        502,
-        602,
-        744
-      ]
-    },
-    {
-      "name": "Truegold Cavalry (unlock)",
-      "cur": 0,
-      "max": 1,
-      "costs": [
-        2236
-      ]
-    }
-  ]
+  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup"
 }
