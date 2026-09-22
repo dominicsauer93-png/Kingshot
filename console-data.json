@@ -805,13 +805,13 @@
         "type": "Cavalry",
         "slot": "Boots (Lethality)",
         "lvC": 101,
-        "lvT": 101,
+        "lvT": 159,
         "mC": 10,
         "mT": 12,
-        "xp": 0,
+        "xp": 213570,
         "fh": 230,
-        "mg": 3,
-        "mith": 0
+        "mg": 11,
+        "mith": 30
       },
       {
         "type": "Archer",
