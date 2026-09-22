@@ -817,13 +817,13 @@
         "type": "Archer",
         "slot": "Helm (Lethality)",
         "lvC": 139,
-        "lvT": 139,
+        "lvT": 179,
         "mC": 11,
-        "mT": 11,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "mT": 15,
+        "xp": 212400,
+        "fh": 540,
+        "mg": 24,
+        "mith": 50
       },
       {
         "type": "Archer",
