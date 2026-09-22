@@ -615,7 +615,7 @@
   "tg": {
     "have": 316,
     "need": 6141,
-    "ttgHave": 5,
+    "ttgHave": 6,
     "ttgNeed": 598
   },
   "govGear": {
@@ -687,7 +687,8 @@
   "ui": {
     "tab": "Build",
     "collapsed": {
-      "Hero Gear": false
+      "Hero Gear": false,
+      "Build Order — TG6→TG8": false
     },
     "density": "compact"
   },
