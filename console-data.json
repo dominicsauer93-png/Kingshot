@@ -829,13 +829,13 @@
         "type": "Archer",
         "slot": "Gloves (Health)",
         "lvC": 80,
-        "lvT": 100,
+        "lvT": 139,
         "mC": 8,
-        "mT": 10,
-        "xp": 38500,
-        "fh": 190,
-        "mg": 2,
-        "mith": 0
+        "mT": 12,
+        "xp": 161830,
+        "fh": 420,
+        "mg": 8,
+        "mith": 10
       },
       {
         "type": "Archer",
