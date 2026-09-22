@@ -853,13 +853,13 @@
         "type": "Archer",
         "slot": "Boots (Lethality)",
         "lvC": 119,
-        "lvT": 119,
+        "lvT": 179,
         "mC": 11,
-        "mT": 11,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "mT": 15,
+        "xp": 285700,
+        "fh": 540,
+        "mg": 27,
+        "mith": 60
       }
     ],
     "open": {
