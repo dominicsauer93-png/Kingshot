@@ -733,13 +733,13 @@
         "type": "Infantry",
         "slot": "Gloves (Health)",
         "lvC": 139,
-        "lvT": 139,
+        "lvT": 200,
         "mC": 12,
         "mT": 18,
-        "xp": 0,
+        "xp": 377720,
         "fh": 930,
-        "mg": 33,
-        "mith": 0
+        "mg": 63,
+        "mith": 140
       },
       {
         "type": "Infantry",
