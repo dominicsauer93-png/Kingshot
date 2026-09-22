@@ -793,13 +793,13 @@
         "type": "Cavalry",
         "slot": "Chest (Health)",
         "lvC": 75,
-        "lvT": 100,
+        "lvT": 139,
         "mC": 9,
         "mT": 12,
-        "xp": 45060,
+        "xp": 168390,
         "fh": 330,
-        "mg": 5,
-        "mith": 0
+        "mg": 8,
+        "mith": 10
       },
       {
         "type": "Cavalry",
