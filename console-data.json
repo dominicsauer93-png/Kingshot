@@ -656,7 +656,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-09-21",
+    "routineDate": "2026-09-22",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -685,7 +685,7 @@
     ]
   },
   "ui": {
-    "tab": "Army",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false
     },
