@@ -594,28 +594,8 @@
       "need": "1000000"
     },
     {
-      "n": "Soldier Training speedup (hrs)",
-      "h": "564.35"
-    },
-    {
-      "n": "General speedup (hrs)",
-      "h": "766.48"
-    },
-    {
-      "n": "Soldier Healing speedup (hrs)",
-      "h": "28.28"
-    },
-    {
-      "n": "Construction speedup (hrs)",
-      "h": "13.75"
-    },
-    {
-      "n": "Research speedup (hrs)",
-      "h": "46.5"
-    },
-    {
-      "n": "Learning Speedup",
-      "h": ""
+      "n": "Learning Speedup (Min",
+      "h": "79"
     }
   ],
   "goldShards": [
