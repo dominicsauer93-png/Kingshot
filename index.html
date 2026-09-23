@@ -309,6 +309,50 @@
   }
   .restiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   @media(max-width:560px){.restiles{grid-template-columns:1fr}}
+  .restiles.four{grid-template-columns:repeat(4,1fr)}
+  .restiles.five{grid-template-columns:repeat(5,1fr);margin-top:6px}
+  @media(max-width:900px){.restiles.four,.restiles.five{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:340px){.restiles.four,.restiles.five{grid-template-columns:1fr}}
+  .herogrid.hggrid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  @media(max-width:600px){
+    .grphead{grid-template-columns:auto minmax(0,1fr)}
+    .grphead > span:last-child{grid-column:2;text-align:left!important}
+    .restile .rt-row{flex-direction:column;align-items:flex-start;gap:4px}
+  }
+  .restiles.four .rt-row input,.restiles.five .rt-row input{width:100%;max-width:130px}
+  .hgpiece .hlv{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .hgpiece .hlv label{display:flex;flex-direction:column;gap:3px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .hgpiece .hlv .pair{display:flex;align-items:center;gap:4px;color:var(--faint)}
+  .hgpiece .hlv input{width:100%;min-width:0;font-family:var(--f-mono);font-weight:700;font-size:13px;color:var(--gold);background:var(--field);border:1px solid var(--field-line);border-radius:7px;padding:5px 2px;text-align:center}
+  .hgcost{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px;font-family:var(--f-mono);font-size:11px;color:var(--muted);text-align:center}
+  .hgcost b{display:block;color:var(--gold);font-size:12px}
+  .spendlist{display:flex;flex-direction:column;gap:8px}
+  .spend{display:grid;grid-template-columns:34px minmax(150px,1.2fr) minmax(150px,1.3fr) 100px minmax(170px,1.5fr);align-items:center;gap:12px;background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+  .spend .rank{font-family:var(--f-disp);font-weight:800;font-size:18px;color:var(--gold);text-align:center}
+  .spend .inv{font-weight:600;font-size:14px}
+  .spend .sstat{font-size:12.5px;color:var(--muted)}
+  .spend .your{font-family:var(--f-mono);font-size:12px;color:var(--muted);line-height:1.5}
+  .prio{font-family:var(--f-mono);font-size:11px;font-weight:700;border-radius:999px;padding:3px 9px;text-align:center;border:1px solid}
+  .prio.p1{color:#1A1208;background:var(--gold);border-color:var(--gold)}
+  .prio.p2{color:var(--gold);border-color:var(--gold-2);background:rgba(232,181,74,.12)}
+  .prio.p3{color:var(--green);border-color:rgba(108,198,138,.45)}
+  .prio.p4{color:var(--muted);border-color:var(--line)}
+  .prio.p5{color:var(--faint);border-color:var(--line-soft)}
+  @media(max-width:760px){
+    .spend{grid-template-columns:30px minmax(0,1fr) auto;grid-template-areas:"r i p" "r s s" "r y y";row-gap:4px}
+    .spend .rank{grid-area:r;align-self:start} .spend .inv{grid-area:i} .spend .prio{grid-area:p} .spend .sstat{grid-area:s} .spend .your{grid-area:y}
+  }
+  .goallist{display:flex;flex-direction:column;gap:6px}
+  .goal{width:100%;display:grid;grid-template-columns:28px minmax(0,1fr) 150px 18px;align-items:center;gap:12px;text-align:left;font:inherit;color:var(--text);background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:11px;padding:9px 12px;cursor:pointer;transition:.15s}
+  .goal:hover{border-color:var(--gold-2);background:rgba(232,181,74,.05)}
+  .goal.done{opacity:.6}
+  .goal .gi{font-size:17px;text-align:center}
+  .goal .gt{font-weight:600;font-size:14px}
+  .goal .gd{font-size:12.5px;color:var(--muted)}
+  .goal .gp{display:flex;flex-direction:column;gap:4px;font-family:var(--f-mono);font-size:11px;color:var(--faint);text-align:right}
+  .goal .gp .minibar{margin:0}
+  .goal .ga{color:var(--muted)}
+  @media(max-width:600px){ .goal{grid-template-columns:24px minmax(0,1fr) 16px} .goal .gp{grid-column:2;text-align:left} .goal .ga{grid-row:1;grid-column:3} }
   .restile{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
   .restile .label{margin-bottom:6px}
   .rt-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
@@ -487,6 +531,17 @@
     </div>
   </div>
 
+  <section data-tab="Home">
+    <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Goals</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
+    <div class="card">
+      <p class="sub">The next step from every section. Tap one to jump there. Updates as you edit.</p>
+      <div class="label">Spend tokens on — in priority order</div>
+      <div class="goallist" id="goalSpend"></div>
+      <div class="label" style="margin-top:16px">Progress goals</div>
+      <div class="goallist" id="goalProg"></div>
+    </div>
+  </section>
+
   <div class="block" data-tab="Home">
     <div class="idstrip" id="idstrip"></div>
   </div>
@@ -645,6 +700,15 @@
 
   <!-- ================= GEAR ================= -->
   <section data-tab="Gear">
+    <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Spending Priority</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
+    <div class="card">
+      <p class="sub">Where to spend event currency and shop tokens, highest first. "Your status" updates from the sections below.</p>
+      <div class="spendlist" id="spendBody"></div>
+      <p class="sub" style="margin:12px 0 0">Charms give permanent stat boosts to your whole army, so charm materials are never wasted.</p>
+    </div>
+  </section>
+
+  <section data-tab="Gear">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Governor Gear</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
       <div class="field" style="margin-bottom:14px"><label for="govTarget">Target tier (all pieces)</label><select id="govTarget" class="sigsel" style="min-width:170px"></select></div>
@@ -670,14 +734,42 @@
   <section data-tab="Gear">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Hero Gear</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
-      <div class="gate-inputs" style="margin:0 0 14px">
-        <div class="field"><label for="hgXp">XP in hand</label><input class="mono" id="hgXp" inputmode="numeric"></div>
-        <div class="field"><label for="hgFh">Forgehammers</label><input class="mono" id="hgFh" inputmode="numeric"></div>
-        <div class="field"><label for="hgMg">Mythic Gear</label><input class="mono" id="hgMg" inputmode="numeric"></div>
-        <div class="field"><label for="hgMith">Mithril</label><input class="mono" id="hgMith" inputmode="numeric"></div>
+      <div class="restiles four">
+        <div class="restile">
+          <label class="label" for="hgXp">Enhancement XP</label>
+          <div class="rt-row"><input class="mono" id="hgXp" inputmode="numeric"><span class="rt-of mono" id="hgXpTxt"></span></div>
+          <div class="meter"><div class="fill" id="hgXpFill" style="width:0%"></div></div>
+          <div class="rt-short mono" id="hgXpShort"></div>
+        </div>
+        <div class="restile">
+          <label class="label" for="hgFh">Forgehammers</label>
+          <div class="rt-row"><input class="mono" id="hgFh" inputmode="numeric"><span class="rt-of mono" id="hgFhTxt"></span></div>
+          <div class="meter"><div class="fill" id="hgFhFill" style="width:0%"></div></div>
+          <div class="rt-short mono" id="hgFhShort"></div>
+        </div>
+        <div class="restile">
+          <label class="label" for="hgMg">Mythic Gear</label>
+          <div class="rt-row"><input class="mono" id="hgMg" inputmode="numeric"><span class="rt-of mono" id="hgMgTxt"></span></div>
+          <div class="meter"><div class="fill" id="hgMgFill" style="width:0%"></div></div>
+          <div class="rt-short mono" id="hgMgShort"></div>
+        </div>
+        <div class="restile">
+          <label class="label" for="hgMith">Mithril</label>
+          <div class="rt-row"><input class="mono" id="hgMith" inputmode="numeric"><span class="rt-of mono" id="hgMithTxt"></span></div>
+          <div class="meter"><div class="fill" id="hgMithFill" style="width:0%"></div></div>
+          <div class="rt-short mono" id="hgMithShort"></div>
+        </div>
       </div>
-      <div id="hgSummary" style="margin-bottom:14px"></div>
-      <div id="hgBody"></div>
+      <details class="howget"><summary>Where to get Hero Gear materials</summary>
+        <ul>
+          <li><b>Enhancement XP:</b> Bear Hunt (the "Leader by Example" skill adds bonus parts per hunt); feeding spare gear also gives XP — Grey 10, Green 30, Blue 60, Purple 150</li>
+          <li><b>Forgehammers:</b> Bear Hunt, event shops, Buccaneer Bounty, Kingdom of Power, Strongest Governor, Merchant Empire, Alliance Mobilization, Honor Fund, packs</li>
+          <li><b>Mithril:</b> Arena Shop — 10,000 Arena Tokens each, max 3 per week</li>
+          <li><b>Mythic Gear:</b> used for Mastery 11–20 and for red-gear ascension milestones</li>
+        </ul>
+        <p class="tip">Mithril is needed at every 20-level red-gear milestone (120, 140, 160, 180, 200) and is the usual long-term bottleneck — stockpile it early. Forgehammers can't be recovered once spent.</p>
+      </details>
+      <div class="grouplist" id="hgBody"></div>
       <button class="additem" id="addHg">+ add upgrade</button>
     </div>
   </section>
@@ -756,6 +848,31 @@
       </details>
       <div class="herogrid" id="goldShardBody"></div>
       <button class="additem" id="addGoldShard">+ add hero</button>
+    </div>
+  </section>
+
+  <section data-tab="Gear">
+    <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Pets</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
+    <div class="card">
+      <div class="label">Materials in hand</div>
+      <div class="restiles five" id="petMats">
+        <div class="restile"><label class="label" for="pet_food">Pet Food</label><div class="rt-row"><input class="mono" id="pet_food" data-k="food" inputmode="numeric"></div></div>
+        <div class="restile"><label class="label" for="pet_manuals">Growth Manuals</label><div class="rt-row"><input class="mono" id="pet_manuals" data-k="manuals" inputmode="numeric"></div></div>
+        <div class="restile"><label class="label" for="pet_potions">Nutrient Potions</label><div class="rt-row"><input class="mono" id="pet_potions" data-k="potions" inputmode="numeric"></div></div>
+        <div class="restile"><label class="label" for="pet_tmCommon">Common Taming Marks</label><div class="rt-row"><input class="mono" id="pet_tmCommon" data-k="tmCommon" inputmode="numeric"></div></div>
+        <div class="restile"><label class="label" for="pet_tmAdv">Advanced Taming Marks</label><div class="rt-row"><input class="mono" id="pet_tmAdv" data-k="tmAdv" inputmode="numeric"></div></div>
+      </div>
+      <details class="howget"><summary>How pets level up &amp; where to get materials</summary>
+        <ul>
+          <li><b>Levelling:</b> Pet Food raises level (Attack/Defense buffs). Every 10 levels the pet must <b>Advance</b> using Growth Manuals, and later Nutrient Potions</li>
+          <li><b>Refining:</b> uses Common or Advanced Taming Marks; each refine randomly raises or lowers secondary buffs</li>
+          <li><b>Where to get:</b> daily play and Pet Adventures (daily chests), some pets' active skills (Pet Food), events and packs</li>
+        </ul>
+        <p class="tip">Save Advanced Taming Marks for high-level Epic (purple) and Legendary (gold) refinement — they're wasted on early tiers.</p>
+      </details>
+      <div class="herogrid" id="petBody"></div>
+      <datalist id="petList"></datalist>
+      <button class="additem" id="addPet">+ add pet</button>
     </div>
   </section>
 
@@ -1495,6 +1612,89 @@ function buildEvents(){
   paintEvents();
 }
 
+/* ---------- spending priority (order from the "Charms vs Other Investments" guide) ---------- */
+function paintSpend(){
+  const host=document.getElementById("spendBody"); if(!host) return;
+  const st=(need,have,label)=>{ const d=need-have; return need<=0?`${label}: nothing needed`:d>0?`${label}: <span class="tagbad">${fmt(d)} short</span>`:`${label}: <span class="tagok">covered ✓</span>`; };
+  const hg=state.heroGear||{rows:[],have:{}}; let fh=0; (hg.rows||[]).forEach(r=>{ fh+=hgCalcCost(r).fh; });
+  const c=state.charms||{rows:[],have:{}}; let cg=0,cd=0; (c.rows||[]).forEach(r=>{ const m=charmRem(r.lvl,r.tgt!=null?r.tgt:c.targetLvl); cg+=m.g; cd+=m.d; });
+  const pt=(state.pets&&state.pets.have)||{};
+  const g=state.govGear; let gs=0,gt=0,gv=0; if(g) g.pieces.forEach(p=>{ const r=govRem(p.cur,g.targetIdx); gs+=r.s; gt+=r.t; gv+=r.v; });
+  const w=state.widgets||{rows:[]}; const wn=(w.rows||[]).reduce((a,r)=>a+widRem(r.lvl),0), wh=(w.rows||[]).reduce((a,r)=>a+num(r.have),0);
+  const rows=[
+    ["Forgehammers","Lethality + Health (Hero Gear)","Highest","p1", st(fh,num(hg.have&&hg.have.fh),"Forgehammers")],
+    ["Charm Materials","Lethality + Health","Very High","p2", st(cg,num(c.have&&c.have.guides),"Guides")+"<br>"+st(cd,num(c.have&&c.have.designs),"Designs")],
+    ["Pet Refinement","Lethality + Health (all troops)","High","p3", `Taming Marks in hand: ${fmt(num(pt.tmCommon))} common · ${fmt(num(pt.tmAdv))} advanced`],
+    ["Governor Gear Materials","Attack + Defense","Medium","p4", g?st(gs,num(g.have&&g.have.satin),"Satin")+"<br>"+st(gt,num(g.have&&g.have.threads),"Threads")+" · "+st(gv,num(g.have&&g.have.vision),"Vision"):"—"],
+    ["Widgets","Variable (hero-specific)","Situational","p5", st(wn,wh,"Widgets")]
+  ];
+  host.innerHTML=rows.map((r,i)=>`<div class="spend"><div class="rank">${i+1}</div><div class="inv">${r[0]}</div><div class="sstat">${r[1]}</div><span class="prio ${r[3]}">${r[2]}</span><div class="your">${r[4]}</div></div>`).join("");
+}
+/* ---------- goals: next step from every section ---------- */
+function goToSection(tab,key){
+  setTab(tab);
+  const sec=[...document.querySelectorAll("main > section")].find(x=>x.dataset.key===key);
+  if(!sec) return window.scrollTo({top:0,behavior:"smooth"});
+  if(state.ui.collapsed[key]){ state.ui.collapsed[key]=false; sec.classList.remove("collapsed"); const b=sec.querySelector(".secbtn"); if(b) b.setAttribute("aria-expanded","true"); }
+  setTimeout(()=>sec.scrollIntoView({behavior:"smooth",block:"start"}),50);
+}
+function goalHtml(g){
+  const pct=Math.max(0,Math.min(100,g.pct||0));
+  return `<button class="goal ${g.done?'done':''}" data-tab="${g.tab}" data-key="${esc(g.key)}">
+    <span class="gi" aria-hidden="true">${g.done?'✅':g.icon}</span>
+    <span style="min-width:0"><span class="gt">${g.title}</span><br><span class="gd">${g.detail}</span></span>
+    <span class="gp">${pct.toFixed(0)}%<span class="minibar"><span class="mf" style="display:block;width:${pct.toFixed(1)}%;${g.done?'background:var(--green)':''}"></span></span></span>
+    <span class="ga" aria-hidden="true">›</span></button>`;
+}
+function paintGoals(){
+  const hs=document.getElementById("goalSpend"), hp=document.getElementById("goalProg"); if(!hs||!hp) return;
+  const pc=(have,need)=>need>0?have/need*100:100;
+  const spend=[], prog=[];
+  // 1 Forgehammers
+  const hg=state.heroGear||{rows:[],have:{}}; let fh=0; (hg.rows||[]).forEach(r=>{ fh+=hgCalcCost(r).fh; }); const fhH=num(hg.have&&hg.have.fh);
+  spend.push({icon:"🔨",title:"Forgehammers",detail:fh-fhH>0?`${fmt(fh-fhH)} short for your hero gear targets`:"Hero gear targets covered",pct:pc(fhH,fh),done:fhH>=fh,tab:"Gear",key:"Hero Gear"});
+  // 2 Charms — main troop first, else the least-finished troop
+  const c=state.charms||{rows:[],have:{}};
+  const cGroups=["Archer","Infantry","Cavalry"].map(t=>{ const rs=(c.rows||[]).filter(r=>r.type===t); let g=0,d=0,lv=0,tg=0,at=0; rs.forEach(r=>{ const m=charmRem(r.lvl,r.tgt); g+=m.g; d+=m.d; lv+=r.lvl; tg+=r.tgt; if(r.lvl>=r.tgt) at++; }); return {t,rs,g,d,lv,tg,at}; }).filter(x=>x.rs.length);
+  const cg=cGroups.find(x=>x.at<x.rs.length);
+  if(cg){ const gS=Math.max(0,cg.g-num(c.have.guides)), dS=Math.max(0,cg.d-num(c.have.designs));
+    spend.push({icon:"💠",title:`${cg.t} charms to target`,detail:`${cg.at}/${cg.rs.length} done · `+(gS||dS?`${fmt(gS)} Guides · ${fmt(dS)} Designs short`:"materials covered — upgrade now"),pct:pc(cg.lv,cg.tg),tab:"Gear",key:"Charms"}); }
+  else spend.push({icon:"💠",title:"Charms",detail:"All charms at target",pct:100,done:true,tab:"Gear",key:"Charms"});
+  // 3 Pets
+  const P=state.pets||{rows:[],have:{}};
+  const pet=(P.rows||[]).filter(r=>{ const goal=num(r.tgt)||num(r.max); return goal>0&&num(r.lvl)<goal; }).sort((a,b)=>num(b.lvl)-num(a.lvl))[0];
+  if(pet){ const goal=num(pet.tgt)||num(pet.max), lv=num(pet.lvl), adv=Math.min(goal,(Math.floor(lv/10)+1)*10);
+    spend.push({icon:"🐾",title:`${esc(pet.n||"Pet")} → Lv ${adv}`,detail:`Lv ${lv} of ${goal} · refine with Taming Marks (${fmt(num(P.have&&P.have.tmCommon))} common · ${fmt(num(P.have&&P.have.tmAdv))} advanced)`,pct:pc(lv,goal),tab:"Gear",key:"Pets"}); }
+  else spend.push({icon:"🐾",title:"Pets",detail:(P.rows||[]).length?"All pets at target":"Add your pets to track them",pct:(P.rows||[]).length?100:0,done:(P.rows||[]).length>0,tab:"Gear",key:"Pets"});
+  // 4 Governor gear
+  const g=state.govGear; if(g){ const tgt=g.targetIdx, lag=g.pieces.filter(p=>p.cur<tgt); let sat=0; g.pieces.forEach(p=>{ sat+=govRem(p.cur,tgt).s; }); const sH=num(g.have&&g.have.satin);
+    spend.push({icon:"🛡️",title:`Governor Gear to ${GOV_TIERS[tgt][0]}`,detail:lag.length?`${6-lag.length}/6 pieces there · Satin ${sat-sH>0?fmt(sat-sH)+" short":"covered"}`:"Set complete",pct:pc(6-lag.length,6),done:!lag.length,tab:"Gear",key:"Governor Gear"}); }
+  // 5 Widgets — a hero that can level now, else the cheapest next level
+  const W=(state.widgets&&state.widgets.rows)||[];
+  const wc=W.filter(r=>num(r.lvl)<10).map(r=>({r,next:widNext(num(r.lvl)),have:num(r.have)})).sort((a,b)=>(b.have>=b.next)-(a.have>=a.next)||(a.next-a.have)-(b.next-b.have))[0];
+  if(wc) spend.push({icon:"⚙️",title:`${esc(wc.r.hero||"Hero")} widget Lv ${num(wc.r.lvl)} → ${num(wc.r.lvl)+1}`,detail:wc.have>=wc.next?"Ready to level up now":`${fmt(wc.next-wc.have)} widgets short`,pct:pc(wc.have,wc.next),tab:"Gear",key:"Widgets"});
+  else spend.push({icon:"⚙️",title:"Widgets",detail:W.length?"All heroes maxed":"Add heroes to track widgets",pct:W.length?100:0,done:W.length>0,tab:"Gear",key:"Widgets"});
+
+  // progress: T11 Archer
+  const tgt=computeTarget(), cur=num(state.dust.current), cn=closestNode();
+  prog.push({icon:"🏹",title:"Unlock T11 Archers",detail:tgt-cur>0?`${fmt(tgt-cur)} Dust to go`+(cn?` · closest node: ${esc(cn.n.name.replace(/ \(.*/,""))}`:""):"Dust gate met — start the research",pct:pc(cur,tgt),done:tgt<=cur,tab:"Army",key:"T11 Unlocks"});
+  // build order — first building not done
+  const bl=(state.buildings||[]).find(b=>!b.d&&bldRem(b).tg+bldRem(b).ttg>0);
+  if(bl){ const r=bldRem(bl); prog.push({icon:"🏰",title:`${esc(bl.n)}: ${esc(r.cur)} → TG 8`,detail:`${fmt(r.tg)} TG · ${fmt(r.ttg)} TTG left for this building`,pct:pc(num(state.tg.have),num(state.tg.need)),tab:"Army",key:"Build Order — TG6→TG8"}); }
+  // troops — biggest gap
+  const tc=state.troopCounts||{}; const tr=[["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]].map(([k,l])=>({l,c:num(tc[k]&&tc[k].cur),t:num(tc[k]&&tc[k].tgt)})).filter(x=>x.t>0).sort((a,b)=>a.c/a.t-b.c/b.t)[0];
+  if(tr) prog.push({icon:"⚔️",title:`Train ${tr.l}`,detail:tr.c<tr.t?`${fmt(tr.t-tr.c)} to reach ${fmt(tr.t)}`:"Target reached",pct:pc(tr.c,tr.t),done:tr.c>=tr.t,tab:"Army",key:"Troop Plan"});
+  // masters — level up next
+  const mc=(state.masters||[]).map(m=>({m,info:MASTER_INFO[m.n],lv:num(m.l)})).filter(x=>x.info&&x.lv<100&&(x.info.best===MAIN_TROOP||x.info.best==="All squads")).sort((a,b)=>b.lv-a.lv)[0];
+  if(mc){ const nx=Math.min(100,(Math.floor(mc.lv/10)+1)*10); prog.push({icon:"🎓",title:`${esc(mc.m.n)} affinity ${mc.lv} → ${nx}`,detail:nx===100?"Kindred Soul unlocks the research tree":"Emblems needed at the breakpoint",pct:mc.lv,tab:"Power",key:"Masters"}); }
+  // gold shards — closest to done
+  const sh=(state.goldShards||[]).filter(r=>num(r.need)>num(r.have)).sort((a,b)=>(num(a.need)-num(a.have))-(num(b.need)-num(b.have)))[0];
+  if(sh) prog.push({icon:"⭐",title:`${esc(sh.n)} shards`,detail:`${fmt(num(sh.need)-num(sh.have))} short — closest hero to done`,pct:pc(num(sh.have),num(sh.need)),tab:"Gear",key:"Gold Hero Shards"});
+
+  // only re-render when something changed, so a tap isn't lost mid-save
+  [[hs,spend],[hp,prog]].forEach(([h,L])=>{ const html=L.map(goalHtml).join(""); if(h.dataset.html===html) return; h.dataset.html=html; h.innerHTML=html;
+    h.querySelectorAll(".goal").forEach(b=>b.onclick=()=>goToSection(b.dataset.tab,b.dataset.key)); });
+}
 /* ---------- home summary tiles ---------- */
 function setTile(id,val,meta,pct,color){
   const el=document.getElementById(id); if(!el) return;
@@ -1504,6 +1704,7 @@ function setTile(id,val,meta,pct,color){
   const mf=el.querySelector(".mf"); if(mf&&pct!=null) mf.style.width=Math.max(0,Math.min(100,pct)).toFixed(1)+"%";
 }
 function paintSummary(){
+  paintSpend(); paintGoals();
   // next event
   const nx=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days)[0];
   if(nx) setTile("sumEvent", nx.e.n||"Event", `${whenTxt(nx.o)} · ${nx.o.date.slice(5)}${nx.e.time?" · "+nx.e.time:""}`, null, nx.o.days===0?"var(--green)":"var(--gold)");
@@ -1634,79 +1835,111 @@ function hgCalcCost(r){
   return { xp, xpExact, fh, mg: mythM+asc.myth, mith: asc.mith };
 }
 
-/* ---------- hero gear (collapsible groups → compact table) ---------- */
-const HG_TYPES=["Infantry","Cavalry","Archer"];
+/* ---------- hero gear (per-troop drop-downs of piece cards) ---------- */
+const HG_TYPES=["Archer","Infantry","Cavalry"]; // main troop first
+const HG_KEYS=[["xp","hgXp","XP"],["fh","hgFh","FH"],["mg","hgMg","Myth"],["mith","hgMith","Mith"]];
+function hgNextMithril(lvC,lvT){ const s=HG_ASCEND_STEPS.find(x=>x.lv>lvC&&x.lv<=lvT&&x.mith>0); return s?s.lv:null; }
+function hgPieceCard(r,type,rerender){
+  const cost=hgCalcCost(r); r.xp=cost.xp; r.fh=cost.fh; r.mg=cost.mg; r.mith=cost.mith;
+  const done=cost.xp+cost.fh+cost.mg+cost.mith===0;
+  const lvC=num(r.lvC), lvT=num(r.lvT), pct=lvT>0?Math.min(100,lvC/lvT*100):100;
+  const lbl=`${type} ${esc(r.slot||'')}`;
+  const card=document.createElement("div"); card.className="hcard hgpiece"+(done?" done":"");
+  const mil=hgNextMithril(lvC,lvT);
+  card.innerHTML=`<div class="htop"><input class="hname hgslot" aria-label="${type} slot name" value="${esc(r.slot||'')}">
+      <button class="del" title="Remove" aria-label="Remove ${lbl}">×</button></div>
+    <div class="hlv">
+      <label>Level<span class="pair"><input class="hgf" data-f="lvC" inputmode="numeric" aria-label="${lbl} current level" value="${r.lvC}">→<input class="hgf" data-f="lvT" inputmode="numeric" aria-label="${lbl} target level" value="${r.lvT}"></span></label>
+      <label>Mastery<span class="pair"><input class="hgf" data-f="mC" inputmode="numeric" aria-label="${lbl} current mastery" value="${r.mC}">→<input class="hgf" data-f="mT" inputmode="numeric" aria-label="${lbl} target mastery" value="${r.mT}"></span></label>
+    </div>
+    <div class="minibar"><div class="mf" style="width:${pct.toFixed(1)}%"></div></div>
+    ${done?`<div class="hfoot"><span class="tagok">at target ✓</span></div>`:`<div class="hgcost">
+      <div title="${cost.xpExact?'exact':'interpolated between reference-table checkpoints'}">XP<b>${cost.xpExact?'':'~'}${fmtBig(cost.xp)}</b></div>
+      <div>FH<b>${fmt(cost.fh)}</b></div><div>Myth<b>${fmt(cost.mg)}</b></div><div>Mith<b>${fmt(cost.mith)}</b></div></div>
+      ${mil?`<div class="hfoot"><span>Next Mithril milestone: Lv ${mil}</span></div>`:""}`}`;
+  card.querySelectorAll(".hgf").forEach(inp=>{ inp.onchange=()=>{ r[inp.dataset.f]=num(inp.value); rerender(); scheduleSave(); }; });
+  const slotInp=card.querySelector(".hgslot"); slotInp.oninput=()=>{ r.slot=slotInp.value; scheduleSave(); };
+  card.querySelector(".del").onclick=()=>{ const hg=state.heroGear, i=hg.rows.indexOf(r); if(i>-1){ hg.rows.splice(i,1); buildHeroGear(); scheduleSave(); } };
+  return card;
+}
 function buildHeroGear(){
   if(!state.heroGear||!Array.isArray(state.heroGear.rows)) state.heroGear=structuredClone(SEED.heroGear);
-  const hg=state.heroGear; if(!hg.have) hg.have={xp:0,fh:0,mg:0,mith:0}; if(!hg.open) hg.open={Infantry:true,Cavalry:true,Archer:true};
+  const hg=state.heroGear; if(!hg.have) hg.have={xp:0,fh:0,mg:0,mith:0};
+  if(!hg.open2){ hg.open2={Archer:true}; } // new drop-down state (Archer open by default)
   const host=document.getElementById("hgBody"); if(!host) return;
-  [["hgXp","xp"],["hgFh","fh"],["hgMg","mg"],["hgMith","mith"]].forEach(([id,k])=>{
-    const el=document.getElementById(id); if(el){ el.value=hg.have[k]||0; el.oninput=()=>{ hg.have[k]=num(el.value); paintHgSummary(); scheduleSave(); }; }
-  });
+  HG_KEYS.forEach(([k,id])=>{ const el=document.getElementById(id); if(el){ el.value=hg.have[k]||0; el.oninput=()=>{ hg.have[k]=num(el.value); paintHgSummary(); scheduleSave(); }; } });
   host.innerHTML="";
   HG_TYPES.forEach(type=>{
     const pieces=hg.rows.filter(r=>r.type===type); if(!pieces.length) return;
-    const open=hg.open[type]!==false;
-    const head=document.createElement("button");
-    head.className="hgtype"; head.setAttribute("aria-expanded",open?"true":"false");
-    head.innerHTML=`<span>${open?'▾':'▸'} ${type} <span style="color:var(--muted);font-weight:400;font-size:12px">${pieces.length} pieces</span></span>`;
-    head.onclick=()=>{ hg.open[type]=!open; buildHeroGear(); scheduleSave(); };
-    host.appendChild(head);
-    if(!open) return;
-    const wrap=document.createElement("div"); wrap.style.cssText="overflow-x:auto;margin-top:6px";
-    const tbl=document.createElement("table"); tbl.style.cssText="width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:11px;white-space:nowrap";
-    tbl.innerHTML=`<thead><tr style="color:var(--faint);text-align:left"><th style="padding:3px 8px 5px 0">Slot</th><th style="padding:3px 6px">Lv</th><th style="padding:3px 6px">M</th><th style="padding:3px 6px">XP</th><th style="padding:3px 6px">FH</th><th style="padding:3px 6px">Myth</th><th style="padding:3px 6px">Mith</th><th></th></tr></thead><tbody></tbody>`;
-    const tb=tbl.querySelector("tbody");
-    pieces.forEach(r=>{
-      const cost=hgCalcCost(r);
-      r.xp=cost.xp; r.fh=cost.fh; r.mg=cost.mg; r.mith=cost.mith;
-      const noUp=cost.xp+cost.fh+cost.mg+cost.mith===0;
-      const tr=document.createElement("tr"); tr.style.borderTop="1px solid var(--line)"; if(noUp) tr.style.opacity=".55";
-      const lbl=`${type} ${esc(r.slot||'')}`;
-      tr.innerHTML=`<td style="padding:5px 8px 5px 0"><input class="hgslot" aria-label="${type} slot name" value="${esc(r.slot||'')}" style="width:130px;font-family:inherit;font-size:12px"></td>
-        <td style="padding:5px 6px"><input class="tnum hgf" data-f="lvC" aria-label="${lbl} current level" value="${r.lvC}" style="width:50px">→<input class="tnum hgf" data-f="lvT" aria-label="${lbl} target level" value="${r.lvT}" style="width:50px"></td>
-        <td style="padding:5px 6px"><input class="tnum hgf" data-f="mC" aria-label="${lbl} current mastery" value="${r.mC}" style="width:40px">→<input class="tnum hgf" data-f="mT" aria-label="${lbl} target mastery" value="${r.mT}" style="width:40px"></td>
-        <td style="padding:5px 6px;color:var(--gold)" title="${cost.xpExact?'exact':'interpolated between reference-table checkpoints'}">${cost.xpExact?'':'~'}${fmt(cost.xp)}</td>
-        <td style="padding:5px 6px;color:var(--gold)">${fmt(cost.fh)}</td>
-        <td style="padding:5px 6px;color:var(--gold)">${fmt(cost.mg)}</td>
-        <td style="padding:5px 6px;color:var(--gold)">${fmt(cost.mith)}</td>
-        <td style="padding:5px 0"><button class="del" title="Remove" aria-label="Remove ${lbl}">×</button></td>`;
-      const xpCell=tr.children[3], fhCell=tr.children[4], mgCell=tr.children[5], mithCell=tr.children[6];
-      const updateRow=()=>{
-        const c2=hgCalcCost(r);
-        r.xp=c2.xp; r.fh=c2.fh; r.mg=c2.mg; r.mith=c2.mith;
-        xpCell.title = c2.xpExact ? "exact" : "interpolated between reference-table checkpoints";
-        xpCell.textContent = (c2.xpExact?'':'~')+fmt(c2.xp);
-        fhCell.textContent = fmt(c2.fh);
-        mgCell.textContent = fmt(c2.mg);
-        mithCell.textContent = fmt(c2.mith);
-        tr.style.opacity = (c2.xp+c2.fh+c2.mg+c2.mith===0) ? ".55" : "";
-        paintHgSummary();
-      };
-      tr.querySelectorAll(".hgf").forEach(inp=>{ inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); updateRow(); scheduleSave(); }; });
-      const slotInp=tr.querySelector(".hgslot"); slotInp.oninput=()=>{ r.slot=slotInp.value; scheduleSave(); };
-      tr.querySelector(".del").onclick=()=>{ const i=hg.rows.indexOf(r); if(i>-1){ hg.rows.splice(i,1); buildHeroGear(); scheduleSave(); } };
-      tb.appendChild(tr);
-    });
-    wrap.appendChild(tbl); host.appendChild(wrap);
+    const open=!!hg.open2[type];
+    const t={xp:0,fh:0,mg:0,mith:0}; let lc=0,lt=0,atT=0;
+    pieces.forEach(r=>{ const c=hgCalcCost(r); t.xp+=c.xp; t.fh+=c.fh; t.mg+=c.mg; t.mith+=c.mith; lc+=num(r.lvC); lt+=Math.max(num(r.lvT),num(r.lvC)); if(c.xp+c.fh+c.mg+c.mith===0) atT++; });
+    const pct=lt>0?Math.min(100,lc/lt*100):100, allDone=atT===pieces.length;
+    const grp=document.createElement("div"); grp.className="grp"+(open?" open":"");
+    const bid="hg"+type;
+    grp.innerHTML=`<button class="grphead" aria-expanded="${open}" aria-controls="${bid}"><span class="mchev" aria-hidden="true">▸</span>
+        <span style="min-width:0"><span class="gname">${type}</span> <span class="gsub">· ${pieces.length} pieces · ${atT}/${pieces.length} at target</span>
+          <div class="minibar"><div class="mf" style="width:${pct.toFixed(1)}%;${allDone?'background:var(--green)':''}"></div></div></span>
+        <span class="gsub" style="text-align:right">${allDone?'<span class="tagok">✓ done</span>':`XP ${fmtBig(t.xp)} · FH ${fmt(t.fh)}<br>Myth ${fmt(t.mg)} · Mith ${fmt(t.mith)}`}</span></button>
+      <div class="grpbody" id="${bid}" ${open?"":"hidden"}><div class="herogrid hggrid"></div></div>`;
+    const grid=grp.querySelector(".herogrid");
+    pieces.forEach(r=>grid.appendChild(hgPieceCard(r,type,buildHeroGear)));
+    const hb=grp.querySelector(".grphead"), body=grp.querySelector(".grpbody");
+    hb.onclick=()=>{ const o=!hg.open2[type]; hg.open2[type]=o; grp.classList.toggle("open",o); hb.setAttribute("aria-expanded",o); body.hidden=!o; scheduleSave(); };
+    host.appendChild(grp);
   });
   const add=document.getElementById("addHg");
-  if(add) add.onclick=()=>{ hg.rows.push({type:"Archer",slot:"New (stat)",lvC:0,lvT:0,mC:0,mT:0,xp:0,fh:0,mg:0,mith:0}); buildHeroGear(); scheduleSave(); };
+  if(add) add.onclick=()=>{ hg.rows.push({type:"Archer",slot:"New (stat)",lvC:0,lvT:0,mC:0,mT:0,xp:0,fh:0,mg:0,mith:0}); hg.open2.Archer=true; buildHeroGear(); scheduleSave(); };
   paintHgSummary();
 }
 function paintHgSummary(){
   const hg=state.heroGear; if(!hg) return;
   const need={xp:0,fh:0,mg:0,mith:0};
-  hg.rows.forEach(r=>{ need.xp+=num(r.xp); need.fh+=num(r.fh); need.mg+=num(r.mg); need.mith+=num(r.mith); });
-  const el=document.getElementById("hgSummary"); if(!el) return;
-  const short=["xp","fh","mg","mith"].some(k=>num(hg.have[k])<need[k]);
-  const rowHtml=(label,k)=>{ const n=need[k], h=num(hg.have[k]), d=h-n;
-    return `<tr><td>${label}</td><td class="mono">${fmt(n)}</td><td class="mono">${fmt(h)}</td><td class="mono" style="color:${d<0?'var(--red)':'var(--green)'}">${d<0?'':'+'}${fmt(d)}</td></tr>`; };
-  el.innerHTML=`<div style="background:${short?'rgba(228,87,75,.08)':'rgba(79,191,123,.06)'};border:1px solid ${short?'rgba(228,87,75,.35)':'rgba(79,191,123,.35)'};border-radius:10px;padding:12px">
-    <div class="disp" style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:${short?'var(--red)':'var(--green)'};margin-bottom:8px">${short?'Not enough resources':'Plan covered'}</div>
-    <table style="width:100%;font-size:12px"><thead><tr><th>Resource</th><th>Need</th><th>Have</th><th>Diff</th></tr></thead><tbody>
-      ${rowHtml("XP","xp")}${rowHtml("Forgehammers","fh")}${rowHtml("Mythic Gear","mg")}${rowHtml("Mithril","mith")}
-    </tbody></table></div>`;
+  hg.rows.forEach(r=>{ const c=hgCalcCost(r); need.xp+=c.xp; need.fh+=c.fh; need.mg+=c.mg; need.mith+=c.mith; });
+  HG_KEYS.forEach(([k,id])=>{ const n=need[k], h=num(hg.have[k]);
+    const f=document.getElementById(id+"Fill"); if(f) f.style.width=(n>0?Math.min(100,h/n*100):100).toFixed(1)+"%";
+    const tx=document.getElementById(id+"Txt"); if(tx) tx.innerHTML=`/ <b>${fmt(n)}</b> needed`;
+    const sh=document.getElementById(id+"Short"); if(sh) sh.innerHTML= n-h>0?`<span class="tagbad">${fmt(n-h)} short</span>`:`<span class="tagok">covered ✓</span>`; });
+}
+
+/* ---------- pets ---------- */
+// pet names from the in-game roster; max levels only where confirmed (others: enter your own)
+const PET_INFO={"Gray Wolf":50,"Bison":60,"Lynx":null,"Cheetah":70,"Moose":null,"Lion":null,"Grizzly Bear":null,"Giant Rhino":100,"Mighty Bison":null,"Alpha Black Panther":100,"Great Moose":100,"Ironclad War Elephant":null,"Regal White Lion":null,"Ironclad War Bear":null};
+function petCardState(card,r){
+  const lv=num(r.lvl), mx=num(r.max), tg=Math.max(num(r.tgt),0);
+  const goal=tg||mx; const pct=goal>0?Math.min(100,lv/goal*100):0, done=goal>0&&lv>=goal;
+  card.classList.toggle("done",done);
+  card.querySelector(".mf").style.width=pct.toFixed(1)+"%";
+  const nextAdv=(Math.floor(lv/10)+1)*10;
+  card.querySelector(".hfoot").innerHTML = done?`<span class="tagok">${tg?'at target':'max'} ✓</span>`
+    : `<span>Next advance: Lv ${mx&&nextAdv>mx?mx:nextAdv}</span><span>${goal?`${fmt(goal-lv)} lv to go`:''}</span>`;
+}
+function buildPets(){
+  if(!state.pets||!Array.isArray(state.pets.rows)) state.pets={have:{food:0,manuals:0,potions:0,tmCommon:0,tmAdv:0},rows:[]};
+  const P=state.pets; if(!P.have) P.have={};
+  const b=document.getElementById("petBody"); if(!b) return;
+  document.querySelectorAll("#petMats input").forEach(el=>{ const k=el.dataset.k; el.value=P.have[k]||0; el.oninput=()=>{ P.have[k]=num(el.value); scheduleSave(); }; });
+  const dl=document.getElementById("petList"); if(dl) dl.innerHTML=Object.keys(PET_INFO).map(n=>`<option value="${n}">`).join("");
+  b.innerHTML="";
+  P.rows.forEach(r=>{
+    const pn=esc(r.n||'pet');
+    const card=document.createElement("div"); card.className="hcard";
+    card.innerHTML=`<div class="htop"><input class="hname petname" list="petList" aria-label="Pet" value="${esc(r.n||'')}" placeholder="pet">
+        <button class="del" title="Remove" aria-label="Remove ${pn}">×</button></div>
+      <div class="hin" style="grid-template-columns:1fr 1fr 1fr"><label>Level<input class="pf" data-f="lvl" inputmode="numeric" aria-label="${pn} level" value="${num(r.lvl)}"></label>
+        <label>Target<input class="pf" data-f="tgt" inputmode="numeric" aria-label="${pn} target level" value="${num(r.tgt)||''}" placeholder="max"></label>
+        <label>Max<input class="pf" data-f="max" inputmode="numeric" aria-label="${pn} max level" value="${num(r.max)||''}" placeholder="?"></label></div>
+      <div class="minibar"><div class="mf"></div></div>
+      <div class="hfoot"></div>`;
+    const ni=card.querySelector(".petname");
+    ni.onchange=()=>{ r.n=ni.value; if(PET_INFO[r.n]&&!num(r.max)){ r.max=PET_INFO[r.n]; card.querySelector('[data-f="max"]').value=r.max; } petCardState(card,r); scheduleSave(); };
+    card.querySelectorAll(".pf").forEach(inp=>{ inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); petCardState(card,r); scheduleSave(); }; });
+    card.querySelector(".del").onclick=()=>{ const i=P.rows.indexOf(r); if(i>-1){ P.rows.splice(i,1); buildPets(); scheduleSave(); } };
+    petCardState(card,r);
+    b.appendChild(card);
+  });
+  document.getElementById("addPet").onclick=()=>{ P.rows.push({n:"",lvl:0,tgt:0,max:0}); buildPets(); scheduleSave();
+    const ins=b.querySelectorAll(".petname"); const last=ins[ins.length-1]; if(last) last.focus(); };
 }
 
 /* ---------- charms ---------- */
@@ -2466,7 +2699,7 @@ function migrateMasterNotes(){
 function renderAll(){
   migrateEvents(); migrateMasterNotes();
   buildToday(); buildTroops(); buildId(); buildGate(); paintGate(); buildInfantry(); buildCavalry(); buildForecast(); buildGovGear();
-  buildHeroGear(); buildCharms(); buildWidgets();
+  buildHeroGear(); buildCharms(); buildWidgets(); buildPets();
   buildChecks("trackNow",state.trackNow); buildChecks("trackFarm",state.trackFarm);
   buildPillars(); buildCombat(); buildRes(); buildMast(); buildGoldShards();
   buildTGbudget(); buildBuildings();
