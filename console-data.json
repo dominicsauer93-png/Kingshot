@@ -1046,7 +1046,7 @@
     },
     "density": "compact",
     "mastOpen": {
-      "Aena": true,
+      "Aena": false,
       "Isnor": false,
       "Pan": true,
       "Valora": true,
