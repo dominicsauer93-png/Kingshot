@@ -175,19 +175,25 @@
   .totgrid b{color:var(--text)}
   .totgrid b.g{color:var(--gold)}
 
-  .nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:16px}
-  .node{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:11px;padding:12px}
-  .node .nname{font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:8px}
-  .node .lvl{display:flex;align-items:baseline;gap:6px}
-  .node .lvl input{width:50px;font-family:var(--f-mono);font-weight:700;font-size:19px;color:var(--gold);background:var(--field);border:1px solid var(--field-line);border-radius:8px;padding:2px 4px;text-align:center}
-  .node .lvl .max{font-family:var(--f-mono);color:var(--faint);font-size:14px}
-  .node .segbar{display:flex;gap:2px;margin-top:10px}
-  .seg{flex:1;height:7px;border-radius:2px;background:#3A2F22}
-  .seg.on{background:linear-gradient(90deg,var(--gold-2),var(--gold))}
-  .node .cost{font-family:var(--f-mono);font-size:11px;color:var(--faint);margin-top:8px}
+  .nodes{display:flex;flex-direction:column;gap:1px;background:var(--line-soft);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:16px}
+  .node{display:grid;grid-template-columns:minmax(0,1fr) 92px minmax(80px,140px) 104px;align-items:center;gap:12px;background:rgba(20,16,12,.85);padding:9px 12px}
+  .node:nth-child(odd){background:rgba(29,23,17,.9)}
+  .node .nname{font-size:13px;font-weight:500;color:var(--text);min-width:0}
+  .node .lvl{display:flex;align-items:center;gap:4px;font-family:var(--f-mono);white-space:nowrap}
+  .node .lvl input{width:42px;font-family:var(--f-mono);font-weight:700;font-size:14px;color:var(--gold);background:var(--field);border:1px solid var(--field-line);border-radius:7px;padding:4px 2px;text-align:center}
+  .node .lvl .max{color:var(--faint);font-size:12.5px}
+  .node .segbar{position:relative;height:7px;border-radius:999px;background:#3A2F22;overflow:hidden}
+  .node .segbar .fillbar{position:absolute;inset:0 auto 0 0;border-radius:999px;background:linear-gradient(90deg,var(--gold-2),var(--gold));transition:width .3s}
+  .node .segbar .fillbar.done{background:var(--green)}
+  .node .cost{font-family:var(--f-mono);font-size:12px;text-align:right;color:var(--muted);white-space:nowrap}
+  .node .cost.done{color:var(--green);font-weight:700}
+  @media(max-width:640px){
+    .node{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name lvl" "bar cost";row-gap:6px}
+    .node .nname{grid-area:name} .node .lvl{grid-area:lvl} .node .segbar{grid-area:bar} .node .cost{grid-area:cost}
+  }
 
   /* ---- power pillars ---- */
-  .pillar{display:grid;grid-template-columns:140px 1fr auto 40px;grid-template-areas:"name bar meta grade";align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-soft)}
+  .pillar{display:grid;grid-template-columns:140px 1fr 190px 40px;grid-template-areas:"name bar meta grade";align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-soft)}
   .pillar:last-child{border-bottom:0}
   .pillar .pname{grid-area:name;font-size:13.5px;font-weight:600}
   .pillar .pbar{grid-area:bar}
@@ -202,8 +208,9 @@
   .bench{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--text);opacity:.6}
   .pmeta{display:flex;align-items:center;gap:6px;justify-content:flex-end;flex-wrap:wrap}
   .pmeta .pv{font-family:var(--f-mono);font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
-  .pmeta input{width:118px;font-family:var(--f-mono);font-size:12px;color:var(--text);background:var(--field);border:1px solid var(--field-line);border-radius:7px;padding:6px 7px;text-align:right}
+  .pmeta input{font-family:var(--f-mono);font-size:12.5px;color:var(--text);background:var(--field);border:1px solid var(--field-line);border-radius:7px;padding:6px 7px;text-align:right;box-sizing:content-box}
   .pmeta input.benchin{color:var(--muted)}
+  .pmeta .sep{color:var(--faint);font-family:var(--f-mono)}
   .grade{font-family:var(--f-disp);font-weight:800;font-size:13px;width:40px;text-align:center;border-radius:7px;padding:4px 0;border:1px solid var(--line)}
   .g-SS,.g-S{color:var(--green);border-color:rgba(108,198,138,.45);background:rgba(108,198,138,.1)}
   .g-A,.g-B{color:var(--amber);border-color:rgba(232,163,61,.45);background:rgba(232,163,61,.1)}
@@ -271,7 +278,10 @@
   @media(max-width:480px){.res-row .resname{flex-basis:100%;margin-right:0}.res-row .res-inputs{margin-left:auto}}
   .troop-inputs{display:flex;align-items:center;gap:6px}
 
-  .charmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .charmgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+  @media(max-width:1060px){.charmgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(max-width:560px){.charmgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .charmgrid .sigsel.charmsel{flex:1;min-width:52px;padding:7px 20px 7px 9px;background-position:right 6px center;text-align:center}
   .hgtype{width:100%;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin:10px 0 0;cursor:pointer;color:var(--text);font:600 13.5px var(--f-body);text-align:left}
   .hgtype:hover{border-color:var(--gold-2)}
 
@@ -421,10 +431,18 @@
         <ul class="checks" id="trackFarm"></ul>
       </div>
     </div>
-    <div class="donotfund">Ahead of benchmark — <b>do not fund:</b> Heroes, Charms, Tech, Pets, Buildings.</div>
   </section>
 
   <!-- ================= ARMY ================= -->
+  <section data-tab="Army">
+    <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Troop Plan</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
+    <div class="card">
+      <h3>Troop targets</h3>
+      <p class="sub">Enter current count and target — bars fill toward the goal.</p>
+      <div id="troopBody"></div>
+    </div>
+  </section>
+
   <section data-tab="Army">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>T11 Unlocks</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="gate">
@@ -466,6 +484,19 @@
       </div>
       <div class="dustline"><span class="of mono">Dust needed (auto):</span><span class="big mono" id="infTgtVal" style="font-size:22px">—</span></div>
       <div class="nodes" id="infNodes"></div>
+      <div class="totals">
+        <div class="label">Everything to reach T11 Infantry</div>
+        <div class="totgrid">
+          <div>Dust <b class="g" id="infT11Dust">—</b></div>
+          <div>Gold <b class="g" id="infT11Gold">—</b></div>
+          <div>Research <b class="g" id="infT11Time">—</b></div>
+          <div>Bread <b id="infT11Bread">—</b></div>
+          <div>Wood <b id="infT11Wood">—</b></div>
+          <div>Stone <b id="infT11Stone">—</b></div>
+          <div>Iron <b id="infT11Iron">—</b></div>
+        </div>
+        <p class="sub" style="margin:8px 0 0">Auto-computed from your infantry node levels.</p>
+      </div>
     </div>
 
     <div class="gate">
@@ -475,6 +506,19 @@
       </div>
       <div class="dustline"><span class="of mono">Dust needed (auto):</span><span class="big mono" id="cavTgtVal" style="font-size:22px">—</span></div>
       <div class="nodes" id="cavNodes"></div>
+      <div class="totals">
+        <div class="label">Everything to reach T11 Cavalry</div>
+        <div class="totgrid">
+          <div>Dust <b class="g" id="cavT11Dust">—</b></div>
+          <div>Gold <b class="g" id="cavT11Gold">—</b></div>
+          <div>Research <b class="g" id="cavT11Time">—</b></div>
+          <div>Bread <b id="cavT11Bread">—</b></div>
+          <div>Wood <b id="cavT11Wood">—</b></div>
+          <div>Stone <b id="cavT11Stone">—</b></div>
+          <div>Iron <b id="cavT11Iron">—</b></div>
+        </div>
+        <p class="sub" style="margin:8px 0 0">Auto-computed from your cavalry node levels.</p>
+      </div>
     </div>
 
     <div class="card">
@@ -489,14 +533,6 @@
     </div>
   </section>
 
-  <section data-tab="Army">
-    <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Troop Plan</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
-    <div class="card">
-      <h3>Troop targets</h3>
-      <p class="sub">Enter current count and target — bars fill toward the goal.</p>
-      <div id="troopBody"></div>
-    </div>
-  </section>
 
   <section data-tab="Army">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Build Order — TG6→TG8</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
@@ -597,6 +633,15 @@
       <div class="tbl"><table><thead><tr><th style="width:40%">Hero</th><th>Lvl</th><th>Have</th><th>To max</th><th><span class="sr-only">Remove</span></th></tr></thead><tbody id="widBody"></tbody></table></div>
       <datalist id="widHeroList"></datalist>
       <button class="additem" id="addWid">+ add hero</button>
+    </div>
+  </section>
+
+  <section data-tab="Gear">
+    <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Gold Hero Shards</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
+    <div class="card">
+      <div class="tbl"><table><thead><tr><th style="width:40%">Hero</th><th>Need</th><th>Have</th><th>Short</th><th><span class="sr-only">Remove</span></th></tr></thead><tbody id="goldShardBody"></tbody></table></div>
+      <div id="goldShardTotal" class="mono" style="margin-top:12px;font-size:13px;color:var(--muted)"></div>
+      <button class="additem" id="addGoldShard">+ add hero</button>
     </div>
   </section>
 
@@ -766,66 +811,95 @@
 
 /* ---------- seed (the whole chat, structured) ---------- */
 const SEED = {
-  account:{ tc:"Truegold Lv. 7", day:"443", power:"242,423,358", vip:"8", spender:"Low–mid", goal:"All-round" },
-  dust:{ current:274, target:6028, gold:218000 },
+  account:{ tc:"", day:"", power:"", vip:"", spender:"", goal:"" },
+  dust:{ current:0, target:0, gold:0 },
   nodes:[
-    {name:"Arrows (Attack)",     cur:12, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
-    {name:"Legionaries (Rally)", cur:7,  max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
-    {name:"Vests (Defense)",     cur:9,  max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
-    {name:"Truegold Archers (unlock)", cur:0, max:1, costs:[2236]}
+    {name:"Truegold Bracers (Health)",   cur:0, max:8,  costs:[40,56,74,102,136,184,248,334]},
+    {name:"Truegold Bows (Lethality)",   cur:0, max:8,  costs:[40,56,74,102,136,184,248,334]},
+    {name:"Truegold Vests (Defense)",    cur:0, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Truegold Legionaries (Rally Capacity)", cur:0, max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
+    {name:"Truegold Arrows (Attack)",    cur:0, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Truegold Archers (unlock)", cur:0, max:1, costs:[2236]},
+    {name:"Truegold Archer Healing",  cur:0, max:10, costs:[102,137,188,255,341,459,612,836,1100,1500]},
+    {name:"Truegold Archer Aid",      cur:0, max:10, costs:[51,68,94,127,170,229,306,418,561,765]},
+    {name:"Truegold Archer Training", cur:0, max:10, costs:[102,137,188,255,341,459,612,836,1100,1500]}
   ],
   infNodes:[
-    {name:"Mauls (Attack)",      cur:7, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
-    {name:"Plating (Defense)",   cur:7, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
-    {name:"Legionaries (Rally)", cur:6, max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
-    {name:"Truegold Infantry (unlock)", cur:0, max:1, costs:[2236]}
+    {name:"Truegold Shields (Health)",   cur:0, max:8,  costs:[40,56,74,102,136,184,248,334]},
+    {name:"Truegold Blades (Lethality)", cur:0, max:8,  costs:[40,56,74,102,136,184,248,334]},
+    {name:"Truegold Plating (Defense)",  cur:0, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Truegold Legionaries (Rally Capacity)", cur:0, max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
+    {name:"Truegold Mauls (Attack)",     cur:0, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Truegold Infantry (unlock)", cur:0, max:1, costs:[2236]},
+    {name:"Truegold Infantry Healing",  cur:0, max:10, costs:[102,137,188,255,341,459,612,836,1100,1500]},
+    {name:"Truegold Infantry Aid",      cur:0, max:10, costs:[51,68,94,127,170,229,306,418,561,765]},
+    {name:"Truegold Infantry Training", cur:0, max:10, costs:[102,137,188,255,341,459,612,836,1100,1500]}
   ],
   cavNodes:[
-    {name:"Lances (Attack)",      cur:12, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
-    {name:"Platecraft (Defense)", cur:12, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
-    {name:"Legionaries (Rally)",  cur:12, max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
-    {name:"Truegold Cavalry (unlock)", cur:0, max:1, costs:[2236]}
+    {name:"Truegold Charge (Lethality)",   cur:0, max:8,  costs:[40,56,74,102,136,184,248,334]},
+    {name:"Truegold Farriery (Health)",    cur:0, max:8,  costs:[40,56,74,102,136,184,248,334]},
+    {name:"Truegold Lances (Attack)",      cur:0, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Truegold Legionaries (Rally Capacity)", cur:0, max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
+    {name:"Truegold Platecraft (Defense)", cur:0, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Truegold Cavalry (unlock)", cur:0, max:1, costs:[2236]},
+    {name:"Truegold Cavalry Healing",  cur:0, max:10, costs:[102,137,188,255,341,459,612,836,1100,1500]},
+    {name:"Truegold Cavalry Aid",      cur:0, max:10, costs:[51,68,94,127,170,229,306,418,561,765]},
+    {name:"Truegold Cavalry Training", cur:0, max:10, costs:[102,137,188,255,341,459,612,836,1100,1500]}
   ],
-  trackNow:[
-    {t:"Battle research Tier VI — lifts Lethality / Health off the V→VI wall", d:false}
-  ],
-  trackFarm:[
-    {t:"Farm Truegold Dust toward the T11 Archer unlock", d:false},
-    {t:"Push Pan 90 → 100 (Ways-and-Means / Falconer skills)", d:false},
-    {t:"Slowly level the 4 lowest masters to lift the grade", d:false}
-  ],
+  trackNow:[],
+  trackFarm:[],
   pillars:[
-    {name:"Building",      v:8430563,   b:7687198,   g:"S"},
-    {name:"Troop",         v:133235265, b:164531870, g:"A"},
-    {name:"Hero",          v:26297916,  b:21305631,  g:"SS"},
-    {name:"Hero Gear",     v:9921154,   b:10062833,  g:"S"},
-    {name:"Governor Gear", v:7013520,   b:7831641,   g:"A"},
-    {name:"Governor Charm",v:10120000,  b:8258400,   g:"SS"},
-    {name:"Tech",          v:17625620,  b:11141492,  g:"SS"},
-    {name:"Pet",           v:19643520,  b:20673792,  g:"S"},
-    {name:"Master",        v:10135800,  b:25148000,  g:"C"}
+    {name:"Building",      v:0, b:0, g:""},
+    {name:"Troop",         v:0, b:0, g:""},
+    {name:"Hero",          v:0, b:0, g:""},
+    {name:"Hero Gear",     v:0, b:0, g:""},
+    {name:"Governor Gear", v:0, b:0, g:""},
+    {name:"Governor Charm",v:0, b:0, g:""},
+    {name:"Tech",          v:0, b:0, g:""},
+    {name:"Pet",           v:0, b:0, g:""},
+    {name:"Master",        v:0, b:0, g:""}
   ],
-  combat:{ attW:160, attL:211, defW:672, defL:55, leth:66.5, hp:49.0 },
+  combat:{ attW:0, attL:0, defW:0, defL:0, leth:0, hp:0 },
   resources:[
-    {n:"Soldier Training speedup (hrs)", h:"564.35"},
-    {n:"General speedup (hrs)",          h:"766.48"},
-    {n:"Soldier Healing speedup (hrs)",  h:"28.28"},
-    {n:"Construction speedup (hrs)",     h:"13.75"},
-    {n:"Research speedup (hrs)",         h:"46.5"},
-    {n:"Bread",  h:"2850000000"},
-    {n:"Wood",   h:"2900000000"},
-    {n:"Stone",  h:"300190000"},
-    {n:"Iron",   h:"223480000"}
+    {n:"Soldier Training speedup (hrs)", h:""},
+    {n:"General speedup (hrs)",          h:""},
+    {n:"Soldier Healing speedup (hrs)",  h:""},
+    {n:"Construction speedup (hrs)",     h:""},
+    {n:"Research speedup (hrs)",         h:""},
+    {n:"Bread",  h:""},
+    {n:"Wood",   h:""},
+    {n:"Stone",  h:""},
+    {n:"Iron",   h:""}
+  ],
+  goldShards:[
+    {n:"Saul",     need:900, have:0},
+    {n:"Amadeus",  need:940, have:0},
+    {n:"Charles",  need:463, have:0},
+    {n:"Hilde",    need:740, have:0},
+    {n:"Marlin",   need:700, have:0},
+    {n:"Zoe",      need:600, have:0},
+    {n:"Jaeger",   need:700, have:0},
+    {n:"Eric",     need:700, have:0},
+    {n:"Rosa",     need:500, have:0},
+    {n:"Petra",    need:500, have:0},
+    {n:"Margot",   need:700, have:0},
+    {n:"Alcar",    need:600, have:0},
+    {n:"Thrud",    need:800, have:0},
+    {n:"Triton",   need:700, have:0},
+    {n:"Sophia",   need:100, have:0},
+    {n:"Ava",      need:940, have:0},
+    {n:"Long Fei", need:400, have:0},
+    {n:"Yang",     need:300, have:0}
   ],
   masters:[
-    {n:"Pan",       l:"90", note:"Best master — push to 100; Ways-and-Means / Falconer"},
-    {n:"Valora",    l:"80", note:"Good — rally / bear value"},
-    {n:"Roman",     l:"60", note:"Attack research — +15% Atk/Def at Kindred Soul"},
-    {n:"Wilson",    l:"40", note:"Health research — +10% Atk/Def at Kindred Soul"},
-    {n:"Cassia",    l:"30", note:"Defense research — +20% Lethality/Health at Kindred Soul"},
-    {n:"Guinevere", l:"30", note:"Defense research — +15% Lethality/Health at Kindred Soul"},
-    {n:"Aena",      l:"0",  note:"Lethality research — +15% Atk/Lethality at Kindred Soul"},
-    {n:"Isnor",     l:"0",  note:"Attack research — +15% Lethality/Health at Kindred Soul"}
+    {n:"Pan",       l:"0", note:"Ways-and-Means / Falconer skills"},
+    {n:"Valora",    l:"0", note:"Rally / bear value"},
+    {n:"Roman",     l:"0", note:"Attack research — +15% Atk/Def at Kindred Soul"},
+    {n:"Wilson",    l:"0", note:"Health research — +10% Atk/Def at Kindred Soul"},
+    {n:"Cassia",    l:"0", note:"Defense research — +20% Lethality/Health at Kindred Soul"},
+    {n:"Guinevere", l:"0", note:"Defense research — +15% Lethality/Health at Kindred Soul"},
+    {n:"Aena",      l:"0", note:"Lethality research — +15% Atk/Lethality at Kindred Soul"},
+    {n:"Isnor",     l:"0", note:"Attack research — +15% Lethality/Health at Kindred Soul"}
   ],
   dustSrc:[
     {t:"Redeem Truegold + Gold → Dust in the War Academy", d:false},
@@ -835,75 +909,58 @@ const SEED = {
     {t:"Gift codes (check optimizer’s codes page)", d:false},
     {t:"Dust pack — best single-spend value", d:false}
   ],
-  openData:[
-    {t:"Exact Dust total for Archer unlock (optimizer planner)", d:false},
-    {t:"Current Truegold balance (for Dust conversion math)", d:false},
-    {t:"T10 Archer count available to promote", d:false}
-  ],
+  openData:[],
   notes:"",
   mysticTrials:[
-    {k:"Mystic Trial (overall)", v:"170", log:[]},
-    {k:"Coliseum (Heroes + Hero Gear)", v:"157", log:[]},
-    {k:"Forest of Life (Pets)", v:"90", log:[]},
-    {k:"Crystal Cave (Charms)", v:"139", log:[]},
-    {k:"Knowledge Nexus (Techs)", v:"174", log:[]},
-    {k:"Molten Fort (Gov Gear)", v:"280", log:[]},
-    {k:"Radiant Spire (ALL stats — full power)", v:"163", log:[]}
+    {k:"Mystic Trial (overall)", v:"", log:[]},
+    {k:"Coliseum (Heroes + Hero Gear)", v:"", log:[]},
+    {k:"Forest of Life (Pets)", v:"", log:[]},
+    {k:"Crystal Cave (Charms)", v:"", log:[]},
+    {k:"Knowledge Nexus (Techs)", v:"", log:[]},
+    {k:"Molten Fort (Gov Gear)", v:"", log:[]},
+    {k:"Radiant Spire (ALL stats — full power)", v:"", log:[]}
   ],
-  tg:{ have:0, need:9757, ttgHave:0, ttgNeed:781 },
-  govGear:{ targetIdx:19, have:{satin:67518,threads:656,vision:322}, pieces:[
-    {name:"Cav 1", cur:10},{name:"Cav 2", cur:10},{name:"Inf 1", cur:11},
-    {name:"Inf 2", cur:12},{name:"Archer 1", cur:11},{name:"Archer 2", cur:19}
+  tg:{ have:0, need:0, ttgHave:0, ttgNeed:0 },
+  govGear:{ targetIdx:0, have:{satin:0,threads:0,vision:0}, pieces:[
+    {name:"Cav 1", cur:0},{name:"Cav 2", cur:0},{name:"Inf 1", cur:0},
+    {name:"Inf 2", cur:0},{name:"Archer 1", cur:0},{name:"Archer 2", cur:0}
   ]},
   forecast:{ log:[] },
-  today:{ routineDate:"", kvkDate:"", bearDate:"", kvkPeriod:14, bearPeriod:2, routine:[    {t:"Intel Missions → collect Hunting Arrows", d:false},
+  today:{ routineDate:"", kvkDate:"", bearDate:"", kvkPeriod:14, bearPeriod:2, routine:[
+    {t:"Intel Missions → collect Hunting Arrows", d:false},
     {t:"Gathering marches all out", d:false},
     {t:"Overfeed the Truegold Crucible", d:false},
     {t:"Super Refine — daily discounted Tier 2 (TTG)", d:false},
     {t:"Claim house / suppression gold", d:false}
   ]},
   ui:{ tab:"Home", collapsed:{}, density:"comfortable" },
-  troopCounts:{ inf:{cur:0,tgt:1500000}, arc:{cur:0,tgt:1500000}, cav:{cur:0,tgt:500000} },
-  bear:{ arrows:0, members:85 },
+  troopCounts:{ inf:{cur:0,tgt:0}, arc:{cur:0,tgt:0}, cav:{cur:0,tgt:0} },
+  bear:{ arrows:0, members:0 },
   heroGear:{
-    have:{ xp:0, fh:133, mg:10, mith:3 },
+    have:{ xp:0, fh:0, mg:0, mith:0 },
     rows:[
-      {type:"Infantry", slot:"Helm (Lethality)",  lvC:104, lvT:104, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
-      {type:"Infantry", slot:"Gloves (Health)",   lvC:104, lvT:104, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
-      {type:"Infantry", slot:"Chest (Health)",    lvC:119, lvT:139, mC:11, mT:11, xp:0, fh:0, mg:0, mith:0},
-      {type:"Infantry", slot:"Boots (Lethality)", lvC:101, lvT:101, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
-      {type:"Cavalry",  slot:"Helm (Lethality)",  lvC:119, lvT:119, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
-      {type:"Cavalry",  slot:"Gloves (Health)",   lvC:75,  lvT:70,  mC:7,  mT:7,  xp:0, fh:0, mg:0, mith:0},
-      {type:"Cavalry",  slot:"Chest (Health)",    lvC:75,  lvT:71,  mC:7,  mT:7,  xp:0, fh:0, mg:0, mith:0},
-      {type:"Cavalry",  slot:"Boots (Lethality)", lvC:101, lvT:101, mC:10, mT:10, xp:0, fh:0, mg:0, mith:0},
-      {type:"Archer",   slot:"Helm (Lethality)",  lvC:139, lvT:139, mC:11, mT:11, xp:0, fh:0, mg:0, mith:0},
-      {type:"Archer",   slot:"Gloves (Health)",   lvC:97,  lvT:82,  mC:6,  mT:6,  xp:0, fh:0, mg:0, mith:0},
-      {type:"Archer",   slot:"Chest (Health)",    lvC:100, lvT:82,  mC:7,  mT:8,  xp:0, fh:0, mg:0, mith:0},
-      {type:"Archer",   slot:"Boots (Lethality)", lvC:119, lvT:119, mC:10, mT:11, xp:0, fh:0, mg:0, mith:0}
+      {type:"Infantry", slot:"Helm (Lethality)",  lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Infantry", slot:"Gloves (Health)",   lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Infantry", slot:"Chest (Health)",    lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Infantry", slot:"Boots (Lethality)", lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Cavalry",  slot:"Helm (Lethality)",  lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Cavalry",  slot:"Gloves (Health)",   lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Cavalry",  slot:"Chest (Health)",    lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Cavalry",  slot:"Boots (Lethality)", lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Archer",   slot:"Helm (Lethality)",  lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Archer",   slot:"Gloves (Health)",   lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Archer",   slot:"Chest (Health)",    lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0},
+      {type:"Archer",   slot:"Boots (Lethality)", lvC:0, lvT:0, mC:0, mT:0, xp:0, fh:0, mg:0, mith:0}
     ]
   },
-  charms:{ targetLvl:22, have:{guides:0,designs:0}, rows:[
-    {type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},{type:"Cavalry", lvl:4, tgt:22},
-    {type:"Infantry", lvl:6, tgt:22},{type:"Infantry", lvl:5, tgt:22},{type:"Infantry", lvl:5, tgt:22},{type:"Infantry", lvl:5, tgt:22},{type:"Infantry", lvl:5, tgt:22},{type:"Infantry", lvl:5, tgt:22},
-    {type:"Archer", lvl:6, tgt:22},{type:"Archer", lvl:6, tgt:22},{type:"Archer", lvl:6, tgt:22},{type:"Archer", lvl:9, tgt:22},{type:"Archer", lvl:6, tgt:22},{type:"Archer", lvl:6, tgt:22}
+  charms:{ targetLvl:0, have:{guides:0,designs:0}, rows:[
+    {type:"Cavalry", lvl:0, tgt:0},{type:"Cavalry", lvl:0, tgt:0},{type:"Cavalry", lvl:0, tgt:0},{type:"Cavalry", lvl:0, tgt:0},{type:"Cavalry", lvl:0, tgt:0},{type:"Cavalry", lvl:0, tgt:0},
+    {type:"Infantry", lvl:0, tgt:0},{type:"Infantry", lvl:0, tgt:0},{type:"Infantry", lvl:0, tgt:0},{type:"Infantry", lvl:0, tgt:0},{type:"Infantry", lvl:0, tgt:0},{type:"Infantry", lvl:0, tgt:0},
+    {type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0}
   ]},
-  widgets:{ have:0, rows:[ {hero:"Yang", lvl:2}, {hero:"Amadeus", lvl:2}, {hero:"Petra", lvl:2} ] },
-  farm:[
-    {k:"Town Center", v:"TC 22–29 (confirm)"},
-    {k:"Storehouse level", v:"— (keep LOW while feeding)"},
-    {k:"VIP", v:"— (target VIP 6 for extra march)"},
-    {k:"Troop count", v:"— (minimal — only for gathering)"},
-    {k:"Alliance", v:"— (sister/NAP, NOT main's alliance)"},
-    {k:"Same kingdom as main?", v:"— (required)"}
-  ],
-  farmChecks:[
-    {t:"Teleport farm next to main", d:false},
-    {t:"Open all unprotected resource packs in farm bag", d:false},
-    {t:"Empty troops — send gathering / garrison a shielded ally", d:false},
-    {t:"Switch to main → attack farm until resources are home", d:false},
-    {t:"Switch back → heal any hurt farm troops", d:false},
-    {t:"(Weekly) Bear Hunt rallies + Eternity's Reach tokens", d:false}
-  ],
+  widgets:{ have:0, rows:[] },
+  farm:[],
+  farmChecks:[],
   buildings:[
     {n:"Town Center",    stepIdx:0, note:"METRONOME — raise one tier to uncap the rest", d:false},
     {n:"Range",          stepIdx:0, note:"Archer line — your main combat", d:false},
@@ -1021,14 +1078,19 @@ function importData(file){
 }
 
 /* ---------- state ---------- */
+// old base-tier nodes superseded by the Truegold tier — drop these even if an old save still carries them
+const DEPRECATED_NODE_NAMES=new Set(["Arrows (Attack)","Vests (Defense)","Mauls (Attack)","Plating (Defense)","Lances (Attack)","Platecraft (Defense)","Legionaries (Rally)"]);
 function mergeSeed(data){
   const s=Object.assign(structuredClone(SEED),data||{});
   // for name-keyed lists, keep saved entries but add any new SEED entries (e.g. new masters) that the save predates
-  ["masters","resources"].forEach(key=>{
-    const seedList=SEED[key], savedList=data&&data[key];
+  const NAME_KEY={masters:"n",resources:"n",goldShards:"n",nodes:"name",infNodes:"name",cavNodes:"name"};
+  Object.keys(NAME_KEY).forEach(key=>{
+    const seedList=SEED[key], savedList=data&&data[key], nk=NAME_KEY[key];
     if(Array.isArray(seedList)&&Array.isArray(savedList)){
-      const have=new Set(savedList.map(x=>x.n));
-      s[key]=savedList.concat(seedList.filter(x=>!have.has(x.n)).map(x=>structuredClone(x)));
+      const have=new Set(savedList.map(x=>x[nk]));
+      let merged=savedList.concat(seedList.filter(x=>!have.has(x[nk])).map(x=>structuredClone(x)));
+      if(["nodes","infNodes","cavNodes"].includes(key)) merged=merged.filter(x=>!DEPRECATED_NODE_NAMES.has(x[nk]));
+      s[key]=merged;
     }
   });
   return s;
@@ -1099,23 +1161,25 @@ const NODE_RES={
   legionaries:{gold:[23000,28000,34000,41000,51000,62000,76000,93000,110000,130000,160000,200000],res:[1000000,1300000,1600000,1900000,2300000,2900000,3500000,4300000,5400000,6500000,7800000,9600000],stone:[210000,260000,320000,390000,470000,580000,710000,860000,1000000,1300000,1500000,1900000],iron:[54000,66000,81000,97000,110000,140000,170000,210000,270000,320000,390000,480000],days:[1.21,1.5,1.83,2.17,2.67,3.29,4.0,4.88,6.08,7.33,8.79,10.88]},
   archers:_ulk, infantry:_ulk, cavalry:_ulk
 };
-function nodeResKey(nd){ return Object.keys(NODE_RES).find(x=>nd.name.toLowerCase().includes(x)); }
+// unlock ladders (archers/infantry/cavalry) only apply to the "(unlock)" node — "Archer Healing" etc. must not match them
+function nodeResKey(nd){ const n=nd.name.toLowerCase(); return Object.keys(NODE_RES).find(x=>n.includes(x) && (NODE_RES[x]!==_ulk || /unlock/.test(n))); }
 function nodeResDays(list){ let days=0; (list||[]).forEach(nd=>{ const k=nodeResKey(nd); if(!k) return; const R=NODE_RES[k]; const mx=nd.max||12;
   for(let i=Math.max(0,nd.cur);i<mx;i++){ if(R.days[i]!=null) days+=R.days[i]; } }); return days; }
 function fmtBig(n){ n=Math.round(n); if(n>=1e9) return (n/1e9).toFixed(2).replace(/\.?0+$/,"")+"B"; if(n>=1e6) return (n/1e6).toFixed(1).replace(/\.0$/,"")+"M"; if(n>=1e3) return Number(n).toLocaleString("en-US"); return String(n); }
-function paintT11(){
-  if(!document.getElementById("t11Dust")) return;
+function paintPhaseSummary(prefix,nodeList,dustTotal){
+  if(!document.getElementById(prefix+"Dust")) return;
   let gold=0,res=0,stone=0,iron=0,days=0;
-  state.nodes.forEach(nd=>{ const k=nodeResKey(nd); if(!k) return; const R=NODE_RES[k]; const mx=nd.max||12;
+  (nodeList||[]).forEach(nd=>{ const k=nodeResKey(nd); if(!k) return; const R=NODE_RES[k]; const mx=nd.max||12;
     for(let i=Math.max(0,nd.cur);i<mx;i++){ if(R.gold[i]!=null){ gold+=R.gold[i]; res+=R.res[i]; stone+=R.stone[i]; iron+=R.iron[i]; days+=R.days[i]; } } });
-  document.getElementById("t11Dust").textContent=fmt(computeTarget());
-  document.getElementById("t11Gold").textContent=fmtBig(gold);
-  document.getElementById("t11Bread").textContent=fmtBig(res);
-  document.getElementById("t11Wood").textContent=fmtBig(res);
-  document.getElementById("t11Stone").textContent=fmtBig(stone);
-  document.getElementById("t11Iron").textContent=fmtBig(iron);
-  document.getElementById("t11Time").textContent="~"+Math.round(days)+"d";
+  document.getElementById(prefix+"Dust").textContent=fmt(Math.round(dustTotal));
+  document.getElementById(prefix+"Gold").textContent=fmtBig(gold);
+  document.getElementById(prefix+"Bread").textContent=fmtBig(res);
+  document.getElementById(prefix+"Wood").textContent=fmtBig(res);
+  document.getElementById(prefix+"Stone").textContent=fmtBig(stone);
+  document.getElementById(prefix+"Iron").textContent=fmtBig(iron);
+  document.getElementById(prefix+"Time").textContent="~"+Math.round(days)+"d";
 }
+function paintT11(){ paintPhaseSummary("t11",state.nodes,computeTarget()); }
 function paintGate(){
   const tgt=Math.max(1,computeTarget());
   const cur=num(state.dust.current);
@@ -1134,30 +1198,34 @@ function paintGate(){
     : `Gold covers the 1M unlock path.`;
   paintT11();
 }
+function renderNodeRow(host,nd,onPaint){
+  const mx=nd.max||12;
+  const d=document.createElement("div"); d.className="node";
+  const pct=mx>0?Math.min(100,nd.cur/mx*100):0;
+  const done=nd.cur>=mx;
+  d.innerHTML=`<div class="nname">${esc(nd.name)}</div>
+    <div class="lvl"><input inputmode="numeric" value="${nd.cur}" aria-label="${esc(nd.name)} level"><span class="max">/ ${mx}</span></div>
+    <div class="segbar"><div class="fillbar ${done?'done':''}" style="width:${pct}%"></div></div>
+    <div class="cost ${done?'done':''}">${done?'DONE ✓':fmt(nodeRem(nd))+' dust'}</div>`;
+  const inp=d.querySelector("input"), bar=d.querySelector(".fillbar"), cost=d.querySelector(".cost");
+  inp.oninput=()=>{
+    const v=Math.max(0,Math.min(mx,num(inp.value)));
+    nd.cur=v;
+    const p=mx>0?Math.min(100,v/mx*100):0, dn=v>=mx;
+    bar.style.width=p+"%"; bar.classList.toggle("done",dn);
+    cost.classList.toggle("done",dn);
+    cost.textContent = dn?'DONE ✓':fmt(nodeRem(nd))+' dust';
+    onPaint(); scheduleSave();
+  };
+  host.appendChild(d);
+}
 function buildGate(){
   const dc=document.getElementById("dustCur"), gc=document.getElementById("goldCur");
   dc.value=state.dust.current; gc.value=state.dust.gold;
   dc.oninput=()=>{ state.dust.current=num(dc.value); paintGate(); scheduleSave(); };
   gc.oninput=()=>{ state.dust.gold=num(gc.value); paintGate(); scheduleSave(); };
   const host=document.getElementById("nodes"); host.innerHTML="";
-  state.nodes.forEach((nd)=>{
-    const mx=nd.max||12;
-    const d=document.createElement("div"); d.className="node";
-    const segs=Array.from({length:mx},(_,i)=>`<div class="seg ${i<nd.cur?'on':''}" data-i="${i}"></div>`).join("");
-    d.innerHTML=`<div class="nname">${nd.name}</div>
-      <div class="lvl"><input inputmode="numeric" value="${nd.cur}" aria-label="${nd.name} level"><span class="max">/ ${mx}</span></div>
-      <div class="segbar">${segs}</div>
-      <div class="cost">${nd.cur>=mx?'DONE ✓':fmt(nodeRem(nd))+' dust'}</div>`;
-    const inp=d.querySelector("input"), cost=d.querySelector(".cost");
-    inp.oninput=()=>{
-      let v=Math.max(0,Math.min(mx,num(inp.value)));
-      nd.cur=v;
-      d.querySelectorAll(".seg").forEach((s,i)=>s.classList.toggle("on",i<v));
-      cost.textContent = v>=mx?'DONE ✓':fmt(nodeRem(nd))+' dust';
-      paintGate(); scheduleSave();
-    };
-    host.appendChild(d);
-  });
+  state.nodes.forEach(nd=>renderNodeRow(host,nd,paintGate));
 }
 
 /* ---------- troop targets ---------- */
@@ -1542,7 +1610,7 @@ function buildCharms(){
   [["charmGuidesHave","guides"],["charmDesignsHave","designs"]].forEach(([id,k])=>{
     const el=document.getElementById(id); if(el){ el.value=c.have[k]||0; el.oninput=()=>{ c.have[k]=num(el.value); paintCharms(); scheduleSave(); }; }
   });
-  const lvlOpts=(sel)=>Array.from({length:23},(_,i)=>`<option value="${i}"${i===sel?' selected':''}>Lv ${i}</option>`).join("");
+  const lvlOpts=(sel,short)=>Array.from({length:23},(_,i)=>`<option value="${i}"${i===sel?' selected':''}>${short?'':'Lv '}${i}</option>`).join("");
   const setAll=document.getElementById("charmSetAll");
   if(setAll){ setAll.innerHTML=lvlOpts(c.targetLvl);
     setAll.onchange=()=>{ c.targetLvl=parseInt(setAll.value,10); scheduleSave(); };
@@ -1558,9 +1626,10 @@ function buildCharms(){
       const rem=charmRem(r.lvl,r.tgt); const done=r.lvl>=r.tgt;
       const cell=document.createElement("div"); cell.style.cssText="background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px";
       cell.innerHTML=`<div style="display:flex;align-items:center;gap:4px">
-          <select class="sigsel curSel" aria-label="${type} charm ${ci+1} current level" style="flex:1;min-width:0;padding-right:22px">${lvlOpts(r.lvl)}</select>
+          <span class="mono" style="color:var(--faint);font-size:11px" aria-hidden="true">Lv</span>
+          <select class="sigsel charmsel curSel" aria-label="${type} charm ${ci+1} current level">${lvlOpts(r.lvl,true)}</select>
           <span style="color:var(--faint);font-size:11px" aria-hidden="true">→</span>
-          <select class="sigsel tgtSel" aria-label="${type} charm ${ci+1} target level" style="flex:1;min-width:0;padding-right:22px">${lvlOpts(r.tgt)}</select>
+          <select class="sigsel charmsel tgtSel" aria-label="${type} charm ${ci+1} target level">${lvlOpts(r.tgt,true)}</select>
         </div>
         <div class="lvlbar" style="max-width:none;margin-top:6px"><div class="lf" style="width:${r.tgt>0?Math.min(100,r.lvl/r.tgt*100):100}%;background:${done?'var(--green)':'linear-gradient(90deg,var(--gold-2),var(--gold))'}"></div></div>
         <div class="mono" style="font-size:11px;color:var(--muted);margin-top:4px">${done?'✓ at target':'G '+fmtBig(rem.g)+' · D '+fmtBig(rem.d)}</div>`;
@@ -1702,54 +1771,24 @@ function buildGovGear(){
 function paintInf(){
   const t=(state.infNodes||[]).reduce((s,n)=>s+nodeRem(n),0);
   const el=document.getElementById("infTgtVal"); if(el) el.textContent=fmt(Math.round(t));
+  paintPhaseSummary("infT11",state.infNodes,t);
 }
 function buildInfantry(){
   if(!Array.isArray(state.infNodes)) return;
   const host=document.getElementById("infNodes"); if(!host) return; host.innerHTML="";
-  state.infNodes.forEach((nd)=>{
-    const mx=nd.max||12;
-    const d=document.createElement("div"); d.className="node";
-    const segs=Array.from({length:mx},(_,i)=>`<div class="seg ${i<nd.cur?'on':''}" data-i="${i}"></div>`).join("");
-    d.innerHTML=`<div class="nname">${nd.name}</div>
-      <div class="lvl"><input inputmode="numeric" value="${nd.cur}" aria-label="${nd.name} level"><span class="max">/ ${mx}</span></div>
-      <div class="segbar">${segs}</div>
-      <div class="cost">${nd.cur>=mx?'DONE ✓':fmt(nodeRem(nd))+' dust'}</div>`;
-    const inp=d.querySelector("input"), cost=d.querySelector(".cost");
-    inp.oninput=()=>{
-      let v=Math.max(0,Math.min(mx,num(inp.value))); nd.cur=v;
-      d.querySelectorAll(".seg").forEach((s,i)=>s.classList.toggle("on",i<v));
-      cost.textContent = v>=mx?'DONE ✓':fmt(nodeRem(nd))+' dust';
-      paintInf(); scheduleSave();
-    };
-    host.appendChild(d);
-  });
+  state.infNodes.forEach(nd=>renderNodeRow(host,nd,paintInf));
   paintInf();
 }
 /* ---------- cavalry (Phase 3) ---------- */
 function paintCav(){
   const t=(state.cavNodes||[]).reduce((s,n)=>s+nodeRem(n),0);
   const el=document.getElementById("cavTgtVal"); if(el) el.textContent=fmt(Math.round(t));
+  paintPhaseSummary("cavT11",state.cavNodes,t);
 }
 function buildCavalry(){
   if(!Array.isArray(state.cavNodes)) return;
   const host=document.getElementById("cavNodes"); if(!host) return; host.innerHTML="";
-  state.cavNodes.forEach((nd)=>{
-    const mx=nd.max||12;
-    const d=document.createElement("div"); d.className="node";
-    const segs=Array.from({length:mx},(_,i)=>`<div class="seg ${i<nd.cur?'on':''}" data-i="${i}"></div>`).join("");
-    d.innerHTML=`<div class="nname">${nd.name}</div>
-      <div class="lvl"><input inputmode="numeric" value="${nd.cur}" aria-label="${nd.name} level"><span class="max">/ ${mx}</span></div>
-      <div class="segbar">${segs}</div>
-      <div class="cost">${nd.cur>=mx?'DONE ✓':fmt(nodeRem(nd))+' dust'}</div>`;
-    const inp=d.querySelector("input"), cost=d.querySelector(".cost");
-    inp.oninput=()=>{
-      let v=Math.max(0,Math.min(mx,num(inp.value))); nd.cur=v;
-      d.querySelectorAll(".seg").forEach((s,i)=>s.classList.toggle("on",i<v));
-      cost.textContent = v>=mx?'DONE ✓':fmt(nodeRem(nd))+' dust';
-      paintCav(); scheduleSave();
-    };
-    host.appendChild(d);
-  });
+  state.cavNodes.forEach(nd=>renderNodeRow(host,nd,paintCav));
   paintCav();
 }
 
@@ -1786,6 +1825,14 @@ function pillarPaint(row,p){
   fill.style.background=col;
   bench.style.left=(p.b/Math.max(p.v,p.b)*100).toFixed(1)+"%";
 }
+function sizeToContent(el){ el.style.width=(Math.max(3,el.value.length)+1)+"ch"; }
+// show short numbers (133.2M) until tapped, then the full number for editing
+function wirePillarField(el,row,p,key){
+  sizeToContent(el);
+  el.addEventListener("focus",()=>{ el.value=fmt(p[key]); sizeToContent(el); el.select(); });
+  el.addEventListener("blur",()=>{ el.value=fmtBig(p[key]); sizeToContent(el); });
+  el.addEventListener("input",()=>{ p[key]=num(el.value); sizeToContent(el); pillarPaint(row,p); scheduleSave(); });
+}
 function buildPillars(){
   const host=document.getElementById("pillars"); host.innerHTML="";
   state.pillars.forEach(p=>{
@@ -1793,14 +1840,15 @@ function buildPillars(){
     row.innerHTML=`<div class="pname">${esc(p.name)}</div>
       <div class="pbar"><div class="pfill"></div><div class="bench"></div></div>
       <div class="pmeta">
-        <input class="mono" aria-label="${esc(p.name)} power" value="${fmt(p.v)}">
-        <span class="pv">/ <input class="mono benchin" aria-label="${esc(p.name)} benchmark" value="${fmt(p.b)}"></span>
+        <input class="mono vin" aria-label="${esc(p.name)} power" value="${fmtBig(p.v)}">
+        <span class="sep" aria-hidden="true">/</span>
+        <input class="mono benchin" aria-label="${esc(p.name)} benchmark" value="${fmtBig(p.b)}">
       </div>
-      <span class="grade g-${esc(p.g)}" title="In-game grade">${esc(p.g)}</span>`;
+      <span class="grade g-${esc(p.g)}" title="In-game grade">${esc(p.g)||"–"}</span>`;
     pillarPaint(row,p);
-    const [inp,binp]=row.querySelectorAll("input");
-    inp.oninput=()=>{ p.v=num(inp.value); pillarPaint(row,p); scheduleSave(); };
-    binp.oninput=()=>{ p.b=num(binp.value); pillarPaint(row,p); scheduleSave(); };
+    const [inp,binp]=row.querySelectorAll(".pmeta input");
+    wirePillarField(inp,row,p,"v");
+    wirePillarField(binp,row,p,"b");
     host.appendChild(row);
   });
 }
@@ -1853,6 +1901,42 @@ function buildRes(){
   document.getElementById("addRes").onclick=()=>{
     state.resources.push({n:"New material",h:""}); buildRes(); scheduleSave();
     const inputs=b.querySelectorAll(".res-row .resname"); const first=inputs[inputs.length-1]; if(first){first.focus();first.select();} };
+}
+
+/* ---------- gold hero shards ---------- */
+function paintGoldShardTotal(){
+  const el=document.getElementById("goldShardTotal"); if(!el) return;
+  let totNeed=0, totHave=0, totShort=0;
+  (state.goldShards||[]).forEach(r=>{ totNeed+=num(r.need); totHave+=num(r.have); totShort+=Math.max(0,num(r.need)-num(r.have)); });
+  el.innerHTML=`<b style="color:var(--text)">Total:</b> ${fmt(totNeed)} needed · ${fmt(totHave)} have · <b style="color:${totShort>0?'var(--red)':'var(--green)'}">${fmt(totShort)} short</b>`;
+}
+function buildGoldShards(){
+  if(!Array.isArray(state.goldShards)) state.goldShards=structuredClone(SEED.goldShards);
+  const b=document.getElementById("goldShardBody"); if(!b) return;
+  b.innerHTML="";
+  state.goldShards.forEach(r=>{
+    const need=num(r.need), have=num(r.have), short=Math.max(0,need-have);
+    const hn=esc(r.n||'hero');
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td><input class="gsname" aria-label="Hero name" value="${esc(r.n||'')}"></td>
+      <td><input class="tnum gsf" data-f="need" aria-label="${hn} shards needed" value="${need}" inputmode="numeric" style="width:76px"></td>
+      <td><input class="tnum gsf" data-f="have" aria-label="${hn} shards in hand" value="${have}" inputmode="numeric" style="width:76px"></td>
+      <td class="mono" style="color:${short>0?'var(--red)':'var(--green)'}">${fmt(short)}</td>
+      <td class="delcell"><button class="del" title="Remove" aria-label="Remove ${hn}">×</button></td>`;
+    const shortCell=tr.children[3];
+    const ni=tr.querySelector(".gsname");
+    ni.oninput=()=>{ r.n=ni.value; scheduleSave(); };
+    tr.querySelectorAll(".gsf").forEach(inp=>{
+      inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); const s=Math.max(0,num(r.need)-num(r.have));
+        shortCell.textContent=fmt(s); shortCell.style.color=s>0?"var(--red)":"var(--green)"; paintGoldShardTotal(); scheduleSave(); };
+    });
+    tr.querySelector(".del").onclick=()=>{ const i=state.goldShards.indexOf(r); if(i>-1){ state.goldShards.splice(i,1); buildGoldShards(); scheduleSave(); } };
+    b.appendChild(tr);
+  });
+  paintGoldShardTotal();
+  const add=document.getElementById("addGoldShard");
+  if(add) add.onclick=()=>{ state.goldShards.push({n:"New hero",need:0,have:0}); buildGoldShards(); scheduleSave();
+    const ins=b.querySelectorAll(".gsname"); const last=ins[ins.length-1]; if(last){ last.focus(); last.select(); } };
 }
 
 /* ---------- masters ---------- */
@@ -2188,7 +2272,7 @@ function renderAll(){
   buildToday(); buildTroops(); buildId(); buildGate(); paintGate(); buildInfantry(); buildCavalry(); buildForecast(); buildGovGear();
   buildHeroGear(); buildCharms(); buildWidgets();
   buildChecks("trackNow",state.trackNow); buildChecks("trackFarm",state.trackFarm);
-  buildPillars(); buildCombat(); buildRes(); buildMast();
+  buildPillars(); buildCombat(); buildRes(); buildMast(); buildGoldShards();
   buildTGbudget(); buildBuildings();
   buildMystic(); buildEvents();
   buildNotes(); buildSync();
