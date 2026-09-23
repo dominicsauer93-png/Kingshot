@@ -963,8 +963,8 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 21073,
-      "threads": 128,
+      "satin": 22311,
+      "threads": 14,
       "vision": 470
     },
     "pieces": [
