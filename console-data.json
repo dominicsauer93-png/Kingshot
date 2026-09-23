@@ -1468,7 +1468,7 @@
       "food": 0,
       "manuals": 0,
       "potions": 0,
-      "tmCommon": 0,
+      "tmCommon": 16,
       "tmAdv": 0
     },
     "rows": [
