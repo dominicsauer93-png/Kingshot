@@ -10,67 +10,10 @@
   },
   "dust": {
     "current": 1695,
-    "target": 2236,
+    "target": 16085,
     "gold": 1000000
   },
   "nodes": [
-    {
-      "name": "Arrows (Attack)",
-      "cur": 12,
-      "max": 12,
-      "costs": [
-        54,
-        66,
-        81,
-        97,
-        118,
-        145,
-        178,
-        216,
-        270,
-        324,
-        388,
-        480
-      ]
-    },
-    {
-      "name": "Legionaries (Rally)",
-      "cur": 12,
-      "max": 12,
-      "costs": [
-        83,
-        102,
-        125,
-        150,
-        184,
-        225,
-        276,
-        334,
-        418,
-        502,
-        602,
-        744
-      ]
-    },
-    {
-      "name": "Vests (Defense)",
-      "cur": 12,
-      "max": 12,
-      "costs": [
-        54,
-        66,
-        81,
-        97,
-        118,
-        145,
-        178,
-        216,
-        270,
-        324,
-        388,
-        480
-      ]
-    },
     {
       "name": "Truegold Archers (unlock)",
       "cur": 0,
@@ -78,12 +21,40 @@
       "costs": [
         2236
       ]
-    }
-  ],
-  "infNodes": [
+    },
     {
-      "name": "Mauls (Attack)",
-      "cur": 7,
+      "name": "Truegold Bracers (Health)",
+      "cur": 8,
+      "max": 8,
+      "costs": [
+        40,
+        56,
+        74,
+        102,
+        136,
+        184,
+        248,
+        334
+      ]
+    },
+    {
+      "name": "Truegold Bows (Lethality)",
+      "cur": 8,
+      "max": 8,
+      "costs": [
+        40,
+        56,
+        74,
+        102,
+        136,
+        184,
+        248,
+        334
+      ]
+    },
+    {
+      "name": "Truegold Vests (Defense)",
+      "cur": 12,
       "max": 12,
       "costs": [
         54,
@@ -101,27 +72,8 @@
       ]
     },
     {
-      "name": "Plating (Defense)",
-      "cur": 7,
-      "max": 12,
-      "costs": [
-        54,
-        66,
-        81,
-        97,
-        118,
-        145,
-        178,
-        216,
-        270,
-        324,
-        388,
-        480
-      ]
-    },
-    {
-      "name": "Legionaries (Rally)",
-      "cur": 6,
+      "name": "Truegold Legionaries (Rally Capacity)",
+      "cur": 12,
       "max": 12,
       "costs": [
         83,
@@ -138,6 +90,78 @@
         744
       ]
     },
+    {
+      "name": "Truegold Arrows (Attack)",
+      "cur": 12,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Truegold Archer Healing",
+      "cur": 0,
+      "max": 10,
+      "costs": [
+        102,
+        137,
+        188,
+        255,
+        341,
+        459,
+        612,
+        836,
+        1100,
+        1500
+      ]
+    },
+    {
+      "name": "Truegold Archer Aid",
+      "cur": 0,
+      "max": 10,
+      "costs": [
+        51,
+        68,
+        94,
+        127,
+        170,
+        229,
+        306,
+        418,
+        561,
+        765
+      ]
+    },
+    {
+      "name": "Truegold Archer Training",
+      "cur": 0,
+      "max": 10,
+      "costs": [
+        102,
+        137,
+        188,
+        255,
+        341,
+        459,
+        612,
+        836,
+        1100,
+        1500
+      ]
+    }
+  ],
+  "infNodes": [
     {
       "name": "Truegold Infantry (unlock)",
       "cur": 0,
@@ -145,12 +169,40 @@
       "costs": [
         2236
       ]
-    }
-  ],
-  "cavNodes": [
+    },
     {
-      "name": "Lances (Attack)",
-      "cur": 12,
+      "name": "Truegold Shields (Health)",
+      "cur": 8,
+      "max": 8,
+      "costs": [
+        40,
+        56,
+        74,
+        102,
+        136,
+        184,
+        248,
+        334
+      ]
+    },
+    {
+      "name": "Truegold Blades (Lethality)",
+      "cur": 8,
+      "max": 8,
+      "costs": [
+        40,
+        56,
+        74,
+        102,
+        136,
+        184,
+        248,
+        334
+      ]
+    },
+    {
+      "name": "Truegold Plating (Defense)",
+      "cur": 6,
       "max": 12,
       "costs": [
         54,
@@ -168,27 +220,8 @@
       ]
     },
     {
-      "name": "Platecraft (Defense)",
-      "cur": 12,
-      "max": 12,
-      "costs": [
-        54,
-        66,
-        81,
-        97,
-        118,
-        145,
-        178,
-        216,
-        270,
-        324,
-        388,
-        480
-      ]
-    },
-    {
-      "name": "Legionaries (Rally)",
-      "cur": 12,
+      "name": "Truegold Legionaries (Rally Capacity)",
+      "cur": 5,
       "max": 12,
       "costs": [
         83,
@@ -206,11 +239,221 @@
       ]
     },
     {
+      "name": "Truegold Mauls (Attack)",
+      "cur": 7,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Truegold Infantry Healing",
+      "cur": 0,
+      "max": 10,
+      "costs": [
+        102,
+        137,
+        188,
+        255,
+        341,
+        459,
+        612,
+        836,
+        1100,
+        1500
+      ]
+    },
+    {
+      "name": "Truegold Infantry Aid",
+      "cur": 0,
+      "max": 10,
+      "costs": [
+        51,
+        68,
+        94,
+        127,
+        170,
+        229,
+        306,
+        418,
+        561,
+        765
+      ]
+    },
+    {
+      "name": "Truegold Infantry Training",
+      "cur": 0,
+      "max": 10,
+      "costs": [
+        102,
+        137,
+        188,
+        255,
+        341,
+        459,
+        612,
+        836,
+        1100,
+        1500
+      ]
+    }
+  ],
+  "cavNodes": [
+    {
       "name": "Truegold Cavalry (unlock)",
       "cur": 0,
       "max": 1,
       "costs": [
         2236
+      ]
+    },
+    {
+      "name": "Truegold Charge (Lethality)",
+      "cur": 8,
+      "max": 8,
+      "costs": [
+        40,
+        56,
+        74,
+        102,
+        136,
+        184,
+        248,
+        334
+      ]
+    },
+    {
+      "name": "Truegold Farriery (Health)",
+      "cur": 8,
+      "max": 8,
+      "costs": [
+        40,
+        56,
+        74,
+        102,
+        136,
+        184,
+        248,
+        334
+      ]
+    },
+    {
+      "name": "Truegold Lances (Attack)",
+      "cur": 12,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Truegold Legionaries (Rally Capacity)",
+      "cur": 5,
+      "max": 12,
+      "costs": [
+        83,
+        102,
+        125,
+        150,
+        184,
+        225,
+        276,
+        334,
+        418,
+        502,
+        602,
+        744
+      ]
+    },
+    {
+      "name": "Truegold Platecraft (Defense)",
+      "cur": 12,
+      "max": 12,
+      "costs": [
+        54,
+        66,
+        81,
+        97,
+        118,
+        145,
+        178,
+        216,
+        270,
+        324,
+        388,
+        480
+      ]
+    },
+    {
+      "name": "Truegold Cavalry Healing",
+      "cur": 0,
+      "max": 10,
+      "costs": [
+        102,
+        137,
+        188,
+        255,
+        341,
+        459,
+        612,
+        836,
+        1100,
+        1500
+      ]
+    },
+    {
+      "name": "Truegold Cavalry Aid",
+      "cur": 0,
+      "max": 10,
+      "costs": [
+        51,
+        68,
+        94,
+        127,
+        170,
+        229,
+        306,
+        418,
+        561,
+        765
+      ]
+    },
+    {
+      "name": "Truegold Cavalry Training",
+      "cur": 0,
+      "max": 10,
+      "costs": [
+        102,
+        137,
+        188,
+        255,
+        341,
+        459,
+        612,
+        836,
+        1100,
+        1500
       ]
     }
   ],
@@ -374,6 +617,98 @@
     {
       "n": "Research speedup (hrs)",
       "h": "46.5"
+    }
+  ],
+  "goldShards": [
+    {
+      "n": "Saul",
+      "need": 900,
+      "have": 0
+    },
+    {
+      "n": "Amadeus",
+      "need": 940,
+      "have": 0
+    },
+    {
+      "n": "Charles",
+      "need": 463,
+      "have": 0
+    },
+    {
+      "n": "Hilde",
+      "need": 740,
+      "have": 0
+    },
+    {
+      "n": "Marlin",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Zoe",
+      "need": 600,
+      "have": 0
+    },
+    {
+      "n": "Jaeger",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Eric",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Rosa",
+      "need": 500,
+      "have": 0
+    },
+    {
+      "n": "Petra",
+      "need": 500,
+      "have": 0
+    },
+    {
+      "n": "Margot",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Alcar",
+      "need": 600,
+      "have": 0
+    },
+    {
+      "n": "Thrud",
+      "need": 800,
+      "have": 0
+    },
+    {
+      "n": "Triton",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Sophia",
+      "need": 100,
+      "have": 0
+    },
+    {
+      "n": "Ava",
+      "need": 940,
+      "have": 0
+    },
+    {
+      "n": "Long Fei",
+      "need": 400,
+      "have": 0
+    },
+    {
+      "n": "Yang",
+      "need": 300,
+      "have": 0
     }
   ],
   "masters": [
