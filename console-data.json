@@ -1015,7 +1015,7 @@
     "routine": [
       {
         "t": "Intel Missions → collect Hunting Arrows",
-        "d": false
+        "d": true
       },
       {
         "t": "Gathering marches all out",
@@ -1031,7 +1031,7 @@
       },
       {
         "t": "Claim house / suppression gold",
-        "d": false
+        "d": true
       }
     ]
   },
