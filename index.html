@@ -567,7 +567,7 @@
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Troop Plan</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
       <h3>Troop targets</h3>
-      <p class="sub">Enter current count and target — bars fill toward the goal.</p>
+      <p class="sub">Enter current count and target — bars fill toward the goal. Shorthand works: <b>500k</b>, <b>1.5m</b>, <b>2b</b> (or "million", "billion").</p>
       <div id="troopBody"></div>
     </div>
   </section>
@@ -1328,7 +1328,11 @@ function mergeSeed(data){
 }
 let state=structuredClone(SEED);
 const fmt=n=>Number(n).toLocaleString("en-US");
-const num=v=>{ const n=parseFloat(String(v).replace(/[^0-9.\-]/g,"")); return isNaN(n)?0:n; };
+// accepts shorthand: 1.5k / 1.5 thousand = 1,500 · 1m / 1 mil / 1 million = 1,000,000 · 2b / 2bn / 2 billion = 2,000,000,000
+const NUM_UNITS={k:1e3,thousand:1e3,m:1e6,mil:1e6,million:1e6,b:1e9,bn:1e9,billion:1e9};
+const num=v=>{ const str=String(v).trim(), m=str.match(/^(-?[\d.,]+)\s*(k|thousand|m|mil|million|b|bn|billion)$/i);
+  if(m){ const b=parseFloat(m[1].replace(/,/g,"")); return isNaN(b)?0:Math.round(b*NUM_UNITS[m[2].toLowerCase()]); }
+  const n=parseFloat(str.replace(/[^0-9.\-]/g,"")); return isNaN(n)?0:n; };
 function fmtInputs(){
   document.querySelectorAll("input").forEach(el=>{
     if(el===document.activeElement || el.type==="date" || el.type==="password" || el.type==="checkbox") return;
@@ -1476,6 +1480,9 @@ function buildTroops(){
       fill.style.background=(num(t.cur)>=num(t.tgt)&&num(t.tgt)>0)?"linear-gradient(90deg,#3e9e63,var(--green))":""; };
     ci.oninput=()=>{ t.cur=num(ci.value); state.troopCounts[k]=t; repaint(); scheduleSave(); };
     ti.oninput=()=>{ t.tgt=num(ti.value); state.troopCounts[k]=t; repaint(); scheduleSave(); };
+    // show the full number once you leave the box (e.g. "1.5m" → 1,500,000)
+    ci.addEventListener("blur",()=>{ ci.value=fmt(t.cur); });
+    ti.addEventListener("blur",()=>{ ti.value=fmt(t.tgt); });
     host.appendChild(row);
   });
 }
