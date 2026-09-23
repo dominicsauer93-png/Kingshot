@@ -1037,7 +1037,8 @@
     "mastOpen": {
       "Aena": true,
       "Isnor": false,
-      "Pan": true
+      "Pan": true,
+      "Valora": true
     },
     "charmOpen": {
       "Archer": false,
