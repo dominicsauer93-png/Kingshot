@@ -955,7 +955,7 @@
     }
   ],
   "tg": {
-    "have": 316,
+    "have": 400,
     "need": 5991,
     "ttgHave": 6,
     "ttgNeed": 591
@@ -1031,7 +1031,7 @@
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
-      "T11 Unlocks▾": false
+      "T11 Unlocks▾": true
     },
     "density": "compact",
     "mastOpen": {
