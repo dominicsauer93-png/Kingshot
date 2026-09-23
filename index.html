@@ -307,6 +307,51 @@
     .mhead{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t d" "l c";row-gap:6px}
     .mhead .mtoggle{grid-area:t} .mhead .mlvl{grid-area:l;padding-left:8px} .mhead .mchip{grid-area:c;justify-self:end} .mhead .del{grid-area:d}
   }
+  .restiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.restiles{grid-template-columns:1fr}}
+  .restile{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .restile .label{margin-bottom:6px}
+  .rt-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .rt-row input{width:110px;font-family:var(--f-mono);font-weight:700;font-size:16px;color:var(--gold);background:var(--field);border:1px solid var(--field-line);border-radius:8px;padding:6px 8px}
+  .rt-of{font-size:13px;color:var(--muted)} .rt-of b{color:var(--text)}
+  .rt-short{font-size:12px;margin-top:6px}
+  .howget{margin:14px 0;background:rgba(0,0,0,.18);border:1px dashed var(--field-line);border-radius:11px;padding:0 14px}
+  .howget summary{cursor:pointer;list-style:none;padding:11px 0;font-weight:600;font-size:13.5px;color:var(--gold);display:flex;align-items:center;gap:8px}
+  .howget summary::-webkit-details-marker{display:none}
+  .howget summary::before{content:"▸";color:var(--muted);transition:transform .2s}
+  .howget[open] summary::before{transform:rotate(90deg)}
+  .howget ul{margin:0 0 8px;padding-left:18px;font-size:13.5px;line-height:1.6}
+  .howget b{color:var(--text)}
+  .howget .tip{font-size:12.5px;color:var(--muted);margin:0 0 12px;border-left:2px solid var(--gold-2);padding-left:10px}
+  .toolrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0 12px}
+  .grouplist{display:flex;flex-direction:column;gap:8px}
+  .grp{background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:12px}
+  .grp.open{border-color:var(--gold-deep)}
+  .grphead{width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;background:none;border:0;color:var(--text);cursor:pointer;text-align:left;padding:12px 14px;font:inherit;border-radius:12px}
+  .grphead:hover{background:rgba(232,181,74,.05)}
+  .grphead .mchev{color:var(--muted);transition:transform .2s}
+  .grp.open .grphead .mchev{transform:rotate(90deg)}
+  .grphead .gname{font-family:var(--f-disp);font-weight:700;font-size:15px;letter-spacing:.04em}
+  .grphead .gsub{font-size:12px;color:var(--muted);font-family:var(--f-mono)}
+  .grphead .minibar{margin-top:6px}
+  .grpbody{padding:0 14px 14px}
+  .herogrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px;margin-top:4px}
+  .hcard{position:relative;background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .hcard.done{border-color:rgba(108,198,138,.45)}
+  .hcard.ready{border-color:var(--gold-2)}
+  .hcard .htop{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+  .hcard .hname{flex:1;min-width:0;font-family:var(--f-disp);font-weight:700;font-size:14.5px;color:var(--text);background:transparent;border:0;border-bottom:1px dashed var(--line);padding:2px 0;border-radius:0}
+  .hcard .hname:focus{box-shadow:none}
+  .hcard .hin{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .hcard .hin label{display:flex;flex-direction:column;gap:3px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .hcard .hin input{width:100%;font-family:var(--f-mono);font-weight:700;font-size:13px;color:var(--gold);background:var(--field);border:1px solid var(--field-line);border-radius:7px;padding:5px 4px;text-align:center}
+  .hcard .hfoot{display:flex;justify-content:space-between;gap:8px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+  .hcard .minibar{margin-top:8px}
+  .pips{display:flex;gap:3px;margin-top:8px}
+  .pips span{flex:1;height:7px;border-radius:2px;background:#3A2F22}
+  .pips span.on{background:linear-gradient(90deg,var(--gold-2),var(--gold))}
+  .hcard.done .pips span.on,.hcard.done .minibar .mf{background:var(--green)}
+  .tagok{color:var(--green);font-weight:700} .tagbad{color:var(--red);font-weight:700} .tagready{color:var(--gold);font-weight:700}
   .charmgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
   @media(max-width:1060px){.charmgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
   @media(max-width:560px){.charmgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -640,26 +685,54 @@
   <section data-tab="Gear">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Charms</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
-      <div class="gate-inputs" style="margin:0 0 10px">
-        <div class="field"><label for="charmGuidesHave">Charm Guides in hand</label><input class="mono" id="charmGuidesHave" inputmode="numeric"></div>
-        <div class="field"><label for="charmDesignsHave">Charm Designs in hand</label><input class="mono" id="charmDesignsHave" inputmode="numeric"></div>
+      <div class="restiles">
+        <div class="restile">
+          <label class="label" for="charmGuidesHave">Charm Guides</label>
+          <div class="rt-row"><input class="mono" id="charmGuidesHave" inputmode="numeric" aria-label="Charm Guides in hand"><span class="rt-of mono" id="charmGuidesTxt"></span></div>
+          <div class="meter"><div class="fill" id="charmGuidesFill" style="width:0%"></div></div>
+          <div class="rt-short mono" id="charmGuidesShort"></div>
+        </div>
+        <div class="restile">
+          <label class="label" for="charmDesignsHave">Charm Designs</label>
+          <div class="rt-row"><input class="mono" id="charmDesignsHave" inputmode="numeric" aria-label="Charm Designs in hand"><span class="rt-of mono" id="charmDesignsTxt"></span></div>
+          <div class="meter"><div class="fill" id="charmDesignsFill" style="width:0%"></div></div>
+          <div class="rt-short mono" id="charmDesignsShort"></div>
+        </div>
       </div>
-      <div class="metric-row"><div class="metric-top"><span>Charm Guides</span><span id="charmGuidesTxt"></span></div><div class="meter"><div class="fill" id="charmGuidesFill" style="width:0%"></div></div></div>
-      <div class="metric-row"><div class="metric-top"><span>Charm Designs</span><span id="charmDesignsTxt"></span></div><div class="meter"><div class="fill" id="charmDesignsFill" style="width:0%"></div></div></div>
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0 4px">
+      <details class="howget"><summary>Where to get Charm Guides &amp; Designs</summary>
+        <ul>
+          <li><b>Events:</b> Eternity's Reach, Alliance Brawl, Merchant Empire, Kingdom of Power, Strongest Governor, Officer Project, Champagne Fair</li>
+          <li><b>Shops:</b> Swordland, Tidal, Kingdom of Power, Alliance</li>
+          <li><b>Other:</b> Crystal Cave, packs &amp; deals</li>
+        </ul>
+        <p class="tip">Designs are usually the bottleneck. Common advice: get every charm to Lv 3 first, then push your main troop's charms to Lv 5.</p>
+      </details>
+      <div class="toolrow">
         <label class="label" for="charmSetAll" style="margin:0">Set all targets to</label>
         <select id="charmSetAll" class="sigsel"></select>
         <button class="btn" id="charmApplyAll">Apply</button>
       </div>
-      <div id="charmBody"></div>
+      <div class="grouplist" id="charmBody"></div>
     </div>
   </section>
 
   <section data-tab="Gear">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Widgets</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
-      <div class="metric-row" style="margin-top:0"><div class="metric-top"><span>Widget mats</span><span id="widMeterTxt"></span></div><div class="meter"><div class="fill" id="widFill" style="width:0%"></div></div></div>
-      <div class="tbl"><table><thead><tr><th style="width:40%">Hero</th><th>Lvl</th><th>Have</th><th>To max</th><th><span class="sr-only">Remove</span></th></tr></thead><tbody id="widBody"></tbody></table></div>
+      <div class="restile wide">
+        <div class="label">Widgets in hand vs. needed to max every hero</div>
+        <div class="rt-row"><span class="rt-of mono" id="widMeterTxt"></span></div>
+        <div class="meter"><div class="fill" id="widFill" style="width:0%"></div></div>
+      </div>
+      <details class="howget"><summary>Where to get Widgets</summary>
+        <ul>
+          <li><b>Chests:</b> Custom Hero Widget Chest from Buccaneer Bounty and Champagne Fair</li>
+          <li><b>Shops:</b> Mystery Shop</li>
+          <li><b>Other:</b> Hall of Heroes (later generations), limited-time event rewards, packs &amp; deals</li>
+        </ul>
+        <p class="tip">Lv 0 → 10 costs 275 widgets (5, 10, 15 … 50 per level).</p>
+      </details>
+      <div class="herogrid" id="widBody"></div>
       <datalist id="widHeroList"></datalist>
       <button class="additem" id="addWid">+ add hero</button>
     </div>
@@ -668,8 +741,20 @@
   <section data-tab="Gear">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Gold Hero Shards</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
-      <div class="tbl"><table><thead><tr><th style="width:40%">Hero</th><th>Need</th><th>Have</th><th>Short</th><th><span class="sr-only">Remove</span></th></tr></thead><tbody id="goldShardBody"></tbody></table></div>
-      <div id="goldShardTotal" class="mono" style="margin-top:12px;font-size:13px;color:var(--muted)"></div>
+      <div class="restile wide">
+        <div class="label">All heroes</div>
+        <div class="rt-row"><span class="rt-of mono" id="goldShardTotal"></span></div>
+        <div class="meter"><div class="fill" id="goldShardFill" style="width:0%"></div></div>
+      </div>
+      <details class="howget"><summary>Where to get Gold (Mythic) Hero Shards</summary>
+        <ul>
+          <li><b>Modes:</b> Arena leaderboard, advanced Intel Missions, certain Conquest stages</li>
+          <li><b>Shops:</b> VIP Shop, Swordland Shop</li>
+          <li><b>Other:</b> hero recruitment, fishing &amp; special events, packs &amp; deals</li>
+        </ul>
+        <p class="tip">General Mythic shards can go to any Mythic hero — except Amadeus and Helga, who only take their own shards.</p>
+      </details>
+      <div class="herogrid" id="goldShardBody"></div>
       <button class="additem" id="addGoldShard">+ add hero</button>
     </div>
   </section>
@@ -1631,11 +1716,13 @@ const CHARM_COSTS=[
  [1030,2220],[1105,2400]
 ];
 function charmRem(cur,tgt){ let g=0,d=0; for(let i=Math.max(0,cur);i<Math.min(22,tgt);i++){ g+=CHARM_COSTS[i][0]; d+=CHARM_COSTS[i][1]; } return {g,d}; }
+const CHARM_TYPES=["Archer","Infantry","Cavalry"]; // main troop first
 function buildCharms(){
   if(!state.charms||!Array.isArray(state.charms.rows)) state.charms=structuredClone(SEED.charms);
   const c=state.charms; if(!c.have) c.have={guides:0,designs:0}; if(c.targetLvl==null) c.targetLvl=22;
   c.rows.forEach(r=>{ if(r.tgt==null) r.tgt=c.targetLvl; });
   if(!document.getElementById("charmBody")) return;
+  if(!state.ui.charmOpen) state.ui.charmOpen={Archer:true};
   [["charmGuidesHave","guides"],["charmDesignsHave","designs"]].forEach(([id,k])=>{
     const el=document.getElementById(id); if(el){ el.value=c.have[k]||0; el.oninput=()=>{ c.have[k]=num(el.value); paintCharms(); scheduleSave(); }; }
   });
@@ -1645,46 +1732,66 @@ function buildCharms(){
     setAll.onchange=()=>{ c.targetLvl=parseInt(setAll.value,10); scheduleSave(); };
     document.getElementById("charmApplyAll").onclick=()=>{ const v=parseInt(setAll.value,10); c.targetLvl=v; c.rows.forEach(r=>r.tgt=v); buildCharms(); scheduleSave(); }; }
   const host=document.getElementById("charmBody"); host.innerHTML="";
-  ["Cavalry","Infantry","Archer"].forEach(type=>{
+  CHARM_TYPES.forEach(type=>{
     const rows=c.rows.filter(r=>(r.type||"")===type); if(!rows.length) return;
-    const head=document.createElement("div"); head.className="today-label"; head.style.cssText="margin:12px 0 6px;color:var(--gold)";
-    head.textContent=type;
-    host.appendChild(head);
-    const grid=document.createElement("div"); grid.className="charmgrid";
+    const open=!!state.ui.charmOpen[type];
+    let g=0,d=0,lvSum=0,tgtSum=0,atT=0;
+    rows.forEach(r=>{ const rem=charmRem(r.lvl,r.tgt); g+=rem.g; d+=rem.d; lvSum+=r.lvl; tgtSum+=r.tgt; if(r.lvl>=r.tgt) atT++; });
+    const avg=(lvSum/rows.length).toFixed(1), pct=tgtSum>0?Math.min(100,lvSum/tgtSum*100):100;
+    const grp=document.createElement("div"); grp.className="grp"+(open?" open":"");
+    const bid="charm"+type;
+    grp.innerHTML=`<button class="grphead" aria-expanded="${open}" aria-controls="${bid}"><span class="mchev" aria-hidden="true">▸</span>
+        <span style="min-width:0"><span class="gname">${type}</span> <span class="gsub">· avg Lv ${avg} · ${atT}/${rows.length} at target</span>
+          <div class="minibar"><div class="mf" style="width:${pct.toFixed(1)}%;${atT===rows.length?'background:var(--green)':''}"></div></div></span>
+        <span class="gsub" style="text-align:right">${atT===rows.length?'<span class="tagok">✓ done</span>':'G '+fmtBig(g)+'<br>D '+fmtBig(d)}</span></button>
+      <div class="grpbody" id="${bid}" ${open?"":"hidden"}><div class="charmgrid"></div></div>`;
+    const grid=grp.querySelector(".charmgrid");
     rows.forEach((r,ci)=>{
       const rem=charmRem(r.lvl,r.tgt); const done=r.lvl>=r.tgt;
-      const cell=document.createElement("div"); cell.style.cssText="background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px";
-      cell.innerHTML=`<div style="display:flex;align-items:center;gap:4px">
+      const cell=document.createElement("div"); cell.style.cssText="background:var(--field);border:1px solid "+(done?"rgba(108,198,138,.45)":"var(--line)")+";border-radius:8px;padding:8px";
+      cell.innerHTML=`<div class="label" style="margin-bottom:4px">Charm ${ci+1}</div>
+        <div style="display:flex;align-items:center;gap:4px">
           <span class="mono" style="color:var(--faint);font-size:11px" aria-hidden="true">Lv</span>
           <select class="sigsel charmsel curSel" aria-label="${type} charm ${ci+1} current level">${lvlOpts(r.lvl,true)}</select>
           <span style="color:var(--faint);font-size:11px" aria-hidden="true">→</span>
           <select class="sigsel charmsel tgtSel" aria-label="${type} charm ${ci+1} target level">${lvlOpts(r.tgt,true)}</select>
         </div>
         <div class="lvlbar" style="max-width:none;margin-top:6px"><div class="lf" style="width:${r.tgt>0?Math.min(100,r.lvl/r.tgt*100):100}%;background:${done?'var(--green)':'linear-gradient(90deg,var(--gold-2),var(--gold))'}"></div></div>
-        <div class="mono" style="font-size:11px;color:var(--muted);margin-top:4px">${done?'✓ at target':'G '+fmtBig(rem.g)+' · D '+fmtBig(rem.d)}</div>`;
+        <div class="mono" style="font-size:11px;color:var(--muted);margin-top:4px">${done?'<span class="tagok">✓ at target</span>':'G '+fmtBig(rem.g)+' · D '+fmtBig(rem.d)}</div>`;
       const curSel=cell.querySelector(".curSel"), tgtSel=cell.querySelector(".tgtSel");
       curSel.onchange=()=>{ r.lvl=parseInt(curSel.value,10); buildCharms(); scheduleSave(); };
       tgtSel.onchange=()=>{ r.tgt=parseInt(tgtSel.value,10); buildCharms(); scheduleSave(); };
       grid.appendChild(cell);
     });
-    host.appendChild(grid);
+    const hb=grp.querySelector(".grphead"), body=grp.querySelector(".grpbody");
+    hb.onclick=()=>{ const o=!state.ui.charmOpen[type]; state.ui.charmOpen[type]=o; grp.classList.toggle("open",o); hb.setAttribute("aria-expanded",o); body.hidden=!o; scheduleSave(); };
+    host.appendChild(grp);
   });
   paintCharms();
 }
 function paintCharms(){
   const c=state.charms; if(!c) return;
   let g=0,d=0; c.rows.forEach(r=>{ const rem=charmRem(r.lvl,r.tgt!=null?r.tgt:c.targetLvl); g+=rem.g; d+=rem.d; });
-  const meter=(need,have,fillId,txtId)=>{ const pct=need>0?Math.min(100,have/need*100):100;
-    const fl=document.getElementById(fillId); if(fl) fl.style.width=pct.toFixed(1)+"%";
-    const tx=document.getElementById(txtId); if(tx) tx.innerHTML=`<b>${fmt(have)}</b> / ${fmt(need)}`; };
-  meter(g,num(c.have.guides),"charmGuidesFill","charmGuidesTxt");
-  meter(d,num(c.have.designs),"charmDesignsFill","charmDesignsTxt");
+  const meter=(need,have,k)=>{ const pct=need>0?Math.min(100,have/need*100):100;
+    const fl=document.getElementById(k+"Fill"); if(fl) fl.style.width=pct.toFixed(1)+"%";
+    const tx=document.getElementById(k+"Txt"); if(tx) tx.innerHTML=`/ <b>${fmt(need)}</b> needed`;
+    const sh=document.getElementById(k+"Short"); if(sh){ const s=need-have; sh.innerHTML= s>0?`<span class="tagbad">${fmt(s)} short</span>`:`<span class="tagok">covered ✓ (+${fmt(-s)})</span>`; } };
+  meter(g,num(c.have.guides),"charmGuides");
+  meter(d,num(c.have.designs),"charmDesigns");
 }
 
 /* ---------- widgets ---------- */
 const WID_COSTS=[5,10,15,20,25,30,35,40,45,50];
 const WID_HEROES=["Yang","Amadeus","Petra","Chenko","Yeonwoo","Amane","Zoe","Jabel","Marlin","Quinn","Vivian","Thrud","Eric","Saul","Helga","Hilde","Jaeger","Ava","Margot","Wee & Woo","Seo-yul","Gwen","Norah","Cyra","Reina","Bahar","Wilson","Roman","Cassia","Guinevere","Valora","Pan"];
 function widRem(lvl){ return WID_COSTS.slice(Math.max(0,Math.min(10,lvl))).reduce((s,x)=>s+x,0); }
+function widNext(lvl){ return lvl>=10?0:WID_COSTS[Math.max(0,lvl)]; }
+function widCardState(card,r){
+  const lvl=Math.max(0,Math.min(10,num(r.lvl))), have=num(r.have), next=widNext(lvl), toMax=widRem(lvl);
+  card.classList.toggle("done",lvl>=10); card.classList.toggle("ready",lvl<10&&have>=next);
+  card.querySelectorAll(".pips span").forEach((p,i)=>p.classList.toggle("on",i<lvl));
+  card.querySelector(".hfoot").innerHTML = lvl>=10 ? `<span class="tagok">MAX ✓</span><span>${fmt(have)} spare</span>`
+    : `<span>Next Lv: <b style="color:var(--text)">${fmt(next)}</b> ${have>=next?'<span class="tagready">· ready ✓</span>':`<span class="tagbad">· ${fmt(next-have)} short</span>`}</span><span>To max: ${fmt(toMax)}</span>`;
+}
 function buildWidgets(){
   if(!state.widgets||!Array.isArray(state.widgets.rows)) state.widgets=structuredClone(SEED.widgets);
   const w=state.widgets;
@@ -1692,34 +1799,28 @@ function buildWidgets(){
   // migrate: mats-in-hand moves from one shared field to per-hero
   w.rows.forEach(r=>{ if(r.have==null) r.have=0; });
   if(w.have){ if(w.rows[0]) w.rows[0].have=(w.rows[0].have||0)+num(w.have); w.have=0; }
-  const total=w.rows.reduce((s,r)=>s+widRem(r.lvl),0);
-  const haveSum=w.rows.reduce((s,r)=>s+num(r.have),0);
-  const pct=total>0?Math.min(100,haveSum/total*100):100;
-  document.getElementById("widFill").style.width=pct.toFixed(1)+"%";
-  document.getElementById("widMeterTxt").innerHTML=`<b>${fmt(haveSum)}</b> / ${fmt(total)}`;
   const dl=document.getElementById("widHeroList"); if(dl) dl.innerHTML=WID_HEROES.map(h=>`<option value="${h}">`).join("");
   const b=document.getElementById("widBody"); b.innerHTML="";
   w.rows.forEach(r=>{
-    const tr=document.createElement("tr");
     const hn=esc(r.hero||'hero');
-    tr.innerHTML=`<td><input list="widHeroList" aria-label="Hero" value="${esc(r.hero||'')}" placeholder="hero" style="min-width:110px;background:var(--field);border:1px solid var(--field-line);border-radius:8px;color:var(--text);font-size:13px;padding:7px 8px"></td>
-      <td><input class="mono-in lvlIn" aria-label="${hn} widget level" value="${r.lvl}" style="width:44px" inputmode="numeric"></td>
-      <td><input class="mono-in haveIn" aria-label="${hn} mats in hand" value="${r.have||0}" style="width:60px" inputmode="numeric"></td>
-      <td class="mono toMax" style="color:var(--gold);font-size:12px">${r.lvl>=10?'MAX':fmt(widRem(r.lvl))}</td>
-      <td class="delcell"><button class="del" title="Remove" aria-label="Remove ${hn}">×</button></td>`;
-    const hi=tr.querySelector("input[list]"), li=tr.querySelector(".lvlIn"), hv=tr.querySelector(".haveIn"), toMax=tr.querySelector(".toMax");
+    const card=document.createElement("div"); card.className="hcard";
+    card.innerHTML=`<div class="htop"><input class="hname" list="widHeroList" aria-label="Hero" value="${esc(r.hero||'')}" placeholder="hero">
+        <button class="del" title="Remove" aria-label="Remove ${hn}">×</button></div>
+      <div class="hin"><label>Level<input class="lvlIn" inputmode="numeric" aria-label="${hn} widget level" value="${r.lvl}"></label>
+        <label>Have<input class="haveIn" inputmode="numeric" aria-label="${hn} widgets in hand" value="${r.have||0}"></label></div>
+      <div class="pips" aria-hidden="true">${Array.from({length:10},()=>'<span></span>').join("")}</div>
+      <div class="hfoot"></div>`;
+    const hi=card.querySelector(".hname"), li=card.querySelector(".lvlIn"), hv=card.querySelector(".haveIn");
     hi.oninput=()=>{ r.hero=hi.value; scheduleSave(); };
-    li.oninput=()=>{
-      r.lvl=Math.max(0,Math.min(10,num(li.value)));
-      toMax.textContent = r.lvl>=10?'MAX':fmt(widRem(r.lvl));
-      paintWidgetsMeter(); scheduleSave();
-    };
-    hv.oninput=()=>{ r.have=num(hv.value); paintWidgetsMeter(); scheduleSave(); };
-    tr.querySelector(".del").onclick=()=>{ const i=w.rows.indexOf(r); if(i>-1){ w.rows.splice(i,1); buildWidgets(); scheduleSave(); } };
-    b.appendChild(tr);
+    li.oninput=()=>{ r.lvl=Math.max(0,Math.min(10,num(li.value))); widCardState(card,r); paintWidgetsMeter(); scheduleSave(); };
+    hv.oninput=()=>{ r.have=num(hv.value); widCardState(card,r); paintWidgetsMeter(); scheduleSave(); };
+    card.querySelector(".del").onclick=()=>{ const i=w.rows.indexOf(r); if(i>-1){ w.rows.splice(i,1); buildWidgets(); scheduleSave(); } };
+    widCardState(card,r);
+    b.appendChild(card);
   });
+  paintWidgetsMeter();
   document.getElementById("addWid").onclick=()=>{ w.rows.push({hero:"",lvl:0,have:0}); buildWidgets(); scheduleSave();
-    const inps=b.querySelectorAll("tr input[list]"); const last=inps[inps.length-1]; if(last) last.focus(); };
+    const inps=b.querySelectorAll(".hname"); const last=inps[inps.length-1]; if(last) last.focus(); };
 }
 function paintWidgetsMeter(){
   const w=state.widgets; if(!w) return;
@@ -1727,7 +1828,7 @@ function paintWidgetsMeter(){
   const haveSum=w.rows.reduce((s,r)=>s+num(r.have),0);
   const pct=total>0?Math.min(100,haveSum/total*100):100;
   const fill=document.getElementById("widFill"); if(fill) fill.style.width=pct.toFixed(1)+"%";
-  const txt=document.getElementById("widMeterTxt"); if(txt) txt.innerHTML=`<b>${fmt(haveSum)}</b> / ${fmt(total)}`;
+  const txt=document.getElementById("widMeterTxt"); if(txt) txt.innerHTML=`<b>${fmt(haveSum)}</b> in hand / <b>${fmt(total)}</b> needed · `+(total-haveSum>0?`<span class="tagbad">${fmt(total-haveSum)} short</span>`:`<span class="tagok">covered ✓</span>`);
 }
 
 /* ---------- governor gear ---------- */
@@ -1935,32 +2036,36 @@ function buildRes(){
 /* ---------- gold hero shards ---------- */
 function paintGoldShardTotal(){
   const el=document.getElementById("goldShardTotal"); if(!el) return;
-  let totNeed=0, totHave=0, totShort=0;
-  (state.goldShards||[]).forEach(r=>{ totNeed+=num(r.need); totHave+=num(r.have); totShort+=Math.max(0,num(r.need)-num(r.have)); });
-  el.innerHTML=`<b style="color:var(--text)">Total:</b> ${fmt(totNeed)} needed · ${fmt(totHave)} have · <b style="color:${totShort>0?'var(--red)':'var(--green)'}">${fmt(totShort)} short</b>`;
+  let totNeed=0, totHave=0, totShort=0, done=0; const L=state.goldShards||[];
+  L.forEach(r=>{ const n=num(r.need),h=num(r.have); totNeed+=n; totHave+=Math.min(h,n); totShort+=Math.max(0,n-h); if(h>=n&&n>0) done++; });
+  el.innerHTML=`<b>${fmt(totHave)}</b> / <b>${fmt(totNeed)}</b> shards · ${done}/${L.length} heroes done · `+(totShort>0?`<span class="tagbad">${fmt(totShort)} short</span>`:`<span class="tagok">all done ✓</span>`);
+  const f=document.getElementById("goldShardFill"); if(f) f.style.width=(totNeed>0?Math.min(100,totHave/totNeed*100):100).toFixed(1)+"%";
+}
+function shardCardState(card,r){
+  const need=num(r.need), have=num(r.have), short=Math.max(0,need-have), pct=need>0?Math.min(100,have/need*100):100, done=need>0&&have>=need;
+  card.classList.toggle("done",done);
+  card.querySelector(".mf").style.width=pct.toFixed(1)+"%";
+  card.querySelector(".hfoot").innerHTML=`<span>${pct.toFixed(0)}%</span>`+(done?`<span class="tagok">done ✓</span>`:`<span class="tagbad">${fmt(short)} short</span>`);
 }
 function buildGoldShards(){
   if(!Array.isArray(state.goldShards)) state.goldShards=structuredClone(SEED.goldShards);
   const b=document.getElementById("goldShardBody"); if(!b) return;
   b.innerHTML="";
   state.goldShards.forEach(r=>{
-    const need=num(r.need), have=num(r.have), short=Math.max(0,need-have);
     const hn=esc(r.n||'hero');
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td><input class="gsname" aria-label="Hero name" value="${esc(r.n||'')}"></td>
-      <td><input class="tnum gsf" data-f="need" aria-label="${hn} shards needed" value="${need}" inputmode="numeric" style="width:76px"></td>
-      <td><input class="tnum gsf" data-f="have" aria-label="${hn} shards in hand" value="${have}" inputmode="numeric" style="width:76px"></td>
-      <td class="mono" style="color:${short>0?'var(--red)':'var(--green)'}">${fmt(short)}</td>
-      <td class="delcell"><button class="del" title="Remove" aria-label="Remove ${hn}">×</button></td>`;
-    const shortCell=tr.children[3];
-    const ni=tr.querySelector(".gsname");
+    const card=document.createElement("div"); card.className="hcard";
+    card.innerHTML=`<div class="htop"><input class="hname gsname" aria-label="Hero name" value="${esc(r.n||'')}">
+        <button class="del" title="Remove" aria-label="Remove ${hn}">×</button></div>
+      <div class="hin"><label>Have<input class="gsf" data-f="have" inputmode="numeric" aria-label="${hn} shards in hand" value="${num(r.have)}"></label>
+        <label>Need<input class="gsf" data-f="need" inputmode="numeric" aria-label="${hn} shards needed" value="${num(r.need)}"></label></div>
+      <div class="minibar"><div class="mf"></div></div>
+      <div class="hfoot"></div>`;
+    const ni=card.querySelector(".gsname");
     ni.oninput=()=>{ r.n=ni.value; scheduleSave(); };
-    tr.querySelectorAll(".gsf").forEach(inp=>{
-      inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); const s=Math.max(0,num(r.need)-num(r.have));
-        shortCell.textContent=fmt(s); shortCell.style.color=s>0?"var(--red)":"var(--green)"; paintGoldShardTotal(); scheduleSave(); };
-    });
-    tr.querySelector(".del").onclick=()=>{ const i=state.goldShards.indexOf(r); if(i>-1){ state.goldShards.splice(i,1); buildGoldShards(); scheduleSave(); } };
-    b.appendChild(tr);
+    card.querySelectorAll(".gsf").forEach(inp=>{ inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); shardCardState(card,r); paintGoldShardTotal(); scheduleSave(); }; });
+    card.querySelector(".del").onclick=()=>{ const i=state.goldShards.indexOf(r); if(i>-1){ state.goldShards.splice(i,1); buildGoldShards(); scheduleSave(); } };
+    shardCardState(card,r);
+    b.appendChild(card);
   });
   paintGoldShardTotal();
   const add=document.getElementById("addGoldShard");
