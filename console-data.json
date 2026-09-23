@@ -1034,7 +1034,8 @@
     },
     "density": "compact",
     "mastOpen": {
-      "Aena": true
+      "Aena": true,
+      "Isnor": false
     }
   },
   "troopCounts": {
