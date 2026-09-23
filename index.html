@@ -278,6 +278,35 @@
   @media(max-width:480px){.res-row .resname{flex-basis:100%;margin-right:0}.res-row .res-inputs{margin-left:auto}}
   .troop-inputs{display:flex;align-items:center;gap:6px}
 
+  .mastnext{font-size:13.5px;background:rgba(0,0,0,.22);border:1px solid var(--line-soft);border-left:3px solid var(--gold-2);border-radius:10px;padding:10px 12px;margin-bottom:12px}
+  .mastnext b{color:var(--gold)}
+  .mastlist{display:flex;flex-direction:column;gap:8px}
+  .mast{background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:12px}
+  .mast.open{border-color:var(--gold-deep)}
+  .mhead{display:grid;grid-template-columns:minmax(0,1fr) 150px auto auto;align-items:center;gap:12px;padding:8px 8px 8px 4px}
+  .mtoggle{display:flex;align-items:center;gap:10px;min-width:0;background:none;border:0;color:var(--text);cursor:pointer;text-align:left;padding:6px 8px;border-radius:8px;font:inherit}
+  .mtoggle:hover{background:rgba(232,181,74,.06)}
+  .mtoggle .mchev{color:var(--muted);transition:transform .2s;flex:none}
+  .mast.open .mtoggle .mchev{transform:rotate(90deg)}
+  .mtoggle .mname{font-family:var(--f-disp);font-weight:700;font-size:15px;letter-spacing:.04em}
+  .mtoggle .mtitle{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mlvl{display:flex;flex-direction:column;gap:5px}
+  .mlvl .row{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px;color:var(--faint)}
+  .mlvl input{width:50px;font-family:var(--f-mono);font-weight:700;font-size:14px;color:var(--gold);background:var(--field);border:1px solid var(--field-line);border-radius:7px;padding:4px 2px;text-align:center}
+  .mlvl .lvlbar{max-width:none;margin:0}
+  .mchip{font-family:var(--f-mono);font-size:11px;font-weight:700;color:var(--gold);background:rgba(232,181,74,.12);border:1px solid rgba(232,181,74,.3);border-radius:999px;padding:3px 9px;white-space:nowrap}
+  .mbody{padding:4px 14px 14px;border-top:1px solid var(--line-soft)}
+  .mfacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 16px;margin:12px 0}
+  .mfacts .label{margin-bottom:2px}
+  .mfacts div div:last-child{font-size:13.5px}
+  .mhow{margin:4px 0 12px;padding-left:20px;font-size:13.5px;line-height:1.6}
+  .mhow li{margin-bottom:4px}
+  .mhow b{color:var(--gold)}
+  .mbody .field input{width:100%;font-family:var(--f-body)}
+  @media(max-width:600px){
+    .mhead{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"t d" "l c";row-gap:6px}
+    .mhead .mtoggle{grid-area:t} .mhead .mlvl{grid-area:l;padding-left:8px} .mhead .mchip{grid-area:c;justify-self:end} .mhead .del{grid-area:d}
+  }
   .charmgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
   @media(max-width:1060px){.charmgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
   @media(max-width:560px){.charmgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -692,8 +721,8 @@
   <section data-tab="Power">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Masters</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
-      <div class="tbl"><table class="tbl-wide"><thead><tr><th style="width:22%">Master</th><th style="width:90px">Lv</th><th>Note</th><th><span class="sr-only">Remove</span></th></tr></thead>
-      <tbody id="mastBody"></tbody></table></div>
+      <div class="mastnext" id="mastNext"></div>
+      <div class="mastlist" id="mastBody"></div>
       <button class="additem" id="addMast">+ add master</button>
     </div>
   </section>
@@ -892,14 +921,14 @@ const SEED = {
     {n:"Yang",     need:300, have:0}
   ],
   masters:[
-    {n:"Pan",       l:"0", note:"Ways-and-Means / Falconer skills"},
-    {n:"Valora",    l:"0", note:"Rally / bear value"},
-    {n:"Roman",     l:"0", note:"Attack research — +15% Atk/Def at Kindred Soul"},
-    {n:"Wilson",    l:"0", note:"Health research — +10% Atk/Def at Kindred Soul"},
-    {n:"Cassia",    l:"0", note:"Defense research — +20% Lethality/Health at Kindred Soul"},
-    {n:"Guinevere", l:"0", note:"Defense research — +15% Lethality/Health at Kindred Soul"},
-    {n:"Aena",      l:"0", note:"Lethality research — +15% Atk/Lethality at Kindred Soul"},
-    {n:"Isnor",     l:"0", note:"Attack research — +15% Lethality/Health at Kindred Soul"}
+    {n:"Pan",       l:"0", note:"Lethality research — +15% Def at Kindred Soul · Best for Archers · push to 100 (Ways-and-Means / Falconer)"},
+    {n:"Valora",    l:"0", note:"Health research — +15% Atk at Kindred Soul · Best for Infantry · rally / Bear Hunt value"},
+    {n:"Roman",     l:"0", note:"Attack research — +15% Atk/Def at Kindred Soul · Best for Cavalry"},
+    {n:"Wilson",    l:"0", note:"Health research — +10% Atk/Def at Kindred Soul · Best for Infantry"},
+    {n:"Cassia",    l:"0", note:"Defense research — +20% Lethality/Health at Kindred Soul · Best for all squads"},
+    {n:"Guinevere", l:"0", note:"Defense research — +15% Lethality/Health at Kindred Soul · Best for all squads"},
+    {n:"Aena",      l:"0", note:"Lethality research — +15% Atk/Def at Kindred Soul · Best for Cavalry"},
+    {n:"Isnor",     l:"0", note:"Attack research — +15% Lethality/Health at Kindred Soul · Best for Archers"}
   ],
   dustSrc:[
     {t:"Redeem Truegold + Gold → Dust in the War Academy", d:false},
@@ -1940,25 +1969,78 @@ function buildGoldShards(){
 }
 
 /* ---------- masters ---------- */
+// game facts per master (from the in-game Masters screen) — levels and notes stay in state
+const MASTER_INFO={
+  Valora:   {title:"Bear Hunter",         talent:"Hunter Instinct",    research:"Squads' Health",    best:"Infantry",   ks:"+15% Squads' Attack",                        unlock:"Generation 3 Heroes", tip:"skip"},
+  Pan:      {title:"Palace Administrator",talent:"Efficient Reserves", research:"Squads' Lethality", best:"Archers",    ks:"+15% Squads' Defense",                       unlock:"Generation 3 Heroes"},
+  Roman:    {title:"Arena Champion",      talent:"Star Belligerent",   research:"Squads' Attack",    best:"Cavalry",    ks:"+15% Squads' Attack · +15% Squads' Defense", unlock:"Generation 3 Heroes"},
+  Cassia:   {title:"Battle Master",       talent:"Horn of Valor",      research:"Squads' Defense",   best:"All squads", ks:"+20% Squads' Lethality · +20% Squads' Health", unlock:"Truegold 5"},
+  Guinevere:{title:"Queen of Holy Sword", talent:"Holy Sword Domain",  research:"Squads' Defense",   best:"All squads", ks:"+15% Squads' Lethality · +15% Squads' Health", unlock:"Generation 4 Heroes"},
+  Wilson:   {title:"Royal Herald",        talent:"Trade Decree",       research:"Squads' Health",    best:"Infantry",   ks:"+10% Squads' Attack · +10% Squads' Defense", unlock:"Generation 4 Heroes"},
+  Aena:     {title:"Caravan Queen",       talent:"Beneficent Mogul",   research:"Squads' Lethality", best:"Cavalry",    ks:"+15% Squads' Attack · +15% Squads' Defense", unlock:"Generation 5 Heroes"},
+  Isnor:    {title:"Legendary Explorer",  talent:"Old Hand",           research:"Squads' Attack",    best:"Archers",    ks:"+15% Squads' Lethality · +15% Squads' Health", unlock:"Generation 5 Heroes"}
+};
+const MAIN_TROOP="Archers";
+function masterHowTo(m,info){
+  const lv=Math.max(0,Math.min(100,Math.floor(num(m.l))));
+  const steps=[];
+  if(lv>=100) steps.push(`<b>Kindred Soul reached</b> — spend <b>Master Emblems</b> in this master's research tree.`);
+  else { const next=Math.min(100,(Math.floor(lv/10)+1)*10);
+    steps.push(`<b>Next goal:</b> level ${lv} → ${next}${next===100?" (Kindred Soul — unlocks the research tree)":""}. Each 10-level breakpoint needs <b>Emblems</b> to break through.`); }
+  steps.push(`<b>Gifts:</b> Copper Horn (~10), Silver Goblet (~100), Elite Spice (~1,000 affinity) — all add to the same total.`);
+  if(info&&info.tip==="skip") steps.push(`<b>Realm Journey only:</b> she levels naturally from normal journeys — don't spend Adventure Supplies on her.`);
+  else steps.push(`<b>Lostlands:</b> good target for Adventure Supplies until 1,000 affinity (then they settle in your town). Realm Journey adds random progress.`);
+  return steps.map(t=>`<li>${t}</li>`).join("");
+}
+function paintMastNext(){
+  const el=document.getElementById("mastNext"); if(!el) return;
+  const c=(state.masters||[]).map(m=>({m,info:MASTER_INFO[m.n],lv:num(m.l)}))
+    .filter(x=>x.info&&x.lv<100&&(x.info.best===MAIN_TROOP||x.info.best==="All squads"))
+    .sort((a,b)=>b.lv-a.lv)[0];
+  el.innerHTML = c ? `<b>Level up next:</b> ${esc(c.m.n)} (${c.lv} → ${Math.min(100,(Math.floor(c.lv/10)+1)*10)}) — best for ${c.info.best}, closest to the next breakpoint.`
+                   : `<b>All ${MAIN_TROOP} / all-squad masters are at Kindred Soul.</b>`;
+}
 function buildMast(){
   const b=document.getElementById("mastBody"); b.innerHTML="";
-  state.masters.forEach(m=>{
-    const tr=document.createElement("tr");
-    const pct=Math.min(100,Math.max(0,num(m.l)/100*100));
-    tr.innerHTML=`<td><input aria-label="Master name" value="${esc(m.n)}"></td>
-      <td><input class="mono-in" aria-label="${esc(m.n)} level" value="${esc(m.l)}" style="width:50px"><div class="lvlbar"><div class="lf" style="width:${pct}%"></div></div></td>
-      <td><input aria-label="${esc(m.n)} note" value="${esc(m.note)}"></td>
-      <td class="delcell"><button class="del" title="Remove" aria-label="Remove ${esc(m.n)}">×</button></td>`;
-    const [ni,li,oi]=tr.querySelectorAll("input"); const lf=tr.querySelector(".lf");
-    ni.oninput=()=>{ m.n=ni.value; scheduleSave(); };
-    li.oninput=()=>{ m.l=li.value; lf.style.width=Math.min(100,Math.max(0,num(li.value)))+"%"; scheduleSave(); };
-    oi.oninput=()=>{ m.note=oi.value; scheduleSave(); };
-    tr.querySelector(".del").onclick=()=>{ const i=state.masters.indexOf(m); if(i>-1){ state.masters.splice(i,1); buildMast(); scheduleSave(); } };
-    b.appendChild(tr);
+  if(!state.ui.mastOpen) state.ui.mastOpen={};
+  state.masters.forEach((m,idx)=>{
+    const info=MASTER_INFO[m.n];
+    const open=!!state.ui.mastOpen[m.n];
+    const pct=Math.min(100,Math.max(0,num(m.l)));
+    const card=document.createElement("div"); card.className="mast"+(open?" open":"");
+    const bid="mast"+idx;
+    card.innerHTML=`<div class="mhead">
+        <button class="mtoggle" aria-expanded="${open}" aria-controls="${bid}"><span class="mchev" aria-hidden="true">▸</span>
+          <span style="min-width:0"><span class="mname">${esc(m.n)}</span><br><span class="mtitle">${info?esc(info.title):"Custom master"}</span></span></button>
+        <div class="mlvl"><div class="row"><input inputmode="numeric" aria-label="${esc(m.n)} affinity level" value="${esc(m.l)}"><span>/ 100</span></div><div class="lvlbar"><div class="lf" style="width:${pct}%"></div></div></div>
+        ${info?`<span class="mchip">${esc(info.best)}</span>`:"<span></span>"}
+        <button class="del" title="Remove" aria-label="Remove ${esc(m.n)}">×</button>
+      </div>
+      <div class="mbody" id="${bid}" ${open?"":"hidden"}>
+        ${info?`<div class="mfacts">
+          <div><div class="label">Talent</div><div>${esc(info.talent)}</div></div>
+          <div><div class="label">Research</div><div>${esc(info.research)} · ${esc(info.best)}</div></div>
+          <div><div class="label">Kindred Soul buff</div><div>${esc(info.ks)}</div></div>
+          <div><div class="label">Unlocks with</div><div>${esc(info.unlock)}</div></div>
+        </div>`:`<div class="field" style="margin:12px 0"><label for="${bid}n">Name</label><input id="${bid}n" class="mname-in" value="${esc(m.n)}"></div>`}
+        <div class="label">How to level</div>
+        <ol class="mhow">${masterHowTo(m,info)}</ol>
+        <div class="field"><label for="${bid}o">Your note</label><textarea id="${bid}o" class="mnote notes" rows="2" style="min-height:0">${esc(m.note)}</textarea></div>
+      </div>`;
+    const tg=card.querySelector(".mtoggle"), body=card.querySelector(".mbody");
+    tg.onclick=()=>{ const o=!state.ui.mastOpen[m.n]; state.ui.mastOpen[m.n]=o; card.classList.toggle("open",o); tg.setAttribute("aria-expanded",o); body.hidden=!o; scheduleSave(); };
+    const li=card.querySelector(".mlvl input"), lf=card.querySelector(".lf"), how=card.querySelector(".mhow");
+    li.oninput=()=>{ m.l=li.value; lf.style.width=Math.min(100,Math.max(0,num(li.value)))+"%"; how.innerHTML=masterHowTo(m,info); paintMastNext(); scheduleSave(); };
+    card.querySelector(".mnote").oninput=e=>{ m.note=e.target.value; scheduleSave(); };
+    const ni=card.querySelector(".mname-in"); if(ni) ni.onchange=()=>{ m.n=ni.value; buildMast(); scheduleSave(); };
+    card.querySelector(".del").onclick=()=>{ const i=state.masters.indexOf(m); if(i>-1){ state.masters.splice(i,1); buildMast(); scheduleSave(); } };
+    b.appendChild(card);
   });
+  paintMastNext();
   document.getElementById("addMast").onclick=()=>{
-    state.masters.push({n:"New master",l:"0",note:""}); buildMast(); scheduleSave();
-    const rows=b.querySelectorAll("tr input"); const first=rows[rows.length-3]; if(first){first.focus();first.select();} };
+    const nm="New master "+(state.masters.length+1);
+    state.masters.push({n:nm,l:"0",note:""}); state.ui.mastOpen[nm]=true; buildMast(); scheduleSave();
+    const ins=b.querySelectorAll(".mname-in"); const last=ins[ins.length-1]; if(last){ last.focus(); last.select(); } };
 }
 
 /* ---------- build order + TG budget ---------- */
@@ -2267,8 +2349,17 @@ function migrateEvents(){
     {n:"Bear Hunt", date:t.bearDate||"", every:t.bearPeriod||2, time:"", note:""}
   ];
 }
+// one-time: replace old master notes ("Laggard" etc.) with the standard research / Kindred Soul / best-for format
+const MASTER_NOTES_V=2;
+function migrateMasterNotes(){
+  if(state.masterNotesV>=MASTER_NOTES_V) return;
+  const std=Object.fromEntries(SEED.masters.map(m=>[m.n,m.note]));
+  (state.masters||[]).forEach(m=>{ if(std[m.n]) m.note=std[m.n]; });
+  state.masterNotesV=MASTER_NOTES_V;
+  scheduleSave();
+}
 function renderAll(){
-  migrateEvents();
+  migrateEvents(); migrateMasterNotes();
   buildToday(); buildTroops(); buildId(); buildGate(); paintGate(); buildInfantry(); buildCavalry(); buildForecast(); buildGovGear();
   buildHeroGear(); buildCharms(); buildWidgets();
   buildChecks("trackNow",state.trackNow); buildChecks("trackFarm",state.trackFarm);
