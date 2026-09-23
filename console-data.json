@@ -715,42 +715,42 @@
     {
       "n": "Pan",
       "l": "90",
-      "note": "Best master — push to 100; Ways-and-Means / Falconer"
+      "note": "Lethality research — +15% Def at Kindred Soul · Best for Archers · push to 100 (Ways-and-Means / Falconer)"
     },
     {
       "n": "Valora",
       "l": "80",
-      "note": "Good — rally / bear value"
+      "note": "Health research — +15% Atk at Kindred Soul · Best for Infantry · rally / Bear Hunt value"
     },
     {
       "n": "Roman",
       "l": "60",
-      "note": "Laggard"
+      "note": "Attack research — +15% Atk/Def at Kindred Soul · Best for Cavalry"
     },
     {
       "n": "Wilson",
       "l": "50",
-      "note": "Laggard"
+      "note": "Health research — +10% Atk/Def at Kindred Soul · Best for Infantry"
     },
     {
       "n": "Cassia",
       "l": "40",
-      "note": "Laggard"
+      "note": "Defense research — +20% Lethality/Health at Kindred Soul · Best for all squads"
     },
     {
       "n": "Guinevere",
       "l": "40",
-      "note": "Laggard"
+      "note": "Defense research — +15% Lethality/Health at Kindred Soul · Best for all squads"
     },
     {
       "n": "Aena",
       "l": "30",
-      "note": "Lethality research — +15% Atk/Lethality at Kindred Soul"
+      "note": "Lethality research — +15% Atk/Def at Kindred Soul · Best for Cavalry"
     },
     {
       "n": "Isnor",
       "l": "0",
-      "note": "Attack research — +15% Lethality/Health at Kindred Soul"
+      "note": "Attack research — +15% Lethality/Health at Kindred Soul · Best for Archers"
     }
   ],
   "dustSrc": [
@@ -1032,7 +1032,8 @@
       "Hero Gear": false,
       "Build Order — TG6→TG8": false
     },
-    "density": "compact"
+    "density": "compact",
+    "mastOpen": {}
   },
   "troopCounts": {
     "inf": {
@@ -1448,5 +1449,6 @@
       "time": "",
       "note": ""
     }
-  ]
+  ],
+  "masterNotesV": 2
 }
