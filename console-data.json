@@ -1027,7 +1027,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false
@@ -1216,6 +1216,9 @@
     "open": {
       "Infantry": true,
       "Cavalry": true,
+      "Archer": true
+    },
+    "open2": {
       "Archer": true
     }
   },
@@ -1457,5 +1460,15 @@
       "note": ""
     }
   ],
-  "masterNotesV": 2
+  "masterNotesV": 2,
+  "pets": {
+    "have": {
+      "food": 0,
+      "manuals": 0,
+      "potions": 0,
+      "tmCommon": 0,
+      "tmAdv": 0
+    },
+    "rows": []
+  }
 }
