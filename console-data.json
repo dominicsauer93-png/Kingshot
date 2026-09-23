@@ -1027,7 +1027,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Army",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false
@@ -1037,6 +1037,9 @@
       "Aena": true,
       "Isnor": false,
       "Pan": false
+    },
+    "charmOpen": {
+      "Archer": true
     }
   },
   "troopCounts": {
