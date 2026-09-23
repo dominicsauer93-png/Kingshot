@@ -320,7 +320,7 @@
     },
     {
       "name": "Truegold Charge (Lethality)",
-      "cur": 8,
+      "cur": 6,
       "max": 8,
       "costs": [
         40,
