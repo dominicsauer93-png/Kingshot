@@ -271,7 +271,10 @@
   @media(max-width:480px){.res-row .resname{flex-basis:100%;margin-right:0}.res-row .res-inputs{margin-left:auto}}
   .troop-inputs{display:flex;align-items:center;gap:6px}
 
-  .charmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .charmgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+  @media(max-width:1060px){.charmgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media(max-width:560px){.charmgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .charmgrid .sigsel.charmsel{flex:1;min-width:52px;padding:7px 20px 7px 9px;background-position:right 6px center;text-align:center}
   .hgtype{width:100%;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin:10px 0 0;cursor:pointer;color:var(--text);font:600 13.5px var(--f-body);text-align:left}
   .hgtype:hover{border-color:var(--gold-2)}
 
@@ -1542,7 +1545,7 @@ function buildCharms(){
   [["charmGuidesHave","guides"],["charmDesignsHave","designs"]].forEach(([id,k])=>{
     const el=document.getElementById(id); if(el){ el.value=c.have[k]||0; el.oninput=()=>{ c.have[k]=num(el.value); paintCharms(); scheduleSave(); }; }
   });
-  const lvlOpts=(sel)=>Array.from({length:23},(_,i)=>`<option value="${i}"${i===sel?' selected':''}>Lv ${i}</option>`).join("");
+  const lvlOpts=(sel,short)=>Array.from({length:23},(_,i)=>`<option value="${i}"${i===sel?' selected':''}>${short?'':'Lv '}${i}</option>`).join("");
   const setAll=document.getElementById("charmSetAll");
   if(setAll){ setAll.innerHTML=lvlOpts(c.targetLvl);
     setAll.onchange=()=>{ c.targetLvl=parseInt(setAll.value,10); scheduleSave(); };
@@ -1558,9 +1561,10 @@ function buildCharms(){
       const rem=charmRem(r.lvl,r.tgt); const done=r.lvl>=r.tgt;
       const cell=document.createElement("div"); cell.style.cssText="background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px";
       cell.innerHTML=`<div style="display:flex;align-items:center;gap:4px">
-          <select class="sigsel curSel" aria-label="${type} charm ${ci+1} current level" style="flex:1;min-width:0;padding-right:22px">${lvlOpts(r.lvl)}</select>
+          <span class="mono" style="color:var(--faint);font-size:11px" aria-hidden="true">Lv</span>
+          <select class="sigsel charmsel curSel" aria-label="${type} charm ${ci+1} current level">${lvlOpts(r.lvl,true)}</select>
           <span style="color:var(--faint);font-size:11px" aria-hidden="true">→</span>
-          <select class="sigsel tgtSel" aria-label="${type} charm ${ci+1} target level" style="flex:1;min-width:0;padding-right:22px">${lvlOpts(r.tgt)}</select>
+          <select class="sigsel charmsel tgtSel" aria-label="${type} charm ${ci+1} target level">${lvlOpts(r.tgt,true)}</select>
         </div>
         <div class="lvlbar" style="max-width:none;margin-top:6px"><div class="lf" style="width:${r.tgt>0?Math.min(100,r.lvl/r.tgt*100):100}%;background:${done?'var(--green)':'linear-gradient(90deg,var(--gold-2),var(--gold))'}"></div></div>
         <div class="mono" style="font-size:11px;color:var(--muted);margin-top:4px">${done?'✓ at target':'G '+fmtBig(rem.g)+' · D '+fmtBig(rem.d)}</div>`;
