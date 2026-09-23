@@ -1038,7 +1038,8 @@
       "Aena": true,
       "Isnor": false,
       "Pan": true,
-      "Valora": true
+      "Valora": true,
+      "Roman": true
     },
     "charmOpen": {
       "Archer": false,
