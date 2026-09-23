@@ -353,6 +353,8 @@
   .goal .gp .minibar{margin:0}
   .goal .ga{color:var(--muted)}
   @media(max-width:600px){ .goal{grid-template-columns:24px minmax(0,1fr) 16px} .goal .gp{grid-column:2;text-align:left} .goal .ga{grid-row:1;grid-column:3} }
+  .latergrp{margin-top:10px}
+  .latergrp .nodes{border-radius:10px}
   .restile{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
   .restile .label{margin-bottom:6px}
   .rt-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
@@ -1383,8 +1385,44 @@ const NODE_COSTS={
 function nodeCosts(nd){ if(Array.isArray(nd.costs)&&nd.costs.length) return nd.costs;
   const k=Object.keys(NODE_COSTS).find(x=>nd.name.toLowerCase().includes(x)); return k?NODE_COSTS[k]:[]; }
 function nodeRem(nd){ return nodeCosts(nd).slice(Math.max(0,nd.cur||0)).reduce((s,x)=>s+x,0); }
+/* ---------- T11 tree order + "after unlock" nodes ---------- */
+const isLaterNode=nd=>/healing|aid|training/i.test(nd.name||"");
+const isUnlockNode=nd=>/unlock/i.test(nd.name||"");
+const coreNodes=list=>(list||[]).filter(nd=>!isLaterNode(nd));
+function treeRank(nd,key){ // tier 1 (max 8) → tier 2 (max 12) → unlock → healing/aid/training, then seed order
+  const tier=isLaterNode(nd)?3:isUnlockNode(nd)?2:(nd.max||12)<=8?0:1;
+  const i=(SEED[key]||[]).findIndex(x=>x.name===nd.name);
+  return tier*100+(i<0?99:i);
+}
+const sortTree=(list,key)=>(list||[]).slice().sort((a,b)=>treeRank(a,key)-treeRank(b,key));
+const unlockedCount=()=>[state.nodes,state.infNodes,state.cavNodes].filter(L=>(L||[]).some(nd=>isUnlockNode(nd)&&nd.cur>=(nd.max||1))).length;
+function renderNodeTree(host,list,key,onPaint){
+  host.innerHTML="";
+  sortTree(coreNodes(list),key).forEach(nd=>renderNodeRow(host,nd,onPaint));
+  // "after unlock" group sits right after the tree
+  let later=host.parentElement.querySelector(":scope > .latergrp");
+  if(!later){ later=document.createElement("div"); later.className="grp latergrp";
+    const tot=host.nextElementSibling&&host.nextElementSibling.classList.contains("totals")?host.nextElementSibling:host; tot.after(later); }
+  const items=sortTree(list,key).filter(isLaterNode);
+  if(!items.length){ later.hidden=true; return; }
+  later.hidden=false;
+  if(!state.ui.laterOpen) state.ui.laterOpen={};
+  const open=!!state.ui.laterOpen[key], bid="later"+key;
+  later.classList.toggle("open",open);
+  later.innerHTML=`<button class="grphead" aria-expanded="${open}" aria-controls="${bid}"><span class="mchev" aria-hidden="true">▸</span>
+      <span style="min-width:0"><span class="gname" style="font-size:13.5px">After unlock</span> <span class="gsub">· Healing, Aid, Training</span><br>
+      <span class="gsub later-status"></span></span><span class="gsub later-dust" style="text-align:right"></span></button>
+    <div class="grpbody" id="${bid}" ${open?"":"hidden"}><div class="nodes" style="margin-top:0"></div></div>`;
+  const paintLater=()=>{ const u=unlockedCount(), d=items.reduce((s,n)=>s+nodeRem(n),0);
+    later.querySelector(".later-status").innerHTML = u>=3?`<span class="tagok">All 3 troop types unlocked — go ahead</span>`:`Start once all 3 troop types are unlocked (${u}/3) · not counted in Dust needed`;
+    later.querySelector(".later-dust").textContent = d>0?fmt(d)+" dust":"done ✓"; };
+  const nl=later.querySelector(".nodes"); items.forEach(nd=>renderNodeRow(nl,nd,()=>{ paintLater(); scheduleSave(); }));
+  paintLater();
+  const hb=later.querySelector(".grphead"), body=later.querySelector(".grpbody");
+  hb.onclick=()=>{ const o=!state.ui.laterOpen[key]; state.ui.laterOpen[key]=o; later.classList.toggle("open",o); hb.setAttribute("aria-expanded",o); body.hidden=!o; scheduleSave(); };
+}
 function computeTarget(){
-  const t=state.nodes.reduce((s,n)=>s+nodeRem(n),0);
+  const t=coreNodes(state.nodes).reduce((s,n)=>s+nodeRem(n),0);
   state.dust.target=Math.round(t);
   return state.dust.target;
 }
@@ -1414,7 +1452,7 @@ function paintPhaseSummary(prefix,nodeList,dustTotal){
   document.getElementById(prefix+"Iron").textContent=fmtBig(iron);
   document.getElementById(prefix+"Time").textContent="~"+Math.round(days)+"d";
 }
-function paintT11(){ paintPhaseSummary("t11",state.nodes,computeTarget()); }
+function paintT11(){ paintPhaseSummary("t11",coreNodes(state.nodes),computeTarget()); }
 function paintGate(){
   const tgt=Math.max(1,computeTarget());
   const cur=num(state.dust.current);
@@ -1460,7 +1498,7 @@ function buildGate(){
   dc.oninput=()=>{ state.dust.current=num(dc.value); paintGate(); scheduleSave(); };
   gc.oninput=()=>{ state.dust.gold=num(gc.value); paintGate(); scheduleSave(); };
   const host=document.getElementById("nodes"); host.innerHTML="";
-  state.nodes.forEach(nd=>renderNodeRow(host,nd,paintGate));
+  renderNodeTree(host,state.nodes,"nodes",paintGate);
 }
 
 /* ---------- troop targets ---------- */
@@ -1497,7 +1535,7 @@ function recurUntil(anchorStr, period){
   return rem===0 ? 0 : (period-rem);
 }
 function closestNode(){
-  const open=(state.nodes||[]).filter(n=>n.cur<(n.max||12)).map(n=>({n,rem:nodeRem(n)})).filter(x=>x.rem>0);
+  const open=coreNodes(state.nodes).filter(n=>n.cur<(n.max||12)).map(n=>({n,rem:nodeRem(n)})).filter(x=>x.rem>0);
   if(!open.length) return null;
   open.sort((a,b)=>a.rem-b.rem); return open[0];
 }
@@ -1771,7 +1809,7 @@ function paintForecast(){
   if(dNeed<=0&&gNeed<=0) html+=`<b style="color:var(--green)">Both gates met — start the research.</b>`;
   else if(blocked) html+=`<b style="color:var(--amber)">One gate isn't growing — log more, or lift that rate.</b>`;
   else html+=`<b style="color:var(--gold)">T11 Archer unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
-  html+=`<br><span class="sub">Then ~${Math.round(nodeResDays(state.nodes))}d research on top (runs once you start it). Based on ${f.days.toFixed(0)}d of history.</span></div>`;
+  html+=`<br><span class="sub">Then ~${Math.round(nodeResDays(coreNodes(state.nodes)))}d research on top (runs once you start it). Based on ${f.days.toFixed(0)}d of history.</span></div>`;
   out.innerHTML=html;
 }
 function buildForecast(){
@@ -2139,26 +2177,26 @@ function buildGovGear(){
 
 /* ---------- infantry (Phase 2) ---------- */
 function paintInf(){
-  const t=(state.infNodes||[]).reduce((s,n)=>s+nodeRem(n),0);
+  const t=coreNodes(state.infNodes).reduce((s,n)=>s+nodeRem(n),0);
   const el=document.getElementById("infTgtVal"); if(el) el.textContent=fmt(Math.round(t));
-  paintPhaseSummary("infT11",state.infNodes,t);
+  paintPhaseSummary("infT11",coreNodes(state.infNodes),t);
 }
 function buildInfantry(){
   if(!Array.isArray(state.infNodes)) return;
   const host=document.getElementById("infNodes"); if(!host) return; host.innerHTML="";
-  state.infNodes.forEach(nd=>renderNodeRow(host,nd,paintInf));
+  renderNodeTree(host,state.infNodes,"infNodes",paintInf);
   paintInf();
 }
 /* ---------- cavalry (Phase 3) ---------- */
 function paintCav(){
-  const t=(state.cavNodes||[]).reduce((s,n)=>s+nodeRem(n),0);
+  const t=coreNodes(state.cavNodes).reduce((s,n)=>s+nodeRem(n),0);
   const el=document.getElementById("cavTgtVal"); if(el) el.textContent=fmt(Math.round(t));
-  paintPhaseSummary("cavT11",state.cavNodes,t);
+  paintPhaseSummary("cavT11",coreNodes(state.cavNodes),t);
 }
 function buildCavalry(){
   if(!Array.isArray(state.cavNodes)) return;
   const host=document.getElementById("cavNodes"); if(!host) return; host.innerHTML="";
-  state.cavNodes.forEach(nd=>renderNodeRow(host,nd,paintCav));
+  renderNodeTree(host,state.cavNodes,"cavNodes",paintCav);
   paintCav();
 }
 
