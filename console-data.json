@@ -619,98 +619,6 @@
       "h": "46.5"
     }
   ],
-  "goldShards": [
-    {
-      "n": "Saul",
-      "need": 900,
-      "have": 0
-    },
-    {
-      "n": "Amadeus",
-      "need": 940,
-      "have": 0
-    },
-    {
-      "n": "Charles",
-      "need": 463,
-      "have": 0
-    },
-    {
-      "n": "Hilde",
-      "need": 740,
-      "have": 0
-    },
-    {
-      "n": "Marlin",
-      "need": 700,
-      "have": 0
-    },
-    {
-      "n": "Zoe",
-      "need": 600,
-      "have": 0
-    },
-    {
-      "n": "Jaeger",
-      "need": 700,
-      "have": 0
-    },
-    {
-      "n": "Eric",
-      "need": 700,
-      "have": 0
-    },
-    {
-      "n": "Rosa",
-      "need": 500,
-      "have": 0
-    },
-    {
-      "n": "Petra",
-      "need": 500,
-      "have": 0
-    },
-    {
-      "n": "Margot",
-      "need": 700,
-      "have": 0
-    },
-    {
-      "n": "Alcar",
-      "need": 600,
-      "have": 0
-    },
-    {
-      "n": "Thrud",
-      "need": 800,
-      "have": 0
-    },
-    {
-      "n": "Triton",
-      "need": 700,
-      "have": 0
-    },
-    {
-      "n": "Sophia",
-      "need": 100,
-      "have": 0
-    },
-    {
-      "n": "Ava",
-      "need": 940,
-      "have": 0
-    },
-    {
-      "n": "Long Fei",
-      "need": 400,
-      "have": 0
-    },
-    {
-      "n": "Yang",
-      "need": 300,
-      "have": 0
-    }
-  ],
   "masters": [
     {
       "n": "Pan",
@@ -1027,7 +935,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Power",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false
@@ -1432,5 +1340,113 @@
       "d": false
     }
   ],
-  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup"
+  "goldShards": [
+    {
+      "n": "Saul",
+      "need": 900,
+      "have": 0
+    },
+    {
+      "n": "Amadeus",
+      "need": 940,
+      "have": 0
+    },
+    {
+      "n": "Charles",
+      "need": 463,
+      "have": 0
+    },
+    {
+      "n": "Hilde",
+      "need": 740,
+      "have": 0
+    },
+    {
+      "n": "Marlin",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Zoe",
+      "need": 600,
+      "have": 0
+    },
+    {
+      "n": "Jaeger",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Eric",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Rosa",
+      "need": 500,
+      "have": 0
+    },
+    {
+      "n": "Petra",
+      "need": 500,
+      "have": 0
+    },
+    {
+      "n": "Margot",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Alcar",
+      "need": 600,
+      "have": 0
+    },
+    {
+      "n": "Thrud",
+      "need": 800,
+      "have": 0
+    },
+    {
+      "n": "Triton",
+      "need": 700,
+      "have": 0
+    },
+    {
+      "n": "Sophia",
+      "need": 100,
+      "have": 0
+    },
+    {
+      "n": "Ava",
+      "need": 940,
+      "have": 0
+    },
+    {
+      "n": "Long Fei",
+      "need": 400,
+      "have": 0
+    },
+    {
+      "n": "Yang",
+      "need": 300,
+      "have": 0
+    }
+  ],
+  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
+  "events": [
+    {
+      "n": "KvK",
+      "date": "",
+      "every": 14,
+      "time": "",
+      "note": ""
+    },
+    {
+      "n": "Bear Hunt",
+      "date": "2026-09-15",
+      "every": 2,
+      "time": "",
+      "note": ""
+    }
+  ]
 }
