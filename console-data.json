@@ -1040,7 +1040,8 @@
       "Pan": false
     },
     "charmOpen": {
-      "Archer": false
+      "Archer": false,
+      "Cavalry": true
     }
   },
   "troopCounts": {
