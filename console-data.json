@@ -10,7 +10,7 @@
   },
   "dust": {
     "current": 1725,
-    "target": 16085,
+    "target": 2236,
     "gold": 1070000
   },
   "nodes": [
@@ -592,6 +592,26 @@
     {
       "n": "Learning Speedup (Min",
       "h": "79"
+    },
+    {
+      "n": "Soldier Training speedup (hrs)",
+      "h": ""
+    },
+    {
+      "n": "General speedup (hrs)",
+      "h": ""
+    },
+    {
+      "n": "Soldier Healing speedup (hrs)",
+      "h": ""
+    },
+    {
+      "n": "Construction speedup (hrs)",
+      "h": ""
+    },
+    {
+      "n": "Research speedup (hrs)",
+      "h": ""
     }
   ],
   "goldShards": [
@@ -1016,7 +1036,7 @@
     ]
   },
   "ui": {
-    "tab": "Army",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1035,7 +1055,8 @@
     "charmOpen": {
       "Archer": false,
       "Cavalry": false
-    }
+    },
+    "laterOpen": {}
   },
   "troopCounts": {
     "inf": {
