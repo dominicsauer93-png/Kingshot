@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-30"
   },
   "dust": {
-    "current": 1591,
+    "current": 1695,
     "target": 2236,
     "gold": 1000000
   },
@@ -685,7 +685,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Army",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false
