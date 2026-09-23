@@ -709,6 +709,11 @@
       "n": "Yang",
       "need": 300,
       "have": 0
+    },
+    {
+      "n": "New hero",
+      "need": 0,
+      "have": 0
     }
   ],
   "masters": [
