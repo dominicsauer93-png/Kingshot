@@ -1466,8 +1466,8 @@
   "pets": {
     "have": {
       "food": 0,
-      "manuals": 0,
-      "potions": 0,
+      "manuals": 1089,
+      "potions": 12,
       "tmCommon": 16,
       "tmAdv": 0
     },
