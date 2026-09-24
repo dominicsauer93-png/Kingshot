@@ -798,7 +798,7 @@
       "d": false
     }
   ],
-  "notes": "KvK PLAN (do on KvK gear days for points) — saved 2026-09-24\n• Governor Gear: Infantry 1 Gold 0★ → Gold 1★ — 23,000 Satin · 230 Threads · 40 Vision = 225,000 KvK points (+2.5% Infantry Attack/Defense, +61,200 power). Leaves 9,577 Satin · 27 Threads · 438 Vision; Gilded Threads are the bottleneck (next Gold 0★ → 1★ needs 230).\n• Hero Gear (Early Game Combat plan): Infantry Chest Mastery 11→12, Archer Helm Mastery 11→12, Cavalry Helm Mastery 10→11 (350 Forgehammers · 5 Mythic Gear); Archer Chest Lv 80→93 and Archer Gloves Lv 80→92 (~43,450 XP). Skip the Cavalry Gloves reforge / Chest +1 swap (costs 50 XP, no gain).",
+  "notes": "KvK PLAN (do on KvK gear days for points) — saved 2026-09-24\n• Governor Gear: Infantry 1 Gold 0★ → Gold 1★ — 23,000 Satin · 230 Threads · 40 Vision = 225,000 KvK points (+2.5% Infantry Attack/Defense, +61,200 power). Leaves 9,577 Satin · 27 Threads · 438 Vision; Gilded Threads are the bottleneck (next Gold 0★ → 1★ needs 230).\n• Hero Gear (Early Game Combat plan): Infantry Chest Mastery 11→12, Archer Helm Mastery 11→12, Cavalry Helm Mastery 10→11 (350 Forgehammers · 5 Mythic Gear); Archer Chest Lv 80→93 and Archer Gloves Lv 80→91 — DONE 2026-09-24. Skip the Cavalry Gloves reforge / Chest +1 swap (costs 50 XP, no gain).",
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
@@ -1197,7 +1197,7 @@
       {
         "type": "Archer",
         "slot": "Gloves (Health)",
-        "lvC": 80,
+        "lvC": 91,
         "lvT": 139,
         "mC": 8,
         "mT": 12,
@@ -1209,7 +1209,7 @@
       {
         "type": "Archer",
         "slot": "Chest (Health)",
-        "lvC": 80,
+        "lvC": 93,
         "lvT": 139,
         "mC": 8,
         "mT": 12,
