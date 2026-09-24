@@ -1036,7 +1036,7 @@
     ]
   },
   "ui": {
-    "tab": "Events",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1055,7 +1055,7 @@
     "charmOpen": {
       "Archer": false,
       "Cavalry": false,
-      "Infantry": true
+      "Infantry": false
     },
     "laterOpen": {}
   },
