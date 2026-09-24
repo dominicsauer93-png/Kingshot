@@ -1036,7 +1036,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Events",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1152,7 +1152,7 @@
         "lvT": 139,
         "mC": 8,
         "mT": 12,
-        "xp": 168390,
+        "xp": 161830,
         "fh": 420,
         "mg": 8,
         "mith": 10
@@ -1164,7 +1164,7 @@
         "lvT": 139,
         "mC": 9,
         "mT": 12,
-        "xp": 168390,
+        "xp": 161830,
         "fh": 330,
         "mg": 8,
         "mith": 10
