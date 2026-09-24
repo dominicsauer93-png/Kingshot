@@ -1148,7 +1148,7 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 75,
+        "lvC": 80,
         "lvT": 139,
         "mC": 8,
         "mT": 12,
@@ -1160,7 +1160,7 @@
       {
         "type": "Cavalry",
         "slot": "Chest (Health)",
-        "lvC": 75,
+        "lvC": 80,
         "lvT": 139,
         "mC": 9,
         "mT": 12,
