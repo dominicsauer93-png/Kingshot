@@ -1015,7 +1015,7 @@
     "routine": [
       {
         "t": "Intel Missions → collect Hunting Arrows",
-        "d": false
+        "d": true
       },
       {
         "t": "Gathering marches all out",
@@ -1023,7 +1023,7 @@
       },
       {
         "t": "Overfeed the Truegold Crucible",
-        "d": false
+        "d": true
       },
       {
         "t": "Super Refine — daily discounted Tier 2 (TTG)",
