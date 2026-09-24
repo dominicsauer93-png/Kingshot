@@ -798,7 +798,7 @@
       "d": false
     }
   ],
-  "notes": "2026-09-24 — KvK: Governor Gear Infantry 1 Gold 0★ → Gold 1★ (23,000 Satin · 230 Threads · 40 Vision) = 225,000 KvK points; +2.5% Infantry Attack/Defense, +61,200 power. Left after: 9,577 Satin · 27 Threads · 438 Vision. Gilded Threads are the bottleneck — next Gold 0★ → 1★ needs 230.",
+  "notes": "",
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
@@ -972,9 +972,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 9577,
-      "threads": 27,
-      "vision": 438
+      "satin": 32497,
+      "threads": 257,
+      "vision": 478
     },
     "pieces": [
       {
@@ -987,7 +987,7 @@
       },
       {
         "name": "Inf 1",
-        "cur": 15
+        "cur": 14
       },
       {
         "name": "Inf 2",
@@ -1236,7 +1236,8 @@
       "Archer": true
     },
     "open2": {
-      "Archer": true
+      "Archer": false,
+      "Cavalry": false
     }
   },
   "charms": {
@@ -1467,7 +1468,7 @@
       "date": "",
       "every": 14,
       "time": "",
-      "note": "Gov Gear Inf 1 Gold 0★→1★ = 225,000 pts (23k Satin · 230 Threads · 40 Vision)"
+      "note": ""
     },
     {
       "n": "Bear Hunt",
