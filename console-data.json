@@ -1053,7 +1053,7 @@
       "Roman": true
     },
     "charmOpen": {
-      "Archer": true,
+      "Archer": false,
       "Cavalry": false,
       "Infantry": true
     },
