@@ -541,27 +541,27 @@
   "resources": [
     {
       "n": "Soldier Training speedup (min)",
-      "h": "1035",
+      "h": "2661",
       "need": ""
     },
     {
       "n": "General speedup (min)",
-      "h": "10240",
+      "h": "11745",
       "need": ""
     },
     {
       "n": "Soldier Healing speedup (min)",
-      "h": "12217",
+      "h": "12438",
       "need": ""
     },
     {
       "n": "Construction speedup (min)",
-      "h": "4298",
+      "h": "5074",
       "need": ""
     },
     {
       "n": "Research speedup (min)",
-      "h": "4598",
+      "h": "5242",
       "need": ""
     },
     {
