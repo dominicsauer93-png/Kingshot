@@ -1036,7 +1036,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1201,7 +1201,7 @@
         "lvT": 139,
         "mC": 8,
         "mT": 12,
-        "xp": 161830,
+        "xp": 143030,
         "fh": 420,
         "mg": 8,
         "mith": 10
@@ -1213,7 +1213,7 @@
         "lvT": 139,
         "mC": 8,
         "mT": 12,
-        "xp": 161830,
+        "xp": 138930,
         "fh": 420,
         "mg": 8,
         "mith": 10
