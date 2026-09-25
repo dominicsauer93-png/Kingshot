@@ -592,6 +592,26 @@
       "n": "Gold",
       "h": "1130000",
       "need": "1000000"
+    },
+    {
+      "n": "Soldier Training speedup (hrs)",
+      "h": ""
+    },
+    {
+      "n": "General speedup (hrs)",
+      "h": ""
+    },
+    {
+      "n": "Soldier Healing speedup (hrs)",
+      "h": ""
+    },
+    {
+      "n": "Construction speedup (hrs)",
+      "h": ""
+    },
+    {
+      "n": "Research speedup (hrs)",
+      "h": ""
     }
   ],
   "goldShards": [
