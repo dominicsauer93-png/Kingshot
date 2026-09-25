@@ -973,9 +973,9 @@
   ],
   "tg": {
     "have": 572,
-    "need": 5991,
+    "need": 5901,
     "ttgHave": 5,
-    "ttgNeed": 591
+    "ttgNeed": 587
   },
   "govGear": {
     "targetIdx": 18,
@@ -1435,7 +1435,7 @@
     },
     {
       "n": "War Academy",
-      "stepIdx": 2,
+      "stepIdx": 3,
       "note": "Research speed + T11 gate",
       "d": false
     },
