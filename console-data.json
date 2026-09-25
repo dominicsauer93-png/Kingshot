@@ -720,42 +720,189 @@
     {
       "n": "Pan",
       "l": "90",
-      "note": "Lethality research — +15% Def at Kindred Soul · Best for Archers · push to 100 (Ways-and-Means / Falconer)"
+      "note": "Lethality research — +15% Def at Kindred Soul · Best for Archers · push to 100 (Ways-and-Means / Falconer)",
+      "skills": [
+        {
+          "l": 5,
+          "max": true,
+          "t": "g"
+        },
+        {
+          "l": 4,
+          "t": "g"
+        },
+        {
+          "l": 5,
+          "max": true,
+          "t": "g"
+        },
+        {
+          "l": 9,
+          "t": "g"
+        }
+      ]
     },
     {
       "n": "Valora",
       "l": "80",
-      "note": "Health research — +15% Atk at Kindred Soul · Best for Infantry · rally / Bear Hunt value"
+      "note": "Health research — +15% Atk at Kindred Soul · Best for Infantry · rally / Bear Hunt value",
+      "skills": [
+        {
+          "l": 10,
+          "max": true,
+          "t": "c"
+        },
+        {
+          "l": 4,
+          "t": "g"
+        },
+        {
+          "l": 4,
+          "t": "g"
+        },
+        {
+          "l": 9,
+          "t": "c"
+        }
+      ]
     },
     {
       "n": "Roman",
       "l": "60",
-      "note": "Attack research — +15% Atk/Def at Kindred Soul · Best for Cavalry"
+      "note": "Attack research — +15% Atk/Def at Kindred Soul · Best for Cavalry",
+      "skills": [
+        {
+          "l": 7,
+          "t": "c"
+        },
+        {
+          "l": 7,
+          "t": "g"
+        },
+        {
+          "l": 7,
+          "t": "g"
+        },
+        {
+          "l": 7,
+          "t": "c"
+        }
+      ]
     },
     {
       "n": "Wilson",
       "l": "50",
-      "note": "Health research — +10% Atk/Def at Kindred Soul · Best for Infantry"
+      "note": "Health research — +10% Atk/Def at Kindred Soul · Best for Infantry",
+      "skills": [
+        {
+          "l": 6,
+          "t": "g"
+        },
+        {
+          "l": 4,
+          "t": "g"
+        },
+        {
+          "l": 4,
+          "t": "g"
+        },
+        {
+          "l": 4,
+          "t": "g"
+        }
+      ]
     },
     {
       "n": "Cassia",
       "l": "40",
-      "note": "Defense research — +20% Lethality/Health at Kindred Soul · Best for all squads"
+      "note": "Defense research — +20% Lethality/Health at Kindred Soul · Best for all squads",
+      "skills": [
+        {
+          "l": 6,
+          "t": "g"
+        },
+        {
+          "l": 5,
+          "t": "c"
+        },
+        {
+          "l": 4,
+          "t": "c"
+        },
+        {
+          "l": 0,
+          "t": "c"
+        }
+      ]
     },
     {
       "n": "Guinevere",
       "l": "40",
-      "note": "Defense research — +15% Lethality/Health at Kindred Soul · Best for all squads"
+      "note": "Defense research — +15% Lethality/Health at Kindred Soul · Best for all squads",
+      "skills": [
+        {
+          "l": 5,
+          "t": "g"
+        },
+        {
+          "l": 4,
+          "t": "g"
+        },
+        {
+          "l": 3,
+          "t": "c"
+        },
+        {
+          "l": 0,
+          "t": "c"
+        }
+      ]
     },
     {
       "n": "Aena",
       "l": "30",
-      "note": "Lethality research — +15% Atk/Def at Kindred Soul · Best for Cavalry"
+      "note": "Lethality research — +15% Atk/Def at Kindred Soul · Best for Cavalry",
+      "skills": [
+        {
+          "l": 1,
+          "t": "g"
+        },
+        {
+          "l": 1,
+          "t": "g"
+        },
+        {
+          "l": 0,
+          "t": "g"
+        },
+        {
+          "l": 0,
+          "t": "g"
+        }
+      ]
     },
     {
       "n": "Isnor",
       "l": "0",
-      "note": "Attack research — +15% Lethality/Health at Kindred Soul · Best for Archers"
+      "note": "Attack research — +15% Lethality/Health at Kindred Soul · Best for Archers",
+      "skills": [
+        {
+          "l": 0,
+          "t": "g"
+        },
+        {
+          "l": 0,
+          "t": "c"
+        },
+        {
+          "l": 0,
+          "t": "g"
+        },
+        {
+          "l": 0,
+          "t": "g"
+        }
+      ]
     }
   ],
   "dustSrc": [

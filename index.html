@@ -355,6 +355,17 @@
   @media(max-width:600px){ .goal{grid-template-columns:24px minmax(0,1fr) 16px} .goal .gp{grid-column:2;text-align:left} .goal .ga{grid-row:1;grid-column:3} }
   .latergrp{margin-top:10px}
   .latergrp .nodes{border-radius:10px}
+  .mskills{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:4px 0 14px}
+  @media(max-width:520px){.mskills{grid-template-columns:repeat(2,1fr)}}
+  .msk{background:var(--field);border:1px solid var(--line);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:5px;align-items:flex-start}
+  .msk.max{border-color:rgba(108,198,138,.55)}
+  .msk.locked{opacity:.6}
+  .msk-n{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .msk-l{width:56px;font-family:var(--f-mono);font-weight:700;font-size:14px;color:var(--gold);background:var(--panel);border:1px solid var(--field-line);border-radius:7px;padding:4px;text-align:center}
+  .msk.max .msk-l{color:var(--green)}
+  .msk-t{margin-left:4px;font:600 10.5px var(--f-body);letter-spacing:0;text-transform:none;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:1px 7px;cursor:pointer}
+  .msk-m{display:flex;align-items:center;gap:5px;font-family:var(--f-mono);font-size:11px;color:var(--muted);cursor:pointer}
+  .msk-m input{width:16px;height:16px;accent-color:var(--green)}
   .restile{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
   .restile .label{margin-bottom:6px}
   .rt-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
@@ -1093,16 +1104,18 @@ const SEED = {
     {name:"Master",        v:0, b:0, g:""}
   ],
   combat:{ attW:0, attL:0, defW:0, defL:0, leth:0, hp:0 },
-  resources:[
-    {n:"Soldier Training speedup (hrs)", h:""},
-    {n:"General speedup (hrs)",          h:""},
-    {n:"Soldier Healing speedup (hrs)",  h:""},
-    {n:"Construction speedup (hrs)",     h:""},
-    {n:"Research speedup (hrs)",         h:""},
+  resources:[ // same order as the in-game Items list
+    {n:"General speedup (min)",          h:""},
+    {n:"Soldier Training speedup (min)", h:""},
+    {n:"Construction speedup (min)",     h:""},
+    {n:"Research speedup (min)",         h:""},
+    {n:"Learning speedup (min)",         h:""},
+    {n:"Soldier Healing speedup (min)",  h:""},
     {n:"Bread",  h:""},
     {n:"Wood",   h:""},
     {n:"Stone",  h:""},
-    {n:"Iron",   h:""}
+    {n:"Iron",   h:""},
+    {n:"Gold",   h:""}
   ],
   goldShards:[
     {n:"Saul",     need:900, have:0},
@@ -1566,7 +1579,7 @@ function buildToday(){
   if(gGap>0) flags.push({w:true, t:`Gold gate: ${fmt(gGap)} short of 1M — bank gold, don't burn it on Dust exchange.`});
   if(state.govGear){ const tgt=state.govGear.targetIdx, lag=state.govGear.pieces.filter(p=>p.cur<tgt).length;
     if(lag) flags.push({w:false, t:`Gov Gear: ${lag}/6 pieces below target — level the lowest pieces evenly for the set bonus.`}); }
-  const rs=(state.resources||[]).find(r=>/research speed/i.test(r.n));
+  const rs=(state.resources||[]).find(r=>/research speed(?!up)/i.test(r.n));
   if(rs) flags.push({w:false, t:`Research speed ${rs.h} — every % shortens the ~329d T11 horizon.`});
   flags.push({w:false, t:`Farm account is your biggest force-multiplier — keep it feeding.`});
   // events happening today go to the top
@@ -2288,21 +2301,44 @@ function buildCombat(){
 }
 
 /* ---------- resources ---------- */
+// one-time tidy: speedups in minutes only (old "(hrs)" rows converted/removed), game order first
+function migrateResources(){
+  const R=state.resources; if(!Array.isArray(R)) return;
+  const fix={"learning speedup (min":"Learning speedup (min)"};
+  R.forEach(r=>{ const k=(r.n||"").toLowerCase(); if(fix[k]) r.n=fix[k]; });
+  R.slice().forEach(r=>{ const m=(r.n||"").match(/^(.*speedup) \(hrs\)$/i); if(!m) return;
+    const minName=m[1]+" (min)", tgt=R.find(x=>(x.n||"").toLowerCase()===minName.toLowerCase());
+    const hrs=num(r.h);
+    if(hrs>0&&!(tgt&&num(tgt.h)>0)){ if(tgt) tgt.h=String(Math.round(hrs*60)); else R.push({n:minName,h:String(Math.round(hrs*60))}); }
+    R.splice(R.indexOf(r),1); });
+  // merge duplicate names (keep the one with a value)
+  const seen={}; R.slice().forEach(r=>{ const k=(r.n||"").toLowerCase(); if(!k) return;
+    if(seen[k]){ if(String(seen[k].h||"").trim()===""&&String(r.h||"").trim()!=="") seen[k].h=r.h; R.splice(R.indexOf(r),1); } else seen[k]=r; });
+  const order=SEED.resources.map(x=>x.n.toLowerCase());
+  const rank=r=>{ const i=order.indexOf((r.n||"").toLowerCase()); return i<0?999:i; };
+  const sorted=R.map((r,i)=>({r,i})).sort((a,b)=>rank(a.r)-rank(b.r)||a.i-b.i).map(x=>x.r);
+  R.length=0; sorted.forEach(r=>R.push(r));
+}
+// big amounts show as 2.76B / 332.6M; tap to see or edit the full number (shorthand works)
+const resShow=v=>{ const t=String(v==null?"":v).trim(); return t===""?"":fmtBig(num(t)); };
 function buildRes(){
+  migrateResources();
   const b=document.getElementById("resBody"); b.innerHTML="";
   state.resources.forEach(r=>{
     const row=document.createElement("div"); row.className="metric-row res-row";
     row.innerHTML=`<div class="metric-top">
         <input class="resname" aria-label="Material name" value="${esc(r.n||'')}">
         <span class="res-inputs">
-          <input class="tnum" data-f="h" inputmode="numeric" aria-label="${esc(r.n||'Material')} amount" value="${esc(r.h||'')}" placeholder="have">
+          <input class="tnum" data-f="h" inputmode="numeric" aria-label="${esc(r.n||'Material')} amount" value="${esc(resShow(r.h))}" placeholder="have">
           <button class="del" title="Remove" aria-label="Remove ${esc(r.n||'material')}">×</button>
         </span>
       </div>`;
     const ni=row.querySelector(".resname");
     const hi=row.querySelector(".tnum");
     ni.oninput=()=>{ r.n=ni.value; scheduleSave(); };
-    hi.oninput=()=>{ r.h=hi.value; scheduleSave(); };
+    hi.oninput=()=>{ r.h=hi.value.trim()===""?"":String(num(hi.value)); scheduleSave(); };
+    hi.addEventListener("focus",()=>{ hi.value=r.h===""?"":fmt(num(r.h)); hi.select(); });
+    hi.addEventListener("blur",()=>{ hi.value=resShow(r.h); });
     row.querySelector(".del").onclick=()=>{ const i=state.resources.indexOf(r); if(i>-1){ state.resources.splice(i,1); buildRes(); scheduleSave(); } };
     b.appendChild(row);
   });
@@ -2383,6 +2419,11 @@ function paintMastNext(){
   el.innerHTML = c ? `<b>Level up next:</b> ${esc(c.m.n)} (${c.lv} → ${Math.min(100,(Math.floor(c.lv/10)+1)*10)}) — best for ${c.info.best}, closest to the next breakpoint.`
                    : `<b>All ${MAIN_TROOP} / all-squad masters are at Kindred Soul.</b>`;
 }
+function paintMastSkillSum(card,m){
+  const el=card.querySelector(".msum"); if(!el) return;
+  const S=Array.isArray(m.skills)?m.skills:[];
+  el.textContent = S.some(x=>num(x&&x.l)) ? " · Skills "+[0,1,2,3].map(i=>{ const x=S[i]||{}; return num(x.l)?(x.max?"MAX":"Lv"+num(x.l)):"🔒"; }).join(" ") : "";
+}
 function buildMast(){
   const b=document.getElementById("mastBody"); b.innerHTML="";
   if(!state.ui.mastOpen) state.ui.mastOpen={};
@@ -2394,7 +2435,7 @@ function buildMast(){
     const bid="mast"+idx;
     card.innerHTML=`<div class="mhead">
         <button class="mtoggle" aria-expanded="${open}" aria-controls="${bid}"><span class="mchev" aria-hidden="true">▸</span>
-          <span style="min-width:0"><span class="mname">${esc(m.n)}</span><br><span class="mtitle">${info?esc(info.title):"Custom master"}</span></span></button>
+          <span style="min-width:0"><span class="mname">${esc(m.n)}</span><br><span class="mtitle">${info?esc(info.title):"Custom master"}</span><span class="mtitle msum"></span></span></button>
         <div class="mlvl"><div class="row"><input inputmode="numeric" aria-label="${esc(m.n)} affinity level" value="${esc(m.l)}"><span>/ 100</span></div><div class="lvlbar"><div class="lf" style="width:${pct}%"></div></div></div>
         ${info?`<span class="mchip">${esc(info.best)}</span>`:"<span></span>"}
         <button class="del" title="Remove" aria-label="Remove ${esc(m.n)}">×</button>
@@ -2406,6 +2447,11 @@ function buildMast(){
           <div><div class="label">Kindred Soul buff</div><div>${esc(info.ks)}</div></div>
           <div><div class="label">Unlocks with</div><div>${esc(info.unlock)}</div></div>
         </div>`:`<div class="field" style="margin:12px 0"><label for="${bid}n">Name</label><input id="${bid}n" class="mname-in" value="${esc(m.n)}"></div>`}
+        <div class="label">Skills <span style="text-transform:none;letter-spacing:0">· 0 = locked · tick when MAX</span></div>
+        <div class="mskills">${[0,1,2,3].map(i=>{ const sk=(m.skills&&m.skills[i])||{l:0}; return `<div class="msk ${num(sk.l)?'':'locked'} ${sk.max?'max':''}">
+          <span class="msk-n">Skill ${i+1} <button class="msk-t" data-i="${i}" title="Tap to switch Combat / Growth" aria-label="${esc(m.n)} skill ${i+1} type: ${sk.t==='c'?'Combat':sk.t==='g'?'Growth':'not set'}">${sk.t==='c'?'⚔ Combat':sk.t==='g'?'🔨 Growth':'type?'}</button></span>
+          <input class="msk-l" data-i="${i}" inputmode="numeric" aria-label="${esc(m.n)} skill ${i+1} level" value="${num(sk.l)}">
+          <label class="msk-m"><input type="checkbox" data-i="${i}" ${sk.max?'checked':''}> MAX</label></div>`; }).join("")}</div>
         <div class="label">How to level</div>
         <ol class="mhow">${masterHowTo(m,info)}</ol>
         <div class="field"><label for="${bid}o">Your note</label><textarea id="${bid}o" class="mnote notes" rows="2" style="min-height:0">${esc(m.note)}</textarea></div>
@@ -2415,6 +2461,11 @@ function buildMast(){
     const li=card.querySelector(".mlvl input"), lf=card.querySelector(".lf"), how=card.querySelector(".mhow");
     li.oninput=()=>{ m.l=li.value; lf.style.width=Math.min(100,Math.max(0,num(li.value)))+"%"; how.innerHTML=masterHowTo(m,info); paintMastNext(); scheduleSave(); };
     card.querySelector(".mnote").oninput=e=>{ m.note=e.target.value; scheduleSave(); };
+    const skOf=i=>{ if(!Array.isArray(m.skills)) m.skills=[{l:0},{l:0},{l:0},{l:0}]; return m.skills[i]||(m.skills[i]={l:0}); };
+    card.querySelectorAll(".msk-l").forEach(inp=>inp.oninput=()=>{ const sk=skOf(+inp.dataset.i); sk.l=Math.max(0,num(inp.value)); inp.closest(".msk").classList.toggle("locked",!sk.l); paintMastSkillSum(card,m); scheduleSave(); });
+    card.querySelectorAll(".msk-m input").forEach(cb=>cb.onchange=()=>{ const sk=skOf(+cb.dataset.i); sk.max=cb.checked; cb.closest(".msk").classList.toggle("max",cb.checked); paintMastSkillSum(card,m); scheduleSave(); });
+    card.querySelectorAll(".msk-t").forEach(bt=>bt.onclick=()=>{ const sk=skOf(+bt.dataset.i); sk.t=sk.t==='c'?'g':'c'; bt.textContent=sk.t==='c'?'⚔ Combat':'🔨 Growth'; scheduleSave(); });
+    paintMastSkillSum(card,m);
     const ni=card.querySelector(".mname-in"); if(ni) ni.onchange=()=>{ m.n=ni.value; buildMast(); scheduleSave(); };
     card.querySelector(".del").onclick=()=>{ const i=state.masters.indexOf(m); if(i>-1){ state.masters.splice(i,1); buildMast(); scheduleSave(); } };
     b.appendChild(card);
@@ -2677,7 +2728,8 @@ function buildLayout(){
   if(!state.ui) state.ui={tab:"Home",collapsed:{}};
   document.querySelectorAll("main > section").forEach(s=>{
     const btn=s.querySelector(".secbtn"); if(!btn) return;
-    const key=btn.textContent.trim(); s.dataset.key=key;
+    const key=(btn.querySelector("span")||btn).textContent.trim(); s.dataset.key=key;
+    if(state.ui.collapsed[key]===undefined && state.ui.collapsed[key+"▾"]!==undefined){ state.ui.collapsed[key]=state.ui.collapsed[key+"▾"]; delete state.ui.collapsed[key+"▾"]; } // old keys included the arrow
     const apply=()=>{ const c=!!state.ui.collapsed[key]; s.classList.toggle("collapsed",c); btn.setAttribute("aria-expanded",c?"false":"true"); };
     if(!btn.dataset.wired){ btn.dataset.wired="1";
       btn.addEventListener("click",()=>{ state.ui.collapsed[key]=!state.ui.collapsed[key]; apply(); scheduleSave(); }); }
