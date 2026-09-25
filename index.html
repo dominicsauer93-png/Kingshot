@@ -364,6 +364,9 @@
   .msk-l{width:56px;font-family:var(--f-mono);font-weight:700;font-size:14px;color:var(--gold);background:var(--panel);border:1px solid var(--field-line);border-radius:7px;padding:4px;text-align:center}
   .msk.max .msk-l{color:var(--green)}
   .msk-t{margin-left:4px;font:600 10.5px var(--f-body);letter-spacing:0;text-transform:none;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:1px 7px;cursor:pointer}
+  .msk-row{display:flex;align-items:center;gap:5px}
+  .msk-cap{font-family:var(--f-mono);font-size:12px;color:var(--faint)}
+  .msk-st{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
   .msk-m{display:flex;align-items:center;gap:5px;font-family:var(--f-mono);font-size:11px;color:var(--muted);cursor:pointer}
   .msk-m input{width:16px;height:16px;accent-color:var(--green)}
   .restile{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
@@ -2419,10 +2422,16 @@ function paintMastNext(){
   el.innerHTML = c ? `<b>Level up next:</b> ${esc(c.m.n)} (${c.lv} → ${Math.min(100,(Math.floor(c.lv/10)+1)*10)}) — best for ${c.info.best}, closest to the next breakpoint.`
                    : `<b>All ${MAIN_TROOP} / all-squad masters are at Kindred Soul.</b>`;
 }
+// max level of each master skill (from the game)
+const MASTER_SKILL_MAX={Pan:[5,5,5,10],Valora:[10,5,5,10],Roman:[10,10,10,10],Cassia:[10,20,20,20],Aena:[10,10],Guinevere:[10,10,20],Wilson:[10,10,10,10]};
+const skillCap=(name,i)=>{ const c=MASTER_SKILL_MAX[name]; return c&&c[i]?c[i]:0; };
+const skillIsMax=(sk,cap)=>cap?num(sk&&sk.l)>=cap:!!(sk&&sk.max);
 function paintMastSkillSum(card,m){
   const el=card.querySelector(".msum"); if(!el) return;
   const S=Array.isArray(m.skills)?m.skills:[];
-  el.textContent = S.some(x=>num(x&&x.l)) ? " · Skills "+[0,1,2,3].map(i=>{ const x=S[i]||{}; return num(x.l)?(x.max?"MAX":"Lv"+num(x.l)):"🔒"; }).join(" ") : "";
+  if(!S.some(x=>num(x&&x.l))){ el.textContent=""; return; }
+  const caps=MASTER_SKILL_MAX[m.n]||[], have=S.reduce((t,x,i)=>t+(caps[i]?Math.min(num(x&&x.l),caps[i]):0),0), tot=caps.reduce((t,c)=>t+c,0);
+  el.textContent=" · Skills "+[0,1,2,3].map(i=>{ const x=S[i]||{}; return num(x.l)?(skillIsMax(x,skillCap(m.n,i))?"MAX":"Lv"+num(x.l)):"🔒"; }).join(" ")+(tot?` (${have}/${tot})`:"");
 }
 function buildMast(){
   const b=document.getElementById("mastBody"); b.innerHTML="";
@@ -2447,11 +2456,12 @@ function buildMast(){
           <div><div class="label">Kindred Soul buff</div><div>${esc(info.ks)}</div></div>
           <div><div class="label">Unlocks with</div><div>${esc(info.unlock)}</div></div>
         </div>`:`<div class="field" style="margin:12px 0"><label for="${bid}n">Name</label><input id="${bid}n" class="mname-in" value="${esc(m.n)}"></div>`}
-        <div class="label">Skills <span style="text-transform:none;letter-spacing:0">· 0 = locked · tick when MAX</span></div>
-        <div class="mskills">${[0,1,2,3].map(i=>{ const sk=(m.skills&&m.skills[i])||{l:0}; return `<div class="msk ${num(sk.l)?'':'locked'} ${sk.max?'max':''}">
+        <div class="label">Skills <span style="text-transform:none;letter-spacing:0">· 0 = locked</span></div>
+        <div class="mskills">${[0,1,2,3].map(i=>{ const sk=(m.skills&&m.skills[i])||{l:0}, cap=skillCap(m.n,i); return `<div class="msk ${num(sk.l)?'':'locked'} ${skillIsMax(sk,cap)?'max':''}">
           <span class="msk-n">Skill ${i+1} <button class="msk-t" data-i="${i}" title="Tap to switch Combat / Growth" aria-label="${esc(m.n)} skill ${i+1} type: ${sk.t==='c'?'Combat':sk.t==='g'?'Growth':'not set'}">${sk.t==='c'?'⚔ Combat':sk.t==='g'?'🔨 Growth':'type?'}</button></span>
-          <input class="msk-l" data-i="${i}" inputmode="numeric" aria-label="${esc(m.n)} skill ${i+1} level" value="${num(sk.l)}">
-          <label class="msk-m"><input type="checkbox" data-i="${i}" ${sk.max?'checked':''}> MAX</label></div>`; }).join("")}</div>
+          <span class="msk-row"><input class="msk-l" data-i="${i}" inputmode="numeric" aria-label="${esc(m.n)} skill ${i+1} level" value="${num(sk.l)}">${cap?`<span class="msk-cap">/ ${cap}</span>`:""}</span>
+          ${cap?`<span class="msk-st">${skillIsMax(sk,cap)?'<span class="tagok">MAX ✓</span>':`${cap-num(sk.l)} to max`}</span>`
+               :`<label class="msk-m"><input type="checkbox" data-i="${i}" ${sk.max?'checked':''}> MAX</label>`}</div>`; }).join("")}</div>
         <div class="label">How to level</div>
         <ol class="mhow">${masterHowTo(m,info)}</ol>
         <div class="field"><label for="${bid}o">Your note</label><textarea id="${bid}o" class="mnote notes" rows="2" style="min-height:0">${esc(m.note)}</textarea></div>
@@ -2462,7 +2472,10 @@ function buildMast(){
     li.oninput=()=>{ m.l=li.value; lf.style.width=Math.min(100,Math.max(0,num(li.value)))+"%"; how.innerHTML=masterHowTo(m,info); paintMastNext(); scheduleSave(); };
     card.querySelector(".mnote").oninput=e=>{ m.note=e.target.value; scheduleSave(); };
     const skOf=i=>{ if(!Array.isArray(m.skills)) m.skills=[{l:0},{l:0},{l:0},{l:0}]; return m.skills[i]||(m.skills[i]={l:0}); };
-    card.querySelectorAll(".msk-l").forEach(inp=>inp.oninput=()=>{ const sk=skOf(+inp.dataset.i); sk.l=Math.max(0,num(inp.value)); inp.closest(".msk").classList.toggle("locked",!sk.l); paintMastSkillSum(card,m); scheduleSave(); });
+    card.querySelectorAll(".msk-l").forEach(inp=>inp.oninput=()=>{ const i=+inp.dataset.i, sk=skOf(i), cap=skillCap(m.n,i); sk.l=Math.max(0,num(inp.value));
+      const box=inp.closest(".msk"); box.classList.toggle("locked",!sk.l); box.classList.toggle("max",skillIsMax(sk,cap));
+      const st=box.querySelector(".msk-st"); if(st) st.innerHTML=skillIsMax(sk,cap)?'<span class="tagok">MAX ✓</span>':`${cap-sk.l} to max`;
+      paintMastSkillSum(card,m); scheduleSave(); });
     card.querySelectorAll(".msk-m input").forEach(cb=>cb.onchange=()=>{ const sk=skOf(+cb.dataset.i); sk.max=cb.checked; cb.closest(".msk").classList.toggle("max",cb.checked); paintMastSkillSum(card,m); scheduleSave(); });
     card.querySelectorAll(".msk-t").forEach(bt=>bt.onclick=()=>{ const sk=skOf(+bt.dataset.i); sk.t=sk.t==='c'?'g':'c'; bt.textContent=sk.t==='c'?'⚔ Combat':'🔨 Growth'; scheduleSave(); });
     paintMastSkillSum(card,m);
