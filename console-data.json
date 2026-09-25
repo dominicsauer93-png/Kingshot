@@ -592,26 +592,6 @@
       "n": "Gold",
       "h": "1130000",
       "need": "1000000"
-    },
-    {
-      "n": "Soldier Training speedup (hrs)",
-      "h": ""
-    },
-    {
-      "n": "General speedup (hrs)",
-      "h": ""
-    },
-    {
-      "n": "Soldier Healing speedup (hrs)",
-      "h": ""
-    },
-    {
-      "n": "Construction speedup (hrs)",
-      "h": ""
-    },
-    {
-      "n": "Research speedup (hrs)",
-      "h": ""
     }
   ],
   "goldShards": [
@@ -1191,7 +1171,7 @@
     ]
   },
   "ui": {
-    "tab": "Power",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
