@@ -1055,11 +1055,14 @@
     },
     "density": "compact",
     "mastOpen": {
-      "Aena": false,
+      "Aena": true,
       "Isnor": false,
       "Pan": true,
       "Valora": true,
-      "Roman": true
+      "Roman": true,
+      "Guinevere": true,
+      "Cassia": true,
+      "Wilson": true
     },
     "charmOpen": {
       "Archer": false,
