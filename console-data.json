@@ -540,18 +540,13 @@
   },
   "resources": [
     {
-      "n": "Soldier Training speedup (min)",
-      "h": "2661",
-      "need": ""
-    },
-    {
       "n": "General speedup (min)",
       "h": "11745",
       "need": ""
     },
     {
-      "n": "Soldier Healing speedup (min)",
-      "h": "12438",
+      "n": "Soldier Training speedup (min)",
+      "h": "2661",
       "need": ""
     },
     {
@@ -562,6 +557,15 @@
     {
       "n": "Research speedup (min)",
       "h": "5242",
+      "need": ""
+    },
+    {
+      "n": "Learning speedup (min)",
+      "h": "79"
+    },
+    {
+      "n": "Soldier Healing speedup (min)",
+      "h": "12438",
       "need": ""
     },
     {
@@ -588,30 +592,6 @@
       "n": "Gold",
       "h": "1130000",
       "need": "1000000"
-    },
-    {
-      "n": "Learning Speedup (Min",
-      "h": "79"
-    },
-    {
-      "n": "Soldier Training speedup (hrs)",
-      "h": ""
-    },
-    {
-      "n": "General speedup (hrs)",
-      "h": ""
-    },
-    {
-      "n": "Soldier Healing speedup (hrs)",
-      "h": ""
-    },
-    {
-      "n": "Construction speedup (hrs)",
-      "h": ""
-    },
-    {
-      "n": "Research speedup (hrs)",
-      "h": ""
     }
   ],
   "goldShards": [
@@ -1195,10 +1175,10 @@
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
-      "T11 Unlocks▾": false,
-      "Widgets▾": true,
-      "Troop Plan▾": false,
-      "Gold Hero Shards▾": true
+      "Troop Plan": false,
+      "T11 Unlocks": false,
+      "Widgets": true,
+      "Gold Hero Shards": true
     },
     "density": "compact",
     "mastOpen": {
