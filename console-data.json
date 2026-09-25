@@ -1534,10 +1534,16 @@
         "max": 0
       },
       {
-        "n": "",
+        "n": "Grizzly Bear",
         "lvl": 0,
         "tgt": 0,
         "max": 0
+      },
+      {
+        "n": "Giant Rhino",
+        "lvl": 0,
+        "tgt": 0,
+        "max": 100
       }
     ]
   }
