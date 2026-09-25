@@ -1502,6 +1502,42 @@
         "lvl": 50,
         "tgt": 0,
         "max": 50
+      },
+      {
+        "n": "Bison",
+        "lvl": 0,
+        "tgt": 0,
+        "max": 60
+      },
+      {
+        "n": "Lynx",
+        "lvl": 0,
+        "tgt": 0,
+        "max": 0
+      },
+      {
+        "n": "Cheetah",
+        "lvl": 0,
+        "tgt": 0,
+        "max": 70
+      },
+      {
+        "n": "Moose",
+        "lvl": 0,
+        "tgt": 0,
+        "max": 0
+      },
+      {
+        "n": "Lion",
+        "lvl": 0,
+        "tgt": 0,
+        "max": 0
+      },
+      {
+        "n": "",
+        "lvl": 0,
+        "tgt": 0,
+        "max": 0
       }
     ]
   }
