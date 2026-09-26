@@ -1186,7 +1186,7 @@
       "Troop Plan": false,
       "T11 Unlocks": false,
       "Widgets": true,
-      "Gold Hero Shards": true
+      "Gold Hero Shards": false
     },
     "density": "compact",
     "mastOpen": {
