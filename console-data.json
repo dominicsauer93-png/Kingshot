@@ -1179,7 +1179,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1676,7 +1676,7 @@
         "n": "Grizzly Bear",
         "lvl": 70,
         "tgt": 0,
-        "max": 0
+        "max": 80
       },
       {
         "n": "Giant Rhino",
@@ -1688,7 +1688,7 @@
         "n": "Mighty Bison",
         "lvl": 0,
         "tgt": 0,
-        "max": 0
+        "max": 100
       },
       {
         "n": "Alpha Black Panther",
@@ -1706,19 +1706,19 @@
         "n": "Ironclad War Elephant",
         "lvl": 0,
         "tgt": 0,
-        "max": 0
+        "max": 100
       },
       {
         "n": "Regal White Lion",
         "lvl": 0,
         "tgt": 0,
-        "max": 0
+        "max": 100
       },
       {
         "n": "Ironclad War Bear",
         "lvl": 0,
         "tgt": 0,
-        "max": 0
+        "max": 100
       }
     ]
   }
