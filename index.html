@@ -371,6 +371,11 @@
   .msk-st{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
   .msk-m{display:flex;align-items:center;gap:5px;font-family:var(--f-mono);font-size:11px;color:var(--muted);cursor:pointer}
   .msk-m input{width:16px;height:16px;accent-color:var(--green)}
+  #petBody{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+  #petBody .hname{font-size:13.5px}
+  .prank{flex:none;font-family:var(--f-disp);font-weight:800;font-size:13px;color:#1A1208;background:var(--gold);border-radius:6px;padding:1px 6px}
+  .pskill{font-size:12px;color:var(--muted);margin:-2px 0 8px}
+  .pskill b{color:var(--gold)}
   .restile{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
   .restile .label{margin-bottom:6px}
   .rt-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
@@ -882,6 +887,7 @@
         <div class="restile"><label class="label" for="pet_tmAdv">Advanced Taming Marks</label><div class="rt-row"><input class="mono" id="pet_tmAdv" data-k="tmAdv" inputmode="numeric"></div></div>
       </div>
       <p class="sub" id="petKvk" style="margin:10px 0 0"></p>
+      <p class="sub" style="margin:6px 0 0">Pets are sorted by upgrade priority for a Lethality / Health combat build (#1 first). Turn on Panther, Elephant, Bison and War Bear skills before KvK fights, Swordland and rallies.</p>
       <details class="howget"><summary>How pets level up &amp; where to get materials</summary>
         <ul>
           <li><b>Levelling:</b> Pet Food raises level (Attack/Defense buffs). Every 10 levels the pet must <b>Advance</b> using Growth Manuals, and later Nutrient Potions</li>
@@ -1727,7 +1733,7 @@ function paintGoals(){
   else spend.push({icon:"💠",title:"Charms",detail:"All charms at target",pct:100,done:true,tab:"Gear",key:"Charms"});
   // 3 Pets
   const P=state.pets||{rows:[],have:{}};
-  const pet=(P.rows||[]).filter(r=>{ const goal=num(r.tgt)||num(r.max); return goal>0&&num(r.lvl)<goal; }).sort((a,b)=>num(b.lvl)-num(a.lvl))[0];
+  const pet=(P.rows||[]).filter(r=>{ const goal=num(r.tgt)||num(r.max); return num(r.lvl)>0&&goal>0&&num(r.lvl)<goal; }).sort((a,b)=>petRank(a)-petRank(b))[0]; // highest-priority owned pet
   if(pet){ const goal=num(pet.tgt)||num(pet.max), lv=num(pet.lvl), adv=Math.min(goal,(Math.floor(lv/10)+1)*10);
     spend.push({icon:"🐾",title:`${esc(pet.n||"Pet")} → Lv ${adv}`,detail:`Lv ${lv} of ${goal} · refine with Taming Marks (${fmt(num(P.have&&P.have.tmCommon))} common · ${fmt(num(P.have&&P.have.tmAdv))} advanced)`,pct:pc(lv,goal),tab:"Gear",key:"Pets"}); }
   else spend.push({icon:"🐾",title:"Pets",detail:(P.rows||[]).length?"All pets at target":"Add your pets to track them",pct:(P.rows||[]).length?100:0,done:(P.rows||[]).length>0,tab:"Gear",key:"Pets"});
@@ -1980,6 +1986,17 @@ const PET_T={
 const PET_INFO={"Gray Wolf":{gen:1,max:50,t:"g1a"},"Lynx":{gen:1,max:60,t:"g1b"},"Bison":{gen:1,max:60,t:"g1b"},"Moose":{gen:2,max:70,t:"g2"},"Cheetah":{gen:2,max:70,t:"g2"},
   "Lion":{gen:3,max:80,t:"g3"},"Grizzly Bear":{gen:3,max:80,t:"g3"},"Mighty Bison":{gen:4,max:100,t:"g4"},"Giant Rhino":{gen:4,max:100,t:"g4"},
   "Alpha Black Panther":{gen:5,max:100,t:"g4"},"Great Moose":{gen:5,max:100,t:"g4"},"Regal White Lion":{gen:6,max:100,t:"g4"},"Ironclad War Elephant":{gen:6,max:100,t:"g4"},"Ironclad War Bear":{gen:7,max:100,t:"g4"}};
+// what each pet does for your fights (active 2-hour skill) and upgrade priority for a Lethality/Health combat build
+const PET_SKILL={"Alpha Black Panther":["+10% Troop Lethality",1,"Lethality is your main goal"],
+  "Ironclad War Elephant":["+10% Squad Health",2,"Health is your weakest stat"],
+  "Mighty Bison":["+15,000 Squad Capacity",3,"more troops in every march"],
+  "Ironclad War Bear":["−10% enemy Defense",4,"works like extra damage"],
+  "Giant Rhino":["+10% Squad Attack",5,"good, but Attack < Lethality/Health"],
+  "Regal White Lion":["+10% Squad Defense",6,"defensive, lowest-value stat"],
+  "Great Moose":["+150,000 Rally Capacity",7,"big only if you lead rallies"],
+  "Lion":["",8,"older pet, max 80"],"Grizzly Bear":["",9,"older pet, max 80"],"Cheetah":["",10,"older pet, max 70"],
+  "Moose":["−3% enemy Squad Health",11,""],"Bison":["",12,""],"Lynx":["",13,""],"Gray Wolf":["",14,""]};
+const petRank=r=>(PET_SKILL[r.n]||[,99])[1];
 function petFoodAt(T,lv){ // cumulative food to reach level lv (linear inside a 10-level band)
   let prevL=0, prevF=0;
   for(const [L,F] of T){ if(lv<=L) return prevF+(F-prevF)*(lv-prevL)/(L-prevL); prevL=L; prevF=F; }
@@ -2023,11 +2040,12 @@ function buildPets(){
   P.rows.forEach(r=>{ const i=PET_INFO[r.n]; if(i&&!num(r.max)) r.max=i.max; }); // fill known max levels
   const dl=document.getElementById("petList"); if(dl) dl.innerHTML=Object.keys(PET_INFO).map(n=>`<option value="${n}">`).join("");
   b.innerHTML="";
-  P.rows.forEach(r=>{
-    const pn=esc(r.n||'pet');
+  P.rows.slice().sort((a,b)=>petRank(a)-petRank(b)).forEach(r=>{
+    const pn=esc(r.n||'pet'), sk=PET_SKILL[r.n];
     const card=document.createElement("div"); card.className="hcard";
-    card.innerHTML=`<div class="htop"><input class="hname petname" list="petList" aria-label="Pet" value="${esc(r.n||'')}" placeholder="pet">
+    card.innerHTML=`<div class="htop">${sk&&sk[1]<=10?`<span class="prank" title="Upgrade priority">#${sk[1]}</span>`:""}<input class="hname petname" list="petList" aria-label="Pet" value="${esc(r.n||'')}" placeholder="pet">
         <button class="del" title="Remove" aria-label="Remove ${pn}">×</button></div>
+      ${sk&&(sk[0]||sk[2])?`<div class="pskill">${sk[0]?`<b>${esc(sk[0])}</b>`:""}${sk[0]&&sk[2]?" · ":""}${esc(sk[2])}</div>`:""}
       <div class="hin" style="grid-template-columns:1fr 1fr 1fr"><label>Level<input class="pf" data-f="lvl" inputmode="numeric" aria-label="${pn} level" value="${num(r.lvl)}"></label>
         <label>Target<input class="pf" data-f="tgt" inputmode="numeric" aria-label="${pn} target level" value="${num(r.tgt)||''}" placeholder="max"></label>
         <label>Max<input class="pf" data-f="max" inputmode="numeric" aria-label="${pn} max level" value="${num(r.max)||''}" placeholder="?"></label></div>
