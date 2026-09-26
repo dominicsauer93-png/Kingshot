@@ -1704,7 +1704,7 @@
       },
       {
         "n": "Ironclad War Elephant",
-        "lvl": 0,
+        "lvl": 5,
         "tgt": 0,
         "max": 100
       },
@@ -1716,7 +1716,7 @@
       },
       {
         "n": "Ironclad War Bear",
-        "lvl": 50,
+        "lvl": 45,
         "tgt": 0,
         "max": 100
       }
