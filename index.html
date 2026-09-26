@@ -311,6 +311,8 @@
   @media(max-width:560px){.restiles{grid-template-columns:1fr}}
   .restiles.four{grid-template-columns:repeat(4,1fr)}
   .restiles.five{grid-template-columns:repeat(5,1fr);margin-top:6px}
+  .restiles.six{grid-template-columns:repeat(3,1fr);margin-top:6px}
+  @media(max-width:560px){.restiles.six{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:900px){.restiles.four,.restiles.five{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:340px){.restiles.four,.restiles.five{grid-template-columns:1fr}}
   .herogrid.hggrid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
@@ -871,13 +873,15 @@
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Pets</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
       <div class="label">Materials in hand</div>
-      <div class="restiles five" id="petMats">
-        <div class="restile"><label class="label" for="pet_food">Pet Food</label><div class="rt-row"><input class="mono" id="pet_food" data-k="food" inputmode="numeric"></div></div>
-        <div class="restile"><label class="label" for="pet_manuals">Growth Manuals</label><div class="rt-row"><input class="mono" id="pet_manuals" data-k="manuals" inputmode="numeric"></div></div>
-        <div class="restile"><label class="label" for="pet_potions">Nutrient Potions</label><div class="rt-row"><input class="mono" id="pet_potions" data-k="potions" inputmode="numeric"></div></div>
+      <div class="restiles six" id="petMats">
+        <div class="restile"><label class="label" for="pet_food">Pet Food</label><div class="rt-row"><input class="mono" id="pet_food" data-k="food" inputmode="numeric"><span class="rt-of mono" id="petNeed_food"></span></div><div class="rt-short mono" id="petShort_food"></div></div>
+        <div class="restile"><label class="label" for="pet_manuals">Growth Manuals</label><div class="rt-row"><input class="mono" id="pet_manuals" data-k="manuals" inputmode="numeric"><span class="rt-of mono" id="petNeed_manuals"></span></div><div class="rt-short mono" id="petShort_manuals"></div></div>
+        <div class="restile"><label class="label" for="pet_potions">Nutrient Potions</label><div class="rt-row"><input class="mono" id="pet_potions" data-k="potions" inputmode="numeric"><span class="rt-of mono" id="petNeed_potions"></span></div><div class="rt-short mono" id="petShort_potions"></div></div>
+        <div class="restile"><label class="label" for="pet_medals">Promotion Medallions</label><div class="rt-row"><input class="mono" id="pet_medals" data-k="medals" inputmode="numeric"><span class="rt-of mono" id="petNeed_medals"></span></div><div class="rt-short mono" id="petShort_medals"></div></div>
         <div class="restile"><label class="label" for="pet_tmCommon">Common Taming Marks</label><div class="rt-row"><input class="mono" id="pet_tmCommon" data-k="tmCommon" inputmode="numeric"></div></div>
         <div class="restile"><label class="label" for="pet_tmAdv">Advanced Taming Marks</label><div class="rt-row"><input class="mono" id="pet_tmAdv" data-k="tmAdv" inputmode="numeric"></div></div>
       </div>
+      <p class="sub" id="petKvk" style="margin:10px 0 0"></p>
       <details class="howget"><summary>How pets level up &amp; where to get materials</summary>
         <ul>
           <li><b>Levelling:</b> Pet Food raises level (Attack/Defense buffs). Every 10 levels the pet must <b>Advance</b> using Growth Manuals, and later Nutrient Potions</li>
@@ -1965,21 +1969,58 @@ function paintHgSummary(){
 
 /* ---------- pets ---------- */
 // pet names from the in-game roster; max levels only where confirmed (others: enter your own)
-const PET_INFO={"Gray Wolf":50,"Bison":60,"Lynx":null,"Cheetah":70,"Moose":null,"Lion":null,"Grizzly Bear":null,"Giant Rhino":100,"Mighty Bison":null,"Alpha Black Panther":100,"Great Moose":100,"Ironclad War Elephant":null,"Regal White Lion":null,"Ironclad War Bear":null};
+// pet advance costs per generation: [advance to, pet food (cumulative from Lv1), growth manuals, nutrient potions, promotion medallions, SG/KvK pts, Alliance Brawl pts]
+const PET_T={
+  g1a:[[10,1715,15,0,0,25000,15000],[20,4895,30,0,0,50000,30000],[30,9905,45,10,0,100000,60000],[40,17565,60,20,0,150000,90000],[50,28865,90,30,10,225000,135000]],
+  g1b:[[10,2530,20,0,0,25000,15000],[20,7890,40,0,0,50000,30000],[30,16910,60,10,0,100000,60000],[40,31230,90,20,0,150000,90000],[50,52850,130,20,10,225000,135000],[60,83770,175,50,20,337500,202500]],
+  g2:[[10,3795,25,0,0,25000,15000],[20,11835,50,0,0,50000,30000],[30,25365,75,10,0,100000,60000],[40,46845,100,20,0,150000,90000],[50,79275,155,30,10,225000,135000],[60,125655,200,50,20,337500,202500],[70,188955,255,80,40,500000,300000]],
+  g3:[[10,5060,30,0,0,25000,15000],[20,15780,60,0,0,50000,30000],[30,33820,95,10,0,100000,60000],[40,62460,125,20,0,150000,90000],[50,105700,190,30,10,225000,135000],[60,167540,250,50,20,337500,202500],[70,251940,310,80,40,500000,300000],[80,360420,380,100,60,600000,360000]],
+  g4:[[10,6325,35,0,0,25000,15000],[20,19725,70,0,0,50000,30000],[30,42275,110,15,0,100000,60000],[40,78075,145,35,0,150000,90000],[50,132125,220,50,10,225000,135000],[60,209425,290,65,20,337500,202500],[70,314925,365,85,40,500000,300000],[80,450525,440,100,60,600000,360000],[90,622525,585,115,80,725000,435000],[100,834625,730,135,100,875000,525000]]
+};
+const PET_INFO={"Gray Wolf":{gen:1,max:50,t:"g1a"},"Lynx":{gen:1,max:60,t:"g1b"},"Bison":{gen:1,max:60,t:"g1b"},"Moose":{gen:2,max:70,t:"g2"},"Cheetah":{gen:2,max:70,t:"g2"},
+  "Lion":{gen:3,max:80,t:"g3"},"Grizzly Bear":{gen:3,max:80,t:"g3"},"Mighty Bison":{gen:4,max:100,t:"g4"},"Giant Rhino":{gen:4,max:100,t:"g4"},
+  "Alpha Black Panther":{gen:5,max:100,t:"g4"},"Great Moose":{gen:5,max:100,t:"g4"},"Regal White Lion":{gen:6,max:100,t:"g4"},"Ironclad War Elephant":{gen:6,max:100,t:"g4"},"Ironclad War Bear":{gen:7,max:100,t:"g4"}};
+function petFoodAt(T,lv){ // cumulative food to reach level lv (linear inside a 10-level band)
+  let prevL=0, prevF=0;
+  for(const [L,F] of T){ if(lv<=L) return prevF+(F-prevF)*(lv-prevL)/(L-prevL); prevL=L; prevF=F; }
+  return prevF;
+}
+function petCost(r){ // cost from current level to target (or max)
+  const info=PET_INFO[r.n]; if(!info) return null;
+  const T=PET_T[info.t], lv=num(r.lvl), goal=Math.min(num(r.tgt)||num(r.max)||info.max, info.max);
+  const c={food:0,manuals:0,potions:0,medals:0,kvk:0,ab:0,exact:lv%10===0};
+  if(goal<=lv) return c;
+  c.food=Math.max(0,Math.round(petFoodAt(T,goal)-petFoodAt(T,lv)));
+  T.forEach(([L,,m,p,md,k,ab])=>{ if(L>lv&&L<=goal){ c.manuals+=m; c.potions+=p; c.medals+=md; c.kvk+=k; c.ab+=ab; } });
+  return c;
+}
 function petCardState(card,r){
   const lv=num(r.lvl), mx=num(r.max), tg=Math.max(num(r.tgt),0);
   const goal=tg||mx; const pct=goal>0?Math.min(100,lv/goal*100):0, done=goal>0&&lv>=goal;
   card.classList.toggle("done",done);
   card.querySelector(".mf").style.width=pct.toFixed(1)+"%";
-  const nextAdv=(Math.floor(lv/10)+1)*10;
+  const nextAdv=(Math.floor(lv/10)+1)*10, c=petCost(r);
   card.querySelector(".hfoot").innerHTML = done?`<span class="tagok">${tg?'at target':'max'} ✓</span>`
-    : `<span>Next advance: Lv ${mx&&nextAdv>mx?mx:nextAdv}</span><span>${goal?`${fmt(goal-lv)} lv to go`:''}</span>`;
+    : `<span>Next advance: Lv ${mx&&nextAdv>mx?mx:nextAdv}</span><span>${goal?`${fmt(goal-lv)} lv to go`:''}</span>`+
+      (!lv?`<span style="flex-basis:100%">Not owned yet — set its level to include it in the totals</span>`:c?`<span style="flex-basis:100%">Food ${c.exact?'':'~'}${fmtBig(c.food)} · Manuals ${fmt(c.manuals)} · Potions ${fmt(c.potions)} · Medallions ${fmt(c.medals)}</span>
+          <span style="flex-basis:100%;color:var(--gold)">Advances worth ${fmtBig(c.kvk)} KvK/SG pts</span>`:"");
+  paintPetTotals();
+}
+function paintPetTotals(){
+  const P=state.pets; if(!P) return;
+  const t={food:0,manuals:0,potions:0,medals:0,kvk:0,ab:0};
+  (P.rows||[]).filter(r=>num(r.lvl)>0).forEach(r=>{ const c=petCost(r); if(c) Object.keys(t).forEach(k=>t[k]+=c[k]); }); // only pets you own (Lv 1+)
+  ["food","manuals","potions","medals"].forEach(k=>{ const h=num(P.have&&P.have[k]);
+    const n=document.getElementById("petNeed_"+k); if(n) n.innerHTML=`/ <b>${fmt(t[k])}</b> needed`;
+    const sh=document.getElementById("petShort_"+k); if(sh) sh.innerHTML=t[k]-h>0?`<span class="tagbad">${fmt(t[k]-h)} short</span>`:`<span class="tagok">covered ✓</span>`; });
+  const kv=document.getElementById("petKvk"); if(kv) kv.innerHTML=t.kvk?`Advancing your pets to their targets/max is worth <b style="color:var(--gold)">${fmt(t.kvk)}</b> KvK / Strongest Governor points and <b>${fmt(t.ab)}</b> Alliance Brawl points — save advances for those event days.`:"";
 }
 function buildPets(){
   if(!state.pets||!Array.isArray(state.pets.rows)) state.pets={have:{food:0,manuals:0,potions:0,tmCommon:0,tmAdv:0},rows:[]};
   const P=state.pets; if(!P.have) P.have={};
   const b=document.getElementById("petBody"); if(!b) return;
-  document.querySelectorAll("#petMats input").forEach(el=>{ const k=el.dataset.k; el.value=P.have[k]||0; el.oninput=()=>{ P.have[k]=num(el.value); scheduleSave(); }; });
+  document.querySelectorAll("#petMats input").forEach(el=>{ const k=el.dataset.k; el.value=fmt(num(P.have[k])); el.oninput=()=>{ P.have[k]=num(el.value); paintPetTotals(); scheduleSave(); }; });
+  P.rows.forEach(r=>{ const i=PET_INFO[r.n]; if(i&&!num(r.max)) r.max=i.max; }); // fill known max levels
   const dl=document.getElementById("petList"); if(dl) dl.innerHTML=Object.keys(PET_INFO).map(n=>`<option value="${n}">`).join("");
   b.innerHTML="";
   P.rows.forEach(r=>{
@@ -1993,7 +2034,7 @@ function buildPets(){
       <div class="minibar"><div class="mf"></div></div>
       <div class="hfoot"></div>`;
     const ni=card.querySelector(".petname");
-    ni.onchange=()=>{ r.n=ni.value; if(PET_INFO[r.n]&&!num(r.max)){ r.max=PET_INFO[r.n]; card.querySelector('[data-f="max"]').value=r.max; } petCardState(card,r); scheduleSave(); };
+    ni.onchange=()=>{ r.n=ni.value; if(PET_INFO[r.n]){ r.max=PET_INFO[r.n].max; card.querySelector('[data-f="max"]').value=r.max; } petCardState(card,r); scheduleSave(); };
     card.querySelectorAll(".pf").forEach(inp=>{ inp.oninput=()=>{ r[inp.dataset.f]=num(inp.value); petCardState(card,r); scheduleSave(); }; });
     card.querySelector(".del").onclick=()=>{ const i=P.rows.indexOf(r); if(i>-1){ P.rows.splice(i,1); buildPets(); scheduleSave(); } };
     petCardState(card,r);
