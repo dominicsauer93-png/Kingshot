@@ -1383,8 +1383,9 @@
       "Archer": true
     },
     "open2": {
-      "Archer": false,
-      "Cavalry": false
+      "Archer": true,
+      "Cavalry": true,
+      "Infantry": true
     }
   },
   "charms": {
