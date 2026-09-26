@@ -1179,7 +1179,7 @@
     ]
   },
   "ui": {
-    "tab": "Army",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1216,7 +1216,7 @@
       "tgt": 1500000
     },
     "cav": {
-      "cur": 29,
+      "cur": 299664,
       "tgt": 500000
     }
   },
