@@ -1613,7 +1613,7 @@
   "events": [
     {
       "n": "KvK",
-      "date": "",
+      "date": "2026-10-05",
       "every": 14,
       "time": "",
       "note": "Planned upgrades for points: Gov Gear Inf 1 Gold 0★→1★ (225k pts) + Hero Gear 3 mastery & Archer Chest/Gloves — see Notes"
@@ -1624,6 +1624,27 @@
       "every": 2,
       "time": "",
       "note": ""
+    },
+    {
+      "n": "Armament Competition (Type 1)",
+      "date": "2026-09-28",
+      "every": 7,
+      "time": "",
+      "note": "2 days (Mon–Tue): Gov Gear score 3 pts, Mythic shard 125, speedups 1 pt/min"
+    },
+    {
+      "n": "Armament Competition (Type 2)",
+      "date": "2026-10-02",
+      "every": 7,
+      "time": "",
+      "note": "2 days (Fri–Sat): Forgehammer 800, Widget 1,600, Mithril 8,000, speedups 1 pt/min, Truegold 100"
+    },
+    {
+      "n": "Officer Project (Type 1)",
+      "date": "2026-09-30",
+      "every": 0,
+      "time": "",
+      "note": "2 days (Wed–Thu): Forgehammer 6,000 pts each, Widget 12,000 each — final reward Forgehammers"
     }
   ],
   "masterNotesV": 2,
