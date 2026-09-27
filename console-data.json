@@ -1417,13 +1417,13 @@
       },
       {
         "type": "Cavalry",
-        "lvl": 5,
+        "lvl": 6,
         "tgt": 10
       },
       {
         "type": "Cavalry",
         "lvl": 5,
-        "tgt": 10
+        "tgt": 6
       },
       {
         "type": "Infantry",
