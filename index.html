@@ -376,6 +376,9 @@
   .prank{flex:none;font-family:var(--f-disp);font-weight:800;font-size:13px;color:#1A1208;background:var(--gold);border-radius:6px;padding:1px 6px}
   .pskill{font-size:12px;color:var(--muted);margin:-2px 0 8px}
   .pskill b{color:var(--gold)}
+  .rallytog{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;color:var(--muted);cursor:pointer}
+  .rallytog input{width:16px;height:16px;accent-color:var(--gold)}
+  .hcard.rallyhero{border-color:var(--gold-2)}
   .restile{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
   .restile .label{margin-bottom:6px}
   .rt-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
@@ -835,7 +838,7 @@
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Widgets</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
       <div class="restile wide">
-        <div class="label">Widgets in hand vs. needed to max every hero</div>
+        <div class="label">Widgets in hand vs. needed to max your rally heroes</div>
         <div class="rt-row"><span class="rt-of mono" id="widMeterTxt"></span></div>
         <div class="meter"><div class="fill" id="widFill" style="width:0%"></div></div>
       </div>
@@ -887,7 +890,7 @@
         <div class="restile"><label class="label" for="pet_tmAdv">Advanced Taming Marks</label><div class="rt-row"><input class="mono" id="pet_tmAdv" data-k="tmAdv" inputmode="numeric"></div></div>
       </div>
       <p class="sub" id="petKvk" style="margin:10px 0 0"></p>
-      <p class="sub" style="margin:6px 0 0">Pets are sorted by upgrade priority for a Lethality / Health combat build (#1 first). Turn on Panther, Elephant, Bison and War Bear skills before KvK fights, Swordland and rallies.</p>
+      <p class="sub" style="margin:6px 0 0">Pets are sorted by upgrade priority for a rally-leader Lethality / Health build (#1 first). Before leading a rally, turn on Panther, Elephant, Great Moose, Bison and War Bear skills.</p>
       <details class="howget"><summary>How pets level up &amp; where to get materials</summary>
         <ul>
           <li><b>Levelling:</b> Pet Food raises level (Attack/Defense buffs). Every 10 levels the pet must <b>Advance</b> using Growth Manuals, and later Nutrient Potions</li>
@@ -1697,7 +1700,7 @@ function paintSpend(){
     ["Charm Materials","Lethality + Health","Very High","p2", st(cg,num(c.have&&c.have.guides),"Guides")+"<br>"+st(cd,num(c.have&&c.have.designs),"Designs")],
     ["Pet Refinement","Lethality + Health (all troops)","High","p3", `Taming Marks in hand: ${fmt(num(pt.tmCommon))} common · ${fmt(num(pt.tmAdv))} advanced`],
     ["Governor Gear Materials","Attack + Defense","Medium","p4", g?st(gs,num(g.have&&g.have.satin),"Satin")+"<br>"+st(gt,num(g.have&&g.have.threads),"Threads")+" · "+st(gv,num(g.have&&g.have.vision),"Vision"):"—"],
-    ["Widgets","Variable (hero-specific)","Situational","p5", st(wn,wh,"Widgets")]
+    ["Widgets","Your rally heroes only (Amadeus, Yang, Ava)","Situational","p5", st(wn,wh,"Widgets")]
   ];
   host.innerHTML=rows.map((r,i)=>`<div class="spend"><div class="rank">${i+1}</div><div class="inv">${r[0]}</div><div class="sstat">${r[1]}</div><span class="prio ${r[3]}">${r[2]}</span><div class="your">${r[4]}</div></div>`).join("");
 }
@@ -1742,7 +1745,8 @@ function paintGoals(){
     spend.push({icon:"🛡️",title:`Governor Gear to ${GOV_TIERS[tgt][0]}`,detail:lag.length?`${6-lag.length}/6 pieces there · Satin ${sat-sH>0?fmt(sat-sH)+" short":"covered"}`:"Set complete",pct:pc(6-lag.length,6),done:!lag.length,tab:"Gear",key:"Governor Gear"}); }
   // 5 Widgets — a hero that can level now, else the cheapest next level
   const W=(state.widgets&&state.widgets.rows)||[];
-  const wc=W.filter(r=>num(r.lvl)<10).map(r=>({r,next:widNext(num(r.lvl)),have:num(r.have)})).sort((a,b)=>(b.have>=b.next)-(a.have>=a.next)||(a.next-a.have)-(b.next-b.have))[0];
+  const WR=W.some(r=>r.rally)?W.filter(r=>r.rally):W; // rally heroes only
+  const wc=WR.filter(r=>num(r.lvl)<10).map(r=>({r,next:widNext(num(r.lvl)),have:num(r.have)})).sort((a,b)=>(b.have>=b.next)-(a.have>=a.next)||(a.next-a.have)-(b.next-b.have))[0];
   if(wc) spend.push({icon:"⚙️",title:`${esc(wc.r.hero||"Hero")} widget Lv ${num(wc.r.lvl)} → ${num(wc.r.lvl)+1}`,detail:wc.have>=wc.next?"Ready to level up now":`${fmt(wc.next-wc.have)} widgets short`,pct:pc(wc.have,wc.next),tab:"Gear",key:"Widgets"});
   else spend.push({icon:"⚙️",title:"Widgets",detail:W.length?"All heroes maxed":"Add heroes to track widgets",pct:W.length?100:0,done:W.length>0,tab:"Gear",key:"Widgets"});
 
@@ -1989,11 +1993,11 @@ const PET_INFO={"Gray Wolf":{gen:1,max:50,t:"g1a"},"Lynx":{gen:1,max:60,t:"g1b"}
 // what each pet does for your fights (active 2-hour skill) and upgrade priority for a Lethality/Health combat build
 const PET_SKILL={"Alpha Black Panther":["+10% Troop Lethality",1,"Lethality is your main goal"],
   "Ironclad War Elephant":["+10% Squad Health",2,"Health is your weakest stat"],
-  "Mighty Bison":["+15,000 Squad Capacity",3,"more troops in every march"],
-  "Ironclad War Bear":["−10% enemy Defense",4,"works like extra damage"],
-  "Giant Rhino":["+10% Squad Attack",5,"good, but Attack < Lethality/Health"],
-  "Regal White Lion":["+10% Squad Defense",6,"defensive, lowest-value stat"],
-  "Great Moose":["+150,000 Rally Capacity",7,"big only if you lead rallies"],
+  "Great Moose":["+150,000 Rally Capacity",3,"you lead rallies — more troops in every rally"],
+  "Mighty Bison":["+15,000 Squad Capacity",4,"more troops in every march"],
+  "Ironclad War Bear":["−10% enemy Defense",5,"works like extra damage"],
+  "Giant Rhino":["+10% Squad Attack",6,"good, but Attack < Lethality/Health"],
+  "Regal White Lion":["+10% Squad Defense",7,"defensive, lowest-value stat"],
   "Lion":["",8,"older pet, max 80"],"Grizzly Bear":["",9,"older pet, max 80"],"Cheetah":["",10,"older pet, max 70"],
   "Moose":["−3% enemy Squad Health",11,""],"Bison":["",12,""],"Lynx":["",13,""],"Gray Wolf":["",14,""]};
 const petRank=r=>(PET_SKILL[r.n]||[,99])[1];
@@ -2153,8 +2157,10 @@ function buildWidgets(){
   w.rows.forEach(r=>{ if(r.have==null) r.have=0; });
   if(w.have){ if(w.rows[0]) w.rows[0].have=(w.rows[0].have||0)+num(w.have); w.have=0; }
   const dl=document.getElementById("widHeroList"); if(dl) dl.innerHTML=WID_HEROES.map(h=>`<option value="${h}">`).join("");
+  // one-time: mark your rally heroes (you lead rallies with Amadeus, Yang and Ava)
+  if(!w.rallySet){ w.rows.forEach(r=>{ if(["Amadeus","Yang","Ava"].includes(r.hero)) r.rally=true; }); w.rallySet=true; }
   const b=document.getElementById("widBody"); b.innerHTML="";
-  w.rows.forEach(r=>{
+  w.rows.slice().sort((a,b)=>(!!b.rally)-(!!a.rally)).forEach(r=>{
     const hn=esc(r.hero||'hero');
     const card=document.createElement("div"); card.className="hcard";
     card.innerHTML=`<div class="htop"><input class="hname" list="widHeroList" aria-label="Hero" value="${esc(r.hero||'')}" placeholder="hero">
@@ -2162,7 +2168,10 @@ function buildWidgets(){
       <div class="hin"><label>Level<input class="lvlIn" inputmode="numeric" aria-label="${hn} widget level" value="${r.lvl}"></label>
         <label>Have<input class="haveIn" inputmode="numeric" aria-label="${hn} widgets in hand" value="${r.have||0}"></label></div>
       <div class="pips" aria-hidden="true">${Array.from({length:10},()=>'<span></span>').join("")}</div>
-      <div class="hfoot"></div>`;
+      <div class="hfoot"></div>
+      <label class="rallytog"><input type="checkbox" ${r.rally?'checked':''} aria-label="${hn} is a rally hero"> ⚔ Rally hero${r.rally?'':' <span style="color:var(--faint)">(skip widgets)</span>'}</label>`;
+    card.classList.toggle("rallyhero",!!r.rally);
+    card.querySelector(".rallytog input").onchange=e=>{ r.rally=e.target.checked; buildWidgets(); scheduleSave(); };
     const hi=card.querySelector(".hname"), li=card.querySelector(".lvlIn"), hv=card.querySelector(".haveIn");
     hi.oninput=()=>{ r.hero=hi.value; scheduleSave(); };
     li.oninput=()=>{ r.lvl=Math.max(0,Math.min(10,num(li.value))); widCardState(card,r); paintWidgetsMeter(); scheduleSave(); };
@@ -2177,8 +2186,9 @@ function buildWidgets(){
 }
 function paintWidgetsMeter(){
   const w=state.widgets; if(!w) return;
-  const total=w.rows.reduce((s,r)=>s+widRem(r.lvl),0);
-  const haveSum=w.rows.reduce((s,r)=>s+num(r.have),0);
+  const R=w.rows.some(r=>r.rally)?w.rows.filter(r=>r.rally):w.rows; // rally heroes only, once marked
+  const total=R.reduce((s,r)=>s+widRem(r.lvl),0);
+  const haveSum=R.reduce((s,r)=>s+num(r.have),0);
   const pct=total>0?Math.min(100,haveSum/total*100):100;
   const fill=document.getElementById("widFill"); if(fill) fill.style.width=pct.toFixed(1)+"%";
   const txt=document.getElementById("widMeterTxt"); if(txt) txt.innerHTML=`<b>${fmt(haveSum)}</b> in hand / <b>${fmt(total)}</b> needed · `+(total-haveSum>0?`<span class="tagbad">${fmt(total-haveSum)} short</span>`:`<span class="tagok">covered ✓</span>`);
