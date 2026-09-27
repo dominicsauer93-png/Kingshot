@@ -1185,7 +1185,7 @@
       "Build Order — TG6→TG8": false,
       "Troop Plan": false,
       "T11 Unlocks": false,
-      "Widgets": true,
+      "Widgets": false,
       "Gold Hero Shards": false
     },
     "density": "compact",
