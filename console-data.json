@@ -1235,11 +1235,11 @@
       {
         "type": "Infantry",
         "slot": "Helm (Lethality)",
-        "lvC": 106,
+        "lvC": 109,
         "lvT": 179,
         "mC": 10,
         "mT": 15,
-        "xp": 322630,
+        "xp": 314230,
         "fh": 650,
         "mg": 28,
         "mith": 60
