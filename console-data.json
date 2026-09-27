@@ -221,7 +221,7 @@
     },
     {
       "name": "Truegold Legionaries (Rally Capacity)",
-      "cur": 5,
+      "cur": 6,
       "max": 12,
       "costs": [
         83,
