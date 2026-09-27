@@ -1179,7 +1179,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1493,19 +1493,23 @@
       {
         "hero": "Yang",
         "lvl": 9,
-        "have": 6
+        "have": 6,
+        "rally": true
       },
       {
         "hero": "Amadeus",
         "lvl": 4,
-        "have": 22
+        "have": 22,
+        "rally": true
       },
       {
         "hero": "Ava",
         "lvl": 2,
-        "have": 4
+        "have": 4,
+        "rally": true
       }
-    ]
+    ],
+    "rallySet": true
   },
   "farm": [
     {
