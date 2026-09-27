@@ -1200,7 +1200,7 @@
       "Wilson": true
     },
     "charmOpen": {
-      "Archer": false,
+      "Archer": true,
       "Cavalry": false,
       "Infantry": false
     },
