@@ -925,7 +925,7 @@
       "d": false
     }
   ],
-  "notes": "KvK PLAN (do on KvK gear days for points) — saved 2026-09-24\n• Governor Gear: Infantry 1 Gold 0★ → Gold 1★ — 23,000 Satin · 230 Threads · 40 Vision = 225,000 KvK points (+2.5% Infantry Attack/Defense, +61,200 power). Leaves 9,577 Satin · 27 Threads · 438 Vision; Gilded Threads are the bottleneck (next Gold 0★ → 1★ needs 230).\n• Hero Gear (Early Game Combat plan): Infantry Chest Mastery 11→12, Archer Helm Mastery 11→12, Cavalry Helm Mastery 10→11 (350 Forgehammers · 5 Mythic Gear); Archer Chest Lv 80→93 and Archer Gloves Lv 80→91 — DONE 2026-09-24. Skip the Cavalry Gloves reforge / Chest +1 swap (costs 50 XP, no gain).\n• T11 Archers: unlock needs 2,236 Dust (have 1,776 → 460 short) + 1M Gold (covered). Unlock research is ~91 days base time — start it before KvK and use Research/General speedups on the KvK research day for points. Then promote as many T10 Archers to T11 as possible (each ~+27 power: 126 vs 99).",
+  "notes": "KvK PLAN (do on KvK gear days for points) — saved 2026-09-24\n• Governor Gear: Infantry 1 Gold 0★ → Gold 1★ — 23,000 Satin · 230 Threads · 40 Vision = 225,000 KvK points (+2.5% Infantry Attack/Defense, +61,200 power). Leaves 9,577 Satin · 27 Threads · 438 Vision; Gilded Threads are the bottleneck (next Gold 0★ → 1★ needs 230).\n• Hero Gear (Early Game Combat plan) — MOVED to Officer Project Wed 30 Sep: Infantry Chest Mastery 11→12, Archer Helm Mastery 11→12, Cavalry Helm Mastery 10→11 (350 Forgehammers · 5 Mythic Gear); Archer Chest Lv 80→93 and Archer Gloves Lv 80→91 — DONE 2026-09-24. Skip the Cavalry Gloves reforge / Chest +1 swap (costs 50 XP, no gain).\n• T11 Archers: unlock needs 2,236 Dust (have 1,776 → 460 short) + 1M Gold (covered). Unlock research is ~91 days base time — start it before KvK and use Research/General speedups on the KvK research day for points. Then promote as many T10 Archers to T11 as possible (each ~+27 power: 126 vs 99).\n\nWEEK PLAN 27 Sep – 5 Oct 2026 (saved 2026-09-27)\n• Sun 27: collect Fishing (gold hero shards) + Champagne Fair (Charm Designs/Guides, widget chests); all gathering marches out.\n• Mon 28–Tue 29 Armament Competition T1: light spending only — speedups score double on Mon 5 Oct (KvK + Armament again).\n• Wed 30–Thu 1 Officer Project T1: spend Forgehammers on the Hero Gear mastery plan (350 × 6,000 ≈ 2.1M pts; final reward gives Forgehammers back) + any widgets (12,000 each).\n• Fri 2–Sat 3 Armament Competition T2: small stuff only; keep the 2 Mithril for red gear.\n• Sun 4: prep — stock healing speedups, pet skills off cooldown.\n• Mon 5 KvK + Armament T1: Gov Gear Infantry 1 Gold 0★→1★, speedups, pet advances on matching KvK days; turn on Panther + Elephant + Bison + War Bear skills before fights.\n• Swordland / TAC / Sanctuary / Alliance Championship: pet combat skills on, keep Healing speedups for between rounds.",
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
@@ -1613,10 +1613,10 @@
   "events": [
     {
       "n": "KvK",
-      "date": "",
+      "date": "2026-10-05",
       "every": 14,
       "time": "",
-      "note": "Planned upgrades for points: Gov Gear Inf 1 Gold 0★→1★ (225k pts) + Hero Gear 3 mastery & Archer Chest/Gloves — see Notes"
+      "note": "Gov Gear Inf 1 Gold 0★→1★ (225k pts), speedups (also Armament T1), pet advances, pet combat skills on — see Notes"
     },
     {
       "n": "Bear Hunt",
@@ -1624,6 +1624,27 @@
       "every": 2,
       "time": "",
       "note": ""
+    },
+    {
+      "n": "Armament Competition (Type 1)",
+      "date": "2026-09-28",
+      "every": 7,
+      "time": "",
+      "note": "Sep 28–29: light spending only. Oct 5–6: overlaps KvK — spend speedups + Gov Gear then"
+    },
+    {
+      "n": "Officer Project (Type 1)",
+      "date": "2026-09-30",
+      "every": 0,
+      "time": "",
+      "note": "Spend Forgehammers on Hero Gear mastery (Inf Chest, Archer Helm, Cav Helm) + widgets — see Notes"
+    },
+    {
+      "n": "Armament Competition (Type 2)",
+      "date": "2026-10-02",
+      "every": 7,
+      "time": "",
+      "note": "Small stuff only; keep Mithril for red gear"
     }
   ],
   "masterNotesV": 2,
