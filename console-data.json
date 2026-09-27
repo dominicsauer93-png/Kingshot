@@ -1201,7 +1201,7 @@
     },
     "charmOpen": {
       "Archer": true,
-      "Cavalry": false,
+      "Cavalry": true,
       "Infantry": false
     },
     "laterOpen": {}
