@@ -1204,7 +1204,9 @@
       "Cavalry": true,
       "Infantry": false
     },
-    "laterOpen": {}
+    "laterOpen": {
+      "nodes": false
+    }
   },
   "troopCounts": {
     "inf": {
