@@ -167,6 +167,7 @@
   .field label{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
   .field input,.field select{font-family:var(--f-mono);font-size:14px;color:var(--text);background:var(--field);border:1px solid var(--field-line);border-radius:9px;padding:9px 10px;width:140px;max-width:100%;min-height:40px}
   .field .out{font-family:var(--f-mono);font-size:15px;font-weight:700;color:var(--gold);padding:9px 0}
+  .gate-done .totals,.gate-done .unlock-note{display:none}
   .unlock-note{font-size:13px;color:var(--muted);margin:12px 0 0}
   .unlock-note b{color:var(--gold)}
   .totals{margin-top:14px;background:rgba(0,0,0,.25);border:1px solid var(--gold-deep);border-radius:12px;padding:14px}
@@ -533,7 +534,7 @@
   <div class="block" data-tab="Home">
     <div class="tiles" id="summary">
       <button class="tile" data-go="Events" id="sumEvent"><div class="lab">📅 Next event</div><div class="val">—</div><div class="meta">Add events in the Events tab</div></button>
-      <button class="tile" data-go="Army" id="sumDust"><div class="lab">🏹 T11 Archer dust</div><div class="val">—</div><div class="meta"></div><div class="minibar"><div class="mf" style="width:0%"></div></div></button>
+      <button class="tile" data-go="Army" id="sumDust"><div class="lab">⚔ T11 <span class="phName">Archer</span> dust</div><div class="val">—</div><div class="meta"></div><div class="minibar"><div class="mf" style="width:0%"></div></div></button>
       <button class="tile" data-go="Power" id="sumPower"><div class="lab">👑 Power vs benchmark</div><div class="val">—</div><div class="meta"></div></button>
       <button class="tile" data-go="Home" id="sumRoutine"><div class="lab">✔ Daily routine</div><div class="val">—</div><div class="meta">resets each day</div><div class="minibar"><div class="mf" style="width:0%"></div></div></button>
     </div>
@@ -600,11 +601,12 @@
 
   <section data-tab="Army">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>T11 Unlocks</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
-    <div class="gate">
+    <div class="gate" id="gateArc">
       <div class="gate-top">
         <div class="gate-title">Phase 1 — Archers</div>
-        <span class="gap-badge" id="gapBadge">GAP</span>
+        <span class="gap-badge">GAP</span>
       </div>
+      <div id="dustBlock">
       <div class="dustline">
         <span class="big mono" id="dustCurEcho">0</span>
         <span class="of mono" id="dustTgtEcho">/ 0</span>
@@ -615,7 +617,8 @@
         <div class="field"><span class="label" style="margin:0">Dust needed (auto)</span><div class="out" id="dustTgtVal">—</div></div>
         <div class="field"><label for="goldCur">Gold in hand</label><input class="mono" id="goldCur" inputmode="numeric"></div>
       </div>
-      <p class="unlock-note">Everything left to unlock T11 Archer is calculated live from your node levels below. <span id="goldNote"></span></p>
+      <p class="unlock-note">Everything left to unlock T11 <span class="phName">Archer</span> is calculated live from its node levels. <span id="goldNote"></span></p>
+      </div>
       <div class="nodes" id="nodes"></div>
       <div class="totals">
         <div class="label">Everything to reach T11 Archers</div>
@@ -632,12 +635,12 @@
       </div>
     </div>
 
-    <div class="gate">
+    <div class="gate" id="gateInf">
       <div class="gate-top">
         <div class="gate-title">Phase 2 — Infantry</div>
         <span class="gap-badge muted" id="infGapBadge">PHASE 2</span>
       </div>
-      <div class="dustline"><span class="of mono">Dust needed (auto):</span><span class="big mono" id="infTgtVal" style="font-size:22px">—</span></div>
+      <div class="dustline phneed"><span class="of mono">Dust needed (auto):</span><span class="big mono" id="infTgtVal" style="font-size:22px">—</span></div>
       <div class="nodes" id="infNodes"></div>
       <div class="totals">
         <div class="label">Everything to reach T11 Infantry</div>
@@ -654,12 +657,12 @@
       </div>
     </div>
 
-    <div class="gate">
+    <div class="gate" id="gateCav">
       <div class="gate-top">
         <div class="gate-title">Phase 3 — Cavalry</div>
         <span class="gap-badge muted" id="cavGapBadge">PHASE 3</span>
       </div>
-      <div class="dustline"><span class="of mono">Dust needed (auto):</span><span class="big mono" id="cavTgtVal" style="font-size:22px">—</span></div>
+      <div class="dustline phneed"><span class="of mono">Dust needed (auto):</span><span class="big mono" id="cavTgtVal" style="font-size:22px">—</span></div>
       <div class="nodes" id="cavNodes"></div>
       <div class="totals">
         <div class="label">Everything to reach T11 Cavalry</div>
@@ -677,7 +680,7 @@
     </div>
 
     <div class="card">
-      <h3>Forecast — T11 Archer unlock date</h3>
+      <h3>Forecast — T11 <span class="phName">Archer</span> unlock date</h3>
       <p class="sub">Tap once per check-in to save your current Dust + Gold. After two check-ins on different days it projects your unlock date. It counts gains and ignores spends.</p>
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
         <button class="btn primary" id="fcLog">＋ Log today's Dust + Gold</button>
@@ -1450,8 +1453,29 @@ function renderNodeTree(host,list,key,onPaint){
   const hb=later.querySelector(".grphead"), body=later.querySelector(".grpbody");
   hb.onclick=()=>{ const o=!state.ui.laterOpen[key]; state.ui.laterOpen[key]=o; later.classList.toggle("open",o); hb.setAttribute("aria-expanded",o); body.hidden=!o; scheduleSave(); };
 }
+// phases in unlock order; the first one with dust left is the "active" one everything else tracks
+const PHASES=[{k:"nodes",n:"Archer",g:"gateArc"},{k:"infNodes",n:"Infantry",g:"gateInf"},{k:"cavNodes",n:"Cavalry",g:"gateCav"}];
+const phaseRem=ph=>coreNodes(state[ph.k]||[]).reduce((s,n)=>s+nodeRem(n),0);
+function activePhase(){ return PHASES.find(ph=>phaseRem(ph)>0)||PHASES[PHASES.length-1]; }
+function phaseGold(list){ let g=0; (list||[]).forEach(nd=>{ const k=nodeResKey(nd); if(!k) return; const R=NODE_RES[k], mx=nd.max||12; for(let i=Math.max(0,nd.cur);i<mx;i++) if(R.gold[i]!=null) g+=R.gold[i]; }); return g; }
+const goldTarget=()=>phaseGold(coreNodes(state[activePhase().k]||[]));
+let _lastPhase=null;
+function orderPhases(){
+  const act=activePhase(), host=document.getElementById(act.g).parentNode, fc=document.getElementById("fcOut").closest(".card");
+  const open=PHASES.filter(ph=>phaseRem(ph)>0), done=PHASES.filter(ph=>phaseRem(ph)<=0&&ph!==act);
+  [...open,...done].forEach((ph,i)=>{ const g=document.getElementById(ph.g); host.insertBefore(g,fc);
+    const isDone=phaseRem(ph)<=0&&ph!==act;
+    g.classList.toggle("gate-done",isDone);
+    g.querySelector(".gate-title").textContent=isDone?`Done — ${ph.n}s ✓`:(ph===act?`Now — ${ph.n}`:`Next — ${ph.n}`);
+    const ne=g.querySelector(".phneed"); if(ne) ne.style.display=(ph===act)?"none":"";
+    const b=g.querySelector(".gap-badge"); if(ph!==act){ b.textContent=isDone?"T11 UNLOCKED":"NEXT"; b.classList.toggle("muted",!isDone); b.style.color=isDone?"var(--green)":""; b.style.borderColor=isDone?"rgba(94,194,124,.45)":""; } else { b.classList.remove("muted"); b.style.borderColor=""; }
+  });
+  const blk=document.getElementById("dustBlock"), ag=document.getElementById(act.g);
+  if(blk.parentNode!==ag) ag.querySelector(".gate-top").after(blk);
+  document.querySelectorAll(".phName").forEach(e=>e.textContent=act.n);
+}
 function computeTarget(){
-  const t=coreNodes(state.nodes).reduce((s,n)=>s+nodeRem(n),0);
+  const t=phaseRem(activePhase());
   state.dust.target=Math.round(t);
   return state.dust.target;
 }
@@ -1483,7 +1507,9 @@ function paintPhaseSummary(prefix,nodeList,dustTotal){
 }
 function paintT11(){ paintPhaseSummary("t11",coreNodes(state.nodes),computeTarget()); }
 function paintGate(){
-  const tgt=Math.max(1,computeTarget());
+  const tgt=Math.max(1,computeTarget()), act=activePhase();
+  const sig=act.k+PHASES.map(ph=>phaseRem(ph)>0?1:0).join("");
+  if(_lastPhase!==sig && document.getElementById(act.g)){ orderPhases(); _lastPhase=sig; }
   const cur=num(state.dust.current);
   document.getElementById("dustCurEcho").textContent=fmt(cur);
   document.getElementById("dustTgtEcho").textContent="/ "+fmt(tgt);
@@ -1491,13 +1517,14 @@ function paintGate(){
   const pct=Math.min(100,cur/tgt*100);
   document.getElementById("dustFill").style.width=pct.toFixed(1)+"%";
   const gap=Math.max(0,tgt-cur);
-  const gb=document.getElementById("gapBadge");
+  const gb=document.getElementById(act.g).querySelector(".gap-badge");
   gb.textContent = gap>0 ? "GAP "+fmt(gap)+" DUST" : "TARGET MET";
   gb.style.color = gap>0 ? "var(--red)" : "var(--green)";
   const gold=num(state.dust.gold);
-  document.getElementById("goldNote").innerHTML = gold<1000000
-    ? `You’re <b style="color:var(--red)">${fmt(1000000-gold)}</b> gold short of the 1M unlock-path total.`
-    : `Gold covers the 1M unlock path.`;
+  const gT=goldTarget();
+  document.getElementById("goldNote").innerHTML = gold<gT
+    ? `You’re <b style="color:var(--red)">${fmt(gT-gold)}</b> gold short of the ${fmtBig(gT)} unlock-path total.`
+    : `Gold covers the ${fmtBig(gT)} unlock path.`;
   paintT11();
 }
 function renderNodeRow(host,nd,onPaint){
@@ -1564,7 +1591,7 @@ function recurUntil(anchorStr, period){
   return rem===0 ? 0 : (period-rem);
 }
 function closestNode(){
-  const open=coreNodes(state.nodes).filter(n=>n.cur<(n.max||12)).map(n=>({n,rem:nodeRem(n)})).filter(x=>x.rem>0);
+  const open=coreNodes(state[activePhase().k]||[]).filter(n=>n.cur<(n.max||12)).map(n=>({n,rem:nodeRem(n)})).filter(x=>x.rem>0);
   if(!open.length) return null;
   open.sort((a,b)=>a.rem-b.rem); return open[0];
 }
@@ -1579,11 +1606,11 @@ function buildToday(){
   const cn=closestNode();
   const f=forecastCalc();
   let unlockTxt="log two check-ins for a date";
-  if(f){ const dDays=f.dustRate>0?(gate-curDust)/f.dustRate:Infinity, gGap=Math.max(0,1000000-num(state.dust.gold)),
+  if(f){ const dDays=f.dustRate>0?(gate-curDust)/f.dustRate:Infinity, gGap=Math.max(0,goldTarget()-num(state.dust.gold)),
       gDays=f.goldRate>0?gGap/f.goldRate:Infinity, both=Math.max(isFinite(dDays)?dDays:0,isFinite(gDays)?gDays:0);
     unlockTxt=(gap<=0&&gGap<=0)?"gates met — start research":(isFinite(both)?"~"+addDays(both):"stalled — rate too low"); }
   document.getElementById("todayStatus").innerHTML=
-    `<b>T11 Archer:</b> ${gap>0?fmt(gap)+" Dust to the gate":"Dust gate met"}. `+
+    `<b>T11 ${activePhase().n}:</b> ${gap>0?fmt(gap)+" Dust to the gate":"Dust gate met"}. `+
     (cn?`Closest node: <b>${cn.n.name.replace(/ \(.*/,'')}</b> (${fmt(cn.rem)} dust).`:`All prereq nodes done — buy the unlock.`)+
     `<br><b>Forecast:</b> unlock ${unlockTxt}. `+
     `<b>Do first:</b> Battle research Tier VI (lethality/health), then feed the archer grind.`;
@@ -1591,8 +1618,8 @@ function buildToday(){
   buildChecks("todayRoutine", t.routine);
   // flags
   const flags=[];
-  const gGap=Math.max(0,1000000-num(state.dust.gold));
-  if(gGap>0) flags.push({w:true, t:`Gold gate: ${fmt(gGap)} short of 1M — bank gold, don't burn it on Dust exchange.`});
+  const gGap=Math.max(0,goldTarget()-num(state.dust.gold));
+  if(gGap>0) flags.push({w:true, t:`Gold gate: ${fmt(gGap)} short of ${fmtBig(goldTarget())} — bank gold, don't burn it on Dust exchange.`});
   if(state.govGear){ const tgt=state.govGear.targetIdx, lag=state.govGear.pieces.filter(p=>p.cur<tgt).length;
     if(lag) flags.push({w:false, t:`Gov Gear: ${lag}/6 pieces below target — level the lowest pieces evenly for the set bonus.`}); }
   const rs=(state.resources||[]).find(r=>/research speed(?!up)/i.test(r.n));
@@ -1750,9 +1777,9 @@ function paintGoals(){
   if(wc) spend.push({icon:"⚙️",title:`${esc(wc.r.hero||"Hero")} widget Lv ${num(wc.r.lvl)} → ${num(wc.r.lvl)+1}`,detail:wc.have>=wc.next?"Ready to level up now":`${fmt(wc.next-wc.have)} widgets short`,pct:pc(wc.have,wc.next),tab:"Gear",key:"Widgets"});
   else spend.push({icon:"⚙️",title:"Widgets",detail:W.length?"All heroes maxed":"Add heroes to track widgets",pct:W.length?100:0,done:W.length>0,tab:"Gear",key:"Widgets"});
 
-  // progress: T11 Archer
+  // progress: T11 (active troop type)
   const tgt=computeTarget(), cur=num(state.dust.current), cn=closestNode();
-  prog.push({icon:"🏹",title:"Unlock T11 Archers",detail:tgt-cur>0?`${fmt(tgt-cur)} Dust to go`+(cn?` · closest node: ${esc(cn.n.name.replace(/ \(.*/,""))}`:""):"Dust gate met — start the research",pct:pc(cur,tgt),done:tgt<=cur,tab:"Army",key:"T11 Unlocks"});
+  prog.push({icon:"⚔",title:`Unlock T11 ${activePhase().n}`,detail:tgt-cur>0?`${fmt(tgt-cur)} Dust to go`+(cn?` · closest node: ${esc(cn.n.name.replace(/ \(.*/,""))}`:""):"Dust gate met — start the research",pct:pc(cur,tgt),done:tgt<=cur,tab:"Army",key:"T11 Unlocks"});
   // build order — first building not done
   const bl=(state.buildings||[]).find(b=>!b.d&&bldRem(b).tg+bldRem(b).ttg>0);
   if(bl){ const r=bldRem(bl); prog.push({icon:"🏰",title:`${esc(bl.n)}: ${esc(r.cur)} → TG 8`,detail:`${fmt(r.tg)} TG · ${fmt(r.ttg)} TTG left for this building`,pct:pc(num(state.tg.have),num(state.tg.need)),tab:"Army",key:"Build Order — TG6→TG8"}); }
@@ -1819,7 +1846,7 @@ function paintForecast(){
   const out=document.getElementById("fcOut"); if(!out) return;
   const f=forecastCalc();
   if(!f){ out.innerHTML=`<span class="sub">Log at least two check-ins on different days to see a projection.</span>`; return; }
-  const dustTgt=computeTarget(), goldTgt=1000000;
+  const dustTgt=computeTarget(), goldTgt=goldTarget();
   const curDust=num(state.dust.current), curGold=num(state.dust.gold);
   const dNeed=Math.max(0,dustTgt-curDust), gNeed=Math.max(0,goldTgt-curGold);
   const dDays = f.dustRate>0 ? dNeed/f.dustRate : Infinity;
@@ -1838,8 +1865,8 @@ function paintForecast(){
   html+=`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line)">`;
   if(dNeed<=0&&gNeed<=0) html+=`<b style="color:var(--green)">Both gates met — start the research.</b>`;
   else if(blocked) html+=`<b style="color:var(--amber)">One gate isn't growing — log more, or lift that rate.</b>`;
-  else html+=`<b style="color:var(--gold)">T11 Archer unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
-  html+=`<br><span class="sub">Then ~${Math.round(nodeResDays(coreNodes(state.nodes)))}d research on top (runs once you start it). Based on ${f.days.toFixed(0)}d of history.</span></div>`;
+  else html+=`<b style="color:var(--gold)">T11 ${activePhase().n} unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
+  html+=`<br><span class="sub">Then ~${Math.round(nodeResDays(coreNodes(state[activePhase().k]||[])))}d research on top (runs once you start it). Based on ${f.days.toFixed(0)}d of history.</span></div>`;
   out.innerHTML=html;
 }
 function buildForecast(){
@@ -2264,7 +2291,7 @@ function buildGovGear(){
 function paintInf(){
   const t=coreNodes(state.infNodes).reduce((s,n)=>s+nodeRem(n),0);
   const el=document.getElementById("infTgtVal"); if(el) el.textContent=fmt(Math.round(t));
-  paintPhaseSummary("infT11",coreNodes(state.infNodes),t);
+  paintPhaseSummary("infT11",coreNodes(state.infNodes),t); paintGate();
 }
 function buildInfantry(){
   if(!Array.isArray(state.infNodes)) return;
@@ -2276,7 +2303,7 @@ function buildInfantry(){
 function paintCav(){
   const t=coreNodes(state.cavNodes).reduce((s,n)=>s+nodeRem(n),0);
   const el=document.getElementById("cavTgtVal"); if(el) el.textContent=fmt(Math.round(t));
-  paintPhaseSummary("cavT11",coreNodes(state.cavNodes),t);
+  paintPhaseSummary("cavT11",coreNodes(state.cavNodes),t); paintGate();
 }
 function buildCavalry(){
   if(!Array.isArray(state.cavNodes)) return;
