@@ -291,6 +291,8 @@
   .mast.open .mtoggle .mchev{transform:rotate(90deg)}
   .mtoggle .mname{font-family:var(--f-disp);font-weight:700;font-size:15px;letter-spacing:.04em}
   .mtoggle .mtitle{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mtoggle > span:last-child{display:block;overflow:hidden}
+  .mtoggle .mwhy{white-space:normal}
   .mlvl{display:flex;flex-direction:column;gap:5px}
   .mlvl .row{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px;color:var(--faint)}
   .mlvl input{width:50px;font-family:var(--f-mono);font-weight:700;font-size:14px;color:var(--gold);background:var(--field);border:1px solid var(--field-line);border-radius:7px;padding:4px 2px;text-align:center}
@@ -2499,6 +2501,17 @@ const MASTER_INFO={
   Isnor:    {title:"Legendary Explorer",  talent:"Old Hand",           research:"Squads' Attack",    best:"Archers",    ks:"+15% Squads' Lethality · +15% Squads' Health", unlock:"Generation 5 Heroes"}
 };
 const MAIN_TROOP="Archers";
+// upgrade order for a rally leader chasing Lethality + Health (like PET_SKILL ranks)
+const MASTER_RANK={
+  Cassia:[1,"+20% Lethality + Health for all troops · combat skills · +Rally Capacity"],
+  Pan:[2,"10 levels from Kindred Soul → Archer Lethality research"],
+  Guinevere:[3,"+15% Lethality + Health for all troops"],
+  Isnor:[4,"+15% Lethality + Health · Archers · still low level"],
+  Valora:[5,"Infantry Health research · Bear Hunt"],
+  Roman:[6,"Cavalry Attack · Attack/Defense buff"],
+  Wilson:[7,"Infantry · Growth skills only"],
+  Aena:[8,"Cavalry · Growth skills only"]};
+const mastRank=m=>(MASTER_RANK[m.n]||[99])[0];
 function masterHowTo(m,info){
   const lv=Math.max(0,Math.min(100,Math.floor(num(m.l))));
   const steps=[];
@@ -2532,15 +2545,15 @@ function paintMastSkillSum(card,m){
 function buildMast(){
   const b=document.getElementById("mastBody"); b.innerHTML="";
   if(!state.ui.mastOpen) state.ui.mastOpen={};
-  state.masters.forEach((m,idx)=>{
-    const info=MASTER_INFO[m.n];
+  state.masters.slice().sort((a,b)=>mastRank(a)-mastRank(b)).forEach((m,idx)=>{
+    const info=MASTER_INFO[m.n], rk=MASTER_RANK[m.n];
     const open=!!state.ui.mastOpen[m.n];
     const pct=Math.min(100,Math.max(0,num(m.l)));
     const card=document.createElement("div"); card.className="mast"+(open?" open":"");
     const bid="mast"+idx;
     card.innerHTML=`<div class="mhead">
         <button class="mtoggle" aria-expanded="${open}" aria-controls="${bid}"><span class="mchev" aria-hidden="true">▸</span>
-          <span style="min-width:0"><span class="mname">${esc(m.n)}</span><br><span class="mtitle">${info?esc(info.title):"Custom master"}</span><span class="mtitle msum"></span></span></button>
+          <span style="min-width:0">${rk?`<span class="prank" title="Upgrade priority">#${rk[0]}</span> `:""}<span class="mname">${esc(m.n)}</span><br>${rk?`<span class="mtitle mwhy" style="color:var(--gold)">${esc(rk[1])}</span><br>`:""}<span class="mtitle">${info?esc(info.title):"Custom master"}</span><span class="mtitle msum"></span></span></button>
         <div class="mlvl"><div class="row"><input inputmode="numeric" aria-label="${esc(m.n)} affinity level" value="${esc(m.l)}"><span>/ 100</span></div><div class="lvlbar"><div class="lf" style="width:${pct}%"></div></div></div>
         ${info?`<span class="mchip">${esc(info.best)}</span>`:"<span></span>"}
         <button class="del" title="Remove" aria-label="Remove ${esc(m.n)}">×</button>
