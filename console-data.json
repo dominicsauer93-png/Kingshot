@@ -1170,7 +1170,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-09-29",
+    "routineDate": "2026-09-30",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1199,7 +1199,7 @@
     ]
   },
   "ui": {
-    "tab": "Power",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
