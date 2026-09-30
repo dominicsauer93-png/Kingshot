@@ -733,9 +733,9 @@
   <section data-tab="Gear">
     <div class="sechead"><h2><button class="secbtn" aria-expanded="true"><span>Spending Priority</span><span class="rule"></span><span class="chev" aria-hidden="true">▾</span></button></h2></div>
     <div class="card">
-      <p class="sub">Where to spend event currency and shop tokens, highest first. "Your status" updates from the sections below.</p>
+      <p class="sub">What to upgrade first, following Quaad's advice. "Your status" updates from the sections below.</p>
       <div class="spendlist" id="spendBody"></div>
-      <p class="sub" style="margin:12px 0 0">Charms give permanent stat boosts to your whole army, so charm materials are never wasted.</p>
+      <p class="sub" style="margin:12px 0 0">Charms give permanent Lethality + Health to your whole army, so charm materials are never wasted.</p>
     </div>
   </section>
 
@@ -1715,7 +1715,7 @@ function buildEvents(){
   paintEvents();
 }
 
-/* ---------- spending priority (order from the "Charms vs Other Investments" guide) ---------- */
+/* ---------- spending priority (order from Quaad's advice) ---------- */
 function paintSpend(){
   const host=document.getElementById("spendBody"); if(!host) return;
   const st=(need,have,label)=>{ const d=need-have; return need<=0?`${label}: nothing needed`:d>0?`${label}: <span class="tagbad">${fmt(d)} short</span>`:`${label}: <span class="tagok">covered ✓</span>`; };
@@ -1724,12 +1724,15 @@ function paintSpend(){
   const pt=(state.pets&&state.pets.have)||{};
   const g=state.govGear; let gs=0,gt=0,gv=0; if(g) g.pieces.forEach(p=>{ const r=govRem(p.cur,g.targetIdx); gs+=r.s; gt+=r.t; gv+=r.v; });
   const w=state.widgets||{rows:[]}; const wn=(w.rows||[]).reduce((a,r)=>a+widRem(r.lvl),0), wh=(w.rows||[]).reduce((a,r)=>a+num(r.have),0);
+  const WL=((w.rows||[]).some(r=>r.rally)?w.rows.filter(r=>r.rally):(w.rows||[])).slice().sort((a,b)=>num(a.lvl)-num(b.lvl));
+  const RED=119, AC=(hg.rows||[]).filter(r=>r.type==="Archer"||r.type==="Cavalry"), acDone=AC.filter(r=>num(r.lvC)>=RED).length;
   const rows=[
-    ["Forgehammers","Lethality + Health (Hero Gear)","Highest","p1", st(fh,num(hg.have&&hg.have.fh),"Forgehammers")],
-    ["Charm Materials","Lethality + Health","Very High","p2", st(cg,num(c.have&&c.have.guides),"Guides")+"<br>"+st(cd,num(c.have&&c.have.designs),"Designs")],
-    ["Pet Refinement","Lethality + Health (all troops)","High","p3", `Taming Marks in hand: ${fmt(num(pt.tmCommon))} common · ${fmt(num(pt.tmAdv))} advanced`],
-    ["Governor Gear Materials","Attack + Defense","Medium","p4", g?st(gs,num(g.have&&g.have.satin),"Satin")+"<br>"+st(gt,num(g.have&&g.have.threads),"Threads")+" · "+st(gv,num(g.have&&g.have.vision),"Vision"):"—"],
-    ["Widgets","Your rally heroes only (Amadeus, Yang, Ava)","Situational","p5", st(wn,wh,"Widgets")]
+    ["Widgets","Rally heroes (Amadeus, Yang, Ava) · keep Infantry, Cavalry and Archer at the same level — lowest first","Highest","p1", st(wn,wh,"Widgets")+(WL.length?`<br>Levels: ${WL.map(r=>esc(r.hero)+" "+num(r.lvl)).join(" · ")}`:"")],
+    ["Hero Gear Levels (XP)","Archer + Cavalry pieces to Red +19 (Lv 119)","Very High","p2", acDone>=AC.length?`<span class="tagok">all ${AC.length} at Lv ${RED} ✓</span>`:`${acDone}/${AC.length} pieces at Lv ${RED} · <span class="tagbad">${AC.length-acDone} to go</span>`],
+    ["Hero Gear (Forgehammers)","Archer Boots next · keep mastery one step behind your next imbuement","High","p3", st(fh,num(hg.have&&hg.have.fh),"Forgehammers")],
+    ["Governor Gear","Infantry pieces first","Medium","p4", g?st(gs,num(g.have&&g.have.satin),"Satin")+"<br>"+st(gt,num(g.have&&g.have.threads),"Threads")+" · "+st(gv,num(g.have&&g.have.vision),"Vision"):"—"],
+    ["Charm Materials","Infantry charms first, then Archers · Lethality + Health","Medium","p4", st(cg,num(c.have&&c.have.guides),"Guides")+"<br>"+st(cd,num(c.have&&c.have.designs),"Designs")],
+    ["Pet Refinement","Lethality + Health · after the above","Later","p5", `Taming Marks in hand: ${fmt(num(pt.tmCommon))} common · ${fmt(num(pt.tmAdv))} advanced`]
   ];
   host.innerHTML=rows.map((r,i)=>`<div class="spend"><div class="rank">${i+1}</div><div class="inv">${r[0]}</div><div class="sstat">${r[1]}</div><span class="prio ${r[3]}">${r[2]}</span><div class="your">${r[4]}</div></div>`).join("");
 }
@@ -1756,9 +1759,9 @@ function paintGoals(){
   // 1 Forgehammers
   const hg=state.heroGear||{rows:[],have:{}}; let fh=0; (hg.rows||[]).forEach(r=>{ fh+=hgCalcCost(r).fh; }); const fhH=num(hg.have&&hg.have.fh);
   spend.push({icon:"🔨",title:"Forgehammers",detail:fh-fhH>0?`${fmt(fh-fhH)} short for your hero gear targets`:"Hero gear targets covered",pct:pc(fhH,fh),done:fhH>=fh,tab:"Gear",key:"Hero Gear"});
-  // 2 Charms — main troop first, else the least-finished troop
+  // 2 Charms — Infantry first (Quaad), then Archers
   const c=state.charms||{rows:[],have:{}};
-  const cGroups=["Archer","Infantry","Cavalry"].map(t=>{ const rs=(c.rows||[]).filter(r=>r.type===t); let g=0,d=0,lv=0,tg=0,at=0; rs.forEach(r=>{ const m=charmRem(r.lvl,r.tgt); g+=m.g; d+=m.d; lv+=r.lvl; tg+=r.tgt; if(r.lvl>=r.tgt) at++; }); return {t,rs,g,d,lv,tg,at}; }).filter(x=>x.rs.length);
+  const cGroups=["Infantry","Archer","Cavalry"].map(t=>{ const rs=(c.rows||[]).filter(r=>r.type===t); let g=0,d=0,lv=0,tg=0,at=0; rs.forEach(r=>{ const m=charmRem(r.lvl,r.tgt); g+=m.g; d+=m.d; lv+=r.lvl; tg+=r.tgt; if(r.lvl>=r.tgt) at++; }); return {t,rs,g,d,lv,tg,at}; }).filter(x=>x.rs.length);
   const cg=cGroups.find(x=>x.at<x.rs.length);
   if(cg){ const gS=Math.max(0,cg.g-num(c.have.guides)), dS=Math.max(0,cg.d-num(c.have.designs));
     spend.push({icon:"💠",title:`${cg.t} charms to target`,detail:`${cg.at}/${cg.rs.length} done · `+(gS||dS?`${fmt(gS)} Guides · ${fmt(dS)} Designs short`:"materials covered — upgrade now"),pct:pc(cg.lv,cg.tg),tab:"Gear",key:"Charms"}); }
@@ -1772,13 +1775,17 @@ function paintGoals(){
   // 4 Governor gear
   const g=state.govGear; if(g){ const tgt=g.targetIdx, lag=g.pieces.filter(p=>p.cur<tgt); let sat=0; g.pieces.forEach(p=>{ sat+=govRem(p.cur,tgt).s; }); const sH=num(g.have&&g.have.satin);
     spend.push({icon:"🛡️",title:`Governor Gear to ${GOV_TIERS[tgt][0]}`,detail:lag.length?`${6-lag.length}/6 pieces there · Satin ${sat-sH>0?fmt(sat-sH)+" short":"covered"}`:"Set complete",pct:pc(6-lag.length,6),done:!lag.length,tab:"Gear",key:"Governor Gear"}); }
-  // 5 Widgets — a hero that can level now, else the cheapest next level
+  // 5 Widgets — lowest-level rally hero first, so all three stay level
   const W=(state.widgets&&state.widgets.rows)||[];
   const WR=W.some(r=>r.rally)?W.filter(r=>r.rally):W; // rally heroes only
-  const wc=WR.filter(r=>num(r.lvl)<10).map(r=>({r,next:widNext(num(r.lvl)),have:num(r.have)})).sort((a,b)=>(b.have>=b.next)-(a.have>=a.next)||(a.next-a.have)-(b.next-b.have))[0];
+  const wc=WR.filter(r=>num(r.lvl)<10).map(r=>({r,next:widNext(num(r.lvl)),have:num(r.have)})).sort((a,b)=>num(a.r.lvl)-num(b.r.lvl)||(a.next-a.have)-(b.next-b.have))[0];
   if(wc) spend.push({icon:"⚙️",title:`${esc(wc.r.hero||"Hero")} widget Lv ${num(wc.r.lvl)} → ${num(wc.r.lvl)+1}`,detail:wc.have>=wc.next?"Ready to level up now":`${fmt(wc.next-wc.have)} widgets short`,pct:pc(wc.have,wc.next),tab:"Gear",key:"Widgets"});
   else spend.push({icon:"⚙️",title:"Widgets",detail:W.length?"All heroes maxed":"Add heroes to track widgets",pct:W.length?100:0,done:W.length>0,tab:"Gear",key:"Widgets"});
 
+  // Archer + Cavalry hero gear to Red +19 (Lv 119)
+  const ACg=(hg.rows||[]).filter(r=>r.type==="Archer"||r.type==="Cavalry"), acLow=ACg.filter(r=>num(r.lvC)<119).sort((a,b)=>num(b.lvC)-num(a.lvC));
+  spend.push({icon:"🔺",title:"Archer + Cavalry gear to Red +19",detail:acLow.length?`${ACg.length-acLow.length}/${ACg.length} at Lv 119 · next: ${esc(acLow[0].type)} ${esc(acLow[0].slot.replace(/ \(.*/,""))} Lv ${num(acLow[0].lvC)} → 119`:"All at Lv 119+",pct:pc(ACg.length-acLow.length,ACg.length),done:!acLow.length,tab:"Gear",key:"Hero Gear"});
+  const SPEND_ORDER=["⚙️","🔺","🔨","🛡️","💠","🐾"]; spend.sort((a,b)=>SPEND_ORDER.indexOf(a.icon)-SPEND_ORDER.indexOf(b.icon)); // Quaad's order
   // progress: T11 (active troop type)
   const tgt=computeTarget(), cur=num(state.dust.current), cn=closestNode();
   prog.push({icon:"⚔",title:`Unlock T11 ${activePhase().n}`,detail:tgt-cur>0?`${fmt(tgt-cur)} Dust to go`+(cn?` · closest node: ${esc(cn.n.name.replace(/ \(.*/,""))}`:""):"Dust gate met — start the research",pct:pc(cur,tgt),done:tgt<=cur,tab:"Army",key:"T11 Unlocks"});

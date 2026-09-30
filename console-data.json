@@ -459,11 +459,11 @@
   ],
   "trackNow": [
     {
-      "t": "Widgets: push Archer boot widget next; keep the Cavalry hero one upgrade behind",
+      "t": "Widgets: keep all 3 rally heroes (Inf, Cav, Archer) at the same level — lowest first",
       "d": false
     },
     {
-      "t": "Governor Gear: Archer + Cavalry to Red 19+ first, then main hero gear",
+      "t": "Hero Gear: Archer + Cavalry pieces to Red +19 (Lv 119) first, then main hero gear",
       "d": false
     },
     {
