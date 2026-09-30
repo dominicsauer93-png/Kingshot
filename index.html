@@ -2532,7 +2532,7 @@ function paintMastNext(){
                    : `<b>All ${MAIN_TROOP} / all-squad masters are at Kindred Soul.</b>`;
 }
 // max level of each master skill (from the game)
-const MASTER_SKILL_MAX={Pan:[5,5,5,10],Valora:[10,5,5,10],Roman:[10,10,10,10],Cassia:[10,20,20,20],Aena:[10,10],Guinevere:[10,10,20],Wilson:[10,10,10,10]};
+const MASTER_SKILL_MAX={Pan:[5,5,5,10],Valora:[10,5,5,10],Roman:[10,10,10,10],Cassia:[10,20,20,20],Aena:[10,10,10,10],Guinevere:[10,10,20,20],Isnor:[10,10,10,10],Wilson:[10,10,10,10]};
 const skillCap=(name,i)=>{ const c=MASTER_SKILL_MAX[name]; return c&&c[i]?c[i]:0; };
 const skillIsMax=(sk,cap)=>cap?num(sk&&sk.l)>=cap:!!(sk&&sk.max);
 function paintMastSkillSum(card,m){
