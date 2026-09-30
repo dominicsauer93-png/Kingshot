@@ -2560,13 +2560,14 @@ function buildMast(){
                :`<label class="msk-m"><input type="checkbox" data-i="${i}" ${sk.max?'checked':''}> MAX</label>`}</div>`; }).join("")}</div>
         <div class="label">How to level</div>
         <ol class="mhow">${masterHowTo(m,info)}</ol>
-        <div class="field"><label for="${bid}o">Your note</label><textarea id="${bid}o" class="mnote notes" rows="2" style="min-height:0">${esc(m.note)}</textarea></div>
+        <div class="field"><label for="${bid}o">Your note</label><textarea id="${bid}o" class="mnote notes" rows="2" style="min-height:0;overflow:hidden;resize:none">${esc(m.note)}</textarea></div>
       </div>`;
     const tg=card.querySelector(".mtoggle"), body=card.querySelector(".mbody");
-    tg.onclick=()=>{ const o=!state.ui.mastOpen[m.n]; state.ui.mastOpen[m.n]=o; card.classList.toggle("open",o); tg.setAttribute("aria-expanded",o); body.hidden=!o; scheduleSave(); };
+    tg.onclick=()=>{ const o=!state.ui.mastOpen[m.n]; state.ui.mastOpen[m.n]=o; card.classList.toggle("open",o); tg.setAttribute("aria-expanded",o); body.hidden=!o; if(o) fitNote(); scheduleSave(); };
     const li=card.querySelector(".mlvl input"), lf=card.querySelector(".lf"), how=card.querySelector(".mhow");
     li.oninput=()=>{ m.l=li.value; lf.style.width=Math.min(100,Math.max(0,num(li.value)))+"%"; how.innerHTML=masterHowTo(m,info); paintMastNext(); scheduleSave(); };
-    card.querySelector(".mnote").oninput=e=>{ m.note=e.target.value; scheduleSave(); };
+    const nt=card.querySelector(".mnote"), fitNote=()=>{ nt.style.height="auto"; nt.style.height=(nt.scrollHeight+2)+"px"; }; // grow to fit, no inner scroll
+    nt.oninput=()=>{ m.note=nt.value; fitNote(); scheduleSave(); };
     const skOf=i=>{ if(!Array.isArray(m.skills)) m.skills=[{l:0},{l:0},{l:0},{l:0}]; return m.skills[i]||(m.skills[i]={l:0}); };
     card.querySelectorAll(".msk-l").forEach(inp=>inp.oninput=()=>{ const i=+inp.dataset.i, sk=skOf(i), cap=skillCap(m.n,i); sk.l=Math.max(0,num(inp.value));
       const box=inp.closest(".msk"); box.classList.toggle("locked",!sk.l); box.classList.toggle("max",skillIsMax(sk,cap));
@@ -2577,7 +2578,7 @@ function buildMast(){
     paintMastSkillSum(card,m);
     const ni=card.querySelector(".mname-in"); if(ni) ni.onchange=()=>{ m.n=ni.value; buildMast(); scheduleSave(); };
     card.querySelector(".del").onclick=()=>{ const i=state.masters.indexOf(m); if(i>-1){ state.masters.splice(i,1); buildMast(); scheduleSave(); } };
-    b.appendChild(card);
+    b.appendChild(card); if(open) requestAnimationFrame(fitNote);
   });
   paintMastNext();
   document.getElementById("addMast").onclick=()=>{
