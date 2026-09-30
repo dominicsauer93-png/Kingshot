@@ -459,13 +459,29 @@
   ],
   "trackNow": [
     {
+      "t": "Widgets: push Archer boot widget next; keep the Cavalry hero one upgrade behind",
+      "d": false
+    },
+    {
+      "t": "Governor Gear: Archer + Cavalry to Red 19+ first, then main hero gear",
+      "d": false
+    },
+    {
+      "t": "Forgehammers: keep Hero Gear mastery one step behind your next imbuement",
+      "d": false
+    },
+    {
+      "t": "No pets/buffs active? Infantry Gov Gear → Infantry charms → Archers (charms = Lethality + Health)",
+      "d": false
+    },
+    {
       "t": "Battle research Tier VI — lifts Lethality / Health off the V→VI wall",
       "d": false
     }
   ],
   "trackFarm": [
     {
-      "t": "Farm Truegold Dust toward the T11 Archer unlock",
+      "t": "Farm Truegold Dust toward the T11 Infantry unlock",
       "d": false
     },
     {
@@ -1271,7 +1287,7 @@
         "slot": "Gloves (Health)",
         "lvC": 139,
         "lvT": 200,
-        "mC": 12,
+        "mC": 13,
         "mT": 18,
         "xp": 377720,
         "fh": 930,
@@ -1283,7 +1299,7 @@
         "slot": "Chest (Health)",
         "lvC": 139,
         "lvT": 179,
-        "mC": 11,
+        "mC": 12,
         "mT": 17,
         "xp": 212400,
         "fh": 870,
@@ -1307,7 +1323,7 @@
         "slot": "Helm (Lethality)",
         "lvC": 119,
         "lvT": 159,
-        "mC": 10,
+        "mC": 11,
         "mT": 13,
         "xp": 165600,
         "fh": 360,
@@ -1317,7 +1333,7 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 80,
+        "lvC": 84,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1329,7 +1345,7 @@
       {
         "type": "Cavalry",
         "slot": "Chest (Health)",
-        "lvC": 81,
+        "lvC": 85,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1355,7 +1371,7 @@
         "slot": "Helm (Lethality)",
         "lvC": 139,
         "lvT": 179,
-        "mC": 11,
+        "mC": 12,
         "mT": 15,
         "xp": 212400,
         "fh": 540,
@@ -1365,7 +1381,7 @@
       {
         "type": "Archer",
         "slot": "Gloves (Health)",
-        "lvC": 94,
+        "lvC": 96,
         "lvT": 139,
         "mC": 8,
         "mT": 12,
@@ -1377,9 +1393,9 @@
       {
         "type": "Archer",
         "slot": "Chest (Health)",
-        "lvC": 93,
+        "lvC": 98,
         "lvT": 139,
-        "mC": 8,
+        "mC": 9,
         "mT": 12,
         "xp": 138930,
         "fh": 420,
