@@ -1241,7 +1241,8 @@
       "Infantry": false
     },
     "laterOpen": {
-      "nodes": false
+      "nodes": false,
+      "cavNodes": false
     }
   },
   "troopCounts": {
