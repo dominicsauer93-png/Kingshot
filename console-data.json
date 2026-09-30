@@ -716,7 +716,7 @@
     {
       "n": "Pan",
       "l": "90",
-      "note": "Best for Archers · Lethality research\nNEXT SKILLS (skill books in hand: 1,374)\n1. Skill 2 Good Steward 4→5 — need 1,826 more books (XP ✓)\n2. Then Skill 4 Ways and Means 9→10 — unlocks after step 1 (XP ✓ books ✓)\nDo Pan before Valora: 4,100 books for 2 levels.",
+      "note": "Best for Archers · Lethality research\nSKILLS = Growth only → spend books on Cassia first, Pan last\n1. Skill 2 Good Steward 4→5 — 3,200 books (XP ✓, Close 1 ✓)\n2. Then Skill 4 Ways and Means 9→10 — unlocks after step 1 (900 books, XP ✓)",
       "skills": [
         {
           "l": 5,
@@ -741,7 +741,7 @@
     {
       "n": "Valora",
       "l": "90",
-      "note": "Best for Infantry · Health research · Bear Hunt\nNEXT SKILLS (skill books in hand: 1,374)\n1. Skill 3 4→5 — need 2,626 more books (XP ✓)\n2. Skill 2 4→5 — need 1,826 more books + Relationship Close 2 ✗\n3. Then Skill 4 Savage Advantage 9→10 — unlocks after steps 1+2 (XP ✓ books ✓)",
+      "note": "Best for Infantry · Health research · Bear Hunt\nNEXT SKILLS (after Cassia)\n1. Skill 3 4→5 — 4,000 books (XP ✓)\n2. Skill 2 4→5 — 3,200 books + Relationship Close 2 ✗\n3. Then Skill 4 Savage Advantage 9→10 — unlocks after steps 1+2 (900 books, XP ✓)",
       "skills": [
         {
           "l": 10,
@@ -811,7 +811,7 @@
     {
       "n": "Cassia",
       "l": "40",
-      "note": "Best for ALL troops · Defense research\nKindred Soul: +20% Lethality + Health (best combat buff)\nNEXT: level 40 → 50 (needs Emblems)\nSkills: Combat skills 2 + 3 first · skill 4 locked",
+      "note": "Best for ALL troops · Defense research\nKindred Soul: +20% Lethality + Health (best combat buff)\nBOOKS GO HERE FIRST (skill books in hand: 3,388)\n1. Skill 1 Recruiter 6→7 — ready now (1,800 books ✓, XP ✓)\n2. Gift Cassia to Casual 1 Affinity — unlocks Skill 4 (+5,000 Rally Capacity) and Skill 2\n3. Skill 3 Commando 4→5 (Lethality + Health) — 3,000 books ✓, XP 53,400 / 595,800 ✗ (tap Learn)\n4. Skill 2 Firepower 5→6 (Attack + Defense) — 2,500 books ✓, XP ✓, needs Casual 1\nNEXT LEVEL: 40 → 50 (needs Emblems)",
       "skills": [
         {
           "l": 6,
