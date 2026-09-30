@@ -765,7 +765,7 @@
     {
       "n": "Roman",
       "l": "60",
-      "note": "Attack research — +15% Atk/Def at Kindred Soul · Best for Cavalry",
+      "note": "Best for Cavalry · Attack research\nNEXT: level 60 → 70 (needs Emblems)\nSkills: all 4 at Lv7 / 10 — Combat skills 1 + 4 first",
       "skills": [
         {
           "l": 7,
@@ -788,7 +788,7 @@
     {
       "n": "Wilson",
       "l": "60",
-      "note": "Health research — +10% Atk/Def at Kindred Soul · Best for Infantry",
+      "note": "Best for Infantry · Health research\nNEXT: level 60 → 70 (needs Emblems)\nSkills: all Growth — low priority for combat",
       "skills": [
         {
           "l": 7,
@@ -811,7 +811,7 @@
     {
       "n": "Cassia",
       "l": "40",
-      "note": "Defense research — +20% Lethality/Health at Kindred Soul · Best for all squads",
+      "note": "Best for ALL troops · Defense research\nKindred Soul: +20% Lethality + Health (best combat buff)\nNEXT: level 40 → 50 (needs Emblems)\nSkills: Combat skills 2 + 3 first · skill 4 locked",
       "skills": [
         {
           "l": 6,
@@ -834,7 +834,7 @@
     {
       "n": "Guinevere",
       "l": "40",
-      "note": "Defense research — +15% Lethality/Health at Kindred Soul · Best for all squads",
+      "note": "Best for ALL troops · Defense research\nKindred Soul: +15% Lethality + Health\nNEXT: level 40 → 50 (needs Emblems)\nSkills: Combat skill 3 first · skill 4 locked",
       "skills": [
         {
           "l": 5,
@@ -857,7 +857,7 @@
     {
       "n": "Aena",
       "l": "30",
-      "note": "Lethality research — +15% Atk/Def at Kindred Soul · Best for Cavalry",
+      "note": "Best for Cavalry · Lethality research\nNEXT: level 30 → 40 (needs Emblems)\nSkills: all Growth — low priority",
       "skills": [
         {
           "l": 1,
@@ -880,7 +880,7 @@
     {
       "n": "Isnor",
       "l": "20",
-      "note": "Attack research — +15% Lethality/Health at Kindred Soul · Best for Archers",
+      "note": "Best for Archers · Attack research\nKindred Soul: +15% Lethality + Health\nNEXT: level 20 → 30 (needs Emblems)\nSkills: Combat skill 2 still locked",
       "skills": [
         {
           "l": 1,
