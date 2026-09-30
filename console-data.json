@@ -1700,8 +1700,8 @@
   "pets": {
     "have": {
       "food": 63400,
-      "manuals": 1185,
-      "potions": 50,
+      "manuals": 1286,
+      "potions": 63,
       "tmCommon": 69,
       "tmAdv": 2,
       "medals": 8
