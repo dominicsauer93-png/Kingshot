@@ -1215,14 +1215,17 @@
     ]
   },
   "ui": {
-    "tab": "Power",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
       "Troop Plan": false,
       "T11 Unlocks": false,
       "Widgets": false,
-      "Gold Hero Shards": false
+      "Gold Hero Shards": false,
+      "Masters": true,
+      "Mystic Trials": true,
+      "Resources & Speedups": true
     },
     "density": "compact",
     "mastOpen": {
