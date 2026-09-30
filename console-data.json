@@ -716,7 +716,7 @@
     {
       "n": "Pan",
       "l": "90",
-      "note": "Lethality research — +15% Def at Kindred Soul · Best for Archers · push to 100 (Ways-and-Means / Falconer) · Next skill upgrades (2026-09-25, skill books in hand 1,374): Skill 2 Good Steward Lv4→5 (Storehouse Governor Stamina replenishment +30 at Lv4) — 276,000 Learning XP ✓, Close 1 ✓, 3,200 books (1,826 short). Skill 4 Ways and Means Lv9→10 (+100 Mystery Badges per daily missions, +3 Mystery Shop refreshes at Lv9) — 93,000 Learning XP ✓, 900 books ✓, needs Total Master Skill Lv24 (now 23 ✗). Order: Good Steward first → 24 unlocks Ways and Means. Books for both: 4,100.",
+      "note": "Best for Archers · Lethality research\nNEXT SKILLS (skill books in hand: 1,374)\n1. Skill 2 Good Steward 4→5 — need 1,826 more books (XP ✓)\n2. Then Skill 4 Ways and Means 9→10 — unlocks after step 1 (XP ✓ books ✓)\nDo Pan before Valora: 4,100 books for 2 levels.",
       "skills": [
         {
           "l": 5,
@@ -741,7 +741,7 @@
     {
       "n": "Valora",
       "l": "90",
-      "note": "Health research — +15% Atk at Kindred Soul · Best for Infantry · rally / Bear Hunt value · Next skill upgrades (2026-09-25, skill books in hand 1,374): Skill 2 Lv4→5 — 220,800 Learning XP ✓, Relationship Close 2 ✗, 3,200 books (1,826 short). Skill 3 Lv4→5 — 345,600 Learning XP ✓, Close 1 ✓, 4,000 books (2,626 short). Skill 4 Savage Advantage Lv9→10 (+Bear Hunt Squad Capacity; 27,000 at Lv9) — 93,000 Learning XP ✓, 900 books ✓, needs Total Master Skill Lv29 (now 27 ✗). Order: Skill 3 first (only books missing) → 28; one more skill level → 29 unlocks Skill 4.",
+      "note": "Best for Infantry · Health research · Bear Hunt\nNEXT SKILLS (skill books in hand: 1,374)\n1. Skill 3 4→5 — need 2,626 more books (XP ✓)\n2. Skill 2 4→5 — need 1,826 more books + Relationship Close 2 ✗\n3. Then Skill 4 Savage Advantage 9→10 — unlocks after steps 1+2 (XP ✓ books ✓)",
       "skills": [
         {
           "l": 10,
