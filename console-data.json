@@ -1262,7 +1262,7 @@
       "Power": false,
       "Buildings": false,
       "Troops": false,
-      "Shards": true,
+      "Shards": false,
       "Masters": false,
       "Gov": true
     }
