@@ -1697,8 +1697,8 @@ function paintGoals(){
   if(tr) prog.push({title:`Train ${tr.l}`,detail:`${fmt(tr.t-tr.c)} to reach ${fmt(tr.t)}`,open:()=>openTroopSheet(tr.k,tr.l),key:"Troop Plan"});
   const mc=(state.masters||[]).map(m=>({m,info:MASTER_INFO[m.n],lv:num(m.l)})).filter(x=>x.info&&x.lv<100&&(x.info.best===MAIN_TROOP||x.info.best==="All squads")).sort((a,b)=>b.lv-a.lv)[0];
   if(mc){ const n2=Math.min(100,(Math.floor(mc.lv/10)+1)*10); prog.push({title:`${esc(mc.m.n)} affinity ${mc.lv} → ${n2}`,detail:n2===100?"Kindred Soul unlocks the research tree":"Emblems needed at the breakpoint",open:()=>openMastSheet(mc.m),key:"Masters"}); }
-  const sh=(state.goldShards||[]).filter(r=>num(r.need)>num(r.have)).sort((a,b)=>(num(a.need)-num(a.have))-(num(b.need)-num(b.have)))[0];
-  if(sh) prog.push({title:`${esc(sh.n)} shards`,detail:`${fmt(num(sh.need)-num(sh.have))} short — closest hero to done`,open:()=>openShardSheet(sh),key:"Gold Hero Shards"});
+  const sh=(state.goldShards||[]).filter(r=>shardNeed(r)>num(r.have)).sort((a,b)=>(shardNeed(a)-num(a.have))-(shardNeed(b)-num(b.have)))[0];
+  if(sh) prog.push({title:`${esc(sh.n)} shards`,detail:`${fmt(shardNeed(sh)-num(sh.have))} short — closest hero to done`,open:()=>openShardSheet(sh),key:"Gold Hero Shards"});
   const all=[...spend,...prog], showAll=!!state.ui.doAll, L=showAll?all:all.slice(0,5); lastGoals=all;
   hs.innerHTML=L.map(doHtml).join("")||`<div class="empty">Everything is at target ✓</div>`;
   bindAll(hs,".do",b=>{ const g2=L[+b.dataset.i]; goToSection(null,g2.key,g2.open); });
@@ -2001,37 +2001,56 @@ function openPetSheet(r){
     onDelete:()=>{ const i=state.pets.rows.indexOf(r); if(i>-1) state.pets.rows.splice(i,1); }});
 }
 
-/* ---------- gold hero shards ---------- */
+/* ---------- gold hero shards: star tiers ----------
+   Each star has 6 steps (T0–T5). The first 5 steps cost the tier's base amount and the 6th costs the next tier's base:
+   0★: 1,1,1,1,1,5 · 1★: 5×5 + 15 · 2★: 15×5 + 40 · 3★: 40×5 + 100 · 4★: 100×6  → 0★ to 5★ = 1,065 shards */
+const SHARD_LEAF=[1,1,1,1,1,5, 5,5,5,5,5,15, 15,15,15,15,15,40, 40,40,40,40,40,100, 100,100,100,100,100,100];
+const SHARD_MAX=SHARD_LEAF.length; // 30 = 5★ max
+const starLabel=p=>p>=SHARD_MAX?"5★ Max":`${Math.floor(p/6)}★ T${p%6}`;
+const starGlyphs=p=>{ const s=Math.min(5,Math.floor(p/6)); return "★".repeat(s)+"☆".repeat(5-s); };
+const STAR_OPTS=Array.from({length:SHARD_MAX+1},(_,i)=>[String(i),starLabel(i)]);
+const hasStars=r=>r.pos!=null&&r.pos!=="";
+function shardNeed(r){ if(!hasStars(r)) return num(r.need); const a=Math.max(0,Math.min(SHARD_MAX,num(r.pos))), b=Math.max(a,Math.min(SHARD_MAX,r.tgt==null||r.tgt===""?SHARD_MAX:num(r.tgt))); let t=0; for(let i=a;i<b;i++) t+=SHARD_LEAF[i]; return t; }
 function renderShards(){
   const L=state.goldShards||[]; let N=0,H=0,S=0,dn=0;
-  L.forEach(r=>{ const n=num(r.need),h=num(r.have); N+=n; H+=Math.min(h,n); S+=Math.max(0,n-h); if(h>=n&&n>0) dn++; });
-  const close=L.filter(r=>num(r.need)>num(r.have)).sort((a,b)=>(num(a.need)-num(a.have))-(num(b.need)-num(b.have)))[0];
+  L.forEach(r=>{ const n=shardNeed(r),h=num(r.have); N+=n; H+=Math.min(h,n); S+=Math.max(0,n-h); if(h>=n&&n>0) dn++; });
+  const close=L.filter(r=>shardNeed(r)>num(r.have)).sort((a,b)=>(shardNeed(a)-num(a.have))-(shardNeed(b)-num(b.have)))[0];
   const gen=num(state.shardGeneral), RALLY=["Yang","Ava"]; // general shards fit any Mythic hero except Amadeus & Helga
-  const genFor=L.filter(r=>RALLY.includes(r.n)&&num(r.need)>num(r.have)).sort((a,b)=>(num(a.need)-num(a.have))-(num(b.need)-num(b.have)))[0];
+  const genFor=L.filter(r=>RALLY.includes(r.n)&&shardNeed(r)>num(r.have)).sort((a,b)=>(shardNeed(a)-num(a.have))-(shardNeed(b)-num(b.have)))[0];
   $("#shardTiles").innerHTML=tileH({id:"shTot",label:"All heroes",value:pc(H,N).toFixed(0)+"%",sub:`${fmt(H)} / ${fmt(N)} · ${dn}/${L.length} done`,p:pc(H,N)})+
-    tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genFor?`best on ${esc(genFor.n)} (${fmt(num(genFor.need)-num(genFor.have))} short)`:"any hero except Amadeus & Helga"})+
-    (close?tileH({id:"shNext",label:"Closest to done",value:esc(close.n),txt:true,sub:`${fmt(num(close.need)-num(close.have))} short`}):tileH({label:"Closest to done",value:"All done",txt:true}));
+    tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genFor?`best on ${esc(genFor.n)} (${fmt(shardNeed(genFor)-num(genFor.have))} short)`:"any hero except Amadeus & Helga"})+
+    (close?tileH({id:"shNext",label:"Closest to done",value:esc(close.n),txt:true,sub:`${fmt(shardNeed(close)-num(close.have))} short`}):tileH({label:"Closest to done",value:"All done",txt:true}));
   on("shNext",()=>close&&openShardSheet(close)); on("shGen",openGeneralShardSheet);
   const b=$("#goldShardBody");
-  b.innerHTML=L.map((r,i)=>{ const n=num(r.need),h=num(r.have),done=n>0&&h>=n;
-    return `<button class="vcard ${done?"s-done":""}" data-i="${i}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(r.n||"Hero")}</span></span><span class="vc-big">${fmt(h)}<small>/ ${n>0?fmt(n):"?"}</small></span>${barH(n>0?pc(h,n):0,done?"ok":"")}<span class="vc-line">${n<=0?'<span class="faint">tap to set shards needed</span>':done?'<span class="ok">Done ✓</span>':`<span class="bad">${fmt(n-h)} short</span>`}</span></button>`; }).join("");
+  b.innerHTML=L.map((r,i)=>{ const n=shardNeed(r),h=num(r.have),st=hasStars(r),maxed=st&&num(r.pos)>=SHARD_MAX,done=maxed||(n>0&&h>=n);
+    return `<button class="vcard ${done?"s-done":""}" data-i="${i}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(r.n||"Hero")}</span></span>
+      ${st?`<span class="vc-sub"><span class="gold" style="letter-spacing:1px">${starGlyphs(num(r.pos))}</span> ${esc(starLabel(num(r.pos)))}${maxed?"":` → ${esc(starLabel(r.tgt==null||r.tgt===""?SHARD_MAX:num(r.tgt)))}`}</span>`:`<span class="vc-sub faint">tap to set star tier</span>`}
+      <span class="vc-big">${fmt(h)}<small>/ ${n>0?fmt(n):st?"0":"?"}</small></span>${barH(n>0?pc(h,n):(done?100:0),done?"ok":"")}
+      <span class="vc-line">${maxed?'<span class="ok">5★ Max ✓</span>':n<=0?'<span class="faint">set the star tier</span>':done?'<span class="ok">Enough shards ✓</span>':`<span class="bad">${fmt(n-h)} short</span>`}</span></button>`; }).join("");
   bindAll(b,".vcard",x=>openShardSheet(L[+x.dataset.i]));
-  on("addGoldShard",()=>{ const r={n:"New hero",need:0,have:0}; L.push(r); afterEdit(); openShardSheet(r); });
+  on("addGoldShard",()=>{ const r={n:"New hero",need:0,have:0,pos:0,tgt:SHARD_MAX}; L.push(r); afterEdit(); openShardSheet(r); });
 }
 function openGeneralShardSheet(){
   openSheet({title:"General Mythic shards",sub:"Fit any Mythic hero except Amadeus and Helga.",build(f){
     f.appendChild(fld("General shards in hand",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v}));
     const inf=infoBox(); f.appendChild(inf);
-    const rf=()=>{ const g=num(state.shardGeneral), L=(state.goldShards||[]).filter(r=>!/amadeus|helga/i.test(r.n||"")&&num(r.need)>num(r.have));
+    const rf=()=>{ const g=num(state.shardGeneral), L=(state.goldShards||[]).filter(r=>!/amadeus|helga/i.test(r.n||"")&&shardNeed(r)>num(r.have));
       const rally=L.filter(r=>["Yang","Ava"].includes(r.n));
-      inf.innerHTML=`<b>Best use:</b> your rally heroes first — `+(rally.length?rally.map(r=>`${esc(r.n)} needs <b>${fmt(num(r.need)-num(r.have))}</b>`).join(", "):"both done")+
+      inf.innerHTML=`<b>Best use:</b> your rally heroes first — `+(rally.length?rally.map(r=>`${esc(r.n)} needs <b>${fmt(shardNeed(r)-num(r.have))}</b>`).join(", "):"both done")+
         `.<br>Amadeus only takes his own shards.`+(g?`<br>You have <b>${fmt(g)}</b> to place.`:""); };
     rf(); return rf; }});
 }
 function openShardSheet(r){
-  openSheet({title:r.n||"Hero",sub:"Gold (Mythic) hero shards.",build(f){
+  openSheet({title:r.n||"Hero",sub:"Star tier and hero shards.",build(f){
     f.appendChild(fld("Hero",{value:r.n,set:v=>r.n=v}));
-    f.appendChild(frow(fld("Shards in hand",{type:"num",value:r.have,get:()=>r.have,set:v=>r.have=v}),fld("Shards needed",{type:"num",value:r.need,get:()=>r.need,set:v=>r.need=v})));
+    f.appendChild(frow(fld("Star tier now",{type:"select",value:hasStars(r)?String(num(r.pos)):"",options:(hasStars(r)?[]:[["","— not set —"]]).concat(STAR_OPTS),set:v=>{ r.pos=v===""?null:parseInt(v,10); if(r.tgt==null) r.tgt=SHARD_MAX; }}),
+      fld("Target",{type:"select",value:String(r.tgt==null?SHARD_MAX:num(r.tgt)),options:STAR_OPTS,set:v=>r.tgt=parseInt(v,10)})));
+    f.appendChild(fld("Hero shards in hand",{type:"num",value:r.have,get:()=>r.have,set:v=>r.have=v}));
+    const inf=infoBox(); f.appendChild(inf);
+    const rf=()=>{ if(!hasStars(r)){ inf.innerHTML=`Set the star tier and the shards needed are worked out for you. (Old number: <b>${fmt(num(r.need))}</b>)`; return; }
+      const n=shardNeed(r), h=num(r.have), p=num(r.pos), nx=p<SHARD_MAX?SHARD_LEAF[p]:0;
+      inf.innerHTML=p>=SHARD_MAX?"5★ Max ✓":`Next step (${esc(starLabel(p+1))}): <b>${nx}</b> shards<br>To ${esc(starLabel(r.tgt==null?SHARD_MAX:num(r.tgt)))}: <b>${fmt(n)}</b> shards · ${h>=n?'<span class="ok">you have enough ✓</span>':`<span class="bad">${fmt(n-h)} short</span>`}`; };
+    rf(); return rf;
   },onDelete:()=>{ const i=state.goldShards.indexOf(r); if(i>-1) state.goldShards.splice(i,1); }});
 }
 
@@ -2284,7 +2303,8 @@ function renderUpdate(){
       b.append(sub(m.n),grid(fld("Affinity",{type:"num",value:m.l,get:()=>m.l,set:v=>m.l=String(v),min:0,max:100}),
         [0,1,2,3].map(i=>{ const sk=m.skills[i]||(m.skills[i]={l:0}), cap=skillCap(m.n,i); return N(`Skill ${i+1}${cap?` (max ${cap})`:""}`,sk,"l",{min:0,max:cap||99}); }))); }); });
   group("Shards","Gold hero shards","shards in hand",b=>{
-    b.append(grid(fld("General Mythic shards",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v}),state.goldShards.map(r=>N(r.n||"Hero",r,"have")))); });
+    b.append(grid(fld("General Mythic shards",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v})));
+    state.goldShards.forEach(r=>b.append(sub(r.n||"Hero"),grid(S("Star tier",hasStars(r)?num(r.pos):"",(hasStars(r)?[]:[["","— not set —"]]).concat(STAR_OPTS),v=>{ r.pos=v===""?null:parseInt(v,10); if(r.tgt==null) r.tgt=SHARD_MAX; }),N("Hero shards",r,"have")))); });
   group("Troops","Troops","current counts",b=>{
     b.append(grid([["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]].map(([k,l])=>N(l,state.troopCounts[k]||(state.troopCounts[k]={cur:0,tgt:0}),"cur")))); });
   group("Buildings","Buildings","current tier",b=>{
