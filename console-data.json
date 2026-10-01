@@ -1251,7 +1251,7 @@
     "sub": {
       "Rally": "Overview",
       "Data": "Checklists",
-      "Gear": "Charms",
+      "Gear": "Hero Gear",
       "Base": "Troops"
     },
     "t11Open": {},
@@ -1278,7 +1278,7 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 291,
+      "fh": 58,
       "mg": 10,
       "mith": 4
     },
