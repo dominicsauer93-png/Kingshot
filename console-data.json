@@ -729,7 +729,7 @@
       "have": 1,
       "pos": 29,
       "tgt": 30,
-      "rally": true
+      "rally": false
     },
     {
       "n": "Ava",
@@ -737,7 +737,7 @@
       "have": 1,
       "pos": 19,
       "tgt": 30,
-      "rally": false
+      "rally": true
     },
     {
       "n": "Long Fei",
@@ -1275,7 +1275,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
