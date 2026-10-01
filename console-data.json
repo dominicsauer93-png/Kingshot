@@ -1215,7 +1215,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1251,7 +1251,7 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Pets",
+      "Gear": "Shards",
       "Base": "T11"
     },
     "t11Open": {},
