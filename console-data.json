@@ -1215,7 +1215,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1249,7 +1249,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
+      "Rally": "Overview",
       "Data": "Account",
       "Gear": "Pets",
       "Base": "T11"
