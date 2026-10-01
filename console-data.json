@@ -1208,7 +1208,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-01",
+    "routineDate": "2026-10-02",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1216,23 +1216,23 @@
     "routine": [
       {
         "t": "Intel Missions → collect Hunting Arrows",
-        "d": true
+        "d": false
       },
       {
         "t": "Gathering marches all out",
-        "d": true
+        "d": false
       },
       {
         "t": "Overfeed the Truegold Crucible",
-        "d": true
+        "d": false
       },
       {
         "t": "Super Refine — daily discounted Tier 2 (TTG)",
-        "d": true
+        "d": false
       },
       {
         "t": "Claim house / suppression gold",
-        "d": true
+        "d": false
       }
     ]
   },
@@ -1273,7 +1273,7 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Shards",
+      "Gear": "Hero Gear",
       "Base": "T11"
     },
     "t11Open": {},
@@ -1311,7 +1311,7 @@
     "have": {
       "xp": 0,
       "fh": 58,
-      "mg": 10,
+      "mg": 3,
       "mith": 4
     },
     "rows": [
