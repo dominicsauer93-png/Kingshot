@@ -549,7 +549,7 @@
       </section>
 
       <section class="sec" data-sub="Shards" data-key="Gold Hero Shards">
-        <div class="tiles t2" id="shardTiles"></div>
+        <div class="tiles t3" id="shardTiles"></div>
         <div class="grid mt" style="--min:170px" id="goldShardBody"></div>
         <button class="add" id="addGoldShard">+ Add hero</button>
         <details class="fold mt"><summary>Where to get Gold Hero Shards</summary><div class="fbody howto">
@@ -881,11 +881,12 @@ async function ghGet(cfg,tok){
   const json=decodeURIComponent(escape(atob((j.content||"").replace(/\n/g,""))));
   return {sha:j.sha,data:json?JSON.parse(json):null};
 }
-async function ghPut(cfg,tok,sha){
+async function ghPut(cfg,tok,sha,urgent){
   const content=btoa(unescape(encodeURIComponent(JSON.stringify(state,null,2))));
   const body={message:`console update ${new Date().toISOString()}`,content,branch:cfg.branch};
   if(sha) body.sha=sha;
-  let r=await fetch(ghUrl(cfg,false),{method:"PUT",headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:JSON.stringify(body)});
+  const payload=JSON.stringify(body), keepalive=!!urgent&&payload.length<60000; // keepalive lets the save finish while the page closes
+  let r=await fetch(ghUrl(cfg,false),{method:"PUT",keepalive,headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:payload});
   if((r.status===409||r.status===422)&&sha!==null){ // stale sha — refetch and retry once
     const cur=await ghGet(cfg,tok); body.sha=cur.sha||undefined;
     r=await fetch(ghUrl(cfg,false),{method:"PUT",headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:JSON.stringify(body)});
@@ -895,20 +896,30 @@ async function ghPut(cfg,tok,sha){
 }
 async function syncPull(silent){
   const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok){ if(!silent) syncStatus("Fill in repo + token first","err"); return; }
+  if(syncPending) await flushSync(); // don't lose unsynced edits
   syncStatus("Pulling…");
   try{ const {sha,data}=await ghGet(syncCfg,tok); remoteSha=sha;
     if(data){ state=mergeSeed(data); renderAll(); if(typeof buildLayout==="function") buildLayout(); await persistLocal(); syncStatus("Pulled ✓ "+new Date().toLocaleTimeString(),"ok"); }
     else syncStatus("No remote file yet — Push to create it","warn");
   }catch(e){ syncStatus(e.message,"err"); }
 }
-async function syncPush(silent){
+async function syncPush(silent,urgent){
   const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok){ if(!silent) syncStatus("Fill in repo + token first","err"); return; }
+  syncPending=false; clearTimeout(syncTimer);
   syncStatus("Pushing…");
-  try{ remoteSha=await ghPut(syncCfg,tok,remoteSha); syncStatus("Synced ✓ "+new Date().toLocaleTimeString(),"ok"); }
+  try{ remoteSha=await ghPut(syncCfg,tok,remoteSha,urgent); syncStatus("Synced ✓ "+new Date().toLocaleTimeString(),"ok"); }
   catch(e){ syncStatus(e.message,"err"); }
 }
-let syncTimer=null;
-function scheduleSyncPush(){ if(!syncCfg.on) return; clearTimeout(syncTimer); syncTimer=setTimeout(()=>syncPush(true),2500); }
+// Auto-push waits until you've stopped editing for a minute (or you leave the page).
+// Every push is a commit, and every commit rebuilds the GitHub Pages site — pushing on every edit
+// kept cancelling the site build, so page updates never went live while you were editing.
+const SYNC_IDLE_MS=60000;
+let syncTimer=null, syncPending=false;
+function scheduleSyncPush(){ if(!syncCfg.on) return; syncPending=true; clearTimeout(syncTimer); syncTimer=setTimeout(()=>flushSync(),SYNC_IDLE_MS);
+  syncStatus("Changes saved on this device — syncing to GitHub after 1 min idle"); }
+function flushSync(urgent){ if(!syncPending) return Promise.resolve(); return syncPush(true,urgent); }
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden") flushSync(true); });
+window.addEventListener("pagehide",()=>flushSync(true));
 
 /* ---------- local save (drives local persistence + optional sync) ---------- */
 let saveTimer=null;
@@ -1995,14 +2006,27 @@ function renderShards(){
   const L=state.goldShards||[]; let N=0,H=0,S=0,dn=0;
   L.forEach(r=>{ const n=num(r.need),h=num(r.have); N+=n; H+=Math.min(h,n); S+=Math.max(0,n-h); if(h>=n&&n>0) dn++; });
   const close=L.filter(r=>num(r.need)>num(r.have)).sort((a,b)=>(num(a.need)-num(a.have))-(num(b.need)-num(b.have)))[0];
+  const gen=num(state.shardGeneral), RALLY=["Yang","Ava"]; // general shards fit any Mythic hero except Amadeus & Helga
+  const genFor=L.filter(r=>RALLY.includes(r.n)&&num(r.need)>num(r.have)).sort((a,b)=>(num(a.need)-num(a.have))-(num(b.need)-num(b.have)))[0];
   $("#shardTiles").innerHTML=tileH({id:"shTot",label:"All heroes",value:pc(H,N).toFixed(0)+"%",sub:`${fmt(H)} / ${fmt(N)} · ${dn}/${L.length} done`,p:pc(H,N)})+
+    tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genFor?`best on ${esc(genFor.n)} (${fmt(num(genFor.need)-num(genFor.have))} short)`:"any hero except Amadeus & Helga"})+
     (close?tileH({id:"shNext",label:"Closest to done",value:esc(close.n),txt:true,sub:`${fmt(num(close.need)-num(close.have))} short`}):tileH({label:"Closest to done",value:"All done",txt:true}));
-  on("shNext",()=>close&&openShardSheet(close));
+  on("shNext",()=>close&&openShardSheet(close)); on("shGen",openGeneralShardSheet);
   const b=$("#goldShardBody");
   b.innerHTML=L.map((r,i)=>{ const n=num(r.need),h=num(r.have),done=n>0&&h>=n;
-    return `<button class="vcard ${done?"s-done":""}" data-i="${i}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(r.n||"Hero")}</span></span><span class="vc-big">${fmt(h)}<small>/ ${fmt(n)}</small></span>${barH(pc(h,n),done?"ok":"")}<span class="vc-line">${done?'<span class="ok">Done ✓</span>':`<span class="bad">${fmt(n-h)} short</span>`}</span></button>`; }).join("");
+    return `<button class="vcard ${done?"s-done":""}" data-i="${i}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(r.n||"Hero")}</span></span><span class="vc-big">${fmt(h)}<small>/ ${n>0?fmt(n):"?"}</small></span>${barH(n>0?pc(h,n):0,done?"ok":"")}<span class="vc-line">${n<=0?'<span class="faint">tap to set shards needed</span>':done?'<span class="ok">Done ✓</span>':`<span class="bad">${fmt(n-h)} short</span>`}</span></button>`; }).join("");
   bindAll(b,".vcard",x=>openShardSheet(L[+x.dataset.i]));
   on("addGoldShard",()=>{ const r={n:"New hero",need:0,have:0}; L.push(r); afterEdit(); openShardSheet(r); });
+}
+function openGeneralShardSheet(){
+  openSheet({title:"General Mythic shards",sub:"Fit any Mythic hero except Amadeus and Helga.",build(f){
+    f.appendChild(fld("General shards in hand",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v}));
+    const inf=infoBox(); f.appendChild(inf);
+    const rf=()=>{ const g=num(state.shardGeneral), L=(state.goldShards||[]).filter(r=>!/amadeus|helga/i.test(r.n||"")&&num(r.need)>num(r.have));
+      const rally=L.filter(r=>["Yang","Ava"].includes(r.n));
+      inf.innerHTML=`<b>Best use:</b> your rally heroes first — `+(rally.length?rally.map(r=>`${esc(r.n)} needs <b>${fmt(num(r.need)-num(r.have))}</b>`).join(", "):"both done")+
+        `.<br>Amadeus only takes his own shards.`+(g?`<br>You have <b>${fmt(g)}</b> to place.`:""); };
+    rf(); return rf; }});
 }
 function openShardSheet(r){
   openSheet({title:r.n||"Hero",sub:"Gold (Mythic) hero shards.",build(f){
@@ -2260,7 +2284,7 @@ function renderUpdate(){
       b.append(sub(m.n),grid(fld("Affinity",{type:"num",value:m.l,get:()=>m.l,set:v=>m.l=String(v),min:0,max:100}),
         [0,1,2,3].map(i=>{ const sk=m.skills[i]||(m.skills[i]={l:0}), cap=skillCap(m.n,i); return N(`Skill ${i+1}${cap?` (max ${cap})`:""}`,sk,"l",{min:0,max:cap||99}); }))); }); });
   group("Shards","Gold hero shards","shards in hand",b=>{
-    b.append(grid(state.goldShards.map(r=>N(r.n||"Hero",r,"have")))); });
+    b.append(grid(fld("General Mythic shards",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v}),state.goldShards.map(r=>N(r.n||"Hero",r,"have")))); });
   group("Troops","Troops","current counts",b=>{
     b.append(grid([["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]].map(([k,l])=>N(l,state.troopCounts[k]||(state.troopCounts[k]={cur:0,tgt:0}),"cur")))); });
   group("Buildings","Buildings","current tier",b=>{
