@@ -1257,8 +1257,14 @@
     "t11Open": {},
     "doAll": false,
     "qOpen": {
-      "Bag": true,
-      "HG": true
+      "Bag": false,
+      "HG": false,
+      "Power": false,
+      "Buildings": false,
+      "Troops": false,
+      "Shards": false,
+      "Masters": false,
+      "Gov": true
     }
   },
   "troopCounts": {
