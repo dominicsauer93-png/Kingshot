@@ -580,11 +580,6 @@
       "h": "1039"
     },
     {
-      "n": "Soldier Healing speedup (min)",
-      "h": "15473",
-      "need": ""
-    },
-    {
       "n": "Bread",
       "h": "2.54",
       "need": "1680000000"
@@ -608,6 +603,11 @@
       "n": "Gold",
       "h": "1130000",
       "need": "1000000"
+    },
+    {
+      "n": "Soldier Healing speedup (min)1",
+      "h": "15473",
+      "need": ""
     }
   ],
   "goldShards": [
