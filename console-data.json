@@ -1215,7 +1215,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Rally",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1254,7 +1254,7 @@
       "Gear": "Hero Gear"
     },
     "t11Open": {},
-    "doAll": true
+    "doAll": false
   },
   "troopCounts": {
     "inf": {
