@@ -216,6 +216,8 @@
   .tile .l > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .tile .v{font:700 clamp(20px,2.4vw,26px)/1.15 var(--f-mono);color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .tile .v.txt{font:700 clamp(17px,2vw,20px)/1.2 var(--f-body)}
+  .tile .s:has(.clamp){white-space:normal}
+  .tile .clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
   .tile .s{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .tile .bar{margin-top:6px}
 
@@ -1547,23 +1549,30 @@ function goToSection(tab,key,thenOpen){
 /* =====================================================================
    HOME
    ===================================================================== */
-function tileH({id,label,value,sub,p,cls,txt,color,go}){
-  return `<button class="tile" ${id?`id="${id}"`:""} ${go?`data-go="${esc(go)}"`:""}><span class="l"><span>${label}</span></span><span class="v ${txt?"txt":""}" ${color?`style="color:${color}"`:""}>${value}</span>${sub!=null?`<span class="s">${sub}</span>`:""}${p!=null?barH(p,cls||""):""}</button>`;
+function tileH({id,label,value,sub,p,cls,txt,color,go,clamp}){
+  return `<button class="tile" ${id?`id="${id}"`:""} ${go?`data-go="${esc(go)}"`:""}><span class="l"><span>${label}</span></span><span class="v ${txt?"txt":""} ${clamp?"clamp":""}" ${color?`style="color:${color}"`:""}>${value}</span>${sub!=null?`<span class="s">${sub}</span>`:""}${p!=null?barH(p,cls||""):""}</button>`;
 }
 function renderHome(){
   const d=new Date();
   $("#homeSub").textContent=d.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})+" · Kingdom day "+kingdomDay();
+  paintGoals(); // fills lastGoals for the "Ready now" tile
   // tiles
-  const nx=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days)[0];
-  const tgt=computeTarget(), cur=num(state.dust.current), ph=activePhase().n, C=state.combat||{};
+  const upc=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days);
+  const live=(state.events||[]).map(e=>({e,a:activeOcc(e)})).filter(x=>x.a).sort((a,b)=>(spendFor(b.e)?1:0)-(spendFor(a.e)?1:0));
+  const now=live[0]||null, soon=now?null:upc[0];
+  const nx=upc.find(x=>x.o.days>0&&(!soon||x.e!==soon.e));
+  const tgt=computeTarget(), cur=num(state.dust.current), ph=activePhase().n;
+  const ready=lastGoals.filter(g=>g.tag==="Ready");
   $("#homeTiles").innerHTML=
+    (now?tileH({id:"tNow",label:`On now${now.a.len>1?` · day ${now.a.day} of ${now.a.len}`:""}${live.length>1?` · +${live.length-1} more`:""}`,value:esc(now.e.n||"Event"),txt:true,color:"var(--green)",sub:`<span class="clamp">Spend: ${esc(spendFor(now.e)||"tap to add")}</span>`})
+      :tileH({id:"tNow",label:soon?`Up next · ${whenTxt(soon.o)}`:"On now",value:soon?esc(soon.e.n||"Event"):"Nothing on",txt:true,sub:soon?`<span class="clamp">Spend: ${esc(spendFor(soon.e)||"tap to add")}</span>`:"add events to plan spending"}))+
     tileH({id:"tEvent",label:"Next event",value:nx?esc(nx.e.n||"Event"):"—",txt:true,sub:nx?`${whenTxt(nx.o)} · ${new Date(nx.o.date+"T00:00:00").toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}${nx.e.time?" · "+esc(nx.e.time):""}`:"Add an event",color:nx&&nx.o.days===0?"var(--green)":""})+
     tileH({id:"tT11",label:`T11 ${ph} dust`,value:tgt>0?pc(cur,tgt).toFixed(0)+"%":"Done",sub:`${fmt(cur)} / ${fmt(tgt)}`,p:pc(cur,tgt),cls:tgt>0?"":"ok"})+
-    tileH({id:"tLeth",label:"Squads' Lethality",value:(C.leth!=null&&C.leth!=="")?num(C.leth)+"%":"—",sub:"tap to update"})+
-    tileH({id:"tHp",label:"Squads' Health",value:(C.hp!=null&&C.hp!=="")?num(C.hp)+"%":"—",sub:"tap to update"});
+    tileH({id:"tReady",label:"Ready now",value:ready.length?`${ready.length} upgrade${ready.length>1?"s":""}`:"None yet",txt:true,color:ready.length?"var(--green)":"",sub:ready.length?ready[0].title:"keep collecting materials"});
   on("tEvent",()=>nx?openEventSheet(nx.e):openEventSheet(null));
   on("tT11",()=>setTab("Base","T11"));
-  on("tLeth",openCombatSheet); on("tHp",openCombatSheet);
+  on("tNow",()=>openEventSheet(now?now.e:soon?soon.e:null));
+  on("tReady",()=>{ const g=ready[0]; if(g) goToSection(null,g.key,g.open); else document.querySelector('[data-key="Do next"]').scrollIntoView({behavior:"smooth"}); });
   // today
   const t=state.today; const today=fcToday();
   if(t.routineDate!==today){ t.routine.forEach(r=>r.d=false); t.routineDate=today; scheduleSave(); }
@@ -1571,7 +1580,6 @@ function renderHome(){
   buildChecks($("#todayRoutine"),t.routine,{tickOnly:true,onTick:()=>paintTodayCount()});
   paintTodayCount();
   renderEvents();
-  paintGoals();
 }
 function paintTodayCount(){ const R=state.today.routine, n=R.filter(r=>r.d).length; $("#todayCount").textContent=R.length?(n===R.length?"All done today ✓":`${n} of ${R.length} done`):"No routine items yet"; }
 
@@ -1593,13 +1601,20 @@ function renderEvents(){
   on("evAdd",()=>openEventSheet(null));
   on("evAll",openAllEventsSheet);
 }
+// what to spend during each event (your own text wins; these are the defaults)
+const EVENT_SPEND=[[/kvk|kingdom of power/i,"Speedups, training, Gov Gear, pet advances"],[/officer project/i,"Forgehammers + widgets"],[/hall of heroes/i,"Marks of Valor → widgets & shards"],[/armament/i,"Small stuff only — save for KvK"],[/bear/i,"Nothing — just lead rallies"],[/strongest governor/i,"Today's theme items"]];
+const EVENT_LEN=[[/hall of heroes/i,3],[/armament competition \(type 1\)/i,2]];
+const spendFor=e=>String(e.spend||"").trim()||((EVENT_SPEND.find(([re])=>re.test(e.n||""))||[])[1]||"");
+const evLen=e=>Math.max(1,Math.floor(num(e.len))||((EVENT_LEN.find(([re])=>re.test(e.n||""))||[])[1]||1));
+function activeOcc(e){ const L=evLen(e); for(let k=0;k<L;k++){ if(occursOn(e,-k)) return {day:k+1,len:L}; } return null; }
 function openEventSheet(ev){
   const isNew=!ev; if(isNew){ ev={n:"New event",date:fcToday(),every:7,time:"",note:""}; state.events.push(ev); afterEdit(); }
   openSheet({title:isNew?"New event":(ev.n||"Event"),sub:"Set any past or future date — it repeats from there.",
     build(f){
       f.appendChild(fld("Event name",{value:ev.n,set:v=>ev.n=v}));
       f.appendChild(frow(fld("Date (any occurrence)",{type:"date",value:ev.date,set:v=>ev.date=v}),fld("Repeats every (days)",{type:"num",value:ev.every||0,get:()=>ev.every,set:v=>ev.every=Math.max(0,Math.floor(v)),hint:"0 = one-off"})));
-      f.appendChild(fld("Time (optional)",{type:"time",value:ev.time,set:v=>ev.time=v}));
+      f.appendChild(frow(fld("Lasts (days)",{type:"num",value:evLen(ev),get:()=>evLen(ev),set:v=>ev.len=Math.max(1,Math.floor(v)||1)}),fld("Time (optional)",{type:"time",value:ev.time,set:v=>ev.time=v})));
+      f.appendChild(fld("What to spend",{value:spendFor(ev),ph:"e.g. Speedups + Gov Gear",set:v=>ev.spend=v,hint:"Shown on Home while the event is on."}));
       f.appendChild(fld("Note",{type:"area",rows:3,value:ev.note,set:v=>ev.note=v}));
       const inf=infoBox(); f.appendChild(inf);
       const r=()=>{ const o=nextOcc(ev); inf.innerHTML=o?(o.past?"This one-off event has passed.":`Next: <b>${new Date(o.date+"T00:00:00").toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})}</b> (${whenTxt(o)}) · ${repeatTxt(ev)}`):"Pick a date."; };
@@ -1622,6 +1637,7 @@ function doHtml(g,i){
   return `<button class="do ${i===0?"first":""}" data-i="${i}"><span class="n" aria-hidden="true">${i+1}</span>
     <span style="min-width:0"><span class="t">${g.title}</span>${g.tag?` ${tagH("ok",g.tag)}`:""}<span class="d" style="display:block">${g.detail}</span></span><span class="chev" aria-hidden="true">›</span></button>`;
 }
+let lastGoals=[];
 function paintGoals(){
   const hs=$("#doNext"); if(!hs) return;
   const spend=[], prog=[];
@@ -1663,7 +1679,7 @@ function paintGoals(){
   if(mc){ const n2=Math.min(100,(Math.floor(mc.lv/10)+1)*10); prog.push({title:`${esc(mc.m.n)} affinity ${mc.lv} → ${n2}`,detail:n2===100?"Kindred Soul unlocks the research tree":"Emblems needed at the breakpoint",open:()=>openMastSheet(mc.m),key:"Masters"}); }
   const sh=(state.goldShards||[]).filter(r=>num(r.need)>num(r.have)).sort((a,b)=>(num(a.need)-num(a.have))-(num(b.need)-num(b.have)))[0];
   if(sh) prog.push({title:`${esc(sh.n)} shards`,detail:`${fmt(num(sh.need)-num(sh.have))} short — closest hero to done`,open:()=>openShardSheet(sh),key:"Gold Hero Shards"});
-  const all=[...spend,...prog], showAll=!!state.ui.doAll, L=showAll?all:all.slice(0,5);
+  const all=[...spend,...prog], showAll=!!state.ui.doAll, L=showAll?all:all.slice(0,5); lastGoals=all;
   hs.innerHTML=L.map(doHtml).join("")||`<div class="empty">Everything is at target ✓</div>`;
   bindAll(hs,".do",b=>{ const g2=L[+b.dataset.i]; goToSection(null,g2.key,g2.open); });
   $("#doCount").textContent=all.length?`${all.length} steps`:"";
