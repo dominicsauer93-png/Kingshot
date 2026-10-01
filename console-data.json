@@ -1247,7 +1247,9 @@
     "laterOpen": {
       "nodes": false,
       "cavNodes": false
-    }
+    },
+    "sub": {},
+    "t11Open": {}
   },
   "troopCounts": {
     "inf": {
