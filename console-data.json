@@ -1194,23 +1194,23 @@
     "routine": [
       {
         "t": "Intel Missions → collect Hunting Arrows",
-        "d": false
+        "d": true
       },
       {
         "t": "Gathering marches all out",
-        "d": false
+        "d": true
       },
       {
         "t": "Overfeed the Truegold Crucible",
-        "d": false
+        "d": true
       },
       {
         "t": "Super Refine — daily discounted Tier 2 (TTG)",
-        "d": false
+        "d": true
       },
       {
         "t": "Claim house / suppression gold",
-        "d": false
+        "d": true
       }
     ]
   },
