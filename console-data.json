@@ -1215,7 +1215,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1251,7 +1251,7 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Checklists",
-      "Gear": "Widgets"
+      "Gear": "Charms"
     },
     "t11Open": {},
     "doAll": false
