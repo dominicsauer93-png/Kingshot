@@ -557,7 +557,7 @@
   "resources": [
     {
       "n": "General speedup (min)",
-      "h": "22185",
+      "h": "16",
       "need": ""
     },
     {
@@ -1252,7 +1252,7 @@
       "Rally": "Overview",
       "Data": "Checklists",
       "Gear": "Charms",
-      "Base": "Buildings"
+      "Base": "Resources"
     },
     "t11Open": {},
     "doAll": false
