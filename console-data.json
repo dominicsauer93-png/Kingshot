@@ -1215,7 +1215,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1248,7 +1248,10 @@
       "nodes": false,
       "cavNodes": false
     },
-    "sub": {},
+    "sub": {
+      "Rally": "Overview",
+      "Data": "Notes"
+    },
     "t11Open": {}
   },
   "troopCounts": {
