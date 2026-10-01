@@ -616,140 +616,160 @@
       "need": 900,
       "have": 0,
       "pos": 18,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Amadeus",
       "need": 940,
       "have": 5,
       "pos": 17,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Charles",
       "need": 463,
       "have": 13,
       "pos": 13,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Hilde",
       "need": 740,
       "have": 1,
       "pos": 23,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Marlin",
       "need": 700,
       "have": 69,
       "pos": 23,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Zoe",
       "need": 600,
       "have": 9,
       "pos": 24,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Jaeger",
       "need": 700,
       "have": 31,
       "pos": 23,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Eric",
       "need": 700,
       "have": 19,
       "pos": 23,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Rosa",
       "need": 500,
       "have": 34,
       "pos": 25,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Petra",
       "need": 500,
       "have": 57,
       "pos": 25,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Margot",
       "need": 700,
       "have": 57,
       "pos": 23,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Alcar",
       "need": 600,
       "have": 48,
       "pos": 24,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Thrud",
       "need": 800,
       "have": 54,
       "pos": 24,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Triton",
       "need": 700,
       "have": 0,
       "pos": 23,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Sophia",
       "need": 100,
       "have": 1,
       "pos": 29,
-      "tgt": 30
+      "tgt": 30,
+      "rally": true
     },
     {
       "n": "Ava",
       "need": 940,
       "have": 1,
       "pos": 19,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Long Fei",
       "need": 400,
       "have": 36,
       "pos": 26,
-      "tgt": 30
+      "tgt": 30,
+      "rally": true
     },
     {
       "n": "Yang",
       "need": 300,
       "have": 1,
       "pos": 27,
-      "tgt": 30
+      "tgt": 30,
+      "rally": true
     },
     {
       "n": "WEE & wOO",
       "need": 0,
       "have": 104,
       "pos": 18,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     },
     {
       "n": "Vivian",
       "need": 0,
       "have": 26,
       "pos": 24,
-      "tgt": 30
+      "tgt": 30,
+      "rally": false
     }
   ],
   "masters": [
@@ -1861,5 +1881,6 @@
       }
     ]
   },
-  "shardGeneral": 132
+  "shardGeneral": 132,
+  "shardRallySet": true
 }
