@@ -1252,14 +1252,14 @@
       "Rally": "Overview",
       "Data": "Checklists",
       "Gear": "Charms",
-      "Base": "Resources"
+      "Base": "Troops"
     },
     "t11Open": {},
     "doAll": false
   },
   "troopCounts": {
     "inf": {
-      "cur": 479806,
+      "cur": 486646,
       "tgt": 1500000
     },
     "arc": {
