@@ -1143,9 +1143,9 @@
     }
   ],
   "tg": {
-    "have": 560,
+    "have": 659,
     "need": 5658,
-    "ttgHave": 2,
+    "ttgHave": 5,
     "ttgNeed": 568
   },
   "govGear": {
@@ -1252,7 +1252,7 @@
       "Rally": "Overview",
       "Data": "Checklists",
       "Gear": "Charms",
-      "Base": "T11"
+      "Base": "Buildings"
     },
     "t11Open": {},
     "doAll": false
