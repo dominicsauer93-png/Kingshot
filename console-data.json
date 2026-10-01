@@ -1222,10 +1222,11 @@
       "Troop Plan": false,
       "T11 Unlocks": false,
       "Widgets": false,
-      "Gold Hero Shards": false,
+      "Gold Hero Shards": true,
       "Masters": true,
       "Mystic Trials": true,
-      "Resources & Speedups": true
+      "Resources & Speedups": true,
+      "Pets": true
     },
     "density": "compact",
     "mastOpen": {
