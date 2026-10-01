@@ -1557,6 +1557,11 @@
         "lvl": 3,
         "have": 2,
         "rally": true
+      },
+      {
+        "hero": "",
+        "lvl": 0,
+        "have": 0
       }
     ],
     "rallySet": true
