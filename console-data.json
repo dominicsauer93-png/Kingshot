@@ -1215,7 +1215,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1252,7 +1252,7 @@
       "Rally": "Overview",
       "Data": "Checklists",
       "Gear": "Governor",
-      "Base": "Resources"
+      "Base": "Buildings"
     },
     "t11Open": {},
     "doAll": false
