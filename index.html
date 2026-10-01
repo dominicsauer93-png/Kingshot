@@ -395,6 +395,10 @@
   .chart{border:1px solid var(--line);border-radius:12px;padding:10px 12px 6px;background:var(--panel)}
   textarea.notes{width:100%;min-height:58vh;padding:14px;border-radius:var(--r);border:1px solid var(--field-line);background:var(--field);color:var(--text);font:15px/1.65 var(--f-body);resize:vertical}
   .kvgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .qgrid .f input,.qgrid .f select{min-height:42px;padding:8px 10px}
+  .qsub{margin:16px 0 8px;font:700 13.5px var(--f-body);color:var(--muted)}
+  .qsub:first-child{margin-top:0}
   .install{display:none}
   .install.show{display:flex}
   .foot{margin:30px 0 0;text-align:center;font-size:12px;color:var(--faint)}
@@ -446,7 +450,7 @@
 
     <!-- ================= HOME ================= -->
     <div class="page" data-tab="Home">
-      <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div></div>
+      <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn primary" data-goto="Update all"><svg width="17" height="17" aria-hidden="true"><use href="#i-pen"/></svg>Update everything</button></div>
       <div class="tiles" id="homeTiles"></div>
       <div class="cols-3-2 mt2">
         <section class="sec" data-key="Do next">
@@ -597,6 +601,11 @@
     <div class="page" data-tab="Data" hidden>
       <div class="phead"><div><h1>Data</h1><p>Notes, checklists, account and sync.</p></div></div>
       <div class="subnav" role="tablist" aria-label="Data sections"></div>
+      <section class="sec" data-sub="Update all" data-key="Update all">
+        <h2>Update everything <small>one page · saves as you type</small></h2>
+        <p class="lead">Fill in what changed in-game. Every section of the console updates from here. Targets are set in each section.</p>
+        <div id="qBody"></div>
+      </section>
       <section class="sec" data-sub="Notes" data-key="Notes">
         <label class="sr-only" for="notes">Notes</label>
         <textarea class="notes" id="notes" placeholder="Plans, KvK dates, decisions…"></textarea>
@@ -1488,7 +1497,7 @@ function initTheme(){
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
 const TABS=["Home","Rally","Gear","Base","Data"];
-const SUBS={Rally:["Overview","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Data:["Notes","Checklists","Account","Sync"]};
+const SUBS={Rally:["Overview","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Data:["Update all","Notes","Checklists","Account","Sync"]};
 const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Rally",Supply:"Rally",Events:"Home",Vault:"Data"};
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
@@ -2207,10 +2216,70 @@ function initInstall(){
 /* =====================================================================
    RENDER ALL + BOOT
    ===================================================================== */
+/* ---------- Update everything (one page) ---------- */
+function renderUpdate(){
+  const host=$("#qBody"); if(!host||host.contains(document.activeElement)) return; // don't rebuild while typing
+  if(!state.ui.qOpen) state.ui.qOpen={Bag:true};
+  host.innerHTML="";
+  const N=(label,obj,key,o)=>fld(label,Object.assign({type:"num",value:obj[key],get:()=>obj[key],set:v=>obj[key]=v},o||{}));
+  const S=(label,val,opts,set)=>fld(label,{type:"select",value:String(val),options:opts,set});
+  const grid=(...els)=>{ const g=document.createElement("div"); g.className="qgrid"; els.flat(3).forEach(e=>g.appendChild(e)); return g; };
+  const sub=t=>{ const h=document.createElement("div"); h.className="qsub"; h.textContent=t; return h; };
+  const group=(key,title,hint,build)=>{ const d=document.createElement("details"); d.className="fold"; if(state.ui.qOpen[key]) d.open=true;
+    d.innerHTML=`<summary><span class="grow">${title}</span><span class="faint" style="font-weight:500;font-size:13px">${hint||""}</span></summary><div class="fbody form"></div>`;
+    const body=d.querySelector(".fbody"); let built=false;
+    const fill=()=>{ if(built) return; built=true; build(body); };
+    if(d.open) fill(); d.ontoggle=()=>{ state.ui.qOpen[key]=d.open; if(d.open) fill(); scheduleSave(); };
+    host.appendChild(d); };
+  const H=state.heroGear.have, C=state.charms.have, P=state.pets.have, G=state.govGear.have;
+  group("Bag","Materials in your bag","dust, gold, gear, charms, pets",b=>{
+    b.append(sub("T11 & buildings"),grid(N("Truegold Dust",state.dust,"current"),N("Gold",state.dust,"gold"),N("Truegold",state.tg,"have"),N("Tempered Truegold",state.tg,"ttgHave")));
+    b.append(sub("Hero Gear"),grid(N("Enhancement XP",H,"xp"),N("Forgehammers",H,"fh"),N("Mythic Gear",H,"mg"),N("Mithril",H,"mith")));
+    b.append(sub("Charms"),grid(N("Charm Guides",C,"guides"),N("Charm Designs",C,"designs")));
+    b.append(sub("Pets"),grid(N("Pet Food",P,"food"),N("Growth Manuals",P,"manuals"),N("Nutrient Potions",P,"potions"),N("Medallions",P,"medals"),N("Common Taming Marks",P,"tmCommon"),N("Advanced Taming Marks",P,"tmAdv")));
+    b.append(sub("Governor Gear"),grid(N("Satin",G,"satin"),N("Gilded Threads",G,"threads"),N("Artisan's Vision",G,"vision")));
+  });
+  group("Widgets","Widgets","level + in hand per hero",b=>{
+    state.widgets.rows.forEach(r=>b.append(sub(r.hero||"Hero"),grid(N("Level",r,"lvl",{min:0,max:10}),N("Widgets in hand",r,"have")))); });
+  group("HG","Hero Gear","level + mastery per piece",b=>{
+    HG_TYPES.forEach(t=>{ const ps=state.heroGear.rows.filter(r=>r.type===t); if(!ps.length) return; b.append(sub(t));
+      b.append(grid(ps.map(r=>[N(`${slotName(r.slot)} level`,r,"lvC",{min:0,max:200}),N(`${slotName(r.slot)} mastery`,r,"mC",{min:0,max:20})]))); }); });
+  group("Charms","Charms","current level of each charm",b=>{
+    const opts=Array.from({length:23},(_,i)=>[String(i),"Lv "+i]);
+    ["Infantry","Archer","Cavalry"].forEach(t=>{ const rs=state.charms.rows.filter(r=>r.type===t); if(!rs.length) return; b.append(sub(t));
+      b.append(grid(rs.map((r,i)=>S(`Charm ${i+1}`,r.lvl,opts,v=>r.lvl=parseInt(v,10))))); }); });
+  group("Pets","Pets","level of each pet",b=>{
+    b.append(grid(state.pets.rows.slice().sort((a,c)=>petRank(a)-petRank(c)).map(r=>N(r.n||"Pet",r,"lvl",{min:0})))); });
+  group("Gov","Governor Gear","tier of each piece",b=>{
+    b.append(grid(state.govGear.pieces.map(p=>S(p.name||"Piece",p.cur,govOpts(),v=>p.cur=parseInt(v,10))))); });
+  group("T11","T11 nodes","level of each node",b=>{
+    PHASES.forEach(ph=>{ const L=sortTree(state[ph.k],ph.k); b.append(sub(ph.n));
+      b.append(grid(L.map(nd=>N(`${nd.name.replace(/^Truegold /,"").replace(/ \(unlock\)/," unlock")} (max ${nd.max||12})`,nd,"cur",{min:0,max:nd.max||12})))); }); });
+  group("Masters","Masters","affinity + skill levels",b=>{
+    state.masters.slice().sort((a,c)=>mastRank(a)-mastRank(c)).forEach(m=>{ if(!Array.isArray(m.skills)) m.skills=[{l:0},{l:0},{l:0},{l:0}];
+      b.append(sub(m.n),grid(fld("Affinity",{type:"num",value:m.l,get:()=>m.l,set:v=>m.l=String(v),min:0,max:100}),
+        [0,1,2,3].map(i=>{ const sk=m.skills[i]||(m.skills[i]={l:0}), cap=skillCap(m.n,i); return N(`Skill ${i+1}${cap?` (max ${cap})`:""}`,sk,"l",{min:0,max:cap||99}); }))); }); });
+  group("Shards","Gold hero shards","shards in hand",b=>{
+    b.append(grid(state.goldShards.map(r=>N(r.n||"Hero",r,"have")))); });
+  group("Troops","Troops","current counts",b=>{
+    b.append(grid([["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]].map(([k,l])=>N(l,state.troopCounts[k]||(state.troopCounts[k]={cur:0,tgt:0}),"cur")))); });
+  group("Buildings","Buildings","current tier",b=>{
+    b.append(grid(state.buildings.map(bl=>{ const B=BUILD_TIERS[bl.n]; return B?S(bl.n,bl.stepIdx||0,[["0",B.from]].concat(B.steps.map((st,k)=>[String(k+1),st.to])),v=>bl.stepIdx=parseInt(v,10)):null; }).filter(Boolean))); });
+  group("Power","Power & combat","pillars, wins, Lethality, Health",b=>{
+    b.append(sub("Power pillars"),grid(state.pillars.map(p=>N(p.name,p,"v"))));
+    const c=state.combat;
+    b.append(sub("Combat"),grid(N("Attacker wins",c,"attW"),N("Attacker losses",c,"attL"),N("Defender wins",c,"defW"),N("Defender losses",c,"defL"),N("Lethality %",c,"leth",{decimal:true}),N("Health %",c,"hp",{decimal:true})));
+    b.append(sub("Account"),grid(fld("Total power",{type:"num",value:state.account.power,get:()=>state.account.power,set:v=>state.account.power=String(v)}),fld("VIP",{value:state.account.vip,set:v=>state.account.vip=v}),fld("Town Center",{value:state.account.tc,set:v=>state.account.tc=v})));
+  });
+  group("Res","Resources & speedups","speedups in minutes",b=>{
+    b.append(grid(state.resources.map(r=>fld(r.n||"Material",{type:"num",value:r.h,get:()=>r.h,allowEmpty:true,set:v=>r.h=v===""?"":String(v)})))); });
+  group("Mystic","Mystic Trials","rank per zone",b=>{
+    b.append(grid(state.mysticTrials.map(z=>fld(z.k||"Zone",{type:"num",value:z.v,get:()=>z.v,allowEmpty:true,set:v=>{ z.v=v===""?"":String(v); if(v!=="") mysticLogEntry(z); }})))); });
+}
 function renderAll(){
   migrateEvents(); migrateMasterNotes();
   if(!state.ui.sub) state.ui.sub={};
-  renderHome(); renderRally(); renderGear(); renderBase(); renderData();
+  renderHome(); renderRally(); renderGear(); renderBase(); renderData(); renderUpdate();
 }
 function initStatic(){
   const dl=document.createElement("datalist"); dl.id="widHeroList"; dl.innerHTML=WID_HEROES.map(h=>`<option value="${esc(h)}">`).join(""); document.body.appendChild(dl);
