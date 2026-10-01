@@ -1215,7 +1215,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1250,7 +1250,8 @@
     },
     "sub": {
       "Rally": "Overview",
-      "Data": "Checklists"
+      "Data": "Checklists",
+      "Gear": "Hero Gear"
     },
     "t11Open": {}
   },
