@@ -376,6 +376,8 @@
   .msk-m input{width:16px;height:16px;accent-color:var(--green)}
   #petBody{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
   #petBody .hname{font-size:13.5px}
+  .hgimb{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5}
+  .hgimb b{color:var(--text)}
   .prank{flex:none;font-family:var(--f-disp);font-weight:800;font-size:13px;color:#1A1208;background:var(--gold);border-radius:6px;padding:1px 6px}
   .pskill{font-size:12px;color:var(--muted);margin:-2px 0 8px}
   .pskill b{color:var(--gold)}
@@ -1949,14 +1951,25 @@ function hgCalcCost(r){
 /* ---------- hero gear (per-troop drop-downs of piece cards) ---------- */
 const HG_TYPES=["Archer","Infantry","Cavalry"]; // main troop first
 const HG_KEYS=[["xp","hgXp","XP"],["fh","hgFh","FH"],["mg","hgMg","Myth"],["mith","hgMith","Mith"]];
-function hgNextMithril(lvC,lvT){ const s=HG_ASCEND_STEPS.find(x=>x.lv>lvC&&x.lv<=lvT&&x.mith>0); return s?s.lv:null; }
+// imbuement milestones: [level, mastery needed, mithril, mythic gear] (optimizer "Imbuement Costs" table)
+const HG_IMB=HG_ASCEND_STEPS.map((x,i)=>[x.lv,10+i,x.mith,x.myth]);
+const hgBonus=L=>L<=100?15+0.35*L:50+0.5*(L-100); // stat bonus % (Mythic 0-100, Red 100-200)
+function hgImbLine(r){
+  const L=num(r.lvC), M=num(r.mC), nx=HG_IMB.find(x=>x[0]>L); 
+  const bon=`Bonus <b>${hgBonus(L).toFixed(1)}%</b>`+(L<119?` · at Lv 119: ${hgBonus(119).toFixed(1)}%`:"");
+  if(!nx) return `<div class="hgimb">${bon}<br><span class="tagok">Max imbuement ✓</span></div>`;
+  const ok=M>=nx[1], ahead=M>nx[1], ready=L>=nx[0]-1&&ok;
+  return `<div class="hgimb">${bon}<br>Next imbuement <b>Lv ${nx[0]}</b>: Mastery ${nx[1]} `+
+    (ok?`<span class="tagok">✓</span>`:`<span class="tagbad">✗ need +${nx[1]-M} (${fmt(hgFhCumulative(nx[1])-hgFhCumulative(M))} FH${hgMythFromMastery(nx[1])>hgMythFromMastery(M)?` + ${hgMythFromMastery(nx[1])-hgMythFromMastery(M)} Mythic`:""})</span>`)+
+    ` · ${nx[2]?nx[2]+" Mithril + ":""}${nx[3]} Mythic`+
+    (ahead?`<br><span style="color:var(--amber)">Mastery ahead — hold Forgehammers here</span>`:ready?`<br><span class="tagok">Ready to imbue</span>`:"")+`</div>`;
+}
 function hgPieceCard(r,type,rerender){
   const cost=hgCalcCost(r); r.xp=cost.xp; r.fh=cost.fh; r.mg=cost.mg; r.mith=cost.mith;
   const done=cost.xp+cost.fh+cost.mg+cost.mith===0;
   const lvC=num(r.lvC), lvT=num(r.lvT), pct=lvT>0?Math.min(100,lvC/lvT*100):100;
   const lbl=`${type} ${esc(r.slot||'')}`;
   const card=document.createElement("div"); card.className="hcard hgpiece"+(done?" done":"");
-  const mil=hgNextMithril(lvC,lvT);
   card.innerHTML=`<div class="htop"><input class="hname hgslot" aria-label="${type} slot name" value="${esc(r.slot||'')}">
       <button class="del" title="Remove" aria-label="Remove ${lbl}">×</button></div>
     <div class="hlv">
@@ -1964,10 +1977,11 @@ function hgPieceCard(r,type,rerender){
       <label>Mastery<span class="pair"><input class="hgf" data-f="mC" inputmode="numeric" aria-label="${lbl} current mastery" value="${r.mC}">→<input class="hgf" data-f="mT" inputmode="numeric" aria-label="${lbl} target mastery" value="${r.mT}"></span></label>
     </div>
     <div class="minibar"><div class="mf" style="width:${pct.toFixed(1)}%"></div></div>
+    ${hgImbLine(r)}
     ${done?`<div class="hfoot"><span class="tagok">at target ✓</span></div>`:`<div class="hgcost">
       <div title="${cost.xpExact?'exact':'interpolated between reference-table checkpoints'}">XP<b>${cost.xpExact?'':'~'}${fmtBig(cost.xp)}</b></div>
       <div>FH<b>${fmt(cost.fh)}</b></div><div>Myth<b>${fmt(cost.mg)}</b></div><div>Mith<b>${fmt(cost.mith)}</b></div></div>
-      ${mil?`<div class="hfoot"><span>Next Mithril milestone: Lv ${mil}</span></div>`:""}`}`;
+`}`;
   card.querySelectorAll(".hgf").forEach(inp=>{ inp.onchange=()=>{ r[inp.dataset.f]=num(inp.value); rerender(); scheduleSave(); }; });
   const slotInp=card.querySelector(".hgslot"); slotInp.oninput=()=>{ r.slot=slotInp.value; scheduleSave(); };
   card.querySelector(".del").onclick=()=>{ const hg=state.heroGear, i=hg.rows.indexOf(r); if(i>-1){ hg.rows.splice(i,1); buildHeroGear(); scheduleSave(); } };
