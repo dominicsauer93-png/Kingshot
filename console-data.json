@@ -1257,7 +1257,8 @@
     "t11Open": {},
     "doAll": false,
     "qOpen": {
-      "Bag": true
+      "Bag": true,
+      "HG": true
     }
   },
   "troopCounts": {
