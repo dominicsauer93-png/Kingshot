@@ -659,57 +659,79 @@
     {
       "n": "Petra",
       "need": 500,
-      "have": 57
+      "have": 57,
+      "pos": 25,
+      "tgt": 30
     },
     {
       "n": "Margot",
       "need": 700,
-      "have": 57
+      "have": 57,
+      "pos": 23,
+      "tgt": 30
     },
     {
       "n": "Alcar",
       "need": 600,
-      "have": 48
+      "have": 48,
+      "pos": 24,
+      "tgt": 30
     },
     {
       "n": "Thrud",
       "need": 800,
-      "have": 54
+      "have": 54,
+      "pos": 24,
+      "tgt": 30
     },
     {
       "n": "Triton",
       "need": 700,
-      "have": 0
+      "have": 0,
+      "pos": 23,
+      "tgt": 30
     },
     {
       "n": "Sophia",
       "need": 100,
-      "have": 1
+      "have": 1,
+      "pos": 29,
+      "tgt": 30
     },
     {
       "n": "Ava",
       "need": 940,
-      "have": 1
+      "have": 1,
+      "pos": 19,
+      "tgt": 30
     },
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 36
+      "have": 36,
+      "pos": 26,
+      "tgt": 30
     },
     {
       "n": "Yang",
       "need": 300,
-      "have": 1
+      "have": 1,
+      "pos": 27,
+      "tgt": 30
     },
     {
       "n": "WEE & wOO",
       "need": 0,
-      "have": 104
+      "have": 104,
+      "pos": 18,
+      "tgt": 30
     },
     {
       "n": "Vivian",
       "need": 0,
-      "have": 26
+      "have": 26,
+      "pos": 24,
+      "tgt": 30
     }
   ],
   "masters": [
@@ -1262,7 +1284,7 @@
       "Power": false,
       "Buildings": false,
       "Troops": false,
-      "Shards": false,
+      "Shards": true,
       "Masters": false,
       "Gov": true
     }
