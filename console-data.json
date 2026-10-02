@@ -1211,9 +1211,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 21033,
-      "threads": 156,
-      "vision": 509
+      "satin": 23833,
+      "threads": 184,
+      "vision": 516
     },
     "pieces": [
       {
@@ -1347,7 +1347,7 @@
   },
   "heroGear": {
     "have": {
-      "xp": 0,
+      "xp": 950,
       "fh": 63,
       "mg": 3,
       "mith": 4
@@ -1513,7 +1513,7 @@
     "targetLvl": 10,
     "have": {
       "guides": 371,
-      "designs": 283
+      "designs": 285
     },
     "rows": [
       {
