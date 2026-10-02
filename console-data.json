@@ -1275,7 +1275,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1311,14 +1311,14 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Shards",
+      "Gear": "Hero Gear",
       "Base": "T11"
     },
     "t11Open": {},
     "doAll": false,
     "qOpen": {
       "Bag": true,
-      "HG": false,
+      "HG": true,
       "Power": false,
       "Buildings": false,
       "Troops": false,
@@ -1347,7 +1347,7 @@
   },
   "heroGear": {
     "have": {
-      "xp": 950,
+      "xp": 600,
       "fh": 63,
       "mg": 3,
       "mith": 4
@@ -1464,7 +1464,7 @@
       {
         "type": "Archer",
         "slot": "Gloves (Health)",
-        "lvC": 96,
+        "lvC": 99,
         "lvT": 139,
         "mC": 8,
         "mT": 12,
@@ -1476,7 +1476,7 @@
       {
         "type": "Archer",
         "slot": "Chest (Health)",
-        "lvC": 98,
+        "lvC": 100,
         "lvT": 139,
         "mC": 9,
         "mT": 12,
