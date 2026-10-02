@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-30"
   },
   "dust": {
-    "current": 528,
+    "current": 560,
     "target": 8468,
     "gold": 447180
   },
@@ -1203,9 +1203,9 @@
     }
   ],
   "tg": {
-    "have": 749,
+    "have": 765,
     "need": 5658,
-    "ttgHave": 5,
+    "ttgHave": 7,
     "ttgNeed": 568
   },
   "govGear": {
@@ -1213,7 +1213,7 @@
     "have": {
       "satin": 21033,
       "threads": 156,
-      "vision": 489
+      "vision": 509
     },
     "pieces": [
       {
@@ -1275,7 +1275,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1310,14 +1310,14 @@
     },
     "sub": {
       "Rally": "Masters",
-      "Data": "Account",
+      "Data": "Update all",
       "Gear": "Shards",
       "Base": "T11"
     },
     "t11Open": {},
     "doAll": false,
     "qOpen": {
-      "Bag": false,
+      "Bag": true,
       "HG": false,
       "Power": false,
       "Buildings": false,
@@ -1348,7 +1348,7 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 58,
+      "fh": 62,
       "mg": 3,
       "mith": 4
     },
@@ -1513,7 +1513,7 @@
     "targetLvl": 10,
     "have": {
       "guides": 371,
-      "designs": 251
+      "designs": 283
     },
     "rows": [
       {
