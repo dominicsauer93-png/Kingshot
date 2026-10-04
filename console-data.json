@@ -894,10 +894,10 @@
     {
       "n": "Guinevere",
       "l": "40",
-      "note": "Best for ALL troops · Defense research\nKindred Soul: +15% Lethality + Health\nRelationship: Casual 1 (+7.65% Lethality + Health)\nNEXT: Advance to Casual 2 — needs 60 Guinevere tokens (have 1) → +8.25% Lethality + Health, Holy Sword Domain Lv5 → 6\nSkills: Combat skills 3 + 4 first (skill 4 now unlocked)",
+      "note": "Best for ALL troops · Defense research\nKindred Soul: +15% Lethality + Health\nNEXT: level 40 → 50 (needs Emblems)\nSkills: Combat skill 3 first · skill 4 locked",
       "skills": [
         {
-          "l": 6,
+          "l": 5,
           "t": "g"
         },
         {
@@ -905,11 +905,11 @@
           "t": "g"
         },
         {
-          "l": 4,
+          "l": 3,
           "t": "c"
         },
         {
-          "l": 2,
+          "l": 0,
           "t": "c"
         }
       ]
@@ -1275,7 +1275,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Rally",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1311,7 +1311,7 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Shards",
       "Base": "T11"
     },
     "t11Open": {},
@@ -1512,8 +1512,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 371,
-      "designs": 285
+      "guides": 257,
+      "designs": 7
     },
     "rows": [
       {
@@ -1558,7 +1558,7 @@
       },
       {
         "type": "Infantry",
-        "lvl": 5,
+        "lvl": 6,
         "tgt": 10
       },
       {
@@ -1621,25 +1621,23 @@
         "hero": "Amadeus",
         "lvl": 5,
         "have": 0,
-        "rally": false
+        "rally": true
       },
       {
         "hero": "Ava",
         "lvl": 3,
         "have": 2,
-        "rally": false
+        "rally": true
       },
       {
         "hero": "Long Fei",
         "lvl": 4,
-        "have": 0,
-        "rally": true
+        "have": 0
       },
       {
         "hero": "Sophia",
         "lvl": 2,
-        "have": 0,
-        "rally": true
+        "have": 0
       }
     ],
     "rallySet": true
