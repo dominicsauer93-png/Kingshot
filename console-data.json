@@ -1275,7 +1275,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1311,7 +1311,7 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Shards",
+      "Gear": "Hero Gear",
       "Base": "T11"
     },
     "t11Open": {},
@@ -1512,8 +1512,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 257,
-      "designs": 7
+      "guides": 371,
+      "designs": 285
     },
     "rows": [
       {
@@ -1558,7 +1558,7 @@
       },
       {
         "type": "Infantry",
-        "lvl": 6,
+        "lvl": 5,
         "tgt": 10
       },
       {
