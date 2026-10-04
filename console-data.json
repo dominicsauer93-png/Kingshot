@@ -1621,23 +1621,25 @@
         "hero": "Amadeus",
         "lvl": 5,
         "have": 0,
-        "rally": true
+        "rally": false
       },
       {
         "hero": "Ava",
         "lvl": 3,
         "have": 2,
-        "rally": true
+        "rally": false
       },
       {
         "hero": "Long Fei",
         "lvl": 4,
-        "have": 0
+        "have": 0,
+        "rally": true
       },
       {
         "hero": "Sophia",
         "lvl": 2,
-        "have": 0
+        "have": 0,
+        "rally": true
       }
     ],
     "rallySet": true
