@@ -1311,7 +1311,7 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Widgets",
       "Base": "T11"
     },
     "t11Open": {},
@@ -1512,8 +1512,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 371,
-      "designs": 285
+      "guides": 257,
+      "designs": 7
     },
     "rows": [
       {
@@ -1558,7 +1558,7 @@
       },
       {
         "type": "Infantry",
-        "lvl": 5,
+        "lvl": 6,
         "tgt": 10
       },
       {
