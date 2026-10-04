@@ -2,7 +2,7 @@
   "account": {
     "tc": "Truegold Lv. 7",
     "day": "443",
-    "power": "297568497",
+    "power": "301800000",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "All-round",
@@ -1226,7 +1226,7 @@
       },
       {
         "name": "Inf 1",
-        "cur": 14
+        "cur": 15
       },
       {
         "name": "Inf 2",
@@ -1428,7 +1428,7 @@
       {
         "type": "Cavalry",
         "slot": "Chest (Health)",
-        "lvC": 85,
+        "lvC": 86,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1440,7 +1440,7 @@
       {
         "type": "Cavalry",
         "slot": "Boots (Lethality)",
-        "lvC": 102,
+        "lvC": 104,
         "lvT": 159,
         "mC": 10,
         "mT": 12,
@@ -1464,7 +1464,7 @@
       {
         "type": "Archer",
         "slot": "Gloves (Health)",
-        "lvC": 99,
+        "lvC": 100,
         "lvT": 139,
         "mC": 8,
         "mT": 12,
@@ -1476,9 +1476,9 @@
       {
         "type": "Archer",
         "slot": "Chest (Health)",
-        "lvC": 100,
+        "lvC": 101,
         "lvT": 139,
-        "mC": 9,
+        "mC": 10,
         "mT": 12,
         "xp": 127930,
         "fh": 330,
@@ -1632,6 +1632,11 @@
       {
         "hero": "Long Fei",
         "lvl": 4,
+        "have": 0
+      },
+      {
+        "hero": "Sophia",
+        "lvl": 2,
         "have": 0
       }
     ],
