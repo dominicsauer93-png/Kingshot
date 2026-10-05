@@ -9,14 +9,14 @@
     "dayAnchor": "2025-06-30"
   },
   "dust": {
-    "current": 560,
-    "target": 8468,
-    "gold": 447180
+    "current": 735,
+    "target": 2236,
+    "gold": 701640
   },
   "nodes": [
     {
       "name": "Truegold Archers (unlock)",
-      "cur": 1,
+      "cur": 0,
       "max": 1,
       "costs": [
         2236
@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1336,9 +1336,11 @@
       "Rally": "Mystic Trials",
       "Data": "Update all",
       "Gear": "Shards",
-      "Base": "Buildings"
+      "Base": "T11"
     },
-    "t11Open": {},
+    "t11Open": {
+      "nodes": true
+    },
     "doAll": false,
     "qOpen": {
       "Bag": true,
