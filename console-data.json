@@ -1227,10 +1227,10 @@
     }
   ],
   "tg": {
-    "have": 765,
-    "need": 5658,
-    "ttgHave": 7,
-    "ttgNeed": 568
+    "have": 101,
+    "need": 5076,
+    "ttgHave": 0,
+    "ttgNeed": 531
   },
   "govGear": {
     "targetIdx": 18,
@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1335,8 +1335,8 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Charms",
-      "Base": "T11"
+      "Gear": "Governor",
+      "Base": "Buildings"
     },
     "t11Open": {},
     "doAll": false,
@@ -1372,9 +1372,9 @@
   "heroGear": {
     "have": {
       "xp": 600,
-      "fh": 63,
+      "fh": 72,
       "mg": 3,
-      "mith": 4
+      "mith": 5
     },
     "rows": [
       {
@@ -1741,7 +1741,7 @@
     },
     {
       "n": "Embassy",
-      "stepIdx": 2,
+      "stepIdx": 5,
       "note": "Rally/garrison capacity — events",
       "d": false
     },
@@ -1759,7 +1759,7 @@
     },
     {
       "n": "Stable",
-      "stepIdx": 0,
+      "stepIdx": 4,
       "note": "Cavalry (off-focus) — defer",
       "d": false
     },
