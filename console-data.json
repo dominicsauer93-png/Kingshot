@@ -734,15 +734,15 @@
     {
       "n": "Ava",
       "need": 940,
-      "have": 1,
-      "pos": 19,
+      "have": 0,
+      "pos": 23,
       "tgt": 30,
       "rally": true
     },
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 36,
+      "have": 51,
       "pos": 26,
       "tgt": 30,
       "rally": true
@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1335,7 +1335,7 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Governor",
+      "Gear": "Shards",
       "Base": "Buildings"
     },
     "t11Open": {},
