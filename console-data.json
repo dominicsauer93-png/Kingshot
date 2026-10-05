@@ -1246,7 +1246,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-04",
+    "routineDate": "2026-10-05",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1275,7 +1275,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1311,7 +1311,7 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Charms",
       "Base": "T11"
     },
     "t11Open": {},
@@ -1558,7 +1558,7 @@
       },
       {
         "type": "Infantry",
-        "lvl": 5,
+        "lvl": 6,
         "tgt": 10
       },
       {
