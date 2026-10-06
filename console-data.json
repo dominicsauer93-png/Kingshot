@@ -1235,8 +1235,8 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 23717,
-      "threads": 238,
+      "satin": 24217,
+      "threads": 288,
       "vision": 519
     },
     "pieces": [
@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
