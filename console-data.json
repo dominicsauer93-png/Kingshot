@@ -745,7 +745,7 @@
       "have": 51,
       "pos": 26,
       "tgt": 30,
-      "rally": true
+      "rally": false
     },
     {
       "n": "Yang",
@@ -1653,19 +1653,19 @@
         "hero": "Ava",
         "lvl": 3,
         "have": 2,
-        "rally": false
+        "rally": true
       },
       {
         "hero": "Long Fei",
         "lvl": 4,
         "have": 0,
-        "rally": true
+        "rally": false
       },
       {
         "hero": "Sophia",
         "lvl": 2,
         "have": 0,
-        "rally": true
+        "rally": false
       }
     ],
     "rallySet": true
