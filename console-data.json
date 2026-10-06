@@ -1335,7 +1335,7 @@
     "sub": {
       "Rally": "Overview",
       "Data": "Update all",
-      "Gear": "Governor",
+      "Gear": "Charms",
       "Base": "Buildings"
     },
     "t11Open": {
@@ -1539,8 +1539,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 371,
-      "designs": 285
+      "guides": 257,
+      "designs": 116
     },
     "rows": [
       {
