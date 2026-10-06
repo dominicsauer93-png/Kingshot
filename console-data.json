@@ -1235,9 +1235,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 23833,
-      "threads": 184,
-      "vision": 516
+      "satin": 23717,
+      "threads": 238,
+      "vision": 519
     },
     "pieces": [
       {
@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1335,8 +1335,8 @@
     "sub": {
       "Rally": "Overview",
       "Data": "Update all",
-      "Gear": "Shards",
-      "Base": "Buildings"
+      "Gear": "Governor",
+      "Base": "Resources"
     },
     "t11Open": {
       "nodes": true
