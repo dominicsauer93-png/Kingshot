@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-30"
   },
   "dust": {
-    "current": 735,
+    "current": 750,
     "target": 2236,
     "gold": 701640
   },
@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
