@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1333,7 +1333,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Heroes",
+      "Rally": "Overview",
       "Data": "Update all",
       "Gear": "Shards",
       "Base": "T11"
