@@ -191,6 +191,22 @@
   .stack{display:flex;flex-direction:column;gap:8px}
   .rowb{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .mt{margin-top:12px} .mt2{margin-top:20px}
+  .tr{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 6px;border-radius:7px;font:800 12.5px/1 var(--f-body)}
+  .tr-S{background:var(--red-soft);color:var(--red)} .tr-A{background:var(--amber-soft);color:var(--amber)} .tr-B{background:var(--gold-soft);color:var(--gold)}
+  .tr-C{background:var(--green-soft);color:var(--green)} .tr-D{background:var(--sunk);color:var(--blue)} .tr-x{background:var(--sunk);color:var(--faint)}
+  .rolecard{display:flex;flex-direction:column;gap:8px;padding:13px 14px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--panel);box-shadow:var(--shadow)}
+  .rolecard h3{margin:0;font:700 14px var(--f-body)}
+  .rolecard ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+  .rolecard li{display:flex;align-items:center;gap:8px;font-size:14px}
+  .rolecard li .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rolecard .soon{font-size:12.5px;color:var(--faint)}
+  .tierwrap{overflow-x:auto;border:1.5px solid var(--line);border-radius:var(--r);background:var(--panel);-webkit-overflow-scrolling:touch}
+  .tiert{border-collapse:collapse;width:100%;font-size:13.5px}
+  .tiert th,.tiert td{padding:7px 6px;text-align:center;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+  .tiert th{font:700 11px var(--f-body);color:var(--muted);text-transform:uppercase;letter-spacing:.03em;vertical-align:bottom}
+  .tiert td:first-child,.tiert th:first-child{text-align:left;position:sticky;left:0;background:var(--panel);padding-left:12px;z-index:1}
+  .tiert tr:last-child td{border-bottom:0}
+  .tiert .cnt{font:700 12px var(--f-mono);color:var(--faint)}
   .empty{padding:18px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:var(--r)}
 
   /* ================= bars ================= */
@@ -271,6 +287,26 @@
   .node .nc{font:600 12.5px var(--f-mono);color:var(--muted);text-align:right;white-space:nowrap}
   .node .nc.ok{color:var(--green)}
   @media (max-width: 640px){ .node{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"n s" "b c";row-gap:6px} .node .nn{grid-area:n} .node .stepper{grid-area:s} .node .bar{grid-area:b} .node .nc{grid-area:c} }
+  .shlist{border:1.5px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--shadow);overflow:hidden}
+  .shgrp{display:flex;justify-content:space-between;gap:8px;padding:9px 14px;font:700 11.5px var(--f-body);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:var(--sunk);border-bottom:1px solid var(--line-soft)}
+  .shgrp small{text-transform:none;letter-spacing:0;font-weight:500;color:var(--faint)}
+  details.shfold > summary{list-style:none;cursor:pointer} details.shfold > summary::-webkit-details-marker{display:none}
+  details.shfold > summary .shgrp::after{content:"▾";margin-left:auto} details.shfold[open] > summary .shgrp::after{content:"▴"}
+  .shrow{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 14px;border-bottom:1px solid var(--line-soft)}
+  .shrow.done{opacity:.7}
+  .shr-id{display:flex;align-items:center;gap:8px;flex:1 1 190px;min-width:0}
+  .shr-rank{font:700 12px var(--f-mono);color:var(--faint);min-width:18px}
+  .shr-name{font:700 14.5px var(--f-body);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .shr-edit{width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:9px;background:transparent;color:var(--faint);margin-left:auto}
+  .shr-edit:hover{background:var(--hover);color:var(--text)} .shr-edit svg{width:17px;height:17px}
+  .shr-ctl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .stepper output.st{min-width:104px;font:600 12.5px var(--f-body);color:var(--text);white-space:nowrap}
+  .stepper output.st .gold{letter-spacing:1px}
+  .shr-have{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+  .shr-have input{width:76px;height:36px;padding:0 9px;border-radius:10px;border:1px solid var(--field-line);background:var(--field);color:var(--text);font:600 16px var(--f-mono)}
+  .shr-out{min-width:96px;text-align:right;font-size:13px;font-weight:600;white-space:nowrap}
+  .shrow .bar{flex-basis:100%;margin:0}
+  @media (max-width: 640px){ .shr-own{display:none} .shr-id{flex:1 1 0} .shr-out{min-width:0;order:1} .shr-ctl{order:2;width:100%;justify-content:space-between} .shrow .bar{order:3} }
   .stepper{display:inline-flex;align-items:center;border:1px solid var(--field-line);border-radius:10px;overflow:hidden;background:var(--field)}
   .stepper button{width:34px;height:34px;border:0;background:transparent;color:var(--muted);font:700 17px var(--f-mono);display:grid;place-items:center}
   .stepper button:hover{background:var(--hover);color:var(--text)}
@@ -486,6 +522,16 @@
         <div class="list" id="pillars"></div>
         <div class="legend"><span><span class="sw" style="background:var(--green)"></span>Ahead</span><span><span class="sw" style="background:var(--amber)"></span>Slightly behind</span><span><span class="sw" style="background:var(--red)"></span>Well behind</span><span><span class="sw" style="background:var(--text);opacity:.55"></span>Benchmark</span></div>
       </section>
+      <section class="sec" data-sub="Heroes" data-key="Hero Roles">
+        <h2>Most used heroes <small>sets your shard order</small></h2>
+        <div class="info" id="heroUse"></div>
+        <h2 class="h2 mt2">Best heroes for each battle <small>your heroes, best first</small></h2>
+        <div class="grid" style="--min:250px" id="roleBest"></div>
+        <h2 class="h2 mt2">Every role at a glance <small>S best → D worst</small></h2>
+        <div class="seg" id="tierSeg" role="group" aria-label="Which heroes" style="max-width:320px"><button data-v="mine">My heroes</button><button data-v="all">All heroes</button></div>
+        <div class="tierwrap mt"><table class="tiert" id="tierTable"></table></div>
+        <p class="faint mt" style="font-size:12.5px">Gen 8 tier lists, Oct 2026. Use score: S=4, A=3, B=2, C=1, D=0 per battle type; KvK and Bear rally lead count double (max 40). ⚔ = rally hero. Diego, Liz and Luna are Gen 8 (“soon”).</p>
+      </section>
       <section class="sec" data-sub="Masters" data-key="Masters">
         <h2>Masters <small>ranked for a rally leader</small></h2>
         <div class="info" id="mastNext"></div>
@@ -550,7 +596,8 @@
 
       <section class="sec" data-sub="Shards" data-key="Gold Hero Shards">
         <div class="tiles t3" id="shardTiles"></div>
-        <div class="grid mt" style="--min:170px" id="goldShardBody"></div>
+        <p class="faint mt" style="font-size:12.5px;margin-bottom:8px">＋ = you upgraded one step in game (spends the shards from “have”). Type new “have” numbers straight in.</p>
+        <div class="shlist" id="goldShardBody"></div>
         <button class="add" id="addGoldShard">+ Add hero</button>
         <details class="fold mt"><summary>Where to get Gold Hero Shards</summary><div class="fbody howto">
           <ul><li><b>Modes:</b> Arena leaderboard, advanced Intel Missions, Conquest stages</li><li><b>Shops:</b> VIP Shop, Swordland Shop, Hall of Heroes</li><li><b>Other:</b> recruitment, fishing &amp; events, packs</li></ul>
@@ -1508,7 +1555,7 @@ function initTheme(){
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
 const TABS=["Home","Rally","Gear","Base","Data"];
-const SUBS={Rally:["Overview","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Data:["Update all","Notes","Checklists","Account","Sync"]};
+const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Data:["Update all","Notes","Checklists","Account","Sync"]};
 const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Rally",Supply:"Rally",Events:"Home",Vault:"Data"};
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
@@ -1697,8 +1744,8 @@ function paintGoals(){
   if(tr) prog.push({title:`Train ${tr.l}`,detail:`${fmt(tr.t-tr.c)} to reach ${fmt(tr.t)}`,open:()=>openTroopSheet(tr.k,tr.l),key:"Troop Plan"});
   const mc=(state.masters||[]).map(m=>({m,info:MASTER_INFO[m.n],lv:num(m.l)})).filter(x=>x.info&&x.lv<100&&(x.info.best===MAIN_TROOP||x.info.best==="All squads")).sort((a,b)=>b.lv-a.lv)[0];
   if(mc){ const n2=Math.min(100,(Math.floor(mc.lv/10)+1)*10); prog.push({title:`${esc(mc.m.n)} affinity ${mc.lv} → ${n2}`,detail:n2===100?"Kindred Soul unlocks the research tree":"Emblems needed at the breakpoint",open:()=>openMastSheet(mc.m),key:"Masters"}); }
-  const sh=(state.goldShards||[]).filter(r=>shardNeed(r)>num(r.have)).sort((a,b)=>(shardNeed(a)-num(a.have))-(shardNeed(b)-num(b.have)))[0];
-  if(sh) prog.push({title:`${esc(sh.n)} shards`,detail:`${fmt(shardNeed(sh)-num(sh.have))} short — closest hero to done`,open:()=>openShardSheet(sh),key:"Gold Hero Shards"});
+  const sh=shardOrder()[0];
+  if(sh) prog.push({title:`${esc(sh.n)} shards`,detail:`${fmt(shardNeed(sh)-num(sh.have))} short — your most-used hero`,open:()=>openShardSheet(sh),key:"Gold Hero Shards"});
   const all=[...spend,...prog], showAll=!!state.ui.doAll, L=showAll?all:all.slice(0,5); lastGoals=all;
   hs.innerHTML=L.map(doHtml).join("")||`<div class="empty">Everything is at target ✓</div>`;
   bindAll(hs,".do",b=>{ const g2=L[+b.dataset.i]; goToSection(null,g2.key,g2.open); });
@@ -1727,7 +1774,7 @@ function renderRally(){
       <span class="bar ${cls}"><i style="width:${Math.min(100,ratio*100).toFixed(1)}%"></i>${p.b>0?`<span class="bench" style="left:${Math.min(99,p.b/Math.max(p.v,p.b)*100).toFixed(1)}%"></span>`:""}</span>
       <span class="pv">${fmtBig(p.v)} / ${fmtBig(p.b)}</span><span class="grade g-${esc(p.g||"")}">${esc(p.g)||"–"}</span></span></button>`; }).join("");
   bindAll(pl,".lrow",b=>openPillarSheet(state.pillars[+b.dataset.i]));
-  renderMasters(); renderMystic();
+  renderHeroRoles(); renderMasters(); renderMystic();
 }
 function openCombatSheet(){
   const c=state.combat;
@@ -1744,6 +1791,48 @@ function openPillarSheet(p){
     const inf=infoBox(); f.appendChild(inf);
     const r=()=>{ const ratio=p.b>0?p.v/p.b:0; inf.innerHTML=p.b>0?`You're at <b>${(ratio*100).toFixed(0)}%</b> of the benchmark (${ratio>=1?"ahead":"behind by "+fmtBig(p.b-p.v)}).`:"Add the benchmark to compare."; };
     r(); return r; }});
+}
+
+/* ---------- hero tier lists (Gen 8, Oct 2026) ---------- */
+const HERO_ROLES=[ // [key, label, short, weight] — rally-lead roles count double (you lead rallies)
+  ["kvkLead","KvK rally lead","KvK lead",2],["kvkJoin","KvK joiner","KvK join",1],["gar","Garrison lead","Garrison",1],["gar64","60/40 garrison","60/40",1],
+  ["bearLead","Bear rally lead","Bear lead",2],["bearJoin","Bear joiner","Bear join",1],["solo","Solo march","Solo",1],["arena","Arena / Conquest","Arena",1]];
+const HERO_GEN8=["Diego","Liz","Luna"];
+const HERO_TIERS={
+  kvkLead:{S:"Ava,Diego,Luna",A:"Charles,Triton,Liz,Yang",B:"Long Fei,Sophia,Thrud,Wee & Woo",C:"Saul,Zoe,Helga,Jabel,Hilde,Eric,Jaeger,Marlin,Margot,Amadeus,Alcar,Petra,Vivian,Rosa",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Quinn,Gordon,Howard,Chenko"},
+  kvkJoin:{S:"Amadeus,Saul,Gordon,Chenko,Yeonwoo,Amane,Hilde,Margot,Triton,Wee & Woo,Ava,Diego,Luna",A:"Howard,Quinn,Rosa,Fahd,Vivian,Charles,Eric",B:"Petra,Thrud,Yang",C:"Jabel,Helga,Marlin,Zoe,Jaeger,Alcar,Long Fei,Sophia,Liz",D:"Olive,Seth,Forrest,Edwin,Diana"},
+  gar:{S:"Wee & Woo,Diego,Liz",A:"Charles,Thrud,Sophia,Luna",B:"Yang,Margot,Triton,Ava,Vivian",C:"Helga,Amadeus,Jabel,Petra,Saul,Marlin,Zoe,Eric,Hilde,Rosa,Alcar,Jaeger,Long Fei",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Quinn,Gordon,Howard,Chenko"},
+  gar64:{S:"Wee & Woo,Diego,Liz",A:"Saul,Triton,Charles,Sophia",B:"Jaeger,Alcar,Long Fei,Ava,Thrud",C:"Helga,Amadeus,Jabel,Petra,Rosa,Marlin,Zoe,Hilde,Yang,Eric,Vivian,Margot,Luna",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Quinn,Gordon,Howard,Chenko"},
+  bearLead:{S:"Amadeus,Ava,Luna",A:"Helga,Petra,Wee & Woo,Yang",B:"Diego,Liz",C:"Margot,Triton,Alcar,Zoe,Thrud,Rosa,Vivian",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Howard,Eric,Gordon,Quinn,Yeonwoo,Amane,Chenko,Saul,Jabel,Hilde,Charles,Long Fei,Sophia,Marlin,Jaeger"},
+  bearJoin:{S:"Amadeus,Chenko,Yeonwoo,Amane,Margot,Vivian,Ava,Wee & Woo,Luna",A:"Petra",B:"Rosa,Yang",C:"Jaeger,Thrud,Hilde,Marlin,Liz",D:"Jabel,Saul,Helga,Quinn,Diana,Gordon,Howard,Fahd,Olive,Seth,Forrest,Edwin,Zoe,Eric,Alcar,Long Fei,Triton,Sophia,Charles,Diego"},
+  solo:{S:"Ava,Diego,Liz,Luna",A:"Thrud,Sophia,Charles,Triton,Wee & Woo",B:"Long Fei,Yang",C:"Helga,Zoe,Saul,Jabel,Hilde,Marlin,Amadeus,Eric,Petra,Margot,Alcar,Rosa,Jaeger,Vivian",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Gordon,Quinn,Howard,Chenko"},
+  arena:{S:"Yang,Charles,Wee & Woo,Diego,Liz,Luna",A:"Thrud,Sophia,Triton,Ava",B:"Margot,Long Fei,Vivian",C:"Petra,Rosa,Alcar",D:"Edwin,Forrest,Seth,Olive,Fahd,Diana,Gordon,Amane,Howard,Quinn,Chenko,Yeonwoo,Helga,Saul,Hilde,Jabel,Jaeger,Zoe,Marlin,Eric,Amadeus"}};
+const heroKey=n=>String(n||"").toLowerCase().replace(/\s+/g," ").trim();
+const TIER_OF={}; Object.entries(HERO_TIERS).forEach(([role,t])=>Object.entries(t).forEach(([g,list])=>list.split(",").forEach(h=>{ (TIER_OF[heroKey(h)]??={name:h})[role]=g; })));
+const TIER_PTS={S:4,A:3,B:2,C:1,D:0};
+const heroUse=n=>{ const t=TIER_OF[heroKey(n)]; return t?HERO_ROLES.reduce((s,[r,,,w])=>s+(TIER_PTS[t[r]]||0)*w,0):0; };
+const trH=g=>`<span class="tr tr-${g||"x"}">${g||"–"}</span>`;
+function heroRoster(){ // your heroes = the Gold Hero Shards list
+  const m={}; (state.goldShards||[]).forEach(r=>{ const k=heroKey(r.n); if(TIER_OF[k]) m[k]={n:TIER_OF[k].name,pos:hasStars(r)?num(r.pos):0,rally:!!r.rally,r}; });
+  return m;
+}
+function renderHeroRoles(){
+  const mine=heroRoster(), gen8=HERO_GEN8.map(heroKey);
+  const ranked=Object.values(mine).sort((a,b)=>heroUse(b.n)-heroUse(a.n)||b.pos-a.pos);
+  $("#heroUse").innerHTML=`<b>Shard order:</b> `+ranked.slice(0,6).map((h,i)=>`${i+1}. ${esc(h.n)} <span class="faint">(${heroUse(h.n)})</span>`).join(" · ")+
+    `<br>Spend shards top-down. Once a hero hits 5★ (or the shards run out for them), spare shards go to the next one.`;
+  $("#roleBest").innerHTML=HERO_ROLES.map(([role,label])=>{
+    const L=Object.values(mine).filter(h=>TIER_OF[heroKey(h.n)][role]).sort((a,b)=>TIER_PTS[TIER_OF[heroKey(b.n)][role]]-TIER_PTS[TIER_OF[heroKey(a.n)][role]]||b.pos-a.pos).slice(0,3);
+    const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
+    return `<div class="rolecard"><h3>${esc(label)}</h3><ol>${L.map(h=>`<li>${trH(TIER_OF[heroKey(h.n)][role])}<span class="nm">${esc(h.n)}${h.rally?" ⚔":""}</span><span class="gold" style="font-size:12px;letter-spacing:1px">${starGlyphs(h.pos)}</span></li>`).join("")}</ol>
+      ${soon.length?`<span class="soon">Gen 8 soon: ${soon.map(esc).join(", ")} (S)</span>`:""}</div>`; }).join("");
+  const mode=state.ui.tierAll?"all":"mine";
+  $$("#tierSeg button").forEach(b=>{ b.setAttribute("aria-pressed",String(b.dataset.v===mode)); b.onclick=()=>{ state.ui.tierAll=b.dataset.v==="all"; scheduleSave(); renderHeroRoles(); }; });
+  const keys=Object.keys(TIER_OF).filter(k=>mode==="all"||mine[k]||gen8.includes(k));
+  keys.sort((a,b)=>heroUse(TIER_OF[b].name)-heroUse(TIER_OF[a].name)||TIER_OF[a].name.localeCompare(TIER_OF[b].name));
+  $("#tierTable").innerHTML=`<thead><tr><th>Hero</th>${HERO_ROLES.map(([,,s])=>`<th>${esc(s)}</th>`).join("")}<th>Use</th></tr></thead><tbody>`+
+    keys.map(k=>{ const t=TIER_OF[k], h=mine[k], s8=gen8.includes(k);
+      return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" ⚔":""}${s8?' <span class="tag plain" style="padding:2px 6px;font-size:10.5px">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
 }
 
 /* ---------- masters ---------- */
@@ -2011,36 +2100,59 @@ const starGlyphs=p=>{ const s=Math.min(5,Math.floor(p/6)); return "★".repeat(s
 const STAR_OPTS=Array.from({length:SHARD_MAX+1},(_,i)=>[String(i),starLabel(i)]);
 const hasStars=r=>r.pos!=null&&r.pos!=="";
 function shardNeed(r){ if(!hasStars(r)) return num(r.need); const a=Math.max(0,Math.min(SHARD_MAX,num(r.pos))), b=Math.max(a,Math.min(SHARD_MAX,r.tgt==null||r.tgt===""?SHARD_MAX:num(r.tgt))); let t=0; for(let i=a;i<b;i++) t+=SHARD_LEAF[i]; return t; }
+let shardFocus=null;
 function renderShards(){
   const L=state.goldShards||[]; let N=0,H=0,S=0,dn=0;
   L.forEach(r=>{ const n=shardNeed(r),h=num(r.have); N+=n; H+=Math.min(h,n); S+=Math.max(0,n-h); if(h>=n&&n>0) dn++; });
-  const close=L.filter(r=>shardNeed(r)>num(r.have)).sort((a,b)=>(shardNeed(a)-num(a.have))-(shardNeed(b)-num(b.have)))[0];
-  // rally heroes for shards (one-time default: Long Fei, Yang, Sophia — change per hero in its edit panel)
-  if(!state.shardRallySet){ L.forEach(r=>{ r.rally=["Long Fei","Yang","Sophia"].includes(r.n); }); state.shardRallySet=true; }
-  const gen=num(state.shardGeneral), RALLY=L.filter(r=>r.rally&&!/amadeus|helga/i.test(r.n||"")).map(r=>r.n); // general shards fit any Mythic hero except Amadeus & Helga
-  const genFor=L.filter(r=>RALLY.includes(r.n)&&shardNeed(r)>num(r.have)).sort((a,b)=>(shardNeed(a)-num(a.have))-(shardNeed(b)-num(b.have)))[0];
+  const top=shardOrder()[0]; // most-used hero still short
+  // rally heroes for shards (one-time default: Ava, Yang, Wee & Woo — change per hero in its edit panel)
+  if(!state.shardRallySet){ L.forEach(r=>{ r.rally=["Ava","Yang","Wee & Woo"].includes(r.n); }); state.shardRallySet=true; }
+  const gen=num(state.shardGeneral), genFor=genOrder()[0]; // general shards → most-used hero still short
   $("#shardTiles").innerHTML=tileH({id:"shTot",label:"All heroes",value:pc(H,N).toFixed(0)+"%",sub:`${fmt(H)} / ${fmt(N)} · ${dn}/${L.length} done`,p:pc(H,N)})+
     tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genFor?`best on ${esc(genFor.n)} (${fmt(shardNeed(genFor)-num(genFor.have))} short)`:"any hero except Amadeus & Helga"})+
-    (close?tileH({id:"shNext",label:"Closest to done",value:esc(close.n),txt:true,sub:`${fmt(shardNeed(close)-num(close.have))} short`}):tileH({label:"Closest to done",value:"All done",txt:true}));
-  on("shNext",()=>close&&openShardSheet(close)); on("shGen",openGeneralShardSheet);
+    (top?tileH({id:"shNext",label:"Focus hero",value:esc(top.n),txt:true,sub:hasStars(top)?`next step ${esc(starLabel(num(top.pos)+1))}: ${SHARD_LEAF[num(top.pos)]} shards · have ${fmt(num(top.have))}`:"set the star tier"}):tileH({label:"Focus hero",value:"All done",txt:true}));
+  on("shNext",()=>top&&openShardSheet(top)); on("shGen",openGeneralShardSheet);
   const b=$("#goldShardBody");
-  const starPos=r=>hasStars(r)?num(r.pos):-1;
-  const order=L.map((r,i)=>({r,i})).sort((a,c)=>(!!c.r.rally)-(!!a.r.rally)||starPos(c.r)-starPos(a.r)||String(a.r.n).localeCompare(String(c.r.n)));
-  b.innerHTML=order.map(({r,i})=>{ const n=shardNeed(r),h=num(r.have),st=hasStars(r),maxed=st&&num(r.pos)>=SHARD_MAX,done=maxed||(n>0&&h>=n);
-    return `<button class="vcard ${done?"s-done":""}" data-i="${i}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(r.n||"Hero")}</span>${r.rally?tagH("acc","⚔ Rally"):""}</span>
-      ${st?`<span class="vc-sub"><span class="gold" style="letter-spacing:1px">${starGlyphs(num(r.pos))}</span> ${esc(starLabel(num(r.pos)))}${maxed?"":` → ${esc(starLabel(r.tgt==null||r.tgt===""?SHARD_MAX:num(r.tgt)))}`}</span>`:`<span class="vc-sub faint">tap to set star tier</span>`}
-      <span class="vc-big">${fmt(h)}<small>/ ${n>0?fmt(n):st?"0":"?"}</small></span>${barH(n>0?pc(h,n):(done?100:0),done?"ok":"")}
-      <span class="vc-line">${maxed?'<span class="ok">5★ Max ✓</span>':n<=0?'<span class="faint">set the star tier</span>':done?'<span class="ok">Enough shards ✓</span>':`<span class="bad">${fmt(n-h)} short</span>`}</span></button>`; }).join("");
-  bindAll(b,".vcard",x=>openShardSheet(L[+x.dataset.i]));
+  const starPos=r=>hasStars(r)?num(r.pos):-1, isDone=r=>{ const n=shardNeed(r); return (hasStars(r)&&num(r.pos)>=SHARD_MAX)||(n>0&&num(r.have)>=n); };
+  const order=L.map((r,i)=>({r,i})).sort((a,c)=>heroUse(c.r.n)-heroUse(a.r.n)||starPos(c.r)-starPos(a.r)||String(a.r.n).localeCompare(String(c.r.n)));
+  const open=order.filter(x=>!isDone(x.r)), focus=open.slice(0,3), next=open.slice(3).filter(x=>heroUse(x.r.n)>=15), spare=open.slice(3).filter(x=>heroUse(x.r.n)<15), done=order.filter(x=>isDone(x.r));
+  let rank=0;
+  const row=({r,i})=>{ rank++; const n=shardNeed(r),h=num(r.have),st=hasStars(r),p=num(r.pos),maxed=st&&p>=SHARD_MAX,dn=isDone(r);
+    return `<div class="shrow ${dn?"done":""}" data-i="${i}"><span class="shr-id"><span class="shr-rank">${rank}</span><span class="shr-name">${esc(r.n||"Hero")}${r.rally?" ⚔":""}</span>${tagH(heroUse(r.n)>=25?"acc":"plain","Use "+heroUse(r.n))}${/amadeus|helga/i.test(r.n||"")?`<span class="tag plain shr-own">own shards</span>`:""}
+      <button class="shr-edit" data-i="${i}" aria-label="Edit ${esc(r.n||"hero")}"><svg aria-hidden="true"><use href="#i-pen"/></svg></button></span>
+      <span class="shr-ctl">${st?`<span class="stepper"><button data-i="${i}" data-d="-1" aria-label="${esc(r.n)} down one step"${p<=0?" disabled":""}>−</button><output class="st"><span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}</output><button data-i="${i}" data-d="1" aria-label="${esc(r.n)} up one step"${maxed?" disabled":""}>+</button></span>`:`<button class="btn sm ghost shr-set" data-i="${i}">Set star tier</button>`}
+      <label class="shr-have">Have <input inputmode="numeric" data-i="${i}" value="${h}" aria-label="${esc(r.n)} shards in hand"></label>
+</span>
+      <span class="shr-out">${maxed?'<span class="ok">5★ Max ✓</span>':n<=0?'<span class="faint">—</span>':dn?'<span class="ok">Enough ✓</span>':`<span class="bad">${fmt(n-h)} short</span>`}</span>
+      ${maxed?"":barH(n>0?pc(h,n):0,dn?"ok":"")}</div>`; };
+  const grp=(t,sub)=>`<div class="shgrp"><span>${t}</span><small>${sub}</small></div>`;
+  b.innerHTML=(focus.length?grp("Focus now","general shards go here")+focus.map(row).join(""):"")+
+    (next.length?grp("Next up","when the focus heroes are done")+next.map(row).join(""):"")+
+    (spare.length?`<details class="shfold"${state.ui.shSpare?" open":""} data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"low use — tap to show")}</summary>${spare.map(row).join("")}</details>`:"")+
+    (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"5★ or enough shards")}</summary>${done.map(row).join("")}</details>`:"")||`<div class="empty">No heroes yet</div>`;
+  b.querySelectorAll("details.shfold").forEach(d=>d.ontoggle=()=>{ state.ui[d.dataset.k]=d.open; scheduleSave(); });
+  bindAll(b,".shr-edit,.shr-set",x=>openShardSheet(L[+x.dataset.i]));
+  b.querySelectorAll(".stepper button").forEach(x=>x.onclick=()=>{ const r=L[+x.dataset.i], d=+x.dataset.d, p=num(r.pos), snap=JSON.stringify(state);
+    if(d>0&&p<SHARD_MAX){ r.pos=p+1; r.have=Math.max(0,num(r.have)-SHARD_LEAF[p]); toast(`${r.n}: ${starLabel(p+1)} (−${SHARD_LEAF[p]} shards)`,snap); }
+    else if(d<0&&p>0){ r.pos=p-1; r.have=num(r.have)+SHARD_LEAF[p-1]; toast(`${r.n}: back to ${starLabel(p-1)}`,snap); }
+    shardFocus=`.stepper button[data-i="${x.dataset.i}"][data-d="${d}"]`; afterEdit(); });
+  b.querySelectorAll(".shr-have input").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
+    x.onchange=()=>{ const r=L[+x.dataset.i]; if(!/\d/.test(x.value)){ x.value=num(r.have); return; } const v=Math.max(0,num(x.value)); r.have=Math.round(v); afterEdit(); }; });
+  if(shardFocus){ const nb=b.querySelector(shardFocus); shardFocus=null; if(nb&&!nb.disabled) nb.focus({preventScroll:true}); }
   on("addGoldShard",()=>{ const r={n:"New hero",need:0,have:0,pos:0,tgt:SHARD_MAX}; L.push(r); afterEdit(); openShardSheet(r); });
+}
+function shardOrder(){ // every hero still short, most-used first
+  return (state.goldShards||[]).filter(r=>shardNeed(r)>num(r.have)&&!(hasStars(r)&&num(r.pos)>=SHARD_MAX)).sort((a,b)=>heroUse(b.n)-heroUse(a.n));
+}
+function genOrder(){ // heroes general shards can go to, most-used first (not Amadeus/Helga, not done)
+  return (state.goldShards||[]).filter(r=>!/amadeus|helga/i.test(r.n||"")&&shardNeed(r)>num(r.have)).sort((a,b)=>heroUse(b.n)-heroUse(a.n));
 }
 function openGeneralShardSheet(){
   openSheet({title:"General Mythic shards",sub:"Fit any Mythic hero except Amadeus and Helga.",build(f){
     f.appendChild(fld("General shards in hand",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v}));
     const inf=infoBox(); f.appendChild(inf);
-    const rf=()=>{ const g=num(state.shardGeneral), L=(state.goldShards||[]).filter(r=>!/amadeus|helga/i.test(r.n||"")&&shardNeed(r)>num(r.have));
-      const rally=L.filter(r=>r.rally);
-      inf.innerHTML=`<b>Best use:</b> your rally heroes first — `+(rally.length?rally.map(r=>`${esc(r.n)} needs <b>${fmt(shardNeed(r)-num(r.have))}</b>`).join(", "):"all done")+
+    const rf=()=>{ const g=num(state.shardGeneral), top=genOrder().slice(0,3);
+      inf.innerHTML=`<b>Best use:</b> most-used heroes first — `+(top.length?top.map(r=>`${esc(r.n)} needs <b>${fmt(shardNeed(r)-num(r.have))}</b>`).join(", then "):"all done")+
         `.<br>Amadeus only takes his own shards.`+(g?`<br>You have <b>${fmt(g)}</b> to place.`:""); };
     rf(); return rf; }});
 }
@@ -2050,7 +2162,7 @@ function openShardSheet(r){
     f.appendChild(frow(fld("Star tier now",{type:"select",value:hasStars(r)?String(num(r.pos)):"",options:(hasStars(r)?[]:[["","— not set —"]]).concat(STAR_OPTS),set:v=>{ r.pos=v===""?null:parseInt(v,10); if(r.tgt==null) r.tgt=SHARD_MAX; }}),
       fld("Target",{type:"select",value:String(r.tgt==null?SHARD_MAX:num(r.tgt)),options:STAR_OPTS,set:v=>r.tgt=parseInt(v,10)})));
     f.appendChild(fld("Hero shards in hand",{type:"num",value:r.have,get:()=>r.have,set:v=>r.have=v}));
-    f.appendChild(fld("Rally hero (shown first, gets general shards)",{type:"check",value:r.rally,set:v=>r.rally=v}));
+    f.appendChild(fld("Rally hero (⚔ marker)",{type:"check",value:r.rally,set:v=>r.rally=v}));
     const inf=infoBox(); f.appendChild(inf);
     const rf=()=>{ if(!hasStars(r)){ inf.innerHTML=`Set the star tier and the shards needed are worked out for you. (Old number: <b>${fmt(num(r.need))}</b>)`; return; }
       const n=shardNeed(r), h=num(r.have), p=num(r.pos), nx=p<SHARD_MAX?SHARD_LEAF[p]:0;
