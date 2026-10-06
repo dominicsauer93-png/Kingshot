@@ -1227,9 +1227,9 @@
     }
   ],
   "tg": {
-    "have": 101,
+    "have": 182,
     "need": 5076,
-    "ttgHave": 0,
+    "ttgHave": 5,
     "ttgNeed": 531
   },
   "govGear": {
@@ -1336,7 +1336,7 @@
       "Rally": "Overview",
       "Data": "Update all",
       "Gear": "Shards",
-      "Base": "T11"
+      "Base": "Buildings"
     },
     "t11Open": {
       "nodes": true
