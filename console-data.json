@@ -734,7 +734,7 @@
     {
       "n": "Ava",
       "need": 940,
-      "have": 0,
+      "have": 100,
       "pos": 23,
       "tgt": 30,
       "rally": true
@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Rally",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1333,7 +1333,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
+      "Rally": "Heroes",
       "Data": "Update all",
       "Gear": "Shards",
       "Base": "T11"
@@ -1351,7 +1351,8 @@
       "Shards": true,
       "Masters": false,
       "Gov": true
-    }
+    },
+    "tierAll": false
   },
   "troopCounts": {
     "inf": {
