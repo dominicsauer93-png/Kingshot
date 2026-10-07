@@ -1270,7 +1270,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-06",
+    "routineDate": "2026-10-07",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1335,7 +1335,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Charms",
+      "Gear": "Pets",
       "Base": "Buildings"
     },
     "t11Open": {
