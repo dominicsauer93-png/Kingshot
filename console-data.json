@@ -1299,7 +1299,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1333,9 +1333,9 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Heroes",
+      "Rally": "Overview",
       "Data": "Update all",
-      "Gear": "Pets",
+      "Gear": "Hero Gear",
       "Base": "Buildings"
     },
     "t11Open": {
@@ -1443,7 +1443,7 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 84,
+        "lvC": 85,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1455,7 +1455,7 @@
       {
         "type": "Cavalry",
         "slot": "Chest (Health)",
-        "lvC": 86,
+        "lvC": 98,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1493,7 +1493,7 @@
         "slot": "Gloves (Health)",
         "lvC": 100,
         "lvT": 139,
-        "mC": 8,
+        "mC": 9,
         "mT": 12,
         "xp": 132530,
         "fh": 420,
