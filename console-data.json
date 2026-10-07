@@ -479,6 +479,73 @@
       "d": false
     }
   ],
+  "weekly": {
+    "week": "2026-10-05",
+    "items": [
+      {
+        "t": "Bear Hunt — join every rally",
+        "d": false
+      },
+      {
+        "t": "Arena Shop — Custom Mythic Hero Gear Chest",
+        "d": false
+      },
+      {
+        "t": "Alliance Shop — everything at 70% off (never shields)",
+        "d": false
+      },
+      {
+        "t": "VIP Shop — Forgehammers + 100 Enhancement XP",
+        "d": false
+      },
+      {
+        "t": "Trial Shop — Truegold Dust first, then Mithril",
+        "d": false
+      },
+      {
+        "t": "Alliance Championship Shop — Master Emblems",
+        "d": false
+      }
+    ]
+  },
+  "packs": [
+    {
+      "t": "2nd construction queue",
+      "aud": 4.99,
+      "kind": "once",
+      "note": "Permanent — doubles building speed",
+      "d": false
+    },
+    {
+      "t": "Ultra Value Monthly Card",
+      "aud": 14.99,
+      "first": 7.99,
+      "kind": "month",
+      "note": "Daily gems + Stamina + 30 days VIP — best value",
+      "d": false
+    },
+    {
+      "t": "Weekly Benefits Card",
+      "aud": 7.99,
+      "kind": "week",
+      "note": "Governor gear materials + speedups",
+      "d": false
+    },
+    {
+      "t": "Extra march queue",
+      "aud": 5.99,
+      "kind": "once",
+      "note": "Permanent — more gathering and rallies",
+      "d": false
+    },
+    {
+      "t": "Intel Monthly Card",
+      "aud": 7.99,
+      "kind": "month",
+      "note": "Steady extras if you log in daily",
+      "d": false
+    }
+  ],
   "trackFarm": [
     {
       "t": "Farm Truegold Dust toward the T11 Infantry unlock",
@@ -1270,7 +1337,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-07",
+    "routineDate": "2026-10-08",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
