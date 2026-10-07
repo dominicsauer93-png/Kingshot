@@ -498,19 +498,19 @@
     },
     {
       "name": "Troop",
-      "v": 171500084,
+      "v": 172935744,
       "b": 188581313,
       "g": "S"
     },
     {
       "name": "Hero",
-      "v": 31961792,
+      "v": 32198573,
       "b": 23484260,
       "g": "SS"
     },
     {
       "name": "Hero Gear",
-      "v": 12947511,
+      "v": 12955836,
       "b": 14161916,
       "g": "S"
     },
@@ -528,19 +528,19 @@
     },
     {
       "name": "Tech",
-      "v": 19442445,
+      "v": 27442445,
       "b": 14483939,
       "g": "SS"
     },
     {
       "name": "Pet",
-      "v": 22021560,
+      "v": 22203000,
       "b": 22741171,
       "g": "S"
     },
     {
       "name": "Master",
-      "v": 14867000,
+      "v": 14922000,
       "b": 32440800,
       "g": "C"
     }
@@ -1333,10 +1333,10 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Overview",
+      "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Governor",
-      "Base": "T11"
+      "Gear": "Charms",
+      "Base": "Resources"
     },
     "t11Open": {
       "nodes": true
