@@ -1295,6 +1295,34 @@
       {
         "t": "Claim house / suppression gold",
         "d": false
+      },
+      {
+        "t": "Queues busy — construction, research, training",
+        "d": false
+      },
+      {
+        "t": "Daily Missions + VIP daily chest",
+        "d": false
+      },
+      {
+        "t": "Mystic Trials (Mithril)",
+        "d": false
+      },
+      {
+        "t": "Arena attempts (tokens → Mythic gear chest)",
+        "d": false
+      },
+      {
+        "t": "Pet Adventures sent (Pet Food, Taming Marks)",
+        "d": false
+      },
+      {
+        "t": "Terrors with Stamina (hero shards)",
+        "d": false
+      },
+      {
+        "t": "Alliance helps, donations, chests",
+        "d": false
       }
     ]
   },

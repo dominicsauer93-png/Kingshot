@@ -348,6 +348,17 @@
   .evwhen.now{color:var(--green)}
 
   /* ================= checklists ================= */
+  .gtable{width:100%;border-collapse:collapse;font-size:13.5px}
+  .gtable th,.gtable td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-soft)}
+  .gtable th{font:700 11px var(--f-body);text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+  .gtable tr:last-child td{border-bottom:0} .gtable td:first-child{font-weight:700;white-space:nowrap}
+  .gtable ol{margin:0;padding-left:18px} .gtable li + li{margin-top:2px}
+  @media (max-width: 640px){ .gtable thead{display:none} .gtable tr{display:block;padding:8px 0;border-bottom:1px solid var(--line-soft)} .gtable td{display:block;border:0;padding:2px 12px} }
+  .pack{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;align-items:start;padding:11px 14px;border-bottom:1px solid var(--line-soft)}
+  .pack:last-child{border-bottom:0} .pack .pn{font-weight:700;font-size:14.5px} .pack .pd{font-size:12.5px;color:var(--muted)}
+  .pack .pp{font:700 14px var(--f-mono);color:var(--gold);text-align:right;white-space:nowrap} .pack .pp small{display:block;font:500 11.5px var(--f-body);color:var(--faint)}
+  .pack .rk{font:700 12px var(--f-mono);color:var(--faint);padding-top:3px}
+  .pack.never .pn{color:var(--red)}
   ul.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
   ul.checks li{display:flex;gap:12px;align-items:center;padding:9px 2px;border-bottom:1px solid var(--line-soft);font-size:14.5px}
   ul.checks li:last-child{border-bottom:0}
@@ -499,6 +510,8 @@
             <h2>Today <small id="todayDate"></small></h2>
             <div class="card"><ul class="checks" id="todayRoutine"></ul>
               <div class="rowb mt"><span class="faint" id="todayCount" style="font-size:13px"></span><button class="btn sm ghost" data-goto="Checklists">Edit list</button></div></div>
+            <div class="card"><h3>This week <small class="faint" style="font:500 12px var(--f-body)">resets Monday</small></h3><ul class="checks" id="weekRoutine"></ul>
+              <div class="rowb mt"><span class="faint" id="weekCount" style="font-size:13px"></span><button class="btn sm ghost" data-goto="Shops &amp; Packs">Shops &amp; packs</button></div></div>
           </section>
           <section class="sec" data-key="Upcoming Events">
             <h2>Coming up <button class="btn sm" id="evAdd">+ Event</button></h2>
@@ -653,6 +666,17 @@
         <p class="lead">Fill in what changed in-game. Every section of the console updates from here. Targets are set in each section.</p>
         <div id="qBody"></div>
       </section>
+      <section class="sec" data-sub="Shops &amp; Packs" data-key="Shops &amp; Packs">
+        <h2>Free path <small>where each supply comes from</small></h2>
+        <div class="card" style="padding:0;overflow:hidden"><table class="gtable" id="srcTable"></table></div>
+        <h2 class="h2 mt2">Shop shopping list <small>buy in this order</small></h2>
+        <div class="card" style="padding:0;overflow:hidden"><table class="gtable" id="shopTable"></table></div>
+        <div class="info mt"><b>Gems:</b> save them for Hero Roulette when Wee &amp; Woo is featured. Don't spend gems on resources or speedups. <b>Speedups:</b> save for the matching event day.</div>
+        <h2 class="h2 mt2">Packs worth buying <small>AUD, approx — your store shows the exact price</small></h2>
+        <div class="tiles t3" id="packTiles"></div>
+        <div class="card mt" style="padding:0;overflow:hidden" id="packList"></div>
+        <p class="faint mt" style="font-size:12.5px">Tick the packs you own or buy. Recurring ticks add up to your monthly spend. Prices converted from USD at about A$1.50 = US$1.</p>
+      </section>
       <section class="sec" data-sub="Notes" data-key="Notes">
         <label class="sr-only" for="notes">Notes</label>
         <textarea class="notes" id="notes" placeholder="Plans, KvK dates, decisions…"></textarea>
@@ -660,6 +684,7 @@
       <section class="sec" data-sub="Checklists" data-key="Checklists">
         <div class="cols">
           <div class="card"><h3>Daily routine</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every day.</p><ul class="checks" id="routineEdit"></ul></div>
+          <div class="card"><h3>Weekly</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every Monday.</p><ul class="checks" id="weekEdit"></ul></div>
           <div class="card"><h3>Execute now</h3><ul class="checks" id="trackNow"></ul></div>
           <div class="card"><h3>Farm quietly</h3><ul class="checks" id="trackFarm"></ul></div>
         </div>
@@ -755,6 +780,21 @@ const SEED = {
     {name:"Truegold Cavalry Training", cur:0, max:10, costs:[102,137,188,255,341,459,612,836,1100,1500]}
   ],
   trackNow:[],
+  weekly:{ week:"", items:[
+    {t:"Bear Hunt — join every rally", d:false},
+    {t:"Arena Shop — Custom Mythic Hero Gear Chest", d:false},
+    {t:"Alliance Shop — everything at 70% off (never shields)", d:false},
+    {t:"VIP Shop — Forgehammers + 100 Enhancement XP", d:false},
+    {t:"Trial Shop — Truegold Dust first, then Mithril", d:false},
+    {t:"Alliance Championship Shop — Master Emblems", d:false}
+  ]},
+  packs:[
+    {t:"2nd construction queue", aud:4.99, kind:"once", note:"Permanent — doubles building speed", d:false},
+    {t:"Ultra Value Monthly Card", aud:14.99, first:7.99, kind:"month", note:"Daily gems + Stamina + 30 days VIP — best value", d:false},
+    {t:"Weekly Benefits Card", aud:7.99, kind:"week", note:"Governor gear materials + speedups", d:false},
+    {t:"Extra march queue", aud:5.99, kind:"once", note:"Permanent — more gathering and rallies", d:false},
+    {t:"Intel Monthly Card", aud:7.99, kind:"month", note:"Steady extras if you log in daily", d:false}
+  ],
   trackFarm:[],
   pillars:[
     {name:"Building",      v:0, b:0, g:""},
@@ -1555,7 +1595,7 @@ function initTheme(){
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
 const TABS=["Home","Rally","Gear","Base","Data"];
-const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Data:["Update all","Notes","Checklists","Account","Sync"]};
+const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Data:["Update all","Shops & Packs","Notes","Checklists","Account","Sync"]};
 const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Rally",Supply:"Rally",Events:"Home",Vault:"Data"};
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
@@ -1646,6 +1686,10 @@ function renderHome(){
   $("#todayDate").textContent=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
   buildChecks($("#todayRoutine"),t.routine,{tickOnly:true,onTick:()=>paintTodayCount()});
   paintTodayCount();
+  const w=state.weekly, wk=weekKey();
+  if(w.week!==wk){ w.items.forEach(r=>r.d=false); w.week=wk; scheduleSave(); }
+  buildChecks($("#weekRoutine"),w.items,{tickOnly:true,onTick:()=>paintWeekCount()});
+  paintWeekCount();
   renderEvents();
 }
 function paintTodayCount(){ const R=state.today.routine, n=R.filter(r=>r.d).length; $("#todayCount").textContent=R.length?(n===R.length?"All done today ✓":`${n} of ${R.length} done`):"No routine items yet"; }
@@ -2317,11 +2361,51 @@ function buildChecks(host,arr,o){
     add.onclick=()=>{ arr.push({t:"New item",d:false}); buildChecks(host,arr,o); scheduleSave(); const s=host.querySelectorAll(".txt"), last=s[s.length-1]; if(last){ last.focus(); document.getSelection().selectAllChildren(last); } };
     host.appendChild(add); }
 }
+/* ---------- free path, shops & packs ---------- */
+const SUPPLY_SRC=[
+  ["Mithril","Red hero gear (Lv 100+)","Mystic Trials → Trial Shop → Arena Shop, Champagne Fair"],
+  ["Forgehammers","Hero gear mastery","Trial Shop, VIP Shop, Adventure Stall"],
+  ["Truegold Dust","Buildings past Lv 30, T11","Trial Shop, Adventure Stall"],
+  ["Widgets","Hero exclusive gear","Buccaneer Bounty, Mystery Shop, Champagne Fair, Hall of Heroes"],
+  ["Charm Designs / Guides","Governor charms","Eternity's Reach, Swordland Shop, Tidal Shop, KvK shop"],
+  ["Satin / Gilded Threads","Governor gear","Viking Vengeance, Alliance Championship Shop"],
+  ["Artisan's Vision","Governor gear","Swordland Shop, Tidal Shop"],
+  ["Master Emblems","Masters","Alliance Championship Shop"],
+  ["Hero shards","Hero stars","Intel, Terrors, Conquest, VIP daily, Hero Roulette"],
+  ["Pet Food / Taming Marks","Pets","Pet Adventure, events"],
+  ["Stamina","Terrors, rallies","VIP Shop, events (very limited)"],
+  ["Speedups","Everything","Events, missions — save for event days"],
+  ["Bread, Wood, Stone, Iron, Gold","Building, training","Gathering, farm account, events — never buy"]];
+const SHOP_LIST=[
+  ["Trial Shop",["Truegold Dust","Mithril","Pure Gold Dust (once unlocked)"]],
+  ["Arena Shop",["Custom Mythic Hero Gear Chest (weekly)","Nothing else unless tokens are left over"]],
+  ["Alliance Shop",["Everything at 70% off you can use","40% off items if tokens are left","Never shields"]],
+  ["VIP Shop",["Forgehammers","100 Enhancement XP","Advanced Teleports if needed"]],
+  ["Swordland Shop",["Artisan's Vision","100 XP Parts","Satin / Gilded Threads","Charm Designs + Guides"]],
+  ["Tidal Shop",["100 XP Parts","Artisan's Vision","Charm Designs + Guides"]],
+  ["Alliance Championship",["Master Emblems","Gilded Threads"]]];
+function weekKey(){ const d=new Date(); const k=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())); k.setUTCDate(k.getUTCDate()-((k.getUTCDay()+6)%7)); return k.toISOString().slice(0,10); }
+function paintWeekCount(){ const R=state.weekly.items, n=R.filter(r=>r.d).length; $("#weekCount").textContent=R.length?(n===R.length?"All done this week ✓":`${n} of ${R.length} done`):"No weekly items yet"; }
+const packMonthly=p=>p.kind==="month"?num(p.aud):p.kind==="week"?num(p.aud)*52/12:0;
+function renderShopsPacks(){
+  $("#srcTable").innerHTML=`<thead><tr><th>Supply</th><th>Used for</th><th>Best free source</th></tr></thead><tbody>`+SUPPLY_SRC.map(([a,b,c])=>`<tr><td>${esc(a)}</td><td class="muted">${esc(b)}</td><td>${esc(c)}</td></tr>`).join("")+`</tbody>`;
+  $("#shopTable").innerHTML=`<thead><tr><th>Shop</th><th>Buy in this order</th></tr></thead><tbody>`+SHOP_LIST.map(([a,L])=>`<tr><td>${esc(a)}</td><td><ol>${L.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></td></tr>`).join("")+`</tbody>`;
+  const P=state.packs||[], own=P.filter(p=>p.d), mo=own.reduce((t,p)=>t+packMonthly(p),0), once=own.filter(p=>p.kind==="once").reduce((t,p)=>t+num(p.aud),0);
+  $("#packTiles").innerHTML=tileH({label:"Your monthly spend",value:"A$"+mo.toFixed(2),sub:own.some(p=>p.kind!=="once")?"from ticked cards":"no cards ticked"})+
+    tileH({label:"One-off buys",value:"A$"+once.toFixed(2),sub:`${own.filter(p=>p.kind==="once").length} of ${P.filter(p=>p.kind==="once").length} permanent unlocks`})+
+    tileH({label:"Budget guide",value:"A$8 / A$30",txt:true,sub:"≈A$8: #1 then #2 · ≈A$30: #1–#4"});
+  const per={once:"one-off",month:"per month",week:"per week"};
+  $("#packList").innerHTML=P.map((p,i)=>`<label class="pack"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}"><span><span class="pn">${i+1}. ${esc(p.t)}</span><br><span class="pd">${esc(p.note||"")}</span></span>
+      <span class="pp">A$${num(p.aud).toFixed(2)}<small>${p.first?`A$${num(p.first).toFixed(2)} first buy · `:""}${per[p.kind]||""}</small></span></label>`).join("")+
+    `<div class="pack never"><span class="rk">✕</span><span><span class="pn">Never buy</span><br><span class="pd">Resource packs, random chests, big mixed bundles. Extra only: event packs with Mithril or Mythic shards.</span></span><span></span></div>`;
+  $$("#packList input[data-i]").forEach(c=>c.onchange=()=>{ P[+c.dataset.i].d=c.checked; afterEdit(); });
+}
 function renderData(){
   const n=$("#notes"); if(document.activeElement!==n) n.value=state.notes||"";
   n.oninput=()=>{ state.notes=n.value; scheduleSave(); };
-  const ae=document.activeElement, editing=ae&&ae.isContentEditable&&ae.closest("#routineEdit,#trackNow,#trackFarm");
-  if(!editing){ buildChecks($("#routineEdit"),state.today.routine,{onTick:()=>{}}); buildChecks($("#trackNow"),state.trackNow); buildChecks($("#trackFarm"),state.trackFarm); }
+  const ae=document.activeElement, editing=ae&&ae.isContentEditable&&ae.closest("#routineEdit,#weekEdit,#trackNow,#trackFarm");
+  if(!editing){ buildChecks($("#routineEdit"),state.today.routine,{onTick:()=>{}}); buildChecks($("#weekEdit"),state.weekly.items,{onTick:()=>{}}); buildChecks($("#trackNow"),state.trackNow); buildChecks($("#trackFarm"),state.trackFarm); }
+  renderShopsPacks();
   $("#idstrip").innerHTML=idFields.map(([k,l])=>tileH({label:l,value:esc(k==="day"?kingdomDay():k==="power"&&num(state.account.power)>0?fmtBig(num(state.account.power)):(state.account[k]||"—")),txt:true})).join("");
   $$("#idstrip .tile").forEach(t=>t.onclick=openAccountSheet);
 }
@@ -2468,6 +2552,8 @@ function initStatic(){
   if(!state.forecast||!Array.isArray(state.forecast.log)) state.forecast={log:[]};
   if(Array.isArray(state.mysticTrials)) state.mysticTrials.forEach(z=>{ if(!Array.isArray(z.log)) z.log=[]; if(!z.log.length){ const val=parseFloat(z.v); if(isFinite(val)) z.log.push({d:fcToday(),v:val}); } });
   if(!state.today||!Array.isArray(state.today.routine)) state.today=structuredClone(SEED.today);
+  if(!state.weekly||!Array.isArray(state.weekly.items)) state.weekly=structuredClone(SEED.weekly);
+  if(!Array.isArray(state.packs)) state.packs=structuredClone(SEED.packs);
   if(!state.ui||typeof state.ui!=="object") state.ui={tab:"Home"};
   if(!state.troopCounts) state.troopCounts=structuredClone(SEED.troopCounts);
   if(!state.heroGear||!Array.isArray(state.heroGear.rows)) state.heroGear=structuredClone(SEED.heroGear);
