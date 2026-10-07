@@ -1235,9 +1235,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 24217,
-      "threads": 288,
-      "vision": 519
+      "satin": 28465,
+      "threads": 308,
+      "vision": 526
     },
     "pieces": [
       {
@@ -1335,7 +1335,7 @@
     "sub": {
       "Rally": "Overview",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Governor",
       "Base": "T11"
     },
     "t11Open": {
