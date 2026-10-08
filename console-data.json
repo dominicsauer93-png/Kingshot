@@ -529,23 +529,21 @@
       "aud": 7.99,
       "kind": "week",
       "note": "Governor gear materials + speedups",
-      "d": false,
-      "bought": "2026-10-08"
+      "d": false
     },
     {
       "t": "Extra march queue",
       "aud": 5.99,
       "kind": "once",
       "note": "Permanent — more gathering and rallies",
-      "d": true
+      "d": false
     },
     {
       "t": "Intel Monthly Card",
       "aud": 7.99,
       "kind": "month",
       "note": "Steady extras if you log in daily",
-      "d": false,
-      "bought": "2026-10-08"
+      "d": false
     }
   ],
   "trackFarm": [
@@ -1396,7 +1394,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1431,7 +1429,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Checklists",
+      "Data": "Shops & Packs",
       "Gear": "Charms",
       "Base": "Buildings"
     },
