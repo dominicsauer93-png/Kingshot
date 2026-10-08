@@ -191,6 +191,19 @@
   .stack{display:flex;flex-direction:column;gap:8px}
   .rowb{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .mt{margin-top:12px} .mt2{margin-top:20px}
+  .searchbtn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:11px;background:var(--field);color:var(--faint);font:500 14px var(--f-body);text-align:left}
+  .searchbtn span{flex:1} .searchbtn kbd{font:600 11px var(--f-mono);padding:2px 6px;border:1px solid var(--line);border-radius:6px;color:var(--faint)}
+  .searchbtn:hover{border-color:var(--gold);color:var(--text)}
+  @media (max-width: 899px){ .searchbtn{display:none} }
+  .srch{position:fixed;inset:0;z-index:95;background:var(--scrim);display:flex;justify-content:center;align-items:flex-start;padding:9vh 16px 16px}
+  .srch-box{width:min(560px,100%);background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-lg);overflow:hidden}
+  #srchIn{width:100%;border:0;border-bottom:1px solid var(--line);padding:16px 18px;font:500 17px var(--f-body);background:var(--panel);color:var(--text);outline:none}
+  #srchList{list-style:none;margin:0;padding:6px;max-height:min(60vh,460px);overflow:auto}
+  #srchList button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:left;padding:11px 12px;border:0;border-radius:9px;background:transparent;color:var(--text);font:600 14.5px var(--f-body)}
+  #srchList button[aria-selected="true"],#srchList button:hover{background:var(--hover)}
+  #srchList .where{color:var(--faint);font:500 12.5px var(--f-body);white-space:nowrap}
+  #srchList .none{padding:14px 12px;color:var(--faint);font-size:14px}
+  .qjump{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
   .tr{display:inline-grid;place-items:center;min-width:26px;height:24px;padding:0 6px;border-radius:7px;font:800 12.5px/1 var(--f-body)}
   .tr-S{background:var(--red-soft);color:var(--red)} .tr-A{background:var(--amber-soft);color:var(--amber)} .tr-B{background:var(--gold-soft);color:var(--gold)}
   .tr-C{background:var(--green-soft);color:var(--green)} .tr-D{background:var(--sunk);color:var(--blue)} .tr-x{background:var(--sunk);color:var(--faint)}
@@ -465,6 +478,7 @@
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.3 8.3 0 1 0 10.2 10.2z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
     <symbol id="i-auto" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17A8.5 8.5 0 0 0 12 3.5z" fill="currentColor"/></g></symbol>
     <symbol id="i-sync" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 20v-4h-4"/></g></symbol>
+ <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
     <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16zM14 6l4 4" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
     <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -474,6 +488,7 @@
 <div class="app">
   <aside class="side">
     <div class="brand"><svg class="crest" aria-hidden="true"><use href="#i-crest"/></svg><div><span class="k">Kingshot</span><span class="t">Command Console</span></div></div>
+    <button class="searchbtn" id="searchSide" aria-label="Search (Ctrl K)"><svg width="17" height="17" aria-hidden="true"><use href="#i-search"/></svg><span>Search</span><kbd>Ctrl K</kbd></button>
     <nav id="tabnav" role="tablist" aria-label="Main sections"></nav>
     <div class="sidefoot">
       <button class="btn install" id="installBtn"><svg width="18" height="18" aria-hidden="true"><use href="#i-down"/></svg>Install app</button>
@@ -492,6 +507,7 @@
     <svg class="crest" aria-hidden="true"><use href="#i-crest"/></svg>
     <span class="t">Command Console</span>
     <span class="save" aria-hidden="true"><span class="dot" id="saveDotM"></span></span>
+ <button class="iconbtn" id="searchTop" title="Search" aria-label="Search"><svg aria-hidden="true"><use href="#i-search"/></svg></button>
     <button class="iconbtn" id="mSync" title="Sync with GitHub" aria-label="Sync with GitHub" hidden><svg aria-hidden="true"><use href="#i-sync"/></svg></button>
     <button class="iconbtn themebtn" title="Theme" aria-label="Change theme"><svg aria-hidden="true"><use href="#i-auto"/></svg></button>
   </header>
@@ -513,10 +529,14 @@
         <div>
           <section class="sec" data-key="Today">
             <h2>Today <small id="todayDate"></small></h2>
-            <div class="card"><ul class="checks" id="todayRoutine"></ul>
-              <div class="rowb mt"><span class="faint" id="todayCount" style="font-size:13px"></span><button class="btn sm ghost" data-goto="Checklists">Edit list</button></div></div>
-            <div class="card"><h3>This week <small class="faint" style="font:500 12px var(--f-body)">resets Monday</small></h3><ul class="checks" id="weekRoutine"></ul>
-              <div class="rowb mt"><span class="faint" id="weekCount" style="font-size:13px"></span><button class="btn sm ghost" data-goto="Shops &amp; Packs">Shops &amp; packs</button></div></div>
+            <div class="card">
+              <div class="rowb"><span class="faint" id="todayCount" style="font-size:13px"></span><button class="btn sm ghost" id="todayShow" hidden></button></div>
+              <div id="todayBar" style="margin:6px 0 4px"></div>
+              <ul class="checks" id="todayRoutine"></ul>
+              <div class="rowb mt"><span></span><button class="btn sm ghost" data-goto="Checklists">Edit list</button></div></div>
+            <details class="fold mt" id="weekFold"><summary><span class="grow">This week <small class="faint" style="font-weight:500">resets Monday</small></span><span class="faint" id="weekCount" style="font-weight:500;font-size:13px"></span></summary>
+              <div class="fbody"><div id="weekBar" style="margin:0 0 4px"></div><ul class="checks" id="weekRoutine"></ul>
+                <div class="rowb mt"><button class="btn sm ghost" id="weekShow" hidden></button><button class="btn sm ghost" data-goto="Shops &amp; Packs">Shops &amp; packs</button></div></div></details>
           </section>
           <section class="sec" data-key="Upcoming Events">
             <h2>Coming up <button class="btn sm" id="evAdd">+ Event</button></h2>
@@ -662,14 +682,17 @@
       </section>
     </div>
 
-    <!-- ================= DATA ================= -->
-    <div class="page" data-tab="Data" hidden>
-      <div class="phead"><div><h1>Data</h1><p>Notes, checklists, account and sync.</p></div></div>
-      <div class="subnav" role="tablist" aria-label="Data sections"></div>
-      <section class="sec" data-sub="Update all" data-key="Update all">
-        <h2>Update everything <small>one page · saves as you type</small></h2>
-        <p class="lead">Fill in what changed in-game. Every section of the console updates from here. Targets are set in each section.</p>
-        <div id="qBody"></div>
+    <!-- ================= PLAN ================= -->
+    <div class="page" data-tab="Plan" hidden>
+      <div class="phead"><div><h1>Plan</h1><p>Daily and weekly routine, shops and packs.</p></div></div>
+      <div class="subnav" role="tablist" aria-label="Plan sections"></div>
+      <section class="sec" data-sub="Checklists" data-key="Checklists">
+        <div class="cols">
+          <div class="card"><h3>Daily routine</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every day.</p><ul class="checks" id="routineEdit"></ul></div>
+          <div class="card"><h3>Weekly</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every Monday.</p><ul class="checks" id="weekEdit"></ul></div>
+          <div class="card"><h3>Execute now</h3><ul class="checks" id="trackNow"></ul></div>
+          <div class="card"><h3>Farm quietly</h3><ul class="checks" id="trackFarm"></ul></div>
+        </div>
       </section>
       <section class="sec" data-sub="Shops &amp; Packs" data-key="Shops &amp; Packs">
         <h2>Free path <small>where each supply comes from</small></h2>
@@ -683,17 +706,21 @@
         <button class="add" id="addPack">+ Add pack</button>
         <p class="faint mt" style="font-size:12.5px">Tick the packs you own or buy. Ticking a card starts its 30-day (or 7-day) timer from today — change the date in ✎ if you bought it earlier. Home warns you 3 days before a card ends.</p>
       </section>
+    </div>
+
+    <!-- ================= DATA ================= -->
+    <div class="page" data-tab="Data" hidden>
+      <div class="phead"><div><h1>Data</h1><p>Update everything, notes, account and sync.</p></div></div>
+      <div class="subnav" role="tablist" aria-label="Data sections"></div>
+      <section class="sec" data-sub="Update all" data-key="Update all">
+        <h2>Update everything <small>one page · saves as you type</small></h2>
+        <p class="lead">Fill in what changed in-game. Every section of the console updates from here. Targets are set in each section.</p>
+        <div class="qjump" id="qJump" role="toolbar" aria-label="Jump to a group"></div>
+        <div id="qBody"></div>
+      </section>
       <section class="sec" data-sub="Notes" data-key="Notes">
         <label class="sr-only" for="notes">Notes</label>
         <textarea class="notes" id="notes" placeholder="Plans, KvK dates, decisions…"></textarea>
-      </section>
-      <section class="sec" data-sub="Checklists" data-key="Checklists">
-        <div class="cols">
-          <div class="card"><h3>Daily routine</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every day.</p><ul class="checks" id="routineEdit"></ul></div>
-          <div class="card"><h3>Weekly</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every Monday.</p><ul class="checks" id="weekEdit"></ul></div>
-          <div class="card"><h3>Execute now</h3><ul class="checks" id="trackNow"></ul></div>
-          <div class="card"><h3>Farm quietly</h3><ul class="checks" id="trackFarm"></ul></div>
-        </div>
       </section>
       <section class="sec" data-sub="Account" data-key="Account">
         <h2>Account <small>tap to edit</small></h2>
@@ -733,6 +760,9 @@
   </main>
 </div>
 
+<div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-label="Search">
+  <div class="srch-box"><input id="srchIn" type="search" placeholder="Search — e.g. mithril, shards, packs, Ava" autocomplete="off" aria-controls="srchList"><ul id="srchList" role="listbox"></ul></div>
+</div>
 <div class="sheetwrap" id="sheetWrap" aria-hidden="true">
   <div class="scrim" data-close></div>
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
@@ -1484,7 +1514,7 @@ function bindAll(host,sel,fn){ host.querySelectorAll(sel).forEach(el=>el.onclick
 
 /* ---------- render scheduling ---------- */
 let renderQueued=false;
-function queueRender(){ if(renderQueued) return; renderQueued=true; requestAnimationFrame(()=>{ renderQueued=false; renderAll(); }); }
+function queueRender(){ if(renderQueued) return; renderQueued=true; requestAnimationFrame(()=>{ renderQueued=false; renderActive(); }); }
 function afterEdit(){ scheduleSave(); queueRender(); if(sheetRefresh) sheetRefresh(); }
 
 /* ---------- toast + undo ---------- */
@@ -1600,14 +1630,15 @@ function initTheme(){
 /* =====================================================================
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
-const TABS=["Home","Rally","Gear","Base","Data"];
-const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Data:["Update all","Shops & Packs","Notes","Checklists","Account","Sync"]};
+const TABS=["Home","Rally","Gear","Base","Plan","Data"];
+const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs"],Data:["Update all","Notes","Account","Sync"]};
 const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Rally",Supply:"Rally",Events:"Home",Vault:"Data"};
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
   Rally:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',
   Gear:'<path d="M12 2.5l8 3v6c0 5-3.5 8.8-8 10.5C7.5 20.3 4 16.5 4 11.5v-6z"/><path d="M12 7v10M8 11h8"/>',
   Base:'<path d="M4 21V9l4-3 4 3 4-3 4 3v12z"/><path d="M10 21v-5h4v5M4 13h16"/>',
+  Plan:'<path d="M8 3h8v3H8z"/><path d="M8 4.5H5V21h14V4.5h-3"/><path d="M8.5 12.5l2 2 4.5-4.5M8.5 17.5h7"/>',
   Data:'<path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8 12h8M8 16h6"/>'
 };
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
@@ -1620,6 +1651,7 @@ function setTab(tab,sub,scroll){
   state.ui.tab=tab;
   $$("#tabnav .tab").forEach(b=>{ const onn=b.dataset.tab===tab; b.setAttribute("aria-selected",onn?"true":"false"); b.tabIndex=onn?0:-1; });
   $$(".page").forEach(p=>p.hidden=p.dataset.tab!==tab);
+  if(dirtyTabs.has(tab)){ dirtyTabs.delete(tab); renderPrep(); TAB_RENDER[tab](); }
   const page=$(`.page[data-tab="${tab}"]`);
   if(s){ page.querySelectorAll(".sec[data-sub]").forEach(x=>x.hidden=x.dataset.sub!==s);
     page.querySelectorAll(".subnav .chip").forEach(c=>c.setAttribute("aria-selected",c.dataset.sub===s?"true":"false")); }
@@ -1630,8 +1662,9 @@ function setTab(tab,sub,scroll){
 }
 function tabFromHash(){
   const [t,s]=(location.hash||"").replace(/^#/,"").split("/");
-  const tab=TABS.find(x=>slug(x)===t); if(!tab) return null;
-  const sub=SUBS[tab]&&SUBS[tab].find(x=>slug(x)===s);
+  let tab=TABS.find(x=>slug(x)===t); if(!tab) return null;
+  let sub=SUBS[tab]&&SUBS[tab].find(x=>slug(x)===s);
+  if(s&&!sub){ const o=Object.keys(SUBS).find(k=>SUBS[k].some(x=>slug(x)===s)); if(o){ tab=o; sub=SUBS[o].find(x=>slug(x)===s); } } // section moved to another tab
   return [tab,sub];
 }
 function buildNav(){
@@ -1665,6 +1698,17 @@ function goToSection(tab,key,thenOpen){
 function tileH({id,label,value,sub,p,cls,txt,color,go,clamp}){
   return `<button class="tile" ${id?`id="${id}"`:""} ${go?`data-go="${esc(go)}"`:""}><span class="l"><span>${label}</span></span><span class="v ${txt?"txt":""} ${clamp?"clamp":""}" ${color?`style="color:${color}"`:""}>${value}</span>${sub!=null?`<span class="s">${sub}</span>`:""}${p!=null?barH(p,cls||""):""}</button>`;
 }
+function homeList(o){ // Home checklist: next 5 still to do; ticked items slide away
+  const arr=o.arr, show=!!state.ui[o.key], n=arr.filter(r=>r.d).length, host=$(o.list);
+  $(o.cnt).textContent=arr.length?(n===arr.length?o.done:`${n} of ${arr.length} done`):"No items yet";
+  $(o.bar).innerHTML=barH(pc(n,arr.length),n===arr.length&&n?"ok":"");
+  const left=arr.filter(r=>!r.d), CAP=5, more=arr.length>Math.min(CAP,left.length);
+  const b=$(o.btn); b.hidden=!more; b.textContent=show?"Show less":`Show all ${arr.length}`;
+  b.onclick=()=>{ state.ui[o.key]=!show; scheduleSave(); homeList(o); };
+  const list=show?arr:left.slice(0,CAP);
+  buildChecks(host,list,{tickOnly:true,onTick:()=>{ clearTimeout(host._t); host._t=setTimeout(()=>homeList(o),show?0:380); }});
+  if(!list.length) host.innerHTML=`<li class="faint" style="padding:8px 0">${esc(o.done)}</li>`;
+}
 function renderHome(){
   const d=new Date();
   $("#homeSub").textContent=d.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})+" · Kingdom day "+kingdomDay();
@@ -1690,17 +1734,15 @@ function renderHome(){
   const t=state.today; const today=fcToday();
   if(t.routineDate!==today){ t.routine.forEach(r=>r.d=false); t.routineDate=today; scheduleSave(); }
   $("#todayDate").textContent=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
-  buildChecks($("#todayRoutine"),t.routine,{tickOnly:true,onTick:()=>paintTodayCount()});
-  paintTodayCount();
+  homeList({arr:t.routine,list:"#todayRoutine",cnt:"#todayCount",bar:"#todayBar",btn:"#todayShow",key:"todayAll",done:"All done today ✓"});
   const pa=packAlerts(), al=$("#packAlert"); al.hidden=!pa.length;
   if(pa.length) al.innerHTML=`<b>Card ending:</b> `+pa.map(({p,n})=>`${esc(p.t)} — ${n<0?`ended ${-n} day${n===-1?"":"s"} ago`:n===0?"ends today":`ends in ${n} day${n===1?"":"s"}`}`).join(" · ")+` <span class="faint">→ renew or untick</span>`;
   const w=state.weekly, wk=weekKey();
   if(w.week!==wk){ w.items.forEach(r=>r.d=false); w.week=wk; scheduleSave(); }
-  buildChecks($("#weekRoutine"),w.items,{tickOnly:true,onTick:()=>paintWeekCount()});
-  paintWeekCount();
+  homeList({arr:w.items,list:"#weekRoutine",cnt:"#weekCount",bar:"#weekBar",btn:"#weekShow",key:"weekAll",done:"All done this week ✓"});
+  const wf=$("#weekFold"); wf.open=!!state.ui.weekOpen; wf.ontoggle=()=>{ if(state.ui.weekOpen!==wf.open){ state.ui.weekOpen=wf.open; scheduleSave(); } };
   renderEvents();
 }
-function paintTodayCount(){ const R=state.today.routine, n=R.filter(r=>r.d).length; $("#todayCount").textContent=R.length?(n===R.length?"All done today ✓":`${n} of ${R.length} done`):"No routine items yet"; }
 
 /* ---------- events ---------- */
 function renderEvents(){
@@ -2393,7 +2435,6 @@ const SHOP_LIST=[
   ["Tidal Shop",["100 XP Parts","Artisan's Vision","Charm Designs + Guides"]],
   ["Alliance Championship",["Master Emblems","Gilded Threads"]]];
 function weekKey(){ const d=new Date(); const k=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())); k.setUTCDate(k.getUTCDate()-((k.getUTCDay()+6)%7)); return k.toISOString().slice(0,10); }
-function paintWeekCount(){ const R=state.weekly.items, n=R.filter(r=>r.d).length; $("#weekCount").textContent=R.length?(n===R.length?"All done this week ✓":`${n} of ${R.length} done`):"No weekly items yet"; }
 const packMonthly=p=>p.kind==="month"?num(p.aud):p.kind==="week"?num(p.aud)*52/12:0;
 const PACK_DAYS={month:30,week:7}, PACK_PER={once:"one-off",month:"per month",week:"per week"};
 const packPrice=p=>p.first&&!p.firstDone?num(p.first):num(p.aud); // first-buy price only until you've bought it once
@@ -2457,12 +2498,14 @@ function openPackSheet(p){
     onDelete:()=>{ const i=state.packs.indexOf(p); if(i>-1) state.packs.splice(i,1); }});
 }
 
-function renderData(){
-  const n=$("#notes"); if(document.activeElement!==n) n.value=state.notes||"";
-  n.oninput=()=>{ state.notes=n.value; scheduleSave(); };
+function renderPlan(){
   const ae=document.activeElement, editing=ae&&ae.isContentEditable&&ae.closest("#routineEdit,#weekEdit,#trackNow,#trackFarm");
   if(!editing){ buildChecks($("#routineEdit"),state.today.routine,{onTick:()=>{}}); buildChecks($("#weekEdit"),state.weekly.items,{onTick:()=>{}}); buildChecks($("#trackNow"),state.trackNow); buildChecks($("#trackFarm"),state.trackFarm); }
   renderShopsPacks();
+}
+function renderData(){
+  const n=$("#notes"); if(document.activeElement!==n) n.value=state.notes||"";
+  n.oninput=()=>{ state.notes=n.value; scheduleSave(); };
   $("#idstrip").innerHTML=idFields.map(([k,l])=>tileH({label:l,value:esc(k==="day"?kingdomDay():k==="power"&&num(state.account.power)>0?fmtBig(num(state.account.power)):(state.account[k]||"—")),txt:true})).join("");
   $$("#idstrip .tile").forEach(t=>t.onclick=openAccountSheet);
 }
@@ -2526,7 +2569,8 @@ function renderUpdate(){
   const S=(label,val,opts,set)=>fld(label,{type:"select",value:String(val),options:opts,set});
   const grid=(...els)=>{ const g=document.createElement("div"); g.className="qgrid"; els.flat(3).forEach(e=>g.appendChild(e)); return g; };
   const sub=t=>{ const h=document.createElement("div"); h.className="qsub"; h.textContent=t; return h; };
-  const group=(key,title,hint,build)=>{ const d=document.createElement("details"); d.className="fold"; if(state.ui.qOpen[key]) d.open=true;
+  const groups=[];
+  const group=(key,title,hint,build)=>{ groups.push([key,title]); const d=document.createElement("details"); d.className="fold"; d.dataset.k=key; if(state.ui.qOpen[key]) d.open=true;
     d.innerHTML=`<summary><span class="grow">${title}</span><span class="faint" style="font-weight:500;font-size:13px">${hint||""}</span></summary><div class="fbody form"></div>`;
     const body=d.querySelector(".fbody"); let built=false;
     const fill=()=>{ if(built) return; built=true; build(body); };
@@ -2577,11 +2621,79 @@ function renderUpdate(){
     b.append(grid(state.resources.map(r=>fld(r.n||"Material",{type:"num",value:r.h,get:()=>r.h,allowEmpty:true,set:v=>r.h=v===""?"":String(v)})))); });
   group("Mystic","Mystic Trials","rank per zone",b=>{
     b.append(grid(state.mysticTrials.map(z=>fld(z.k||"Zone",{type:"num",value:z.v,get:()=>z.v,allowEmpty:true,set:v=>{ z.v=v===""?"":String(v); if(v!=="") mysticLogEntry(z); }})))); });
+  // jump bar: open one group, fold the rest, scroll to it
+  $("#qJump").innerHTML=groups.map(([k,t])=>`<button class="chip" data-k="${esc(k)}">${esc(t)}</button>`).join("");
+  $$("#qJump .chip").forEach(c=>c.onclick=()=>{ host.querySelectorAll("details.fold").forEach(d=>{ d.open=d.dataset.k===c.dataset.k; });
+    const d=host.querySelector(`details.fold[data-k="${c.dataset.k}"]`); if(d) setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"start"}),30); });
 }
-function renderAll(){
-  migrateEvents(); migrateMasterNotes();
-  if(!state.ui.sub) state.ui.sub={};
-  renderHome(); renderRally(); renderGear(); renderBase(); renderData(); renderUpdate();
+const TAB_RENDER={Home:()=>renderHome(),Rally:()=>renderRally(),Gear:()=>renderGear(),Base:()=>renderBase(),Plan:()=>renderPlan(),Data:()=>{ renderData(); renderUpdate(); }};
+const dirtyTabs=new Set();
+function renderPrep(){ migrateEvents(); migrateMasterNotes(); if(!state.ui.sub) state.ui.sub={}; }
+function renderAll(){ renderPrep(); TABS.forEach(t=>TAB_RENDER[t]()); dirtyTabs.clear(); }
+function renderActive(){ // after an edit: redraw only the tab you're looking at; the rest redraw when opened
+  renderPrep(); const cur=TABS.includes(state.ui.tab)?state.ui.tab:"Home";
+  TAB_RENDER[cur](); TABS.forEach(t=>{ if(t!==cur) dirtyTabs.add(t); else dirtyTabs.delete(t); });
+}
+/* ---------- quick search (Ctrl K) ---------- */
+const SEARCH_KW={
+  "Hero Gear":"mithril forgehammer forgehammers red gear imbuement mastery enhancement xp mythic gear chest",
+  "Widgets":"exclusive gear widget",
+  "Charms":"charm designs guides lethality health",
+  "Governor Gear":"gov gear satin gilded threads artisan vision",
+  "Gold Hero Shards":"shards stars star tier general mythic",
+  "Hero Roles":"tier list kvk bear garrison joiner arena conquest solo use score best heroes",
+  "Masters":"emblems affinity cassia pan kindred soul",
+  "Mystic Trials":"rank zone mithril",
+  "Pets":"pet food taming marks growth manuals potions medallions",
+  "T11 Unlocks":"truegold dust infantry archer cavalry t11 nodes",
+  "Troop Plan":"troops train training",
+  "Build Order — TG6→TG8":"buildings town center tg truegold barracks range stable",
+  "Resources & Speedups":"bread wood stone iron gold speedups",
+  "Shops & Packs":"packs budget card monthly weekly shop shops aud spend trial arena alliance vip swordland tidal free",
+  "Checklists":"routine daily weekly execute farm",
+  "Today":"routine daily checklist",
+  "Upcoming Events":"events calendar kvk bear hunt hall of heroes armament",
+  "Do next":"next upgrade priorities",
+  "Update all":"update everything bag materials form",
+  "Combat Quality":"win rate lethality health attacker defender",
+  "Power Grades":"power pillars benchmark grade",
+  "Data & Sync":"github sync token backup export import",
+  "Account":"governor town center vip kingdom day power",
+  "Notes":"notes"};
+function searchIndex(){
+  const heroes=(state.goldShards||[]).map(r=>r.n).join(" ").toLowerCase();
+  return $$(".sec[data-key]").map(sec=>{ const tab=sec.closest(".page").dataset.tab, sub=sec.dataset.sub||"", key=sec.dataset.key;
+    const h=sec.querySelector("h2"), head=h?h.childNodes[0].textContent.trim():"";
+    const kw=(SEARCH_KW[key]||"")+(/Shards|Hero Roles/.test(key)?" "+heroes:"");
+    return {tab,sub,key,title:key,hay:[key,head,sub,tab,kw].join(" ").toLowerCase()}; });
+}
+let srchSel=0, srchRes=[];
+function openSearch(){
+  const w=$("#srch"), inp=$("#srchIn"); w.hidden=false; inp.value=""; paintSearch(); setTimeout(()=>inp.focus(),0);
+}
+function closeSearch(){ $("#srch").hidden=true; }
+function paintSearch(){
+  const q=$("#srchIn").value.toLowerCase().trim(), words=q.split(/\s+/).filter(Boolean), idx=searchIndex();
+  const rx=words.map(w=>new RegExp("(^|[^a-z0-9])"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
+  const score=x=>x.title.toLowerCase().includes(q)?-1:Math.min(...rx.map(r=>{ const m=x.hay.match(r); return m?m.index:1e9; }));
+  srchRes=!words.length?idx:idx.filter(x=>rx.every(r=>r.test(x.hay))).map(x=>({x,s:score(x)})).sort((a,b)=>a.s-b.s).map(o=>o.x);
+  srchSel=Math.min(srchSel,Math.max(0,srchRes.length-1)); if(!q) srchSel=0;
+  $("#srchList").innerHTML=srchRes.length?srchRes.map((r,i)=>`<li><button role="option" data-i="${i}" aria-selected="${i===srchSel}"><span>${esc(r.title)}</span><span class="where">${esc(r.tab)}${r.sub&&r.sub!==r.title?" › "+esc(r.sub):""}</span></button></li>`).join(""):`<li class="none">Nothing found for “${esc(q)}”</li>`;
+  $$("#srchList button").forEach(b=>b.onclick=()=>pickSearch(+b.dataset.i));
+}
+function pickSearch(i){ const r=srchRes[i]; if(!r) return; closeSearch(); goToSection(null,r.key);
+  setTimeout(()=>{ const sec=[...$$(".sec[data-key]")].find(x=>x.dataset.key===r.key); if(sec&&!sec.hidden&&!sec.dataset.sub) sec.scrollIntoView({behavior:"smooth",block:"start"}); },80); }
+function initSearch(){
+  ["searchSide","searchTop"].forEach(id=>on(id,openSearch));
+  const inp=$("#srchIn");
+  inp.oninput=()=>{ srchSel=0; paintSearch(); };
+  inp.onkeydown=e=>{ if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); srchSel=Math.max(0,Math.min(srchRes.length-1,srchSel+(e.key==="ArrowDown"?1:-1))); paintSearch(); const sb=$(`#srchList button[data-i="${srchSel}"]`); if(sb) sb.scrollIntoView({block:"nearest"}); }
+    else if(e.key==="Enter"){ e.preventDefault(); pickSearch(srchSel); } else if(e.key==="Escape"){ closeSearch(); } };
+  $("#srch").addEventListener("click",e=>{ if(e.target.id==="srch") closeSearch(); });
+  document.addEventListener("keydown",e=>{ const t=e.target, typing=t&&(t.isContentEditable||/INPUT|TEXTAREA|SELECT/.test(t.tagName));
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){ e.preventDefault(); $("#srch").hidden?openSearch():closeSearch(); }
+    else if(e.key==="/"&&!typing&&$("#srch").hidden){ e.preventDefault(); openSearch(); }
+    else if(e.key==="Escape"&&!$("#srch").hidden) closeSearch(); });
 }
 function initStatic(){
   const dl=document.createElement("datalist"); dl.id="widHeroList"; dl.innerHTML=WID_HEROES.map(h=>`<option value="${esc(h)}">`).join(""); document.body.appendChild(dl);
@@ -2590,7 +2702,7 @@ function initStatic(){
 
 /* ---------- boot ---------- */
 (async function(){
-  initStatic(); buildNav(); initSheet(); initTheme(); initInstall();
+  initStatic(); buildNav(); initSheet(); initTheme(); initInstall(); initSearch();
   const saved=await load();
   if(saved) state=mergeSeed(saved);
   if(Array.isArray(state.nodes)){
