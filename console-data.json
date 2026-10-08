@@ -724,7 +724,7 @@
     {
       "n": "Ava",
       "need": 940,
-      "have": 100,
+      "have": 67,
       "pos": 23,
       "tgt": 30,
       "rally": true
@@ -748,8 +748,8 @@
     {
       "n": "Wee & Woo",
       "need": 0,
-      "have": 4,
-      "pos": 18,
+      "have": 25,
+      "pos": 20,
       "tgt": 30,
       "rally": true
     },
@@ -2309,6 +2309,6 @@
       }
     ]
   },
-  "shardGeneral": 42,
+  "shardGeneral": 30,
   "shardRallySet": true
 }
