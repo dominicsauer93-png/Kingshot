@@ -1276,11 +1276,11 @@
       },
       {
         "t": "Overfeed the Truegold Crucible",
-        "d": false
+        "d": true
       },
       {
         "t": "Super Refine — daily discounted Tier 2 (TTG)",
-        "d": false
+        "d": true
       },
       {
         "t": "Claim house / suppression gold",
@@ -1292,7 +1292,7 @@
       },
       {
         "t": "Daily Missions + VIP daily chest",
-        "d": false
+        "d": true
       },
       {
         "t": "Mystic Trials (Mithril)",
@@ -1304,7 +1304,7 @@
       },
       {
         "t": "Pet Adventures sent (Pet Food, Taming Marks)",
-        "d": false
+        "d": true
       },
       {
         "t": "Terrors with Stamina (hero shards)",
@@ -1317,7 +1317,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
