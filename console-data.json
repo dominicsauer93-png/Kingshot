@@ -1385,7 +1385,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Rally",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1439,7 +1439,8 @@
       "Gov": true
     },
     "tierAll": false,
-    "progKey": "power"
+    "progKey": "power",
+    "roleOpen": true
   },
   "troopCounts": {
     "inf": {
