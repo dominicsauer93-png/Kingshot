@@ -354,11 +354,15 @@
   .gtable tr:last-child td{border-bottom:0} .gtable td:first-child{font-weight:700;white-space:nowrap}
   .gtable ol{margin:0;padding-left:18px} .gtable li + li{margin-top:2px}
   @media (max-width: 640px){ .gtable thead{display:none} .gtable tr{display:block;padding:8px 0;border-bottom:1px solid var(--line-soft)} .gtable td{display:block;border:0;padding:2px 12px} }
-  .pack{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;align-items:start;padding:11px 14px;border-bottom:1px solid var(--line-soft)}
+  .pack{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:4px 12px;align-items:start;padding:11px 14px;border-bottom:1px solid var(--line-soft)}
   .pack:last-child{border-bottom:0} .pack .pn{font-weight:700;font-size:14.5px} .pack .pd{font-size:12.5px;color:var(--muted)}
   .pack .pp{font:700 14px var(--f-mono);color:var(--gold);text-align:right;white-space:nowrap} .pack .pp small{display:block;font:500 11.5px var(--f-body);color:var(--faint)}
   .pack .rk{font:700 12px var(--f-mono);color:var(--faint);padding-top:3px}
   .pack.never .pn{color:var(--red)}
+  .pack.owned{opacity:.6}
+  #packTiles .tile .s{white-space:normal}
+  .pack .pl{font-size:12.5px;margin-top:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .pack .renew{padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--field);color:var(--text);font:600 12px var(--f-body)}
   ul.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
   ul.checks li{display:flex;gap:12px;align-items:center;padding:9px 2px;border-bottom:1px solid var(--line-soft);font-size:14.5px}
   ul.checks li:last-child{border-bottom:0}
@@ -498,6 +502,7 @@
     <!-- ================= HOME ================= -->
     <div class="page" data-tab="Home">
       <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn primary" data-goto="Update all"><svg width="17" height="17" aria-hidden="true"><use href="#i-pen"/></svg>Update everything</button></div>
+      <button class="info" id="packAlert" hidden data-goto="Shops &amp; Packs" style="display:block;width:100%;text-align:left;margin-bottom:12px;border-color:var(--amber);background:var(--amber-soft);color:var(--text)"></button>
       <div class="tiles" id="homeTiles"></div>
       <div class="cols-3-2 mt2">
         <section class="sec" data-key="Do next">
@@ -672,10 +677,11 @@
         <h2 class="h2 mt2">Shop shopping list <small>buy in this order</small></h2>
         <div class="card" style="padding:0;overflow:hidden"><table class="gtable" id="shopTable"></table></div>
         <div class="info mt"><b>Gems:</b> save them for Hero Roulette when Wee &amp; Woo is featured. Don't spend gems on resources or speedups. <b>Speedups:</b> save for the matching event day.</div>
-        <h2 class="h2 mt2">Packs worth buying <small>AUD, approx — your store shows the exact price</small></h2>
-        <div class="tiles t3" id="packTiles"></div>
+        <h2 class="h2 mt2">Packs worth buying <small>AUD · tap ✎ to edit</small></h2>
+        <div class="tiles" id="packTiles"></div>
         <div class="card mt" style="padding:0;overflow:hidden" id="packList"></div>
-        <p class="faint mt" style="font-size:12.5px">Tick the packs you own or buy. Recurring ticks add up to your monthly spend. Prices converted from USD at about A$1.50 = US$1.</p>
+        <button class="add" id="addPack">+ Add pack</button>
+        <p class="faint mt" style="font-size:12.5px">Tick the packs you own or buy. Ticking a card starts its 30-day (or 7-day) timer from today — change the date in ✎ if you bought it earlier. Home warns you 3 days before a card ends.</p>
       </section>
       <section class="sec" data-sub="Notes" data-key="Notes">
         <label class="sr-only" for="notes">Notes</label>
@@ -1686,6 +1692,8 @@ function renderHome(){
   $("#todayDate").textContent=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
   buildChecks($("#todayRoutine"),t.routine,{tickOnly:true,onTick:()=>paintTodayCount()});
   paintTodayCount();
+  const pa=packAlerts(), al=$("#packAlert"); al.hidden=!pa.length;
+  if(pa.length) al.innerHTML=`<b>Card ending:</b> `+pa.map(({p,n})=>`${esc(p.t)} — ${n<0?`ended ${-n} day${n===-1?"":"s"} ago`:n===0?"ends today":`ends in ${n} day${n===1?"":"s"}`}`).join(" · ")+` <span class="faint">→ renew or untick</span>`;
   const w=state.weekly, wk=weekKey();
   if(w.week!==wk){ w.items.forEach(r=>r.d=false); w.week=wk; scheduleSave(); }
   buildChecks($("#weekRoutine"),w.items,{tickOnly:true,onTick:()=>paintWeekCount()});
@@ -2387,19 +2395,68 @@ const SHOP_LIST=[
 function weekKey(){ const d=new Date(); const k=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())); k.setUTCDate(k.getUTCDate()-((k.getUTCDay()+6)%7)); return k.toISOString().slice(0,10); }
 function paintWeekCount(){ const R=state.weekly.items, n=R.filter(r=>r.d).length; $("#weekCount").textContent=R.length?(n===R.length?"All done this week ✓":`${n} of ${R.length} done`):"No weekly items yet"; }
 const packMonthly=p=>p.kind==="month"?num(p.aud):p.kind==="week"?num(p.aud)*52/12:0;
+const PACK_DAYS={month:30,week:7}, PACK_PER={once:"one-off",month:"per month",week:"per week"};
+const packPrice=p=>p.first&&!p.firstDone?num(p.first):num(p.aud); // first-buy price only until you've bought it once
+function packDaysLeft(p){ // ticked card: days until it runs out (negative = ended)
+  if(!p.d||!PACK_DAYS[p.kind]||!p.bought) return null;
+  const end=new Date(p.bought+"T00:00:00"); end.setDate(end.getDate()+PACK_DAYS[p.kind]);
+  return Math.round((end-new Date(fcToday()+"T00:00:00"))/864e5);
+}
+function packAlerts(){ return (state.packs||[]).map(p=>({p,n:packDaysLeft(p)})).filter(x=>x.n!=null&&x.n<=3); }
+function packLeftH(n){ return n==null?"":n<0?`<span class="bad">Ended ${-n} day${n===-1?"":"s"} ago</span>`:n===0?`<span class="bad">Ends today</span>`:n<=3?`<span class="warn">Ends in ${n} day${n===1?"":"s"}</span>`:`<span class="ok">${n} days left</span>`; }
 function renderShopsPacks(){
   $("#srcTable").innerHTML=`<thead><tr><th>Supply</th><th>Used for</th><th>Best free source</th></tr></thead><tbody>`+SUPPLY_SRC.map(([a,b,c])=>`<tr><td>${esc(a)}</td><td class="muted">${esc(b)}</td><td>${esc(c)}</td></tr>`).join("")+`</tbody>`;
   $("#shopTable").innerHTML=`<thead><tr><th>Shop</th><th>Buy in this order</th></tr></thead><tbody>`+SHOP_LIST.map(([a,L])=>`<tr><td>${esc(a)}</td><td><ol>${L.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></td></tr>`).join("")+`</tbody>`;
-  const P=state.packs||[], own=P.filter(p=>p.d), mo=own.reduce((t,p)=>t+packMonthly(p),0), once=own.filter(p=>p.kind==="once").reduce((t,p)=>t+num(p.aud),0);
+  const P=state.packs||[], nextBuy=P.find(p=>!p.d), own=P.filter(p=>p.d), mo=own.reduce((t,p)=>t+packMonthly(p),0), once=own.filter(p=>p.kind==="once").reduce((t,p)=>t+num(p.aud),0);
+  const bud=num(state.packBudget), left=bud-mo;
+  const nbCost=nextBuy?(nextBuy.kind==="once"?packPrice(nextBuy):nextBuy.kind==="week"?packPrice(nextBuy)*52/12:packPrice(nextBuy)):0;
   $("#packTiles").innerHTML=tileH({label:"Your monthly spend",value:"A$"+mo.toFixed(2),sub:own.some(p=>p.kind!=="once")?"from ticked cards":"no cards ticked"})+
+    tileH({id:"pkBudget",label:"Monthly budget",value:bud?(left<0?"−":"")+"A$"+Math.abs(left).toFixed(2):"Set budget",color:bud?(left<0?"var(--red)":"var(--green)"):"",txt:!bud,sub:bud?`${left<0?"over":"left"} of A$${bud.toFixed(2)}`:"tap to set",p:bud?Math.min(100,mo/bud*100):null,cls:bud&&left<0?"bad":""})+
     tileH({label:"One-off buys",value:"A$"+once.toFixed(2),sub:`${own.filter(p=>p.kind==="once").length} of ${P.filter(p=>p.kind==="once").length} permanent unlocks`})+
-    tileH({label:"Budget guide",value:"A$8 / A$30",txt:true,sub:"≈A$8: #1 then #2 · ≈A$30: #1–#4"});
-  const per={once:"one-off",month:"per month",week:"per week"};
-  $("#packList").innerHTML=P.map((p,i)=>`<label class="pack"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}"><span><span class="pn">${i+1}. ${esc(p.t)}</span><br><span class="pd">${esc(p.note||"")}</span></span>
-      <span class="pp">A$${num(p.aud).toFixed(2)}<small>${p.first?`A$${num(p.first).toFixed(2)} first buy · `:""}${per[p.kind]||""}</small></span></label>`).join("")+
-    `<div class="pack never"><span class="rk">✕</span><span><span class="pn">Never buy</span><br><span class="pd">Resource packs, random chests, big mixed bundles. Extra only: event packs with Mithril or Mythic shards.</span></span><span></span></div>`;
-  $$("#packList input[data-i]").forEach(c=>c.onchange=()=>{ P[+c.dataset.i].d=c.checked; afterEdit(); });
+    (nextBuy?tileH({label:"Next best buy",value:esc(nextBuy.t),txt:true,clamp:true,sub:`A$${packPrice(nextBuy).toFixed(2)}${nextBuy.first&&!nextBuy.firstDone?" first buy":""} · ${PACK_PER[nextBuy.kind]||""}${bud?(nbCost<=left?' · <span class="ok">fits budget ✓</span>':` · <span class="bad">A$${(nbCost-Math.max(0,left)).toFixed(2)} over</span>`):""}`}):tileH({label:"Next best buy",value:"All bought",txt:true}));
+  on("pkBudget",openPackBudgetSheet);
+  const bought=p=>p.d&&p.kind==="once"; // owned one-off unlocks are hidden in a fold at the bottom
+  const rows=P.map((p,i)=>({p,i})), owned=rows.filter(x=>bought(x.p));
+  const packRow=({p,i},k)=>{ const n=packDaysLeft(p), rec=!!PACK_DAYS[p.kind];
+    return `<div class="pack${bought(p)?" owned":""}"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}">
+      <span><span class="pn">${bought(p)?"":`${k+1}. `}${esc(p.t)}</span>${bought(p)?" "+tagH("ok","Owned ✓"):""}<br><span class="pd">${esc(p.note||"")}</span>
+      ${p.d&&rec?`<span class="pl">${p.bought?packLeftH(n):'<span class="faint">set the date you bought it (✎)</span>'}${p.bought&&n<=3?`<button class="renew" data-i="${i}">Renewed today</button>`:""}</span>`:""}</span>
+      <span class="pp">A$${packPrice(p).toFixed(2)}<small>${p.first&&!p.firstDone?"first buy · ":""}${PACK_PER[p.kind]||""}</small></span>
+      <button class="shr-edit" data-i="${i}" aria-label="Edit ${esc(p.t)}"><svg aria-hidden="true"><use href="#i-pen"/></svg></button></div>`; };
+  $("#packList").innerHTML=rows.filter(x=>!bought(x.p)).map(packRow).join("")+
+    `<div class="pack never"><span class="rk">✕</span><span><span class="pn">Never buy</span><br><span class="pd">Resource packs, random chests, big mixed bundles. Extra only: event packs with Mithril or Mythic shards.</span></span><span></span><span></span></div>`+
+    (owned.length?`<details class="shfold"><summary><div class="shgrp"><span>Already owned (${owned.length})</span><small>untick if bought by mistake</small></div></summary>${owned.map(packRow).join("")}</details>`:"");
+  $$("#packList input[data-i]").forEach(c=>c.onchange=()=>{ const p=P[+c.dataset.i]; p.d=c.checked;
+    if(c.checked&&PACK_DAYS[p.kind]){ p.bought=fcToday(); if(p.first) p.firstDone=true; } afterEdit(); });
+  $$("#packList .renew").forEach(b=>b.onclick=()=>{ const p=P[+b.dataset.i], snap=JSON.stringify(state); p.bought=fcToday(); p.firstDone=true; afterEdit(); toast(`${p.t} renewed`,snap); });
+  bindAll($("#packList"),".shr-edit",b=>openPackSheet(P[+b.dataset.i]));
+  on("addPack",()=>{ const p={t:"New pack",aud:0,kind:"once",note:"",d:false}; P.push(p); afterEdit(); openPackSheet(p); });
 }
+function openPackBudgetSheet(){
+  openSheet({title:"Monthly budget",sub:"What you're happy to spend each month on cards and packs.",build(f){
+    f.appendChild(fld("Budget (A$ per month)",{type:"num",decimal:true,value:state.packBudget||"",get:()=>state.packBudget||"",set:v=>state.packBudget=v,ph:"e.g. 30"}));
+    const inf=infoBox(); f.appendChild(inf);
+    const rf=()=>{ const P=state.packs||[], mo=P.filter(p=>p.d).reduce((t,p)=>t+packMonthly(p),0), b=num(state.packBudget);
+      inf.innerHTML=`Ticked cards cost <b>A$${mo.toFixed(2)}</b> a month (weekly cards × 52 ÷ 12).`+(b?` That leaves <b class="${b-mo<0?"bad":"ok"}">A$${(b-mo).toFixed(2)}</b>.`:""); };
+    rf(); return rf; }});
+}
+function openPackSheet(p){
+  openSheet({title:p.t||"Pack",sub:"Price, type and when you bought it.",build(f){
+    f.appendChild(fld("Name",{value:p.t,set:v=>p.t=v}));
+    f.appendChild(frow(fld("Price (A$)",{type:"num",decimal:true,value:p.aud,get:()=>p.aud,set:v=>p.aud=v}),
+      fld("Type",{type:"select",value:p.kind||"once",options:[["once","One-off (permanent)"],["month","Monthly card (30 days)"],["week","Weekly card (7 days)"]],set:v=>p.kind=v})));
+    if(p.kind!=="once"){
+      f.appendChild(frow(fld("First-buy price (A$)",{type:"num",decimal:true,allowEmpty:true,value:p.first==null?"":p.first,get:()=>p.first==null?"":p.first,set:v=>p.first=v===""?null:v,hint:"leave empty if none"}),
+        fld("Bought on",{type:"date",value:p.bought||"",set:v=>p.bought=v})));
+      f.appendChild(fld("I've used the first-buy price",{type:"check",value:!!p.firstDone,set:v=>p.firstDone=v}));
+    }
+    f.appendChild(fld("Note",{value:p.note,set:v=>p.note=v}));
+    const inf=infoBox(); f.appendChild(inf);
+    const rf=()=>{ const n=packDaysLeft(p); inf.innerHTML=p.kind==="once"?(p.d?"Owned ✓ — hidden under “Already owned”.":"Permanent once bought."):!p.d?"Tick it on the list when you buy it — the timer starts from today.":p.bought?`${packLeftH(n)} · costs <b>A$${packMonthly(p).toFixed(2)}</b> a month`:"Set the date you bought it to see days left."; };
+    rf(); return rf; },
+    onDelete:()=>{ const i=state.packs.indexOf(p); if(i>-1) state.packs.splice(i,1); }});
+}
+
 function renderData(){
   const n=$("#notes"); if(document.activeElement!==n) n.value=state.notes||"";
   n.oninput=()=>{ state.notes=n.value; scheduleSave(); };
@@ -2554,6 +2611,7 @@ function initStatic(){
   if(!state.today||!Array.isArray(state.today.routine)) state.today=structuredClone(SEED.today);
   if(!state.weekly||!Array.isArray(state.weekly.items)) state.weekly=structuredClone(SEED.weekly);
   if(!Array.isArray(state.packs)) state.packs=structuredClone(SEED.packs);
+  state.packs.forEach(p=>{ if(p.d&&p.first&&p.kind!=="once") p.firstDone=true; }); // already-bought cards have used their first-buy price
   if(!state.ui||typeof state.ui!=="object") state.ui={tab:"Home"};
   if(!state.troopCounts) state.troopCounts=structuredClone(SEED.troopCounts);
   if(!state.heroGear||!Array.isArray(state.heroGear.rows)) state.heroGear=structuredClone(SEED.heroGear);
