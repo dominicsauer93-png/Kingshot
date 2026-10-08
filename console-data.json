@@ -1317,7 +1317,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Rally",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1352,7 +1352,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Shops & Packs",
+      "Data": "Update all",
       "Gear": "Charms",
       "Base": "Buildings"
     },
