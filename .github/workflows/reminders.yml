@@ -1,0 +1,19 @@
+name: Daily reminders
+on:
+  schedule:
+    - cron: "50 22 * * *"   # 8:50 am Brisbane time
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/remind.mjs
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          TZ: Australia/Brisbane

@@ -1,0 +1,23 @@
+name: Tests
+on:
+  pull_request:
+    paths: ["index.html", "sw.js", "tests/**", "scripts/**", ".github/workflows/**"]
+  push:
+    branches: [main]
+    paths: ["index.html", "sw.js", "tests/**", "scripts/**", ".github/workflows/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-save --no-package-lock playwright@1.49.1
+      - run: npx playwright install --with-deps chromium
+      - run: node tests/smoke.mjs
+      - run: node scripts/remind.mjs
