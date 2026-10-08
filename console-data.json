@@ -514,7 +514,7 @@
       "aud": 4.99,
       "kind": "once",
       "note": "Permanent — doubles building speed",
-      "d": false
+      "d": true
     },
     {
       "t": "Ultra Value Monthly Card",
@@ -522,7 +522,7 @@
       "first": 7.99,
       "kind": "month",
       "note": "Daily gems + Stamina + 30 days VIP — best value",
-      "d": false
+      "d": true
     },
     {
       "t": "Weekly Benefits Card",
@@ -1394,7 +1394,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1429,7 +1429,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Update all",
+      "Data": "Shops & Packs",
       "Gear": "Charms",
       "Base": "Buildings"
     },
