@@ -644,7 +644,7 @@
     {
       "n": "Zoe",
       "need": 600,
-      "have": 9,
+      "have": 10,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -660,7 +660,7 @@
     {
       "n": "Eric",
       "need": 700,
-      "have": 20,
+      "have": 21,
       "pos": 23,
       "tgt": 30,
       "rally": false
@@ -700,7 +700,7 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 72,
+      "have": 75,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -732,7 +732,7 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 51,
+      "have": 63,
       "pos": 26,
       "tgt": 30,
       "rally": false
@@ -756,7 +756,7 @@
     {
       "n": "Vivian",
       "need": 0,
-      "have": 37,
+      "have": 43,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -1372,7 +1372,8 @@
     },
     "tierAll": false,
     "progKey": "power",
-    "roleOpen": true
+    "roleOpen": true,
+    "shSpare": true
   },
   "troopCounts": {
     "inf": {
