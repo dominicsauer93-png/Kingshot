@@ -1225,9 +1225,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 24217,
-      "threads": 288,
-      "vision": 519
+      "satin": 43493,
+      "threads": 447,
+      "vision": 530
     },
     "pieces": [
       {
@@ -1353,7 +1353,7 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Shards",
+      "Gear": "Governor",
       "Base": "Buildings"
     },
     "t11Open": {
