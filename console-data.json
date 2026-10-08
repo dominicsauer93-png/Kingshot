@@ -522,7 +522,8 @@
       "first": 7.99,
       "kind": "month",
       "note": "Daily gems + Stamina + 30 days VIP — best value",
-      "d": true
+      "d": true,
+      "firstDone": true
     },
     {
       "t": "Weekly Benefits Card",
@@ -624,23 +625,19 @@
   "resources": [
     {
       "n": "General speedup (min)",
-      "h": "23375",
-      "need": ""
+      "h": "23375"
     },
     {
       "n": "Soldier Training speedup (min)",
-      "h": "9996",
-      "need": ""
+      "h": "9996"
     },
     {
       "n": "Construction speedup (min)",
-      "h": "8103",
-      "need": ""
+      "h": "8103"
     },
     {
       "n": "Research speedup (min)",
-      "h": "1672",
-      "need": ""
+      "h": "1672"
     },
     {
       "n": "Learning speedup (min)",
@@ -648,33 +645,27 @@
     },
     {
       "n": "Soldier Healing speedup (min)",
-      "h": "15662",
-      "need": ""
+      "h": "15662"
     },
     {
       "n": "Bread",
-      "h": "2060000000",
-      "need": "1680000000"
+      "h": "2060000000"
     },
     {
       "n": "Wood",
-      "h": "2690000000",
-      "need": "2490000000"
+      "h": "2690000000"
     },
     {
       "n": "Stone",
-      "h": "290300000",
-      "need": "416640000"
+      "h": "290300000"
     },
     {
       "n": "Iron",
-      "h": "220000000",
-      "need": "134380000"
+      "h": "220000000"
     },
     {
       "n": "Gold",
-      "h": "445400",
-      "need": "1000000"
+      "h": "445400"
     }
   ],
   "goldShards": [
@@ -1447,7 +1438,8 @@
       "Masters": false,
       "Gov": true
     },
-    "tierAll": false
+    "tierAll": false,
+    "progKey": "power"
   },
   "troopCounts": {
     "inf": {
@@ -1766,252 +1758,19 @@
     ],
     "rallySet": true
   },
-  "farm": [
-    {
-      "k": "Town Center",
-      "v": "TC 22–29 (confirm)"
+  "heroInfo": {
+    "Wee & Woo": {
+      "type": "Archer"
     },
-    {
-      "k": "Storehouse level",
-      "v": "— (keep LOW while feeding)"
+    "Sophia": {
+      "type": "Cavalry"
     },
-    {
-      "k": "VIP",
-      "v": "— (target VIP 6 for extra march)"
-    },
-    {
-      "k": "Troop count",
-      "v": "— (minimal — only for gathering)"
-    },
-    {
-      "k": "Alliance",
-      "v": "— (sister/NAP, NOT main's alliance)"
-    },
-    {
-      "k": "Same kingdom as main?",
-      "v": "— (required)"
-    }
-  ],
-  "farmChecks": [
-    {
-      "t": "Teleport farm next to main",
-      "d": false
-    },
-    {
-      "t": "Open all unprotected resource packs in farm bag",
-      "d": false
-    },
-    {
-      "t": "Empty troops — send gathering / garrison a shielded ally",
-      "d": false
-    },
-    {
-      "t": "Switch to main → attack farm until resources are home",
-      "d": false
-    },
-    {
-      "t": "Switch back → heal any hurt farm troops",
-      "d": false
-    },
-    {
-      "t": "(Weekly) Bear Hunt rallies + Eternity's Reach tokens",
-      "d": false
-    }
-  ],
-  "buildings": [
-    {
-      "n": "Town Center",
-      "stepIdx": 0,
-      "note": "METRONOME — raise one tier to uncap the rest",
-      "d": false
-    },
-    {
-      "n": "Range",
-      "stepIdx": 5,
-      "note": "Archer line — your main combat",
-      "d": false
-    },
-    {
-      "n": "War Academy",
-      "stepIdx": 6,
-      "note": "Research speed + T11 gate",
-      "d": false
-    },
-    {
-      "n": "Embassy",
-      "stepIdx": 5,
-      "note": "Rally/garrison capacity — events",
-      "d": false
-    },
-    {
-      "n": "Command Center",
-      "stepIdx": 0,
-      "note": "March capacity — rally contribution",
-      "d": false
-    },
-    {
-      "n": "Barracks",
-      "stepIdx": 0,
-      "note": "Infantry tanks",
-      "d": false
-    },
-    {
-      "n": "Stable",
-      "stepIdx": 4,
-      "note": "Cavalry (off-focus) — defer",
-      "d": false
-    },
-    {
-      "n": "Infirmary",
-      "stepIdx": 0,
-      "note": "Healing sustain — defer, big",
-      "d": false
-    }
-  ],
-  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
-  "events": [
-    {
-      "n": "KvK",
-      "date": "2026-10-05",
-      "every": 14,
-      "time": "",
-      "note": "Gov Gear Inf 1 Gold 0★→1★ (225k pts), speedups (also Armament T1), pet advances, pet combat skills on — see Notes"
-    },
-    {
-      "n": "Bear Hunt",
-      "date": "2026-09-15",
-      "every": 2,
-      "time": "",
-      "note": ""
-    },
-    {
-      "n": "Armament Competition (Type 1)",
-      "date": "2026-09-28",
-      "every": 7,
-      "time": "",
-      "note": "Sep 28–29: light spending only. Oct 5–6: overlaps KvK — spend speedups + Gov Gear then"
-    },
-    {
-      "n": "Officer Project (Type 1)",
-      "date": "2026-09-30",
-      "every": 0,
-      "time": "",
-      "note": "Spend Forgehammers on Hero Gear mastery (Inf Chest, Archer Helm, Cav Helm) + widgets — see Notes"
-    },
-    {
-      "n": "Armament Competition (Type 2)",
-      "date": "2026-10-02",
-      "every": 7,
-      "time": "",
-      "note": "Small stuff only; keep Mithril for red gear"
-    },
-    {
-      "n": "Hall of Heroes",
-      "date": "2026-09-27",
-      "every": 7,
-      "time": "",
-      "note": "3 days (Sun–Tue): spend Marks of Valor on widget chests / shards for rally heroes (Amadeus, Yang, Ava) first"
-    }
-  ],
-  "masterNotesV": 2,
-  "pets": {
-    "have": {
-      "food": 68750,
-      "manuals": 1314,
-      "potions": 67,
-      "tmCommon": 76,
-      "tmAdv": 2,
-      "medals": 8
-    },
-    "rows": [
-      {
-        "n": "Gray Wolf",
-        "lvl": 50,
-        "tgt": 0,
-        "max": 50
-      },
-      {
-        "n": "Bison",
-        "lvl": 60,
-        "tgt": 0,
-        "max": 60
-      },
-      {
-        "n": "Lynx",
-        "lvl": 60,
-        "tgt": 0,
-        "max": 60
-      },
-      {
-        "n": "Cheetah",
-        "lvl": 61,
-        "tgt": 0,
-        "max": 70
-      },
-      {
-        "n": "Moose",
-        "lvl": 70,
-        "tgt": 0,
-        "max": 70
-      },
-      {
-        "n": "Lion",
-        "lvl": 70,
-        "tgt": 0,
-        "max": 80
-      },
-      {
-        "n": "Grizzly Bear",
-        "lvl": 70,
-        "tgt": 0,
-        "max": 80
-      },
-      {
-        "n": "Giant Rhino",
-        "lvl": 60,
-        "tgt": 0,
-        "max": 100
-      },
-      {
-        "n": "Mighty Bison",
-        "lvl": 70,
-        "tgt": 0,
-        "max": 100
-      },
-      {
-        "n": "Alpha Black Panther",
-        "lvl": 80,
-        "tgt": 0,
-        "max": 100
-      },
-      {
-        "n": "Great Moose",
-        "lvl": 60,
-        "tgt": 0,
-        "max": 100
-      },
-      {
-        "n": "Ironclad War Elephant",
-        "lvl": 50,
-        "tgt": 0,
-        "max": 100
-      },
-      {
-        "n": "Regal White Lion",
-        "lvl": 54,
-        "tgt": 0,
-        "max": 100
-      },
-      {
-        "n": "Ironclad War Bear",
-        "lvl": 45,
-        "tgt": 0,
-        "max": 100
-      }
-    ]
+    "Ava": {},
+    "Yang": {},
+    "Triton": {},
+    "Charles": {},
+    "Amadeus": {}
   },
-  "shardGeneral": 42,
-  "shardRallySet": true,
   "history": [
     {
       "d": "2026-09-23",
@@ -2304,5 +2063,251 @@
         "stars": 455
       }
     }
-  ]
+  ],
+  "farm": [
+    {
+      "k": "Town Center",
+      "v": "TC 22–29 (confirm)"
+    },
+    {
+      "k": "Storehouse level",
+      "v": "— (keep LOW while feeding)"
+    },
+    {
+      "k": "VIP",
+      "v": "— (target VIP 6 for extra march)"
+    },
+    {
+      "k": "Troop count",
+      "v": "— (minimal — only for gathering)"
+    },
+    {
+      "k": "Alliance",
+      "v": "— (sister/NAP, NOT main's alliance)"
+    },
+    {
+      "k": "Same kingdom as main?",
+      "v": "— (required)"
+    }
+  ],
+  "farmChecks": [
+    {
+      "t": "Teleport farm next to main",
+      "d": false
+    },
+    {
+      "t": "Open all unprotected resource packs in farm bag",
+      "d": false
+    },
+    {
+      "t": "Empty troops — send gathering / garrison a shielded ally",
+      "d": false
+    },
+    {
+      "t": "Switch to main → attack farm until resources are home",
+      "d": false
+    },
+    {
+      "t": "Switch back → heal any hurt farm troops",
+      "d": false
+    },
+    {
+      "t": "(Weekly) Bear Hunt rallies + Eternity's Reach tokens",
+      "d": false
+    }
+  ],
+  "buildings": [
+    {
+      "n": "Town Center",
+      "stepIdx": 0,
+      "note": "METRONOME — raise one tier to uncap the rest",
+      "d": false
+    },
+    {
+      "n": "Range",
+      "stepIdx": 5,
+      "note": "Archer line — your main combat",
+      "d": false
+    },
+    {
+      "n": "War Academy",
+      "stepIdx": 6,
+      "note": "Research speed + T11 gate",
+      "d": false
+    },
+    {
+      "n": "Embassy",
+      "stepIdx": 5,
+      "note": "Rally/garrison capacity — events",
+      "d": false
+    },
+    {
+      "n": "Command Center",
+      "stepIdx": 0,
+      "note": "March capacity — rally contribution",
+      "d": false
+    },
+    {
+      "n": "Barracks",
+      "stepIdx": 0,
+      "note": "Infantry tanks",
+      "d": false
+    },
+    {
+      "n": "Stable",
+      "stepIdx": 4,
+      "note": "Cavalry (off-focus) — defer",
+      "d": false
+    },
+    {
+      "n": "Infirmary",
+      "stepIdx": 0,
+      "note": "Healing sustain — defer, big",
+      "d": false
+    }
+  ],
+  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
+  "events": [
+    {
+      "n": "KvK",
+      "date": "2026-10-05",
+      "every": 14,
+      "time": "",
+      "note": "Gov Gear Inf 1 Gold 0★→1★ (225k pts), speedups (also Armament T1), pet advances, pet combat skills on — see Notes"
+    },
+    {
+      "n": "Bear Hunt",
+      "date": "2026-09-15",
+      "every": 2,
+      "time": "",
+      "note": ""
+    },
+    {
+      "n": "Armament Competition (Type 1)",
+      "date": "2026-09-28",
+      "every": 7,
+      "time": "",
+      "note": "Sep 28–29: light spending only. Oct 5–6: overlaps KvK — spend speedups + Gov Gear then"
+    },
+    {
+      "n": "Officer Project (Type 1)",
+      "date": "2026-09-30",
+      "every": 0,
+      "time": "",
+      "note": "Spend Forgehammers on Hero Gear mastery (Inf Chest, Archer Helm, Cav Helm) + widgets — see Notes"
+    },
+    {
+      "n": "Armament Competition (Type 2)",
+      "date": "2026-10-02",
+      "every": 7,
+      "time": "",
+      "note": "Small stuff only; keep Mithril for red gear"
+    },
+    {
+      "n": "Hall of Heroes",
+      "date": "2026-09-27",
+      "every": 7,
+      "time": "",
+      "note": "3 days (Sun–Tue): spend Marks of Valor on widget chests / shards for rally heroes (Amadeus, Yang, Ava) first"
+    }
+  ],
+  "masterNotesV": 2,
+  "pets": {
+    "have": {
+      "food": 68750,
+      "manuals": 1314,
+      "potions": 67,
+      "tmCommon": 76,
+      "tmAdv": 2,
+      "medals": 8
+    },
+    "rows": [
+      {
+        "n": "Gray Wolf",
+        "lvl": 50,
+        "tgt": 0,
+        "max": 50
+      },
+      {
+        "n": "Bison",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 60
+      },
+      {
+        "n": "Lynx",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 60
+      },
+      {
+        "n": "Cheetah",
+        "lvl": 61,
+        "tgt": 0,
+        "max": 70
+      },
+      {
+        "n": "Moose",
+        "lvl": 70,
+        "tgt": 0,
+        "max": 70
+      },
+      {
+        "n": "Lion",
+        "lvl": 70,
+        "tgt": 0,
+        "max": 80
+      },
+      {
+        "n": "Grizzly Bear",
+        "lvl": 70,
+        "tgt": 0,
+        "max": 80
+      },
+      {
+        "n": "Giant Rhino",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Mighty Bison",
+        "lvl": 70,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Alpha Black Panther",
+        "lvl": 80,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Great Moose",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Ironclad War Elephant",
+        "lvl": 50,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Regal White Lion",
+        "lvl": 54,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Ironclad War Bear",
+        "lvl": 45,
+        "tgt": 0,
+        "max": 100
+      }
+    ]
+  },
+  "shardGeneral": 42,
+  "shardRallySet": true
 }
