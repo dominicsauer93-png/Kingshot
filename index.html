@@ -191,6 +191,27 @@
   .stack{display:flex;flex-direction:column;gap:8px}
   .rowb{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .mt{margin-top:12px} .mt2{margin-top:20px}
+  ul.tight,ol.tight{margin:0;padding-left:20px;font-size:13.5px;line-height:1.55;color:var(--muted)} ul.tight li+li,ol.tight li+li{margin-top:3px}
+  .card code{font:600 12.5px var(--f-mono);background:var(--sunk);padding:1px 5px;border-radius:5px;word-break:break-all}
+  .evmode{margin:0 0 12px;padding:12px 14px;border-radius:var(--r);border:1.5px solid var(--green);background:var(--green-soft)}
+  .evmode .eh{display:flex;justify-content:space-between;align-items:baseline;gap:4px 10px;flex-wrap:wrap;list-style:none;cursor:pointer} .evmode .eh::-webkit-details-marker{display:none}
+  .evmode .eh .et::after{content:" ▾";font-size:12px;color:var(--muted)} .evmode[open] .eh .et::after{content:" ▴"}
+  .evmode[open] .eh{margin-bottom:2px}
+  .evmode .et{font:700 15.5px var(--f-body);color:var(--text)} .evmode .ed{font-size:12.5px;color:var(--muted)}
+  .evmode .es{font-size:13.5px;margin:4px 0 6px;color:var(--text)}
+  .evmode .ehave{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 6px} .evmode .ehave span{font:600 12px var(--f-body);padding:3px 8px;border-radius:999px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
+  .evmode .ehave b{color:var(--text)}
+  .evmode ul.checks li{padding:6px 0}
+  .chips-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px} .chips-row::-webkit-scrollbar{display:none}
+  .chip[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+  .pchart{position:relative} .pchart svg{display:block;width:100%;height:auto;touch-action:pan-y}
+  .ptip{position:absolute;pointer-events:none;transform:translate(-50%,-100%);margin-top:-10px;padding:6px 9px;border-radius:8px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);font:600 12.5px var(--f-body);color:var(--text);white-space:nowrap}
+  .ptip small{display:block;font:500 11px var(--f-mono);color:var(--faint)}
+  .phead-big{font:700 26px/1.1 var(--f-mono);color:var(--text)} .phead-sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .hcard .hrow{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--muted)} .hcard .hrow b{color:var(--text);font-weight:600;text-align:right}
+  .hcard .hnext{font-size:13px;padding:7px 9px;border-radius:9px;background:var(--sunk)} .hcard .hroles{display:flex;gap:4px;flex-wrap:wrap}
+  .hcard .hroles .tr{min-width:0;height:auto;padding:3px 6px;font-size:11px}
+  @media (max-width: 640px){ .hcard .hrow,.hcard .hroles{display:none} .hcard{gap:5px;padding:11px 13px} }
   .searchbtn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:11px;background:var(--field);color:var(--faint);font:500 14px var(--f-body);text-align:left}
   .searchbtn span{flex:1} .searchbtn kbd{font:600 11px var(--f-mono);padding:2px 6px;border:1px solid var(--line);border-radius:6px;color:var(--faint)}
   .searchbtn:hover{border-color:var(--gold);color:var(--text)}
@@ -519,6 +540,7 @@
     <div class="page" data-tab="Home">
       <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn primary" data-goto="Update all"><svg width="17" height="17" aria-hidden="true"><use href="#i-pen"/></svg>Update everything</button></div>
       <button class="info" id="packAlert" hidden data-goto="Shops &amp; Packs" style="display:block;width:100%;text-align:left;margin-bottom:12px;border-color:var(--amber);background:var(--amber-soft);color:var(--text)"></button>
+      <details class="evmode" id="eventMode" hidden></details>
       <div class="tiles" id="homeTiles"></div>
       <div class="cols-3-2 mt2">
         <section class="sec" data-key="Do next">
@@ -555,19 +577,29 @@
         <h2>Combat quality <small>tap to update</small></h2>
         <div class="tiles" id="combatTiles"></div>
       </section>
+      <section class="sec" data-sub="Overview" data-key="Progress">
+        <h2>Progress over time <small>saved once a day, automatically</small></h2>
+        <div class="card">
+          <div class="chips-row" id="progMetric" role="group" aria-label="What to chart"></div>
+          <div class="rowb mt" style="align-items:flex-end"><div id="progHead"></div><div class="seg" id="progRange" role="group" aria-label="Time range"><button data-v="30">30d</button><button data-v="90">90d</button><button data-v="all">All</button></div></div>
+          <div class="pchart mt" id="progChart"></div>
+          <details class="fold mt" id="progTblWrap"><summary><span class="grow">Show the numbers</span></summary><div class="fbody" id="progTbl"></div></details>
+        </div>
+      </section>
       <section class="sec" data-sub="Overview" data-key="Power Grades">
         <h2>Power grades <small>tap a pillar to edit</small></h2>
         <div class="list" id="pillars"></div>
         <div class="legend"><span><span class="sw" style="background:var(--green)"></span>Ahead</span><span><span class="sw" style="background:var(--amber)"></span>Slightly behind</span><span><span class="sw" style="background:var(--red)"></span>Well behind</span><span><span class="sw" style="background:var(--text);opacity:.55"></span>Benchmark</span></div>
       </section>
       <section class="sec" data-sub="Heroes" data-key="Hero Roles">
-        <h2>Most used heroes <small>sets your shard order</small></h2>
-        <div class="info" id="heroUse"></div>
-        <h2 class="h2 mt2">Best heroes for each battle <small>your heroes, best first</small></h2>
-        <div class="grid" style="--min:250px" id="roleBest"></div>
-        <h2 class="h2 mt2">Every role at a glance <small>S best → D worst</small></h2>
-        <div class="seg" id="tierSeg" role="group" aria-label="Which heroes" style="max-width:320px"><button data-v="mine">My heroes</button><button data-v="all">All heroes</button></div>
-        <div class="tierwrap mt"><table class="tiert" id="tierTable"></table></div>
+        <h2>Your heroes <small>most used first · tap a hero</small></h2>
+        <div class="grid" style="--min:260px" id="heroCards"></div>
+        <button class="btn sm ghost mt" id="heroMore" hidden></button>
+        <details class="fold mt2" id="roleFold"><summary><span class="grow">Best heroes for each battle</span><span class="faint" style="font-weight:500;font-size:13px">8 battle types</span></summary>
+          <div class="fbody"><div class="grid" style="--min:250px" id="roleBest"></div></div></details>
+        <details class="fold" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="faint" style="font-weight:500;font-size:13px">S best → D worst</span></summary>
+          <div class="fbody"><div class="seg" id="tierSeg" role="group" aria-label="Which heroes" style="max-width:320px"><button data-v="mine">My heroes</button><button data-v="all">All heroes</button></div>
+          <div class="tierwrap mt"><table class="tiert" id="tierTable"></table></div></div></details>
         <p class="faint mt" style="font-size:12.5px">Gen 8 tier lists, Oct 2026. Use score: S=4, A=3, B=2, C=1, D=0 per battle type; KvK and Bear rally lead count double (max 40). ⚔ = rally hero. Diego, Liz and Luna are Gen 8 (“soon”).</p>
       </section>
       <section class="sec" data-sub="Masters" data-key="Masters">
@@ -705,6 +737,22 @@
         <div class="card mt" style="padding:0;overflow:hidden" id="packList"></div>
         <button class="add" id="addPack">+ Add pack</button>
         <p class="faint mt" style="font-size:12.5px">Tick the packs you own or buy. Ticking a card starts its 30-day (or 7-day) timer from today — change the date in ✎ if you bought it earlier. Home warns you 3 days before a card ends.</p>
+      </section>
+      <section class="sec" data-sub="Reminders" data-key="Reminders">
+        <h2>Reminders <small>so you never miss an event or a card</small></h2>
+        <div class="cols">
+          <div class="card"><h3>1 · Add to your calendar</h3>
+            <p class="lead" style="margin:0 0 10px">Works now, nothing to set up. Your phone's calendar reminds you.</p>
+            <ul class="tight" id="icsList"></ul>
+            <button class="btn primary mt" id="icsBtn">Download calendar file</button>
+            <p class="faint mt" style="font-size:12.5px">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
+          <div class="card"><h3>2 · Phone notifications (optional)</h3>
+            <p class="lead" style="margin:0 0 10px">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app.</p>
+            <ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
+              <li>On GitHub: repo → <b>Settings → Secrets and variables → Actions → New repository secret</b>. Name <code>NTFY_TOPIC</code>, value = the same topic name.</li>
+              <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol>
+            <p class="faint mt" style="font-size:12.5px">Keep the topic secret: anyone who knows it can read these notes. Nothing is sent until the secret exists.</p></div>
+        </div>
       </section>
     </div>
 
@@ -945,6 +993,8 @@ const SEED = {
     {type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0},{type:"Archer", lvl:0, tgt:0}
   ]},
   widgets:{ have:0, rows:[] },
+  heroInfo:{ "Wee & Woo":{type:"Archer"}, "Sophia":{type:"Cavalry"} },
+  history:[],
   farm:[],
   farmChecks:[],
   buildings:[
@@ -1010,35 +1060,80 @@ async function ghPut(cfg,tok,sha,urgent){
   if(sha) body.sha=sha;
   const payload=JSON.stringify(body), keepalive=!!urgent&&payload.length<60000; // keepalive lets the save finish while the page closes
   let r=await fetch(ghUrl(cfg,false),{method:"PUT",keepalive,headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:payload});
-  if((r.status===409||r.status===422)&&sha!==null){ // stale sha — refetch and retry once
-    const cur=await ghGet(cfg,tok); body.sha=cur.sha||undefined;
-    r=await fetch(ghUrl(cfg,false),{method:"PUT",headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:JSON.stringify(body)});
-  }
+  if(r.status===409||r.status===422){ const e=new Error("conflict"); e.conflict=true; throw e; } // another device saved first — caller merges and retries
   if(!r.ok) throw new Error("GitHub write failed ("+r.status+")");
   const j=await r.json(); return j.content.sha;
 }
+/* ---------- two-device safe sync ----------
+   We keep a copy of the data as it was at the last sync (the "base"). When GitHub has changed since then
+   (another device saved), we merge: whatever each side changed is kept; only if both changed the same
+   value does this device win. Lists of named things (heroes, packs, events…) merge item by item. */
+const BASE_KEY="kingshot-sync-base", PEND_KEY="kingshot-sync-pending";
+const syncBase=()=>{ try{ return JSON.parse(lsGet(BASE_KEY)||"null"); }catch(e){ return null; } };
+const setSyncBase=d=>lsSet(BASE_KEY,JSON.stringify(d));
+const setPending=v=>{ if(v) lsSet(PEND_KEY,"1"); else lsDel(PEND_KEY); };
+const isPending=()=>!!lsGet(PEND_KEY);
+const jeq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const isObj=x=>x&&typeof x==="object"&&!Array.isArray(x);
+function itemId(x){ if(!isObj(x)) return null; for(const k of ["n","name","hero","k","slot","t","d"]) if(x[k]!=null&&x[k]!=="") return k+":"+x[k]+(x.type?"|"+x.type:""); return null; }
+function merge3(b,l,r){
+  if(jeq(l,r)) return l; if(jeq(l,b)) return r; if(jeq(r,b)) return l;
+  if(isObj(l)&&isObj(r)){ const o={}, B=isObj(b)?b:{};
+    new Set([...Object.keys(l),...Object.keys(r)]).forEach(k=>{ if(k==="ui"){ if(l.ui!==undefined) o.ui=l.ui; return; } const v=merge3(B[k],l[k],r[k]); if(v!==undefined) o[k]=v; });
+    return o; }
+  if(Array.isArray(l)&&Array.isArray(r)){
+    const ids=a=>a.map(itemId), li=ids(l), ri=ids(r), B=Array.isArray(b)?b:[], bi=ids(B);
+    const uniq=a=>a.every(x=>x!=null)&&new Set(a).size===a.length;
+    if(!uniq(li)||!uniq(ri)) return l; // no stable ids — this device wins
+    const bm=new Map(B.map((x,i)=>[bi[i],x])), rm=new Map(r.map((x,i)=>[ri[i],x])), out=[];
+    l.forEach((x,i)=>{ const id=li[i];
+      if(rm.has(id)) out.push(merge3(bm.get(id),x,rm.get(id)));
+      else if(!bm.has(id)||!jeq(bm.get(id),x)) out.push(x); }); // other device deleted it — drop unless we edited it
+    r.forEach((x,i)=>{ const id=ri[i]; if(!li.includes(id)&&!bm.has(id)) out.push(x); }); // other device added it
+    return out; }
+  return l; // both changed the same value — this device wins
+}
 async function syncPull(silent){
   const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok){ if(!silent) syncStatus("Fill in repo + token first","err"); return; }
-  if(syncPending) await flushSync(); // don't lose unsynced edits
   syncStatus("Pulling…");
   try{ const {sha,data}=await ghGet(syncCfg,tok); remoteSha=sha;
-    if(data){ state=mergeSeed(data); renderAll(); if(typeof buildLayout==="function") buildLayout(); await persistLocal(); syncStatus("Pulled ✓ "+new Date().toLocaleTimeString(),"ok"); }
-    else syncStatus("No remote file yet — Push to create it","warn");
+    if(!data){ syncStatus("No remote file yet — Push to create it","warn"); return; }
+    const base=syncBase(), local=JSON.parse(JSON.stringify(state));
+    const unsynced=isPending()||syncPending||(base&&!jeq(base,local));
+    let merged=false;
+    const noUi=o=>{ const c=Object.assign({},o); delete c.ui; return c; };
+    if(unsynced){ state=mergeSeed(merge3(base||data,local,data)); merged=!jeq(noUi(state),noUi(mergeSeed(data))); } // no base yet: keep this device's unsynced edits
+    else state=mergeSeed(data);
+    setSyncBase(data); renderAll(); if(typeof buildLayout==="function") buildLayout(); await persistLocal();
+    if(merged){ setPending(true); syncPending=true; await syncPush(true); syncStatus("Merged this device's changes with GitHub ✓","ok"); }
+    else { setPending(false); syncStatus("Pulled ✓ "+new Date().toLocaleTimeString(),"ok"); }
   }catch(e){ syncStatus(e.message,"err"); }
 }
 async function syncPush(silent,urgent){
   const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok){ if(!silent) syncStatus("Fill in repo + token first","err"); return; }
   syncPending=false; clearTimeout(syncTimer);
   syncStatus("Pushing…");
-  try{ remoteSha=await ghPut(syncCfg,tok,remoteSha,urgent); syncStatus("Synced ✓ "+new Date().toLocaleTimeString(),"ok"); }
-  catch(e){ syncStatus(e.message,"err"); }
+  const mergeRemote=async()=>{ const cur=await ghGet(syncCfg,tok); let changed=false;
+    if(cur.data&&cur.sha!==remoteSha){ const base=syncBase();
+      const m=base?merge3(base,JSON.parse(JSON.stringify(state)),cur.data):JSON.parse(JSON.stringify(state));
+      changed=!jeq(m,state); state=mergeSeed(m); setSyncBase(cur.data); }
+    remoteSha=cur.sha; return changed; };
+  try{
+    let changed=false;
+    if(!urgent) changed=await mergeRemote(); // closing the page: no time to read first — a conflict is merged next time
+    try{ remoteSha=await ghPut(syncCfg,tok,remoteSha,urgent); }
+    catch(e){ if(!e.conflict||urgent) throw e; changed=(await mergeRemote())||changed; remoteSha=await ghPut(syncCfg,tok,remoteSha,false); }
+    setSyncBase(JSON.parse(JSON.stringify(state))); setPending(false);
+    if(changed){ renderAll(); await persistLocal(); }
+    syncStatus((changed?"Merged with your other device ✓ ":"Synced ✓ ")+new Date().toLocaleTimeString(),"ok");
+  }catch(e){ setPending(true); syncStatus(e.conflict?"Other device saved first — will merge on next sync":e.message,e.conflict?"warn":"err"); }
 }
 // Auto-push waits until you've stopped editing for a minute (or you leave the page).
 // Every push is a commit, and every commit rebuilds the GitHub Pages site — pushing on every edit
 // kept cancelling the site build, so page updates never went live while you were editing.
 const SYNC_IDLE_MS=60000;
 let syncTimer=null, syncPending=false;
-function scheduleSyncPush(){ if(!syncCfg.on) return; syncPending=true; clearTimeout(syncTimer); syncTimer=setTimeout(()=>flushSync(),SYNC_IDLE_MS);
+function scheduleSyncPush(){ if(!syncCfg.on) return; syncPending=true; setPending(true); clearTimeout(syncTimer); syncTimer=setTimeout(()=>flushSync(),SYNC_IDLE_MS);
   syncStatus("Changes saved on this device — syncing to GitHub after 1 min idle"); }
 function flushSync(urgent){ if(!syncPending) return Promise.resolve(); return syncPush(true,urgent); }
 document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden") flushSync(true); });
@@ -1048,6 +1143,7 @@ window.addEventListener("pagehide",()=>flushSync(true));
 let saveTimer=null;
 function setSaveUI(cls,txt){ ["saveDot","saveDotM"].forEach(id=>{ const d=document.getElementById(id); if(d) d.className="dot"+(cls?" "+cls:""); }); const t=document.getElementById("saveTxt"); if(t) t.textContent=txt; }
 function scheduleSave(){
+  try{ takeSnapshot(); }catch(e){}
   setSaveUI("busy","Saving…");
   clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{ const ok=await persistLocal(); setSaveUI(ok?"":"err",ok?"Saved":"Session only"); scheduleSyncPush(); },400);
@@ -1631,7 +1727,7 @@ function initTheme(){
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
 const TABS=["Home","Rally","Gear","Base","Plan","Data"];
-const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs"],Data:["Update all","Notes","Account","Sync"]};
+const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs","Reminders"],Data:["Update all","Notes","Account","Sync"]};
 const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Rally",Supply:"Rally",Events:"Home",Vault:"Data"};
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
@@ -1709,10 +1805,42 @@ function homeList(o){ // Home checklist: next 5 still to do; ticked items slide 
   buildChecks(host,list,{tickOnly:true,onTick:()=>{ clearTimeout(host._t); host._t=setTimeout(()=>homeList(o),show?0:380); }});
   if(!list.length) host.innerHTML=`<li class="faint" style="padding:8px 0">${esc(o.done)}</li>`;
 }
+/* ---------- event mode: what to do while an event is live ---------- */
+const EVENT_STEPS=[
+  [/kvk|kingdom of power/i,["Use speedups on the matching prep day only","Governor Gear upgrades on its day","Pet advances on its day","Pet combat skills on before the battle"]],
+  [/officer project/i,["Forgehammers into hero gear mastery","Level widgets (lowest rally hero first)"]],
+  [/hall of heroes/i,["Spend Marks of Valor on widgets + shards","General shards into your focus hero"]],
+  [/armament/i,["Small speedups only — save the big ones for KvK"]],
+  [/bear/i,["Pet buffs on: Panther, Elephant, Great Moose, Bison, War Bear","Lead rallies with your Bear heroes (Amadeus, Ava, Yang)"]],
+  [/strongest governor/i,["Check today's theme — spend only on that"]]];
+const minsTxt=m=>{ m=num(m); const d=Math.floor(m/1440), h=Math.floor(m%1440/60); return d?`${fmt(d)}d ${h}h`:`${h}h`; };
+function eventHave(e){ const n=e.n||"", R=state.resources||[], rv=k=>{ const r=R.find(x=>new RegExp(k,"i").test(x.n)); return r?num(r.h):0; }, out=[];
+  if(/kvk|kingdom of power|armament/i.test(n)){ [["General","General speedups"],["Training","Training"],["Construction","Construction"],["Research","Research"],["Healing","Healing"]].forEach(([k,l])=>{ const v=rv(k); if(v) out.push([l,minsTxt(v)]); }); }
+  if(/kvk|kingdom of power/i.test(n)){ const G=(state.govGear&&state.govGear.have)||{}; if(num(G.satin)) out.push(["Satin",fmtBig(num(G.satin))]); if(num(G.threads)) out.push(["Threads",fmt(num(G.threads))]); if(num(G.vision)) out.push(["Artisan's Vision",fmt(num(G.vision))]);
+    const P=(state.pets&&state.pets.have)||{}; if(num(P.food)) out.push(["Pet Food",fmtBig(num(P.food))]); }
+  if(/officer project/i.test(n)){ const H=(state.heroGear&&state.heroGear.have)||{}; out.push(["Forgehammers",fmt(num(H.fh))]); out.push(["Widgets",fmt(((state.widgets&&state.widgets.rows)||[]).reduce((t,r)=>t+num(r.have),0))]); }
+  if(/hall of heroes/i.test(n)){ out.push(["General shards",fmt(num(state.shardGeneral))]); const f=shardOrder()[0]; if(f) out.push([`${f.n} shards`,`${fmt(num(f.have))} (${fmt(shardNeed(f)-num(f.have))} short)`]); }
+  return out; }
+function renderEventMode(){
+  const box=$("#eventMode"), live=(state.events||[]).map(e=>({e,a:activeOcc(e)})).filter(x=>x.a);
+  const rank=e=>{ const i=[/kvk|kingdom of power/i,/hall of heroes/i,/officer project/i,/strongest governor/i,/armament/i,/bear/i].findIndex(r=>r.test(e.n||"")); return i<0?3.5:i; }; // most important event first
+  live.sort((a,b)=>rank(a.e)-rank(b.e));
+  const cur=live[0]; box.hidden=!cur; if(!cur) return;
+  const e=cur.e, steps=(EVENT_STEPS.find(([r])=>r.test(e.n||""))||[0,[]])[1], start=new Date(fcToday()+"T00:00:00"); start.setDate(start.getDate()-(cur.a.day-1));
+  const key=(e.n||"")+"|"+ymd(start); if(!state.eventTicks||state.eventTicks.key!==key) state.eventTicks={key,done:[]};
+  const items=steps.map((t,i)=>({t,d:state.eventTicks.done.includes(i)})), left=cur.a.len-cur.a.day, have=eventHave(e);
+  const nd=items.filter(x=>x.d).length;
+  box.innerHTML=`<summary class="eh"><span class="et">⚡ ${esc(e.n||"Event")} is on</span><span class="ed">${cur.a.len>1?`day ${cur.a.day} of ${cur.a.len} · `:""}${left?`${left} more day${left>1?"s":""}`:"last day"}${live.length>1?` · +${live.length-1} more`:""}${items.length?` · <b id="evDone">${nd}/${items.length} done</b>`:""}</span></summary>
+    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}<ul class="checks" id="evSteps"></ul>`;
+  buildChecks($("#evSteps"),items,{tickOnly:true,onTick:()=>{ state.eventTicks.done=items.map((x,i)=>x.d?i:-1).filter(i=>i>=0); const d=$("#evDone"); if(d) d.textContent=`${state.eventTicks.done.length}/${items.length} done`; scheduleSave(); }});
+  const want=state.ui.evOpen!=null?state.ui.evOpen:innerWidth>640; box.open=want; // open on PC, one line on phones until tapped
+  box.ontoggle=()=>{ if(box.open!==want){ state.ui.evOpen=box.open; scheduleSave(); } };
+}
 function renderHome(){
   const d=new Date();
   $("#homeSub").textContent=d.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})+" · Kingdom day "+kingdomDay();
   paintGoals(); // fills lastGoals for the "Ready now" tile
+  renderEventMode();
   // tiles
   const upc=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days);
   const live=(state.events||[]).map(e=>({e,a:activeOcc(e)})).filter(x=>x.a).sort((a,b)=>(spendFor(b.e)?1:0)-(spendFor(a.e)?1:0));
@@ -1868,7 +1996,7 @@ function renderRally(){
       <span class="bar ${cls}"><i style="width:${Math.min(100,ratio*100).toFixed(1)}%"></i>${p.b>0?`<span class="bench" style="left:${Math.min(99,p.b/Math.max(p.v,p.b)*100).toFixed(1)}%"></span>`:""}</span>
       <span class="pv">${fmtBig(p.v)} / ${fmtBig(p.b)}</span><span class="grade g-${esc(p.g||"")}">${esc(p.g)||"–"}</span></span></button>`; }).join("");
   bindAll(pl,".lrow",b=>openPillarSheet(state.pillars[+b.dataset.i]));
-  renderHeroRoles(); renderMasters(); renderMystic();
+  renderProgress(); renderHeroCards(); renderHeroRoles(); renderMasters(); renderMystic();
 }
 function openCombatSheet(){
   const c=state.combat;
@@ -1912,14 +2040,12 @@ function heroRoster(){ // your heroes = the Gold Hero Shards list
 }
 function renderHeroRoles(){
   const mine=heroRoster(), gen8=HERO_GEN8.map(heroKey);
-  const ranked=Object.values(mine).sort((a,b)=>heroUse(b.n)-heroUse(a.n)||b.pos-a.pos);
-  $("#heroUse").innerHTML=`<b>Shard order:</b> `+ranked.slice(0,6).map((h,i)=>`${i+1}. ${esc(h.n)} <span class="faint">(${heroUse(h.n)})</span>`).join(" · ")+
-    `<br>Spend shards top-down. Once a hero hits 5★ (or the shards run out for them), spare shards go to the next one.`;
   $("#roleBest").innerHTML=HERO_ROLES.map(([role,label])=>{
     const L=Object.values(mine).filter(h=>TIER_OF[heroKey(h.n)][role]).sort((a,b)=>TIER_PTS[TIER_OF[heroKey(b.n)][role]]-TIER_PTS[TIER_OF[heroKey(a.n)][role]]||b.pos-a.pos).slice(0,3);
     const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
     return `<div class="rolecard"><h3>${esc(label)}</h3><ol>${L.map(h=>`<li>${trH(TIER_OF[heroKey(h.n)][role])}<span class="nm">${esc(h.n)}${h.rally?" ⚔":""}</span><span class="gold" style="font-size:12px;letter-spacing:1px">${starGlyphs(h.pos)}</span></li>`).join("")}</ol>
       ${soon.length?`<span class="soon">Gen 8 soon: ${soon.map(esc).join(", ")} (S)</span>`:""}</div>`; }).join("");
+  [["#roleFold","roleOpen"],["#tierFold","tierOpen"]].forEach(([id,k])=>{ const d=$(id); d.open=!!state.ui[k]; d.ontoggle=()=>{ if(state.ui[k]!==d.open){ state.ui[k]=d.open; scheduleSave(); } }; });
   const mode=state.ui.tierAll?"all":"mine";
   $$("#tierSeg button").forEach(b=>{ b.setAttribute("aria-pressed",String(b.dataset.v===mode)); b.onclick=()=>{ state.ui.tierAll=b.dataset.v==="all"; scheduleSave(); renderHeroRoles(); }; });
   const keys=Object.keys(TIER_OF).filter(k=>mode==="all"||mine[k]||gen8.includes(k));
@@ -1927,6 +2053,115 @@ function renderHeroRoles(){
   $("#tierTable").innerHTML=`<thead><tr><th>Hero</th>${HERO_ROLES.map(([,,s])=>`<th>${esc(s)}</th>`).join("")}<th>Use</th></tr></thead><tbody>`+
     keys.map(k=>{ const t=TIER_OF[k], h=mine[k], s8=gen8.includes(k);
       return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" ⚔":""}${s8?' <span class="tag plain" style="padding:2px 6px;font-size:10.5px">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
+}
+
+/* ---------- hero pages: everything about one hero in one place ---------- */
+const HERO_TYPES=["Infantry","Cavalry","Archer"];
+const heroInfo=n=>{ if(!state.heroInfo) state.heroInfo={}; return state.heroInfo[n]||(state.heroInfo[n]={}); };
+const shardRow=n=>(state.goldShards||[]).find(r=>heroKey(r.n)===heroKey(n));
+const widRow=n=>((state.widgets&&state.widgets.rows)||[]).find(r=>heroKey(r.hero)===heroKey(n));
+function heroGearSum(type){ const R=((state.heroGear&&state.heroGear.rows)||[]).filter(r=>r.type===type); if(!R.length) return null;
+  return {n:R.length,avg:Math.round(R.reduce((t,r)=>t+num(r.lvC),0)/R.length),red:R.filter(r=>num(r.lvC)>=100).length,low:R.slice().sort((a,b)=>num(a.lvC)-num(b.lvC))[0]}; }
+function heroFacts(n){
+  const sr=shardRow(n), wr=widRow(n), t=TIER_OF[heroKey(n)]||{}, info=heroInfo(n);
+  const st=sr&&hasStars(sr)?num(sr.pos):null, have=sr?num(sr.have):0, nextCost=st!=null&&st<SHARD_MAX?SHARD_LEAF[st]:0;
+  const shortAll=sr?Math.max(0,shardNeed(sr)-have):0, wl=wr?num(wr.lvl):null, wNext=wr?widNext(wl):0, wHave=wr?num(wr.have):0;
+  const S=HERO_ROLES.filter(([r])=>t[r]==="S").map(([,,sh])=>sh);
+  let next="";
+  if(st!=null&&nextCost&&have>=nextCost) next=`<span class="ok">Ready:</span> star step to ${esc(starLabel(st+1))} (${nextCost} shards)`;
+  else if(wr&&wNext&&wHave>=wNext) next=`<span class="ok">Ready:</span> widget Lv ${wl} → ${wl+1}`;
+  else { const opts=[]; if(st!=null&&nextCost) opts.push([nextCost-have,`${fmt(nextCost-have)} shards to ${esc(starLabel(st+1))}`]); if(wr&&wNext) opts.push([wNext-wHave,`${fmt(wNext-wHave)} widgets to Lv ${wl+1}`]);
+    opts.sort((a,b)=>a[0]-b[0]); next=opts.length?"Closest: "+opts[0][1]:st!=null&&st>=SHARD_MAX?"5★ max ✓":"Set stars on the Shards page"; }
+  return {sr,wr,t,info,st,have,nextCost,shortAll,wl,wNext,wHave,S,next,use:heroUse(n),gear:info.type?heroGearSum(info.type):null};
+}
+function heroCardH(n,rank){ const f=heroFacts(n);
+  return `<button class="vcard hcard" data-h="${esc(n)}">${EDIT_ICON}<span class="vc-top"><span class="shr-rank">${rank}</span><span class="vc-name">${esc(n)}${f.sr&&f.sr.rally?" ⚔":""}</span>${tagH(f.use>=25?"acc":"plain","Use "+f.use)}</span>
+    <span class="vc-sub">${f.st!=null?`<span class="gold" style="letter-spacing:1px">${starGlyphs(f.st)}</span> ${esc(starLabel(f.st))}`:'<span class="faint">stars not set</span>'}${f.info.type?` · ${esc(f.info.type)}`:""}</span>
+    <span class="hrow"><span>Shards</span><b>${f.sr?(f.shortAll?`${fmt(f.have)} · ${fmt(f.shortAll)} short`:'<span class="ok">enough ✓</span>'):"—"}</b></span>
+    <span class="hrow"><span>Widget</span><b>${f.wr?`Lv ${f.wl}${f.wNext?` · ${fmt(f.wHave)}/${fmt(f.wNext)}`:" · max"}`:'<span class="faint">not tracked</span>'}</b></span>
+    <span class="hrow"><span>Gear</span><b>${f.gear?`${f.info.type} avg Lv ${f.gear.avg} · ${f.gear.red}/${f.gear.n} red`:'<span class="faint">set troop type</span>'}</b></span>
+    ${f.S.length?`<span class="hroles">${f.S.map(x=>`<span class="tr tr-S">S ${esc(x)}</span>`).join("")}</span>`:""}
+    <span class="hnext">${f.next}</span></button>`; }
+function renderHeroCards(){
+  const mine=Object.values(heroRoster()).sort((a,b)=>heroUse(b.n)-heroUse(a.n)||b.pos-a.pos), all=!!state.ui.heroAll, L=all?mine:mine.slice(0,6);
+  $("#heroCards").innerHTML=L.map((h,i)=>heroCardH(h.n,i+1)).join("")||`<div class="empty">Add heroes on the Shards page.</div>`;
+  bindAll($("#heroCards"),".hcard",b=>openHeroSheet(b.dataset.h));
+  const m=$("#heroMore"); m.hidden=mine.length<=6; m.textContent=all?"Show top 6":`Show all ${mine.length} heroes`; m.onclick=()=>{ state.ui.heroAll=!all; scheduleSave(); renderHeroCards(); };
+}
+function openHeroSheet(n){
+  openSheet({title:n,sub:"Stars, shards, widget and troop type — all in one place.",build(f){
+    const info=heroInfo(n), sr=shardRow(n);
+    f.appendChild(frow(fld("Troop type",{type:"select",value:info.type||"",options:[["","— not set —"]].concat(HERO_TYPES.map(t=>[t,t])),set:v=>{ if(v) info.type=v; else delete info.type; }}),
+      sr?fld("Rally hero ⚔",{type:"check",value:sr.rally,set:v=>sr.rally=v}):document.createElement("span")));
+    if(sr){ f.appendChild(frow(fld("Star tier now",{type:"select",value:hasStars(sr)?String(num(sr.pos)):"",options:(hasStars(sr)?[]:[["","— not set —"]]).concat(STAR_OPTS),set:v=>{ sr.pos=v===""?null:parseInt(v,10); if(sr.tgt==null) sr.tgt=SHARD_MAX; }}),
+      fld("Hero shards in hand",{type:"num",value:sr.have,get:()=>sr.have,set:v=>sr.have=v}))); }
+    let wr=widRow(n);
+    const wbox=document.createElement("div"); f.appendChild(wbox);
+    const wfill=()=>{ wbox.innerHTML=""; wr=widRow(n);
+      if(wr) wbox.appendChild(frow(fld("Widget level",{type:"select",value:String(num(wr.lvl)),options:Array.from({length:11},(_,i)=>[String(i),"Lv "+i]),set:v=>wr.lvl=parseInt(v,10)}),
+        fld("Widgets in hand",{type:"num",value:wr.have,get:()=>wr.have,set:v=>wr.have=v})));
+      else { const b=document.createElement("button"); b.className="btn sm ghost"; b.type="button"; b.textContent="+ Track this hero's widget";
+        b.onclick=()=>{ state.widgets.rows.push({hero:n,lvl:0,have:0,rally:false}); afterEdit(); wfill(); }; wbox.appendChild(b); } };
+    wfill();
+    const inf=infoBox(); f.appendChild(inf);
+    const rf=()=>{ const x=heroFacts(n);
+      inf.innerHTML=`<b>Next:</b> ${x.next}<br>`+
+        (x.sr&&x.st!=null?`<b>Shards:</b> ${x.st>=SHARD_MAX?"5★ max ✓":`next step ${x.nextCost} · to ${esc(starLabel(x.sr.tgt==null?SHARD_MAX:num(x.sr.tgt)))}: ${fmt(x.shortAll)} short`}<br>`:"")+
+        (x.gear?`<b>${esc(x.info.type)} hero gear:</b> avg Lv ${x.gear.avg}, ${x.gear.red}/${x.gear.n} red · lowest ${esc(x.gear.low.slot)} Lv ${num(x.gear.low.lvC)}<br>`:"")+
+        `<b>Use score:</b> ${x.use}/40<div class="hroles" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">${HERO_ROLES.map(([r,,sh])=>`<span style="display:inline-flex;align-items:center;gap:4px;font-size:12px">${trH(x.t[r])} ${esc(sh)}</span>`).join("")}</div>`; };
+    rf(); return rf; }});
+}
+
+/* ---------- progress history (one snapshot per day) ---------- */
+const PROG_METRICS=[
+  ["power","Power",v=>fmtBig(v)],["leth","Lethality",v=>v.toFixed(1)+"%"],["hp","Health",v=>v.toFixed(1)+"%"],
+  ["attWR","Attack win %",v=>v.toFixed(1)+"%"],["defWR","Defence win %",v=>v.toFixed(1)+"%"],
+  ["p:Hero","Hero power",v=>fmtBig(v)],["p:Hero Gear","Hero gear power",v=>fmtBig(v)],["p:Troop","Troop power",v=>fmtBig(v)],
+  ["p:Governor Gear","Gov gear power",v=>fmtBig(v)],["p:Governor Charm","Charm power",v=>fmtBig(v)],["stars","Hero star steps",v=>fmt(v)]];
+function snapValues(){ const c=state.combat||{}, w=(a,b)=>(num(a)+num(b))>0?num(a)/(num(a)+num(b))*100:null, v={};
+  if(num(state.account&&state.account.power)>0) v.power=num(state.account.power);
+  if(num(c.leth)) v.leth=num(c.leth); if(num(c.hp)) v.hp=num(c.hp);
+  const a=w(c.attW,c.attL), d=w(c.defW,c.defL); if(a!=null) v.attWR=+a.toFixed(2); if(d!=null) v.defWR=+d.toFixed(2);
+  (state.pillars||[]).forEach(p=>{ if(num(p.v)>0) v["p:"+p.name]=num(p.v); });
+  const st=(state.goldShards||[]).filter(hasStars).reduce((t,r)=>t+num(r.pos),0); if(st) v.stars=st;
+  return v; }
+function takeSnapshot(){ if(!Array.isArray(state.history)) state.history=[];
+  const d=fcToday(), v=snapValues(), H=state.history, last=H[H.length-1];
+  if(last&&last.d===d){ if(JSON.stringify(last.v)!==JSON.stringify(v)) last.v=v; return; }
+  H.push({d,v}); if(H.length>730) H.splice(0,H.length-730); }
+function progSeries(key,range){ const H=(state.history||[]).filter(e=>e.v&&e.v[key]!=null);
+  if(range==="all") return H.map(e=>({d:e.d,v:e.v[key]}));
+  const from=new Date(fcToday()+"T00:00:00"); from.setDate(from.getDate()-num(range)); const f=ymd(from);
+  return H.filter(e=>e.d>=f).map(e=>({d:e.d,v:e.v[key]})); }
+function renderProgress(){
+  const keys=PROG_METRICS.filter(([k])=>(state.history||[]).some(e=>e.v&&e.v[k]!=null));
+  if(!keys.some(([k])=>k===state.ui.progKey)) state.ui.progKey=(keys[0]||PROG_METRICS[0])[0];
+  const range=state.ui.progRange||"90", key=state.ui.progKey, M=PROG_METRICS.find(([k])=>k===key), F=M[2];
+  $("#progMetric").innerHTML=keys.map(([k,l])=>`<button class="chip" data-k="${esc(k)}" aria-pressed="${k===key}">${esc(l)}</button>`).join("");
+  $$("#progMetric .chip").forEach(c=>c.onclick=()=>{ state.ui.progKey=c.dataset.k; scheduleSave(); renderProgress(); });
+  $$("#progRange button").forEach(b=>{ b.setAttribute("aria-pressed",String(b.dataset.v===range)); b.onclick=()=>{ state.ui.progRange=b.dataset.v; scheduleSave(); renderProgress(); }; });
+  const S=progSeries(key,range), wrap=$("#progChart");
+  if(!S.length){ $("#progHead").innerHTML=""; wrap.innerHTML=`<div class="empty">No history yet — it saves itself once a day.</div>`; $("#progTbl").innerHTML=""; return; }
+  const first=S[0], last=S[S.length-1], dl=last.v-first.v, worse=false;
+  $("#progHead").innerHTML=`<div class="phead-big">${F(last.v)}</div><div class="phead-sub">${esc(M[1])} · ${S.length>1?(dl===0?"no change":`<span class="${dl>0?"ok":"bad"}">${dl>0?"▲":"▼"} ${F(Math.abs(dl))}</span> since ${esc(first.d)}`):"first day saved — the line grows from here"}</div>`;
+  const css=getComputedStyle(document.documentElement), cv=n=>css.getPropertyValue(n).trim();
+  const W=640,H=220,pl=58,pr=16,pt=14,pb=28,PW=W-pl-pr,PH=H-pt-pb, vals=S.map(e=>e.v), mn=Math.min(...vals), mx=Math.max(...vals), pad=(mx-mn)*0.12||Math.max(Math.abs(mx)*0.02,1), lo=mn-pad, hi=mx+pad;
+  const t=e=>new Date(e.d+"T00:00:00").getTime(), t0=t(first), t1=t(last);
+  const X=e=>t1===t0?pl+PW/2:pl+(t(e)-t0)/(t1-t0)*PW, Y=v=>pt+PH-(v-lo)/(hi-lo)*PH, col=cv("--acc"), grid=cv("--line-soft"), ink=cv("--faint"), bg=cv("--panel");
+  let g=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(M[1])} over time">`;
+  for(let i=0;i<=3;i++){ const v=lo+(hi-lo)*i/3, y=Y(v); g+=`<line x1="${pl}" x2="${W-pr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${grid}"/><text x="${pl-8}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="11" font-family="JetBrains Mono,monospace" fill="${ink}">${esc(F(v))}</text>`; }
+  g+=`<text x="${pl}" y="${H-8}" font-size="11" font-family="JetBrains Mono,monospace" fill="${ink}">${esc(first.d)}</text>`+(S.length>1?`<text x="${W-pr}" y="${H-8}" text-anchor="end" font-size="11" font-family="JetBrains Mono,monospace" fill="${ink}">${esc(last.d)}</text>`:"");
+  if(S.length>1) g+=`<polyline points="${S.map(e=>X(e).toFixed(1)+","+Y(e.v).toFixed(1)).join(" ")}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  g+=`<circle cx="${X(last).toFixed(1)}" cy="${Y(last.v).toFixed(1)}" r="5" fill="${col}" stroke="${bg}" stroke-width="2"/>`;
+  g+=`<line id="pX" y1="${pt}" y2="${pt+PH}" stroke="${ink}" stroke-dasharray="3 3" visibility="hidden"/><circle id="pDot" r="5" fill="${bg}" stroke="${col}" stroke-width="2" visibility="hidden"/><rect x="${pl}" y="${pt}" width="${PW}" height="${PH}" fill="transparent" id="pHit"/></svg><div class="ptip" id="pTip" hidden></div>`;
+  wrap.innerHTML=g;
+  const svg=wrap.querySelector("svg"), tip=$("#pTip"), px=$("#pX"), pd=$("#pDot");
+  const show=ev=>{ const r=svg.getBoundingClientRect(), x=(ev.clientX-r.left)/r.width*W; let best=S[0]; S.forEach(e=>{ if(Math.abs(X(e)-x)<Math.abs(X(best)-x)) best=e; });
+    const cx=X(best), cy=Y(best.v); px.setAttribute("x1",cx); px.setAttribute("x2",cx); px.setAttribute("visibility","visible"); pd.setAttribute("cx",cx); pd.setAttribute("cy",cy); pd.setAttribute("visibility","visible");
+    tip.hidden=false; tip.innerHTML=`${esc(F(best.v))}<small>${esc(best.d)}</small>`; tip.style.left=(cx/W*r.width)+"px"; tip.style.top=(cy/H*r.height)+"px"; };
+  const hide=()=>{ tip.hidden=true; px.setAttribute("visibility","hidden"); pd.setAttribute("visibility","hidden"); };
+  const hit=$("#pHit"); hit.onpointermove=show; hit.onpointerdown=show; hit.onpointerleave=hide;
+  $("#progTbl").innerHTML=`<table class="gtable"><thead><tr><th>Date</th><th>${esc(M[1])}</th></tr></thead><tbody>${S.slice().reverse().slice(0,30).map(e=>`<tr><td>${esc(e.d)}</td><td>${esc(F(e.v))}</td></tr>`).join("")}</tbody></table>`;
 }
 
 /* ---------- masters ---------- */
@@ -2498,10 +2733,37 @@ function openPackSheet(p){
     onDelete:()=>{ const i=state.packs.indexOf(p); if(i>-1) state.packs.splice(i,1); }});
 }
 
+/* ---------- reminders: calendar file (.ics) ---------- */
+function icsItems(){ const out=[];
+  (state.events||[]).forEach(e=>{ if(!e.date) return; out.push({kind:"event",e,label:`${e.n}${num(e.every)?` · ${repeatTxt(e)}`:""}`}); });
+  (state.packs||[]).forEach(p=>{ const n=packDaysLeft(p); if(n==null) return; const end=new Date(p.bought+"T00:00:00"); end.setDate(end.getDate()+PACK_DAYS[p.kind]); out.push({kind:"card",p,end:ymd(end),label:`${p.t} ends ${ymd(end)}`}); });
+  return out; }
+function icsText(){
+  const z=n=>String(n).padStart(2,"0"), dt=s=>s.replace(/-/g,""), stamp=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
+  const esc2=t=>String(t||"").replace(/\\/g,"\\\\").replace(/;/g,"\;").replace(/,/g,"\\,").replace(/\n/g,"\\n");
+  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Kingshot Command Console//EN","CALSCALE:GREGORIAN","X-WR-CALNAME:Kingshot"];
+  icsItems().forEach((x,i)=>{
+    if(x.kind==="event"){ const e=x.e, every=Math.floor(num(e.every)), t=/^\d\d:\d\d$/.test(e.time||"")?e.time:"";
+      L.push("BEGIN:VEVENT",`UID:ks-ev-${i}-${dt(e.date)}@kingshot-console`,`DTSTAMP:${stamp}`);
+      if(t){ L.push(`DTSTART:${dt(e.date)}T${t.replace(":","")}00`,`DURATION:PT1H`); } else { const n=new Date(e.date+"T00:00:00"); n.setDate(n.getDate()+evLen(e)); L.push(`DTSTART;VALUE=DATE:${dt(e.date)}`,`DTEND;VALUE=DATE:${dt(ymd(n))}`); }
+      if(every>0) L.push(`RRULE:FREQ=DAILY;INTERVAL=${every}`);
+      L.push(`SUMMARY:${esc2("Kingshot: "+e.n)}`,`DESCRIPTION:${esc2("Spend: "+(spendFor(e)||"—")+(e.note?"\n"+e.note:""))}`,
+        "BEGIN:VALARM","ACTION:DISPLAY",`DESCRIPTION:${esc2(e.n)}`,t?"TRIGGER:-PT30M":"TRIGGER:PT9H","END:VALARM","END:VEVENT"); }
+    else { const p=x.p; L.push("BEGIN:VEVENT",`UID:ks-card-${i}-${dt(x.end)}@kingshot-console`,`DTSTAMP:${stamp}`,`DTSTART;VALUE=DATE:${dt(x.end)}`,
+        `SUMMARY:${esc2("Kingshot: "+p.t+" ends")}`,`DESCRIPTION:${esc2("Renew it, then tap “Renewed today” in the console.")}`,
+        "BEGIN:VALARM","ACTION:DISPLAY",`DESCRIPTION:${esc2(p.t+" ends in 3 days")}`,"TRIGGER:-P2DT15H","END:VALARM","END:VEVENT"); } });
+  L.push("END:VCALENDAR"); return L.join("\r\n")+"\r\n"; }
+function renderReminders(){
+  const I=icsItems(); $("#icsList").innerHTML=I.length?I.map(x=>`<li>${esc(x.label)}</li>`).join(""):`<li>No events or ticked cards yet.</li>`;
+  let hint=lsGet("kingshot-ntfy-hint"); // kept on this device only — never synced, the repo is public
+  if(!hint){ hint="kingshot-"+Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,8); lsSet("kingshot-ntfy-hint",hint); }
+  $("#ntfyTopic").textContent=hint;
+  on("icsBtn",()=>{ const blob=new Blob([icsText()],{type:"text/calendar"}), a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="kingshot-reminders.ics"; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500); toast("Calendar file downloaded"); });
+}
 function renderPlan(){
   const ae=document.activeElement, editing=ae&&ae.isContentEditable&&ae.closest("#routineEdit,#weekEdit,#trackNow,#trackFarm");
   if(!editing){ buildChecks($("#routineEdit"),state.today.routine,{onTick:()=>{}}); buildChecks($("#weekEdit"),state.weekly.items,{onTick:()=>{}}); buildChecks($("#trackNow"),state.trackNow); buildChecks($("#trackFarm"),state.trackFarm); }
-  renderShopsPacks();
+  renderShopsPacks(); renderReminders();
 }
 function renderData(){
   const n=$("#notes"); if(document.activeElement!==n) n.value=state.notes||"";
@@ -2641,7 +2903,8 @@ const SEARCH_KW={
   "Charms":"charm designs guides lethality health",
   "Governor Gear":"gov gear satin gilded threads artisan vision",
   "Gold Hero Shards":"shards stars star tier general mythic",
-  "Hero Roles":"tier list kvk bear garrison joiner arena conquest solo use score best heroes",
+  "Hero Roles":"tier list kvk bear garrison joiner arena conquest solo use score best heroes hero page troop type",
+  "Progress":"history chart trend growth power lethality health win rate over time",
   "Masters":"emblems affinity cassia pan kindred soul",
   "Mystic Trials":"rank zone mithril",
   "Pets":"pet food taming marks growth manuals potions medallions",
@@ -2651,6 +2914,7 @@ const SEARCH_KW={
   "Resources & Speedups":"bread wood stone iron gold speedups",
   "Shops & Packs":"packs budget card monthly weekly shop shops aud spend trial arena alliance vip swordland tidal free",
   "Checklists":"routine daily weekly execute farm",
+  "Reminders":"reminders notifications calendar ics ntfy alerts phone",
   "Today":"routine daily checklist",
   "Upcoming Events":"events calendar kvk bear hunt hall of heroes armament",
   "Do next":"next upgrade priorities",
@@ -2723,6 +2987,9 @@ function initStatic(){
   if(!state.today||!Array.isArray(state.today.routine)) state.today=structuredClone(SEED.today);
   if(!state.weekly||!Array.isArray(state.weekly.items)) state.weekly=structuredClone(SEED.weekly);
   if(!Array.isArray(state.packs)) state.packs=structuredClone(SEED.packs);
+  if(!state.heroInfo||typeof state.heroInfo!=="object") state.heroInfo=structuredClone(SEED.heroInfo);
+  if(!Array.isArray(state.history)) state.history=[];
+  takeSnapshot();
   state.packs.forEach(p=>{ if(p.d&&p.first&&p.kind!=="once") p.firstDone=true; }); // already-bought cards have used their first-buy price
   if(!state.ui||typeof state.ui!=="object") state.ui={tab:"Home"};
   if(!state.troopCounts) state.troopCounts=structuredClone(SEED.troopCounts);
