@@ -1385,7 +1385,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1419,9 +1419,9 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Heroes",
+      "Rally": "Masters",
       "Data": "Shops & Packs",
-      "Gear": "Charms",
+      "Gear": "Hero Gear",
       "Base": "Buildings"
     },
     "t11Open": {
@@ -1543,7 +1543,7 @@
       {
         "type": "Cavalry",
         "slot": "Chest (Health)",
-        "lvC": 86,
+        "lvC": 100,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
