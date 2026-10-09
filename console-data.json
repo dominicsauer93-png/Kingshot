@@ -2,10 +2,10 @@
   "account": {
     "tc": "Truegold Lv. 7",
     "day": "443",
-    "power": "301800000",
+    "power": "319037386",
     "vip": "9",
     "spender": "Low–mid",
-    "goal": "All-round",
+    "goal": "Main - all out attack ",
     "dayAnchor": "2025-06-30"
   },
   "dust": {
@@ -1285,17 +1285,17 @@
     }
   ],
   "tg": {
-    "have": 338,
+    "have": 370,
     "need": 5076,
-    "ttgHave": 5,
+    "ttgHave": 0,
     "ttgNeed": 531
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 62161,
-      "threads": 627,
-      "vision": 592
+      "satin": 74631,
+      "threads": 751,
+      "vision": 595
     },
     "pieces": [
       {
@@ -1385,7 +1385,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1431,13 +1431,13 @@
     "doAll": false,
     "qOpen": {
       "Bag": true,
-      "HG": true,
+      "HG": false,
       "Power": false,
       "Buildings": false,
       "Troops": false,
-      "Shards": true,
+      "Shards": false,
       "Masters": false,
-      "Gov": true
+      "Gov": false
     },
     "tierAll": false,
     "progKey": "power",
@@ -1465,8 +1465,8 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 60,
-      "mg": 11,
+      "fh": 61,
+      "mg": 2,
       "mith": 6
     },
     "rows": [
@@ -1629,8 +1629,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 492,
-      "designs": 407
+      "guides": 495,
+      "designs": 707
     },
     "rows": [
       {
@@ -2138,7 +2138,7 @@
     {
       "d": "2026-10-10",
       "v": {
-        "power": 301800000,
+        "power": 319037386,
         "leth": 73,
         "hp": 58.8,
         "attWR": 38.08,
@@ -2307,11 +2307,11 @@
   "pets": {
     "have": {
       "food": 68750,
-      "manuals": 1485,
+      "manuals": 1513,
       "potions": 117,
-      "tmCommon": 137,
+      "tmCommon": 142,
       "tmAdv": 4,
-      "medals": 8
+      "medals": 34
     },
     "rows": [
       {
