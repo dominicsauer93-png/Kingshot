@@ -537,7 +537,7 @@
       "aud": 5.99,
       "kind": "once",
       "note": "Permanent — more gathering and rallies",
-      "d": false
+      "d": true
     },
     {
       "t": "Intel Monthly Card",
@@ -1385,7 +1385,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Rally",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1420,9 +1420,10 @@
     },
     "sub": {
       "Rally": "Masters",
-      "Data": "Shops & Packs",
+      "Data": "Update all",
       "Gear": "Hero Gear",
-      "Base": "T11"
+      "Base": "T11",
+      "Plan": "Shops & Packs"
     },
     "t11Open": {
       "nodes": true
@@ -1440,7 +1441,8 @@
     },
     "tierAll": false,
     "progKey": "power",
-    "roleOpen": true
+    "roleOpen": true,
+    "heroAll": false
   },
   "troopCounts": {
     "inf": {
@@ -1766,11 +1768,60 @@
     "Sophia": {
       "type": "Cavalry"
     },
-    "Ava": {},
-    "Yang": {},
-    "Triton": {},
-    "Charles": {},
-    "Amadeus": {}
+    "Ava": {
+      "type": "Cavalry"
+    },
+    "Yang": {
+      "type": "Archer"
+    },
+    "Triton": {
+      "type": "Infantry"
+    },
+    "Charles": {
+      "type": "Infantry"
+    },
+    "Amadeus": {
+      "type": "Infantry"
+    },
+    "Thrud": {
+      "type": "Cavalry"
+    },
+    "Margot": {
+      "type": "Cavalry"
+    },
+    "Petra": {
+      "type": "Cavalry"
+    },
+    "Vivian": {
+      "type": "Archer"
+    },
+    "Rosa": {
+      "type": "Archer"
+    },
+    "Long Fei": {
+      "type": "Infantry"
+    },
+    "Saul": {
+      "type": "Cavalry"
+    },
+    "Alcar": {
+      "type": "Infantry"
+    },
+    "Hilde": {
+      "type": "Cavalry"
+    },
+    "Zoe": {
+      "type": "Infantry"
+    },
+    "Jaeger": {
+      "type": "Cavalry"
+    },
+    "Eric": {
+      "type": "Infantry"
+    },
+    "Marlin": {
+      "type": "Archer"
+    }
   },
   "history": [
     {
