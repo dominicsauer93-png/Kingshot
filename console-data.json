@@ -1328,7 +1328,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-09",
+    "routineDate": "2026-10-10",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1344,11 +1344,11 @@
       },
       {
         "t": "Overfeed the Truegold Crucible",
-        "d": true
+        "d": false
       },
       {
         "t": "Super Refine — daily discounted Tier 2 (TTG)",
-        "d": true
+        "d": false
       },
       {
         "t": "Claim house / suppression gold",
@@ -1360,7 +1360,7 @@
       },
       {
         "t": "Daily Missions + VIP daily chest",
-        "d": true
+        "d": false
       },
       {
         "t": "Mystic Trials (Mithril)",
@@ -1372,7 +1372,7 @@
       },
       {
         "t": "Pet Adventures sent (Pet Food, Taming Marks)",
-        "d": true
+        "d": false
       },
       {
         "t": "Terrors with Stamina (hero shards)",
@@ -2117,6 +2117,26 @@
     },
     {
       "d": "2026-10-09",
+      "v": {
+        "power": 301800000,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9175515,
+        "p:Troop": 171500084,
+        "p:Hero": 31961792,
+        "p:Hero Gear": 12947511,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 19442445,
+        "p:Pet": 22021560,
+        "p:Master": 14867000,
+        "stars": 457
+      }
+    },
+    {
+      "d": "2026-10-10",
       "v": {
         "power": 301800000,
         "leth": 73,
