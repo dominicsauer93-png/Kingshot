@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-30"
   },
   "dust": {
-    "current": 750,
+    "current": 253,
     "target": 8192,
     "gold": 701640
   },
@@ -625,27 +625,27 @@
   "resources": [
     {
       "n": "General speedup (min)",
-      "h": "23375"
+      "h": "297"
     },
     {
       "n": "Soldier Training speedup (min)",
-      "h": "9996"
+      "h": "1349"
     },
     {
       "n": "Construction speedup (min)",
-      "h": "8103"
+      "h": "3468"
     },
     {
       "n": "Research speedup (min)",
-      "h": "1672"
+      "h": "1277"
     },
     {
       "n": "Learning speedup (min)",
-      "h": "1039"
+      "h": "360"
     },
     {
       "n": "Soldier Healing speedup (min)",
-      "h": "15662"
+      "h": "17577"
     },
     {
       "n": "Bread",
@@ -792,7 +792,7 @@
     {
       "n": "Ava",
       "need": 940,
-      "have": 67,
+      "have": 100,
       "pos": 23,
       "tgt": 30,
       "rally": true
@@ -824,7 +824,7 @@
     {
       "n": "Vivian",
       "need": 0,
-      "have": 43,
+      "have": 44,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -1285,7 +1285,7 @@
     }
   ],
   "tg": {
-    "have": 182,
+    "have": 338,
     "need": 5076,
     "ttgHave": 5,
     "ttgNeed": 531
@@ -1293,9 +1293,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 43493,
-      "threads": 447,
-      "vision": 530
+      "satin": 62161,
+      "threads": 627,
+      "vision": 592
     },
     "pieces": [
       {
@@ -1465,9 +1465,9 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 103,
+      "fh": 60,
       "mg": 11,
-      "mith": 5
+      "mith": 6
     },
     "rows": [
       {
@@ -1533,7 +1533,7 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 84,
+        "lvC": 85,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1545,7 +1545,7 @@
       {
         "type": "Cavalry",
         "slot": "Chest (Health)",
-        "lvC": 100,
+        "lvC": 101,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1557,7 +1557,7 @@
       {
         "type": "Cavalry",
         "slot": "Boots (Lethality)",
-        "lvC": 104,
+        "lvC": 106,
         "lvT": 159,
         "mC": 10,
         "mT": 12,
@@ -1629,8 +1629,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 257,
-      "designs": 116
+      "guides": 492,
+      "designs": 407
     },
     "rows": [
       {
@@ -2287,10 +2287,10 @@
   "pets": {
     "have": {
       "food": 68750,
-      "manuals": 1314,
-      "potions": 67,
-      "tmCommon": 76,
-      "tmAdv": 2,
+      "manuals": 1485,
+      "potions": 117,
+      "tmCommon": 137,
+      "tmAdv": 4,
       "medals": 8
     },
     "rows": [
