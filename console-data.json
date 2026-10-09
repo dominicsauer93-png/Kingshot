@@ -1385,7 +1385,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1419,7 +1419,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Masters",
+      "Rally": "Overview",
       "Data": "Update all",
       "Gear": "Hero Gear",
       "Base": "T11",
