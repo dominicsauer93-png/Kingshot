@@ -479,74 +479,6 @@
       "d": false
     }
   ],
-  "weekly": {
-    "week": "2026-10-05",
-    "items": [
-      {
-        "t": "Bear Hunt — join every rally",
-        "d": false
-      },
-      {
-        "t": "Arena Shop — Custom Mythic Hero Gear Chest",
-        "d": false
-      },
-      {
-        "t": "Alliance Shop — everything at 70% off (never shields)",
-        "d": false
-      },
-      {
-        "t": "VIP Shop — Forgehammers + 100 Enhancement XP",
-        "d": false
-      },
-      {
-        "t": "Trial Shop — Truegold Dust first, then Mithril",
-        "d": false
-      },
-      {
-        "t": "Alliance Championship Shop — Master Emblems",
-        "d": false
-      }
-    ]
-  },
-  "packs": [
-    {
-      "t": "2nd construction queue",
-      "aud": 4.99,
-      "kind": "once",
-      "note": "Permanent — doubles building speed",
-      "d": true
-    },
-    {
-      "t": "Ultra Value Monthly Card",
-      "aud": 14.99,
-      "first": 7.99,
-      "kind": "month",
-      "note": "Daily gems + Stamina + 30 days VIP — best value",
-      "d": true,
-      "firstDone": true
-    },
-    {
-      "t": "Weekly Benefits Card",
-      "aud": 7.99,
-      "kind": "week",
-      "note": "Governor gear materials + speedups",
-      "d": false
-    },
-    {
-      "t": "Extra march queue",
-      "aud": 5.99,
-      "kind": "once",
-      "note": "Permanent — more gathering and rallies",
-      "d": true
-    },
-    {
-      "t": "Intel Monthly Card",
-      "aud": 7.99,
-      "kind": "month",
-      "note": "Steady extras if you log in daily",
-      "d": false
-    }
-  ],
   "trackFarm": [
     {
       "t": "Farm Truegold Dust toward the T11 Infantry unlock",
@@ -1761,6 +1693,176 @@
     ],
     "rallySet": true
   },
+  "farm": [
+    {
+      "k": "Town Center",
+      "v": "TC 22–29 (confirm)"
+    },
+    {
+      "k": "Storehouse level",
+      "v": "— (keep LOW while feeding)"
+    },
+    {
+      "k": "VIP",
+      "v": "— (target VIP 6 for extra march)"
+    },
+    {
+      "k": "Troop count",
+      "v": "— (minimal — only for gathering)"
+    },
+    {
+      "k": "Alliance",
+      "v": "— (sister/NAP, NOT main's alliance)"
+    },
+    {
+      "k": "Same kingdom as main?",
+      "v": "— (required)"
+    }
+  ],
+  "farmChecks": [
+    {
+      "t": "Teleport farm next to main",
+      "d": false
+    },
+    {
+      "t": "Open all unprotected resource packs in farm bag",
+      "d": false
+    },
+    {
+      "t": "Empty troops — send gathering / garrison a shielded ally",
+      "d": false
+    },
+    {
+      "t": "Switch to main → attack farm until resources are home",
+      "d": false
+    },
+    {
+      "t": "Switch back → heal any hurt farm troops",
+      "d": false
+    },
+    {
+      "t": "(Weekly) Bear Hunt rallies + Eternity's Reach tokens",
+      "d": false
+    }
+  ],
+  "buildings": [
+    {
+      "n": "Town Center",
+      "stepIdx": 0,
+      "note": "METRONOME — raise one tier to uncap the rest",
+      "d": false
+    },
+    {
+      "n": "Range",
+      "stepIdx": 5,
+      "note": "Archer line — your main combat",
+      "d": false
+    },
+    {
+      "n": "War Academy",
+      "stepIdx": 6,
+      "note": "Research speed + T11 gate",
+      "d": false
+    },
+    {
+      "n": "Embassy",
+      "stepIdx": 5,
+      "note": "Rally/garrison capacity — events",
+      "d": false
+    },
+    {
+      "n": "Command Center",
+      "stepIdx": 0,
+      "note": "March capacity — rally contribution",
+      "d": false
+    },
+    {
+      "n": "Barracks",
+      "stepIdx": 0,
+      "note": "Infantry tanks",
+      "d": false
+    },
+    {
+      "n": "Stable",
+      "stepIdx": 4,
+      "note": "Cavalry (off-focus) — defer",
+      "d": false
+    },
+    {
+      "n": "Infirmary",
+      "stepIdx": 0,
+      "note": "Healing sustain — defer, big",
+      "d": false
+    }
+  ],
+  "weekly": {
+    "week": "2026-10-05",
+    "items": [
+      {
+        "t": "Bear Hunt — join every rally",
+        "d": false
+      },
+      {
+        "t": "Arena Shop — Custom Mythic Hero Gear Chest",
+        "d": false
+      },
+      {
+        "t": "Alliance Shop — everything at 70% off (never shields)",
+        "d": false
+      },
+      {
+        "t": "VIP Shop — Forgehammers + 100 Enhancement XP",
+        "d": false
+      },
+      {
+        "t": "Trial Shop — Truegold Dust first, then Mithril",
+        "d": false
+      },
+      {
+        "t": "Alliance Championship Shop — Master Emblems",
+        "d": false
+      }
+    ]
+  },
+  "packs": [
+    {
+      "t": "2nd construction queue",
+      "aud": 4.99,
+      "kind": "once",
+      "note": "Permanent — doubles building speed",
+      "d": true
+    },
+    {
+      "t": "Ultra Value Monthly Card",
+      "aud": 14.99,
+      "first": 7.99,
+      "kind": "month",
+      "note": "Daily gems + Stamina + 30 days VIP — best value",
+      "d": true,
+      "firstDone": true
+    },
+    {
+      "t": "Weekly Benefits Card",
+      "aud": 7.99,
+      "kind": "week",
+      "note": "Governor gear materials + speedups",
+      "d": false
+    },
+    {
+      "t": "Extra march queue",
+      "aud": 5.99,
+      "kind": "once",
+      "note": "Permanent — more gathering and rallies",
+      "d": true
+    },
+    {
+      "t": "Intel Monthly Card",
+      "aud": 7.99,
+      "kind": "month",
+      "note": "Steady extras if you log in daily",
+      "d": false
+    }
+  ],
   "heroInfo": {
     "Wee & Woo": {
       "type": "Archer"
@@ -2154,108 +2256,6 @@
         "p:Master": 14867000,
         "stars": 457
       }
-    }
-  ],
-  "farm": [
-    {
-      "k": "Town Center",
-      "v": "TC 22–29 (confirm)"
-    },
-    {
-      "k": "Storehouse level",
-      "v": "— (keep LOW while feeding)"
-    },
-    {
-      "k": "VIP",
-      "v": "— (target VIP 6 for extra march)"
-    },
-    {
-      "k": "Troop count",
-      "v": "— (minimal — only for gathering)"
-    },
-    {
-      "k": "Alliance",
-      "v": "— (sister/NAP, NOT main's alliance)"
-    },
-    {
-      "k": "Same kingdom as main?",
-      "v": "— (required)"
-    }
-  ],
-  "farmChecks": [
-    {
-      "t": "Teleport farm next to main",
-      "d": false
-    },
-    {
-      "t": "Open all unprotected resource packs in farm bag",
-      "d": false
-    },
-    {
-      "t": "Empty troops — send gathering / garrison a shielded ally",
-      "d": false
-    },
-    {
-      "t": "Switch to main → attack farm until resources are home",
-      "d": false
-    },
-    {
-      "t": "Switch back → heal any hurt farm troops",
-      "d": false
-    },
-    {
-      "t": "(Weekly) Bear Hunt rallies + Eternity's Reach tokens",
-      "d": false
-    }
-  ],
-  "buildings": [
-    {
-      "n": "Town Center",
-      "stepIdx": 0,
-      "note": "METRONOME — raise one tier to uncap the rest",
-      "d": false
-    },
-    {
-      "n": "Range",
-      "stepIdx": 5,
-      "note": "Archer line — your main combat",
-      "d": false
-    },
-    {
-      "n": "War Academy",
-      "stepIdx": 6,
-      "note": "Research speed + T11 gate",
-      "d": false
-    },
-    {
-      "n": "Embassy",
-      "stepIdx": 5,
-      "note": "Rally/garrison capacity — events",
-      "d": false
-    },
-    {
-      "n": "Command Center",
-      "stepIdx": 0,
-      "note": "March capacity — rally contribution",
-      "d": false
-    },
-    {
-      "n": "Barracks",
-      "stepIdx": 0,
-      "note": "Infantry tanks",
-      "d": false
-    },
-    {
-      "n": "Stable",
-      "stepIdx": 4,
-      "note": "Cavalry (off-focus) — defer",
-      "d": false
-    },
-    {
-      "n": "Infirmary",
-      "stepIdx": 0,
-      "note": "Healing sustain — defer, big",
-      "d": false
     }
   ],
   "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
