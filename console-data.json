@@ -2328,7 +2328,7 @@
       "date": "2026-09-28",
       "every": 7,
       "time": "",
-      "note": "Sep 28–29: light spending only. Oct 5–6: overlaps KvK — spend speedups + Gov Gear then"
+      "note": "12–13 Oct (UTC) confirmed. Small stuff only — save big speedups for KvK. Rewards: Mythic Gear, gems, keys."
     },
     {
       "n": "Officer Project (Type 1)",
@@ -2372,17 +2372,17 @@
       "n": "Merchant Empire",
       "date": "2026-10-12",
       "every": 0,
-      "len": 3,
+      "len": 7,
       "time": "",
-      "note": "Starts Mon 12 Oct; runs past Wed — set the real end date when known. Rewards include Charm Designs."
+      "note": "12 Oct – 18 Oct 04:00 (UTC). Rewards: Mythic Gear, Forgehammers, Nutrient Potions, Growth Manuals."
     },
     {
       "n": "Alliance Brawl",
       "date": "2026-10-12",
       "every": 0,
-      "len": 3,
+      "len": 7,
       "time": "",
-      "note": "Starts Mon 12 Oct; runs past Wed. Rewards include Charm Designs."
+      "note": "12 Oct – 18 Oct 12:00 (UTC). Rewards: Truegold, Mythic Gear, building items."
     },
     {
       "n": "Swordland Showdown",
@@ -2407,6 +2407,15 @@
       "len": 3,
       "time": "",
       "note": "14–16 Oct (UTC). Defeat Elite Rebels for Thrud (Mythic). Rewards: Thrud shards, Forgehammers, chest."
+    },
+    {
+      "n": "Hero Rally",
+      "date": "2026-10-12",
+      "every": 0,
+      "len": 14,
+      "time": "",
+      "spend": "Nothing — just do Daily Missions",
+      "note": "12–25 Oct (UTC). Daily Missions give Path Points. Rewards: Charles shards, Truegold, gems, 3 h speedups."
     }
   ],
   "masterNotesV": 2,
