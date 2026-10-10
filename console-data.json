@@ -793,7 +793,7 @@
       "n": "Ava",
       "need": 940,
       "have": 100,
-      "pos": 23,
+      "pos": 24,
       "tgt": 30,
       "rally": true
     },
@@ -1409,7 +1409,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Rally",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1443,7 +1443,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
+      "Rally": "Heroes",
       "Data": "Update all",
       "Gear": "Hero Gear",
       "Base": "Troops",
@@ -2178,7 +2178,7 @@
         "p:Tech": 27588945,
         "p:Pet": 22229640,
         "p:Master": 14940000,
-        "stars": 457
+        "stars": 458
       }
     }
   ],
