@@ -1317,7 +1317,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1354,7 +1354,7 @@
       "Rally": "Mystic Trials",
       "Data": "Update all",
       "Gear": "Shards",
-      "Base": "T11",
+      "Base": "Troops",
       "Plan": "Shops & Packs"
     },
     "t11Open": {
