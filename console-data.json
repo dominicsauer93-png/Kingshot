@@ -2332,10 +2332,11 @@
     },
     {
       "n": "Officer Project (Type 1)",
-      "date": "2026-09-30",
-      "every": 0,
+      "date": "2026-10-14",
+      "every": 14,
       "time": "",
-      "note": "Spend Forgehammers on Hero Gear mastery (Inf Chest, Archer Helm, Cav Helm) + widgets — see Notes"
+      "note": "14–15 Oct (UTC). Spend Forgehammers on hero gear mastery + level widgets. Rewards: Mythic Gear, gems, keys.",
+      "len": 2
     },
     {
       "n": "Armament Competition (Type 2)",
@@ -2362,10 +2363,10 @@
     {
       "n": "Alliance Championship",
       "date": "2026-10-12",
-      "every": 7,
-      "len": 6,
+      "every": 0,
+      "len": 7,
       "time": "",
-      "note": "Mon–Sat each week (calendar). Shop: Master Emblems first."
+      "note": "12–18 Oct (UTC). Shop: Master Emblems first. Repeat pattern not confirmed — update with the next date."
     },
     {
       "n": "Merchant Empire",
@@ -2387,17 +2388,25 @@
       "n": "Swordland Showdown",
       "date": "2026-10-12",
       "every": 0,
-      "len": 3,
+      "len": 7,
       "time": "",
-      "note": "Starts Mon 12 Oct; runs past Wed. Swordland Shop: Artisan's Vision first."
+      "note": "12–18 Oct (UTC). Swordland Shop: Artisan's Vision first. Rewards include Mythic Gear + a chest."
     },
     {
-      "n": "Sanctuary",
+      "n": "Sanctuary Battle",
       "date": "2026-10-13",
       "every": 0,
-      "len": 2,
+      "len": 4,
       "time": "",
-      "note": "Starts Tue 13 Oct (name cut off on the calendar — rename if wrong)."
+      "note": "13–16 Oct (UTC). Alliance fight for Sanctuaries. Rewards include Thrud shards + books."
+    },
+    {
+      "n": "Champion's Way",
+      "date": "2026-10-14",
+      "every": 0,
+      "len": 3,
+      "time": "",
+      "note": "14–16 Oct (UTC). Defeat Elite Rebels for Thrud (Mythic). Rewards: Thrud shards, Forgehammers, chest."
     }
   ],
   "masterNotesV": 2,
