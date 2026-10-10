@@ -1217,9 +1217,9 @@
     }
   ],
   "tg": {
-    "have": 370,
+    "have": 380,
     "need": 5076,
-    "ttgHave": 0,
+    "ttgHave": 2,
     "ttgNeed": 531
   },
   "govGear": {
@@ -1354,7 +1354,7 @@
       "Rally": "Mystic Trials",
       "Data": "Update all",
       "Gear": "Shards",
-      "Base": "Troops",
+      "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
     "t11Open": {
@@ -1378,7 +1378,7 @@
   },
   "troopCounts": {
     "inf": {
-      "cur": 492978,
+      "cur": 500031,
       "tgt": 1500000
     },
     "arc": {
@@ -1386,7 +1386,7 @@
       "tgt": 1500000
     },
     "cav": {
-      "cur": 383953,
+      "cur": 391318,
       "tgt": 500000
     }
   },
