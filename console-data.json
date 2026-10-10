@@ -2313,7 +2313,8 @@
       "date": "2026-10-05",
       "every": 14,
       "time": "",
-      "note": "Gov Gear Inf 1 Gold 0★→1★ (225k pts), speedups (also Armament T1), pet advances, pet combat skills on — see Notes"
+      "note": "Gov Gear Inf 1 Gold 0★→1★ (225k pts), speedups (also Armament T1), pet advances, pet combat skills on — see Notes",
+      "len": 8
     },
     {
       "n": "Bear Hunt",
@@ -2346,9 +2347,57 @@
     {
       "n": "Hall of Heroes",
       "date": "2026-09-27",
-      "every": 7,
+      "every": 0,
       "time": "",
-      "note": "3 days (Sun–Tue): spend Marks of Valor on widget chests / shards for rally heroes (Amadeus, Yang, Ava) first"
+      "note": "Not weekly — wasn't on the 11 Oct calendar. Set the next date when it shows in-game. 3 days: Marks of Valor → widgets / shards for Ava, Wee & Woo, Yang."
+    },
+    {
+      "n": "Finder's Fortune",
+      "date": "2026-10-11",
+      "every": 0,
+      "len": 3,
+      "time": "",
+      "note": "Sun 11 – Tue 13 Oct (in-game calendar, UTC)"
+    },
+    {
+      "n": "Alliance Championship",
+      "date": "2026-10-12",
+      "every": 7,
+      "len": 6,
+      "time": "",
+      "note": "Mon–Sat each week (calendar). Shop: Master Emblems first."
+    },
+    {
+      "n": "Merchant Empire",
+      "date": "2026-10-12",
+      "every": 0,
+      "len": 3,
+      "time": "",
+      "note": "Starts Mon 12 Oct; runs past Wed — set the real end date when known. Rewards include Charm Designs."
+    },
+    {
+      "n": "Alliance Brawl",
+      "date": "2026-10-12",
+      "every": 0,
+      "len": 3,
+      "time": "",
+      "note": "Starts Mon 12 Oct; runs past Wed. Rewards include Charm Designs."
+    },
+    {
+      "n": "Swordland Showdown",
+      "date": "2026-10-12",
+      "every": 0,
+      "len": 3,
+      "time": "",
+      "note": "Starts Mon 12 Oct; runs past Wed. Swordland Shop: Artisan's Vision first."
+    },
+    {
+      "n": "Sanctuary",
+      "date": "2026-10-13",
+      "every": 0,
+      "len": 2,
+      "time": "",
+      "note": "Starts Tue 13 Oct (name cut off on the calendar — rename if wrong)."
     }
   ],
   "masterNotesV": 2,
