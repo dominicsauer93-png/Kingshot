@@ -995,7 +995,7 @@
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
-      "v": "111",
+      "v": "104",
       "log": [
         {
           "d": "2026-09-15",
@@ -1020,12 +1020,16 @@
         {
           "d": "2026-09-29",
           "v": 111
+        },
+        {
+          "d": "2026-10-10",
+          "v": 104
         }
       ]
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "106",
+      "v": "109",
       "log": [
         {
           "d": "2026-09-15",
@@ -1050,12 +1054,16 @@
         {
           "d": "2026-10-05",
           "v": 106
+        },
+        {
+          "d": "2026-10-10",
+          "v": 109
         }
       ]
     },
     {
       "k": "Forest of Life (Pets)",
-      "v": "54",
+      "v": "64",
       "log": [
         {
           "d": "2026-09-15",
@@ -1080,12 +1088,16 @@
         {
           "d": "2026-10-05",
           "v": 54
+        },
+        {
+          "d": "2026-10-10",
+          "v": 64
         }
       ]
     },
     {
       "k": "Crystal Cave (Charms)",
-      "v": "74",
+      "v": "78",
       "log": [
         {
           "d": "2026-09-15",
@@ -1114,12 +1126,16 @@
         {
           "d": "2026-10-05",
           "v": 74
+        },
+        {
+          "d": "2026-10-10",
+          "v": 78
         }
       ]
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "159",
+      "v": "122",
       "log": [
         {
           "d": "2026-09-15",
@@ -1148,12 +1164,16 @@
         {
           "d": "2026-10-05",
           "v": 159
+        },
+        {
+          "d": "2026-10-10",
+          "v": 122
         }
       ]
     },
     {
       "k": "Molten Fort (Gov Gear)",
-      "v": "176",
+      "v": "175",
       "log": [
         {
           "d": "2026-09-15",
@@ -1182,6 +1202,10 @@
         {
           "d": "2026-10-05",
           "v": 176
+        },
+        {
+          "d": "2026-10-10",
+          "v": 175
         }
       ]
     },
@@ -1317,7 +1341,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1354,7 +1378,7 @@
       "Rally": "Mystic Trials",
       "Data": "Update all",
       "Gear": "Shards",
-      "Base": "Buildings",
+      "Base": "Troops",
       "Plan": "Shops & Packs"
     },
     "t11Open": {
@@ -1374,7 +1398,8 @@
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": false
+    "heroAll": false,
+    "petMaxOpen": true
   },
   "troopCounts": {
     "inf": {
@@ -2382,7 +2407,7 @@
       },
       {
         "n": "Ironclad War Elephant",
-        "lvl": 50,
+        "lvl": 56,
         "tgt": 0,
         "max": 100
       },
