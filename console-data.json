@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-30"
   },
   "dust": {
-    "current": 253,
+    "current": 260,
     "target": 8192,
     "gold": 928800
   },
@@ -688,7 +688,7 @@
     {
       "n": "Charles",
       "need": 463,
-      "have": 10,
+      "have": 11,
       "pos": 13,
       "tgt": 30,
       "rally": false
@@ -768,7 +768,7 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 75,
+      "have": 84,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -800,7 +800,7 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 63,
+      "have": 69,
       "pos": 26,
       "tgt": 30,
       "rally": false
@@ -824,7 +824,7 @@
     {
       "n": "Vivian",
       "need": 0,
-      "have": 44,
+      "have": 49,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -1309,7 +1309,7 @@
     }
   ],
   "tg": {
-    "have": 380,
+    "have": 482,
     "need": 4932,
     "ttgHave": 2,
     "ttgNeed": 522
@@ -1317,7 +1317,7 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 75031,
+      "satin": 75111,
       "threads": 766,
       "vision": 596
     },
@@ -1409,7 +1409,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1443,10 +1443,10 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Heroes",
+      "Rally": "Overview",
       "Data": "Update all",
       "Gear": "Hero Gear",
-      "Base": "Troops",
+      "Base": "T11",
       "Plan": "Shops & Packs"
     },
     "t11Open": {
@@ -1459,16 +1459,18 @@
       "Power": true,
       "Buildings": false,
       "Troops": false,
-      "Shards": false,
+      "Shards": true,
       "Masters": true,
       "Gov": false,
-      "Res": true
+      "Res": true,
+      "T11": false
     },
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
     "heroAll": false,
-    "petMaxOpen": true
+    "petMaxOpen": true,
+    "shSpare": true
   },
   "troopCounts": {
     "inf": {
@@ -1491,7 +1493,7 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 61,
+      "fh": 62,
       "mg": 2,
       "mith": 6
     },
@@ -1655,8 +1657,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 495,
-      "designs": 707
+      "guides": 925,
+      "designs": 823
     },
     "rows": [
       {
@@ -2353,10 +2355,10 @@
   "pets": {
     "have": {
       "food": 68750,
-      "manuals": 1513117,
-      "potions": 121,
-      "tmCommon": 142,
-      "tmAdv": 4,
+      "manuals": 1541,
+      "potions": 125,
+      "tmCommon": 151,
+      "tmAdv": 3,
       "medals": 34
     },
     "rows": [
