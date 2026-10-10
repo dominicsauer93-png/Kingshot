@@ -724,8 +724,8 @@
     {
       "n": "Ava",
       "need": 940,
-      "have": 100,
-      "pos": 23,
+      "have": 0,
+      "pos": 24,
       "tgt": 30,
       "rally": true
     },
