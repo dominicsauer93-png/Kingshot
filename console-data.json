@@ -1218,9 +1218,9 @@
   ],
   "tg": {
     "have": 380,
-    "need": 5076,
+    "need": 4932,
     "ttgHave": 2,
-    "ttgNeed": 531
+    "ttgNeed": 522
   },
   "govGear": {
     "targetIdx": 18,
@@ -1790,7 +1790,7 @@
     },
     {
       "n": "Infirmary",
-      "stepIdx": 0,
+      "stepIdx": 3,
       "note": "Healing sustain — defer, big",
       "d": false
     }
