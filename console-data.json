@@ -11,7 +11,7 @@
   "dust": {
     "current": 253,
     "target": 8192,
-    "gold": 701640
+    "gold": 928800
   },
   "nodes": [
     {
@@ -1317,7 +1317,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1351,7 +1351,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Heroes",
+      "Rally": "Mystic Trials",
       "Data": "Update all",
       "Gear": "Shards",
       "Base": "T11",
@@ -2307,8 +2307,8 @@
   "pets": {
     "have": {
       "food": 68750,
-      "manuals": 1513,
-      "potions": 117,
+      "manuals": 1513117,
+      "potions": 121,
       "tmCommon": 142,
       "tmAdv": 4,
       "medals": 34
