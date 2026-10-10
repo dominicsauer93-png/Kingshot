@@ -492,25 +492,25 @@
   "pillars": [
     {
       "name": "Building",
-      "v": 9175515,
+      "v": 9229595,
       "b": 8097059,
       "g": "S"
     },
     {
       "name": "Troop",
-      "v": 171500084,
+      "v": 179073395,
       "b": 188581313,
       "g": "S"
     },
     {
       "name": "Hero",
-      "v": 31961792,
+      "v": 32354610,
       "b": 23484260,
       "g": "SS"
     },
     {
       "name": "Hero Gear",
-      "v": 12947511,
+      "v": 12955861,
       "b": 14161916,
       "g": "S"
     },
@@ -528,19 +528,19 @@
     },
     {
       "name": "Tech",
-      "v": 19442445,
+      "v": 27588945,
       "b": 14483939,
       "g": "SS"
     },
     {
       "name": "Pet",
-      "v": 22021560,
+      "v": 22229640,
       "b": 22741171,
       "g": "S"
     },
     {
       "name": "Master",
-      "v": 14867000,
+      "v": 14940000,
       "b": 32440800,
       "g": "C"
     }
@@ -891,7 +891,7 @@
           "t": "g"
         },
         {
-          "l": 4,
+          "l": 5,
           "t": "g"
         },
         {
@@ -910,7 +910,7 @@
       "note": "Best for Cavalry · Lethality research\nNEXT: level 30 → 40 (needs Emblems)\nSkills: all Growth — low priority",
       "skills": [
         {
-          "l": 1,
+          "l": 3,
           "t": "g"
         },
         {
@@ -1249,9 +1249,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 74631,
-      "threads": 751,
-      "vision": 595
+      "satin": 75031,
+      "threads": 766,
+      "vision": 596
     },
     "pieces": [
       {
@@ -1341,7 +1341,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1377,7 +1377,7 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Shards",
+      "Gear": "Hero Gear",
       "Base": "Troops",
       "Plan": "Shops & Packs"
     },
@@ -1388,12 +1388,13 @@
     "qOpen": {
       "Bag": true,
       "HG": false,
-      "Power": false,
+      "Power": true,
       "Buildings": false,
       "Troops": false,
       "Shards": false,
-      "Masters": false,
-      "Gov": false
+      "Masters": true,
+      "Gov": false,
+      "Res": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -2425,7 +2426,7 @@
       }
     ]
   },
-  "shardGeneral": 30,
+  "shardGeneral": 15,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Armament Competition (Type 2)|2026-10-09",
