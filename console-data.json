@@ -523,7 +523,8 @@
       "kind": "month",
       "note": "Daily gems + Stamina + 30 days VIP — best value",
       "d": true,
-      "firstDone": true
+      "firstDone": true,
+      "bought": "2026-10-13"
     },
     {
       "t": "Weekly Benefits Card",
@@ -1318,9 +1319,9 @@
   ],
   "tg": {
     "have": 593,
-    "need": 4932,
+    "need": 4884,
     "ttgHave": 5,
-    "ttgNeed": 522
+    "ttgNeed": 519
   },
   "govGear": {
     "targetIdx": 18,
@@ -1417,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Plan",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -2287,7 +2288,7 @@
     },
     {
       "n": "Command Center",
-      "stepIdx": 0,
+      "stepIdx": 2,
       "note": "March capacity — rally contribution",
       "d": false
     },
@@ -2305,7 +2306,7 @@
     },
     {
       "n": "Infirmary",
-      "stepIdx": 3,
+      "stepIdx": 2,
       "note": "Healing sustain — defer, big",
       "d": false
     }
