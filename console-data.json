@@ -1063,7 +1063,7 @@
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
-      "v": "104",
+      "v": "101",
       "log": [
         {
           "d": "2026-09-15",
@@ -1092,6 +1092,10 @@
         {
           "d": "2026-10-10",
           "v": 104
+        },
+        {
+          "d": "2026-10-11",
+          "v": 101
         }
       ]
     },
@@ -1279,7 +1283,7 @@
     },
     {
       "k": "Radiant Spire (ALL stats — full power)",
-      "v": "111",
+      "v": "92",
       "log": [
         {
           "d": "2026-09-15",
@@ -1304,6 +1308,10 @@
         {
           "d": "2026-10-05",
           "v": 111
+        },
+        {
+          "d": "2026-10-11",
+          "v": 92
         }
       ]
     }
@@ -1409,7 +1417,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Rally",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1443,7 +1451,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Overview",
+      "Rally": "Mystic Trials",
       "Data": "Update all",
       "Gear": "Pets",
       "Base": "T11",
