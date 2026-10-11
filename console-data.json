@@ -1409,7 +1409,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Plan",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -2187,16 +2187,16 @@
         "hp": 58.8,
         "attWR": 38.08,
         "defWR": 91.68,
-        "p:Building": 9175515,
-        "p:Troop": 171500084,
-        "p:Hero": 31961792,
-        "p:Hero Gear": 12947511,
+        "p:Building": 9229595,
+        "p:Troop": 179073395,
+        "p:Hero": 32354610,
+        "p:Hero Gear": 12955861,
         "p:Governor Gear": 8788320,
         "p:Governor Charm": 11980000,
-        "p:Tech": 19442445,
-        "p:Pet": 22021560,
-        "p:Master": 14867000,
-        "stars": 457
+        "p:Tech": 27588945,
+        "p:Pet": 22229640,
+        "p:Master": 14940000,
+        "stars": 458
       }
     }
   ],
@@ -2514,7 +2514,7 @@
   "shardGeneral": 15,
   "shardRallySet": true,
   "eventTicks": {
-    "key": "Hall of Heroes|2026-10-11",
+    "key": "KvK|2026-10-05",
     "done": []
   }
 }
