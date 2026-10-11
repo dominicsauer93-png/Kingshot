@@ -1409,7 +1409,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1443,7 +1443,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Overview",
+      "Rally": "Heroes",
       "Data": "Update all",
       "Gear": "Hero Gear",
       "Base": "T11",
@@ -1456,21 +1456,17 @@
     "qOpen": {
       "Bag": true,
       "HG": false,
-      "Power": true,
+      "Power": false,
       "Buildings": false,
       "Troops": false,
-      "Shards": true,
-      "Masters": true,
-      "Gov": false,
-      "Res": true,
-      "T11": false
+      "Shards": false,
+      "Masters": false,
+      "Gov": false
     },
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": false,
-    "petMaxOpen": true,
-    "shSpare": true
+    "heroAll": false
   },
   "troopCounts": {
     "inf": {
@@ -2191,16 +2187,16 @@
         "hp": 58.8,
         "attWR": 38.08,
         "defWR": 91.68,
-        "p:Building": 9229595,
-        "p:Troop": 179073395,
-        "p:Hero": 32354610,
-        "p:Hero Gear": 12955861,
+        "p:Building": 9175515,
+        "p:Troop": 171500084,
+        "p:Hero": 31961792,
+        "p:Hero Gear": 12947511,
         "p:Governor Gear": 8788320,
         "p:Governor Charm": 11980000,
-        "p:Tech": 27588945,
-        "p:Pet": 22229640,
-        "p:Master": 14940000,
-        "stars": 458
+        "p:Tech": 19442445,
+        "p:Pet": 22021560,
+        "p:Master": 14867000,
+        "stars": 457
       }
     }
   ],
@@ -2518,7 +2514,7 @@
   "shardGeneral": 15,
   "shardRallySet": true,
   "eventTicks": {
-    "key": "KvK|2026-10-05",
+    "key": "Hall of Heroes|2026-10-11",
     "done": []
   }
 }
