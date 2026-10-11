@@ -11,7 +11,7 @@
   "dust": {
     "current": 260,
     "target": 8192,
-    "gold": 928800
+    "gold": 1030000
   },
   "nodes": [
     {
@@ -625,47 +625,47 @@
   "resources": [
     {
       "n": "General speedup (min)",
-      "h": "297"
+      "h": "6003"
     },
     {
       "n": "Soldier Training speedup (min)",
-      "h": "1349"
+      "h": "1490"
     },
     {
       "n": "Construction speedup (min)",
-      "h": "3468"
+      "h": "6148"
     },
     {
       "n": "Research speedup (min)",
-      "h": "1277"
+      "h": "4285"
     },
     {
       "n": "Learning speedup (min)",
-      "h": "360"
+      "h": "720"
     },
     {
       "n": "Soldier Healing speedup (min)",
-      "h": "17577"
+      "h": "18675"
     },
     {
       "n": "Bread",
-      "h": "2060000000"
+      "h": "1660000000"
     },
     {
       "n": "Wood",
-      "h": "2690000000"
+      "h": "1340000000"
     },
     {
       "n": "Stone",
-      "h": "290300000"
+      "h": "52070000"
     },
     {
       "n": "Iron",
-      "h": "220000000"
+      "h": "157290000"
     },
     {
       "n": "Gold",
-      "h": "445400"
+      "h": "1030000"
     }
   ],
   "goldShards": [
@@ -1309,9 +1309,9 @@
     }
   ],
   "tg": {
-    "have": 482,
+    "have": 593,
     "need": 4932,
-    "ttgHave": 2,
+    "ttgHave": 5,
     "ttgNeed": 522
   },
   "govGear": {
@@ -2417,7 +2417,7 @@
   "masterNotesV": 2,
   "pets": {
     "have": {
-      "food": 68750,
+      "food": 12950,
       "manuals": 1541,
       "potions": 125,
       "tmCommon": 151,
