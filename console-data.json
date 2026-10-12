@@ -1454,7 +1454,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Pets",
+      "Gear": "Widgets",
       "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
@@ -1802,7 +1802,8 @@
       {
         "hero": "Charles",
         "lvl": 0,
-        "have": 15
+        "have": 15,
+        "rally": true
       },
       {
         "hero": "Triton",
@@ -2401,7 +2402,8 @@
       "every": 0,
       "len": 3,
       "time": "",
-      "note": "Sun 11 – Tue 13 Oct (in-game calendar, UTC)"
+      "note": "Sun 11 – Tue 13 Oct (in-game calendar, UTC)",
+      "imp": "high"
     },
     {
       "n": "Alliance Championship",
@@ -2435,7 +2437,8 @@
       "every": 0,
       "len": 7,
       "time": "",
-      "note": "12–18 Oct (UTC). Swordland Shop: Artisan's Vision first. Rewards include Mythic Gear + a chest."
+      "note": "12–18 Oct (UTC). Swordland Shop: Artisan's Vision first. Rewards include Mythic Gear + a chest.",
+      "imp": "high"
     },
     {
       "n": "Sanctuary Battle",
@@ -2563,7 +2566,7 @@
   "shardGeneral": 58,
   "shardRallySet": true,
   "eventTicks": {
-    "key": "Armament Competition (Type 1)|2026-10-12",
+    "key": "Alliance Brawl|2026-10-12",
     "done": []
   }
 }
