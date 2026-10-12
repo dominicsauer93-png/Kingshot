@@ -1281,7 +1281,7 @@ const DAY_MS=86400000;
 // next occurrence of an event from today (local dates). every=0 → one-off.
 function nextOcc(ev){
   if(!ev||!ev.date) return null;
-  const a=new Date(ev.date+"T00:00:00"), t=new Date(fcToday()+"T00:00:00");
+  const a=new Date(ev.date+"T00:00:00"), t=new Date(gameToday()+"T00:00:00");
   if(isNaN(a)) return null;
   let diff=Math.round((a-t)/DAY_MS);
   const every=Math.max(0,Math.floor(num(ev.every)));
@@ -1291,7 +1291,7 @@ function nextOcc(ev){
 }
 function occursOn(ev,dayOffset){
   if(!ev||!ev.date) return false;
-  const a=new Date(ev.date+"T00:00:00"), t=new Date(fcToday()+"T00:00:00");
+  const a=new Date(ev.date+"T00:00:00"), t=new Date(gameToday()+"T00:00:00");
   if(isNaN(a)) return false;
   const diff=Math.round((a-t)/DAY_MS)-dayOffset;
   const every=Math.max(0,Math.floor(num(ev.every)));
@@ -1303,6 +1303,7 @@ function repeatTxt(ev){ const n=Math.floor(num(ev.every)); return !n?"one-off":n
 /* ---------- forecast ---------- */
 function ymd(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function fcToday(){ return ymd(new Date()); }
+function gameToday(){ return new Date().toISOString().slice(0,10); } // event days follow the game clock (UTC), same as Kingdom day
 function forecastCalc(){
   const log=(state.forecast&&state.forecast.log)||[];
   if(log.length<2) return null;
@@ -1824,10 +1825,10 @@ function eventHave(e){ const n=e.n||"", R=state.resources||[], rv=k=>{ const r=R
   return out; }
 function renderEventMode(){
   const box=$("#eventMode"), live=(state.events||[]).map(e=>({e,a:activeOcc(e)})).filter(x=>x.a);
-  const rank=e=>{ const i=[/kvk|kingdom of power/i,/hall of heroes/i,/officer project/i,/strongest governor/i,/armament/i,/bear/i].findIndex(r=>r.test(e.n||"")); return i<0?3.5:i; }; // most important event first
+  const rank=e=>{ const i=[/kvk|kingdom of power/i,/hall of heroes/i,/officer project/i,/strongest governor/i,/armament/i,/bear/i].findIndex(r=>r.test(e.n||"")); return i<0?4.5:i; }; // most important event first; events without advice go below Armament, above Bear
   live.sort((a,b)=>rank(a.e)-rank(b.e));
   const cur=live[0]; box.hidden=!cur; if(!cur) return;
-  const e=cur.e, steps=(EVENT_STEPS.find(([r])=>r.test(e.n||""))||[0,[]])[1], start=new Date(fcToday()+"T00:00:00"); start.setDate(start.getDate()-(cur.a.day-1));
+  const e=cur.e, steps=(EVENT_STEPS.find(([r])=>r.test(e.n||""))||[0,[]])[1], start=new Date(gameToday()+"T00:00:00"); start.setDate(start.getDate()-(cur.a.day-1));
   const key=(e.n||"")+"|"+ymd(start); if(!state.eventTicks||state.eventTicks.key!==key) state.eventTicks={key,done:[]};
   const items=steps.map((t,i)=>({t,d:state.eventTicks.done.includes(i)})), left=cur.a.len-cur.a.day, have=eventHave(e);
   const nd=items.filter(x=>x.d).length;
@@ -1884,7 +1885,7 @@ function renderEvents(){
       <span class="evwhen ${o.days===0?"now":""}">${whenTxt(o)}</span></button>`; }).join("")
     : `<div class="empty">No upcoming events.</div>`;
   bindAll(up,".evrow",b=>openEventSheet(state.events[+b.dataset.i]));
-  const t0=new Date(fcToday()+"T00:00:00"); let html="";
+  const t0=new Date(gameToday()+"T00:00:00"); let html="";
   for(let i=0;i<14;i++){ const dd=new Date(t0.getTime()+i*DAY_MS), evs=(state.events||[]).filter(e=>occursOn(e,i)), names=evs.map(e=>e.n||"Event").join(", ");
     html+=`<div class="cday ${i===0?"today":""}" title="${esc(dd.toDateString()+(names?" — "+names:""))}"><div class="dh"><span>${dd.toLocaleDateString(undefined,{weekday:"short"})}</span><b>${dd.getDate()}</b></div><span class="dots">${evs.map(e=>`<i class="${/kvk/i.test(e.n||"")?"k":""}"></i>`).join("")}</span>${names?`<span class="sr-only">${esc(names)}</span>`:""}</div>`; }
   $("#evCal").innerHTML=html;
