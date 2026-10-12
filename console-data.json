@@ -1319,9 +1319,9 @@
   ],
   "tg": {
     "have": 15,
-    "need": 4506,
+    "need": 4398,
     "ttgHave": 9,
-    "ttgNeed": 488
+    "ttgNeed": 482
   },
   "govGear": {
     "targetIdx": 18,
@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Plan",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1454,7 +1454,7 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Charms",
+      "Gear": "Widgets",
       "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
@@ -2371,7 +2371,7 @@
     },
     {
       "n": "Barracks",
-      "stepIdx": 0,
+      "stepIdx": 1,
       "note": "Infantry tanks",
       "d": false
     },
