@@ -191,6 +191,22 @@
   .stack{display:flex;flex-direction:column;gap:8px}
   .rowb{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
   .mt{margin-top:12px} .mt2{margin-top:20px}
+  @media (max-width: 899px){ .btn.sm{min-height:40px;padding:7px 12px} .shr-edit{width:40px;height:40px} .chip{min-height:38px} }
+  .fab{position:fixed;right:20px;bottom:24px;z-index:60;width:56px;height:56px;border-radius:50%;border:0;background:var(--acc);color:var(--onacc);box-shadow:var(--shadow-lg);display:grid;place-items:center;font:300 32px/1 var(--f-body);cursor:pointer}
+  .fab:hover{filter:brightness(1.08)} @media (max-width: 899px){ .fab{right:16px;bottom:calc(var(--bnav) + 16px + env(safe-area-inset-bottom))} }
+  .hglist{border:1.5px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--shadow);overflow:hidden}
+  .hgrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;align-items:center;width:100%;text-align:left;padding:10px 14px;border:0;border-bottom:1px solid var(--line-soft);border-left:4px solid transparent;background:transparent;color:var(--text)}
+  .hgrow:last-child{border-bottom:0} .hgrow:hover{background:var(--hover)}
+  .hgrow.s-ready{border-left-color:var(--green)} .hgrow.s-block{border-left-color:var(--red)} .hgrow.s-warn{border-left-color:var(--amber)} .hgrow.s-done{opacity:.7}
+  .hgrow .hn{font:700 14.5px var(--f-body)} .hgrow .hn small{font-weight:500;color:var(--faint)} .hgrow .hl{font:500 12.5px var(--f-mono);color:var(--muted)}
+  .hgrow .hb{font:700 16px var(--f-mono);text-align:right;white-space:nowrap} .hgrow .hb small{font:500 11.5px var(--f-body);color:var(--faint);margin-left:3px}
+  @media (max-width: 640px){ .hgrow .hb small .to{display:none} .hgrow .hl{font-size:12px;white-space:nowrap} .hgrow{padding:9px 12px} }
+  .hgrow .hs{grid-column:1/-1;font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:center;flex-wrap:wrap} .hgrow .bar{grid-column:1/-1;margin:2px 0 0}
+  .dohead{font:700 11.5px var(--f-body);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:4px 2px 6px} .dohead + .do{margin-top:0}
+  .cday{cursor:pointer;font:inherit;color:inherit;width:100%} .cday:hover{border-color:var(--gold-2)} .cday.sel{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+  .cday .dots i.b{background:var(--faint)} .cday .dots i.t{background:var(--acc)}
+  .evday{margin-top:10px;padding:10px 12px;border-radius:11px;background:var(--sunk);border:1px solid var(--line-soft);font-size:13.5px}
+  .evday b{display:block;margin-bottom:4px} .evday div{padding:3px 0;color:var(--muted)} .evday div span{color:var(--text);font-weight:600}
   ul.tight,ol.tight{margin:0;padding-left:20px;font-size:13.5px;line-height:1.55;color:var(--muted)} ul.tight li+li,ol.tight li+li{margin-top:3px}
   .card code{font:600 12.5px var(--f-mono);background:var(--sunk);padding:1px 5px;border-radius:5px;word-break:break-all}
   .evmode{margin:0 0 12px;padding:12px 14px;border-radius:var(--r);border:1.5px solid var(--green);background:var(--green-soft)}
@@ -269,7 +285,7 @@
   button.tile:hover{border-color:var(--gold-2);transform:translateY(-1px)}
   .tile .l{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px;min-width:0}
   .tile .l > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .tile .v{font:700 clamp(20px,2.4vw,26px)/1.15 var(--f-mono);color:var(--gold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tile .v{font:700 clamp(20px,2.4vw,26px)/1.15 var(--f-mono);color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .tile .v.txt{font:700 clamp(17px,2vw,20px)/1.2 var(--f-body)}
   .tile .s:has(.clamp){white-space:normal}
   .tile .clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
@@ -289,7 +305,7 @@
   .vc-top{display:flex;align-items:center;gap:8px;min-width:0}
   .vc-name{flex:1;min-width:0;font:700 14.5px var(--f-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .vc-meta{font:500 12px var(--f-mono);color:var(--faint);white-space:nowrap}
-  .vc-big{font:700 24px/1.1 var(--f-mono);color:var(--gold)}
+  .vc-big{font:700 24px/1.1 var(--f-mono);color:var(--text)}
   .vc-big small{font:500 12.5px var(--f-body);color:var(--faint);margin-left:4px}
   .vc-line{font-size:12.5px;color:var(--muted);line-height:1.4}
   .vc-line b{color:var(--text)}
@@ -568,7 +584,7 @@
           </section>
           <section class="sec" data-key="Upcoming Events">
             <h2>Coming up <button class="btn sm" id="evAdd">+ Event</button></h2>
-            <div class="card"><div class="cal" id="evCal"></div><div class="stack mt" id="evUpcoming"></div>
+            <div class="card"><div class="cal" id="evCal"></div><div class="evday" id="evDay" hidden></div><div class="stack mt" id="evUpcoming"></div>
               <button class="btn sm ghost mt" id="evAll">All events</button></div>
           </section>
         </div>
@@ -764,17 +780,13 @@
 
     <!-- ================= DATA ================= -->
     <div class="page" data-tab="Data" hidden>
-      <div class="phead"><div><h1>Data</h1><p>Update everything, notes, account and sync.</p></div></div>
+      <div class="phead"><div><h1>Data</h1><p>Update everything, account and sync.</p></div></div>
       <div class="subnav" role="tablist" aria-label="Data sections"></div>
       <section class="sec" data-sub="Update all" data-key="Update all">
         <h2>Update everything <small>one page · saves as you type</small></h2>
         <p class="lead">Fill in what changed in-game. Every section of the console updates from here. Targets are set in each section.</p>
         <div class="qjump" id="qJump" role="toolbar" aria-label="Jump to a group"></div>
         <div id="qBody"></div>
-      </section>
-      <section class="sec" data-sub="Notes" data-key="Notes">
-        <label class="sr-only" for="notes">Notes</label>
-        <textarea class="notes" id="notes" placeholder="Plans, KvK dates, decisions…"></textarea>
       </section>
       <section class="sec" data-sub="Account" data-key="Account">
         <h2>Account <small>tap to edit</small></h2>
@@ -814,6 +826,7 @@
   </main>
 </div>
 
+<button class="fab" id="quickBtn" aria-label="Quick update" title="Quick update">+</button>
 <div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-label="Search">
   <div class="srch-box"><input id="srchIn" type="search" placeholder="Search — e.g. mithril, shards, packs, Ava" autocomplete="off" aria-controls="srchList"><ul id="srchList" role="listbox"></ul></div>
 </div>
@@ -1201,6 +1214,12 @@ function fmtInputs(){
     if(/^\d{4,}$/.test(v)) el.value=Number(v).toLocaleString("en-US");
   });
 }
+// stop numbers being dragged from one box into another (the browser's text drag-and-drop)
+function initNoDrag(){
+  const isField=t=>t&&t.matches&&t.matches("input,textarea,select");
+  document.addEventListener("dragstart",e=>{ if(isField(e.target)) e.preventDefault(); });
+  ["dragover","drop"].forEach(ev=>document.addEventListener(ev,e=>{ if(isField(e.target)){ e.preventDefault(); if(e.dataTransfer) e.dataTransfer.dropEffect="none"; } }));
+}
 function initCommaFormatting(){
   document.addEventListener("focusin",e=>{ const t=e.target; if(t&&t.tagName==="INPUT"&&/^[\d,]+$/.test(t.value)) t.value=t.value.replace(/,/g,""); });
   document.addEventListener("focusout",e=>{ const t=e.target; if(t&&t.tagName==="INPUT"&&t.type!=="date"&&t.type!=="password"){ const v=(t.value||"").replace(/,/g,""); if(/^\d{4,}$/.test(v)) t.value=Number(v).toLocaleString("en-US"); } });
@@ -1308,6 +1327,8 @@ function repeatTxt(ev){ const n=Math.floor(num(ev.every)); return !n?"one-off":n
 /* ---------- forecast ---------- */
 function ymd(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
 function fcToday(){ return ymd(new Date()); }
+function fd(d){ if(!d) return ""; const x=new Date(String(d).slice(0,10)+"T00:00:00"); if(isNaN(x)) return String(d); // "23 Sep" (adds the year if it's not this year)
+  return x.toLocaleDateString(undefined,{day:"numeric",month:"short",...(x.getFullYear()!==new Date().getFullYear()?{year:"numeric"}:{})}); }
 function gameToday(){ return new Date().toISOString().slice(0,10); } // event days follow the game clock (UTC), same as Kingdom day
 function forecastCalc(){
   const log=(state.forecast&&state.forecast.log)||[];
@@ -1734,7 +1755,7 @@ function initTheme(){
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
 const TABS=["Home","Rally","Gear","Base","Plan","Data"];
-const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Widgets","Hero Gear","Governor","Charms","Shards","Pets"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs","Reminders"],Data:["Update all","Notes","Account","Sync"]};
+const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Widgets","Hero Gear","Governor","Charms","Shards","Pets"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs","Reminders"],Data:["Update all","Account","Sync"]};
 const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Rally",Supply:"Rally",Events:"Home",Vault:"Data"};
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
@@ -1860,15 +1881,17 @@ function renderHome(){
   const nx=upc.find(x=>x.o.days>0&&(!soon||x.e!==soon.e));
   const tgt=computeTarget(), cur=num(state.dust.current), ph=activePhase().n;
   const ready=lastGoals.filter(g=>g.tag==="Ready");
+  const fh=shardOrder().find(r=>hasStars(r)&&num(r.pos)<SHARD_MAX), fcost=fh?SHARD_LEAF[num(fh.pos)]:0;
+  const focusTile=fh?tileH({id:"tNow",label:"Next star step",value:esc(fh.n),txt:true,sub:`${fmt(num(fh.have))} / ${fmt(fcost)} shards → ${esc(starLabel(num(fh.pos)+1))}`,p:pc(num(fh.have),fcost),cls:num(fh.have)>=fcost?"ok":""}):null;
   $("#homeTiles").innerHTML=
-    (now?tileH({id:"tNow",label:`On now${now.a.len>1?` · day ${now.a.day} of ${now.a.len}`:""}${live.length>1?` · +${live.length-1} more`:""}`,value:esc(now.e.n||"Event"),txt:true,color:"var(--green)",sub:`<span class="clamp">Spend: ${esc(spendFor(now.e)||"tap to add")}</span>`})
-      :tileH({id:"tNow",label:soon?`Up next · ${whenTxt(soon.o)}`:"On now",value:soon?esc(soon.e.n||"Event"):"Nothing on",txt:true,sub:soon?`<span class="clamp">Spend: ${esc(spendFor(soon.e)||"tap to add")}</span>`:"add events to plan spending"}))+
+    ((now&&focusTile)?focusTile:(now?tileH({id:"tNow",label:`On now${now.a.len>1?` · day ${now.a.day} of ${now.a.len}`:""}${live.length>1?` · +${live.length-1} more`:""}`,value:esc(now.e.n||"Event"),txt:true,color:"var(--green)",sub:`<span class="clamp">Spend: ${esc(spendFor(now.e)||"tap to add")}</span>`})
+      :tileH({id:"tNow",label:soon?`Up next · ${whenTxt(soon.o)}`:"On now",value:soon?esc(soon.e.n||"Event"):"Nothing on",txt:true,sub:soon?`<span class="clamp">Spend: ${esc(spendFor(soon.e)||"tap to add")}</span>`:"add events to plan spending"})))+
     tileH({id:"tEvent",label:"Next event",value:nx?esc(nx.e.n||"Event"):"—",txt:true,sub:nx?`${whenTxt(nx.o)} · ${new Date(nx.o.date+"T00:00:00").toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}${nx.e.time?" · "+esc(nx.e.time):""}`:"Add an event",color:nx&&nx.o.days===0?"var(--green)":""})+
     tileH({id:"tT11",label:`T11 ${ph} dust`,value:tgt>0?pc(cur,tgt).toFixed(0)+"%":"Done",sub:`${fmt(cur)} / ${fmt(tgt)}`,p:pc(cur,tgt),cls:tgt>0?"":"ok"})+
     tileH({id:"tReady",label:"Ready now",value:ready.length?`${ready.length} upgrade${ready.length>1?"s":""}`:"None yet",txt:true,color:ready.length?"var(--green)":"",sub:ready.length?ready[0].title:"keep collecting materials"});
   on("tEvent",()=>nx?openEventSheet(nx.e):openEventSheet(null));
   on("tT11",()=>setTab("Base","T11"));
-  on("tNow",()=>openEventSheet(now?now.e:soon?soon.e:null));
+  on("tNow",()=>(now&&fh)?openShardSheet(fh):openEventSheet(now?now.e:soon?soon.e:null));
   on("tReady",()=>{ const g=ready[0]; if(g) goToSection(null,g.key,g.open); else document.querySelector('[data-key="Do next"]').scrollIntoView({behavior:"smooth"}); });
   // today
   const t=state.today; const today=fcToday();
@@ -1885,6 +1908,7 @@ function renderHome(){
 }
 
 /* ---------- events ---------- */
+let calSel=null; // tapped calendar day (0 = today)
 function renderEvents(){
   const list=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days||String(a.e.time||"").localeCompare(String(b.e.time||"")));
   const up=$("#evUpcoming");
@@ -1897,8 +1921,12 @@ function renderEvents(){
   bindAll(up,".evrow",b=>openEventSheet(state.events[+b.dataset.i]));
   const t0=new Date(gameToday()+"T00:00:00"); let html="";
   for(let i=0;i<14;i++){ const dd=new Date(t0.getTime()+i*DAY_MS), evs=(state.events||[]).filter(e=>occursOn(e,i)), names=evs.map(e=>e.n||"Event").join(", ");
-    html+=`<div class="cday ${i===0?"today":""}" title="${esc(dd.toDateString()+(names?" — "+names:""))}"><div class="dh"><span>${dd.toLocaleDateString(undefined,{weekday:"short"})}</span><b>${dd.getDate()}</b></div><span class="dots">${evs.map(e=>`<i class="${/kvk/i.test(e.n||"")?"k":""}"></i>`).join("")}</span>${names?`<span class="sr-only">${esc(names)}</span>`:""}</div>`; }
+    html+=`<button class="cday ${i===0?"today":""}${calSel===i?" sel":""}" data-i="${i}" title="${esc(dd.toDateString()+(names?" — "+names:""))}"><div class="dh"><span>${dd.toLocaleDateString(undefined,{weekday:"short"})}</span><b>${dd.getDate()}</b></div><span class="dots">${evs.map(e=>`<i class="${/kvk|kingdom of power/i.test(e.n||"")?"k":/bear/i.test(e.n||"")?"b":e.imp==="top"?"t":""}"></i>`).join("")}</span>${names?`<span class="sr-only">${esc(names)}</span>`:""}</button>`; }
   $("#evCal").innerHTML=html;
+  $$("#evCal .cday").forEach(b=>b.onclick=()=>{ calSel=calSel===+b.dataset.i?null:+b.dataset.i; renderEvents(); });
+  const dayBox=$("#evDay");
+  if(calSel==null){ dayBox.hidden=true; } else { const dd=new Date(t0.getTime()+calSel*DAY_MS), evs=(state.events||[]).filter(e=>{ for(let k=0;k<evLen(e);k++) if(occursOn(e,calSel-k)) return true; return false; });
+    dayBox.hidden=false; dayBox.innerHTML=`<b>${dd.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"short"})}</b>`+(evs.length?evs.map(e=>`<div><span>${esc(e.n||"Event")}</span>${spendFor(e)?" — "+esc(spendFor(e)):""}</div>`).join(""):`<div>No events.</div>`); }
   on("evAdd",()=>openEventSheet(null));
   on("evAll",openAllEventsSheet);
 }
@@ -1981,8 +2009,10 @@ function paintGoals(){
   if(mc){ const n2=Math.min(100,(Math.floor(mc.lv/10)+1)*10); prog.push({title:`${esc(mc.m.n)} affinity ${mc.lv} → ${n2}`,detail:n2===100?"Kindred Soul unlocks the research tree":"Emblems needed at the breakpoint",open:()=>openMastSheet(mc.m),key:"Masters"}); }
   const sh=shardOrder()[0];
   if(sh) prog.push({title:`${esc(sh.n)} shards`,detail:`${fmt(shardNeed(sh)-num(sh.have))} short — your most-used hero`,open:()=>openShardSheet(sh),key:"Gold Hero Shards"});
-  const all=[...spend,...prog], showAll=!!state.ui.doAll, L=showAll?all:all.slice(0,5); lastGoals=all;
-  hs.innerHTML=L.map(doHtml).join("")||`<div class="empty">Everything is at target ✓</div>`;
+  const all=[...spend,...prog].map((g,i)=>({g,i})).sort((a,b)=>(b.g.tag==="Ready")-(a.g.tag==="Ready")||a.i-b.i).map(x=>x.g); // ready-now upgrades first
+  const showAll=!!state.ui.doAll, L=showAll?all:all.slice(0,5); lastGoals=all;
+  const nReady=L.filter(g=>g.tag==="Ready").length;
+  hs.innerHTML=L.map((g,i)=>(nReady&&i===0?`<div class="dohead ok">Ready now</div>`:"")+(nReady&&i===nReady?`<div class="dohead">Working towards</div>`:"")+doHtml(g,i)).join("")||`<div class="empty">Everything is at target ✓</div>`;
   bindAll(hs,".do",b=>{ const g2=L[+b.dataset.i]; goToSection(null,g2.key,g2.open); });
   $("#doCount").textContent=all.length?`${all.length} steps`:"";
   const mb=$("#doMore"); mb.hidden=all.length<=5; mb.textContent=showAll?"Show top 5":`Show all ${all.length}`;
@@ -2156,25 +2186,28 @@ function renderProgress(){
   const S=progSeries(key,range), wrap=$("#progChart");
   if(!S.length){ $("#progHead").innerHTML=""; wrap.innerHTML=`<div class="empty">No history yet — it saves itself once a day.</div>`; $("#progTbl").innerHTML=""; return; }
   const first=S[0], last=S[S.length-1], dl=last.v-first.v, worse=false;
-  $("#progHead").innerHTML=`<div class="phead-big">${F(last.v)}</div><div class="phead-sub">${esc(M[1])} · ${S.length>1?(dl===0?"no change":`<span class="${dl>0?"ok":"bad"}">${dl>0?"▲":"▼"} ${F(Math.abs(dl))}</span> since ${esc(first.d)}`):"first day saved — the line grows from here"}</div>`;
+  $("#progHead").innerHTML=`<div class="phead-big">${F(last.v)}</div><div class="phead-sub">${esc(M[1])} · ${S.length>1?(dl===0?"no change":`<span class="${dl>0?"ok":"bad"}">${dl>0?"▲":"▼"} ${F(Math.abs(dl))}</span> since ${esc(fd(first.d))}`):"first day saved — the line grows from here"}</div>`;
   const css=getComputedStyle(document.documentElement), cv=n=>css.getPropertyValue(n).trim();
-  const W=640,H=220,pl=58,pr=16,pt=14,pb=28,PW=W-pl-pr,PH=H-pt-pb, vals=S.map(e=>e.v), mn=Math.min(...vals), mx=Math.max(...vals), pad=(mx-mn)*0.12||Math.max(Math.abs(mx)*0.02,1), lo=mn-pad, hi=mx+pad;
+  const W=640,H=220,pl=58,pr=16,pt=14,pb=28,PW=W-pl-pr,PH=H-pt-pb, vals=S.map(e=>e.v), mn=Math.min(...vals), mx=Math.max(...vals);
+  const nice=x=>{ const e=10**Math.floor(Math.log10(x)), f=x/e; return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*e; }; // round axis steps: 280M, 300M, 320M
+  const step=nice(((mx-mn)||Math.max(Math.abs(mx)*0.04,1))/3); let lo=Math.floor(mn/step)*step, hi=Math.ceil(mx/step)*step; if(hi===lo) hi=lo+step;
   const t=e=>new Date(e.d+"T00:00:00").getTime(), t0=t(first), t1=t(last);
   const X=e=>t1===t0?pl+PW/2:pl+(t(e)-t0)/(t1-t0)*PW, Y=v=>pt+PH-(v-lo)/(hi-lo)*PH, col=cv("--acc"), grid=cv("--line-soft"), ink=cv("--faint"), bg=cv("--panel");
   let g=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(M[1])} over time">`;
-  for(let i=0;i<=3;i++){ const v=lo+(hi-lo)*i/3, y=Y(v); g+=`<line x1="${pl}" x2="${W-pr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${grid}"/><text x="${pl-8}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="11" font-family="JetBrains Mono,monospace" fill="${ink}">${esc(F(v))}</text>`; }
-  g+=`<text x="${pl}" y="${H-8}" font-size="11" font-family="JetBrains Mono,monospace" fill="${ink}">${esc(first.d)}</text>`+(S.length>1?`<text x="${W-pr}" y="${H-8}" text-anchor="end" font-size="11" font-family="JetBrains Mono,monospace" fill="${ink}">${esc(last.d)}</text>`:"");
+  for(let v=lo;v<=hi+step/2;v+=step){ const y=Y(v); g+=`<line x1="${pl}" x2="${W-pr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${grid}"/><text x="${pl-8}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="11" font-family="JetBrains Mono,monospace" fill="${ink}">${esc(F(v))}</text>`; }
+  g+=`<text x="${pl}" y="${H-8}" font-size="11" font-family="JetBrains Mono,monospace" fill="${ink}">${esc(fd(first.d))}</text>`+(S.length>1?`<text x="${W-pr}" y="${H-8}" text-anchor="end" font-size="11" font-family="JetBrains Mono,monospace" fill="${ink}">${esc(fd(last.d))}</text>`:"");
   if(S.length>1) g+=`<polyline points="${S.map(e=>X(e).toFixed(1)+","+Y(e.v).toFixed(1)).join(" ")}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  S.forEach((e,k)=>{ if(k>0&&k<S.length-1&&e.v!==S[k-1].v) g+=`<circle cx="${X(e).toFixed(1)}" cy="${Y(e.v).toFixed(1)}" r="3.5" fill="${bg}" stroke="${col}" stroke-width="2"/>`; }); // a dot wherever the number changed
   g+=`<circle cx="${X(last).toFixed(1)}" cy="${Y(last.v).toFixed(1)}" r="5" fill="${col}" stroke="${bg}" stroke-width="2"/>`;
   g+=`<line id="pX" y1="${pt}" y2="${pt+PH}" stroke="${ink}" stroke-dasharray="3 3" visibility="hidden"/><circle id="pDot" r="5" fill="${bg}" stroke="${col}" stroke-width="2" visibility="hidden"/><rect x="${pl}" y="${pt}" width="${PW}" height="${PH}" fill="transparent" id="pHit"/></svg><div class="ptip" id="pTip" hidden></div>`;
   wrap.innerHTML=g;
   const svg=wrap.querySelector("svg"), tip=$("#pTip"), px=$("#pX"), pd=$("#pDot");
   const show=ev=>{ const r=svg.getBoundingClientRect(), x=(ev.clientX-r.left)/r.width*W; let best=S[0]; S.forEach(e=>{ if(Math.abs(X(e)-x)<Math.abs(X(best)-x)) best=e; });
     const cx=X(best), cy=Y(best.v); px.setAttribute("x1",cx); px.setAttribute("x2",cx); px.setAttribute("visibility","visible"); pd.setAttribute("cx",cx); pd.setAttribute("cy",cy); pd.setAttribute("visibility","visible");
-    tip.hidden=false; tip.innerHTML=`${esc(F(best.v))}<small>${esc(best.d)}</small>`; tip.style.left=(cx/W*r.width)+"px"; tip.style.top=(cy/H*r.height)+"px"; };
+    tip.hidden=false; tip.innerHTML=`${esc(F(best.v))}<small>${esc(fd(best.d))}</small>`; tip.style.left=(cx/W*r.width)+"px"; tip.style.top=(cy/H*r.height)+"px"; };
   const hide=()=>{ tip.hidden=true; px.setAttribute("visibility","hidden"); pd.setAttribute("visibility","hidden"); };
   const hit=$("#pHit"); hit.onpointermove=show; hit.onpointerdown=show; hit.onpointerleave=hide;
-  $("#progTbl").innerHTML=`<table class="gtable"><thead><tr><th>Date</th><th>${esc(M[1])}</th></tr></thead><tbody>${S.slice().reverse().slice(0,30).map(e=>`<tr><td>${esc(e.d)}</td><td>${esc(F(e.v))}</td></tr>`).join("")}</tbody></table>`;
+  $("#progTbl").innerHTML=`<table class="gtable"><thead><tr><th>Date</th><th>${esc(M[1])}</th></tr></thead><tbody>${S.slice().reverse().slice(0,30).map(e=>`<tr><td>${esc(fd(e.d))}</td><td>${esc(F(e.v))}</td></tr>`).join("")}</tbody></table>`;
 }
 
 /* ---------- masters ---------- */
@@ -2247,7 +2280,7 @@ function paintMysticChart(){
     for(let g=0;g<=2;g++){ const v=lo+(hi-lo)*g/2, y=pt+PH-PH*g/2; svg+=`<line x1="${pl}" y1="${y.toFixed(1)}" x2="${W-pr}" y2="${y.toFixed(1)}" stroke="${line}"/><text x="${pl-6}" y="${(y+3).toFixed(1)}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="10" fill="${faint}">${fmt(Math.round(v))}</text>`; }
     if(log.length>1) svg+=`<polyline points="${log.map(e=>X(e.d).toFixed(1)+","+Y(e.v).toFixed(1)).join(" ")}" fill="none" stroke="${col}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
     log.forEach((e,k)=>{ svg+=`<circle cx="${X(e.d).toFixed(1)}" cy="${Y(e.v).toFixed(1)}" r="${k===log.length-1?4.5:3.5}" fill="${k===log.length-1?col:bg}" stroke="${col}" stroke-width="2"><title>${e.d}: #${fmt(e.v)}</title></circle>`; });
-    svg+=`<text x="${pl}" y="${H-6}" font-family="JetBrains Mono,monospace" font-size="9" fill="${faint}">${log[0].d}</text><text x="${W-pr}" y="${H-6}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="${faint}">${log[log.length-1].d}</text></svg>`;
+    svg+=`<text x="${pl}" y="${H-6}" font-family="JetBrains Mono,monospace" font-size="9" fill="${faint}">${fd(log[0].d)}</text><text x="${W-pr}" y="${H-6}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="${faint}">${fd(log[log.length-1].d)}</text></svg>`;
     return `<div class="chart"><div class="rowb" style="flex-wrap:nowrap"><span style="display:flex;align-items:center;gap:6px;min-width:0"><span style="width:9px;height:9px;border-radius:50%;background:${col};flex:none"></span><b style="font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(z.k)}</b></span><b class="mono gold">#${fmt(last)}</b></div>
       <div style="font-size:12px;margin:2px 0 4px">${log.length>1?(dlt<0?`<span class="ok">▼ ${fmt(-dlt)} better</span>`:dlt>0?`<span class="bad">▲ ${fmt(dlt)} worse</span>`:`<span class="faint">no change</span>`):`<span class="faint">first log</span>`}</div>${svg}</div>`; }).join("")+`</div>`;
 }
@@ -2275,18 +2308,19 @@ function renderHeroGear(){
   $("#hgMats").innerHTML=["xp","fh","mg","mith"].map(k=>{ const h=num(hg.have[k]); return tileH({id:"hgm_"+k,label:names[k],value:fmtBig(h),sub:`of ${fmtBig(need[k])} · ${need[k]>h?`<span class="bad">${fmtBig(need[k]-h)} short</span>`:`<span class="ok">covered</span>`}`,p:pc(h,need[k]),cls:h>=need[k]?"ok":""}); }).join("");
   $$("#hgMats .tile").forEach(t=>t.onclick=openHgMatsSheet);
   const host=$("#hgBody"); host.innerHTML="";
+  const ready=hg.rows.filter(r=>hgState(r).cls==="s-ready");
+  if(ready.length){ const d=document.createElement("div"); d.className="info"; d.innerHTML=`<b class="ok">Ready to imbue now (${ready.length}):</b> `+ready.map(r=>`${esc(r.type)} ${esc(slotName(r.slot))}`).join(" · "); host.appendChild(d); }
   HG_TYPES.forEach(type=>{
     const pieces=hg.rows.filter(r=>r.type===type); if(!pieces.length) return;
     const blk=pieces.find(r=>hgState(r).cls==="s-block"), rdy=pieces.find(r=>hgState(r).cls==="s-ready"), low=pieces.filter(r=>num(r.lvC)<119).sort((a,b)=>num(b.lvC)-num(a.lvC))[0];
     const next=blk?`next: ${slotName(blk.slot)} mastery`:low?`next: ${slotName(low.slot)} → Lv 119`:rdy?`ready: ${slotName(rdy.slot)} imbue`:"all on track";
     const sec=document.createElement("div"); sec.className="mt";
-    sec.innerHTML=`<h2 class="h2">${type} <small>${esc(next)}</small></h2><div class="grid" style="--min:200px"></div>`;
-    const grid=sec.querySelector(".grid");
-    pieces.forEach(r=>{ const L=num(r.lvC), st=hgState(r), b=document.createElement("button"); b.className="vcard "+st.cls;
-      b.innerHTML=`${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(slotName(r.slot))} <span class="faint" style="font-weight:500">${esc(slotStat(r.slot))}</span></span></span>
-        <span class="vc-meta">Lv ${L} · Mastery ${num(r.mC)}</span>
-        <span class="vc-big">${hgBonus(L).toFixed(1)}%${L<119?`<small>→ ${hgBonus(119).toFixed(1)}% at 119</small>`:""}</span>
-        <span>${st.tag}</span><span class="vc-line">${st.line}</span>${barH(pc(L,Math.max(num(r.lvT),L)),st.cls==="s-done"?"ok":"")}`;
+    sec.innerHTML=`<h2 class="h2">${type} <small>${esc(next)}</small></h2><div class="hglist"></div>`;
+    const grid=sec.querySelector(".hglist");
+    pieces.forEach(r=>{ const L=num(r.lvC), st=hgState(r), b=document.createElement("button"); b.className="hgrow "+st.cls;
+      b.innerHTML=`<span><span class="hn">${esc(slotName(r.slot))} <small>${esc(slotStat(r.slot))}</small></span><br><span class="hl">Lv ${L} · M${num(r.mC)}</span></span>
+        <span class="hb">${hgBonus(L).toFixed(1)}%<small>bonus${L<119?`<span class="to"> → ${hgBonus(119).toFixed(1)}% at 119</span>`:""}</small></span>
+        <span class="hs">${st.tag}<span>${st.line}</span></span>${barH(pc(L,Math.max(num(r.lvT),L)),st.cls==="s-done"?"ok":"")}`;
       b.onclick=()=>openHgSheet(r); grid.appendChild(b); });
     host.appendChild(sec);
   });
@@ -2749,7 +2783,7 @@ function openPackSheet(p){
 /* ---------- reminders: calendar file (.ics) ---------- */
 function icsItems(){ const out=[];
   (state.events||[]).forEach(e=>{ if(!e.date) return; out.push({kind:"event",e,label:`${e.n}${num(e.every)?` · ${repeatTxt(e)}`:""}`}); });
-  (state.packs||[]).forEach(p=>{ const n=packDaysLeft(p); if(n==null) return; const end=new Date(p.bought+"T00:00:00"); end.setDate(end.getDate()+PACK_DAYS[p.kind]); out.push({kind:"card",p,end:ymd(end),label:`${p.t} ends ${ymd(end)}`}); });
+  (state.packs||[]).forEach(p=>{ const n=packDaysLeft(p); if(n==null) return; const end=new Date(p.bought+"T00:00:00"); end.setDate(end.getDate()+PACK_DAYS[p.kind]); out.push({kind:"card",p,end:ymd(end),label:`${p.t} ends ${fd(ymd(end))}`}); });
   return out; }
 function icsText(){
   const z=n=>String(n).padStart(2,"0"), dt=s=>s.replace(/-/g,""), stamp=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
@@ -2779,8 +2813,6 @@ function renderPlan(){
   renderShopsPacks(); renderReminders();
 }
 function renderData(){
-  const n=$("#notes"); if(document.activeElement!==n) n.value=state.notes||"";
-  n.oninput=()=>{ state.notes=n.value; scheduleSave(); };
   $("#idstrip").innerHTML=idFields.map(([k,l])=>tileH({label:l,value:esc(k==="day"?kingdomDay():k==="power"&&num(state.account.power)>0?fmtBig(num(state.account.power)):(state.account[k]||"—")),txt:true})).join("");
   $$("#idstrip .tile").forEach(t=>t.onclick=openAccountSheet);
 }
@@ -2935,8 +2967,7 @@ const SEARCH_KW={
   "Combat Quality":"win rate lethality health attacker defender",
   "Power Grades":"power pillars benchmark grade",
   "Data & Sync":"github sync token backup export import",
-  "Account":"governor town center vip kingdom day power",
-  "Notes":"notes"};
+  "Account":"governor town center vip kingdom day power"};
 function searchIndex(){
   const heroes=(state.goldShards||[]).map(r=>r.n).join(" ").toLowerCase();
   return $$(".sec[data-key]").map(sec=>{ const tab=sec.closest(".page").dataset.tab, sub=sec.dataset.sub||"", key=sec.dataset.key;
@@ -2972,6 +3003,37 @@ function initSearch(){
     else if(e.key==="/"&&!typing&&$("#srch").hidden){ e.preventDefault(); openSearch(); }
     else if(e.key==="Escape"&&!$("#srch").hidden) closeSearch(); });
 }
+/* ---------- quick update: the numbers you change most, one sheet ---------- */
+function parseDur(v){ const t=String(v||"").toLowerCase().trim(); if(!t) return null;
+  if(/^[\d,.]+$/.test(t)) return Math.round(num(t)); // plain number = minutes
+  let m=0, ok=false; t.replace(/(\d+(?:\.\d+)?)\s*(d|day|days|h|hr|hrs|hour|hours|m|min|mins|minute|minutes)\b/g,(_,n,u)=>{ ok=true; n=parseFloat(n); m+=u[0]==="d"?n*1440:u[0]==="h"?n*60:n; return ""; });
+  return ok?Math.round(m):null; }
+function openQuickSheet(){
+  openSheet({title:"Quick update",sub:"The numbers you change most. Everything else is in Data → Update all.",build(f){
+    const sub=t=>{ const h=document.createElement("div"); h.className="qsub"; h.textContent=t; f.appendChild(h); };
+    const N=(label,obj,k,o)=>fld(label,Object.assign({type:"num",value:obj[k],get:()=>obj[k],set:v=>obj[k]=v},o||{}));
+    const H=state.heroGear.have, G=state.govGear.have||(state.govGear.have={}), C=state.charms.have||(state.charms.have={});
+    sub("Truegold & hero gear");
+    f.appendChild(frow(N("Truegold Dust",state.dust,"current"),N("Truegold",state.tg,"have")));
+    f.appendChild(frow(N("Forgehammers",H,"fh"),N("Mithril",H,"mith")));
+    f.appendChild(frow(N("Mythic Gear",H,"mg"),N("Enhancement XP",H,"xp",{hint:"shorthand works: 1.2m"})));
+    sub("Hero shards");
+    const SH=shardOrder().filter(r=>!/amadeus|helga/i.test(r.n||"")).slice(0,3);
+    f.appendChild(frow(fld("General Mythic shards",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v}),...(SH[0]?[N(SH[0].n+" shards",SH[0],"have")]:[])));
+    if(SH.length>1) f.appendChild(frow(...SH.slice(1).map(r=>N(r.n+" shards",r,"have"))));
+    const W=(state.widgets&&state.widgets.rows)||[];
+    if(W.length){ sub("Widgets in hand"); for(let i=0;i<W.length;i+=2) f.appendChild(frow(...W.slice(i,i+2).map(r=>N(r.hero||"Widget",r,"have")))); }
+    sub("Speedups — type like the game shows: 4d 4h 3m");
+    const R=state.resources||[], SP=[["General","General"],["Soldier Training","Training"],["Construction","Construction"],["Research","Research"],["Soldier Healing","Healing"]];
+    const spF=([k,l])=>{ const r=R.find(x=>x.n.startsWith(k+" speedup")); if(!r) return null;
+      return fld(l,{value:minsTxt(r.h)+(num(r.h)%60?" "+(num(r.h)%60)+"m":""),set:v=>{ const m=parseDur(v); if(m!=null) r.h=String(m); }}); };
+    const sf=SP.map(spF).filter(Boolean); for(let i=0;i<sf.length;i+=2) f.appendChild(frow(...sf.slice(i,i+2)));
+    sub("Governor gear & charms");
+    f.appendChild(frow(N("Satin",G,"satin"),N("Gilded Threads",G,"threads")));
+    f.appendChild(frow(N("Artisan's Vision",G,"vision"),N("Charm Guides",C,"guides")));
+    f.appendChild(frow(N("Charm Designs",C,"designs"),document.createElement("span")));
+  }});
+}
 function initStatic(){
   const dl=document.createElement("datalist"); dl.id="widHeroList"; dl.innerHTML=WID_HEROES.map(h=>`<option value="${esc(h)}">`).join(""); document.body.appendChild(dl);
   const pl=document.createElement("datalist"); pl.id="petList"; pl.innerHTML=Object.keys(PET_INFO).map(n=>`<option value="${esc(n)}">`).join(""); document.body.appendChild(pl);
@@ -2979,7 +3041,7 @@ function initStatic(){
 
 /* ---------- boot ---------- */
 (async function(){
-  initStatic(); buildNav(); initSheet(); initTheme(); initInstall(); initSearch();
+  initStatic(); buildNav(); initSheet(); initTheme(); initInstall(); initSearch(); on("quickBtn",openQuickSheet);
   const saved=await load();
   if(saved) state=mergeSeed(saved);
   if(Array.isArray(state.nodes)){
@@ -3016,7 +3078,7 @@ function initStatic(){
   if(Array.isArray(state.buildings)) state.buildings.forEach(bl=>{ if(bl.stepIdx===undefined) bl.stepIdx=0; delete bl.t; delete bl.tg; delete bl.ttg; delete bl.time; });
   if(state.account && !state.account.dayAnchor){ const d=parseInt(state.account.day)||443; const a=new Date(); a.setUTCDate(a.getUTCDate()-(d-1)); state.account.dayAnchor=a.toISOString().slice(0,10); }
   state.ui.tab=TAB_ALIAS[state.ui.tab]||state.ui.tab;
-  renderAll(); buildSync(); initCommaFormatting();
+  renderAll(); buildSync(); initCommaFormatting(); initNoDrag();
   const fromHash=tabFromHash(); setTab(fromHash?fromHash[0]:state.ui.tab, fromHash?fromHash[1]:undefined, false);
   const persists=hasStore||lsSet("__probe__","1"); if(!persists) setSaveUI("err","Session only");
   if(syncCfg.on && syncCfg.owner && loadTok()) syncPull(true);
