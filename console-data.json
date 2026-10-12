@@ -1326,9 +1326,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 75931,
-      "threads": 767,
-      "vision": 618
+      "satin": 95131,
+      "threads": 959,
+      "vision": 666
     },
     "pieces": [
       {
@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1454,7 +1454,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Pets",
       "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
@@ -1475,7 +1475,9 @@
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": false
+    "heroAll": false,
+    "evOpen": false,
+    "shSpare": true
   },
   "troopCounts": {
     "inf": {
@@ -1498,9 +1500,9 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 62,
+      "fh": 151,
       "mg": 2,
-      "mith": 6
+      "mith": 7
     },
     "rows": [
       {
@@ -2465,7 +2467,7 @@
       "food": 12950,
       "manuals": 1541,
       "potions": 125,
-      "tmCommon": 151,
+      "tmCommon": 158,
       "tmAdv": 3,
       "medals": 34
     },
@@ -2556,7 +2558,7 @@
       }
     ]
   },
-  "shardGeneral": 15,
+  "shardGeneral": 58,
   "shardRallySet": true,
   "eventTicks": {
     "key": "KvK|2026-10-05",
