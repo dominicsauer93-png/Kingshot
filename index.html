@@ -202,6 +202,11 @@
   .evmode .ehave{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 6px} .evmode .ehave span{font:600 12px var(--f-body);padding:3px 8px;border-radius:999px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}
   .evmode .ehave b{color:var(--text)}
   .evmode ul.checks li{padding:6px 0}
+  .evmode .eall{margin-top:8px;border-top:1px solid var(--line);padding-top:6px}
+  .evmode .eall-h{font:700 11px var(--f-body);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:2px 0 4px}
+  .evmode .erow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;width:100%;text-align:left;padding:7px 8px;border:0;border-radius:9px;background:transparent;color:var(--text)}
+  .evmode .erow:hover{background:var(--panel)} .evmode .erow .en{font-weight:700;font-size:13.5px} .evmode .erow .ew{font:600 12px var(--f-mono);color:var(--muted)}
+  .evmode .erow .esp{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
   .chips-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px} .chips-row::-webkit-scrollbar{display:none}
   .chip[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
   .pchart{position:relative} .pchart svg{display:block;width:100%;height:auto;touch-action:pan-y}
@@ -1729,7 +1734,7 @@ function initTheme(){
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
 const TABS=["Home","Rally","Gear","Base","Plan","Data"];
-const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Hero Gear","Widgets","Charms","Pets","Shards","Governor"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs","Reminders"],Data:["Update all","Notes","Account","Sync"]};
+const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Widgets","Hero Gear","Governor","Charms","Shards","Pets"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs","Reminders"],Data:["Update all","Notes","Account","Sync"]};
 const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Rally",Supply:"Rally",Events:"Home",Vault:"Data"};
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
@@ -1823,17 +1828,22 @@ function eventHave(e){ const n=e.n||"", R=state.resources||[], rv=k=>{ const r=R
   if(/officer project/i.test(n)){ const H=(state.heroGear&&state.heroGear.have)||{}; out.push(["Forgehammers",fmt(num(H.fh))]); out.push(["Widgets",fmt(((state.widgets&&state.widgets.rows)||[]).reduce((t,r)=>t+num(r.have),0))]); }
   if(/hall of heroes/i.test(n)){ out.push(["General shards",fmt(num(state.shardGeneral))]); const f=shardOrder()[0]; if(f) out.push([`${f.n} shards`,`${fmt(num(f.have))} (${fmt(shardNeed(f)-num(f.have))} short)`]); }
   return out; }
+const EVENT_IMP={top:0,high:1,normal:2,low:3}; // set per event in its edit panel
+function eventRank(e){ if(e.imp&&EVENT_IMP[e.imp]!=null) return EVENT_IMP[e.imp]-0.5; // your own setting wins
+  const i=[/kvk|kingdom of power/i,/hall of heroes/i,/officer project/i,/strongest governor/i,/armament/i].findIndex(r=>r.test(e.n||""));
+  return i>=0?[0,1,1,1.5,2.2][i]:/bear/i.test(e.n||"")?3.2:2.5; }
+function liveEvents(){ return (state.events||[]).map(e=>({e,a:activeOcc(e)})).filter(x=>x.a).sort((a,b)=>eventRank(a.e)-eventRank(b.e)); }
 function renderEventMode(){
-  const box=$("#eventMode"), live=(state.events||[]).map(e=>({e,a:activeOcc(e)})).filter(x=>x.a);
-  const rank=e=>{ const i=[/kvk|kingdom of power/i,/hall of heroes/i,/officer project/i,/strongest governor/i,/armament/i,/bear/i].findIndex(r=>r.test(e.n||"")); return i<0?4.5:i; }; // most important event first; events without advice go below Armament, above Bear
-  live.sort((a,b)=>rank(a.e)-rank(b.e));
+  const box=$("#eventMode"), live=liveEvents();
   const cur=live[0]; box.hidden=!cur; if(!cur) return;
   const e=cur.e, steps=(EVENT_STEPS.find(([r])=>r.test(e.n||""))||[0,[]])[1], start=new Date(gameToday()+"T00:00:00"); start.setDate(start.getDate()-(cur.a.day-1));
   const key=(e.n||"")+"|"+ymd(start); if(!state.eventTicks||state.eventTicks.key!==key) state.eventTicks={key,done:[]};
   const items=steps.map((t,i)=>({t,d:state.eventTicks.done.includes(i)})), left=cur.a.len-cur.a.day, have=eventHave(e);
   const nd=items.filter(x=>x.d).length;
   box.innerHTML=`<summary class="eh"><span class="et">⚡ ${esc(e.n||"Event")} is on</span><span class="ed">${cur.a.len>1?`day ${cur.a.day} of ${cur.a.len} · `:""}${left?`${left} more day${left>1?"s":""}`:"last day"}${live.length>1?` · +${live.length-1} more`:""}${items.length?` · <b id="evDone">${nd}/${items.length} done</b>`:""}</span></summary>
-    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}<ul class="checks" id="evSteps"></ul>`;
+    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}<ul class="checks" id="evSteps"></ul>`+
+    (live.length>1?`<div class="eall"><div class="eall-h">Also on now</div>${live.slice(1).map(({e:x,a},i)=>`<button class="erow" data-i="${i+1}"><span class="en">${esc(x.n||"Event")}</span><span class="ew">${a.len>1?`day ${a.day}/${a.len}`:"today"}</span><span class="esp">${esc(spendFor(x)||"tap to add what to spend")}</span></button>`).join("")}</div>`:"");
+  bindAll(box,".erow",b=>openEventSheet(live[+b.dataset.i].e));
   buildChecks($("#evSteps"),items,{tickOnly:true,onTick:()=>{ state.eventTicks.done=items.map((x,i)=>x.d?i:-1).filter(i=>i>=0); const d=$("#evDone"); if(d) d.textContent=`${state.eventTicks.done.length}/${items.length} done`; scheduleSave(); }});
   const want=state.ui.evOpen!=null?state.ui.evOpen:innerWidth>640; box.open=want; // open on PC, one line on phones until tapped
   box.ontoggle=()=>{ if(box.open!==want){ state.ui.evOpen=box.open; scheduleSave(); } };
@@ -1845,7 +1855,7 @@ function renderHome(){
   renderEventMode();
   // tiles
   const upc=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days);
-  const live=(state.events||[]).map(e=>({e,a:activeOcc(e)})).filter(x=>x.a).sort((a,b)=>(spendFor(b.e)?1:0)-(spendFor(a.e)?1:0));
+  const live=liveEvents();
   const now=live[0]||null, soon=now?null:upc[0];
   const nx=upc.find(x=>x.o.days>0&&(!soon||x.e!==soon.e));
   const tgt=computeTarget(), cur=num(state.dust.current), ph=activePhase().n;
@@ -1906,6 +1916,7 @@ function openEventSheet(ev){
       f.appendChild(frow(fld("Date (any occurrence)",{type:"date",value:ev.date,set:v=>ev.date=v}),fld("Repeats every (days)",{type:"num",value:ev.every||0,get:()=>ev.every,set:v=>ev.every=Math.max(0,Math.floor(v)),hint:"0 = one-off"})));
       f.appendChild(frow(fld("Lasts (days)",{type:"num",value:evLen(ev),get:()=>evLen(ev),set:v=>ev.len=Math.max(1,Math.floor(v)||1)}),fld("Time (optional)",{type:"time",value:ev.time,set:v=>ev.time=v})));
       f.appendChild(fld("What to spend",{value:spendFor(ev),ph:"e.g. Speedups + Gov Gear",set:v=>ev.spend=v,hint:"Shown on Home while the event is on."}));
+      f.appendChild(fld("Importance",{type:"select",value:ev.imp||"",options:[["","Auto"],["top","Top — show first"],["high","High"],["normal","Normal"],["low","Low"]],set:v=>{ if(v) ev.imp=v; else delete ev.imp; },hint:"When several events are on, the most important one leads the Home card."}));
       f.appendChild(fld("Note",{type:"area",rows:3,value:ev.note,set:v=>ev.note=v}));
       const inf=infoBox(); f.appendChild(inf);
       const r=()=>{ const o=nextOcc(ev); inf.innerHTML=o?(o.past?"This one-off event has passed.":`Next: <b>${new Date(o.date+"T00:00:00").toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})}</b> (${whenTxt(o)}) · ${repeatTxt(ev)}`):"Pick a date."; };
