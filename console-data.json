@@ -1361,7 +1361,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-12",
+    "routineDate": "2026-10-13",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Plan",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1452,18 +1452,18 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Heroes",
+      "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Widgets",
+      "Gear": "Charms",
       "Base": "Buildings",
-      "Plan": "Checklists"
+      "Plan": "Shops & Packs"
     },
     "t11Open": {
       "nodes": true
     },
     "doAll": false,
     "qOpen": {
-      "Bag": false,
+      "Bag": true,
       "HG": false,
       "Power": false,
       "Buildings": false,
@@ -1475,9 +1475,7 @@
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": false,
-    "evOpen": true,
-    "shSpare": true
+    "heroAll": false
   },
   "troopCounts": {
     "inf": {
@@ -2228,7 +2226,47 @@
       }
     },
     {
+      "d": "2026-10-13",
+      "v": {
+        "power": 319037386,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9229595,
+        "p:Troop": 179073395,
+        "p:Hero": 32354610,
+        "p:Hero Gear": 12955861,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 27588945,
+        "p:Pet": 22229640,
+        "p:Master": 14940000,
+        "stars": 458
+      }
+    },
+    {
       "d": "2026-10-12",
+      "v": {
+        "power": 319037386,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9229595,
+        "p:Troop": 179073395,
+        "p:Hero": 32354610,
+        "p:Hero Gear": 12955861,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 27588945,
+        "p:Pet": 22229640,
+        "p:Master": 14940000,
+        "stars": 458
+      }
+    },
+    {
+      "d": "2026-10-13",
       "v": {
         "power": 319037386,
         "leth": 73,
