@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1476,7 +1476,7 @@
     "progKey": "power",
     "roleOpen": true,
     "heroAll": false,
-    "evOpen": false,
+    "evOpen": true,
     "shSpare": true
   },
   "troopCounts": {
@@ -2561,7 +2561,7 @@
   "shardGeneral": 58,
   "shardRallySet": true,
   "eventTicks": {
-    "key": "KvK|2026-10-05",
+    "key": "Armament Competition (Type 1)|2026-10-12",
     "done": []
   }
 }
