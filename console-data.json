@@ -9,9 +9,9 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 260,
-    "target": 8192,
-    "gold": 1030000
+    "current": 437,
+    "target": 7858,
+    "gold": 1110000
   },
   "nodes": [
     {
@@ -221,7 +221,7 @@
     },
     {
       "name": "Truegold Legionaries (Rally Capacity)",
-      "cur": 7,
+      "cur": 8,
       "max": 12,
       "costs": [
         83,
@@ -1318,17 +1318,17 @@
     }
   ],
   "tg": {
-    "have": 593,
-    "need": 4884,
-    "ttgHave": 5,
-    "ttgNeed": 519
+    "have": 113,
+    "need": 4506,
+    "ttgHave": 15,
+    "ttgNeed": 488
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 75111,
-      "threads": 766,
-      "vision": 596
+      "satin": 75931,
+      "threads": 767,
+      "vision": 618
     },
     "pieces": [
       {
@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1454,7 +1454,7 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Widgets",
+      "Gear": "Governor",
       "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
@@ -1566,7 +1566,7 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 85,
+        "lvC": 92,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1663,7 +1663,7 @@
     "targetLvl": 10,
     "have": {
       "guides": 925,
-      "designs": 823
+      "designs": 826
     },
     "rows": [
       {
@@ -2312,7 +2312,7 @@
     },
     {
       "n": "War Academy",
-      "stepIdx": 6,
+      "stepIdx": 9,
       "note": "Research speed + T11 gate",
       "d": false
     },
@@ -2336,7 +2336,7 @@
     },
     {
       "n": "Stable",
-      "stepIdx": 4,
+      "stepIdx": 5,
       "note": "Cavalry (off-focus) — defer",
       "d": false
     },
