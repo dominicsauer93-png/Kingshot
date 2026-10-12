@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Plan",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1452,9 +1452,9 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
+      "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Charms",
+      "Gear": "Widgets",
       "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
@@ -1770,13 +1770,13 @@
       {
         "hero": "Amadeus",
         "lvl": 5,
-        "have": 0,
-        "rally": false
+        "have": 49,
+        "rally": true
       },
       {
         "hero": "Ava",
         "lvl": 3,
-        "have": 2,
+        "have": 21,
         "rally": true
       },
       {
@@ -1790,6 +1790,22 @@
         "lvl": 2,
         "have": 0,
         "rally": false
+      },
+      {
+        "hero": "Wee & Woo",
+        "lvl": 0,
+        "have": 15,
+        "rally": true
+      },
+      {
+        "hero": "Charles",
+        "lvl": 0,
+        "have": 15
+      },
+      {
+        "hero": "Triton",
+        "lvl": 2,
+        "have": 0
       }
     ],
     "rallySet": true
