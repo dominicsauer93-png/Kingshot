@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1452,9 +1452,9 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Masters",
+      "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Governor",
+      "Gear": "Hero Gear",
       "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
@@ -1566,7 +1566,7 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 92,
+        "lvC": 94,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
