@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1471,7 +1471,7 @@
     },
     "doAll": false,
     "qOpen": {
-      "Bag": false,
+      "Bag": true,
       "HG": false,
       "Power": false,
       "Buildings": false,
