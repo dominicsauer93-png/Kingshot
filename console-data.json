@@ -1478,7 +1478,8 @@
       "Troops": false,
       "Shards": false,
       "Masters": false,
-      "Gov": false
+      "Gov": false,
+      "Widgets": true
     },
     "tierAll": false,
     "progKey": "power",
