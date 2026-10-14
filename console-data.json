@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1452,9 +1452,9 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Overview",
+      "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Pets",
+      "Gear": "Widgets",
       "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
@@ -1498,9 +1498,9 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 151,
+      "fh": 202,
       "mg": 2,
-      "mith": 7
+      "mith": 11
     },
     "rows": [
       {
@@ -1566,7 +1566,7 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 94,
+        "lvC": 100,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1718,12 +1718,12 @@
       },
       {
         "type": "Infantry",
-        "lvl": 5,
+        "lvl": 6,
         "tgt": 10
       },
       {
         "type": "Infantry",
-        "lvl": 5,
+        "lvl": 6,
         "tgt": 10
       },
       {
