@@ -546,6 +546,13 @@
       "kind": "month",
       "note": "Steady extras if you log in daily",
       "d": false
+    },
+    {
+      "t": "New pack",
+      "aud": 0,
+      "kind": "once",
+      "note": "",
+      "d": false
     }
   ],
   "trackFarm": [
