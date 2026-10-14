@@ -10,7 +10,7 @@
   },
   "dust": {
     "current": 69,
-    "target": 7440,
+    "target": 6938,
     "gold": 1110000
   },
   "nodes": [
@@ -221,7 +221,7 @@
     },
     {
       "name": "Truegold Legionaries (Rally Capacity)",
-      "cur": 9,
+      "cur": 10,
       "max": 12,
       "costs": [
         83,
@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
