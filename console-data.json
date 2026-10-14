@@ -10,7 +10,7 @@
   },
   "dust": {
     "current": 437,
-    "target": 7858,
+    "target": 7440,
     "gold": 1110000
   },
   "nodes": [
@@ -221,7 +221,7 @@
     },
     {
       "name": "Truegold Legionaries (Rally Capacity)",
-      "cur": 8,
+      "cur": 9,
       "max": 12,
       "costs": [
         83,
@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Plan",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1459,18 +1459,19 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
+      "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Widgets",
       "Base": "T11",
-      "Plan": "Shops & Packs"
+      "Plan": "Checklists"
     },
     "t11Open": {
-      "nodes": false
+      "nodes": true,
+      "cavNodes": false
     },
     "doAll": false,
     "qOpen": {
-      "Bag": true,
+      "Bag": false,
       "HG": false,
       "Power": false,
       "Buildings": false,
@@ -1482,7 +1483,9 @@
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": false
+    "heroAll": false,
+    "evOpen": true,
+    "shSpare": true
   },
   "troopCounts": {
     "inf": {
@@ -2233,47 +2236,7 @@
       }
     },
     {
-      "d": "2026-10-13",
-      "v": {
-        "power": 319037386,
-        "leth": 73,
-        "hp": 58.8,
-        "attWR": 38.08,
-        "defWR": 91.68,
-        "p:Building": 9229595,
-        "p:Troop": 179073395,
-        "p:Hero": 32354610,
-        "p:Hero Gear": 12955861,
-        "p:Governor Gear": 8788320,
-        "p:Governor Charm": 11980000,
-        "p:Tech": 27588945,
-        "p:Pet": 22229640,
-        "p:Master": 14940000,
-        "stars": 458
-      }
-    },
-    {
       "d": "2026-10-12",
-      "v": {
-        "power": 319037386,
-        "leth": 73,
-        "hp": 58.8,
-        "attWR": 38.08,
-        "defWR": 91.68,
-        "p:Building": 9229595,
-        "p:Troop": 179073395,
-        "p:Hero": 32354610,
-        "p:Hero Gear": 12955861,
-        "p:Governor Gear": 8788320,
-        "p:Governor Charm": 11980000,
-        "p:Tech": 27588945,
-        "p:Pet": 22229640,
-        "p:Master": 14940000,
-        "stars": 458
-      }
-    },
-    {
-      "d": "2026-10-13",
       "v": {
         "power": 319037386,
         "leth": 73,
