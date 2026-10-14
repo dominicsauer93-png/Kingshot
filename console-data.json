@@ -1333,8 +1333,8 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 101427,
-      "threads": 994,
+      "satin": 102487,
+      "threads": 1004,
       "vision": 687
     },
     "pieces": [
@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1461,7 +1461,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Governor",
+      "Gear": "Widgets",
       "Base": "Troops",
       "Plan": "Checklists"
     },
