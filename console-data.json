@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1454,7 +1454,7 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Widgets",
+      "Gear": "Governor",
       "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
