@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 437,
+    "current": 69,
     "target": 7440,
     "gold": 1110000
   },
@@ -1325,17 +1325,17 @@
     }
   ],
   "tg": {
-    "have": 15,
+    "have": 82,
     "need": 4278,
-    "ttgHave": 9,
+    "ttgHave": 4,
     "ttgNeed": 470
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 95131,
-      "threads": 959,
-      "vision": 666
+      "satin": 101427,
+      "threads": 994,
+      "vision": 687
     },
     "pieces": [
       {
@@ -1672,8 +1672,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 925,
-      "designs": 826
+      "guides": 709,
+      "designs": 279
     },
     "rows": [
       {
@@ -2498,11 +2498,11 @@
   "pets": {
     "have": {
       "food": 12950,
-      "manuals": 1541,
-      "potions": 125,
-      "tmCommon": 158,
-      "tmAdv": 3,
-      "medals": 34
+      "manuals": 1113,
+      "potions": 34,
+      "tmCommon": 0,
+      "tmAdv": 0,
+      "medals": 4
     },
     "rows": [
       {
