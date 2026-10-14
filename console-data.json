@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1454,7 +1454,7 @@
     "sub": {
       "Rally": "Overview",
       "Data": "Update all",
-      "Gear": "Charms",
+      "Gear": "Pets",
       "Base": "Buildings",
       "Plan": "Shops & Packs"
     },
