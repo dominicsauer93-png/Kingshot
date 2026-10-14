@@ -1486,7 +1486,8 @@
     "roleOpen": true,
     "heroAll": false,
     "evOpen": true,
-    "shSpare": true
+    "shSpare": true,
+    "petMaxOpen": true
   },
   "troopCounts": {
     "inf": {
@@ -2574,7 +2575,7 @@
       },
       {
         "n": "Ironclad War Elephant",
-        "lvl": 56,
+        "lvl": 60,
         "tgt": 0,
         "max": 100
       },
