@@ -1418,7 +1418,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Plan",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1459,7 +1459,7 @@
       "Plan": "Shops & Packs"
     },
     "t11Open": {
-      "nodes": true
+      "nodes": false
     },
     "doAll": false,
     "qOpen": {
