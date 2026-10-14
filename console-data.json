@@ -2,7 +2,7 @@
   "account": {
     "tc": "Truegold Lv. 7",
     "day": "485",
-    "power": "319037386",
+    "power": "325541709",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "Main - all out attack ",
@@ -568,25 +568,25 @@
   "pillars": [
     {
       "name": "Building",
-      "v": 9229595,
+      "v": 9287731,
       "b": 8097059,
       "g": "S"
     },
     {
       "name": "Troop",
-      "v": 179073395,
+      "v": 183568900,
       "b": 188581313,
       "g": "S"
     },
     {
       "name": "Hero",
-      "v": 32354610,
+      "v": 32483632,
       "b": 23484260,
       "g": "SS"
     },
     {
       "name": "Hero Gear",
-      "v": 12955861,
+      "v": 13168561,
       "b": 14161916,
       "g": "S"
     },
@@ -598,25 +598,25 @@
     },
     {
       "name": "Governor Charm",
-      "v": 11980000,
+      "v": 12228000,
       "b": 9383040,
       "g": "SS"
     },
     {
       "name": "Tech",
-      "v": 27588945,
+      "v": 27923445,
       "b": 14483939,
       "g": "SS"
     },
     {
       "name": "Pet",
-      "v": 22229640,
+      "v": 22701120,
       "b": 22741171,
       "g": "S"
     },
     {
       "name": "Master",
-      "v": 14940000,
+      "v": 15392000,
       "b": 32440800,
       "g": "C"
     }
@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1461,8 +1461,8 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Widgets",
-      "Base": "Buildings",
+      "Gear": "Pets",
+      "Base": "Troops",
       "Plan": "Checklists"
     },
     "t11Open": {
@@ -1490,7 +1490,7 @@
   },
   "troopCounts": {
     "inf": {
-      "cur": 500031,
+      "cur": 503450,
       "tgt": 1500000
     },
     "arc": {
@@ -1498,7 +1498,7 @@
       "tgt": 1500000
     },
     "cav": {
-      "cur": 391318,
+      "cur": 398298,
       "tgt": 500000
     }
   },
@@ -2259,20 +2259,20 @@
     {
       "d": "2026-10-14",
       "v": {
-        "power": 319037386,
+        "power": 325541709,
         "leth": 73,
         "hp": 58.8,
         "attWR": 38.08,
         "defWR": 91.68,
-        "p:Building": 9229595,
-        "p:Troop": 179073395,
-        "p:Hero": 32354610,
-        "p:Hero Gear": 12955861,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
         "p:Governor Gear": 8788320,
-        "p:Governor Charm": 11980000,
-        "p:Tech": 27588945,
-        "p:Pet": 22229640,
-        "p:Master": 14940000,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
         "stars": 458
       }
     }
