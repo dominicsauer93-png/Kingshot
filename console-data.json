@@ -1325,7 +1325,7 @@
     }
   ],
   "tg": {
-    "have": 137,
+    "have": 143,
     "need": 4278,
     "ttgHave": 4,
     "ttgNeed": 470
@@ -1462,7 +1462,7 @@
       "Rally": "Heroes",
       "Data": "Update all",
       "Gear": "Widgets",
-      "Base": "T11",
+      "Base": "Buildings",
       "Plan": "Checklists"
     },
     "t11Open": {
