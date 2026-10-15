@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1462,11 +1462,12 @@
       "Rally": "Mystic Trials",
       "Data": "Update all",
       "Gear": "Hero Gear",
-      "Base": "T11",
-      "Plan": "Shops & Packs"
+      "Base": "Troops",
+      "Plan": "Checklists"
     },
     "t11Open": {
-      "nodes": true
+      "nodes": true,
+      "cavNodes": false
     },
     "doAll": false,
     "qOpen": {
@@ -1477,12 +1478,16 @@
       "Troops": false,
       "Shards": false,
       "Masters": false,
-      "Gov": false
+      "Gov": false,
+      "Widgets": true
     },
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": false
+    "heroAll": false,
+    "evOpen": true,
+    "shSpare": true,
+    "petMaxOpen": true
   },
   "troopCounts": {
     "inf": {
@@ -1776,14 +1781,14 @@
       },
       {
         "hero": "Amadeus",
-        "lvl": 5,
-        "have": 49,
+        "lvl": 6,
+        "have": 19,
         "rally": true
       },
       {
         "hero": "Ava",
         "lvl": 4,
-        "have": 0,
+        "have": 3,
         "rally": true
       },
       {
