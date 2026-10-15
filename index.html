@@ -194,6 +194,27 @@
   @media (max-width: 899px){ .btn.sm{min-height:40px;padding:7px 12px} .shr-edit{width:40px;height:40px} .chip{min-height:38px} }
   .fab{position:fixed;right:20px;bottom:24px;z-index:60;width:56px;height:56px;border-radius:50%;border:0;background:var(--acc);color:var(--onacc);box-shadow:var(--shadow-lg);display:grid;place-items:center;font:300 32px/1 var(--f-body);cursor:pointer}
   .fab:hover{filter:brightness(1.08)} @media (max-width: 899px){ .fab{right:16px;bottom:calc(var(--bnav) + 16px + env(safe-area-inset-bottom))} }
+  .hggrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  @media (max-width: 1100px){ .hggrid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  .hgcard{display:flex;flex-direction:column;gap:7px;min-width:0;text-align:left;padding:12px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--panel);box-shadow:var(--shadow);color:var(--text);cursor:pointer;transition:border-color .15s,transform .15s}
+  .hgcard:hover{border-color:var(--gold-2);transform:translateY(-1px)}
+  .hgcard.s-ready{border-color:color-mix(in srgb,var(--green) 55%,var(--line))} .hgcard.s-block{border-color:color-mix(in srgb,var(--red) 45%,var(--line))} .hgcard.s-done{opacity:.75}
+  .hgcard{position:relative}
+  .hgnum{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--onacc);font:800 11.5px var(--f-body);vertical-align:1px}
+  .hgnum.go{background:var(--green);color:#fff}
+  .hgc-rank{position:absolute;top:-8px;left:-8px;min-width:24px;height:24px;font-size:12.5px;box-shadow:var(--shadow)}
+  .hgc-req{font:600 12px var(--f-body);display:flex;flex-wrap:wrap;gap:2px 6px}
+  .hgsum{margin-bottom:4px;line-height:1.7}
+  .hgc-top{display:flex;align-items:center;gap:10px}
+  .hgc-ic{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--sunk);color:var(--muted)} .hgc-ic svg{width:26px;height:26px}
+  .s-ready .hgc-ic{background:var(--green-soft);color:var(--green)} .s-block .hgc-ic{background:var(--red-soft);color:var(--red)} .s-warn .hgc-ic{background:var(--amber-soft);color:var(--amber)}
+  .hgc-id{flex:1;min-width:0;display:flex;flex-direction:column} .hgc-n{font:700 15px var(--f-body)} .hgc-s{font-size:12px;color:var(--faint)}
+  .hgc-lv{display:flex;flex-direction:column;align-items:flex-end;line-height:1} .hgc-lv b{font:700 20px var(--f-mono)} .hgc-lv small{font:600 10.5px var(--f-body);color:var(--faint);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  .hgc-mid{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap} .hgc-b{font:700 15px var(--f-mono)} .hgc-b small{font:500 11.5px var(--f-body);color:var(--faint)}
+  .hgc-m{font-size:12.5px;color:var(--muted)} .hgc-m b{color:var(--text)}
+  .hgcard .bar{margin:0}
+  .hgc-st .tag{font-size:11.5px} .hgc-line{font-size:12.5px;line-height:1.4;color:var(--muted)}
+  .hgtroop{display:inline-flex;align-items:center;gap:8px} .hgtroop svg{width:20px;height:20px;color:var(--gold)}
   .hglist{border:1.5px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--shadow);overflow:hidden}
   .hgrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 12px;align-items:center;width:100%;text-align:left;padding:10px 14px;border:0;border-bottom:1px solid var(--line-soft);border-left:4px solid transparent;background:transparent;color:var(--text)}
   .hgrow:last-child{border-bottom:0} .hgrow:hover{background:var(--hover)}
@@ -2296,11 +2317,44 @@ function hgState(r){
   if(!nx) return {cls:"s-done",tag:tagH("ok","Max imbuement ✓"),line:"Fully imbued"};
   const need=nx[1], ok=M>=need, ahead=M>need, ready=L>=nx[0]-1&&ok;
   if(!ok){ const fhc=hgFhCumulative(need)-hgFhCumulative(M), my=hgMythFromMastery(need)-hgMythFromMastery(M);
-    return {cls:"s-block",tag:tagH("bad",`Mastery +${need-M}`),line:`${fmt(fhc)} hammers${my?` + ${my} Mythic`:""} → ${nx[0]===100?"lets it turn red":"Lv "+nx[0]+" imbue"}`}; }
-  if(ready) return {cls:"s-ready",tag:tagH("gold","Ready to imbue"),line:`Lv ${nx[0]}: ${nx[2]?nx[2]+" Mithril + ":""}${nx[3]} Mythic`+(ahead?" · mastery already ahead":"")};
+    return {cls:"s-block",req:{fh:fhc,mg:my},tag:tagH("bad",`Mastery +${need-M}`),line:`${fmt(fhc)} hammers${my?` + ${my} Mythic`:""} → ${nx[0]===100?"lets it turn red":"Lv "+nx[0]+" imbue"}`}; }
+  if(ready){ const H=(state.heroGear&&state.heroGear.have)||{}, mS=Math.max(0,nx[2]-num(H.mith)), yS=Math.max(0,nx[3]-num(H.mg)); // only "ready" if you can afford the imbue
+    if(mS||yS) return {cls:"s-warn",req:{mith:nx[2],mg:nx[3]},tag:tagH("warn","Need materials"),line:`Lv ${nx[0]} imbue — short ${[mS?mS+" Mithril":"",yS?yS+" Mythic":""].filter(Boolean).join(" + ")}`}; }
+  if(ready) return {cls:"s-ready",req:{mith:nx[2],mg:nx[3]},tag:tagH("ok","Ready to imbue"),line:`Lv ${nx[0]}: ${nx[2]?nx[2]+" Mithril + ":""}${nx[3]} Mythic`+(ahead?" · mastery already ahead":"")};
   if(ahead) return {cls:"s-warn",tag:tagH("warn","Hold hammers"),line:`Mastery is ahead — XP to Lv ${nx[0]-1} first`};
   return {cls:"",tag:tagH("plain",`XP to Lv ${nx[0]-1}`),line:`Then Lv ${nx[0]} imbue (mastery ${need} ✓)`};
 }
+// what each next step needs vs what's in the bag, e.g. "Hammers 110/132 ✓ · Mythic 1/2 ✓"
+const HG_MAT={fh:["Hammers","fh"],mith:["Mithril","mith"],mg:["Mythic","mg"]};
+function hgReqH(req){ if(!req) return ""; const H=state.heroGear.have||{};
+  return Object.entries(req).filter(([,v])=>v>0).map(([k,v])=>{ const h=num(H[HG_MAT[k][1]]), ok=h>=v; return `<span class="${ok?"ok":"bad"}">${HG_MAT[k][0]} ${fmt(h)}/${fmt(v)} ${ok?"✓":"✗"}</span>`; }).join(" · "); }
+const hgAfford=st=>!!st.req&&Object.entries(st.req).every(([k,v])=>num((state.heroGear.have||{})[HG_MAT[k][1]])>=v);
+function hgPriority(rows){ // order of what to do next, across all pieces
+  const ti=t=>{ const i=HG_TYPES.indexOf(t); return i<0?9:i; };
+  const score=r=>{ const st=hgState(r), L=num(r.lvC);
+    if(st.cls==="s-ready") return 0;                       // imbue you can afford now
+    if(st.cls==="s-block"&&hgAfford(st)) return 1;          // mastery step you can afford now
+    if(st.cls===""&&L<119&&r.type!=="Infantry") return 2;   // XP Archer/Cavalry towards Lv 119
+    if(st.cls==="s-block") return 3;                        // mastery, need more hammers
+    if(st.cls==="s-warn") return 4;                         // imbue, waiting on Mithril/Mythic
+    return 5; };
+  const ord=(a,b)=>a.s-b.s||ti(a.r.type)-ti(b.r.type)||num(b.r.lvC)-num(a.r.lvC);
+  const L=rows.filter(r=>hgState(r).cls!=="s-done").map(r=>({r,s:score(r),st:hgState(r)})).sort(ord);
+  const bag={fh:num((state.heroGear.have||{}).fh),mith:num((state.heroGear.have||{}).mith),mg:num((state.heroGear.have||{}).mg)}; // shared budget: two steps can't spend the same hammers
+  L.forEach(x=>{ if(x.s>1) return; const req=Object.entries(x.st.req||{});
+    if(req.every(([k,v])=>bag[k]>=v)) req.forEach(([k,v])=>bag[k]-=v); else x.s=x.st.cls==="s-block"?3:4; });
+  const out=L.sort(ord).map(x=>x.r); out.now=new Set(L.filter(x=>x.s<=1).map(x=>x.r)); return out; } // .now = affordable together right now
+// little pictures for each gear slot and troop type (line drawings, follow the text colour)
+const SLOT_ICON={
+  helm:'<path d="M4.5 14a7.5 7.5 0 0 1 15 0v4.5h-4.2V15H8.7v3.5H4.5z"/><path d="M12 6.5V3.5M8.7 12h6.6"/>',
+  gloves:'<path d="M7.5 21v-7.5L5.2 10.4V6.3a1.2 1.2 0 0 1 2.4 0V9.5M7.6 9.5V4.5a1.2 1.2 0 0 1 2.4 0V9M10 9V3.7a1.2 1.2 0 0 1 2.4 0V9M12.4 9V4.9a1.2 1.2 0 0 1 2.4 0V12l1.6-1.8a1.3 1.3 0 0 1 2 1.6L15.8 16v5z"/><path d="M7.5 18h8.3"/>',
+  chest:'<path d="M8.5 3.5 12 5.3l3.5-1.8L20 6.6l-2.3 4.1V21H6.3V10.7L4 6.6z"/><path d="M12 5.3V21M6.3 14h11.4"/>',
+  boots:'<path d="M7.5 3.5h5.5V13l5.4 2.7a2.1 2.1 0 0 1 1.1 1.9V20H6v-3l1.5-2.4z"/><path d="M6 17h13.5M7.5 8h5.5"/>'};
+const TROOP_ICON={
+  Infantry:'<path d="M12 3l7 2.8v5.4c0 4.6-3 8.3-7 9.8-4-1.5-7-5.2-7-9.8V5.8z"/><path d="M12 8v8M8.5 11.5h7"/>',
+  Cavalry:'<path d="M6 21v-5.5c0-2.3 1-4 2.6-5.3L8 6.5l2.6 1.6L13 4l1 3.5c3 .7 5 3.5 5 6.5l-2.4.8-2.3-1.8-1.3 2.3V21"/><circle cx="12.2" cy="9.3" r=".6"/>',
+  Archer:'<path d="M6 3c7.5 2.6 7.5 15.4 0 18M6 3v18"/><path d="M3.5 12h15.5M16.5 9.4 19.2 12l-2.7 2.6"/>'};
+const hgIcon=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${d}</svg>`;
 function renderHeroGear(){
   const hg=state.heroGear; if(!hg.have) hg.have={xp:0,fh:0,mg:0,mith:0};
   const need={xp:0,fh:0,mg:0,mith:0}; hg.rows.forEach(r=>{ const c=hgCalcCost(r); need.xp+=c.xp; need.fh+=c.fh; need.mg+=c.mg; need.mith+=c.mith; });
@@ -2308,19 +2362,29 @@ function renderHeroGear(){
   $("#hgMats").innerHTML=["xp","fh","mg","mith"].map(k=>{ const h=num(hg.have[k]); return tileH({id:"hgm_"+k,label:names[k],value:fmtBig(h),sub:`of ${fmtBig(need[k])} · ${need[k]>h?`<span class="bad">${fmtBig(need[k]-h)} short</span>`:`<span class="ok">covered</span>`}`,p:pc(h,need[k]),cls:h>=need[k]?"ok":""}); }).join("");
   $$("#hgMats .tile").forEach(t=>t.onclick=openHgMatsSheet);
   const host=$("#hgBody"); host.innerHTML="";
-  const ready=hg.rows.filter(r=>hgState(r).cls==="s-ready");
-  if(ready.length){ const d=document.createElement("div"); d.className="info"; d.innerHTML=`<b class="ok">Ready to imbue now (${ready.length}):</b> `+ready.map(r=>`${esc(r.type)} ${esc(slotName(r.slot))}`).join(" · "); host.appendChild(d); }
+  const prio=hgPriority(hg.rows), rank=new Map(prio.slice(0,3).map((r,i)=>[r,i+1]));
+  const tot={fh:0,mith:0,mg:0}; hg.rows.forEach(r=>{ const st=hgState(r); if(st.req) Object.entries(st.req).forEach(([k,v])=>tot[k]+=v); });
+  const SRC={mg:"Arena Shop (Custom Mythic Gear Chest), Merchant Empire, Armament",mith:"Mystic Trials, Trial Shop, Arena Shop",fh:"VIP Shop, Trial Shop, Merchant Empire"};
+  const short=Object.entries(tot).map(([k,v])=>({k,v,h:num(hg.have[HG_MAT[k][1]])})).filter(x=>x.v>x.h).sort((a,b)=>(b.v-b.h)/b.v-(a.v-a.h)/a.v);
+  const d=document.createElement("div"); d.className="info hgsum";
+  d.innerHTML=(prio.length?`<b>Do next:</b> `+prio.slice(0,3).map((r,i)=>`<span class="hgnum${prio.now.has(r)?" go":""}">${i+1}</span> ${esc(r.type)} ${esc(slotName(r.slot))}${prio.now.has(r)?' <span class="ok">(can do now)</span>':""}`).join(" &nbsp; "):"<b>All pieces fully imbued ✓</b>")+
+    (short.length?`<br><b>Bottleneck — ${HG_MAT[short[0].k][0]==="Hammers"?"Forgehammers":HG_MAT[short[0].k][0]==="Mythic"?"Mythic Gear":"Mithril"}:</b> need ${fmt(short[0].v)} for every next step, you have ${fmt(short[0].h)}. Get it from ${SRC[short[0].k]}.`+
+      (short.length>1?`<br><span class="faint">Also short: ${short.slice(1).map(x=>`${HG_MAT[x.k][0]==="Hammers"?"Forgehammers":HG_MAT[x.k][0]==="Mythic"?"Mythic Gear":"Mithril"} ${fmt(x.h)}/${fmt(x.v)}`).join(" · ")}</span>`:""):"");
+  host.appendChild(d);
   HG_TYPES.forEach(type=>{
     const pieces=hg.rows.filter(r=>r.type===type); if(!pieces.length) return;
     const blk=pieces.find(r=>hgState(r).cls==="s-block"), rdy=pieces.find(r=>hgState(r).cls==="s-ready"), low=pieces.filter(r=>num(r.lvC)<119).sort((a,b)=>num(b.lvC)-num(a.lvC))[0];
     const next=blk?`next: ${slotName(blk.slot)} mastery`:low?`next: ${slotName(low.slot)} → Lv 119`:rdy?`ready: ${slotName(rdy.slot)} imbue`:"all on track";
     const sec=document.createElement("div"); sec.className="mt";
-    sec.innerHTML=`<h2 class="h2">${type} <small>${esc(next)}</small></h2><div class="hglist"></div>`;
-    const grid=sec.querySelector(".hglist");
-    pieces.forEach(r=>{ const L=num(r.lvC), st=hgState(r), b=document.createElement("button"); b.className="hgrow "+st.cls;
-      b.innerHTML=`<span><span class="hn">${esc(slotName(r.slot))} <small>${esc(slotStat(r.slot))}</small></span><br><span class="hl">Lv ${L} · M${num(r.mC)}</span></span>
-        <span class="hb">${hgBonus(L).toFixed(1)}%<small>bonus${L<119?`<span class="to"> → ${hgBonus(119).toFixed(1)}% at 119</span>`:""}</small></span>
-        <span class="hs">${st.tag}<span>${st.line}</span></span>${barH(pc(L,Math.max(num(r.lvT),L)),st.cls==="s-done"?"ok":"")}`;
+    sec.innerHTML=`<h2 class="h2"><span class="hgtroop">${hgIcon(TROOP_ICON[type])}${type}</span> <small>${esc(next)}</small></h2><div class="hggrid"></div>`;
+    const grid=sec.querySelector(".hggrid");
+    pieces.forEach(r=>{ const L=num(r.lvC), st=hgState(r), b=document.createElement("button"); b.className="hgcard "+st.cls;
+      b.innerHTML=`<span class="hgc-top"><span class="hgc-ic">${hgIcon(SLOT_ICON[slotName(r.slot).toLowerCase()]||SLOT_ICON.helm)}</span>
+          <span class="hgc-id"><span class="hgc-n">${esc(slotName(r.slot))}</span><span class="hgc-s">${esc(slotStat(r.slot))}</span></span>
+          <span class="hgc-lv"><b>${L}</b><small>Lv</small></span></span>${rank.has(r)?`<span class="hgnum hgc-rank${prio.now.has(r)?" go":""}">${rank.get(r)}</span>`:""}
+        <span class="hgc-mid"><span class="hgc-b">${hgBonus(L).toFixed(1)}%<small> bonus</small></span><span class="hgc-m">Mastery <b>${num(r.mC)}</b></span></span>
+        ${barH(pc(L,Math.max(num(r.lvT),L)),st.cls==="s-ready"||st.cls==="s-done"?"ok":st.cls==="s-block"?"bad":"")}
+        <span class="hgc-st">${st.tag}</span><span class="hgc-line">${st.line}</span>${st.req?`<span class="hgc-req">${hgReqH(st.req)}</span>`:""}`;
       b.onclick=()=>openHgSheet(r); grid.appendChild(b); });
     host.appendChild(sec);
   });
