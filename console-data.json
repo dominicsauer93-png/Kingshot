@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1459,7 +1459,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Heroes",
+      "Rally": "Mystic Trials",
       "Data": "Update all",
       "Gear": "Widgets",
       "Base": "Troops",
@@ -1787,8 +1787,8 @@
       },
       {
         "hero": "Ava",
-        "lvl": 3,
-        "have": 21,
+        "lvl": 4,
+        "have": 0,
         "rally": true
       },
       {
@@ -1805,14 +1805,14 @@
       },
       {
         "hero": "Wee & Woo",
-        "lvl": 0,
-        "have": 15,
+        "lvl": 2,
+        "have": 0,
         "rally": true
       },
       {
         "hero": "Charles",
-        "lvl": 0,
-        "have": 15,
+        "lvl": 2,
+        "have": 0,
         "rally": true
       },
       {
