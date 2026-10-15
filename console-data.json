@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1459,14 +1459,15 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
-      "Data": "Sync",
-      "Gear": "Hero Gear",
-      "Base": "T11",
-      "Plan": "Shops & Packs"
+      "Rally": "Heroes",
+      "Data": "Update all",
+      "Gear": "Widgets",
+      "Base": "Troops",
+      "Plan": "Checklists"
     },
     "t11Open": {
-      "nodes": true
+      "nodes": true,
+      "cavNodes": false
     },
     "doAll": false,
     "qOpen": {
@@ -1477,12 +1478,16 @@
       "Troops": false,
       "Shards": false,
       "Masters": false,
-      "Gov": false
+      "Gov": false,
+      "Widgets": true
     },
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": false
+    "heroAll": false,
+    "evOpen": true,
+    "shSpare": true,
+    "petMaxOpen": true
   },
   "troopCounts": {
     "inf": {
@@ -2233,47 +2238,7 @@
       }
     },
     {
-      "d": "2026-10-13",
-      "v": {
-        "power": 319037386,
-        "leth": 73,
-        "hp": 58.8,
-        "attWR": 38.08,
-        "defWR": 91.68,
-        "p:Building": 9229595,
-        "p:Troop": 179073395,
-        "p:Hero": 32354610,
-        "p:Hero Gear": 12955861,
-        "p:Governor Gear": 8788320,
-        "p:Governor Charm": 11980000,
-        "p:Tech": 27588945,
-        "p:Pet": 22229640,
-        "p:Master": 14940000,
-        "stars": 458
-      }
-    },
-    {
       "d": "2026-10-12",
-      "v": {
-        "power": 319037386,
-        "leth": 73,
-        "hp": 58.8,
-        "attWR": 38.08,
-        "defWR": 91.68,
-        "p:Building": 9229595,
-        "p:Troop": 179073395,
-        "p:Hero": 32354610,
-        "p:Hero Gear": 12955861,
-        "p:Governor Gear": 8788320,
-        "p:Governor Charm": 11980000,
-        "p:Tech": 27588945,
-        "p:Pet": 22229640,
-        "p:Master": 14940000,
-        "stars": 458
-      }
-    },
-    {
-      "d": "2026-10-13",
       "v": {
         "power": 319037386,
         "leth": 73,
@@ -2295,20 +2260,20 @@
     {
       "d": "2026-10-14",
       "v": {
-        "power": 319037386,
+        "power": 325541709,
         "leth": 73,
         "hp": 58.8,
         "attWR": 38.08,
         "defWR": 91.68,
-        "p:Building": 9229595,
-        "p:Troop": 179073395,
-        "p:Hero": 32354610,
-        "p:Hero Gear": 12955861,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
         "p:Governor Gear": 8788320,
-        "p:Governor Charm": 11980000,
-        "p:Tech": 27588945,
-        "p:Pet": 22229640,
-        "p:Master": 14940000,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
         "stars": 458
       }
     },
