@@ -9,9 +9,9 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 69,
+    "current": 84,
     "target": 6938,
-    "gold": 1110000
+    "gold": 539580
   },
   "nodes": [
     {
@@ -1325,9 +1325,9 @@
     }
   ],
   "tg": {
-    "have": 143,
+    "have": 320,
     "need": 4278,
-    "ttgHave": 4,
+    "ttgHave": 7,
     "ttgNeed": 470
   },
   "govGear": {
@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1461,8 +1461,8 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Shards",
-      "Base": "Troops",
+      "Gear": "Pets",
+      "Base": "Buildings",
       "Plan": "Checklists"
     },
     "t11Open": {
