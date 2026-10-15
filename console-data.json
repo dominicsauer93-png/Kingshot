@@ -696,15 +696,15 @@
     {
       "n": "Charles",
       "need": 463,
-      "have": 11,
-      "pos": 13,
+      "have": 0,
+      "pos": 16,
       "tgt": 30,
       "rally": false
     },
     {
       "n": "Hilde",
       "need": 740,
-      "have": 2,
+      "have": 4,
       "pos": 23,
       "tgt": 30,
       "rally": false
@@ -712,7 +712,7 @@
     {
       "n": "Marlin",
       "need": 700,
-      "have": 69,
+      "have": 70,
       "pos": 23,
       "tgt": 30,
       "rally": false
@@ -720,7 +720,7 @@
     {
       "n": "Zoe",
       "need": 600,
-      "have": 10,
+      "have": 11,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -728,7 +728,7 @@
     {
       "n": "Jaeger",
       "need": 700,
-      "have": 33,
+      "have": 34,
       "pos": 23,
       "tgt": 30,
       "rally": false
@@ -736,7 +736,7 @@
     {
       "n": "Eric",
       "need": 700,
-      "have": 21,
+      "have": 24,
       "pos": 23,
       "tgt": 30,
       "rally": false
@@ -744,7 +744,7 @@
     {
       "n": "Rosa",
       "need": 500,
-      "have": 34,
+      "have": 36,
       "pos": 25,
       "tgt": 30,
       "rally": false
@@ -752,7 +752,7 @@
     {
       "n": "Petra",
       "need": 500,
-      "have": 34,
+      "have": 36,
       "pos": 25,
       "tgt": 30,
       "rally": false
@@ -768,7 +768,7 @@
     {
       "n": "Alcar",
       "need": 600,
-      "have": 48,
+      "have": 49,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -776,7 +776,7 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 84,
+      "have": 100,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -808,7 +808,7 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 69,
+      "have": 84,
       "pos": 26,
       "tgt": 30,
       "rally": false
@@ -824,15 +824,15 @@
     {
       "n": "Wee & Woo",
       "need": 0,
-      "have": 25,
-      "pos": 20,
+      "have": 0,
+      "pos": 21,
       "tgt": 30,
       "rally": true
     },
     {
       "n": "Vivian",
       "need": 0,
-      "have": 49,
+      "have": 57,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -1333,9 +1333,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 102487,
-      "threads": 1004,
-      "vision": 687
+      "satin": 112663,
+      "threads": 1110,
+      "vision": 721
     },
     "pieces": [
       {
@@ -1461,7 +1461,7 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Shards",
       "Base": "Troops",
       "Plan": "Checklists"
     },
@@ -1510,15 +1510,15 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 202,
+      "fh": 132,
       "mg": 2,
-      "mith": 11
+      "mith": 19
     },
     "rows": [
       {
         "type": "Infantry",
         "slot": "Helm (Lethality)",
-        "lvC": 109,
+        "lvC": 112,
         "lvT": 179,
         "mC": 10,
         "mT": 15,
@@ -1578,7 +1578,7 @@
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 100,
+        "lvC": 101,
         "lvT": 139,
         "mC": 10,
         "mT": 12,
@@ -1652,7 +1652,7 @@
         "slot": "Boots (Lethality)",
         "lvC": 119,
         "lvT": 179,
-        "mC": 11,
+        "mC": 12,
         "mT": 15,
         "xp": 285700,
         "fh": 540,
@@ -1674,8 +1674,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 709,
-      "designs": 279
+      "guides": 728,
+      "designs": 283
     },
     "rows": [
       {
@@ -2294,7 +2294,7 @@
         "p:Tech": 27923445,
         "p:Pet": 22701120,
         "p:Master": 15392000,
-        "stars": 458
+        "stars": 462
       }
     }
   ],
@@ -2613,7 +2613,7 @@
       }
     ]
   },
-  "shardGeneral": 58,
+  "shardGeneral": 44,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Alliance Brawl|2026-10-12",
