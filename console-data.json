@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1461,7 +1461,7 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Pets",
+      "Gear": "Hero Gear",
       "Base": "Buildings",
       "Plan": "Checklists"
     },
