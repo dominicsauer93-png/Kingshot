@@ -2,15 +2,15 @@
   "account": {
     "tc": "Truegold Lv. 7",
     "day": "485",
-    "power": "325541709",
+    "power": "327880096",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "Main - all out attack ",
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 176,
-    "target": 6938,
+    "current": 46,
+    "target": 7224,
     "gold": 539580
   },
   "nodes": [
@@ -221,7 +221,7 @@
     },
     {
       "name": "Truegold Legionaries (Rally Capacity)",
-      "cur": 10,
+      "cur": 9,
       "max": 12,
       "costs": [
         83,
@@ -240,7 +240,7 @@
     },
     {
       "name": "Truegold Mauls (Attack)",
-      "cur": 7,
+      "cur": 8,
       "max": 12,
       "costs": [
         54,
@@ -1484,9 +1484,9 @@
     },
     "sub": {
       "Rally": "Masters",
-      "Data": "Update all",
-      "Gear": "Widgets",
-      "Base": "T11",
+      "Data": "Account",
+      "Gear": "Governor",
+      "Base": "Troops",
       "Plan": "Shops & Packs"
     },
     "t11Open": {
@@ -2324,7 +2324,7 @@
     {
       "d": "2026-10-16",
       "v": {
-        "power": 325541709,
+        "power": 327880096,
         "leth": 73,
         "hp": 58.8,
         "attWR": 38.08,
