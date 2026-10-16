@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Plan",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1487,7 +1487,7 @@
       "Data": "Update all",
       "Gear": "Widgets",
       "Base": "T11",
-      "Plan": "Checklists"
+      "Plan": "Shops & Packs"
     },
     "t11Open": {
       "nodes": true,
