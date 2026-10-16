@@ -718,7 +718,8 @@
       </section>
 
       <section class="sec" data-sub="Governor" data-key="Governor Gear">
-        <div class="tiles" id="govTiles"></div>
+        <div class="info" id="govPlan"></div>
+        <div class="tiles mt" id="govTiles"></div>
         <div class="grid mt" style="--min:170px" id="govBody"></div>
         <p class="note-line" id="govNote"></p>
       </section>
@@ -2009,8 +2010,9 @@ function paintGoals(){
   if(pet){ const goal=num(pet.tgt)||num(pet.max), lv=num(pet.lvl), adv=Math.min(goal,(Math.floor(lv/10)+1)*10);
     spend.push({k:"pet",title:`${esc(pet.n||"Pet")} → Lv ${adv}`,detail:`Lv ${lv} of ${goal} · save advances for KvK days`,open:()=>openPetSheet(pet),key:"Pets"}); }
   // governor gear
-  const g=state.govGear; if(g){ const tgt=g.targetIdx, lag=g.pieces.filter(p=>p.cur<tgt); let sat=0; g.pieces.forEach(p=>{ sat+=govRem(p.cur,tgt).s; }); const sH=num(g.have&&g.have.satin);
-    if(lag.length) spend.push({k:"gov",title:`Governor Gear to ${GOV_TIERS[tgt][0]}`,detail:`${6-lag.length}/6 pieces there · Satin ${sat-sH>0?fmt(sat-sH)+" short":"covered"}`,open:()=>openGovPieceSheet(lag.sort((a,b)=>a.cur-b.cur)[0]),key:"Governor Gear"}); }
+  const g=state.govGear; if(g&&g.pieces){ const P=govPlan(), sH=num(g.have&&g.have.satin);
+    if(P.cur&&P.step.length){ const p0=P.step[0], nx=num(p0.cur)+1, one=GOV_TIERS[nx]||[], tH=num(g.have&&g.have.threads), vH=num(g.have&&g.have.vision), ready=one[1]<=sH&&one[2]<=tH&&one[3]<=vH;
+      spend.push({k:"gov",title:`${esc(p0.name)}: ${esc(GOV_TIERS[num(p0.cur)][0])} → ${esc(one[0]||"")}`,detail:`Plan step: ${esc(P.label(P.cur))} · ${ready?"you have the materials":`Satin ${fmt(one[1])} · Threads ${fmt(one[2])}${one[3]?` · Vision ${fmt(one[3])}`:""}`}`,tag:ready?"Ready":"",open:()=>openGovPieceSheet(p0),key:"Governor Gear"}); } }
   // widgets — lowest-level rally hero first, so all three stay level
   const W=(state.widgets&&state.widgets.rows)||[], WR=W.some(r=>r.rally)?W.filter(r=>r.rally):W;
   const wc=WR.filter(r=>num(r.lvl)<10).map(r=>({r,next:widNext(num(r.lvl)),have:num(r.have)})).sort((a,b)=>num(a.r.lvl)-num(b.r.lvl)||(a.next-a.have)-(b.next-b.have))[0];
@@ -2329,27 +2331,28 @@ const HG_MAT={fh:["Hammers","fh"],mith:["Mithril","mith"],mg:["Mythic","mg"]};
 function hgReqH(req){ if(!req) return ""; const H=state.heroGear.have||{};
   return Object.entries(req).filter(([,v])=>v>0).map(([k,v])=>{ const h=num(H[HG_MAT[k][1]]), ok=h>=v; return `<span class="${ok?"ok":"bad"}">${HG_MAT[k][0]} ${fmt(h)}/${fmt(v)} ${ok?"✓":"✗"}</span>`; }).join(" · "); }
 const hgAfford=st=>!!st.req&&Object.entries(st.req).every(([k,v])=>num((state.heroGear.have||{})[HG_MAT[k][1]])>=v);
-// Ranking = Quaad's rules + the optimiser's stat order (kingshotoptimizer.com hero gear guide):
-//  1. can you do it now (you have the materials) — budget-aware, two steps can't spend the same hammers
-//  2. Quaad: Archer + Cavalry pieces to Lv 119 (Red +19) before anything else
-//  3. Quaad: Forgehammers only one step behind the next imbue (pieces with mastery ahead wait)
-//  4. optimiser stat order: Inf Health → Archer Lethality → Cav Lethality → Inf Lethality → Archer Health → Cav Health
-const HG_STAT_ORDER=["Infantry Health","Archer Lethality","Cavalry Lethality","Infantry Lethality","Archer Health","Cavalry Health"];
+// Ranking matches the optimiser's picks (kingshotoptimizer.com weighted stat gain) using simple rules:
+//  1. Lethality pieces before Health (rally leader — the optimiser weights Lethality higher)
+//  2. Quaad: Archer + Cavalry before Infantry; Forgehammers only one step behind the next imbue (pieces with mastery ahead wait)
+//  3. a mastery step before an imbue (mastery gives the bigger gain, e.g. +6.5% vs +1.4%)
+//  4. cheaper imbue first (Lv 120 before Lv 140), then Archer before Cavalry
+// Materials go to the top picks first; a green badge means you can afford it now.
+const HG_STAT_ORDER=["Archer Lethality","Cavalry Lethality","Infantry Lethality","Infantry Health","Archer Health","Cavalry Health"];
 const hgStatRank=r=>{ const i=HG_STAT_ORDER.indexOf(r.type+" "+slotStat(r.slot)); return i<0?9:i; };
-const hgQuaad=r=>(r.type==="Archer"||r.type==="Cavalry")&&num(r.lvC)<119?0:1; // 0 = still climbing to Lv 119
+const hgQuaad=r=>r.type==="Infantry"?1:0;
+const hgLeth=r=>/lethal/i.test(slotStat(r.slot))?0:1;
+const hgAct=st=>st.cls==="s-block"?0:st.req?1:2; // mastery, imbue, XP
 function hgPriority(rows){
   const H=state.heroGear.have||{}, bag={fh:num(H.fh),mith:num(H.mith),mg:num(H.mg),xp:num(H.xp)};
   const L=rows.map(r=>({r,st:hgState(r)})).filter(x=>x.st.cls!=="s-done");
   L.forEach(x=>{ x.wait=x.st.cls==="s-warn"&&!x.st.req?1:0; }); // "Hold hammers": mastery already ahead — Quaad says wait
-  const ord=(a,b)=>a.wait-b.wait||hgQuaad(a.r)-hgQuaad(b.r)||hgStatRank(a.r)-hgStatRank(b.r)||num(b.r.lvC)-num(a.r.lvC);
+  const ord=(a,b)=>a.wait-b.wait||hgLeth(a.r)-hgLeth(b.r)||hgQuaad(a.r)-hgQuaad(b.r)||hgAct(a.st)-hgAct(b.st)||num(a.r.lvC)-num(b.r.lvC)||hgStatRank(a.r)-hgStatRank(b.r);
   L.sort(ord);
-  L.forEach(x=>{ const req=Object.entries(x.st.req||{}); // XP-only steps need Enhancement XP
-    const need=x.st.req?req:(x.st.cls===""?[["xp",1]]:[]);
+  L.forEach(x=>{ const req=Object.entries(x.st.req||{}), need=x.st.req?req:(x.st.cls===""?[["xp",1]]:[]);
     x.now=!x.wait&&need.length>0&&need.every(([k,v])=>bag[k]>=v);
     if(x.now&&x.st.req) req.forEach(([k,v])=>bag[k]-=v); });
-  L.sort((a,b)=>(b.now-a.now)||ord(a,b));
   const out=L.map(x=>x.r); out.now=new Set(L.filter(x=>x.now).map(x=>x.r));
-  out.why=r=>`${hgQuaad(r)===0?"Quaad: to Lv 119 · ":""}${r.type} ${slotStat(r.slot)} (#${hgStatRank(r)+1} stat)`; return out; }
+  out.why=r=>{ const st=hgState(r); return `${r.type} ${slotStat(r.slot)} · ${st.cls==="s-block"?"mastery step":st.req?"imbue":"XP to the next imbue"}`; }; return out; }
 // little pictures for each gear slot and troop type (line drawings, follow the text colour)
 const SLOT_ICON={
   helm:'<path d="M4.5 14a7.5 7.5 0 0 1 15 0v4.5h-4.2V15H8.7v3.5H4.5z"/><path d="M12 6.5V3.5M8.7 12h6.6"/>',
@@ -2374,7 +2377,7 @@ function renderHeroGear(){
   const short=Object.entries(tot).map(([k,v])=>({k,v,h:num(hg.have[HG_MAT[k][1]])})).filter(x=>x.v>x.h).sort((a,b)=>(b.v-b.h)/b.v-(a.v-a.h)/a.v);
   const d=document.createElement("div"); d.className="info hgsum";
   d.innerHTML=(prio.length?`<b>Do next:</b> `+prio.slice(0,3).map((r,i)=>`<br><span class="hgnum${prio.now.has(r)?" go":""}">${i+1}</span> <b>${esc(r.type)} ${esc(slotName(r.slot))}</b>${prio.now.has(r)?' <span class="ok">can do now</span>':""} <span class="faint">— ${esc(prio.why(r))}</span>`).join(""):"<b>All pieces fully imbued ✓</b>")+
-    `<br><span class="faint" style="font-size:12.5px">Ranked by Quaad (Archer + Cavalry to Lv 119 first, hammers one step behind the next imbue), then the optimiser's stat order: Inf Health → Archer Lethality → Cav Lethality → Inf Lethality → Archer Health → Cav Health.</span>`+
+    `<br><span class="faint" style="font-size:12.5px">Ranked to match the optimiser: Lethality before Health · Archer + Cavalry before Infantry (Quaad) · mastery steps before imbues · cheaper imbues first. Materials go to the top picks first.</span>`+
     (short.length?`<br><b>Bottleneck — ${HG_MAT[short[0].k][0]==="Hammers"?"Forgehammers":HG_MAT[short[0].k][0]==="Mythic"?"Mythic Gear":"Mithril"}:</b> need ${fmt(short[0].v)} for every next step, you have ${fmt(short[0].h)}. Get it from ${SRC[short[0].k]}.`+
       (short.length>1?`<br><span class="faint">Also short: ${short.slice(1).map(x=>`${HG_MAT[x.k][0]==="Hammers"?"Forgehammers":HG_MAT[x.k][0]==="Mythic"?"Mythic Gear":"Mithril"} ${fmt(x.h)}/${fmt(x.v)}`).join(" · ")}</span>`:""):"");
   host.appendChild(d);
@@ -2619,19 +2622,40 @@ function openShardSheet(r){
 }
 
 /* ---------- governor gear ---------- */
+/* ---------- governor gear plan (your rule) ----------
+   Infantry + Archer go up a tier first; Cavalry follows one tier behind:
+   Inf+Arch → Gold T1, Inf+Arch → Gold T2, Cav → Gold T1, Inf+Arch → Gold T3, Cav → Gold T2 … (each tier = its 0★) */
+const GOV_MS=[14,18,22,26,30,34,38,42,46,50,54]; // Gold, Gold T1, Gold T2, Gold T3, Red, Red T1 …
+const govIsCav=p=>/cav/i.test(p.name||"");
+function govPlan(){
+  const g=state.govGear, main=g.pieces.filter(p=>!govIsCav(p)), cav=g.pieces.filter(govIsCav);
+  const goals=[]; for(let i=1;i<GOV_MS.length;i++){ goals.push({who:"main",to:GOV_MS[i]}); goals.push({who:"cav",to:GOV_MS[i-1]}); }
+  const set=w=>w==="main"?main:cav, open=G=>set(G.who).some(p=>num(p.cur)<G.to);
+  const ci=goals.findIndex(open), cur=ci<0?null:goals[ci];
+  const mainT=(goals.find(G=>G.who==="main"&&open(G))||{to:GOV_MS[GOV_MS.length-1]}).to;
+  const cavT=(goals.find(G=>G.who==="cav"&&open(G))||{to:GOV_MS[GOV_MS.length-1]}).to;
+  const label=G=>`${G.who==="main"?"Infantry + Archer":"Cavalry"} → ${GOV_TIERS[G.to][0]}`;
+  const tgtOf=p=>govIsCav(p)?cavT:mainT;
+  const step=cur?set(cur.who).filter(p=>num(p.cur)<cur.to).sort((a,b)=>num(a.cur)-num(b.cur)):[];
+  let s=0,t=0,v=0; step.forEach(p=>{ const r=govRem(num(p.cur),cur.to); s+=r.s; t+=r.t; v+=r.v; });
+  return {goals,ci,cur,label,tgtOf,step,need:{s,t,v}};
+}
 function renderGov(){
   const g=state.govGear; if(!g.have) g.have={satin:0,threads:0,vision:0};
-  const tgt=g.targetIdx; let s=0,t=0,v=0; g.pieces.forEach(p=>{ const r=govRem(p.cur,tgt); s+=r.s; t+=r.t; v+=r.v; });
-  const at=g.pieces.filter(p=>p.cur>=tgt).length;
+  const P=govPlan(), cur=P.cur; const {s,t,v}=P.need;
+  const at=cur?(cur.who==="main"?g.pieces.filter(p=>!govIsCav(p)):g.pieces.filter(govIsCav)).filter(p=>num(p.cur)>=cur.to).length:6, of=cur?(cur.who==="main"?g.pieces.filter(p=>!govIsCav(p)).length:g.pieces.filter(govIsCav).length):6;
+  $("#govPlan").innerHTML=`<b>Your plan:</b> Infantry + Archer go up a tier first, Cavalry stays one tier behind.<br>`+
+    P.goals.map((G,idx)=>({G,idx})).filter(({G,idx})=>idx===P.ci-1||idx===P.ci||(idx>P.ci&&(G.who==="main"?state.govGear.pieces.filter(p=>!govIsCav(p)):state.govGear.pieces.filter(govIsCav)).some(p=>num(p.cur)<G.to))).slice(0,4).map(({G,idx})=>{ const done=idx<P.ci||P.ci<0, now=idx===P.ci;
+      return `<span class="${done?"ok":now?"":"faint"}">${done?"✓":now?"▶":"·"} ${esc(P.label(G))}</span>${now&&P.step.length?` <span class="faint">— next: ${P.step.map(p=>`${esc(p.name)} (${esc(GOV_TIERS[num(p.cur)][0])})`).join(", ")}</span>`:""}`; }).join("<br>");
   const mt=(id,l,need,have)=>tileH({id,label:l,value:fmtBig(have),sub:`of ${fmtBig(need)} · ${need>have?`<span class="bad">${fmtBig(need-have)} short</span>`:`<span class="ok">covered</span>`}`,p:pc(have,need)});
-  $("#govTiles").innerHTML=tileH({id:"gvT",label:"Target tier",value:esc(GOV_TIERS[tgt][0]),txt:true,sub:`${at}/6 pieces there`,p:pc(at,6),cls:at===6?"ok":""})+
+  $("#govTiles").innerHTML=tileH({id:"gvT",label:"Current step",value:cur?esc(GOV_TIERS[cur.to][0]):"Plan done",txt:true,sub:cur?`${cur.who==="main"?"Inf + Archer":"Cavalry"} · ${at}/${of} there`:"",p:pc(at,of),cls:at===of?"ok":""})+
     mt("gvS","Satin",s,num(g.have.satin))+mt("gvG","Gilded Threads",t,num(g.have.threads))+mt("gvV","Artisan's Vision",v,num(g.have.vision));
-  on("gvT",openGovTargetSheet); ["gvS","gvG","gvV"].forEach(id=>on(id,openGovMatsSheet));
+  on("gvT",()=>P.step[0]&&openGovPieceSheet(P.step[0])); ["gvS","gvG","gvV"].forEach(id=>on(id,openGovMatsSheet));
   const b=$("#govBody");
-  b.innerHTML=g.pieces.map((p,i)=>{ const done=p.cur>=tgt, r=govRem(p.cur,tgt);
-    return `<button class="vcard ${done?"s-done":""}" data-i="${i}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(p.name||"Piece")}</span></span><span class="vc-big" style="font:700 17px var(--f-body);color:var(--text)">${esc(GOV_TIERS[p.cur]?GOV_TIERS[p.cur][0]:"—")}</span>${barH(tgt>0?pc(p.cur,tgt):100,done?"ok":"")}<span class="vc-line">${done?'<span class="ok">At target ✓</span>':`${fmtBig(r.s)} Satin to target`}</span></button>`; }).join("");
+  b.innerHTML=g.pieces.map((p,i)=>{ const tgt=P.tgtOf(p), done=p.cur>=tgt, r=govRem(p.cur,tgt);
+    return `<button class="vcard ${done?"s-done":""}" data-i="${i}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(p.name||"Piece")}</span></span><span class="vc-big" style="font:700 17px var(--f-body);color:var(--text)">${esc(GOV_TIERS[p.cur]?GOV_TIERS[p.cur][0]:"—")}</span>${barH(tgt>0?pc(p.cur,tgt):100,done?"ok":"")}<span class="vc-line">${done?'<span class="ok">At target ✓</span>':(P.cur&&P.cur.who!==(govIsCav(p)?"cav":"main"))?`<span class="faint">waits — ${esc(GOV_TIERS[tgt][0])} after ${govIsCav(p)?"Inf + Archer go up":"Cavalry catches up"}</span>`:`→ ${esc(GOV_TIERS[tgt][0])} · ${fmtBig(r.s)} Satin`}</span></button>`; }).join("");
   bindAll(b,".vcard",x=>openGovPieceSheet(g.pieces[+x.dataset.i]));
-  $("#govNote").innerHTML=at===6?"Set complete — full set bonus active.":"The set bonus needs all 6 at the same tier — level the lowest first.";
+  $("#govNote").innerHTML="Materials above are for the current step only. Each card shows that piece's own target (Cavalry's is one tier lower).";
 }
 const govOpts=()=>GOV_TIERS.map((r,i)=>[String(i),r[0]]);
 function openGovTargetSheet(){ const g=state.govGear; openSheet({title:"Governor Gear target",sub:"All 6 pieces aim for this tier.",build(f){ f.appendChild(fld("Target tier",{type:"select",value:String(g.targetIdx),options:govOpts(),set:v=>g.targetIdx=parseInt(v,10)})); }}); }
