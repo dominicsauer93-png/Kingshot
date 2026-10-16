@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1483,9 +1483,9 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
+      "Rally": "Masters",
       "Data": "Update all",
-      "Gear": "Charms",
+      "Gear": "Widgets",
       "Base": "T11",
       "Plan": "Checklists"
     },
