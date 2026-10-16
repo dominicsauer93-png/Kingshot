@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1483,11 +1483,11 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
-      "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Rally": "Masters",
+      "Data": "Account",
+      "Gear": "Governor",
       "Base": "Troops",
-      "Plan": "Checklists"
+      "Plan": "Shops & Packs"
     },
     "t11Open": {
       "nodes": true,
@@ -2303,26 +2303,6 @@
     },
     {
       "d": "2026-10-15",
-      "v": {
-        "power": 325541709,
-        "leth": 73,
-        "hp": 58.8,
-        "attWR": 38.08,
-        "defWR": 91.68,
-        "p:Building": 9287731,
-        "p:Troop": 183568900,
-        "p:Hero": 32483632,
-        "p:Hero Gear": 13168561,
-        "p:Governor Gear": 8788320,
-        "p:Governor Charm": 12228000,
-        "p:Tech": 27923445,
-        "p:Pet": 22701120,
-        "p:Master": 15392000,
-        "stars": 462
-      }
-    },
-    {
-      "d": "2026-10-17",
       "v": {
         "power": 325541709,
         "leth": 73,
