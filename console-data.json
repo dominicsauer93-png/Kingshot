@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1483,9 +1483,9 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Overview",
+      "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Governor",
+      "Gear": "Charms",
       "Base": "T11",
       "Plan": "Checklists"
     },
@@ -1698,8 +1698,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 728,
-      "designs": 283
+      "guides": 736,
+      "designs": 291
     },
     "rows": [
       {
