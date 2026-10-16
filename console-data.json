@@ -1326,9 +1326,9 @@
   ],
   "tg": {
     "have": 320,
-    "need": 4278,
+    "need": 4158,
     "ttgHave": 7,
-    "ttgNeed": 470
+    "ttgNeed": 458
   },
   "govGear": {
     "targetIdx": 18,
@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1461,7 +1461,7 @@
     "sub": {
       "Rally": "Mystic Trials",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Widgets",
       "Base": "Buildings",
       "Plan": "Checklists"
     },
@@ -2415,7 +2415,7 @@
     },
     {
       "n": "Infirmary",
-      "stepIdx": 2,
+      "stepIdx": 5,
       "note": "Healing sustain — defer, big",
       "d": false
     }
