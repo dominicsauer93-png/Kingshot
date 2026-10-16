@@ -2329,21 +2329,27 @@ const HG_MAT={fh:["Hammers","fh"],mith:["Mithril","mith"],mg:["Mythic","mg"]};
 function hgReqH(req){ if(!req) return ""; const H=state.heroGear.have||{};
   return Object.entries(req).filter(([,v])=>v>0).map(([k,v])=>{ const h=num(H[HG_MAT[k][1]]), ok=h>=v; return `<span class="${ok?"ok":"bad"}">${HG_MAT[k][0]} ${fmt(h)}/${fmt(v)} ${ok?"✓":"✗"}</span>`; }).join(" · "); }
 const hgAfford=st=>!!st.req&&Object.entries(st.req).every(([k,v])=>num((state.heroGear.have||{})[HG_MAT[k][1]])>=v);
-function hgPriority(rows){ // order of what to do next, across all pieces
-  const ti=t=>{ const i=HG_TYPES.indexOf(t); return i<0?9:i; };
-  const score=r=>{ const st=hgState(r), L=num(r.lvC);
-    if(st.cls==="s-ready") return 0;                       // imbue you can afford now
-    if(st.cls==="s-block"&&hgAfford(st)) return 1;          // mastery step you can afford now
-    if(st.cls===""&&L<119&&r.type!=="Infantry") return 2;   // XP Archer/Cavalry towards Lv 119
-    if(st.cls==="s-block") return 3;                        // mastery, need more hammers
-    if(st.cls==="s-warn") return 4;                         // imbue, waiting on Mithril/Mythic
-    return 5; };
-  const ord=(a,b)=>a.s-b.s||ti(a.r.type)-ti(b.r.type)||num(b.r.lvC)-num(a.r.lvC);
-  const L=rows.filter(r=>hgState(r).cls!=="s-done").map(r=>({r,s:score(r),st:hgState(r)})).sort(ord);
-  const bag={fh:num((state.heroGear.have||{}).fh),mith:num((state.heroGear.have||{}).mith),mg:num((state.heroGear.have||{}).mg)}; // shared budget: two steps can't spend the same hammers
-  L.forEach(x=>{ if(x.s>1) return; const req=Object.entries(x.st.req||{});
-    if(req.every(([k,v])=>bag[k]>=v)) req.forEach(([k,v])=>bag[k]-=v); else x.s=x.st.cls==="s-block"?3:4; });
-  const out=L.sort(ord).map(x=>x.r); out.now=new Set(L.filter(x=>x.s<=1).map(x=>x.r)); return out; } // .now = affordable together right now
+// Ranking = Quaad's rules + the optimiser's stat order (kingshotoptimizer.com hero gear guide):
+//  1. can you do it now (you have the materials) — budget-aware, two steps can't spend the same hammers
+//  2. Quaad: Archer + Cavalry pieces to Lv 119 (Red +19) before anything else
+//  3. Quaad: Forgehammers only one step behind the next imbue (pieces with mastery ahead wait)
+//  4. optimiser stat order: Inf Health → Archer Lethality → Cav Lethality → Inf Lethality → Archer Health → Cav Health
+const HG_STAT_ORDER=["Infantry Health","Archer Lethality","Cavalry Lethality","Infantry Lethality","Archer Health","Cavalry Health"];
+const hgStatRank=r=>{ const i=HG_STAT_ORDER.indexOf(r.type+" "+slotStat(r.slot)); return i<0?9:i; };
+const hgQuaad=r=>(r.type==="Archer"||r.type==="Cavalry")&&num(r.lvC)<119?0:1; // 0 = still climbing to Lv 119
+function hgPriority(rows){
+  const H=state.heroGear.have||{}, bag={fh:num(H.fh),mith:num(H.mith),mg:num(H.mg),xp:num(H.xp)};
+  const L=rows.map(r=>({r,st:hgState(r)})).filter(x=>x.st.cls!=="s-done");
+  L.forEach(x=>{ x.wait=x.st.cls==="s-warn"&&!x.st.req?1:0; }); // "Hold hammers": mastery already ahead — Quaad says wait
+  const ord=(a,b)=>a.wait-b.wait||hgQuaad(a.r)-hgQuaad(b.r)||hgStatRank(a.r)-hgStatRank(b.r)||num(b.r.lvC)-num(a.r.lvC);
+  L.sort(ord);
+  L.forEach(x=>{ const req=Object.entries(x.st.req||{}); // XP-only steps need Enhancement XP
+    const need=x.st.req?req:(x.st.cls===""?[["xp",1]]:[]);
+    x.now=!x.wait&&need.length>0&&need.every(([k,v])=>bag[k]>=v);
+    if(x.now&&x.st.req) req.forEach(([k,v])=>bag[k]-=v); });
+  L.sort((a,b)=>(b.now-a.now)||ord(a,b));
+  const out=L.map(x=>x.r); out.now=new Set(L.filter(x=>x.now).map(x=>x.r));
+  out.why=r=>`${hgQuaad(r)===0?"Quaad: to Lv 119 · ":""}${r.type} ${slotStat(r.slot)} (#${hgStatRank(r)+1} stat)`; return out; }
 // little pictures for each gear slot and troop type (line drawings, follow the text colour)
 const SLOT_ICON={
   helm:'<path d="M4.5 14a7.5 7.5 0 0 1 15 0v4.5h-4.2V15H8.7v3.5H4.5z"/><path d="M12 6.5V3.5M8.7 12h6.6"/>',
@@ -2367,7 +2373,8 @@ function renderHeroGear(){
   const SRC={mg:"Arena Shop (Custom Mythic Gear Chest), Merchant Empire, Armament",mith:"Mystic Trials, Trial Shop, Arena Shop",fh:"VIP Shop, Trial Shop, Merchant Empire"};
   const short=Object.entries(tot).map(([k,v])=>({k,v,h:num(hg.have[HG_MAT[k][1]])})).filter(x=>x.v>x.h).sort((a,b)=>(b.v-b.h)/b.v-(a.v-a.h)/a.v);
   const d=document.createElement("div"); d.className="info hgsum";
-  d.innerHTML=(prio.length?`<b>Do next:</b> `+prio.slice(0,3).map((r,i)=>`<span class="hgnum${prio.now.has(r)?" go":""}">${i+1}</span> ${esc(r.type)} ${esc(slotName(r.slot))}${prio.now.has(r)?' <span class="ok">(can do now)</span>':""}`).join(" &nbsp; "):"<b>All pieces fully imbued ✓</b>")+
+  d.innerHTML=(prio.length?`<b>Do next:</b> `+prio.slice(0,3).map((r,i)=>`<br><span class="hgnum${prio.now.has(r)?" go":""}">${i+1}</span> <b>${esc(r.type)} ${esc(slotName(r.slot))}</b>${prio.now.has(r)?' <span class="ok">can do now</span>':""} <span class="faint">— ${esc(prio.why(r))}</span>`).join(""):"<b>All pieces fully imbued ✓</b>")+
+    `<br><span class="faint" style="font-size:12.5px">Ranked by Quaad (Archer + Cavalry to Lv 119 first, hammers one step behind the next imbue), then the optimiser's stat order: Inf Health → Archer Lethality → Cav Lethality → Inf Lethality → Archer Health → Cav Health.</span>`+
     (short.length?`<br><b>Bottleneck — ${HG_MAT[short[0].k][0]==="Hammers"?"Forgehammers":HG_MAT[short[0].k][0]==="Mythic"?"Mythic Gear":"Mithril"}:</b> need ${fmt(short[0].v)} for every next step, you have ${fmt(short[0].h)}. Get it from ${SRC[short[0].k]}.`+
       (short.length>1?`<br><span class="faint">Also short: ${short.slice(1).map(x=>`${HG_MAT[x.k][0]==="Hammers"?"Forgehammers":HG_MAT[x.k][0]==="Mythic"?"Mythic Gear":"Mithril"} ${fmt(x.h)}/${fmt(x.v)}`).join(" · ")}</span>`:""):"");
   host.appendChild(d);
@@ -2703,7 +2710,15 @@ function renderBuildings(){
   $("#tgTiles").innerHTML=tileH({id:"tgA",label:"Truegold",value:fmt(num(t.have)),sub:`of ${fmt(tg)} · ${tg>num(t.have)?`<span class="bad">${fmt(tg-num(t.have))} short</span>`:`<span class="ok">covered</span>`}`,p:pc(num(t.have),tg)})+
     tileH({id:"tgB",label:"Tempered Truegold",value:fmt(num(t.ttgHave)),sub:`of ${fmt(ttg)} · ${ttg>num(t.ttgHave)?`<span class="bad">${fmt(ttg-num(t.ttgHave))} short</span>`:`<span class="ok">covered</span>`}`,p:pc(num(t.ttgHave),ttg)});
   on("tgA",openTGSheet); on("tgB",openTGSheet);
-  $("#tgNote").innerHTML="TTG is the long pole — run Super Refinement every week. Defer Stable &amp; Infirmary.";
+  // Tempered Truegold from refining Truegold. Tier 1 = refines 1–20 of the week: 20 TG each (first refine of the day half price), gives 1–3 TTG (random).
+  // Minimum target = worst luck (1 TTG per refine); average = 2 per refine. Tier 2+ costs 50–160 TG per refine, so we plan on Tier 1 only.
+  const ttgShort=Math.max(0,ttg-num(t.ttgHave)), tgShort=Math.max(0,tg-num(t.have));
+  const T1=20, wkTG=7*10+13*20; // 20 refines a week, 7 of them at the daily half price
+  const plan=per=>{ const refines=Math.ceil(ttgShort/per), weeks=Math.ceil(refines/T1), full=Math.floor(refines/T1), rest=refines-full*T1;
+    const cost=full*wkTG+Math.min(rest,7)*10+Math.max(0,rest-7)*20; return {refines,weeks,cost,total:tgShort+cost}; };
+  const minP=plan(1), avgP=plan(2);
+  $("#tgNote").innerHTML=ttgShort?`<b>Truegold target incl. refining for ${fmt(ttgShort)} TTG:</b> minimum <b>${fmt(minP.total)} TG</b> (worst luck, ~${minP.weeks} weeks) · average <b>${fmt(avgP.total)} TG</b> (~${avgP.weeks} weeks).<br><span class="faint">${fmt(tgShort)} TG for buildings + refining at Tier 1 only (20 refines a week, 20 TG each, first of the day half price; 1–3 TTG each). Tier 2+ is 50–160 TG a refine — only worth it if you're in a hurry.</span>`
+    :"Tempered Truegold covered ✓ — keep refining Tier 1 weekly for the next tier. Defer Stable &amp; Infirmary.";
   $("#buildBody").innerHTML=state.buildings.map((bl,k)=>{ const r=bldRem(bl);
     return `<button class="lrow" data-i="${k}" ${bl.d?'style="opacity:.6"':""}><span style="min-width:0"><span class="lt" style="display:block"><span class="faint mono">${k+1}.</span> ${esc(bl.n)}</span><span class="ls">${bl.d?"done ✓":`${esc(r.cur)} → TG 8`}${bl.note?" · "+esc(bl.note):""}</span></span><span class="lv">${bl.d?tagH("ok","done"):`${fmt(r.tg)} TG<br><span class="faint" style="font-weight:500">${fmt(r.ttg)} TTG</span>`}</span></button>`; }).join("");
   bindAll($("#buildBody"),".lrow",b=>openBuildingSheet(state.buildings[+b.dataset.i]));
