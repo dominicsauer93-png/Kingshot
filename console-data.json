@@ -1349,7 +1349,7 @@
     }
   ],
   "tg": {
-    "have": 144,
+    "have": 298,
     "need": 4158,
     "ttgHave": 1,
     "ttgNeed": 458
@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1483,10 +1483,10 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
+      "Rally": "Overview",
       "Data": "Update all",
       "Gear": "Widgets",
-      "Base": "T11",
+      "Base": "Buildings",
       "Plan": "Checklists"
     },
     "t11Open": {
