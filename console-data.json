@@ -1425,7 +1425,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Rally",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1459,7 +1459,7 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Mystic Trials",
+      "Rally": "Overview",
       "Data": "Update all",
       "Gear": "Widgets",
       "Base": "Buildings",
