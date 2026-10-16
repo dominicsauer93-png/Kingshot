@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Plan",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1812,7 +1812,7 @@
       {
         "hero": "Ava",
         "lvl": 4,
-        "have": 3,
+        "have": 14,
         "rally": true
       },
       {
