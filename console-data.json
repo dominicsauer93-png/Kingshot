@@ -1357,9 +1357,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 13821,
-      "threads": 90,
-      "vision": 561
+      "satin": 8959,
+      "threads": 10,
+      "vision": 568
     },
     "pieces": [
       {
@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1485,7 +1485,7 @@
     "sub": {
       "Rally": "Overview",
       "Data": "Update all",
-      "Gear": "Widgets",
+      "Gear": "Hero Gear",
       "Base": "T11",
       "Plan": "Shops & Packs"
     },
@@ -1533,10 +1533,10 @@
   },
   "heroGear": {
     "have": {
-      "xp": 0,
-      "fh": 132,
-      "mg": 0,
-      "mith": 19
+      "xp": 340,
+      "fh": 61,
+      "mg": 3,
+      "mith": 20
     },
     "rows": [
       {
@@ -1698,7 +1698,7 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 736,
+      "guides": 740,
       "designs": 291
     },
     "rows": [
