@@ -9,9 +9,9 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 46,
+    "current": 61,
     "target": 7224,
-    "gold": 539580
+    "gold": 273090
   },
   "nodes": [
     {
@@ -1485,7 +1485,7 @@
     "sub": {
       "Rally": "Overview",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Governor",
       "Base": "T11",
       "Plan": "Shops & Packs"
     },
