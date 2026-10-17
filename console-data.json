@@ -2,7 +2,7 @@
   "account": {
     "tc": "Truegold Lv. 7",
     "day": "485",
-    "power": "327880096",
+    "power": "332501453",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "Main - all out attack ",
@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Rally",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1483,8 +1483,8 @@
       "cavNodes": false
     },
     "sub": {
-      "Rally": "Masters",
-      "Data": "Account",
+      "Rally": "Overview",
+      "Data": "Update all",
       "Gear": "Widgets",
       "Base": "T11",
       "Plan": "Shops & Packs"
@@ -2344,7 +2344,7 @@
     {
       "d": "2026-10-17",
       "v": {
-        "power": 327880096,
+        "power": 332501453,
         "leth": 73,
         "hp": 58.8,
         "attWR": 38.08,
