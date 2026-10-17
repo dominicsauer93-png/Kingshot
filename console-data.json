@@ -1485,7 +1485,7 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Account",
-      "Gear": "Governor",
+      "Gear": "Hero Gear",
       "Base": "Troops",
       "Plan": "Shops & Packs"
     },
@@ -1626,9 +1626,9 @@
       {
         "type": "Cavalry",
         "slot": "Boots (Lethality)",
-        "lvC": 106,
+        "lvC": 111,
         "lvT": 159,
-        "mC": 10,
+        "mC": 11,
         "mT": 12,
         "xp": 211510,
         "fh": 230,
