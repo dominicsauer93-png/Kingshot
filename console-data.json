@@ -1349,10 +1349,10 @@
     }
   ],
   "tg": {
-    "have": 298,
-    "need": 4158,
-    "ttgHave": 1,
-    "ttgNeed": 458
+    "have": 188,
+    "need": 4104,
+    "ttgHave": 0,
+    "ttgNeed": 445
   },
   "govGear": {
     "targetIdx": 18,
@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1486,7 +1486,7 @@
       "Rally": "Masters",
       "Data": "Account",
       "Gear": "Widgets",
-      "Base": "Troops",
+      "Base": "T11",
       "Plan": "Shops & Packs"
     },
     "t11Open": {
@@ -2429,7 +2429,7 @@
     },
     {
       "n": "War Academy",
-      "stepIdx": 9,
+      "stepIdx": 10,
       "note": "Research speed + T11 gate",
       "d": false
     },
