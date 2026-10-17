@@ -1380,7 +1380,7 @@
       },
       {
         "name": "Archer 1",
-        "cur": 15
+        "cur": 16
       },
       {
         "name": "Archer 2",
@@ -1485,7 +1485,7 @@
     "sub": {
       "Rally": "Masters",
       "Data": "Account",
-      "Gear": "Hero Gear",
+      "Gear": "Widgets",
       "Base": "Troops",
       "Plan": "Shops & Packs"
     },
@@ -1811,8 +1811,8 @@
       },
       {
         "hero": "Ava",
-        "lvl": 4,
-        "have": 14,
+        "lvl": 5,
+        "have": 0,
         "rally": true
       },
       {
