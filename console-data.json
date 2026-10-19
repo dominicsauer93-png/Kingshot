@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 225,
+    "current": 0,
     "target": 7224,
     "gold": 273090
   },
@@ -369,7 +369,7 @@
     },
     {
       "name": "Truegold Legionaries (Rally Capacity)",
-      "cur": 5,
+      "cur": 6,
       "max": 12,
       "costs": [
         83,
@@ -1483,7 +1483,7 @@
     ]
   },
   "ui": {
-    "tab": "Plan",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1519,13 +1519,13 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Shards",
+      "Gear": "Hero Gear",
       "Base": "T11",
       "Plan": "Shops & Packs"
     },
     "t11Open": {
       "nodes": true,
-      "cavNodes": false
+      "cavNodes": true
     },
     "doAll": false,
     "qOpen": {
@@ -1851,7 +1851,7 @@
       {
         "hero": "Ava",
         "lvl": 5,
-        "have": 16,
+        "have": 21,
         "rally": true
       },
       {
@@ -1881,7 +1881,8 @@
       {
         "hero": "Triton",
         "lvl": 2,
-        "have": 0
+        "have": 0,
+        "rally": true
       }
     ],
     "rallySet": true
