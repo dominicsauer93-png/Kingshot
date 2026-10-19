@@ -1071,7 +1071,7 @@
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
-      "v": "102",
+      "v": "98",
       "log": [
         {
           "d": "2026-09-15",
@@ -1108,12 +1108,16 @@
         {
           "d": "2026-10-16",
           "v": 102
+        },
+        {
+          "d": "2026-10-19",
+          "v": 98
         }
       ]
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "114",
+      "v": "116",
       "log": [
         {
           "d": "2026-09-15",
@@ -1146,6 +1150,10 @@
         {
           "d": "2026-10-16",
           "v": 114
+        },
+        {
+          "d": "2026-10-19",
+          "v": 116
         }
       ]
     },
@@ -1231,7 +1239,7 @@
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "122",
+      "v": "124",
       "log": [
         {
           "d": "2026-09-15",
@@ -1264,12 +1272,16 @@
         {
           "d": "2026-10-10",
           "v": 122
+        },
+        {
+          "d": "2026-10-19",
+          "v": 124
         }
       ]
     },
     {
       "k": "Molten Fort (Gov Gear)",
-      "v": "166",
+      "v": "165",
       "log": [
         {
           "d": "2026-09-15",
@@ -1306,12 +1318,16 @@
         {
           "d": "2026-10-16",
           "v": 166
+        },
+        {
+          "d": "2026-10-19",
+          "v": 165
         }
       ]
     },
     {
       "k": "Radiant Spire (ALL stats — full power)",
-      "v": "96",
+      "v": "92",
       "log": [
         {
           "d": "2026-09-15",
@@ -1344,6 +1360,10 @@
         {
           "d": "2026-10-16",
           "v": 96
+        },
+        {
+          "d": "2026-10-19",
+          "v": 92
         }
       ]
     }
@@ -1495,15 +1515,19 @@
     },
     "doAll": false,
     "qOpen": {
-      "Bag": true,
+      "Bag": false,
       "HG": false,
-      "Power": false,
-      "Buildings": false,
+      "Power": true,
+      "Buildings": true,
       "Troops": false,
       "Shards": false,
       "Masters": false,
-      "Gov": false,
-      "Widgets": true
+      "Gov": true,
+      "Widgets": false,
+      "Charms": false,
+      "T11": false,
+      "Mystic": true,
+      "Pets": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1542,7 +1566,7 @@
       {
         "type": "Infantry",
         "slot": "Helm (Lethality)",
-        "lvC": 112,
+        "lvC": 113,
         "lvT": 179,
         "mC": 10,
         "mT": 15,
@@ -1626,7 +1650,7 @@
       {
         "type": "Cavalry",
         "slot": "Boots (Lethality)",
-        "lvC": 111,
+        "lvC": 117,
         "lvT": 159,
         "mC": 11,
         "mT": 12,
@@ -1704,7 +1728,7 @@
     "rows": [
       {
         "type": "Cavalry",
-        "lvl": 5,
+        "lvl": 6,
         "tgt": 6
       },
       {
@@ -1812,13 +1836,13 @@
       {
         "hero": "Ava",
         "lvl": 5,
-        "have": 0,
+        "have": 16,
         "rally": true
       },
       {
         "hero": "Long Fei",
         "lvl": 4,
-        "have": 0,
+        "have": 10,
         "rally": false
       },
       {
@@ -2691,7 +2715,7 @@
       },
       {
         "n": "Ironclad War Bear",
-        "lvl": 50,
+        "lvl": 56,
         "tgt": 0,
         "max": 100
       }
