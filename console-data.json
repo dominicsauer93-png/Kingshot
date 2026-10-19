@@ -1731,7 +1731,8 @@
       "Archer": true,
       "Cavalry": true,
       "Infantry": true
-    }
+    },
+    "fhSeen": 309
   },
   "charms": {
     "targetLvl": 10,
