@@ -480,7 +480,7 @@
     }
   ],
   "weekly": {
-    "week": "2026-10-12",
+    "week": "2026-10-19",
     "items": [
       {
         "t": "Bear Hunt — join every rally",
@@ -1392,7 +1392,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-17",
+    "routineDate": "2026-10-19",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -2360,6 +2360,26 @@
         "p:Master": 15392000,
         "stars": 462
       }
+    },
+    {
+      "d": "2026-10-19",
+      "v": {
+        "power": 332501453,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 462
+      }
     }
   ],
   "farm": [
@@ -2680,7 +2700,7 @@
   "shardGeneral": 44,
   "shardRallySet": true,
   "eventTicks": {
-    "key": "Alliance Brawl|2026-10-12",
+    "key": "KvK|2026-10-19",
     "done": []
   }
 }
