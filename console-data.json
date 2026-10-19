@@ -510,11 +510,32 @@
   },
   "packs": [
     {
-      "t": "2nd construction queue",
-      "aud": 4.99,
+      "t": "Dragon Value Pack ×3",
+      "aud": 23.97,
       "kind": "once",
-      "note": "Permanent — doubles building speed",
-      "d": true
+      "d": false,
+      "note": "Event deal, 1 per day, ends ~26 Oct · 3,630%. Claim the free Ashen Bounty too. Spend the 940 essence: 5 Mithril, 32 Charm Designs, 20 Truegold"
+    },
+    {
+      "t": "Charm Benefits Card",
+      "aud": 7.99,
+      "kind": "week",
+      "d": false,
+      "note": "Weekly Benefits — pick Charm: 60 Designs + 60 Guides. Designs are your charm blocker. Check it shows 3,000%+"
+    },
+    {
+      "t": "Truegold Weekly Card",
+      "aud": 7.99,
+      "kind": "week",
+      "d": false,
+      "note": "144 Truegold (32 now + 16 a day) · 4,600% — best Truegold per $"
+    },
+    {
+      "t": "Intel Monthly Pass",
+      "aud": 7.99,
+      "kind": "month",
+      "d": false,
+      "note": "105 Truegold (65 now + 40 at target), 2,500 gems, 45h speedups · 4,625%"
     },
     {
       "t": "Ultra Value Monthly Card",
@@ -527,11 +548,18 @@
       "bought": "2026-10-13"
     },
     {
-      "t": "Weekly Benefits Card",
-      "aud": 7.99,
-      "kind": "week",
-      "note": "Governor gear materials + speedups",
-      "d": false
+      "t": "Kingdom Special Pack",
+      "aud": 30.99,
+      "kind": "month",
+      "d": true,
+      "note": "1,999 Kingdom Stars + 20 hero shards — monthly reset"
+    },
+    {
+      "t": "2nd construction queue",
+      "aud": 4.99,
+      "kind": "once",
+      "note": "Permanent — doubles building speed",
+      "d": true
     },
     {
       "t": "Extra march queue",
@@ -539,20 +567,6 @@
       "kind": "once",
       "note": "Permanent — more gathering and rallies",
       "d": true
-    },
-    {
-      "t": "Intel Monthly Card",
-      "aud": 7.99,
-      "kind": "month",
-      "note": "Steady extras if you log in daily",
-      "d": false
-    },
-    {
-      "t": "New pack",
-      "aud": 0,
-      "kind": "once",
-      "note": "",
-      "d": false
     }
   ],
   "trackFarm": [
@@ -2726,5 +2740,6 @@
   "eventTicks": {
     "key": "KvK|2026-10-19",
     "done": []
-  }
+  },
+  "packBudget": 100
 }
