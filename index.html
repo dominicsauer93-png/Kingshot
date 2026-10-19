@@ -302,6 +302,7 @@
   .tiles.t2{grid-template-columns:repeat(2,minmax(0,1fr))}
   @media (max-width: 1000px){ .tiles{grid-template-columns:repeat(2,minmax(0,1fr))} .tiles.t3{grid-template-columns:repeat(3,minmax(0,1fr))} }
   @media (max-width: 520px){ .tiles.t3{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width: 520px){ .tiles.hgt{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px} .tiles.hgt .tile{padding:10px} }
   .tile{display:flex;flex-direction:column;gap:3px;min-width:0;text-align:left;padding:13px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
   button.tile:hover{border-color:var(--gold-2);transform:translateY(-1px)}
   .tile .l{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px;min-width:0}
@@ -666,7 +667,7 @@
       <div class="subnav" role="tablist" aria-label="Gear sections"></div>
 
       <section class="sec" data-sub="Hero Gear" data-key="Hero Gear">
-        <div class="tiles" id="hgMats"></div>
+        <div class="tiles t3 hgt" id="hgMats"></div>
         <div id="hgBody" class="mt"></div>
         <button class="add" id="addHg">+ Add gear piece</button>
         <details class="fold mt"><summary>Where to get Hero Gear materials</summary><div class="fbody howto">
@@ -1185,6 +1186,7 @@ let saveTimer=null;
 function setSaveUI(cls,txt){ ["saveDot","saveDotM"].forEach(id=>{ const d=document.getElementById(id); if(d) d.className="dot"+(cls?" "+cls:""); }); const t=document.getElementById("saveTxt"); if(t) t.textContent=txt; }
 function scheduleSave(){
   try{ takeSnapshot(); }catch(e){}
+  try{ trackHammers(); }catch(e){}
   setSaveUI("busy","Saving…");
   clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{ const ok=await persistLocal(); setSaveUI(ok?"":"err",ok?"Saved":"Session only"); scheduleSyncPush(); },400);
@@ -2332,21 +2334,19 @@ function hgReqH(req){ if(!req) return ""; const H=state.heroGear.have||{};
   return Object.entries(req).filter(([,v])=>v>0).map(([k,v])=>{ const h=num(H[HG_MAT[k][1]]), ok=h>=v; return `<span class="${ok?"ok":"bad"}">${HG_MAT[k][0]} ${fmt(h)}/${fmt(v)} ${ok?"✓":"✗"}</span>`; }).join(" · "); }
 const hgAfford=st=>!!st.req&&Object.entries(st.req).every(([k,v])=>num((state.heroGear.have||{})[HG_MAT[k][1]])>=v);
 // Ranking matches the optimiser's picks (kingshotoptimizer.com weighted stat gain) using simple rules:
-//  1. Lethality pieces before Health (rally leader — the optimiser weights Lethality higher)
-//  2. Quaad: Archer + Cavalry before Infantry; Forgehammers only one step behind the next imbue (pieces with mastery ahead wait)
+//  1. stat order (HG_STAT_ORDER): Lethality on every troop first, then Infantry Health (front line takes the hits), then Archer, Cavalry Health
+//  2. Quaad: Forgehammers only one step behind the next imbue (pieces with mastery ahead wait)
 //  3. a mastery step before an imbue (mastery gives the bigger gain, e.g. +6.5% vs +1.4%)
-//  4. cheaper imbue first (Lv 120 before Lv 140), then Archer before Cavalry
+//  4. cheaper imbue first (Lv 120 before Lv 140)
 // Materials go to the top picks first; a green badge means you can afford it now.
 const HG_STAT_ORDER=["Archer Lethality","Cavalry Lethality","Infantry Lethality","Infantry Health","Archer Health","Cavalry Health"];
 const hgStatRank=r=>{ const i=HG_STAT_ORDER.indexOf(r.type+" "+slotStat(r.slot)); return i<0?9:i; };
-const hgQuaad=r=>r.type==="Infantry"?1:0;
-const hgLeth=r=>/lethal/i.test(slotStat(r.slot))?0:1;
 const hgAct=st=>st.cls==="s-block"?0:st.req?1:2; // mastery, imbue, XP
 function hgPriority(rows){
   const H=state.heroGear.have||{}, bag={fh:num(H.fh),mith:num(H.mith),mg:num(H.mg),xp:num(H.xp)};
   const L=rows.map(r=>({r,st:hgState(r)})).filter(x=>x.st.cls!=="s-done");
   L.forEach(x=>{ x.wait=x.st.cls==="s-warn"&&!x.st.req?1:0; }); // "Hold hammers": mastery already ahead — Quaad says wait
-  const ord=(a,b)=>a.wait-b.wait||hgLeth(a.r)-hgLeth(b.r)||hgQuaad(a.r)-hgQuaad(b.r)||hgAct(a.st)-hgAct(b.st)||num(a.r.lvC)-num(b.r.lvC)||hgStatRank(a.r)-hgStatRank(b.r);
+  const ord=(a,b)=>a.wait-b.wait||hgStatRank(a.r)-hgStatRank(b.r)||hgAct(a.st)-hgAct(b.st)||num(a.r.lvC)-num(b.r.lvC);
   L.sort(ord);
   L.forEach(x=>{ const req=Object.entries(x.st.req||{}), need=x.st.req?req:(x.st.cls===""?[["xp",1]]:[]);
     x.now=!x.wait&&need.length>0&&need.every(([k,v])=>bag[k]>=v);
@@ -2364,22 +2364,33 @@ const TROOP_ICON={
   Cavalry:'<path d="M6 21v-5.5c0-2.3 1-4 2.6-5.3L8 6.5l2.6 1.6L13 4l1 3.5c3 .7 5 3.5 5 6.5l-2.4.8-2.3-1.8-1.3 2.3V21"/><circle cx="12.2" cy="9.3" r=".6"/>',
   Archer:'<path d="M6 3c7.5 2.6 7.5 15.4 0 18M6 3v18"/><path d="M3.5 12h15.5M16.5 9.4 19.2 12l-2.7 2.6"/>'};
 const hgIcon=d=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${d}</svg>`;
+// hammers gained per month: every rise in the bag counts, spending doesn't
+function trackHammers(){
+  const hg=state.heroGear; if(!hg||!hg.have) return; const h=num(hg.have.fh);
+  if(hg.fhSeen!=null&&h>num(hg.fhSeen)){ const m=gameToday().slice(0,7); hg.fhGot=hg.fhGot||{}; hg.fhGot[m]=num(hg.fhGot[m])+h-num(hg.fhSeen); }
+  hg.fhSeen=h; }
+function hgMonthGot(back){ const d=new Date(gameToday()+"T00:00:00Z"); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth()-back); return num((state.heroGear.fhGot||{})[d.toISOString().slice(0,7)]); }
 function renderHeroGear(){
   const hg=state.heroGear; if(!hg.have) hg.have={xp:0,fh:0,mg:0,mith:0};
-  const need={xp:0,fh:0,mg:0,mith:0}; hg.rows.forEach(r=>{ const c=hgCalcCost(r); need.xp+=c.xp; need.fh+=c.fh; need.mg+=c.mg; need.mith+=c.mith; });
-  const names={xp:"Enhancement XP",fh:"Forgehammers",mg:"Mythic Gear",mith:"Mithril"};
-  $("#hgMats").innerHTML=["xp","fh","mg","mith"].map(k=>{ const h=num(hg.have[k]); return tileH({id:"hgm_"+k,label:names[k],value:fmtBig(h),sub:`of ${fmtBig(need[k])} · ${need[k]>h?`<span class="bad">${fmtBig(need[k]-h)} short</span>`:`<span class="ok">covered</span>`}`,p:pc(h,need[k]),cls:h>=need[k]?"ok":""}); }).join("");
+  if(hg.fhSeen==null) hg.fhSeen=num(hg.have.fh);
+  const prio=hgPriority(hg.rows), top=prio.slice(0,3), rank=new Map(top.map((r,i)=>[r,i+1]));
+  const n3={fh:0,mith:0,mg:0}; top.forEach(r=>{ const st=hgState(r); if(st.req) Object.entries(st.req).forEach(([k,v])=>n3[k]+=v); });
+  const got=hgMonthGot(0);
+  const nTile=(k,label,extra)=>{ const h=num(hg.have[k]), v=n3[k];
+    return tileH({id:"hgm_"+k,label,value:fmt(h)+(v?`<small class="faint"> / ${fmt(v)}</small>`:""),sub:extra||(v>h?`<span class="bad">${fmt(v-h)} short</span>`:`<span class="ok">enough</span>`),p:v?pc(h,v):null,cls:h>=v?"ok":""}); };
+  $("#hgMats").innerHTML=nTile("mg","Mythic Gear")+nTile("mith","Mithril")+nTile("fh","Hammers",`+${fmt(got)} this month`);
   $$("#hgMats .tile").forEach(t=>t.onclick=openHgMatsSheet);
   const host=$("#hgBody"); host.innerHTML="";
-  const prio=hgPriority(hg.rows), rank=new Map(prio.slice(0,3).map((r,i)=>[r,i+1]));
-  const tot={fh:0,mith:0,mg:0}; hg.rows.forEach(r=>{ const st=hgState(r); if(st.req) Object.entries(st.req).forEach(([k,v])=>tot[k]+=v); });
   const SRC={mg:"Arena Shop (Custom Mythic Gear Chest), Merchant Empire, Armament",mith:"Mystic Trials, Trial Shop, Arena Shop",fh:"VIP Shop, Trial Shop, Merchant Empire"};
-  const short=Object.entries(tot).map(([k,v])=>({k,v,h:num(hg.have[HG_MAT[k][1]])})).filter(x=>x.v>x.h).sort((a,b)=>(b.v-b.h)/b.v-(a.v-a.h)/a.v);
+  const lack=["mg","mith","fh"].find(k=>n3[k]>num(hg.have[k])), MATN={mg:"Mythic Gear",mith:"Mithril",fh:"Forgehammers"};
   const d=document.createElement("div"); d.className="info hgsum";
-  d.innerHTML=(prio.length?`<b>Do next:</b> `+prio.slice(0,3).map((r,i)=>`<br><span class="hgnum${prio.now.has(r)?" go":""}">${i+1}</span> <b>${esc(r.type)} ${esc(slotName(r.slot))}</b>${prio.now.has(r)?' <span class="ok">can do now</span>':""} <span class="faint">— ${esc(prio.why(r))}</span>`).join(""):"<b>All pieces fully imbued ✓</b>")+
-    `<br><span class="faint" style="font-size:12.5px">Ranked to match the optimiser: Lethality before Health · Archer + Cavalry before Infantry (Quaad) · mastery steps before imbues · cheaper imbues first. Materials go to the top picks first.</span>`+
-    (short.length?`<br><b>Bottleneck — ${HG_MAT[short[0].k][0]==="Hammers"?"Forgehammers":HG_MAT[short[0].k][0]==="Mythic"?"Mythic Gear":"Mithril"}:</b> need ${fmt(short[0].v)} for every next step, you have ${fmt(short[0].h)}. Get it from ${SRC[short[0].k]}.`+
-      (short.length>1?`<br><span class="faint">Also short: ${short.slice(1).map(x=>`${HG_MAT[x.k][0]==="Hammers"?"Forgehammers":HG_MAT[x.k][0]==="Mythic"?"Mythic Gear":"Mithril"} ${fmt(x.h)}/${fmt(x.v)}`).join(" · ")}</span>`:""):"");
+  const bag={fh:num(hg.have.fh),mith:num(hg.have.mith),mg:num(hg.have.mg)};
+  const stat=r=>{ const st=hgState(r); if(!st.req) return `<span class="faint">XP first</span>`; // walk the bag down the list so #2 and #3 see what #1 used
+    const miss=Object.entries(st.req).filter(([k,v])=>v>bag[k]).map(([k,v])=>`${fmt(v-bag[k])} ${HG_MAT[k][0]}`);
+    Object.entries(st.req).forEach(([k,v])=>bag[k]-=v);
+    return miss.length?`<span class="bad">short ${miss.join(" + ")}</span>`:`<span class="ok">ready ✓</span>`; };
+  d.innerHTML=(prio.length?`<b>Next up</b>`+top.map((r,i)=>`<br><span class="hgnum${prio.now.has(r)?" go":""}">${i+1}</span> ${esc(r.type)} <b>${esc(slotName(r.slot))}</b> <span class="faint">${hgState(r).cls==="s-block"?"mastery":"imbue"}</span> · ${stat(r)}`).join(""):"<b>All pieces fully imbued ✓</b>")+
+    (lack?`<br><span class="faint" style="font-size:12.5px">Get ${MATN[lack]} from ${SRC[lack]}.</span>`:"");
   host.appendChild(d);
   HG_TYPES.forEach(type=>{
     const pieces=hg.rows.filter(r=>r.type===type); if(!pieces.length) return;
@@ -2394,17 +2405,19 @@ function renderHeroGear(){
           <span class="hgc-lv"><b>${L}</b><small>Lv</small></span></span>${rank.has(r)?`<span class="hgnum hgc-rank${prio.now.has(r)?" go":""}">${rank.get(r)}</span>`:""}
         <span class="hgc-mid"><span class="hgc-b">${hgBonus(L).toFixed(1)}%<small> bonus</small></span><span class="hgc-m">Mastery <b>${num(r.mC)}</b></span></span>
         ${barH(pc(L,Math.max(num(r.lvT),L)),st.cls==="s-ready"||st.cls==="s-done"?"ok":st.cls==="s-block"?"bad":"")}
-        <span class="hgc-st">${st.tag}</span><span class="hgc-line">${st.line}</span>${st.req?`<span class="hgc-req">${hgReqH(st.req)}</span>`:""}`;
+        <span class="hgc-st">${st.tag}</span><span class="hgc-line">${st.line}</span>`;
       b.onclick=()=>openHgSheet(r); grid.appendChild(b); });
     host.appendChild(sec);
   });
   on("addHg",()=>{ const r={type:"Archer",slot:"New (stat)",lvC:0,lvT:0,mC:0,mT:0,xp:0,fh:0,mg:0,mith:0}; hg.rows.push(r); afterEdit(); openHgSheet(r); });
 }
 function openHgMatsSheet(){
-  const h=state.heroGear.have;
+  const h=state.heroGear.have, need={xp:0,fh:0,mg:0,mith:0}; state.heroGear.rows.forEach(r=>{ const c=hgCalcCost(r); for(const k in need) need[k]+=c[k]; });
   openSheet({title:"Hero Gear materials",sub:"What you have in your bag right now.",build(f){
+    const cap=infoBox(); cap.innerHTML=`Hammers gained: <b>+${fmt(hgMonthGot(0))}</b> this month · +${fmt(hgMonthGot(1))} last month<br><b>Long-term</b> <span class="faint">(to the mastery targets on each piece — a cap, not a goal)</span><br>${fmt(need.fh)} Forgehammers · ${fmt(need.mith)} Mithril · ${fmt(need.mg)} Mythic · ${fmtBig(need.xp)} XP`;
     f.appendChild(frow(fld("Enhancement XP",{type:"num",value:h.xp,get:()=>h.xp,set:v=>h.xp=v}),fld("Forgehammers",{type:"num",value:h.fh,get:()=>h.fh,set:v=>h.fh=v})));
     f.appendChild(frow(fld("Mythic Gear",{type:"num",value:h.mg,get:()=>h.mg,set:v=>h.mg=v}),fld("Mithril",{type:"num",value:h.mith,get:()=>h.mith,set:v=>h.mith=v})));
+    f.appendChild(cap);
   }});
 }
 function openHgSheet(r){
