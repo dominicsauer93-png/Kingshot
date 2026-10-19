@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 61,
+    "current": 225,
     "target": 7224,
     "gold": 273090
   },
@@ -1349,17 +1349,17 @@
     }
   ],
   "tg": {
-    "have": 188,
+    "have": 32,
     "need": 4104,
-    "ttgHave": 0,
+    "ttgHave": 30,
     "ttgNeed": 445
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 8959,
-      "threads": 10,
-      "vision": 568
+      "satin": 14309,
+      "threads": 74,
+      "vision": 569
     },
     "pieces": [
       {
@@ -1449,7 +1449,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1534,9 +1534,9 @@
   "heroGear": {
     "have": {
       "xp": 340,
-      "fh": 61,
-      "mg": 3,
-      "mith": 20
+      "fh": 309,
+      "mg": 1,
+      "mith": 21
     },
     "rows": [
       {
@@ -1698,8 +1698,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 740,
-      "designs": 291
+      "guides": 633,
+      "designs": 12
     },
     "rows": [
       {
@@ -2604,9 +2604,9 @@
   "pets": {
     "have": {
       "food": 12950,
-      "manuals": 1113,
-      "potions": 34,
-      "tmCommon": 0,
+      "manuals": 1291,
+      "potions": 62,
+      "tmCommon": 1,
       "tmAdv": 0,
       "medals": 4
     },
