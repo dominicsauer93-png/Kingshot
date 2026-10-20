@@ -1522,7 +1522,7 @@
       "nodes": true,
       "cavNodes": true
     },
-    "doAll": false,
+    "doAll": true,
     "qOpen": {
       "Bag": false,
       "HG": false,
