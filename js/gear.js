@@ -2,7 +2,7 @@
 /* =====================================================================
    GEAR
    ===================================================================== */
-function renderGear(){ renderHeroGear(); renderWidgets(); renderCharms(); renderPets(); renderShards(); renderGov(); }
+function renderGear(){ renderHeroGear(); renderWidgets(); renderCharms(); renderPets(); renderGov(); }
 
 /* ---------- hero gear ---------- */
 function hgState(r){
@@ -79,7 +79,7 @@ function renderHeroGear(){
     Object.entries(st.req).forEach(([k,v])=>bag[k]-=v);
     return miss.length?`<span class="bad">short ${miss.join(" + ")}</span>`:`<span class="ok">ready ✓</span>`; };
   d.innerHTML=(prio.length?`<b>Next up</b>`+top.map((r,i)=>`<br><span class="hgnum${prio.now.has(r)?" go":""}">${i+1}</span> ${esc(r.type)} <b>${esc(slotName(r.slot))}</b> <span class="faint">${hgState(r).cls==="s-block"?"mastery":"imbue"}</span> · ${stat(r)}`).join(""):"<b>All pieces fully imbued ✓</b>")+
-    (lack?`<br><span class="faint" style="font-size:12.5px">Get ${MATN[lack]} from ${SRC[lack]}.</span>`:"");
+    (lack?`<br><span class="faint" style="font-size:13.5px">Get ${MATN[lack]} from ${SRC[lack]}.</span>`:"");
   host.appendChild(d);
   HG_TYPES.forEach(type=>{
     const pieces=hg.rows.filter(r=>r.type===type); if(!pieces.length) return;
@@ -170,12 +170,12 @@ function renderCharms(){
   const nb=$("#charmNext"); nb.innerHTML=next.length?`<b>Next up</b>`+next.map((r,i)=>{ const L=num(r.lvl), k=CHARM_COSTS[L], miss=[];
       if(k[1]>bag.d) miss.push(`${fmt(k[1]-Math.max(0,bag.d))} Designs`); if(k[0]>bag.g) miss.push(`${fmt(k[0]-Math.max(0,bag.g))} Guides`); bag.g-=k[0]; bag.d-=k[1];
       return `<br><span class="hgnum${miss.length?"":" go"}">${i+1}</span> ${esc(r.type)} <b>Charm ${idx(r)}</b> <span class="faint">Lv ${L} → ${L+1}</span> · ${miss.length?`<span class="bad">short ${miss.join(" + ")}</span>`:'<span class="ok">ready ✓</span>'}`; }).join("")+
-    `<br><span class="faint" style="font-size:12.5px">Tiles show what these 3 need. The end goal gets done one level at a time.</span>`:"<b>All charms at target ✓</b>";
+    `<br><span class="faint" style="font-size:13.5px">Tiles show what these 3 need. The end goal gets done one level at a time.</span>`:"<b>All charms at target ✓</b>";
   $("#charmBody").innerHTML=order.map(type=>{ const rows=c.rows.filter(r=>r.type===type); if(!rows.length) return "";
     let g=0,d=0,lv=0,tg=0,at=0; rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt); g+=m.g; d+=m.d; lv+=r.lvl; tg+=r.tgt; if(r.lvl>=r.tgt) at++; });
     const done=at===rows.length;
     return `<button class="vcard ${done?"s-done":""}" data-t="${type}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${type} charms</span>${type==="Infantry"?tagH("gold","first"):""}<span class="vc-meta">avg Lv ${(lv/rows.length).toFixed(1)}</span></span>
-      <span class="charm6">${rows.map((r,i)=>`<span style="padding:6px 8px;border-radius:9px;border:1px solid ${r.lvl>=r.tgt?"var(--green)":"var(--line)"};background:var(--panel-2)"><span class="faint" style="font-size:11.5px;display:block">Charm ${i+1}</span><b class="mono">${r.lvl}</b><span class="faint mono" style="font-size:12px"> → ${r.tgt}</span></span>`).join("")}</span>
+      <span class="charm6">${rows.map((r,i)=>`<span style="padding:6px 8px;border-radius:9px;border:1px solid ${r.lvl>=r.tgt?"var(--green)":"var(--line)"};background:var(--panel-2)"><span class="faint" style="font-size:12.5px;display:block">Charm ${i+1}</span><b class="mono">${r.lvl}</b><span class="faint mono" style="font-size:13px"> → ${r.tgt}</span></span>`).join("")}</span>
       <span class="vc-line">${(()=>{ if(done) return '<span class="ok">All at target ✓</span>'; const nx=rows.filter(r=>r.lvl<r.tgt).sort((a,b)=>a.lvl-b.lvl)[0], k=CHARM_COSTS[nx.lvl];
         return `Next: Charm ${rows.indexOf(nx)+1} Lv ${nx.lvl} → ${nx.lvl+1} · <b>${fmt(k[1])}</b> Designs + <b>${fmt(k[0])}</b> Guides <span class="faint">· ${at}/${rows.length} at target</span>`; })()}</span>${barH(pc(lv,tg),done?"ok":"")}</button>`; }).join("");
   bindAll($("#charmBody"),".vcard",b=>openCharmSheet(b.dataset.t));
@@ -269,37 +269,33 @@ function renderShards(){
   // rally heroes for shards (one-time default: Ava, Yang, Wee & Woo — change per hero in its edit panel)
   if(!state.shardRallySet){ L.forEach(r=>{ r.rally=["Ava","Yang","Wee & Woo"].includes(r.n); }); state.shardRallySet=true; }
   const gen=num(state.shardGeneral), genFor=genOrder()[0]; // general shards → most-used hero still short
-  $("#shardTiles").innerHTML=tileH({id:"shTot",label:"All heroes",value:pc(H,N).toFixed(0)+"%",sub:`${fmt(H)} / ${fmt(N)} · ${dn}/${L.length} done`,p:pc(H,N)})+
-    tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genFor?`best on ${esc(genFor.n)} (${fmt(shardNeed(genFor)-num(genFor.have))} short)`:"any hero except Amadeus & Helga"})+
-    (top?tileH({id:"shNext",label:"Focus hero",value:esc(top.n),txt:true,sub:hasStars(top)?`next step ${esc(starLabel(num(top.pos)+1))}: ${SHARD_LEAF[num(top.pos)]} shards · have ${fmt(num(top.have))}`:"set the star tier"}):tileH({label:"Focus hero",value:"All done",txt:true}));
+  const tn=top&&hasStars(top)?SHARD_LEAF[num(top.pos)]:0;
+  $("#shardTiles").innerHTML=(top?stepTileH("shNext",`Focus: ${esc(top.n)} → ${hasStars(top)?esc(starLabel(num(top.pos)+1)):"?"}`,num(top.have),tn,shardNeed(top)):tileH({label:"Focus hero",value:"All done",txt:true}))+
+    tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genFor?`use on <b>${esc(genFor.n)}</b>`:"any hero except Amadeus & Helga"});
   on("shNext",()=>top&&openShardSheet(top)); on("shGen",openGeneralShardSheet);
   const b=$("#goldShardBody");
   const starPos=r=>hasStars(r)?num(r.pos):-1, isDone=r=>{ const n=shardNeed(r); return (hasStars(r)&&num(r.pos)>=SHARD_MAX)||(n>0&&num(r.have)>=n); };
   const order=L.map((r,i)=>({r,i})).sort((a,c)=>heroUse(c.r.n)-heroUse(a.r.n)||starPos(c.r)-starPos(a.r)||String(a.r.n).localeCompare(String(c.r.n)));
   const open=order.filter(x=>!isDone(x.r)), focus=open.slice(0,3), next=open.slice(3).filter(x=>heroUse(x.r.n)>=15), spare=open.slice(3).filter(x=>heroUse(x.r.n)<15), done=order.filter(x=>isDone(x.r));
   let rank=0;
-  const row=({r,i})=>{ rank++; const n=shardNeed(r),h=num(r.have),st=hasStars(r),p=num(r.pos),maxed=st&&p>=SHARD_MAX,dn=isDone(r);
-    return `<div class="shrow ${dn?"done":""}" data-i="${i}"><span class="shr-id"><span class="shr-rank">${rank}</span><span class="shr-name">${esc(r.n||"Hero")}${r.rally?" ⚔":""}</span>${tagH(heroUse(r.n)>=25?"acc":"plain","Use "+heroUse(r.n))}${/amadeus|helga/i.test(r.n||"")?`<span class="tag plain shr-own">own shards</span>`:""}
-      <button class="shr-edit" data-i="${i}" aria-label="Edit ${esc(r.n||"hero")}"><svg aria-hidden="true"><use href="#i-pen"/></svg></button></span>
-      <span class="shr-ctl">${st?`<span class="stepper"><button data-i="${i}" data-d="-1" aria-label="${esc(r.n)} down one step"${p<=0?" disabled":""}>−</button><output class="st"><span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}</output><button data-i="${i}" data-d="1" aria-label="${esc(r.n)} up one step"${maxed?" disabled":""}>+</button></span>`:`<button class="btn sm ghost shr-set" data-i="${i}">Set star tier</button>`}
-      <label class="shr-have">Have <input inputmode="numeric" data-i="${i}" value="${h}" aria-label="${esc(r.n)} shards in hand"></label>
-</span>
-      <span class="shr-out">${maxed?'<span class="ok">5★ Max ✓</span>':n<=0?'<span class="faint">—</span>':dn?'<span class="ok">Enough ✓</span>':`<span class="bad">${fmt(n-h)} short</span>`}</span>
-      ${maxed?"":barH(n>0?pc(h,n):0,dn?"ok":"")}</div>`; };
+  const row=({r,i})=>{ rank++; const h=num(r.have),st=hasStars(r),p=num(r.pos),maxed=st&&p>=SHARD_MAX,nx=st&&!maxed?SHARD_LEAF[p]:0,ready=nx&&h>=nx;
+    return `<div class="shrow2 ${maxed?"done":""}" data-i="${i}">
+      <button class="sh2-id" data-i="${i}" aria-label="Edit ${esc(r.n||"hero")}"><span class="shr-rank">${rank}</span>
+        <span class="sh2-who"><span class="sh2-name">${esc(r.n||"Hero")}${r.rally?" ⚔":""}</span>
+        <span class="sh2-star">${st?`<span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}`:'<span class="faint">tap to set stars</span>'} · Use ${heroUse(r.n)}</span></span></button>
+      <label class="sh2-have">Have <input inputmode="numeric" data-i="${i}" value="${h}" aria-label="${esc(r.n)} shards in hand"></label>
+      <span class="sh2-out">${maxed?'<span class="ok">5★ max ✓</span>':!st?"":ready?`<button class="didit sh2-up" data-i="${i}">Upgrade → ${esc(starLabel(p+1))}</button>`:`next <b>${fmt(nx)}</b> · <span class="bad">${fmt(nx-h)} short</span>`}</span>
+      ${maxed||!st?"":barH(pc(h,nx),ready?"ok":"")}</div>`; };
   const grp=(t,sub)=>`<div class="shgrp"><span>${t}</span><small>${sub}</small></div>`;
   b.innerHTML=(focus.length?grp("Focus now","general shards go here")+focus.map(row).join(""):"")+
     (next.length?grp("Next up","when the focus heroes are done")+next.map(row).join(""):"")+
     (spare.length?`<details class="shfold"${state.ui.shSpare?" open":""} data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"low use — tap to show")}</summary>${spare.map(row).join("")}</details>`:"")+
     (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"5★ or enough shards")}</summary>${done.map(row).join("")}</details>`:"")||`<div class="empty">No heroes yet</div>`;
   b.querySelectorAll("details.shfold").forEach(d=>d.ontoggle=()=>{ state.ui[d.dataset.k]=d.open; scheduleSave(); });
-  bindAll(b,".shr-edit,.shr-set",x=>openShardSheet(L[+x.dataset.i]));
-  b.querySelectorAll(".stepper button").forEach(x=>x.onclick=()=>{ const r=L[+x.dataset.i], d=+x.dataset.d, p=num(r.pos), snap=JSON.stringify(state);
-    if(d>0&&p<SHARD_MAX){ r.pos=p+1; r.have=Math.max(0,num(r.have)-SHARD_LEAF[p]); toast(`${r.n}: ${starLabel(p+1)} (−${SHARD_LEAF[p]} shards)`,snap); }
-    else if(d<0&&p>0){ r.pos=p-1; r.have=num(r.have)+SHARD_LEAF[p-1]; toast(`${r.n}: back to ${starLabel(p-1)}`,snap); }
-    shardFocus=`.stepper button[data-i="${x.dataset.i}"][data-d="${d}"]`; afterEdit(); });
-  b.querySelectorAll(".shr-have input").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
+  bindAll(b,".sh2-id",x=>openShardSheet(L[+x.dataset.i]));
+  bindAll(b,".sh2-up",x=>{ const r=L[+x.dataset.i], p=num(r.pos), snap=JSON.stringify(state); r.pos=p+1; r.have=Math.max(0,num(r.have)-SHARD_LEAF[p]); afterEdit(); toast(`${r.n}: ${starLabel(p+1)} (−${SHARD_LEAF[p]} shards)`,snap); });
+  b.querySelectorAll(".sh2-have input").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
     x.onchange=()=>{ const r=L[+x.dataset.i]; if(!/\d/.test(x.value)){ x.value=num(r.have); return; } const v=Math.max(0,num(x.value)); r.have=Math.round(v); afterEdit(); }; });
-  if(shardFocus){ const nb=b.querySelector(shardFocus); shardFocus=null; if(nb&&!nb.disabled) nb.focus({preventScroll:true}); }
   on("addGoldShard",()=>{ const r={n:"New hero",need:0,have:0,pos:0,tgt:SHARD_MAX}; L.push(r); afterEdit(); openShardSheet(r); });
 }
 function shardOrder(){ // every hero still short, most-used first

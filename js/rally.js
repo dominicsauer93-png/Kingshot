@@ -19,7 +19,7 @@ function renderRally(){
       <span class="bar ${cls}"><i style="width:${Math.min(100,ratio*100).toFixed(1)}%"></i>${p.b>0?`<span class="bench" style="left:${Math.min(99,p.b/Math.max(p.v,p.b)*100).toFixed(1)}%"></span>`:""}</span>
       <span class="pv">${fmtBig(p.v)} / ${fmtBig(p.b)}</span><span class="grade g-${esc(p.g||"")}">${esc(p.g)||"–"}</span></span></button>`; }).join("");
   bindAll(pl,".lrow",b=>openPillarSheet(state.pillars[+b.dataset.i]));
-  renderProgress(); renderHeroCards(); renderHeroRoles(); renderMasters(); renderMystic();
+  renderProgress(); renderHeroCards(); renderHeroRoles(); renderShards(); renderMasters(); renderMystic();
 }
 function openCombatSheet(){
   const c=state.combat;
@@ -66,7 +66,7 @@ function renderHeroRoles(){
   $("#roleBest").innerHTML=HERO_ROLES.map(([role,label])=>{
     const L=Object.values(mine).filter(h=>TIER_OF[heroKey(h.n)][role]).sort((a,b)=>TIER_PTS[TIER_OF[heroKey(b.n)][role]]-TIER_PTS[TIER_OF[heroKey(a.n)][role]]||b.pos-a.pos).slice(0,3);
     const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
-    return `<div class="rolecard"><h3>${esc(label)}</h3><ol>${L.map(h=>`<li>${trH(TIER_OF[heroKey(h.n)][role])}<span class="nm">${esc(h.n)}${h.rally?" ⚔":""}</span><span class="gold" style="font-size:12px;letter-spacing:1px">${starGlyphs(h.pos)}</span></li>`).join("")}</ol>
+    return `<div class="rolecard"><h3>${esc(label)}</h3><ol>${L.map(h=>`<li>${trH(TIER_OF[heroKey(h.n)][role])}<span class="nm">${esc(h.n)}${h.rally?" ⚔":""}</span><span class="gold" style="font-size:13px;letter-spacing:1px">${starGlyphs(h.pos)}</span></li>`).join("")}</ol>
       ${soon.length?`<span class="soon">Gen 8 soon: ${soon.map(esc).join(", ")} (S)</span>`:""}</div>`; }).join("");
   [["#roleFold","roleOpen"],["#tierFold","tierOpen"]].forEach(([id,k])=>{ const d=$(id); d.open=!!state.ui[k]; d.ontoggle=()=>{ if(state.ui[k]!==d.open){ state.ui[k]=d.open; scheduleSave(); } }; });
   const mode=state.ui.tierAll?"all":"mine";
@@ -97,13 +97,9 @@ function heroFacts(n){
     opts.sort((a,b)=>a[0]-b[0]); next=opts.length?"Closest: "+opts[0][1]:st!=null&&st>=SHARD_MAX?"5★ max ✓":"Set stars on the Shards page"; }
   return {sr,wr,t,info,st,have,nextCost,shortAll,wl,wNext,wHave,S,next,use:heroUse(n),gear:info.type?heroGearSum(info.type):null};
 }
-function heroCardH(n,rank){ const f=heroFacts(n);
+function heroCardH(n,rank){ const f=heroFacts(n); // kept short: who, stars, the one next thing — the rest is in the hero sheet
   return `<button class="vcard hcard" data-h="${esc(n)}">${EDIT_ICON}<span class="vc-top"><span class="shr-rank">${rank}</span><span class="vc-name">${esc(n)}${f.sr&&f.sr.rally?" ⚔":""}</span>${tagH(f.use>=25?"acc":"plain","Use "+f.use)}</span>
-    <span class="vc-sub">${f.st!=null?`<span class="gold" style="letter-spacing:1px">${starGlyphs(f.st)}</span> ${esc(starLabel(f.st))}`:'<span class="faint">stars not set</span>'}${f.info.type?` · ${esc(f.info.type)}`:""}</span>
-    <span class="hrow"><span>Shards</span><b>${f.sr?(f.shortAll?`${fmt(f.have)} · ${fmt(f.shortAll)} short`:'<span class="ok">enough ✓</span>'):"—"}</b></span>
-    <span class="hrow"><span>Widget</span><b>${f.wr?`Lv ${f.wl}${f.wNext?` · ${fmt(f.wHave)}/${fmt(f.wNext)}`:" · max"}`:'<span class="faint">not tracked</span>'}</b></span>
-    <span class="hrow"><span>Gear</span><b>${f.gear?`${f.info.type} avg Lv ${f.gear.avg} · ${f.gear.red}/${f.gear.n} red`:'<span class="faint">set troop type</span>'}</b></span>
-    ${f.S.length?`<span class="hroles">${f.S.map(x=>`<span class="tr tr-S">S ${esc(x)}</span>`).join("")}</span>`:""}
+    <span class="vc-sub">${f.st!=null?`<span class="gold" style="letter-spacing:1px">${starGlyphs(f.st)}</span> ${esc(starLabel(f.st))}`:'<span class="faint">stars not set</span>'}${f.info.type?` · ${esc(f.info.type)}`:""}${f.wr?` · widget Lv ${f.wl}`:""}</span>
     <span class="hnext">${f.next}</span></button>`; }
 function renderHeroCards(){
   const mine=Object.values(heroRoster()).sort((a,b)=>heroUse(b.n)-heroUse(a.n)||b.pos-a.pos), all=!!state.ui.heroAll, L=all?mine:mine.slice(0,6);
@@ -131,7 +127,7 @@ function openHeroSheet(n){
       inf.innerHTML=`<b>Next:</b> ${x.next}<br>`+
         (x.sr&&x.st!=null?`<b>Shards:</b> ${x.st>=SHARD_MAX?"5★ max ✓":`next step ${x.nextCost} · to ${esc(starLabel(x.sr.tgt==null?SHARD_MAX:num(x.sr.tgt)))}: ${fmt(x.shortAll)} short`}<br>`:"")+
         (x.gear?`<b>${esc(x.info.type)} hero gear:</b> avg Lv ${x.gear.avg}, ${x.gear.red}/${x.gear.n} red · lowest ${esc(x.gear.low.slot)} Lv ${num(x.gear.low.lvC)}<br>`:"")+
-        `<b>Use score:</b> ${x.use}/40<div class="hroles" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">${HERO_ROLES.map(([r,,sh])=>`<span style="display:inline-flex;align-items:center;gap:4px;font-size:12px">${trH(x.t[r])} ${esc(sh)}</span>`).join("")}</div>`; };
+        `<b>Use score:</b> ${x.use}/40<div class="hroles" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">${HERO_ROLES.map(([r,,sh])=>`<span style="display:inline-flex;align-items:center;gap:4px;font-size:13px">${trH(x.t[r])} ${esc(sh)}</span>`).join("")}</div>`; };
     rf(); return rf; }});
 }
 
@@ -261,7 +257,7 @@ function paintMysticChart(){
     if(log.length>1) svg+=`<polyline points="${log.map(e=>X(e.d).toFixed(1)+","+Y(e.v).toFixed(1)).join(" ")}" fill="none" stroke="${col}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
     log.forEach((e,k)=>{ svg+=`<circle cx="${X(e.d).toFixed(1)}" cy="${Y(e.v).toFixed(1)}" r="${k===log.length-1?4.5:3.5}" fill="${k===log.length-1?col:bg}" stroke="${col}" stroke-width="2"><title>${e.d}: #${fmt(e.v)}</title></circle>`; });
     svg+=`<text x="${pl}" y="${H-6}" font-family="JetBrains Mono,monospace" font-size="9" fill="${faint}">${fd(log[0].d)}</text><text x="${W-pr}" y="${H-6}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="${faint}">${fd(log[log.length-1].d)}</text></svg>`;
-    return `<div class="chart"><div class="rowb" style="flex-wrap:nowrap"><span style="display:flex;align-items:center;gap:6px;min-width:0"><span style="width:9px;height:9px;border-radius:50%;background:${col};flex:none"></span><b style="font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(z.k)}</b></span><b class="mono gold">#${fmt(last)}</b></div>
-      <div style="font-size:12px;margin:2px 0 4px">${log.length>1?(dlt<0?`<span class="ok">▼ ${fmt(-dlt)} better</span>`:dlt>0?`<span class="bad">▲ ${fmt(dlt)} worse</span>`:`<span class="faint">no change</span>`):`<span class="faint">first log</span>`}</div>${svg}</div>`; }).join("")+`</div>`;
+    return `<div class="chart"><div class="rowb" style="flex-wrap:nowrap"><span style="display:flex;align-items:center;gap:6px;min-width:0"><span style="width:9px;height:9px;border-radius:50%;background:${col};flex:none"></span><b style="font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(z.k)}</b></span><b class="mono gold">#${fmt(last)}</b></div>
+      <div style="font-size:13px;margin:2px 0 4px">${log.length>1?(dlt<0?`<span class="ok">▼ ${fmt(-dlt)} better</span>`:dlt>0?`<span class="bad">▲ ${fmt(dlt)} worse</span>`:`<span class="faint">no change</span>`):`<span class="faint">first log</span>`}</div>${svg}</div>`; }).join("")+`</div>`;
 }
 

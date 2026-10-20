@@ -14,7 +14,7 @@ function laterH(list,key){
   const items=sortTree(list,key).filter(isLaterNode); if(!items.length) return "";
   const u=unlockedCount(), d=items.reduce((s,n)=>s+nodeRem(n),0);
   if(!state.ui.laterOpen) state.ui.laterOpen={};
-  return `<details class="fold mt" data-later="${key}" ${state.ui.laterOpen[key]?"open":""}><summary><span class="grow">After unlock <span class="faint" style="font-weight:500">· Healing, Aid, Training</span><br><span class="faint" style="font-weight:500;font-size:13px">${u>=3?"All 3 troop types unlocked — go ahead":`Start once all 3 troop types are unlocked (${u}/3) · not in Dust needed`}</span></span><span class="mono faint">${d>0?fmt(d)+" dust":"done ✓"}</span></summary><div class="fbody">${nodeRowsH(items,key)}</div></details>`;
+  return `<details class="fold mt" data-later="${key}" ${state.ui.laterOpen[key]?"open":""}><summary><span class="grow">After unlock <span class="faint" style="font-weight:500">· Healing, Aid, Training</span><br><span class="faint" style="font-weight:500;font-size:14px">${u>=3?"All 3 troop types unlocked — go ahead":`Start once all 3 troop types are unlocked (${u}/3) · not in Dust needed`}</span></span><span class="mono faint">${d>0?fmt(d)+" dust":"done ✓"}</span></summary><div class="fbody">${nodeRowsH(items,key)}</div></details>`;
 }
 let stepFocus=null;
 function renderT11(){
@@ -47,14 +47,14 @@ function buildForecast(){
     const ex=state.forecast.log.findIndex(e=>e.d===today); if(ex>=0) state.forecast.log[ex]=entry; else state.forecast.log.push(entry);
     const m=$("#fcMsg"); m.textContent=`Logged ${fmt(entry.dust)} dust · ${fmtBig(entry.gold)} gold`; m.hidden=false; afterEdit(); });
   const h=$("#fcHistory"), log=[...(state.forecast.log||[])].sort((a,b)=>b.d.localeCompare(a.d)).slice(0,6);
-  h.innerHTML=log.length?`<div class="list">`+log.map(e=>`<div class="lrow"><span class="mono" style="font-size:13px">${e.d} · ${fmt(e.dust)} dust · ${fmtBig(e.gold)} gold</span><button class="x" data-d="${e.d}" aria-label="Remove check-in ${e.d}">×</button></div>`).join("")+`</div>`:"";
+  h.innerHTML=log.length?`<div class="list">`+log.map(e=>`<div class="lrow"><span class="mono" style="font-size:14px">${e.d} · ${fmt(e.dust)} dust · ${fmtBig(e.gold)} gold</span><button class="x" data-d="${e.d}" aria-label="Remove check-in ${e.d}">×</button></div>`).join("")+`</div>`:"";
   h.querySelectorAll(".x").forEach(b=>b.onclick=()=>{ const snap=JSON.stringify(state); state.forecast.log=state.forecast.log.filter(e=>e.d!==b.dataset.d); afterEdit(); toast("Check-in removed",snap); });
   paintForecast();
 }
 function renderTroops(){
   const tc=state.troopCounts; const L=[["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]];
   $("#troopBody").innerHTML=L.map(([k,l])=>{ const t=tc[k]||{cur:0,tgt:0}, p=pc(num(t.cur),num(t.tgt)), done=num(t.tgt)>0&&num(t.cur)>=num(t.tgt);
-    return `<button class="lrow" data-k="${k}" data-l="${l}" style="grid-template-columns:1fr auto"><span style="min-width:0;display:flex;flex-direction:column;gap:6px"><span class="rowb"><span class="lt">${l}</span><span class="mono muted" style="font-size:13px">${fmt(num(t.cur))} / ${fmt(num(t.tgt))}</span></span>${barH(p,done?"ok":"big")}</span><span class="lv">${p.toFixed(0)}%</span></button>`; }).join("");
+    return `<button class="lrow" data-k="${k}" data-l="${l}" style="grid-template-columns:1fr auto"><span style="min-width:0;display:flex;flex-direction:column;gap:6px"><span class="rowb"><span class="lt">${l}</span><span class="mono muted" style="font-size:14px">${fmt(num(t.cur))} / ${fmt(num(t.tgt))}</span></span>${barH(p,done?"ok":"big")}</span><span class="lv">${p.toFixed(0)}%</span></button>`; }).join("");
   bindAll($("#troopBody"),".lrow",b=>openTroopSheet(b.dataset.k,b.dataset.l));
 }
 function openTroopSheet(k,l){ const t=state.troopCounts[k]||(state.troopCounts[k]={cur:0,tgt:0}); openSheet({title:`${l} troops`,sub:"Shorthand works: 500k, 1.5m",build(f){

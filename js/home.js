@@ -67,17 +67,13 @@ function renderHome(){
   $("#homeSub").textContent=d.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})+" · Kingdom day "+kingdomDay();
   paintGoals();
   renderEventMode();
-  // today
+  // daily + weekly checklists reset here (they live in Plan → Checklists now, not on Home)
   const t=state.today; const today=fcToday();
   if(t.routineDate!==today){ t.routine.forEach(r=>r.d=false); t.routineDate=today; scheduleSave(); }
-  $("#todayDate").textContent=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
-  homeList({arr:t.routine,list:"#todayRoutine",cnt:"#todayCount",bar:"#todayBar",btn:"#todayShow",key:"todayAll",done:"All done today ✓"});
   const pa=packAlerts(), al=$("#packAlert"); al.hidden=!pa.length;
   if(pa.length) al.innerHTML=`<b>Card ending:</b> `+pa.map(({p,n})=>`${esc(p.t)} — ${n<0?`ended ${-n} day${n===-1?"":"s"} ago`:n===0?"ends today":`ends in ${n} day${n===1?"":"s"}`}`).join(" · ")+` <span class="faint">→ renew or untick</span>`;
   const w=state.weekly, wk=weekKey();
   if(w.week!==wk){ w.items.forEach(r=>r.d=false); w.week=wk; scheduleSave(); }
-  homeList({arr:w.items,list:"#weekRoutine",cnt:"#weekCount",bar:"#weekBar",btn:"#weekShow",key:"weekAll",done:"All done this week ✓"});
-  const wf=$("#weekFold"); wf.open=!!state.ui.weekOpen; wf.ontoggle=()=>{ if(state.ui.weekOpen!==wf.open){ state.ui.weekOpen=wf.open; scheduleSave(); } };
   renderEvents();
 }
 
@@ -110,16 +106,23 @@ const EVENT_LEN=[[/hall of heroes/i,3],[/armament competition \(type 1\)/i,2]];
 const spendFor=e=>String(e.spend||"").trim()||((EVENT_SPEND.find(([re])=>re.test(e.n||""))||[])[1]||"");
 const evLen=e=>Math.max(1,Math.floor(num(e.len))||((EVENT_LEN.find(([re])=>re.test(e.n||""))||[])[1]||1));
 function activeOcc(e){ const L=evLen(e); for(let k=0;k<L;k++){ if(occursOn(e,-k)) return {day:k+1,len:L}; } return null; }
+// note text → one fact per line ("·" and full stops start new lines)
+function noteHtml(t){ const L=String(t||"").split(/\n| · |(?<=\.)\s+(?=[A-Z0-9])/).map(x=>x.trim()).filter(Boolean);
+  return L.length?`<ul>${L.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:""; }
 function openEventSheet(ev){
   const isNew=!ev; if(isNew){ ev={n:"New event",date:fcToday(),every:7,time:"",note:""}; state.events.push(ev); afterEdit(); }
   openSheet({title:isNew?"New event":(ev.n||"Event"),sub:"Set any past or future date — it repeats from there.",
     build(f){
+      // note: easy-to-read view first (one fact per line), editing tucked under "Edit note"
+      const nv=document.createElement("div"); nv.className="evnote"; f.appendChild(nv);
+      const paintNote=()=>{ nv.innerHTML=noteHtml(ev.note)||'<span class="faint">No notes yet.</span>'; }; paintNote();
+      const ed=document.createElement("details"); ed.className="fold"; ed.innerHTML="<summary>Edit note</summary>"; const eb=document.createElement("div"); eb.className="fbody"; ed.appendChild(eb);
+      eb.appendChild(fld("Note",{type:"area",rows:8,value:ev.note,set:v=>{ ev.note=v; paintNote(); },hint:"Start a new line for each point."})); f.appendChild(ed);
       f.appendChild(fld("Event name",{value:ev.n,set:v=>ev.n=v}));
       f.appendChild(frow(fld("Date (any occurrence)",{type:"date",value:ev.date,set:v=>ev.date=v}),fld("Repeats every (days)",{type:"num",value:ev.every||0,get:()=>ev.every,set:v=>ev.every=Math.max(0,Math.floor(v)),hint:"0 = one-off"})));
       f.appendChild(frow(fld("Lasts (days)",{type:"num",value:evLen(ev),get:()=>evLen(ev),set:v=>ev.len=Math.max(1,Math.floor(v)||1)}),fld("Time (optional)",{type:"time",value:ev.time,set:v=>ev.time=v})));
       f.appendChild(fld("What to spend",{value:spendFor(ev),ph:"e.g. Speedups + Gov Gear",set:v=>ev.spend=v,hint:"Shown on Home while the event is on."}));
       f.appendChild(fld("Importance",{type:"select",value:ev.imp||"",options:[["","Auto"],["top","Top — show first"],["high","High"],["normal","Normal"],["low","Low"]],set:v=>{ if(v) ev.imp=v; else delete ev.imp; },hint:"When several events are on, the most important one leads the Home card."}));
-      f.appendChild(fld("Note",{type:"area",rows:3,value:ev.note,set:v=>ev.note=v}));
       const inf=infoBox(); f.appendChild(inf);
       const r=()=>{ const o=nextOcc(ev); inf.innerHTML=o?(o.past?"This one-off event has passed.":`Next: <b>${new Date(o.date+"T00:00:00").toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})}</b> (${whenTxt(o)}) · ${repeatTxt(ev)}`):"Pick a date."; };
       r(); return r;

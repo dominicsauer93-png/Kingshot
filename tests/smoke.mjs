@@ -31,7 +31,7 @@ for (const [w, h, label] of [[390, 844, "phone"], [1280, 900, "pc"]]) {
   // core features
   check(await p.evaluate(() => typeof merge3 === "function" && merge3({a:1,b:1},{a:2,b:1},{a:1,b:3}).a === 2 && merge3({a:1,b:1},{a:2,b:1},{a:1,b:3}).b === 3), `${label}: two-device merge keeps both edits`);
   await p.evaluate(() => setTab("Home")); await p.waitForTimeout(150);
-  check(await p.locator("#todayRoutine li").count() > 0, `${label}: Home routine renders`);
+  check(await p.locator("#doNext .do").count() > 0, `${label}: Home Do next renders`);
   await p.evaluate(() => openSearch()); await p.fill("#srchIn", "shards"); await p.waitForTimeout(100);
   check(await p.locator("#srchList button").count() > 0, `${label}: search finds sections`);
   await p.evaluate(() => closeSearch());

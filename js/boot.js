@@ -13,7 +13,7 @@ function renderUpdate(){
   const sub=t=>{ const h=document.createElement("div"); h.className="qsub"; h.textContent=t; return h; };
   const groups=[];
   const group=(key,title,hint,build)=>{ groups.push([key,title]); const d=document.createElement("details"); d.className="fold"; d.dataset.k=key; if(state.ui.qOpen[key]) d.open=true;
-    d.innerHTML=`<summary><span class="grow">${title}</span><span class="faint" style="font-weight:500;font-size:13px">${hint||""}</span></summary><div class="fbody form"></div>`;
+    d.innerHTML=`<summary><span class="grow">${title}</span><span class="faint" style="font-weight:500;font-size:14px">${hint||""}</span></summary><div class="fbody form"></div>`;
     const body=d.querySelector(".fbody"); let built=false;
     const fill=()=>{ if(built) return; built=true; build(body); };
     if(d.open) fill(); d.ontoggle=()=>{ state.ui.qOpen[key]=d.open; if(d.open) fill(); scheduleSave(); };
@@ -68,7 +68,7 @@ function renderUpdate(){
   $$("#qJump .chip").forEach(c=>c.onclick=()=>{ host.querySelectorAll("details.fold").forEach(d=>{ d.open=d.dataset.k===c.dataset.k; });
     const d=host.querySelector(`details.fold[data-k="${c.dataset.k}"]`); if(d) setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"start"}),30); });
 }
-const TAB_RENDER={Home:()=>renderHome(),Rally:()=>renderRally(),Gear:()=>renderGear(),Base:()=>renderBase(),Plan:()=>renderPlan(),Data:()=>{ renderData(); renderUpdate(); }};
+const TAB_RENDER={Home:()=>renderHome(),Heroes:()=>renderRally(),Gear:()=>renderGear(),Base:()=>renderBase(),Plan:()=>renderPlan(),Data:()=>{ renderData(); renderUpdate(); }};
 const dirtyTabs=new Set();
 function renderPrep(){ migrateEvents(); migrateMasterNotes(); if(!state.ui.sub) state.ui.sub={}; }
 function renderAll(){ renderPrep(); TABS.forEach(t=>TAB_RENDER[t]()); dirtyTabs.clear(); }

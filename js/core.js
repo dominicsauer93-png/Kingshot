@@ -515,7 +515,7 @@ function paintForecast(){
     const when = need<=0 ? `<b style="color:var(--green)">already met</b>` : (isFinite(dys)?`~<b>${addDays(dys)}</b> (${Math.ceil(dys)}d)`:`<b style="color:var(--red)">never at current rate</b>`);
     return `<div style="margin-bottom:4px">${label}: ${rateTxt} · ${when}</div>`;
   };
-  let html=`<div class="mono" style="font-size:12.5px">`;
+  let html=`<div class="mono" style="font-size:13.5px">`;
   html+=line("Dust",f.dustRate,dNeed,dDays);
   html+=line("Gold",f.goldRate,gNeed,gDays);
   const both=Math.max(isFinite(dDays)?dDays:0, isFinite(gDays)?gDays:0);
