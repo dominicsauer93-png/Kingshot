@@ -681,7 +681,7 @@
       </section>
 
       <section class="sec" data-sub="Widgets" data-key="Widgets">
-        <div class="tiles t2" id="widTiles"></div>
+        <div class="tiles t2" id="widTiles" style="grid-template-columns:1fr"></div>
         <div class="grid mt" style="--min:200px" id="widBody"></div>
         <button class="add" id="addWid">+ Add hero</button>
         <details class="fold mt"><summary>Where to get Widgets</summary><div class="fbody howto">
@@ -691,6 +691,7 @@
 
       <section class="sec" data-sub="Charms" data-key="Charms">
         <div class="tiles t2" id="charmMats"></div>
+        <div class="info hgsum mt" id="charmNext"></div>
         <div class="stack mt" id="charmBody"></div>
         <details class="fold mt"><summary>Where to get Charm Guides &amp; Designs</summary><div class="fbody howto">
           <ul><li><b>Events:</b> Eternity's Reach, Alliance Brawl, Merchant Empire, Kingdom of Power, Strongest Governor, Officer Project, Champagne Fair</li><li><b>Shops:</b> Swordland, Tidal, Kingdom of Power, Alliance</li><li><b>Other:</b> Crystal Cave, packs</li></ul>
@@ -699,6 +700,7 @@
 
       <section class="sec" data-sub="Pets" data-key="Pets">
         <div class="tiles" id="petMats"></div>
+        <div class="info mt" id="petNext"></div>
         <p class="note-line" id="petKvk"></p>
         <div class="grid mt" style="--min:240px" id="petBody"></div>
         <details class="fold mt" id="petMaxed" hidden></details>
@@ -1845,6 +1847,9 @@ function goToSection(tab,key,thenOpen){
 /* =====================================================================
    HOME
    ===================================================================== */
+// "have / next step" tile — the small step up front, the end goal as a faint line
+const fmtK=v=>v>=1e4&&v<1e6?fmt(Math.round(v/1e3))+"K":fmtBig(v); // 172,000 → 172K so tiles fit on a phone
+function stepTileH(id,label,h,v,goal,f){ f=f||fmtK; return tileH({id,label,value:f(h),sub:(!v?"not needed next":`next ${f(v)} · `+(v>h?`<span class="bad">${f(v-h)} short</span>`:`<span class="ok">enough ✓</span>`))+(goal?`<br><span class="faint">end goal ${f(goal)}</span>`:""),p:v?pc(h,v):null,cls:v&&h>=v?"ok":""}); }
 function tileH({id,label,value,sub,p,cls,txt,color,go,clamp}){
   return `<button class="tile" ${id?`id="${id}"`:""} ${go?`data-go="${esc(go)}"`:""}><span class="l"><span>${label}</span></span><span class="v ${txt?"txt":""} ${clamp?"clamp":""}" ${color?`style="color:${color}"`:""}>${value}</span>${sub!=null?`<span class="s">${sub}</span>`:""}${p!=null?barH(p,cls||""):""}</button>`;
 }
@@ -2452,9 +2457,8 @@ function renderWidgets(){
   const R=w.rows.some(r=>r.rally)?w.rows.filter(r=>r.rally):w.rows;
   const total=R.reduce((s,r)=>s+widRem(num(r.lvl)),0), haveSum=R.reduce((s,r)=>s+num(r.have),0);
   const low=R.filter(r=>num(r.lvl)<10).sort((a,b)=>num(a.lvl)-num(b.lvl)||(widNext(num(a.lvl))-num(a.have))-(widNext(num(b.lvl))-num(b.have)))[0];
-  $("#widTiles").innerHTML=tileH({id:"wTot",label:"Widgets (rally heroes)",value:fmt(haveSum),sub:`of ${fmt(total)} to max · ${total>haveSum?`<span class="bad">${fmt(total-haveSum)} short</span>`:`<span class="ok">covered</span>`}`,p:pc(haveSum,total)})+
-    (low?tileH({id:"wNext",label:"Level next",value:`${esc(low.hero)} ${num(low.lvl)} → ${num(low.lvl)+1}`,txt:true,sub:num(low.have)>=widNext(num(low.lvl))?`<span class="ok">ready now</span>`:`${fmt(widNext(num(low.lvl))-num(low.have))} widgets short`}):tileH({label:"Level next",value:"All maxed",txt:true}));
-  on("wTot",()=>low&&openWidSheet(low)); on("wNext",()=>low&&openWidSheet(low));
+  $("#widTiles").innerHTML=low?stepTileH("wTot",`Next: ${esc(low.hero)} Lv ${num(low.lvl)} → ${num(low.lvl)+1}`,num(low.have),widNext(num(low.lvl)),total):tileH({id:"wTot",label:"Widgets (rally heroes)",value:"All maxed",txt:true});
+  on("wTot",()=>low&&openWidSheet(low));
   const b=$("#widBody");
   const L=w.rows.slice().sort((a,c)=>(!!c.rally)-(!!a.rally)||num(a.lvl)-num(c.lvl));
   b.innerHTML=L.map(r=>{ const lvl=Math.max(0,Math.min(10,num(r.lvl))), have=num(r.have), next=widNext(lvl);
@@ -2481,16 +2485,24 @@ function renderCharms(){
   c.rows.forEach(r=>{ if(r.tgt==null) r.tgt=c.targetLvl; });
   let G=0,D=0; c.rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt); G+=m.g; D+=m.d; });
   const gh=num(c.have.guides), dh=num(c.have.designs);
-  $("#charmMats").innerHTML=tileH({id:"chG",label:"Charm Guides",value:fmt(gh),sub:`of ${fmt(G)} · ${G>gh?`<span class="bad">${fmt(G-gh)} short</span>`:`<span class="ok">covered</span>`}`,p:pc(gh,G)})+
-    tileH({id:"chD",label:"Charm Designs",value:fmt(dh),sub:`of ${fmt(D)} · ${D>dh?`<span class="bad">${fmt(D-dh)} short</span>`:`<span class="ok">covered</span>`}`,p:pc(dh,D)});
-  on("chG",openCharmMatsSheet); on("chD",openCharmMatsSheet);
   const order=["Infantry","Archer","Cavalry"]; // Quaad: Infantry first
+  // next 3 upgrades: one level each, Infantry first, lowest charm first — small steps instead of the whole end goal
+  const next=c.rows.filter(r=>num(r.lvl)<num(r.tgt)&&num(r.lvl)<22).sort((a,b)=>order.indexOf(a.type)-order.indexOf(b.type)||num(a.lvl)-num(b.lvl)).slice(0,3);
+  const n3={g:0,d:0}; next.forEach(r=>{ const k=CHARM_COSTS[num(r.lvl)]; n3.g+=k[0]; n3.d+=k[1]; });
+  $("#charmMats").innerHTML=stepTileH("chD","Charm Designs",dh,n3.d,D)+stepTileH("chG","Charm Guides",gh,n3.g,G);
+  on("chG",openCharmMatsSheet); on("chD",openCharmMatsSheet);
+  const bag={g:gh,d:dh}, idx=r=>c.rows.filter(x=>x.type===r.type).indexOf(r)+1;
+  const nb=$("#charmNext"); nb.innerHTML=next.length?`<b>Next up</b>`+next.map((r,i)=>{ const L=num(r.lvl), k=CHARM_COSTS[L], miss=[];
+      if(k[1]>bag.d) miss.push(`${fmt(k[1]-Math.max(0,bag.d))} Designs`); if(k[0]>bag.g) miss.push(`${fmt(k[0]-Math.max(0,bag.g))} Guides`); bag.g-=k[0]; bag.d-=k[1];
+      return `<br><span class="hgnum${miss.length?"":" go"}">${i+1}</span> ${esc(r.type)} <b>Charm ${idx(r)}</b> <span class="faint">Lv ${L} → ${L+1}</span> · ${miss.length?`<span class="bad">short ${miss.join(" + ")}</span>`:'<span class="ok">ready ✓</span>'}`; }).join("")+
+    `<br><span class="faint" style="font-size:12.5px">Tiles show what these 3 need. The end goal gets done one level at a time.</span>`:"<b>All charms at target ✓</b>";
   $("#charmBody").innerHTML=order.map(type=>{ const rows=c.rows.filter(r=>r.type===type); if(!rows.length) return "";
     let g=0,d=0,lv=0,tg=0,at=0; rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt); g+=m.g; d+=m.d; lv+=r.lvl; tg+=r.tgt; if(r.lvl>=r.tgt) at++; });
     const done=at===rows.length;
     return `<button class="vcard ${done?"s-done":""}" data-t="${type}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${type} charms</span>${type==="Infantry"?tagH("gold","first"):""}<span class="vc-meta">avg Lv ${(lv/rows.length).toFixed(1)}</span></span>
       <span class="charm6">${rows.map((r,i)=>`<span style="padding:6px 8px;border-radius:9px;border:1px solid ${r.lvl>=r.tgt?"var(--green)":"var(--line)"};background:var(--panel-2)"><span class="faint" style="font-size:11.5px;display:block">Charm ${i+1}</span><b class="mono">${r.lvl}</b><span class="faint mono" style="font-size:12px"> → ${r.tgt}</span></span>`).join("")}</span>
-      <span class="vc-line">${done?'<span class="ok">All at target ✓</span>':`${at}/${rows.length} at target · <b>${fmt(g)}</b> Guides · <b>${fmt(d)}</b> Designs to go`}</span>${barH(pc(lv,tg),done?"ok":"")}</button>`; }).join("");
+      <span class="vc-line">${(()=>{ if(done) return '<span class="ok">All at target ✓</span>'; const nx=rows.filter(r=>r.lvl<r.tgt).sort((a,b)=>a.lvl-b.lvl)[0], k=CHARM_COSTS[nx.lvl];
+        return `Next: Charm ${rows.indexOf(nx)+1} Lv ${nx.lvl} → ${nx.lvl+1} · <b>${fmt(k[1])}</b> Designs + <b>${fmt(k[0])}</b> Guides <span class="faint">· ${at}/${rows.length} at target</span>`; })()}</span>${barH(pc(lv,tg),done?"ok":"")}</button>`; }).join("");
   bindAll($("#charmBody"),".vcard",b=>openCharmSheet(b.dataset.t));
 }
 function openCharmMatsSheet(){
@@ -2522,7 +2534,10 @@ function renderPets(){
   const t={food:0,manuals:0,potions:0,medals:0,kvk:0,ab:0};
   P.rows.filter(r=>num(r.lvl)>0).forEach(r=>{ const c=petCost(r); if(c) Object.keys(t).forEach(k=>t[k]+=c[k]); });
   const M=[["food","Pet Food"],["manuals","Growth Manuals"],["potions","Nutrient Potions"],["medals","Medallions"]];
-  $("#petMats").innerHTML=M.map(([k,l])=>{ const h=num(P.have[k]); return tileH({id:"pm_"+k,label:l,value:fmtBig(h),sub:`of ${fmtBig(t[k])} · ${t[k]>h?`<span class="bad">${fmtBig(t[k]-h)} short</span>`:`<span class="ok">covered</span>`}`,p:pc(h,t[k])}); }).join("")+
+  const nxPet=P.rows.filter(r=>{ const g=num(r.tgt)||num(r.max); return num(r.lvl)>0&&g>num(r.lvl)&&PET_INFO[r.n]; }).sort((a,c)=>petRank(a)-petRank(c))[0];
+  const nxC=nxPet?petCost(Object.assign({},nxPet,{tgt:Math.min((Math.floor(num(nxPet.lvl)/10)+1)*10,num(nxPet.tgt)||num(nxPet.max))})):null;
+  $("#petNext").innerHTML=nxPet?`<b>Next up:</b> ${esc(nxPet.n)} Lv ${num(nxPet.lvl)} → ${Math.min((Math.floor(num(nxPet.lvl)/10)+1)*10,num(nxPet.tgt)||num(nxPet.max))} — tiles show what that needs.`:"";
+  $("#petMats").innerHTML=M.map(([k,l])=>stepTileH("pm_"+k,l,num(P.have[k]),nxC?nxC[k]:0,t[k])).join("")+
     tileH({id:"pm_tm",label:"Taming Marks",value:`${fmt(num(P.have.tmCommon))} · ${fmt(num(P.have.tmAdv))}`,sub:"common · advanced"});
   $$("#petMats .tile").forEach(x=>x.onclick=openPetMatsSheet);
   $("#petKvk").innerHTML=t.kvk?`Advancing your pets to target is worth <b class="gold">${fmt(t.kvk)}</b> KvK / Strongest Governor points (${fmt(t.ab)} Alliance Brawl) — save advances for those days.`:"";
@@ -2669,7 +2684,8 @@ function renderGov(){
   $("#govPlan").innerHTML=`<b>Your plan:</b> Infantry + Archer go up a tier first, Cavalry stays one tier behind.<br>`+
     P.goals.map((G,idx)=>({G,idx})).filter(({G,idx})=>idx===P.ci-1||idx===P.ci||(idx>P.ci&&(G.who==="main"?state.govGear.pieces.filter(p=>!govIsCav(p)):state.govGear.pieces.filter(govIsCav)).some(p=>num(p.cur)<G.to))).slice(0,4).map(({G,idx})=>{ const done=idx<P.ci||P.ci<0, now=idx===P.ci;
       return `<span class="${done?"ok":now?"":"faint"}">${done?"✓":now?"▶":"·"} ${esc(P.label(G))}</span>${now&&P.step.length?` <span class="faint">— next: ${P.step.map(p=>`${esc(p.name)} (${esc(GOV_TIERS[num(p.cur)][0])})`).join(", ")}</span>`:""}`; }).join("<br>");
-  const mt=(id,l,need,have)=>tileH({id,label:l,value:fmtBig(have),sub:`of ${fmtBig(need)} · ${need>have?`<span class="bad">${fmtBig(need-have)} short</span>`:`<span class="ok">covered</span>`}`,p:pc(have,need)});
+  const np=P.step.slice().sort((a,b)=>num(a.cur)-num(b.cur))[0], n1=np?govRem(num(np.cur),num(np.cur)+1):{s:0,t:0,v:0}; // next single upgrade
+  const mt=(id,l,need,have)=>stepTileH(id,l,have,{gvS:n1.s,gvG:n1.t,gvV:n1.v}[id],need);
   $("#govTiles").innerHTML=tileH({id:"gvT",label:"Current step",value:cur?esc(GOV_TIERS[cur.to][0]):"Plan done",txt:true,sub:cur?`${cur.who==="main"?"Inf + Archer":"Cavalry"} · ${at}/${of} there`:"",p:pc(at,of),cls:at===of?"ok":""})+
     mt("gvS","Satin",s,num(g.have.satin))+mt("gvG","Gilded Threads",t,num(g.have.threads))+mt("gvV","Artisan's Vision",v,num(g.have.vision));
   on("gvT",()=>P.step[0]&&openGovPieceSheet(P.step[0])); ["gvS","gvG","gvV"].forEach(id=>on(id,openGovMatsSheet));
@@ -2677,7 +2693,7 @@ function renderGov(){
   b.innerHTML=g.pieces.map((p,i)=>{ const tgt=P.tgtOf(p), done=p.cur>=tgt, r=govRem(p.cur,tgt);
     return `<button class="vcard ${done?"s-done":""}" data-i="${i}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(p.name||"Piece")}</span></span><span class="vc-big" style="font:700 17px var(--f-body);color:var(--text)">${esc(GOV_TIERS[p.cur]?GOV_TIERS[p.cur][0]:"—")}</span>${barH(tgt>0?pc(p.cur,tgt):100,done?"ok":"")}<span class="vc-line">${done?'<span class="ok">At target ✓</span>':(P.cur&&P.cur.who!==(govIsCav(p)?"cav":"main"))?`<span class="faint">waits — ${esc(GOV_TIERS[tgt][0])} after ${govIsCav(p)?"Inf + Archer go up":"Cavalry catches up"}</span>`:`→ ${esc(GOV_TIERS[tgt][0])} · ${fmtBig(r.s)} Satin`}</span></button>`; }).join("");
   bindAll(b,".vcard",x=>openGovPieceSheet(g.pieces[+x.dataset.i]));
-  $("#govNote").innerHTML="Materials above are for the current step only. Each card shows that piece's own target (Cavalry's is one tier lower).";
+  $("#govNote").innerHTML=(np?`Materials above: the next upgrade, <b>${esc(np.name)}</b> → ${esc((GOV_TIERS[num(np.cur)+1]||[""])[0])}. The faint line is the whole current step. `:"")+"Each card shows that piece's own target (Cavalry's is one tier lower).";
 }
 const govOpts=()=>GOV_TIERS.map((r,i)=>[String(i),r[0]]);
 function openGovTargetSheet(){ const g=state.govGear; openSheet({title:"Governor Gear target",sub:"All 6 pieces aim for this tier.",build(f){ f.appendChild(fld("Target tier",{type:"select",value:String(g.targetIdx),options:govOpts(),set:v=>g.targetIdx=parseInt(v,10)})); }}); }
@@ -2753,8 +2769,9 @@ function openTroopSheet(k,l){ const t=state.troopCounts[k]||(state.troopCounts[k
 function renderBuildings(){
   const t=state.tg; let w=0,s=0,i=0,tg=0,ttg=0; state.buildings.forEach(bl=>{ const r=bldRem(bl); w+=r.w; s+=r.s; i+=r.i; tg+=r.tg; ttg+=r.ttg; });
   t.need=Math.round(tg); t.ttgNeed=Math.round(ttg);
-  $("#tgTiles").innerHTML=tileH({id:"tgA",label:"Truegold",value:fmt(num(t.have)),sub:`of ${fmt(tg)} · ${tg>num(t.have)?`<span class="bad">${fmt(tg-num(t.have))} short</span>`:`<span class="ok">covered</span>`}`,p:pc(num(t.have),tg)})+
-    tileH({id:"tgB",label:"Tempered Truegold",value:fmt(num(t.ttgHave)),sub:`of ${fmt(ttg)} · ${ttg>num(t.ttgHave)?`<span class="bad">${fmt(ttg-num(t.ttgHave))} short</span>`:`<span class="ok">covered</span>`}`,p:pc(num(t.ttgHave),ttg)});
+  const nb=state.buildings.find(bl=>!bl.d&&BUILD_TIERS[bl.n]&&(bl.stepIdx||0)<BUILD_TIERS[bl.n].steps.length), ns=nb?BUILD_TIERS[nb.n].steps[nb.stepIdx||0]:null;
+  $("#tgTiles").innerHTML=stepTileH("tgA","Truegold",num(t.have),ns?ns.tg:0,tg)+stepTileH("tgB","Tempered Truegold",num(t.ttgHave),ns?ns.ttg:0,ttg)+
+    (ns?`<div class="info" style="grid-column:1/-1">Next: <b>${esc(nb.n)}</b> → ${esc(ns.to)}</div>`:"");
   on("tgA",openTGSheet); on("tgB",openTGSheet);
   // Tempered Truegold from refining Truegold. Tier 1 = refines 1–20 of the week: 20 TG each (first refine of the day half price), gives 1–3 TTG (random).
   // Minimum target = worst luck (1 TTG per refine); average = 2 per refine. Tier 2+ costs 50–160 TG per refine, so we plan on Tier 1 only.
