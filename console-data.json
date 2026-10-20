@@ -1478,7 +1478,7 @@
     ]
   },
   "ui": {
-    "tab": "Plan",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1514,7 +1514,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Widgets",
       "Base": "Resources",
       "Plan": "Shops & Packs"
     },
