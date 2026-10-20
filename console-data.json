@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 0,
+    "current": 137,
     "target": 7224,
     "gold": 273090
   },
@@ -1378,9 +1378,9 @@
     }
   ],
   "tg": {
-    "have": 32,
+    "have": 157,
     "need": 4104,
-    "ttgHave": 30,
+    "ttgHave": 32,
     "ttgNeed": 445
   },
   "govGear": {
@@ -1478,7 +1478,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1514,9 +1514,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Widgets",
+      "Gear": "Hero Gear",
       "Base": "Resources",
-      "Plan": "Shops & Packs"
+      "Plan": "Shops & Packs",
+      "Heroes": "Shards"
     },
     "t11Open": {
       "nodes": false,
@@ -1524,7 +1525,7 @@
     },
     "doAll": false,
     "qOpen": {
-      "Bag": false,
+      "Bag": true,
       "HG": false,
       "Power": true,
       "Buildings": true,
@@ -1737,8 +1738,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 673,
-      "designs": 12
+      "guides": 703,
+      "designs": 172
     },
     "rows": [
       {
