@@ -1486,7 +1486,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1522,10 +1522,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Charms",
       "Base": "Resources",
       "Plan": "Shops & Packs",
-      "Heroes": "Masters"
+      "Heroes": "Mystic Trials"
     },
     "t11Open": {
       "nodes": false,
