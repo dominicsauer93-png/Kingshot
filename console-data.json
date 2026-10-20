@@ -1478,7 +1478,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Plan",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1515,12 +1515,12 @@
       "Rally": "Heroes",
       "Data": "Update all",
       "Gear": "Hero Gear",
-      "Base": "T11",
+      "Base": "Resources",
       "Plan": "Shops & Packs"
     },
     "t11Open": {
-      "nodes": true,
-      "cavNodes": true
+      "nodes": false,
+      "cavNodes": false
     },
     "doAll": false,
     "qOpen": {
