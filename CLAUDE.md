@@ -10,4 +10,6 @@ When the user mentions Eternity's Reach (or says it's on / coming up), open your
 - Keep beating everyone on Scattered Copper Ore (you had 52.8K vs their 28.3K).
 - Skill order: Right, Right, Left, Left, Right. Skip the Peak. Save Skill 5 for Vein Outbursts.
 
-Full guide and ranking table: the Eternity's Reach event note in `console-data.json`.
+- Runs every 14 days at 9 pm Brisbane (11:00 UTC). Best ever: rank 13 with 383,822 (25 Aug 2026). Top 10 needs about 420K+.
+
+Full guide, ranking table and full history: the Eternity's Reach event note in `console-data.json`.
