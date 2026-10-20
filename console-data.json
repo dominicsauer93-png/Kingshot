@@ -1783,47 +1783,47 @@
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Archer",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Archer",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Archer",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Archer",
@@ -1833,12 +1833,12 @@
       {
         "type": "Archer",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       },
       {
         "type": "Archer",
         "lvl": 6,
-        "tgt": 10
+        "tgt": 7
       }
     ]
   },
