@@ -39,7 +39,8 @@ function hgPriority(rows){
   L.sort(ord);
   L.forEach(x=>{ const req=Object.entries(x.st.req||{}), need=x.st.req?req:(x.st.cls===""?[["xp",1]]:[]);
     x.now=!x.wait&&need.length>0&&need.every(([k,v])=>bag[k]>=v);
-    if(x.now&&x.st.req) req.forEach(([k,v])=>bag[k]-=v); });
+    // a higher pick keeps its materials even when it can't go yet — so a lower pick never spends the Mythic the #1 is waiting for
+    if(x.st.req&&!x.wait) req.forEach(([k,v])=>bag[k]=Math.max(0,bag[k]-v)); });
   const out=L.map(x=>x.r); out.now=new Set(L.filter(x=>x.now).map(x=>x.r));
   out.why=r=>{ const st=hgState(r); return `${r.type} ${slotStat(r.slot)} · ${st.cls==="s-block"?"mastery step":st.req?"imbue":"XP to the next imbue"}`; }; return out; }
 // little pictures for each gear slot and troop type (line drawings, follow the text colour)
