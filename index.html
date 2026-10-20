@@ -241,6 +241,8 @@
   .evmode ul.checks li{padding:6px 0}
   .evmode .eall{margin-top:8px;border-top:1px solid var(--line);padding-top:6px}
   .evmode .eall-h{font:700 11px var(--f-body);text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:2px 0 4px}
+  .evmode .erow[hidden]{display:none}
+  .evmode .emore{display:block;margin:2px 8px 4px;padding:4px 0;border:0;background:none;color:var(--acc);font:600 13px var(--f-body);cursor:pointer}
   .evmode .erow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;width:100%;text-align:left;padding:7px 8px;border:0;border-radius:9px;background:transparent;color:var(--text)}
   .evmode .erow:hover{background:var(--panel)} .evmode .erow .en{font-weight:700;font-size:13.5px} .evmode .erow .ew{font:600 12px var(--f-mono);color:var(--muted)}
   .evmode .erow .esp{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
@@ -1864,7 +1866,13 @@ const EVENT_STEPS=[
   [/hall of heroes/i,["Spend Marks of Valor on widgets + shards","General shards into your focus hero"]],
   [/armament/i,["Small speedups only — save the big ones for KvK"]],
   [/bear/i,["Pet buffs on: Panther, Elephant, Great Moose, Bison, War Bear","Lead rallies with your Bear heroes (Amadeus, Ava, Yang)"]],
-  [/strongest governor/i,["Check today's theme — spend only on that"]]];
+  [/strongest governor/i,["Check today's theme — spend only on that"]],
+  [/hero roulette/i,["Set the wheel to your focus hero (Change) — Wee & Woo or Ava","Tokens cost 1,500 gems — always Spin 10 (9 tokens)","Reach the chests: 70 spins (30 shards + 30 books + 30 manuals), 120 (50 each)","Skip Lucky Chip packs — under 3,000%"]],
+  [/voyage/i,["Keep all 4 sails running — 8 h each, start one before bed","Open treasures — merging 3 Premium is random (Exquisite or Majestic)","Milestones: 20 = 40 Guides · 60 = 80 Designs · 120 = 180 · 200 = 240 Designs"]],
+  [/eternity'?s reach/i,["Join the ~30 min session — be online when it opens","Gather as much Copper Ore as you can — ranking pays Charm Designs","Rank 21–50: 47 Designs · 51–100: 38 · 101–200: 30 · 201–500: 22"]],
+  [/nearby beasts/i,["Hunt beasts on the map for points","Reach 80 points: Expedition manuals + Conquest books, keys, potions","Top ranks add hero shards + gems"]],
+  [/golden glaives/i,["Do Watchtower Intel missions for Dim Goldstone","Redeem in order: gold Truegold item (20) → 5 Truegold (5) → 1 h speedups (4) → 10K XP (3)","Skip the resource carts"]],
+  [/dragon essence/i,["Claim the free Ashen Bounty","Value Pack (1 a day) is the cheapest essence per $","Store: focus-hero shards 20 each · Mithril 160 · 28 Hammers 200 · 32 Charm Designs 80 · 20 Truegold 40"]]];
 const minsTxt=m=>{ m=num(m); const d=Math.floor(m/1440), h=Math.floor(m%1440/60); return d?`${fmt(d)}d ${h}h`:`${h}h`; };
 function eventHave(e){ const n=e.n||"", R=state.resources||[], rv=k=>{ const r=R.find(x=>new RegExp(k,"i").test(x.n)); return r?num(r.h):0; }, out=[];
   if(/kvk|kingdom of power|armament/i.test(n)){ [["General","General speedups"],["Training","Training"],["Construction","Construction"],["Research","Research"],["Healing","Healing"]].forEach(([k,l])=>{ const v=rv(k); if(v) out.push([l,minsTxt(v)]); }); }
@@ -1887,8 +1895,9 @@ function renderEventMode(){
   const nd=items.filter(x=>x.d).length;
   box.innerHTML=`<summary class="eh"><span class="et">⚡ ${esc(e.n||"Event")} is on</span><span class="ed">${cur.a.len>1?`day ${cur.a.day} of ${cur.a.len} · `:""}${left?`${left} more day${left>1?"s":""}`:"last day"}${live.length>1?` · +${live.length-1} more`:""}${items.length?` · <b id="evDone">${nd}/${items.length} done</b>`:""}</span></summary>
     <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}<ul class="checks" id="evSteps"></ul>`+
-    (live.length>1?`<div class="eall"><div class="eall-h">Also on now</div>${live.slice(1).map(({e:x,a},i)=>`<button class="erow" data-i="${i+1}"><span class="en">${esc(x.n||"Event")}</span><span class="ew">${a.len>1?`day ${a.day}/${a.len}`:"today"}</span><span class="esp">${esc(spendFor(x)||"tap to add what to spend")}</span></button>`).join("")}</div>`:"");
+    (live.length>1?`<div class="eall"><div class="eall-h">Also on now</div>${live.slice(1).map(({e:x,a},i)=>`<button class="erow" data-i="${i+1}"${i>=3?" hidden":""}><span class="en">${esc(x.n||"Event")}</span><span class="ew">${a.len>1?`day ${a.day}/${a.len}`:"today"}</span><span class="esp">${esc(spendFor(x)||"tap to add what to spend")}</span></button>`).join("")}${live.length>4?`<button class="emore" id="evMore">+ ${live.length-4} more</button>`:""}</div>`:"");
   bindAll(box,".erow",b=>openEventSheet(live[+b.dataset.i].e));
+  on("evMore",()=>{ $$("#eventMode .erow[hidden]").forEach(r=>r.hidden=false); $("#evMore").remove(); });
   buildChecks($("#evSteps"),items,{tickOnly:true,onTick:()=>{ state.eventTicks.done=items.map((x,i)=>x.d?i:-1).filter(i=>i>=0); const d=$("#evDone"); if(d) d.textContent=`${state.eventTicks.done.length}/${items.length} done`; scheduleSave(); }});
   const want=state.ui.evOpen!=null?state.ui.evOpen:innerWidth>640; box.open=want; // open on PC, one line on phones until tapped
   box.ontoggle=()=>{ if(box.open!==want){ state.ui.evOpen=box.open; scheduleSave(); } };
@@ -1934,14 +1943,14 @@ function renderHome(){
 /* ---------- events ---------- */
 let calSel=null; // tapped calendar day (0 = today)
 function renderEvents(){
-  const list=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days||String(a.e.time||"").localeCompare(String(b.e.time||"")));
+  const list=(state.events||[]).filter(e=>!activeOcc(e)).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days||String(a.e.time||"").localeCompare(String(b.e.time||"")));
   const up=$("#evUpcoming");
   up.innerHTML=list.length?list.slice(0,6).map(({e,o},i)=>{ const dd=new Date(o.date+"T00:00:00");
     return `<button class="lrow evrow" data-i="${state.events.indexOf(e)}" style="border:1px solid var(--line);border-radius:12px">
       <span class="evdate"><span class="m" style="display:block">${dd.toLocaleDateString(undefined,{month:"short"})}</span><span class="d" style="display:block">${dd.getDate()}</span></span>
       <span style="min-width:0"><span class="lt" style="display:block">${esc(e.n||"Event")}</span><span class="ls" style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${dd.toLocaleDateString(undefined,{weekday:"short"})}${e.time?" · "+esc(e.time):""} · ${repeatTxt(e)}${e.note?" · "+esc(e.note):""}</span></span>
       <span class="evwhen ${o.days===0?"now":""}">${whenTxt(o)}</span></button>`; }).join("")
-    : `<div class="empty">No upcoming events.</div>`;
+    : `<div class="empty">Nothing new starting soon${liveEvents().length?" — what's on now is in the event card":""}.</div>`;
   bindAll(up,".evrow",b=>openEventSheet(state.events[+b.dataset.i]));
   const t0=new Date(gameToday()+"T00:00:00"); let html="";
   for(let i=0;i<14;i++){ const dd=new Date(t0.getTime()+i*DAY_MS), evs=(state.events||[]).filter(e=>occursOn(e,i)), names=evs.map(e=>e.n||"Event").join(", ");
@@ -1955,7 +1964,7 @@ function renderEvents(){
   on("evAll",openAllEventsSheet);
 }
 // what to spend during each event (your own text wins; these are the defaults)
-const EVENT_SPEND=[[/kvk|kingdom of power/i,"Speedups, training, Gov Gear, pet advances"],[/officer project/i,"Forgehammers + widgets"],[/hall of heroes/i,"Marks of Valor → widgets & shards"],[/armament/i,"Small stuff only — save for KvK"],[/bear/i,"Nothing — just lead rallies"],[/strongest governor/i,"Today's theme items"]];
+const EVENT_SPEND=[[/kvk|kingdom of power/i,"Speedups, training, Gov Gear, pet advances"],[/officer project/i,"Forgehammers + widgets"],[/hall of heroes/i,"Marks of Valor → widgets & shards"],[/armament/i,"Small stuff only — save for KvK"],[/bear/i,"Nothing — just lead rallies"],[/strongest governor/i,"Today's theme items"],[/hero roulette/i,"Gems from the roulette fund — Spin 10 only"],[/voyage/i,"Nothing — keep all 4 sails running"],[/dragon essence/i,"Value Pack only — essence into focus-hero shards"]];
 const EVENT_LEN=[[/hall of heroes/i,3],[/armament competition \(type 1\)/i,2]];
 const spendFor=e=>String(e.spend||"").trim()||((EVENT_SPEND.find(([re])=>re.test(e.n||""))||[])[1]||"");
 const evLen=e=>Math.max(1,Math.floor(num(e.len))||((EVENT_LEN.find(([re])=>re.test(e.n||""))||[])[1]||1));
@@ -1996,10 +2005,10 @@ function paintGoals(){
   const hs=$("#doNext"); if(!hs) return;
   const spend=[], prog=[];
   const hg=state.heroGear||{rows:[],have:{}}; let fh=0; (hg.rows||[]).forEach(r=>{ fh+=hgCalcCost(r).fh; }); const fhH=num(hg.have&&hg.have.fh);
-  // hammers: the piece whose mastery blocks its next imbuement (Archer/Cavalry first, cheapest first)
-  const blk=(hg.rows||[]).map(r=>{ const L=num(r.lvC), M=num(r.mC), nx=HG_IMB.find(x=>x[0]>L); return nx&&M<nx[1]?{r,nx,cost:hgFhCumulative(nx[1])-hgFhCumulative(M)}:null; }).filter(Boolean)
-    .sort((a,b)=>((a.r.type==="Infantry")-(b.r.type==="Infantry"))||a.cost-b.cost)[0];
-  if(blk) spend.push({k:"fh",title:`${esc(blk.r.type)} ${esc(slotName(blk.r.slot))} mastery ${num(blk.r.mC)} → ${blk.nx[1]}`,detail:`${fmt(blk.cost)} Forgehammers (you have ${fmt(fhH)}) · ${blk.nx[0]===100?"lets it turn red":"unlocks the Lv "+blk.nx[0]+" imbuement"}`,tag:fhH>=blk.cost?"Ready":"",open:()=>openHgSheet(blk.r),key:"Hero Gear"});
+  // hero gear: the same #1 as the Hero Gear tab's "Next up" (optimiser order, materials checked)
+  const hp=(hg.rows||[]).length?hgPriority(hg.rows):[], top=hp.find(r=>hp.now.has(r))||hp[0];
+  if(top){ const st=hgState(top), nx=HG_IMB.find(x=>x[0]>num(top.lvC));
+    spend.push({k:"fh",title:`${esc(top.type)} ${esc(slotName(top.slot))} ${st.cls==="s-block"?`mastery ${num(top.mC)} → ${nx[1]}`:st.req?`Lv ${nx[0]} imbue`:`XP to Lv ${nx[0]-1}`}`,detail:st.req?hgReqH(st.req):esc(st.line),tag:hp.now.has(top)?"Ready":"",open:()=>openHgSheet(top),key:"Hero Gear"}); }
   else if(fh>fhH) spend.push({k:"fh",title:"Forgehammers",detail:`${fmt(fh-fhH)} short for your hero gear targets`,key:"Hero Gear"});
   // charms — Infantry first (Quaad), then Archers
   const c=state.charms||{rows:[],have:{}};
