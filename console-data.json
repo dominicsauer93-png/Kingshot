@@ -2700,9 +2700,9 @@
       "every": 0,
       "len": 1,
       "time": "21:00",
-      "note": "Game mode you enter for ~30 min and gather Copper Ore. Ranking (Designs / Guides / gems): 1st 150/95/8K · 2nd 115/75/7K · 3rd 85/55/6K · 4–5 65/45/5.5K · 6–10 55/40/5K · 11–20 47/38/4.5K · 21–50 47/38/4K · 51–100 38/34/2K · 101–200 30/30/1K · 201–500 22/22/600. Top 5 also get a 14-day frame. Yield targets: 10 Charm Guides at 75K, 100K, 150K.",
+      "note": "Game mode you enter for ~30 min and gather Copper Ore. Ranking (Designs / Guides / gems): 1st 150/95/8K · 2nd 115/75/7K · 3rd 85/55/6K · 4–5 65/45/5.5K · 6–10 55/40/5K · 11–20 47/38/4.5K · 21–50 47/38/4K · 51–100 38/34/2K · 101–200 30/30/1K · 201–500 22/22/600. Top 5 also get a 14-day frame. Yield targets: 10 Charm Guides at 75K, 100K, 150K. Alliance tips: Fractured veins give 200 copper/s; Skill 3 gives 5,000 copper per common vein occupied (1 min cooldown); winning the center is worth less than gathering.",
       "imp": "high",
-      "spend": "Be online for the ~30 min session — ranking pays Charm Designs"
+      "spend": "Gather copper — recall 1 march every 60 s"
     },
     {
       "n": "Defeat Nearby Beasts",
