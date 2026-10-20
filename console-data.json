@@ -1478,7 +1478,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1544,7 +1544,8 @@
     "heroAll": false,
     "evOpen": true,
     "shSpare": true,
-    "petMaxOpen": true
+    "petMaxOpen": true,
+    "weekOpen": false
   },
   "troopCounts": {
     "inf": {
@@ -1659,7 +1660,7 @@
       {
         "type": "Cavalry",
         "slot": "Boots (Lethality)",
-        "lvC": 117,
+        "lvC": 118,
         "lvT": 159,
         "mC": 11,
         "mT": 12,
