@@ -1478,7 +1478,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1513,7 +1513,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
+      "Data": "Update all",
       "Gear": "Hero Gear",
       "Base": "T11",
       "Plan": "Shops & Packs"
@@ -1522,7 +1522,7 @@
       "nodes": true,
       "cavNodes": true
     },
-    "doAll": true,
+    "doAll": false,
     "qOpen": {
       "Bag": false,
       "HG": false,
@@ -2822,7 +2822,7 @@
   "shardGeneral": 37,
   "shardRallySet": true,
   "eventTicks": {
-    "key": "KvK|2026-10-19",
+    "key": "Strongest Governor|2026-10-19",
     "done": []
   },
   "packBudget": 100
