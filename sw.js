@@ -1,8 +1,9 @@
 // Offline support for the installed app.
 // The page is fetched network-first so updates show straight away; the cached copy is only used offline.
 // GitHub API calls (sync) are never cached.
-const CACHE = "kingshot-v1";
-const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
+const CACHE = "kingshot-v2";
+const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png",
+  "./css/app.css", "./js/core.js", "./js/ui.js", "./js/home.js", "./js/rally.js", "./js/gear.js", "./js/base.js", "./js/data.js", "./js/boot.js"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

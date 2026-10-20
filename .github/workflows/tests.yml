@@ -1,10 +1,10 @@
 name: Tests
 on:
   pull_request:
-    paths: ["index.html", "sw.js", "tests/**", "scripts/**", ".github/workflows/**"]
+    paths: ["index.html", "css/**", "js/**", "sw.js", "tests/**", "scripts/**", ".github/workflows/**"]
   push:
     branches: [main]
-    paths: ["index.html", "sw.js", "tests/**", "scripts/**", ".github/workflows/**"]
+    paths: ["index.html", "css/**", "js/**", "sw.js", "tests/**", "scripts/**", ".github/workflows/**"]
   workflow_dispatch:
 permissions:
   contents: read
