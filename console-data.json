@@ -2656,6 +2656,26 @@
       "time": "",
       "spend": "Nothing — just do Daily Missions",
       "note": "12–25 Oct (UTC). Daily Missions give Path Points. Rewards: Charles shards, Truegold, gems, 3 h speedups."
+    },
+    {
+      "n": "Hero Roulette",
+      "date": "2026-10-20",
+      "every": 0,
+      "len": 4,
+      "time": "",
+      "imp": "high",
+      "spend": "Gems from the 120K fund — 1,500 per token, always Spin 10 (9 tokens)",
+      "note": "Ends 23 Oct (UTC). Wee & Woo shards. 35/120 spins on 20 Oct — 85 to go = 77 tokens = 115,500 gems. Chests at 70 and 120."
+    },
+    {
+      "n": "Wavebound Voyage",
+      "date": "2026-10-20",
+      "every": 0,
+      "len": 6,
+      "time": "",
+      "imp": "high",
+      "spend": "Nothing — keep all 4 sails running (8 h each)",
+      "note": "Ends ~25 Oct (UTC). Charm Designs: 60 explorations = 80 Designs (target), 120 = 180. Open treasures, don't merge."
     }
   ],
   "masterNotesV": 2,
