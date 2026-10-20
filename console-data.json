@@ -2547,7 +2547,7 @@
     {
       "n": "KvK",
       "date": "2026-10-05",
-      "every": 14,
+      "every": 0,
       "time": "",
       "note": "Gov Gear Inf 1 Gold 0★→1★ (225k pts), speedups (also Armament T1), pet advances, pet combat skills on",
       "len": 7
@@ -2562,7 +2562,7 @@
     {
       "n": "Armament Competition (Type 1)",
       "date": "2026-09-28",
-      "every": 7,
+      "every": 0,
       "time": "",
       "note": "12–13 Oct (UTC) confirmed. Small stuff only — save big speedups for KvK. Rewards: Mythic Gear, gems, keys."
     },
@@ -2664,8 +2664,7 @@
       "len": 4,
       "time": "",
       "imp": "high",
-      "spend": "Gems from the 120K fund — 1,500 per token, always Spin 10 (9 tokens)",
-      "note": "Ends 23 Oct (UTC). Wee & Woo shards. 45/120 spins — 75 to go = 7× Spin 10 + 5 singles = 68 tokens = 102,000 gems. Chest 70: 30 W&W shards + 30 Conquest books + 30 Expedition manuals. Chest 120: 50 of each."
+      "note": "Usually ~3 days. Gems 1,500 per token. 120 spins from 45 = 102,000 gems. Last run: Oct 2026, 120K gem fund."
     },
     {
       "n": "Wavebound Voyage",
@@ -2674,8 +2673,53 @@
       "len": 6,
       "time": "",
       "imp": "high",
-      "spend": "Nothing — keep all 4 sails running (8 h each)",
-      "note": "Ends ~25 Oct (UTC). Charm Designs: 60 explorations = 80 Designs (target), 120 = 180. Open treasures, don't merge."
+      "note": "Usually ~5 days. 1 exploration per sail, 12 a day max with 4 sails — 60 is reachable, 120 isn't without big speedups. 4th sail was A$7.99."
+    },
+    {
+      "n": "Dragon Essence",
+      "date": "2026-10-19",
+      "every": 0,
+      "len": 7,
+      "time": "",
+      "imp": "normal",
+      "note": "7 days. Packs: Value A$7.99 (300 essence, 1 a day, 3,630%) — the rest are 25 essence per $ and under 3,000%. Searing Path event also gives essence."
+    },
+    {
+      "n": "Strongest Governor",
+      "date": "2026-10-19",
+      "every": 0,
+      "len": 6,
+      "time": "",
+      "imp": "top",
+      "note": "Each day has a theme — spend only on that day's theme. Dates: check and fix."
+    },
+    {
+      "n": "Eternity's Reach",
+      "date": "2026-10-20",
+      "every": 0,
+      "len": 1,
+      "time": "21:00",
+      "note": "Game mode you enter for ~30 min and gather Copper Ore. Ranking (Designs / Guides / gems): 1st 150/95/8K · 2nd 115/75/7K · 3rd 85/55/6K · 4–5 65/45/5.5K · 6–10 55/40/5K · 11–20 47/38/4.5K · 21–50 47/38/4K · 51–100 38/34/2K · 101–200 30/30/1K · 201–500 22/22/600. Top 5 also get a 14-day frame. Yield targets: 10 Charm Guides at 75K, 100K, 150K.",
+      "imp": "high",
+      "spend": "Be online for the ~30 min session — ranking pays Charm Designs"
+    },
+    {
+      "n": "Defeat Nearby Beasts",
+      "date": "2026-10-20",
+      "every": 0,
+      "len": 3,
+      "time": "",
+      "note": "~3 days. Targets: 30 resources · 50 XP + 5 min speedups · 80 = 5 Expedition manuals, 5 Conquest books, 5 keys, 5 potions. Ranking: hero shards, gems, speedups.",
+      "spend": "Stamina on beasts — reach 80 points"
+    },
+    {
+      "n": "Golden Glaives",
+      "date": "2026-10-20",
+      "every": 0,
+      "len": 1,
+      "time": "",
+      "note": "Watchtower Intel → Dim Goldstone exchange. Truegold items sell out first — redeem them on day 1. Leftover stones: 10K XP, then resources.",
+      "spend": "Dim Goldstone — Truegold first"
     }
   ],
   "masterNotesV": 2,
