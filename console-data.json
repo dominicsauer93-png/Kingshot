@@ -2701,7 +2701,7 @@
       "every": 0,
       "len": 1,
       "time": "21:00",
-      "note": "Game mode you enter for ~30 min and gather Copper Ore. Ranking (Designs / Guides / gems): 1st 150/95/8K · 2nd 115/75/7K · 3rd 85/55/6K · 4–5 65/45/5.5K · 6–10 55/40/5K · 11–20 47/38/4.5K · 21–50 47/38/4K · 51–100 38/34/2K · 101–200 30/30/1K · 201–500 22/22/600. Top 5 also get a 14-day frame. Yield targets: 10 Charm Guides at 75K, 100K, 150K. Alliance tips: Fractured veins give 200 copper/s; Skill 3 gives 5,000 copper per common vein occupied (1 min cooldown); winning the center is worth less than gathering.",
+      "note": "~30 min game mode — gather Copper Ore\nRanking pays Charm Designs / Guides / gems:\n1st: 150 / 95 / 8,000\n2nd: 115 / 75 / 7,000\n3rd: 85 / 55 / 6,000\n4–5: 65 / 45 / 5,500\n6–10: 55 / 40 / 5,000\n11–20: 47 / 38 / 4,500\n21–50: 47 / 38 / 4,000\n51–100: 38 / 34 / 2,000\n101–200: 30 / 30 / 1,000\n201–500: 22 / 22 / 600\nYield targets: 10 Charm Guides at 75K, 100K, 150K\nFractured veins: 200 copper a second\nSkill 3: 5,000 copper per common vein (1 min cooldown)\nWinning the center is worth less than gathering",
       "imp": "high",
       "spend": "Gather copper — recall 1 march every 60 s"
     },

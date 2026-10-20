@@ -52,7 +52,7 @@
         <span class="save" role="status" aria-live="polite"><span class="dot" id="saveDot"></span><span id="saveTxt">Saved</span></span>
         <button class="iconbtn themebtn" title="Theme" aria-label="Change theme"><svg aria-hidden="true"><use href="#i-auto"/></svg></button>
       </div>
-      <div class="faint" id="syncMini" style="font-size:12px"></div>
+      <div class="faint" id="syncMini" style="font-size:13px"></div>
     </div>
   </aside>
 
@@ -76,22 +76,11 @@
       <div class="cols-3-2 mt2">
         <section class="sec" data-key="Do next">
           <h2>Do next <small id="doCount"></small></h2>
-          <p class="faint" style="margin:-4px 0 10px;font-size:12.5px">Ready now first, then main heroes, then whole-army stats. Tap one to open it, or “I did this” to update the bag in one go.</p>
+          <p class="faint" style="margin:-4px 0 10px;font-size:13.5px">Ready now first, then main heroes, then whole-army stats. Tap one to open it, or “I did this” to update the bag in one go.</p>
           <div class="dolist" id="doNext"></div>
           <button class="btn mt" id="doMore">Show all</button>
         </section>
         <div>
-          <section class="sec" data-key="Today">
-            <h2>Today <small id="todayDate"></small></h2>
-            <div class="card">
-              <div class="rowb"><span class="faint" id="todayCount" style="font-size:13px"></span><button class="btn sm ghost" id="todayShow" hidden></button></div>
-              <div id="todayBar" style="margin:6px 0 4px"></div>
-              <ul class="checks" id="todayRoutine"></ul>
-              <div class="rowb mt"><span></span><button class="btn sm ghost" data-goto="Checklists">Edit list</button></div></div>
-            <details class="fold mt" id="weekFold"><summary><span class="grow">This week <small class="faint" style="font-weight:500">resets Monday</small></span><span class="faint" id="weekCount" style="font-weight:500;font-size:13px"></span></summary>
-              <div class="fbody"><div id="weekBar" style="margin:0 0 4px"></div><ul class="checks" id="weekRoutine"></ul>
-                <div class="rowb mt"><button class="btn sm ghost" id="weekShow" hidden></button><button class="btn sm ghost" data-goto="Shops &amp; Packs">Shops &amp; packs</button></div></div></details>
-          </section>
           <section class="sec" data-key="Upcoming Events">
             <h2>Coming up <button class="btn sm" id="evAdd">+ Event</button></h2>
             <div class="card"><div class="cal" id="evCal"></div><div class="evday" id="evDay" hidden></div><div class="stack mt" id="evUpcoming"></div>
@@ -102,9 +91,9 @@
     </div>
 
     <!-- ================= RALLY ================= -->
-    <div class="page" data-tab="Rally" hidden>
-      <div class="phead"><div><h1>Rally</h1><p>How strong you are as a rally leader.</p></div></div>
-      <div class="subnav" role="tablist" aria-label="Rally sections"></div>
+    <div class="page" data-tab="Heroes" hidden>
+      <div class="phead"><div><h1>Heroes</h1><p>Your heroes, their shards, and how strong you are as a rally leader.</p></div></div>
+      <div class="subnav" role="tablist" aria-label="Heroes sections"></div>
       <section class="sec" data-sub="Overview" data-key="Combat Quality">
         <h2>Combat quality <small>tap to update</small></h2>
         <div class="tiles" id="combatTiles"></div>
@@ -123,17 +112,27 @@
         <div class="list" id="pillars"></div>
         <div class="legend"><span><span class="sw" style="background:var(--green)"></span>Ahead</span><span><span class="sw" style="background:var(--amber)"></span>Slightly behind</span><span><span class="sw" style="background:var(--red)"></span>Well behind</span><span><span class="sw" style="background:var(--text);opacity:.55"></span>Benchmark</span></div>
       </section>
-      <section class="sec" data-sub="Heroes" data-key="Hero Roles">
+      <section class="sec" data-sub="Roster" data-key="Hero Roles">
         <h2>Your heroes <small>most used first · tap a hero</small></h2>
         <div class="grid" style="--min:260px" id="heroCards"></div>
         <button class="btn sm ghost mt" id="heroMore" hidden></button>
-        <details class="fold mt2" id="roleFold"><summary><span class="grow">Best heroes for each battle</span><span class="faint" style="font-weight:500;font-size:13px">8 battle types</span></summary>
+        <details class="fold mt2" id="roleFold"><summary><span class="grow">Best heroes for each battle</span><span class="faint" style="font-weight:500;font-size:14px">8 battle types</span></summary>
           <div class="fbody"><div class="grid" style="--min:250px" id="roleBest"></div></div></details>
-        <details class="fold" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="faint" style="font-weight:500;font-size:13px">S best → D worst</span></summary>
+        <details class="fold" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="faint" style="font-weight:500;font-size:14px">S best → D worst</span></summary>
           <div class="fbody"><div class="seg" id="tierSeg" role="group" aria-label="Which heroes" style="max-width:320px"><button data-v="mine">My heroes</button><button data-v="all">All heroes</button></div>
           <div class="tierwrap mt"><table class="tiert" id="tierTable"></table></div></div></details>
-        <p class="faint mt" style="font-size:12.5px">Gen 8 tier lists, Oct 2026. Use score: S=4, A=3, B=2, C=1, D=0 per battle type; KvK and Bear rally lead count double (max 40). ⚔ = rally hero. Diego, Liz and Luna are Gen 8 (“soon”).</p>
+        <p class="faint mt" style="font-size:13.5px">Gen 8 tier lists, Oct 2026. Use score: S=4, A=3, B=2, C=1, D=0 per battle type; KvK and Bear rally lead count double (max 40). ⚔ = rally hero. Diego, Liz and Luna are Gen 8 (“soon”).</p>
       </section>
+      <section class="sec" data-sub="Shards" data-key="Gold Hero Shards">
+        <div class="tiles t2" id="shardTiles"></div>
+        <p class="muted mt" style="margin-bottom:8px">Type your shards in <b>Have</b>. When a hero has enough, tap <b>Upgrade</b> after you do it in game. Tap a name to set stars.</p>
+        <div class="shlist" id="goldShardBody"></div>
+        <button class="add" id="addGoldShard">+ Add hero</button>
+        <details class="fold mt"><summary>Where to get Gold Hero Shards</summary><div class="fbody howto">
+          <ul><li><b>Modes:</b> Arena leaderboard, advanced Intel Missions, Conquest stages</li><li><b>Shops:</b> VIP Shop, Swordland Shop, Hall of Heroes</li><li><b>Other:</b> recruitment, fishing &amp; events, packs</li></ul>
+          General Mythic shards fit any Mythic hero — except Amadeus and Helga.</div></details>
+      </section>
+
       <section class="sec" data-sub="Masters" data-key="Masters">
         <h2>Masters <small>ranked for a rally leader</small></h2>
         <div class="info" id="mastNext"></div>
@@ -198,15 +197,6 @@
           Before leading a rally, turn on Panther, Elephant, Great Moose, Bison and War Bear skills. Save Advanced Taming Marks for high-level pets.</div></details>
       </section>
 
-      <section class="sec" data-sub="Shards" data-key="Gold Hero Shards">
-        <div class="tiles t3" id="shardTiles"></div>
-        <p class="faint mt" style="font-size:12.5px;margin-bottom:8px">＋ = you upgraded one step in game (spends the shards from “have”). Type new “have” numbers straight in.</p>
-        <div class="shlist" id="goldShardBody"></div>
-        <button class="add" id="addGoldShard">+ Add hero</button>
-        <details class="fold mt"><summary>Where to get Gold Hero Shards</summary><div class="fbody howto">
-          <ul><li><b>Modes:</b> Arena leaderboard, advanced Intel Missions, Conquest stages</li><li><b>Shops:</b> VIP Shop, Swordland Shop, Hall of Heroes</li><li><b>Other:</b> recruitment, fishing &amp; events, packs</li></ul>
-          General Mythic shards fit any Mythic hero — except Amadeus and Helga.</div></details>
-      </section>
 
       <section class="sec" data-sub="Governor" data-key="Governor Gear">
         <div class="info" id="govPlan"></div>
@@ -271,7 +261,7 @@
         <div class="tiles" id="packTiles"></div>
         <div class="card mt" style="padding:0;overflow:hidden" id="packList"></div>
         <button class="add" id="addPack">+ Add pack</button>
-        <p class="faint mt" style="font-size:12.5px">Tick the packs you own or buy. Ticking a card starts its 30-day (or 7-day) timer from today — change the date in ✎ if you bought it earlier. Home warns you 3 days before a card ends.</p>
+        <p class="faint mt" style="font-size:13.5px">Tick the packs you own or buy. Ticking a card starts its 30-day (or 7-day) timer from today — change the date in ✎ if you bought it earlier. Home warns you 3 days before a card ends.</p>
       </section>
       <section class="sec" data-sub="Reminders" data-key="Reminders">
         <h2>Reminders <small>so you never miss an event or a card</small></h2>
@@ -280,13 +270,13 @@
             <p class="lead" style="margin:0 0 10px">Works now, nothing to set up. Your phone's calendar reminds you.</p>
             <ul class="tight" id="icsList"></ul>
             <button class="btn primary mt" id="icsBtn">Download calendar file</button>
-            <p class="faint mt" style="font-size:12.5px">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
+            <p class="faint mt" style="font-size:13.5px">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
           <div class="card"><h3>2 · Phone notifications (optional)</h3>
             <p class="lead" style="margin:0 0 10px">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app.</p>
             <ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
               <li>On GitHub: repo → <b>Settings → Secrets and variables → Actions → New repository secret</b>. Name <code>NTFY_TOPIC</code>, value = the same topic name.</li>
               <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol>
-            <p class="faint mt" style="font-size:12.5px">Keep the topic secret: anyone who knows it can read these notes. Nothing is sent until the secret exists.</p></div>
+            <p class="faint mt" style="font-size:13.5px">Keep the topic secret: anyone who knows it can read these notes. Nothing is sent until the secret exists.</p></div>
         </div>
       </section>
     </div>

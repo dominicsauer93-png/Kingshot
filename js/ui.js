@@ -131,12 +131,12 @@ function initTheme(){
 /* =====================================================================
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
-const TABS=["Home","Rally","Gear","Base","Plan","Data"];
-const SUBS={Rally:["Overview","Heroes","Masters","Mystic Trials"],Gear:["Widgets","Hero Gear","Governor","Charms","Shards","Pets"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs","Reminders"],Data:["Update all","Account","Sync"]};
-const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Rally",Supply:"Rally",Events:"Home",Vault:"Data"};
+const TABS=["Home","Heroes","Gear","Base","Plan","Data"];
+const SUBS={Heroes:["Overview","Roster","Shards","Masters","Mystic Trials"],Gear:["Widgets","Hero Gear","Governor","Charms","Pets"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs","Reminders"],Data:["Update all","Account","Sync"]};
+const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Heroes",Supply:"Heroes",Rally:"Heroes",Events:"Home",Vault:"Data"};
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
-  Rally:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',
+  Heroes:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',
   Gear:'<path d="M12 2.5l8 3v6c0 5-3.5 8.8-8 10.5C7.5 20.3 4 16.5 4 11.5v-6z"/><path d="M12 7v10M8 11h8"/>',
   Base:'<path d="M4 21V9l4-3 4 3 4-3 4 3v12z"/><path d="M10 21v-5h4v5M4 13h16"/>',
   Plan:'<path d="M8 3h8v3H8z"/><path d="M8 4.5H5V21h14V4.5h-3"/><path d="M8.5 12.5l2 2 4.5-4.5M8.5 17.5h7"/>',
@@ -162,8 +162,9 @@ function setTab(tab,sub,scroll){
   if(changed) scheduleSave();
 }
 function tabFromHash(){
-  const [t,s]=(location.hash||"").replace(/^#/,"").split("/");
-  let tab=TABS.find(x=>slug(x)===t); if(!tab) return null;
+  let [t,s]=(location.hash||"").replace(/^#/,"").split("/");
+  let tab=TABS.find(x=>slug(x)===t)||TAB_ALIAS[Object.keys(TAB_ALIAS).find(k=>slug(k)===t)]; if(!tab) return null;
+  if(s==="heroes") s="roster"; // old link name
   let sub=SUBS[tab]&&SUBS[tab].find(x=>slug(x)===s);
   if(s&&!sub){ const o=Object.keys(SUBS).find(k=>SUBS[k].some(x=>slug(x)===s)); if(o){ tab=o; sub=SUBS[o].find(x=>slug(x)===s); } } // section moved to another tab
   return [tab,sub];
