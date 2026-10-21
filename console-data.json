@@ -1486,7 +1486,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1522,7 +1522,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Widgets",
+      "Gear": "Pets",
       "Base": "Buildings",
       "Plan": "Shops & Packs",
       "Heroes": "Masters"
@@ -1747,7 +1747,7 @@
     "targetLvl": 10,
     "have": {
       "guides": 731,
-      "designs": 247
+      "designs": 279
     },
     "rows": [
       {
@@ -2757,9 +2757,9 @@
   "pets": {
     "have": {
       "food": 12950,
-      "manuals": 1291,
-      "potions": 62,
-      "tmCommon": 1,
+      "manuals": 1350,
+      "potions": 67,
+      "tmCommon": 14,
       "tmAdv": 0,
       "medals": 4
     },
