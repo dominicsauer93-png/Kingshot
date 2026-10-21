@@ -1525,7 +1525,7 @@
       "Gear": "Pets",
       "Base": "Buildings",
       "Plan": "Shops & Packs",
-      "Heroes": "Masters"
+      "Heroes": "Mystic Trials"
     },
     "t11Open": {
       "nodes": false,
@@ -1860,7 +1860,7 @@
       {
         "hero": "Ava",
         "lvl": 5,
-        "have": 27,
+        "have": 30,
         "rally": true
       },
       {
