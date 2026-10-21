@@ -1490,7 +1490,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1526,10 +1526,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Pets",
+      "Gear": "Widgets",
       "Base": "Buildings",
       "Plan": "Shops & Packs",
-      "Heroes": "Roster"
+      "Heroes": "Overview"
     },
     "t11Open": {
       "nodes": false,
