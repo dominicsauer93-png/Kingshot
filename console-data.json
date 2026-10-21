@@ -506,34 +506,18 @@
   },
   "packs": [
     {
-      "t": "Ultra Value Monthly Card",
-      "aud": 14.99,
-      "first": 7.99,
-      "kind": "month",
-      "note": "Daily gems + Stamina + 30 days VIP — best value",
+      "t": "Sails Aloft — Common ×5",
+      "aud": 39.95,
+      "kind": "once",
       "d": false,
-      "firstDone": true
+      "note": "Voyage speedups: 500 × 1 h = ~62 sails. From 19 explorations → ~126, past the 120 milestone (+180 Designs). 3,600%. Speed up one sail at a time, keep the rest sailing"
     },
     {
       "t": "Dragon Value Pack ×3",
       "aud": 23.97,
       "kind": "once",
       "d": true,
-      "note": "1 of 3 bought · event deal, 1 per day, ends ~26 Oct · 3,630%. Claim the free Ashen Bounty too. Spend the 940 essence on 47 hero shards: 24 Wee & Woo (finishes her next step), 23 Ava. Keep General shards for Ava"
-    },
-    {
-      "t": "Truegold Weekly Card",
-      "aud": 7.99,
-      "kind": "week",
-      "d": false,
-      "note": "144 Truegold (32 now + 16 a day) · 4,600% — best Truegold per $"
-    },
-    {
-      "t": "Intel Monthly Pass",
-      "aud": 7.99,
-      "kind": "month",
-      "d": false,
-      "note": "105 Truegold (65 now + 40 at target), 2,500 gems, 45h speedups · 4,625%"
+      "note": "1 of 3 bought — skipping the rest this month (budget went to Voyage speedups). Spend the essence on Wee & Woo, then Ava shards"
     },
     {
       "t": "Kingdom Special Pack",
