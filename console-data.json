@@ -1529,7 +1529,7 @@
       "Gear": "Pets",
       "Base": "Buildings",
       "Plan": "Shops & Packs",
-      "Heroes": "Mystic Trials"
+      "Heroes": "Roster"
     },
     "t11Open": {
       "nodes": false,
@@ -1559,7 +1559,8 @@
     "shSpare": true,
     "petMaxOpen": true,
     "weekOpen": false,
-    "todayAll": true
+    "todayAll": true,
+    "tierOpen": true
   },
   "troopCounts": {
     "inf": {
