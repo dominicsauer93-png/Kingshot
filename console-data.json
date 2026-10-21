@@ -1490,7 +1490,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1526,7 +1526,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Hero Gear",
+      "Gear": "Charms",
       "Base": "Buildings",
       "Plan": "Shops & Packs",
       "Heroes": "Shards"
@@ -1751,8 +1751,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 731,
-      "designs": 279
+      "guides": 851,
+      "designs": 399
     },
     "rows": [
       {
