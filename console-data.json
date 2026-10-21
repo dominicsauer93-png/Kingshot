@@ -513,8 +513,8 @@
       "note": "Voyage speedups: 500 × 1 h = ~62 sails. From 19 explorations → ~126, past the 120 milestone (+180 Designs). 3,600%. Speed up one sail at a time, keep the rest sailing"
     },
     {
-      "t": "Dragon Value Pack ×3",
-      "aud": 23.97,
+      "t": "Dragon Value Pack",
+      "aud": 7.99,
       "kind": "once",
       "d": true,
       "note": "1 of 3 bought — skipping the rest this month (budget went to Voyage speedups). Spend the essence on Wee & Woo, then Ava shards"
@@ -675,8 +675,9 @@
       "need": 900,
       "have": 0,
       "pos": 18,
-      "tgt": 24,
-      "rally": false
+      "tgt": 18,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Amadeus",
@@ -699,16 +700,18 @@
       "need": 740,
       "have": 6,
       "pos": 23,
-      "tgt": 24,
-      "rally": false
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Marlin",
       "need": 700,
       "have": 72,
       "pos": 23,
-      "tgt": 24,
-      "rally": false
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Zoe",
@@ -723,16 +726,18 @@
       "need": 700,
       "have": 35,
       "pos": 23,
-      "tgt": 24,
-      "rally": false
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Eric",
       "need": 700,
       "have": 24,
       "pos": 23,
-      "tgt": 24,
-      "rally": false
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Rosa",
@@ -755,8 +760,9 @@
       "need": 700,
       "have": 60,
       "pos": 23,
-      "tgt": 24,
-      "rally": false
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Alcar",
