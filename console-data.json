@@ -1390,7 +1390,7 @@
     }
   ],
   "tg": {
-    "have": 170,
+    "have": 185,
     "need": 4104,
     "ttgHave": 35,
     "ttgNeed": 445
@@ -1490,7 +1490,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
