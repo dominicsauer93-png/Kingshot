@@ -1522,7 +1522,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Charms",
+      "Gear": "Widgets",
       "Base": "Buildings",
       "Plan": "Shops & Packs",
       "Heroes": "Masters"
@@ -1860,7 +1860,7 @@
       {
         "hero": "Ava",
         "lvl": 5,
-        "have": 24,
+        "have": 27,
         "rally": true
       },
       {
