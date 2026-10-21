@@ -1429,7 +1429,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-20",
+    "routineDate": "2026-10-21",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1486,7 +1486,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1521,25 +1521,24 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Update all",
-      "Gear": "Charms",
-      "Base": "Resources",
-      "Plan": "Shops & Packs",
-      "Heroes": "Mystic Trials"
+      "Data": "Account",
+      "Gear": "Hero Gear",
+      "Base": "T11",
+      "Plan": "Shops & Packs"
     },
     "t11Open": {
-      "nodes": false,
-      "cavNodes": false
+      "nodes": true,
+      "cavNodes": true
     },
-    "doAll": false,
+    "doAll": true,
     "qOpen": {
-      "Bag": true,
-      "HG": true,
+      "Bag": false,
+      "HG": false,
       "Power": true,
       "Buildings": true,
       "Troops": false,
       "Shards": false,
-      "Masters": true,
+      "Masters": false,
       "Gov": true,
       "Widgets": false,
       "Charms": false,
@@ -1552,10 +1551,8 @@
     "roleOpen": true,
     "heroAll": false,
     "evOpen": true,
-    "shSpare": false,
-    "petMaxOpen": true,
-    "weekOpen": false,
-    "todayAll": true
+    "shSpare": true,
+    "petMaxOpen": true
   },
   "troopCounts": {
     "inf": {
@@ -2434,6 +2431,26 @@
       "d": "2026-10-20",
       "v": {
         "power": 335924750,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 463
+      }
+    },
+    {
+      "d": "2026-10-21",
+      "v": {
+        "power": 332501453,
         "leth": 73,
         "hp": 58.8,
         "attWR": 38.08,
