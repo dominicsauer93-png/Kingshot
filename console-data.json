@@ -9,9 +9,9 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 137,
+    "current": 152,
     "target": 7224,
-    "gold": 273090
+    "gold": 541570
   },
   "nodes": [
     {
@@ -705,15 +705,15 @@
     {
       "n": "Charles",
       "need": 463,
-      "have": 0,
-      "pos": 16,
+      "have": 5,
+      "pos": 18,
       "tgt": 30,
       "rally": false
     },
     {
       "n": "Hilde",
       "need": 740,
-      "have": 4,
+      "have": 6,
       "pos": 23,
       "tgt": 30,
       "rally": false
@@ -721,7 +721,7 @@
     {
       "n": "Marlin",
       "need": 700,
-      "have": 70,
+      "have": 72,
       "pos": 23,
       "tgt": 30,
       "rally": false
@@ -737,7 +737,7 @@
     {
       "n": "Jaeger",
       "need": 700,
-      "have": 34,
+      "have": 35,
       "pos": 23,
       "tgt": 30,
       "rally": false
@@ -761,7 +761,7 @@
     {
       "n": "Petra",
       "need": 500,
-      "have": 36,
+      "have": 38,
       "pos": 25,
       "tgt": 30,
       "rally": false
@@ -769,7 +769,7 @@
     {
       "n": "Margot",
       "need": 700,
-      "have": 59,
+      "have": 60,
       "pos": 23,
       "tgt": 30,
       "rally": false
@@ -785,8 +785,8 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 100,
-      "pos": 24,
+      "have": 27,
+      "pos": 25,
       "tgt": 30,
       "rally": false
     },
@@ -817,7 +817,7 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 84,
+      "have": 100,
       "pos": 26,
       "tgt": 30,
       "rally": false
@@ -833,15 +833,15 @@
     {
       "n": "Wee & Woo",
       "need": 0,
-      "have": 16,
-      "pos": 22,
+      "have": 12,
+      "pos": 24,
       "tgt": 30,
       "rally": true
     },
     {
       "n": "Vivian",
       "need": 0,
-      "have": 57,
+      "have": 68,
       "pos": 24,
       "tgt": 30,
       "rally": false
@@ -1386,17 +1386,17 @@
     }
   ],
   "tg": {
-    "have": 157,
+    "have": 170,
     "need": 4104,
-    "ttgHave": 32,
+    "ttgHave": 35,
     "ttgNeed": 445
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 15459,
-      "threads": 74,
-      "vision": 569
+      "satin": 39595,
+      "threads": 260,
+      "vision": 608
     },
     "pieces": [
       {
@@ -1486,7 +1486,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1521,24 +1521,25 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
-      "Gear": "Hero Gear",
-      "Base": "T11",
-      "Plan": "Shops & Packs"
+      "Data": "Update all",
+      "Gear": "Charms",
+      "Base": "Buildings",
+      "Plan": "Shops & Packs",
+      "Heroes": "Masters"
     },
     "t11Open": {
-      "nodes": true,
-      "cavNodes": true
+      "nodes": false,
+      "cavNodes": false
     },
-    "doAll": true,
+    "doAll": false,
     "qOpen": {
-      "Bag": false,
-      "HG": false,
+      "Bag": true,
+      "HG": true,
       "Power": true,
       "Buildings": true,
       "Troops": false,
       "Shards": false,
-      "Masters": false,
+      "Masters": true,
       "Gov": true,
       "Widgets": false,
       "Charms": false,
@@ -1552,7 +1553,9 @@
     "heroAll": false,
     "evOpen": true,
     "shSpare": true,
-    "petMaxOpen": true
+    "petMaxOpen": true,
+    "weekOpen": false,
+    "todayAll": true
   },
   "troopCounts": {
     "inf": {
@@ -1667,7 +1670,7 @@
       {
         "type": "Cavalry",
         "slot": "Boots (Lethality)",
-        "lvC": 118,
+        "lvC": 119,
         "lvT": 159,
         "mC": 11,
         "mT": 12,
@@ -1743,8 +1746,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 703,
-      "designs": 172
+      "guides": 731,
+      "designs": 247
     },
     "rows": [
       {
@@ -2464,7 +2467,7 @@
         "p:Tech": 27923445,
         "p:Pet": 22701120,
         "p:Master": 15392000,
-        "stars": 463
+        "stars": 468
       }
     }
   ],
@@ -2847,7 +2850,7 @@
       }
     ]
   },
-  "shardGeneral": 37,
+  "shardGeneral": 40,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Strongest Governor|2026-10-19",
