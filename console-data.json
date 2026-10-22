@@ -1480,7 +1480,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1517,9 +1517,9 @@
       "Rally": "Heroes",
       "Data": "Update all",
       "Gear": "Charms",
-      "Base": "Resources",
+      "Base": "Buildings",
       "Plan": "Shops & Packs",
-      "Heroes": "Mystic Trials"
+      "Heroes": "Shards"
     },
     "t11Open": {
       "nodes": false,
@@ -1533,10 +1533,10 @@
       "Buildings": true,
       "Troops": false,
       "Shards": false,
-      "Masters": true,
+      "Masters": false,
       "Gov": true,
-      "Widgets": false,
-      "Charms": false,
+      "Widgets": true,
+      "Charms": true,
       "T11": false,
       "Mystic": true,
       "Pets": true
@@ -1546,10 +1546,11 @@
     "roleOpen": true,
     "heroAll": false,
     "evOpen": true,
-    "shSpare": false,
+    "shSpare": true,
     "petMaxOpen": true,
     "weekOpen": false,
-    "todayAll": true
+    "todayAll": true,
+    "tierOpen": true
   },
   "troopCounts": {
     "inf": {
@@ -1853,8 +1854,8 @@
       },
       {
         "hero": "Ava",
-        "lvl": 5,
-        "have": 30,
+        "lvl": 6,
+        "have": 0,
         "rally": true
       },
       {
@@ -2864,7 +2865,7 @@
       }
     ]
   },
-  "shardGeneral": 40,
+  "shardGeneral": 66,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Strongest Governor|2026-10-19",
