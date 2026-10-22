@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 152,
+    "current": 242,
     "target": 7224,
     "gold": 541570
   },
@@ -1380,9 +1380,9 @@
     }
   ],
   "tg": {
-    "have": 185,
+    "have": 156,
     "need": 4104,
-    "ttgHave": 35,
+    "ttgHave": 29,
     "ttgNeed": 445
   },
   "govGear": {
@@ -1390,7 +1390,7 @@
     "have": {
       "satin": 78209,
       "threads": 555,
-      "vision": 653
+      "vision": 654
     },
     "pieces": [
       {
@@ -1536,7 +1536,7 @@
       "Masters": true,
       "Gov": true,
       "Widgets": false,
-      "Charms": false,
+      "Charms": true,
       "T11": false,
       "Mystic": true,
       "Pets": true
@@ -1573,8 +1573,8 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 496,
-      "mg": 5,
+      "fh": 497,
+      "mg": 13,
       "mith": 22
     },
     "rows": [
@@ -1733,16 +1733,16 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 496,
+    "fhSeen": 497,
     "fhGot": {
-      "2026-10": 1409
+      "2026-10": 1902
     }
   },
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 851,
-      "designs": 399
+      "guides": 1009,
+      "designs": 477
     },
     "rows": [
       {
@@ -2611,7 +2611,7 @@
     },
     {
       "n": "Barracks",
-      "stepIdx": 1,
+      "stepIdx": 2,
       "note": "Infantry tanks",
       "d": false
     },
