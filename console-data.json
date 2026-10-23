@@ -1388,9 +1388,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 78209,
-      "threads": 555,
-      "vision": 654
+      "satin": 48209,
+      "threads": 255,
+      "vision": 599
     },
     "pieces": [
       {
@@ -1403,7 +1403,7 @@
       },
       {
         "name": "Inf 1",
-        "cur": 18
+        "cur": 19
       },
       {
         "name": "Inf 2",
@@ -1493,7 +1493,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1529,7 +1529,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Charms",
+      "Gear": "Governor",
       "Base": "Buildings",
       "Plan": "Shops & Packs",
       "Heroes": "Shards"
@@ -1803,8 +1803,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 1009,
-      "designs": 477
+      "guides": 31,
+      "designs": 80
     },
     "rows": [
       {
@@ -1814,18 +1814,21 @@
       },
       {
         "type": "Cavalry",
-        "lvl": 5,
-        "tgt": 6
+        "lvl": 6,
+        "tgt": 6,
+        "st": 0
+      },
+      {
+        "type": "Cavalry",
+        "lvl": 6,
+        "tgt": 6,
+        "st": 0
       },
       {
         "type": "Cavalry",
         "lvl": 5,
-        "tgt": 6
-      },
-      {
-        "type": "Cavalry",
-        "lvl": 5,
-        "tgt": 6
+        "tgt": 6,
+        "st": 1
       },
       {
         "type": "Cavalry",
@@ -1840,7 +1843,8 @@
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 7
+        "tgt": 7,
+        "st": 1
       },
       {
         "type": "Infantry",
@@ -1902,7 +1906,8 @@
       {
         "kind": "x",
         "g": 686,
-        "d": 343
+        "d": 343,
+        "done": true
       },
       {
         "type": "Cavalry",
