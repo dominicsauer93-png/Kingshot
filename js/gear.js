@@ -60,14 +60,22 @@ function trackHammers(){
   if(hg.fhSeen!=null&&h>num(hg.fhSeen)){ const m=gameToday().slice(0,7); hg.fhGot=hg.fhGot||{}; hg.fhGot[m]=num(hg.fhGot[m])+h-num(hg.fhSeen); }
   hg.fhSeen=h; }
 function hgMonthGot(back){ const d=new Date(gameToday()+"T00:00:00Z"); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth()-back); return num((state.heroGear.fhGot||{})[d.toISOString().slice(0,7)]); }
+/* ---------- optimiser plan: the upgrades kingshotoptimizer.com picked (checked with Quaad) ----------
+   When a plan is saved it leads the Hero Gear tab and Home, in the optimiser's order. */
+const hgPlanRow=s=>((state.heroGear&&state.heroGear.rows)||[]).find(r=>r.type===s.type&&slotName(r.slot)===s.slot);
+function hgPlanLeft(){ return ((state.heroGear&&state.heroGear.plan)||[]).filter(s=>{ const r=hgPlanRow(s); return r&&((s.mTo!=null&&num(r.mC)<s.mTo)||(s.lvTo!=null&&num(r.lvC)<s.lvTo)); }); }
+function hgPlanWhat(s){ const r=hgPlanRow(s); return [s.lvTo!=null&&num(r.lvC)<s.lvTo?`Lv ${num(r.lvC)} → ${s.lvTo}`:"",s.mTo!=null&&num(r.mC)<s.mTo?`Mastery ${num(r.mC)} → ${s.mTo}`:""].filter(Boolean).join(" + "); }
+function hgPlanApply(s){ const H=state.heroGear.have, r=hgPlanRow(s); ["fh","mg","mith"].forEach(k=>H[k]=num(H[k])-num(s[k])); if(s.mTo!=null) r.mC=Math.max(num(r.mC),s.mTo); if(s.lvTo!=null) r.lvC=Math.max(num(r.lvC),s.lvTo); }
 function renderHeroGear(){
   const hg=state.heroGear; if(!hg.have) hg.have={xp:0,fh:0,mg:0,mith:0};
   if(hg.fhSeen==null) hg.fhSeen=num(hg.have.fh);
-  const prio=hgPriority(hg.rows), top=prio.slice(0,3), rank=new Map(top.map((r,i)=>[r,i+1]));
-  const n3={fh:0,mith:0,mg:0}; top.forEach(r=>{ const st=hgState(r); if(st.req) Object.entries(st.req).forEach(([k,v])=>n3[k]+=v); });
+  const plan=hgPlanLeft(), prio=hgPriority(hg.rows), top=prio.slice(0,3), rank=new Map(plan.length?plan.map((x,i)=>[hgPlanRow(x),i+1]):top.map((r,i)=>[r,i+1]));
+  const n3={fh:0,mith:0,mg:0};
+  if(plan.length) plan.forEach(x=>["fh","mith","mg"].forEach(k=>n3[k]+=num(x[k])));
+  else top.forEach(r=>{ const st=hgState(r); if(st.req) Object.entries(st.req).forEach(([k,v])=>n3[k]+=v); });
   const got=hgMonthGot(0);
   const nTile=(k,label,extra)=>{ const h=num(hg.have[k]), v=n3[k];
-    return tileH({id:"hgm_"+k,label,value:fmt(h)+(v?`<small class="faint"> / ${fmt(v)}</small>`:""),sub:extra||(v>h?`<span class="bad">${fmt(v-h)} short</span>`:`<span class="ok">enough</span>`),p:v?pc(h,v):null,cls:h>=v?"ok":""}); };
+    return tileH({id:"hgm_"+k,label,value:fmt(h),sub:(v?`need ${fmtK(v)} · `+(v>h?`<span class="bad">${fmtK(v-h)} short</span>`:`<span class="ok">enough ✓</span>`):"not needed next")+(extra?`<br><span class="faint">${extra}</span>`:""),p:v?pc(h,v):null,cls:v&&h>=v?"ok":""}); };
   $("#hgMats").innerHTML=nTile("mg","Mythic Gear")+nTile("mith","Mithril")+nTile("fh","Hammers",`+${fmt(got)} this month`);
   $$("#hgMats .tile").forEach(t=>t.onclick=openHgMatsSheet);
   const host=$("#hgBody"); host.innerHTML="";
@@ -81,6 +89,12 @@ function renderHeroGear(){
     return miss.length?`<span class="bad">short ${miss.join(" + ")}</span>`:`<span class="ok">ready ✓</span>`; };
   d.innerHTML=(prio.length?`<b>Next up</b>`+top.map((r,i)=>`<br><span class="hgnum${prio.now.has(r)?" go":""}">${i+1}</span> ${esc(r.type)} <b>${esc(slotName(r.slot))}</b> <span class="faint">${hgState(r).cls==="s-block"?"mastery":"imbue"}</span> · ${stat(r)}`).join(""):"<b>All pieces fully imbued ✓</b>")+
     (lack?`<br><span class="faint" style="font-size:13.5px">Get ${MATN[lack]} from ${SRC[lack]}.</span>`:"");
+  if(plan.length){ const pb={fh:num(hg.have.fh),mith:num(hg.have.mith),mg:num(hg.have.mg)};
+    d.innerHTML=`<b>Optimiser plan</b> <span class="faint">${hg.planDate?"· "+esc(fd(hg.planDate)):""} · checked with Quaad</span>`+plan.map((x,i)=>{
+      const cost=[["fh","hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(x[k])).map(([k,l])=>{ const ok=pb[k]>=num(x[k]); pb[k]-=num(x[k]); return `<span class="${ok?"ok":"bad"}">${fmt(num(x[k]))} ${l} ${ok?"✓":"✗"}</span>`; }).join(" · ");
+      return `<div class="hgplan"><span class="hgnum">${i+1}</span><span class="hgp-t">${esc(x.type)} <b>${esc(x.slot)}</b> <span class="faint">${esc(hgPlanWhat(x))}</span>${x.gain?` <span class="gold">+${x.gain}%</span>`:""}<br><span class="hgp-c">${cost}</span></span><button class="didit hgp-done" data-i="${i}">✓ Done</button></div>`; }).join("")+
+      `<span class="faint" style="font-size:13.5px">Tap Done after you do it in game — it spends the materials and updates the piece.</span>`;
+    bindAll(d,".hgp-done",b=>{ const x=plan[+b.dataset.i], snap=JSON.stringify(state); hgPlanApply(x); afterEdit(); toast(`${x.type} ${x.slot}: done`,snap); }); }
   host.appendChild(d);
   HG_TYPES.forEach(type=>{
     const pieces=hg.rows.filter(r=>r.type===type); if(!pieces.length) return;
@@ -159,12 +173,14 @@ function openWidSheet(r){
 function renderCharms(){
   const c=state.charms; if(!c.have) c.have={guides:0,designs:0}; if(c.targetLvl==null) c.targetLvl=22;
   c.rows.forEach(r=>{ if(r.tgt==null) r.tgt=c.targetLvl; });
-  let G=0,D=0; c.rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt); G+=m.g; D+=m.d; });
+  let G=0,D=0; c.rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt,num(r.st)); G+=m.g; D+=m.d; });
   const gh=num(c.have.guides), dh=num(c.have.designs);
   const order=["Infantry","Archer","Cavalry"]; // Quaad: Infantry first
   // next 3 upgrades: one level each, Infantry first, lowest charm first — small steps instead of the whole end goal
   const next=charmNextList(3); // shared with Home
-  const n3={g:0,d:0}; next.forEach(r=>{ const k=CHARM_COSTS[num(r.lvl)]; n3.g+=k[0]; n3.d+=k[1]; });
+  const cpl=charmPlanLeft(), n3={g:0,d:0};
+  if(cpl.length){ let dx=0; cpl.forEach(x=>{ if(x.kind==="x"){ n3.g+=x.g; dx+=x.d; } else { n3.g+=x.g; n3.d+=x.d; } }); n3.d=Math.max(0,n3.d-dx); } // exchanged Designs count toward the need
+  else next.forEach(r=>{ const k=CHARM_COSTS[num(r.lvl)]; n3.g+=k[0]; n3.d+=k[1]; });
   $("#charmMats").innerHTML=stepTileH("chD","Charm Designs",dh,n3.d,D)+stepTileH("chG","Charm Guides",gh,n3.g,G);
   on("chG",openCharmMatsSheet); on("chD",openCharmMatsSheet);
   const bag={g:gh,d:dh}, idx=r=>c.rows.filter(x=>x.type===r.type).indexOf(r)+1;
@@ -172,11 +188,19 @@ function renderCharms(){
       if(k[1]>bag.d) miss.push(`${fmt(k[1]-Math.max(0,bag.d))} Designs`); if(k[0]>bag.g) miss.push(`${fmt(k[0]-Math.max(0,bag.g))} Guides`); bag.g-=k[0]; bag.d-=k[1];
       return `<br><span class="hgnum${miss.length?"":" go"}">${i+1}</span> ${esc(r.type)} <b>Charm ${idx(r)}</b> <span class="faint">Lv ${L} → ${L+1}</span> · ${miss.length?`<span class="bad">short ${miss.join(" + ")}</span>`:'<span class="ok">ready ✓</span>'}`; }).join("")+
     `<br><span class="faint" style="font-size:13.5px">Tiles show what these 3 need. The end goal gets done one level at a time.</span>`:"<b>All charms at target ✓</b>";
+  if(cpl.length){ const bag={g:gh,d:dh};
+    nb.innerHTML=`<b>Optimiser plan</b> <span class="faint">${c.planDate?"· "+esc(fd(c.planDate)):""}</span>`+cpl.map((x,i)=>{ let what,cost;
+      if(x.kind==="x"){ what=`<b>Exchange</b> <span class="faint">Guides → Designs (50%)</span>`; const ok=bag.g>=x.g; bag.g-=x.g; bag.d+=x.d; cost=`<span class="${ok?"ok":"bad"}">−${fmt(x.g)} Guides ${ok?"✓":"✗"}</span> · <span class="ok">+${fmt(x.d)} Designs</span>`; }
+      else { const r=charmPlanRow(x); what=`${esc(x.type)} <b>Charm ${x.i}</b> <span class="faint">${charmLvH(r)} → ${x.toS?`Lv ${x.toL} · ${x.toS}/5`:`Lv ${x.toL}`}</span>${x.gain?` <span class="gold">+${x.gain}%</span>`:""}`;
+        cost=[["g","Guides"],["d","Designs"]].map(([k,l])=>{ const ok=bag[k]>=x[k]; bag[k]-=x[k]; return `<span class="${ok?"ok":"bad"}">${fmt(x[k])} ${l} ${ok?"✓":"✗"}</span>`; }).join(" · "); }
+      return `<div class="hgplan"><span class="hgnum">${i+1}</span><span class="hgp-t">${what}<br><span class="hgp-c">${cost}</span></span><button class="didit chp-done" data-i="${i}">✓ Done</button></div>`; }).join("")+
+      `<span class="faint" style="font-size:13.5px">Tap Done after you do it in game — it updates your Guides, Designs and the charm.</span>`;
+    bindAll(nb,".chp-done",b=>{ const x=cpl[+b.dataset.i], snap=JSON.stringify(state); charmPlanApply(x); afterEdit(); toast("Charm plan step done",snap); }); }
   $("#charmBody").innerHTML=order.map(type=>{ const rows=c.rows.filter(r=>r.type===type); if(!rows.length) return "";
-    let g=0,d=0,lv=0,tg=0,at=0; rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt); g+=m.g; d+=m.d; lv+=r.lvl; tg+=r.tgt; if(r.lvl>=r.tgt) at++; });
+    let g=0,d=0,lv=0,tg=0,at=0; rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt,num(r.st)); g+=m.g; d+=m.d; lv+=r.lvl; tg+=r.tgt; if(r.lvl>=r.tgt) at++; });
     const done=at===rows.length;
     return `<button class="vcard ${done?"s-done":""}" data-t="${type}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${type} charms</span>${type==="Infantry"?tagH("gold","first"):""}<span class="vc-meta">avg Lv ${(lv/rows.length).toFixed(1)}</span></span>
-      <span class="charm6">${rows.map((r,i)=>`<span style="padding:6px 8px;border-radius:9px;border:1px solid ${r.lvl>=r.tgt?"var(--green)":"var(--line)"};background:var(--panel-2)"><span class="faint" style="font-size:12.5px;display:block">Charm ${i+1}</span><b class="mono">${r.lvl}</b><span class="faint mono" style="font-size:13px"> → ${r.tgt}</span></span>`).join("")}</span>
+      <span class="charm6">${rows.map((r,i)=>`<span style="padding:6px 8px;border-radius:9px;border:1px solid ${r.lvl>=r.tgt?"var(--green)":"var(--line)"};background:var(--panel-2)"><span class="faint" style="font-size:12.5px;display:block">Charm ${i+1}</span><b class="mono">${r.lvl}</b>${num(r.st)?`<span class="faint mono" style="font-size:12.5px">·${num(r.st)}/5</span>`:""}<span class="faint mono" style="font-size:13px"> → ${r.tgt}</span></span>`).join("")}</span>
       <span class="vc-line">${(()=>{ if(done) return '<span class="ok">All at target ✓</span>'; const nx=rows.filter(r=>r.lvl<r.tgt).sort((a,b)=>a.lvl-b.lvl)[0], k=CHARM_COSTS[nx.lvl];
         return `Next: Charm ${rows.indexOf(nx)+1} Lv ${nx.lvl} → ${nx.lvl+1} · <b>${fmt(k[1])}</b> Designs + <b>${fmt(k[0])}</b> Guides <span class="faint">· ${at}/${rows.length} at target</span>`; })()}</span>${barH(pc(lv,tg),done?"ok":"")}</button>`; }).join("");
   bindAll($("#charmBody"),".vcard",b=>openCharmSheet(b.dataset.t));
@@ -198,7 +222,7 @@ function openCharmSheet(type){
     const inf=infoBox(); f.appendChild(inf);
     const draw=()=>{ list.innerHTML=""; rows.forEach((r,i)=>{ list.appendChild(frow(fld(`Charm ${i+1} now`,{type:"select",value:String(r.lvl),options:opts,set:v=>r.lvl=parseInt(v,10)}),fld(`Charm ${i+1} target`,{type:"select",value:String(r.tgt),options:opts,set:v=>r.tgt=parseInt(v,10)}))); }); };
     let lastT=rows.map(r=>r.tgt).join();
-    const rf=()=>{ let g=0,d=0; rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt); g+=m.g; d+=m.d; }); inf.innerHTML=`To reach your targets: <b>${fmt(g)}</b> Guides · <b>${fmt(d)}</b> Designs`;
+    const rf=()=>{ let g=0,d=0; rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt,num(r.st)); g+=m.g; d+=m.d; }); inf.innerHTML=`To reach your targets: <b>${fmt(g)}</b> Guides · <b>${fmt(d)}</b> Designs`;
       const t=rows.map(r=>r.tgt).join(); if(t!==lastT){ lastT=t; draw(); } };
     draw(); rf(); return rf; }});
 }
@@ -355,6 +379,14 @@ function renderGov(){
   $("#govPlan").innerHTML=`<b>Your plan:</b> Infantry + Archer go up a tier first, Cavalry stays one tier behind.<br>`+
     P.goals.map((G,idx)=>({G,idx})).filter(({G,idx})=>idx===P.ci-1||idx===P.ci||(idx>P.ci&&(G.who==="main"?state.govGear.pieces.filter(p=>!govIsCav(p)):state.govGear.pieces.filter(govIsCav)).some(p=>num(p.cur)<G.to))).slice(0,4).map(({G,idx})=>{ const done=idx<P.ci||P.ci<0, now=idx===P.ci;
       return `<span class="${done?"ok":now?"":"faint"}">${done?"✓":now?"▶":"·"} ${esc(P.label(G))}</span>${now&&P.step.length?` <span class="faint">— next: ${P.step.map(p=>`${esc(p.name)} (${esc(GOV_TIERS[num(p.cur)][0])})`).join(", ")}</span>`:""}`; }).join("<br>");
+  const gpl=govPlanLeft();
+  if(gpl.length){ const bag={s:num(g.have.satin),t:num(g.have.threads),v:num(g.have.vision)};
+    $("#govPlan").innerHTML=`<b>Optimiser plan</b> <span class="faint">${g.planDate?"· "+esc(fd(g.planDate)):""}</span>`+gpl.map((x,i)=>{ const p=govPlanPiece(x), n=govRem(num(p.cur),x.to);
+      const cost=[["s","Satin"],["t","Threads"],["v","Vision"]].filter(([k])=>n[k]).map(([k,l])=>{ const ok=bag[k]>=n[k]; bag[k]-=n[k]; return `<span class="${ok?"ok":"bad"}">${fmtK(n[k])} ${l} ${ok?"✓":"✗"}</span>`; }).join(" · ");
+      return `<div class="hgplan"><span class="hgnum">${i+1}</span><span class="hgp-t"><b>${esc(p.name)}</b> <span class="faint">${esc(GOV_TIERS[num(p.cur)][0])} → ${esc(GOV_TIERS[x.to][0])}</span>${x.gain?` <span class="gold">+${x.gain}%</span>`:""}<br><span class="hgp-c">${cost}</span></span><button class="didit gvp-done" data-i="${i}">✓ Done</button></div>`; }).join("")+
+      `<span class="faint" style="font-size:13.5px">Tap Done after you do it in game — it spends the materials and updates the piece.</span>`;
+    bindAll($("#govPlan"),".gvp-done",bt=>{ const x=gpl[+bt.dataset.i], p=govPlanPiece(x), n=govRem(num(p.cur),x.to), snap=JSON.stringify(state);
+      g.have.satin=num(g.have.satin)-n.s; g.have.threads=num(g.have.threads)-n.t; g.have.vision=num(g.have.vision)-n.v; p.cur=x.to; afterEdit(); toast(`${p.name}: ${GOV_TIERS[x.to][0]}`,snap); }); }
   const gn=govNextStep(), np=gn&&gn.p, n1=gn?gn.need:{s:0,t:0,v:0}; // next single upgrade, shared with Home
   const mt=(id,l,need,have)=>stepTileH(id,l,have,{gvS:n1.s,gvG:n1.t,gvV:n1.v}[id],need);
   $("#govTiles").innerHTML=tileH({id:"gvT",label:"Current step",value:cur?esc(GOV_TIERS[cur.to][0]):"Plan done",txt:true,sub:cur?`${cur.who==="main"?"Inf + Archer":"Cavalry"} · ${at}/${of} there`:"",p:pc(at,of),cls:at===of?"ok":""})+

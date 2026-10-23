@@ -626,7 +626,9 @@ const CHARM_COSTS=[
  [560,420],[580,600],[610,780],[645,960],[685,1140],[730,1320],[780,1500],[835,1680],[895,1860],[960,2040],
  [1030,2220],[1105,2400]
 ];
-function charmRem(cur,tgt){ let g=0,d=0; for(let i=Math.max(0,cur);i<Math.min(22,tgt);i++){ g+=CHARM_COSTS[i][0]; d+=CHARM_COSTS[i][1]; } return {g,d}; }
+function charmRem(cur,tgt,st){ let g=0,d=0; for(let i=Math.max(0,cur);i<Math.min(22,tgt);i++){ g+=CHARM_COSTS[i][0]; d+=CHARM_COSTS[i][1]; }
+  if(st&&cur<tgt&&CHARM_COSTS[cur]){ g-=Math.round(CHARM_COSTS[cur][0]*st/5); d-=Math.round(CHARM_COSTS[cur][1]*st/5); } // each level is 5 stages
+  return {g,d}; }
 const CHARM_TYPES=["Archer","Infantry","Cavalry"]; // main troop first
 
 /* ---------- widgets ---------- */
