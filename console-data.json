@@ -1417,7 +1417,20 @@
         "name": "Archer 2",
         "cur": 19
       }
-    ]
+    ],
+    "plan": [
+      {
+        "name": "Inf 1",
+        "to": 19,
+        "gain": 2.55
+      },
+      {
+        "name": "Cav 1",
+        "to": 15,
+        "gain": 2.55
+      }
+    ],
+    "planDate": "2026-10-23"
   },
   "forecast": {
     "log": []
@@ -1736,7 +1749,56 @@
     "fhSeen": 497,
     "fhGot": {
       "2026-10": 1902
-    }
+    },
+    "plan": [
+      {
+        "type": "Infantry",
+        "slot": "Helm",
+        "mTo": 11,
+        "fh": 110,
+        "mg": 1,
+        "mith": 0,
+        "gain": 6.2
+      },
+      {
+        "type": "Infantry",
+        "slot": "Chest",
+        "mTo": 13,
+        "fh": 130,
+        "mg": 3,
+        "mith": 0,
+        "gain": 10.4
+      },
+      {
+        "type": "Infantry",
+        "slot": "Boots",
+        "mTo": 11,
+        "fh": 110,
+        "mg": 1,
+        "mith": 0,
+        "gain": 5.6
+      },
+      {
+        "type": "Cavalry",
+        "slot": "Helm",
+        "lvTo": 120,
+        "mTo": 12,
+        "fh": 120,
+        "mg": 5,
+        "mith": 10,
+        "gain": 8.5
+      },
+      {
+        "type": "Archer",
+        "slot": "Boots",
+        "lvTo": 120,
+        "fh": 0,
+        "mg": 3,
+        "mith": 10,
+        "gain": 1.3
+      }
+    ],
+    "planDate": "2026-10-23"
   },
   "charms": {
     "targetLvl": 10,
@@ -1835,7 +1897,60 @@
         "lvl": 6,
         "tgt": 7
       }
-    ]
+    ],
+    "plan": [
+      {
+        "kind": "x",
+        "g": 686,
+        "d": 343
+      },
+      {
+        "type": "Cavalry",
+        "i": 2,
+        "toL": 6,
+        "toS": 0,
+        "g": 120,
+        "d": 300,
+        "gain": 5
+      },
+      {
+        "type": "Cavalry",
+        "i": 3,
+        "toL": 6,
+        "toS": 0,
+        "g": 120,
+        "d": 300,
+        "gain": 5
+      },
+      {
+        "type": "Cavalry",
+        "i": 4,
+        "toL": 5,
+        "toS": 1,
+        "g": 24,
+        "d": 60,
+        "gain": 1
+      },
+      {
+        "type": "Infantry",
+        "i": 1,
+        "toL": 6,
+        "toS": 1,
+        "g": 28,
+        "d": 80,
+        "gain": 1
+      },
+      {
+        "type": "Infantry",
+        "i": 2,
+        "toL": 6,
+        "toS": 1,
+        "g": 28,
+        "d": 80,
+        "gain": 1
+      }
+    ],
+    "planDate": "2026-10-23"
   },
   "widgets": {
     "have": 0,

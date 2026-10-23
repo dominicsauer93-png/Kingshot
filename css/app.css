@@ -530,3 +530,7 @@
 
   .evnote{padding:12px 14px;border-radius:12px;background:var(--panel-2);border:1px solid var(--line);font-size:15px;line-height:1.5}
   .evnote ul{margin:0;padding-left:18px} .evnote li{margin:3px 0}
+
+  .hgplan{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line-soft)}
+  .hgplan:first-of-type{margin-top:6px}
+  .hgp-c{font-size:14px}

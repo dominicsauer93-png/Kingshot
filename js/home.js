@@ -150,13 +150,24 @@ let lastGoals=[];
    Each section says what its next small step is. Home ranks them with your rule:
    ready now first, then main heroes (hero gear, widgets, shards), then whole-army stats. */
 const CHARM_ORDER=["Infantry","Archer","Cavalry"]; // Quaad: Infantry first
+// optimiser charm plan: an exchange row (Guides → Designs) and stage-by-stage upgrades, in the optimiser's order
+const charmPlanRow=x=>((state.charms&&state.charms.rows)||[]).filter(r=>r.type===x.type)[x.i-1];
+const charmLvH=r=>`Lv ${num(r.lvl)}${num(r.st)?` · ${num(r.st)}/5`:""}`;
+function charmPlanLeft(){ return ((state.charms&&state.charms.plan)||[]).filter(x=>{ if(x.kind==="x") return !x.done; const r=charmPlanRow(x); return r&&num(r.lvl)*5+num(r.st)<x.toL*5+num(x.toS); }); }
+function charmPlanApply(x){ const h=state.charms.have; if(x.kind==="x"){ h.guides=num(h.guides)-x.g; h.designs=num(h.designs)+x.d; x.done=true; return; }
+  const r=charmPlanRow(x); h.guides=num(h.guides)-x.g; h.designs=num(h.designs)-x.d; r.lvl=x.toL; r.st=num(x.toS); }
 function charmNextList(n){ return ((state.charms&&state.charms.rows)||[]).filter(r=>num(r.lvl)<num(r.tgt)&&num(r.lvl)<22).sort((a,b)=>CHARM_ORDER.indexOf(a.type)-CHARM_ORDER.indexOf(b.type)||num(a.lvl)-num(b.lvl)).slice(0,n||3); }
 function widNextRow(){ const W=(state.widgets&&state.widgets.rows)||[], R=W.some(r=>r.rally)?W.filter(r=>r.rally):W;
   return R.filter(r=>num(r.lvl)<10).sort((a,b)=>num(a.lvl)-num(b.lvl)||(widNext(num(a.lvl))-num(a.have))-(widNext(num(b.lvl))-num(b.have)))[0]||null; }
 function petNextStep(){ const P=state.pets||{rows:[]};
   const r=(P.rows||[]).filter(x=>{ const g=num(x.tgt)||num(x.max); return num(x.lvl)>0&&g>num(x.lvl)&&PET_INFO[x.n]; }).sort((a,b)=>petRank(a)-petRank(b))[0]; if(!r) return null;
   const to=Math.min((Math.floor(num(r.lvl)/10)+1)*10,num(r.tgt)||num(r.max)); return {r,to,cost:petCost(Object.assign({},r,{tgt:to}))}; }
-function govNextStep(){ const g=state.govGear; if(!g||!g.pieces) return null; const P=govPlan(); if(!P.cur||!P.step.length) return null;
+// optimiser plan for governor gear (one tier per row) — leads when saved, like the hero gear plan
+const govPlanPiece=x=>((state.govGear&&state.govGear.pieces)||[]).find(p=>p.name===x.name);
+function govPlanLeft(){ return ((state.govGear&&state.govGear.plan)||[]).filter(x=>{ const p=govPlanPiece(x); return p&&num(p.cur)<x.to; }); }
+function govNextStep(){ const g=state.govGear; if(!g||!g.pieces) return null; const P=govPlan(), pl=govPlanLeft()[0];
+  if(pl){ const p=govPlanPiece(pl); return {p,P,to:num(p.cur)+1,need:govRem(num(p.cur),num(p.cur)+1)}; }
+  if(!P.cur||!P.step.length) return null;
   const p=P.step.slice().sort((a,b)=>num(a.cur)-num(b.cur))[0]; return {p,P,to:num(p.cur)+1,need:govRem(num(p.cur),num(p.cur)+1)}; }
 function bldNextStep(){ const bl=(state.buildings||[]).find(b=>!b.d&&BUILD_TIERS[b.n]&&(b.stepIdx||0)<BUILD_TIERS[b.n].steps.length); return bl?{bl,st:BUILD_TIERS[bl.n].steps[bl.stepIdx||0]}:null; }
 const STEP_ORDER=["fh","wid","shard","charm","gov","bld","pet","t11","troop","mast"]; // main heroes, then whole-army stats
@@ -164,8 +175,10 @@ function nextSteps(){
   const out=[], have=(o,k)=>num(o&&o[k]);
   // hero gear — same #1 as the Hero Gear tab
   const hg=state.heroGear||{rows:[],have:{}}, H=hg.have||{};
-  const hp=(hg.rows||[]).length?hgPriority(hg.rows):[], top=hp.find(r=>hp.now.has(r)&&hgState(r).req)||hp[0];
-  if(top){ const st=hgState(top), nx=HG_IMB.find(x=>x[0]>num(top.lvC)), ready=!!st.req&&hp.now.has(top), block=st.cls==="s-block";
+  const hp=(hg.rows||[]).length?hgPriority(hg.rows):[], top=hp.find(r=>hp.now.has(r)&&hgState(r).req)||hp[0], plan=hgPlanLeft()[0];
+  if(plan){ const ready=["fh","mg","mith"].every(k=>num(H[k])>=num(plan[k]));
+    out.push({k:"fh",title:`${esc(plan.type)} ${esc(plan.slot)} ${esc(hgPlanWhat(plan))}`,detail:[["fh","Hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(plan[k])).map(([k,l])=>`<span class="${num(H[k])>=num(plan[k])?"ok":"bad"}">${l} ${fmt(num(H[k]))}/${fmt(num(plan[k]))} ${num(H[k])>=num(plan[k])?"✓":"✗"}</span>`).join(" · ")+(plan.gain?` · <span class="gold">+${plan.gain}%</span>`:""),ready,open:()=>openHgSheet(hgPlanRow(plan)),key:"Hero Gear",apply:ready?()=>hgPlanApply(plan):null}); }
+  else if(top){ const st=hgState(top), nx=HG_IMB.find(x=>x[0]>num(top.lvC)), ready=!!st.req&&hp.now.has(top), block=st.cls==="s-block";
     out.push({k:"fh",title:`${esc(top.type)} ${esc(slotName(top.slot))} ${block?`mastery ${num(top.mC)} → ${nx[1]}`:st.req?`Lv ${nx[0]} imbue`:`XP to Lv ${nx[0]-1}`}`,detail:st.req?hgReqH(st.req):esc(st.line),ready,open:()=>openHgSheet(top),key:"Hero Gear",
       apply:ready?()=>{ Object.entries(st.req).forEach(([k,v])=>H[HG_MAT[k][1]]=num(H[HG_MAT[k][1]])-v); if(block) top.mC=nx[1]; else top.lvC=nx[0]; }:null}); }
   // widgets — lowest rally hero first
@@ -177,7 +190,11 @@ function nextSteps(){
     out.push({k:"shard",title:`${esc(sh.n)} → ${esc(starLabel(num(sh.pos)+1))}`,detail:`${fmt(num(sh.have))} / ${fmt(nd)} shards`+(ready?"":` · ${fmt(nd-num(sh.have))} short`),ready,open:()=>openShardSheet(sh),key:"Gold Hero Shards",
       apply:ready?()=>{ sh.have=num(sh.have)-nd; sh.pos=num(sh.pos)+1; }:null}); }
   // charms — one level
-  const c=state.charms||{have:{}}, cr=charmNextList(1)[0]; if(cr){ const k=CHARM_COSTS[num(cr.lvl)], gH=have(c.have,"guides"), dH=have(c.have,"designs"), ready=gH>=k[0]&&dH>=k[1];
+  const c=state.charms||{have:{}}, cp=charmPlanLeft()[0], cr=cp?null:charmNextList(1)[0];
+  if(cp){ const gH=have(c.have,"guides"), dH=have(c.have,"designs"), ready=gH>=cp.g&&(cp.kind==="x"||dH>=cp.d), r=cp.kind==="x"?null:charmPlanRow(cp);
+    out.push({k:"charm",title:cp.kind==="x"?`Charm exchange: ${fmt(cp.g)} Guides → ${fmt(cp.d)} Designs`:`${esc(cp.type)} Charm ${cp.i} ${charmLvH(r)} → ${cp.toS?`Lv ${cp.toL} · ${cp.toS}/5`:`Lv ${cp.toL}`}`,
+      detail:cp.kind==="x"?"Step 1 of the optimiser's charm plan":`${fmt(cp.d)} Designs + ${fmt(cp.g)} Guides`+(cp.gain?` · <span class="gold">+${cp.gain}%</span>`:""),ready,open:()=>openCharmSheet(cp.type||"Cavalry"),key:"Charms",apply:ready?()=>charmPlanApply(cp):null}); }
+  if(cr){ const k=CHARM_COSTS[num(cr.lvl)], gH=have(c.have,"guides"), dH=have(c.have,"designs"), ready=gH>=k[0]&&dH>=k[1];
     const idx=c.rows.filter(x=>x.type===cr.type).indexOf(cr)+1;
     out.push({k:"charm",title:`${esc(cr.type)} Charm ${idx} Lv ${num(cr.lvl)} → ${num(cr.lvl)+1}`,detail:ready?`${fmt(k[1])} Designs + ${fmt(k[0])} Guides`:[dH<k[1]?`${fmt(k[1]-dH)} Designs`:"",gH<k[0]?`${fmt(k[0]-gH)} Guides`:""].filter(Boolean).join(" + ")+" short",ready,open:()=>openCharmSheet(cr.type),key:"Charms",
       apply:ready?()=>{ c.have.guides=gH-k[0]; c.have.designs=dH-k[1]; cr.lvl=num(cr.lvl)+1; }:null}); }
