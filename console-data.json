@@ -1493,7 +1493,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1529,10 +1529,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Charms",
-      "Base": "Buildings",
+      "Gear": "Governor",
+      "Base": "T11",
       "Plan": "Shops & Packs",
-      "Heroes": "Shards"
+      "Heroes": "Mystic Trials"
     },
     "t11Open": {
       "nodes": false,
@@ -1549,7 +1549,7 @@
       "Masters": true,
       "Gov": true,
       "Widgets": false,
-      "Charms": true,
+      "Charms": false,
       "T11": false,
       "Mystic": true,
       "Pets": true
@@ -1559,11 +1559,11 @@
     "roleOpen": true,
     "heroAll": false,
     "evOpen": true,
-    "shSpare": true,
+    "shSpare": false,
     "petMaxOpen": true,
     "weekOpen": false,
     "todayAll": true,
-    "tierOpen": true
+    "tierOpen": false
   },
   "troopCounts": {
     "inf": {
@@ -2558,26 +2558,6 @@
     },
     {
       "d": "2026-10-21",
-      "v": {
-        "power": 335924750,
-        "leth": 73,
-        "hp": 58.8,
-        "attWR": 38.08,
-        "defWR": 91.68,
-        "p:Building": 9287731,
-        "p:Troop": 183568900,
-        "p:Hero": 32483632,
-        "p:Hero Gear": 13168561,
-        "p:Governor Gear": 8788320,
-        "p:Governor Charm": 12228000,
-        "p:Tech": 27923445,
-        "p:Pet": 22701120,
-        "p:Master": 15392000,
-        "stars": 469
-      }
-    },
-    {
-      "d": "2026-10-23",
       "v": {
         "power": 335924750,
         "leth": 73,
