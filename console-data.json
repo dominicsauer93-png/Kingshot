@@ -1493,7 +1493,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1586,9 +1586,9 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 497,
-      "mg": 13,
-      "mith": 22
+      "fh": 27,
+      "mg": 0,
+      "mith": 2
     },
     "rows": [
       {
@@ -1596,7 +1596,7 @@
         "slot": "Helm (Lethality)",
         "lvC": 113,
         "lvT": 179,
-        "mC": 10,
+        "mC": 11,
         "mT": 15,
         "xp": 314230,
         "fh": 650,
@@ -1620,7 +1620,7 @@
         "slot": "Chest (Health)",
         "lvC": 139,
         "lvT": 179,
-        "mC": 12,
+        "mC": 13,
         "mT": 17,
         "xp": 212400,
         "fh": 750,
@@ -1632,7 +1632,7 @@
         "slot": "Boots (Lethality)",
         "lvC": 101,
         "lvT": 200,
-        "mC": 10,
+        "mC": 11,
         "mT": 15,
         "xp": 498990,
         "fh": 650,
@@ -1642,9 +1642,9 @@
       {
         "type": "Cavalry",
         "slot": "Helm (Lethality)",
-        "lvC": 119,
+        "lvC": 120,
         "lvT": 159,
-        "mC": 11,
+        "mC": 12,
         "mT": 13,
         "xp": 165600,
         "fh": 250,
@@ -1726,7 +1726,7 @@
       {
         "type": "Archer",
         "slot": "Boots (Lethality)",
-        "lvC": 119,
+        "lvC": 120,
         "lvT": 179,
         "mC": 12,
         "mT": 15,
@@ -1746,7 +1746,7 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 497,
+    "fhSeen": 27,
     "fhGot": {
       "2026-10": 1902
     },
