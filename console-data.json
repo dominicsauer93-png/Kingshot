@@ -1388,14 +1388,14 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 48209,
-      "threads": 255,
-      "vision": 599
+      "satin": 25209,
+      "threads": 25,
+      "vision": 559
     },
     "pieces": [
       {
         "name": "Cav 1",
-        "cur": 14
+        "cur": 15
       },
       {
         "name": "Cav 2",
@@ -1803,8 +1803,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 31,
-      "designs": 80
+      "guides": 3,
+      "designs": 0
     },
     "rows": [
       {
@@ -1822,7 +1822,7 @@
         "type": "Cavalry",
         "lvl": 6,
         "tgt": 6,
-        "st": 0
+        "st": 1
       },
       {
         "type": "Cavalry",
@@ -1939,15 +1939,6 @@
       {
         "type": "Infantry",
         "i": 1,
-        "toL": 6,
-        "toS": 1,
-        "g": 28,
-        "d": 80,
-        "gain": 1
-      },
-      {
-        "type": "Infantry",
-        "i": 2,
         "toL": 6,
         "toS": 1,
         "g": 28,
