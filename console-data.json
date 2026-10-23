@@ -1381,9 +1381,9 @@
   ],
   "tg": {
     "have": 156,
-    "need": 4104,
+    "need": 3996,
     "ttgHave": 29,
-    "ttgNeed": 445
+    "ttgNeed": 439
   },
   "govGear": {
     "targetIdx": 18,
