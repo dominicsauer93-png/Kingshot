@@ -1388,7 +1388,7 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 25209,
+      "satin": 25353,
       "threads": 25,
       "vision": 559
     },
@@ -1585,7 +1585,7 @@
   },
   "heroGear": {
     "have": {
-      "xp": 0,
+      "xp": 5340,
       "fh": 27,
       "mg": 0,
       "mith": 2
@@ -2923,9 +2923,9 @@
   "pets": {
     "have": {
       "food": 12950,
-      "manuals": 1350,
-      "potions": 67,
-      "tmCommon": 14,
+      "manuals": 1385,
+      "potions": 77,
+      "tmCommon": 22,
       "tmAdv": 0,
       "medals": 4
     },
@@ -3016,7 +3016,7 @@
       }
     ]
   },
-  "shardGeneral": 66,
+  "shardGeneral": 68,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Strongest Governor|2026-10-19",
