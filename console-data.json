@@ -1532,7 +1532,7 @@
       "Gear": "Governor",
       "Base": "T11",
       "Plan": "Shops & Packs",
-      "Heroes": "Shards"
+      "Heroes": "Masters"
     },
     "t11Open": {
       "nodes": false,
@@ -3016,7 +3016,7 @@
       }
     ]
   },
-  "shardGeneral": 68,
+  "shardGeneral": 81,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Strongest Governor|2026-10-19",
