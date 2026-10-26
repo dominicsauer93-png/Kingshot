@@ -110,21 +110,39 @@ const SHOP_DB=[
 ];
 const SHOP_MISSING=[];
 
+// the page: a simple shopping list first (one tile per shop, what to buy right now), details tucked below
+const SG_REGULAR=[["Trial Shop","Weekly"],["Arena Shop","Weekly"],["Alliance Championship Shop","Weekly"],["KvK Shop (Kingdom of Power)","Weekly"],["Swordland Shop","Every 2 weeks"],["Tidal Shop","Every 2 weeks"],["Alliance Shop — weekly","Weekly"],["Alliance Shop — daily","Daily"]];
+const SG_EVENT=["Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
+const sgShort=n=>n.replace(/ Shop$/,"").replace(/ \(Kingdom of Power\)/,"").replace(/^Alliance Shop — /,"Alliance ").replace(/^Alliance Championship$/,"Alliance Champ.");
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
   const mo=state.packMonths||{}, cur=gameToday().slice(0,7), last=Object.keys(mo).sort().pop();
-  const N=blockerNeeds();
+  const N=blockerNeeds(), idx=n=>SHOP_DB.findIndex(s=>s.n===n), full=!!state.ui.sgFull; // full = the raw database (item tables, packs, reference)
   const fdS=s=>s?new Date(s+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"}):"";
-  host.innerHTML=`<div class="info"><b>How I pick</b><ul class="sgrules">${SHOP_RULES.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`+
-      (last&&mo[last].closed?`<span class="faint">${new Date(last+"-01T00:00:00").toLocaleDateString(undefined,{month:"long"})} closed — A$${num(mo[last].spent).toFixed(2)} spent${mo[last].note?` (${esc(mo[last].note)})`:""}. ${last<cur?"New month — budget is fresh.":"Budget resets on the 1st."}</span>`:"")+`</div>`+plannerH()+
-    SHOP_DB.map((s,i)=>`<details class="fold mt sgshop"${state.ui.sgOpen===i?" open":""} data-i="${i}"><summary><span class="grow">${esc(s.n)} <small class="faint" style="font-weight:500">${esc(s.cur)} · ${esc(s.when)}</small></span><small class="faint">seen ${fdS(s.seen)}</small></summary><div class="fbody">`+
+  const tile=([n,when])=>{ const s=SHOP_DB[idx(n)]; if(!s) return ""; const b=liveBuys(s,N).need, seen=new Set(), top=b.filter(x=>!seen.has(x.k)&&seen.add(x.k)).slice(0,2);
+    return `<button class="sgtile" data-i="${idx(n)}"><span class="sgt-h"><b>${esc(sgShort(n))}</b><small>${esc(when)}</small></span>`+
+      (top.length?top.map(x=>`<span class="sgt-buy">${esc(x.it[0].replace(/ \(.*\)/,""))}<em>${fmt(x.it[1])}</em></span>`).join(""):'<span class="sgt-none">Nothing you need ✓</span>')+`</button>`; };
+  const fold=i=>{ const s=SHOP_DB[i]; return `<details class="fold mt sgshop"${state.ui.sgOpen===i?" open":""} data-i="${i}"><summary><span class="grow">${esc(s.n)}</span><small class="faint">${esc(s.cur)}</small></summary><div class="fbody">`+
       liveBuysH(s,N)+(s.best.length?`<div class="sgbest"><b>Usually buy</b><ol>${s.best.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:"")+
       (s.skip.length?`<div class="sgskip"><b>Skip</b><ul>${s.skip.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"")+
-      (s.items.length?`<div class="card mt" style="padding:0;overflow:hidden"><table class="gtable"><thead><tr><th>Item</th><th>Cost</th><th>${typeof s.items[0][2]==="number"?"Limit":"%"}</th></tr></thead><tbody>${s.items.map(([a,b,c])=>`<tr><td>${esc(a)}</td><td class="mono">${typeof b==="number"?fmt(b):esc(b)}</td><td class="mono">${typeof c==="number"?fmt(c):esc(c)}</td></tr>`).join("")}</tbody></table></div>`:"")+
-      (s.note?`<p class="muted" style="margin:8px 0 0">${esc(s.note)}</p>`:"")+`</div></details>`).join("")+
-    `<details class="fold mt"><summary><span class="grow">Hero seasons <small class="faint" style="font-weight:500">for Hall of Heroes chests</small></span></summary><div class="fbody"><table class="gtable"><tbody>${Object.entries(HERO_SEASON).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
+      (full&&s.items.length?`<details class="fold mt"><summary><span class="grow">Everything it sells</span><small class="faint">seen ${fdS(s.seen)}</small></summary><div class="fbody" style="padding:0"><table class="gtable"><thead><tr><th>Item</th><th>Cost</th><th>${typeof s.items[0][2]==="number"?"Limit":"%"}</th></tr></thead><tbody>${s.items.map(([a,b,c])=>`<tr><td>${esc(a)}</td><td class="mono">${typeof b==="number"?fmt(b):esc(b)}</td><td class="mono">${typeof c==="number"?fmt(c):esc(c)}</td></tr>`).join("")}</tbody></table></div></details>`:"")+
+      (s.note?`<p class="muted" style="margin:8px 0 0">${esc(s.note)}</p>`:"")+`</div></details>`; };
+  const regIdx=SG_REGULAR.map(([n])=>idx(n)).filter(i=>i>=0), evIdx=SG_EVENT.map(idx).filter(i=>i>=0), packIdx=SHOP_DB.map((_,i)=>i).filter(i=>!regIdx.includes(i)&&!evIdx.includes(i));
+  const blk=["mg","threads","designs","mith","gen"].filter(k=>N[k]&&N[k].short).map(k=>`${RES_LABEL[k]} <b>${fmt(N[k].short)}</b> short`);
+  host.innerHTML=`<div class="card sghead"><b style="font-size:16px">Your shopping list</b><p class="muted" style="margin:2px 0 0">What to buy in each shop right now, from your bag. Tap a shop for details.</p>`+
+      (blk.length?`<p class="sgblk">Short of: ${blk.join(" · ")}</p>`:"")+`</div>`+
+    `<div class="sgtiles">${SG_REGULAR.map(tile).join("")}</div>`+
+    (last&&mo[last].closed&&last===cur?`<p class="faint mt" style="margin-bottom:0">${new Date(last+"-01T00:00:00").toLocaleDateString(undefined,{month:"long"})} budget closed — A$${num(mo[last].spent).toFixed(2)} spent. Resets on the 1st.</p>`:"")+
+    `<h3 class="sgsec">Shops</h3>`+regIdx.map(fold).join("")+
+    `<h3 class="sgsec">Event shops</h3>`+evIdx.map(fold).join("")+
+    (full?`<h3 class="sgsec">Packs</h3>`+packIdx.map(fold).join("")+
+    `<h3 class="sgsec">Reference</h3>`+
+    `<details class="fold mt"><summary><span class="grow">How I pick</span></summary><div class="fbody"><ul class="sgrules">${SHOP_RULES.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></details>`+
+    `<details class="fold mt"><summary><span class="grow">Hero seasons</span><small class="faint">Hall of Heroes chests</small></summary><div class="fbody"><table class="gtable"><tbody>${Object.entries(HERO_SEASON).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
     `<details class="fold mt"><summary><span class="grow">What the icons are</span></summary><div class="fbody"><table class="gtable"><tbody>${ITEM_KEY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
-    `<div class="info mt">${SHOP_MISSING.length?`<b>Still to add:</b> ${SHOP_MISSING.map(esc).join(" · ")}<br>`:"<b>All shops added.</b> New event shops or packs: "}<span class="faint">Upload screenshots to the <b>shops/inbox</b> folder in the Kingshot repo (GitHub app → Add file → Upload files), then tell Claude “uploaded”.</span></div>`;
-  const sp=$("#sgPlan"); if(sp) sp.ontoggle=()=>{ state.ui.planOpen=sp.open; scheduleSave(); };
+    `<p class="faint mt">New shop or pack? Send a screenshot, or upload it to <b>shops/inbox</b> in the Kingshot repo.</p>`:"")+
+    `<button class="btn ghost sm mt" id="sgFull">${full?"Hide full shop data":"Show full shop data"}</button>`;
+  on("sgFull",()=>{ state.ui.sgFull=!full; scheduleSave(); renderShopGuide(); });
+  host.querySelectorAll(".sgtile").forEach(t=>t.onclick=()=>{ const d=host.querySelector(`details.sgshop[data-i="${t.dataset.i}"]`); if(d){ d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); } });
   host.querySelectorAll("details.sgshop").forEach(d=>d.ontoggle=()=>{ if(d.open) state.ui.sgOpen=+d.dataset.i; else if(state.ui.sgOpen===+d.dataset.i) delete state.ui.sgOpen; scheduleSave(); });
 }

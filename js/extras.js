@@ -83,20 +83,6 @@ function liveBuysH(shop,N){
   return `<div class="sglive"><b>Right now</b> <span class="faint">from your bag</span><ol>${need.slice(0,4).map(x=>`<li><b>${esc(x.it[0])}</b> — ${fmt(x.it[1])}${x.it[2]!=null?` · limit ${typeof x.it[2]==="number"?fmt(x.it[2]):esc(x.it[2])}`:""}<br><span class="faint">${esc(RES_LABEL[x.k])} short ${fmt(N[x.k].short)} — ${esc(N[x.k].what)}</span></li>`).join("")}</ol>`+
     (covered.length?`<span class="faint">Covered for now: ${[...new Set(covered.map(x=>RES_LABEL[x.k]))].join(", ")} ✓</span>`:"")+`</div>`; }
 
-/* ---------- Shop guide: this week planner ---------- */
-function plannerH(){
-  const N=blockerNeeds(), find=n=>SHOP_DB.find(s=>s.n===n);
-  const row=(when,names)=>{ const shops=names.map(find).filter(Boolean); if(!shops.length) return "";
-    const get=shops.map(s=>{ const b=liveBuys(s,N).need[0]; return b?`${s.n.replace(/ Shop.*| —.*/,"")}: ${b.it[0].replace(/ \(.*\)/,"")}`:null; }).filter(Boolean);
-    return `<tr><td>${when}</td><td>${shops.map(s=>esc(s.n.replace(/ Shop$/,""))).join(" · ")}</td><td>${get.length?get.map(esc).join("<br>"):'<span class="faint">nothing you need</span>'}</td></tr>`; };
-  const th=["Alliance Championship Shop","Swordland Shop","Tidal Shop"].map(find).filter(Boolean).reduce((t,s)=>{ const it=s.items.find(i=>/Gilded Threads/.test(i[0])); return t+(it?num(it[2])/(/14/.test(s.when)?2:1):0); },0);
-  return `<details class="fold mt" ${state.ui.planOpen!==false?"open":""} id="sgPlan"><summary><span class="grow">This week <small class="faint" style="font-weight:500">every shop refresh</small></span></summary><div class="fbody">
-    <table class="gtable"><thead><tr><th>When</th><th>Shops</th><th>Buy for your blockers</th></tr></thead><tbody>
-    ${row("Weekly",["Arena Shop","Trial Shop","Alliance Championship Shop","KvK Shop (Kingdom of Power)","Alliance Shop — weekly"])}
-    ${row("Every 2 weeks",["Swordland Shop","Tidal Shop"])}
-    ${row("Daily",["Alliance Shop — daily"])}</tbody></table>
-    <p class="muted" style="margin:8px 0 0">Guaranteed Threads: about <b>${fmt(Math.round(th))}</b> a week if you clear the limits (AC 100 weekly, Swordland 50 + Tidal 25 every 2 weeks).</p></div></details>`; }
-
 /* ---------- Event battle card (full screen while the event runs) ---------- */
 const BATTLE=[[/eternity'?s reach/i,{mins:30,every:60,target:20,chips:["R","R","L","L","R"],
   tips:["Skill order (rows 1–5)","Skip the Peak at 23 min","Save Skill 5 for Vein Outbursts","Recall the nearest common-vein march when the ring hits 0"]}]];
@@ -153,4 +139,36 @@ function renderWeekly(){
       <tr><td>Spent this month</td><td class="mono">${mo?`A$${num(mo.spent).toFixed(2)}`:"—"}</td></tr></tbody></table>
     ${done.length?`<p style="margin:10px 0 4px"><b>Done this week</b></p><ul class="wdone">${done.slice(-8).reverse().map(x=>`<li>${esc(x.t)} <span class="faint">${esc(fd(x.d))}</span></li>`).join("")}</ul>`:'<p class="faint" style="margin:10px 0 0">Upgrades you tick off with ✓ Done show up here.</p>'}
     ${up.length?`<p style="margin:10px 0 4px"><b>Coming next week</b></p><ul class="wdone">${up.map(x=>`<li>${esc(x.e.n)} <span class="faint">${whenTxt(x.o)}</span></li>`).join("")}</ul>`:""}</div>`;
+}
+
+/* ---------- report card at the top of Hero Gear, Governor and Charms (same look as the weekly report) ---------- */
+function weekDelta(key){ const H=(state.history||[]).slice().sort((a,b)=>a.d.localeCompare(b.d)); if(H.length<2) return null;
+  const last=H[H.length-1], wk=new Date(new Date(last.d)-7*864e5).toISOString().slice(0,10), first=H.filter(x=>x.d<=wk).pop()||H[0];
+  return {d:num(last.v[key])-num(first.v[key]),spark:H.filter(x=>x.d>=first.d).map(x=>num(x.v[key])),from:first.d}; }
+function reportCard(id,{title,pkey,rows,doneRe}){
+  const box=$("#"+id); if(!box) return;
+  const w=pkey?weekDelta(pkey):null, sp=w?w.spark:[], lo=Math.min(...sp), hi=Math.max(...sp);
+  const done=(state.doneLog||[]).filter(x=>w&&x.d>w.from&&doneRe&&doneRe.test(x.t));
+  const sgn=v=>v>0?`<span class="ok">+${fmtBig(v)}</span>`:v<0?`<span class="bad">−${fmtBig(-v)}</span>`:'<span class="faint">no change</span>';
+  box.innerHTML=`<div class="rowb"><b style="font-size:16px">${esc(title)}</b>${w?`<span>${sgn(w.d)} power <span class="faint">this week</span></span>`:""}</div>`+
+    (sp.length>1&&hi>lo?`<div class="wspark">${sp.map(v=>`<i style="height:${hi>lo?20+80*(v-lo)/(hi-lo):60}%"></i>`).join("")}</div>`:"")+
+    `<div class="rcrows">${rows.filter(Boolean).map(([a,b])=>`<div class="rcrow"><span>${a}</span><b>${b}</b></div>`).join("")}</div>`+
+    (done.length?`<p style="margin:10px 0 4px"><b>Done this week</b></p><ul class="wdone">${done.slice(-5).reverse().map(x=>`<li>${esc(x.t)} <span class="faint">${esc(fd(x.d))}</span></li>`).join("")}</ul>`:""); }
+const needRow=(N,k,l)=>N[k]?[l,`${fmt(N[k].have)} / ${fmt(N[k].need)} ${N[k].short?`<span class="bad">${fmt(N[k].short)} short</span>`:'<span class="ok">✓</span>'}`]:null;
+function renderReports(){
+  const N=blockerNeeds();
+  const hp=hgPlanLeft()[0], pr=hp?null:hgPriority(state.heroGear.rows||[])[0];
+  reportCard("hgReport",{title:"Hero Gear",pkey:"p:Hero Gear",doneRe:/helm|gloves|chest|boots|imbue|mastery/i,rows:[
+    ["Next up",hp?`${esc(hp.type)} ${esc(hp.slot)} — ${esc(hgPlanWhat(hp))}`:pr?`${esc(pr.type)} ${esc(slotName(pr.slot))}`:"All done ✓"],
+    needRow(N,"mg","Mythic Gear"),needRow(N,"mith","Mithril"),needRow(N,"fh","Hammers")]});
+  const gv=govNextStep();
+  reportCard("govReport",{title:"Governor Gear",pkey:"p:Governor Gear",doneRe:/(gold|purple|red|blue|green) (t\d )?\d★/i,rows:[
+    ["Next up",gv?`${esc(gv.p.name)} → ${esc((GOV_TIERS[gv.to]||[""])[0])}`:"Plan done ✓"],
+    needRow(N,"threads","Threads"),
+    gv?["Satin",`${fmtK(num(state.govGear.have.satin))} / ${fmtK(gv.need.s)} ${num(state.govGear.have.satin)>=gv.need.s?'<span class="ok">✓</span>':'<span class="bad">short</span>'}`]:null]});
+  const cn=charmNextList(1)[0];
+  reportCard("charmReport",{title:"Charms",pkey:"p:Governor Charm",doneRe:/charm/i,rows:[
+    ["Next up",cn?`${esc(cn.type)} charm Lv ${num(cn.lvl)} → ${num(cn.lvl)+1}`:"All at target ✓"],
+    needRow(N,"designs","Designs (next 3)"),
+    ["Guides",fmt(num(state.charms.have.guides))]]});
 }
