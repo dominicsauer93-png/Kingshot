@@ -813,8 +813,8 @@
     {
       "n": "Triton",
       "need": 700,
-      "have": 100,
-      "pos": 24,
+      "have": 0,
+      "pos": 25,
       "tgt": 24,
       "rally": false
     },
@@ -1552,7 +1552,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1588,10 +1588,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Governor",
-      "Base": "T11",
-      "Plan": "Shops & Packs",
-      "Heroes": "Mystic Trials"
+      "Gear": "Widgets",
+      "Base": "Buildings",
+      "Plan": "Shop guide",
+      "Heroes": "Roster"
     },
     "t11Open": {
       "nodes": false,
@@ -1618,11 +1618,13 @@
     "roleOpen": true,
     "heroAll": false,
     "evOpen": true,
-    "shSpare": false,
+    "shSpare": true,
     "petMaxOpen": true,
     "weekOpen": false,
     "todayAll": true,
-    "tierOpen": false
+    "tierOpen": false,
+    "planOpen": true,
+    "sgOpen": 3
   },
   "troopCounts": {
     "inf": {
@@ -2676,26 +2678,6 @@
       }
     },
     {
-      "d": "2026-10-26",
-      "v": {
-        "power": 335924750,
-        "leth": 73,
-        "hp": 58.8,
-        "attWR": 38.08,
-        "defWR": 91.68,
-        "p:Building": 9287731,
-        "p:Troop": 183568900,
-        "p:Hero": 32483632,
-        "p:Hero Gear": 13168561,
-        "p:Governor Gear": 8788320,
-        "p:Governor Charm": 12228000,
-        "p:Tech": 27923445,
-        "p:Pet": 22701120,
-        "p:Master": 15392000,
-        "stars": 469
-      }
-    },
-    {
       "d": "2026-10-24",
       "v": {
         "power": 335924750,
@@ -2752,7 +2734,7 @@
         "p:Tech": 27923445,
         "p:Pet": 22701120,
         "p:Master": 15392000,
-        "stars": 470
+        "stars": 471
       }
     }
   ],
@@ -3265,6 +3247,18 @@
     "done": []
   },
   "packBudget": 100,
+  "packMonths": {
+    "2026-10": {
+      "spent": 54.96,
+      "closed": true,
+      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99"
+    },
+    "2026-11": {
+      "spent": 0,
+      "closed": false,
+      "note": "Plan: Path of Honor 14.99 · Charm card 14.99 · Hero Gear card 14.99 · Chameleos 7.99 = 52.96 · ~A$47 spare"
+    }
+  },
   "income": {
     "mg": {
       "since": "2026-10-26",
@@ -3307,22 +3301,16 @@
       "seen": 22
     }
   },
-  "packMonths": {
-    "2026-10": {
-      "spent": 54.96,
-      "closed": true,
-      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99"
-    },
-    "2026-11": {
-      "spent": 0,
-      "closed": false,
-      "note": "Plan: Path of Honor 14.99 · Charm card 14.99 · Hero Gear card 14.99 · Chameleos 7.99 = 52.96 · ~A$47 spare"
-    }
-  },
   "battle": {
     "key": "Eternity's Reach|2026-10-26",
     "cnt": 29,
     "start": 1792982853076,
     "last": 1792982895207
-  }
+  },
+  "doneLog": [
+    {
+      "d": "2026-10-26",
+      "t": "Triton: 4★ T1 (−100 shards)"
+    }
+  ]
 }
