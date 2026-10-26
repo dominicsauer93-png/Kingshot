@@ -785,7 +785,7 @@
     {
       "n": "Triton",
       "need": 700,
-      "have": 0,
+      "have": 100,
       "pos": 24,
       "tgt": 24,
       "rally": false
@@ -1524,7 +1524,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1563,7 +1563,7 @@
       "Gear": "Pets",
       "Base": "Buildings",
       "Plan": "Shop guide",
-      "Heroes": "Overview"
+      "Heroes": "Shards"
     },
     "t11Open": {
       "nodes": false,
@@ -2704,7 +2704,7 @@
         "p:Tech": 27923445,
         "p:Pet": 22701120,
         "p:Master": 15392000,
-        "stars": 469
+        "stars": 470
       }
     }
   ],
