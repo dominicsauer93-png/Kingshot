@@ -690,7 +690,7 @@
     {
       "n": "Charles",
       "need": 463,
-      "have": 5,
+      "have": 29,
       "pos": 18,
       "tgt": 24,
       "rally": false
@@ -698,7 +698,7 @@
     {
       "n": "Hilde",
       "need": 740,
-      "have": 6,
+      "have": 7,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -724,7 +724,7 @@
     {
       "n": "Jaeger",
       "need": 700,
-      "have": 35,
+      "have": 36,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -733,7 +733,7 @@
     {
       "n": "Eric",
       "need": 700,
-      "have": 24,
+      "have": 26,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -742,7 +742,7 @@
     {
       "n": "Rosa",
       "need": 500,
-      "have": 36,
+      "have": 37,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -775,7 +775,7 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 27,
+      "have": 47,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -783,7 +783,7 @@
     {
       "n": "Triton",
       "need": 700,
-      "have": 0,
+      "have": 9,
       "pos": 23,
       "tgt": 24,
       "rally": false
@@ -807,7 +807,7 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 0,
+      "have": 12,
       "pos": 27,
       "tgt": 27,
       "rally": false
@@ -831,7 +831,7 @@
     {
       "n": "Vivian",
       "need": 0,
-      "have": 68,
+      "have": 69,
       "pos": 24,
       "tgt": 24,
       "rally": false
@@ -920,7 +920,7 @@
           "t": "g"
         },
         {
-          "l": 4,
+          "l": 6,
           "t": "g"
         },
         {
@@ -970,7 +970,7 @@
           "t": "g"
         },
         {
-          "l": 4,
+          "l": 5,
           "t": "c"
         },
         {
@@ -1016,7 +1016,7 @@
           "t": "c"
         },
         {
-          "l": 0,
+          "l": 1,
           "t": "g"
         },
         {
@@ -1493,7 +1493,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1532,7 +1532,7 @@
       "Gear": "Governor",
       "Base": "T11",
       "Plan": "Shops & Packs",
-      "Heroes": "Shards"
+      "Heroes": "Mystic Trials"
     },
     "t11Open": {
       "nodes": false,
@@ -1559,7 +1559,7 @@
     "roleOpen": true,
     "heroAll": false,
     "evOpen": true,
-    "shSpare": false,
+    "shSpare": true,
     "petMaxOpen": true,
     "weekOpen": false,
     "todayAll": true,
@@ -3179,7 +3179,7 @@
       }
     ]
   },
-  "shardGeneral": 81,
+  "shardGeneral": 108,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
