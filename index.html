@@ -81,6 +81,7 @@
           <button class="btn mt" id="doMore">Show all</button>
         </section>
         <div>
+          <section class="sec" data-key="Bag check"><div class="card" id="bagCheck"></div><div class="card mt" id="timelines"></div></section>
           <section class="sec" data-key="Upcoming Events">
             <h2>Coming up <button class="btn sm" id="evAdd">+ Event</button></h2>
             <div class="card"><div class="cal" id="evCal"></div><div class="evday" id="evDay" hidden></div><div class="stack mt" id="evUpcoming"></div>
@@ -94,6 +95,10 @@
     <div class="page" data-tab="Heroes" hidden>
       <div class="phead"><div><h1>Heroes</h1><p>Your heroes, their shards, and how strong you are as a rally leader.</p></div></div>
       <div class="subnav" role="tablist" aria-label="Heroes sections"></div>
+      <section class="sec" data-sub="Overview" data-key="This week">
+        <h2>This week <small>built from your history</small></h2>
+        <div id="weekReport"></div>
+      </section>
       <section class="sec" data-sub="Overview" data-key="Combat Quality">
         <h2>Combat quality <small>tap to update</small></h2>
         <div class="tiles" id="combatTiles"></div>
@@ -357,6 +362,7 @@
 <script src="js/base.js"></script>
 <script src="js/data.js"></script>
 <script src="js/shops.js"></script>
+<script src="js/extras.js"></script>
 <script src="js/boot.js"></script>
 </body>
 </html>

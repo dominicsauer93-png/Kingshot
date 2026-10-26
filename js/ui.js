@@ -21,6 +21,7 @@ function afterEdit(){ scheduleSave(); queueRender(); if(sheetRefresh) sheetRefre
 /* ---------- toast + undo ---------- */
 let toastTimer=null;
 function toast(msg,undoSnap){
+  if(undoSnap) try{ logDone(msg); }catch(e){} // an undoable action = something you did; it feeds the weekly report
   const t=$("#toast"); $("#toastMsg").textContent=msg;
   const u=$("#toastUndo"); u.textContent=undoSnap?"Undo":"";
   u.onclick=undoSnap?()=>{ state=JSON.parse(undoSnap); renderAll(); scheduleSave(); t.classList.remove("show"); }:null;

@@ -113,16 +113,18 @@ const SHOP_MISSING=[];
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
   const mo=state.packMonths||{}, cur=gameToday().slice(0,7), last=Object.keys(mo).sort().pop();
+  const N=blockerNeeds();
   const fdS=s=>s?new Date(s+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"}):"";
   host.innerHTML=`<div class="info"><b>How I pick</b><ul class="sgrules">${SHOP_RULES.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`+
-      (last&&mo[last].closed?`<span class="faint">${new Date(last+"-01T00:00:00").toLocaleDateString(undefined,{month:"long"})} closed — A$${num(mo[last].spent).toFixed(2)} spent${mo[last].note?` (${esc(mo[last].note)})`:""}. ${last<cur?"New month — budget is fresh.":"Budget resets on the 1st."}</span>`:"")+`</div>`+
+      (last&&mo[last].closed?`<span class="faint">${new Date(last+"-01T00:00:00").toLocaleDateString(undefined,{month:"long"})} closed — A$${num(mo[last].spent).toFixed(2)} spent${mo[last].note?` (${esc(mo[last].note)})`:""}. ${last<cur?"New month — budget is fresh.":"Budget resets on the 1st."}</span>`:"")+`</div>`+plannerH()+
     SHOP_DB.map((s,i)=>`<details class="fold mt sgshop"${state.ui.sgOpen===i?" open":""} data-i="${i}"><summary><span class="grow">${esc(s.n)} <small class="faint" style="font-weight:500">${esc(s.cur)} · ${esc(s.when)}</small></span><small class="faint">seen ${fdS(s.seen)}</small></summary><div class="fbody">`+
-      (s.best.length?`<div class="sgbest"><b>Buy</b><ol>${s.best.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:"")+
+      liveBuysH(s,N)+(s.best.length?`<div class="sgbest"><b>Usually buy</b><ol>${s.best.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:"")+
       (s.skip.length?`<div class="sgskip"><b>Skip</b><ul>${s.skip.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"")+
       (s.items.length?`<div class="card mt" style="padding:0;overflow:hidden"><table class="gtable"><thead><tr><th>Item</th><th>Cost</th><th>${typeof s.items[0][2]==="number"?"Limit":"%"}</th></tr></thead><tbody>${s.items.map(([a,b,c])=>`<tr><td>${esc(a)}</td><td class="mono">${typeof b==="number"?fmt(b):esc(b)}</td><td class="mono">${typeof c==="number"?fmt(c):esc(c)}</td></tr>`).join("")}</tbody></table></div>`:"")+
       (s.note?`<p class="muted" style="margin:8px 0 0">${esc(s.note)}</p>`:"")+`</div></details>`).join("")+
     `<details class="fold mt"><summary><span class="grow">Hero seasons <small class="faint" style="font-weight:500">for Hall of Heroes chests</small></span></summary><div class="fbody"><table class="gtable"><tbody>${Object.entries(HERO_SEASON).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
     `<details class="fold mt"><summary><span class="grow">What the icons are</span></summary><div class="fbody"><table class="gtable"><tbody>${ITEM_KEY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
     `<div class="info mt">${SHOP_MISSING.length?`<b>Still to add:</b> ${SHOP_MISSING.map(esc).join(" · ")}<br>`:"<b>All shops added.</b> New event shops or packs: "}<span class="faint">Upload screenshots to the <b>shops/inbox</b> folder in the Kingshot repo (GitHub app → Add file → Upload files), then tell Claude “uploaded”.</span></div>`;
+  const sp=$("#sgPlan"); if(sp) sp.ontoggle=()=>{ state.ui.planOpen=sp.open; scheduleSave(); };
   host.querySelectorAll("details.sgshop").forEach(d=>d.ontoggle=()=>{ if(d.open) state.ui.sgOpen=+d.dataset.i; else if(state.ui.sgOpen===+d.dataset.i) delete state.ui.sgOpen; scheduleSave(); });
 }

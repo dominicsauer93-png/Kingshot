@@ -19,7 +19,7 @@ function renderRally(){
       <span class="bar ${cls}"><i style="width:${Math.min(100,ratio*100).toFixed(1)}%"></i>${p.b>0?`<span class="bench" style="left:${Math.min(99,p.b/Math.max(p.v,p.b)*100).toFixed(1)}%"></span>`:""}</span>
       <span class="pv">${fmtBig(p.v)} / ${fmtBig(p.b)}</span><span class="grade g-${esc(p.g||"")}">${esc(p.g)||"–"}</span></span></button>`; }).join("");
   bindAll(pl,".lrow",b=>openPillarSheet(state.pillars[+b.dataset.i]));
-  renderProgress(); renderHeroCards(); renderHeroRoles(); renderShards(); renderMasters(); renderMystic();
+  renderWeekly(); renderProgress(); renderHeroCards(); renderHeroRoles(); renderShards(); renderMasters(); renderMystic();
 }
 function openCombatSheet(){
   const c=state.combat;

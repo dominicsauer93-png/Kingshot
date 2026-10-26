@@ -319,6 +319,7 @@ function setSaveUI(cls,txt){ ["saveDot","saveDotM"].forEach(id=>{ const d=docume
 function scheduleSave(){
   try{ takeSnapshot(); }catch(e){}
   try{ trackHammers(); }catch(e){}
+  try{ trackIncome(); }catch(e){}
   setSaveUI("busy","Saving…");
   clearTimeout(saveTimer);
   saveTimer=setTimeout(async()=>{ const ok=await persistLocal(); setSaveUI(ok?"":"err",ok?"Saved":"Session only"); scheduleSyncPush(); },400);
