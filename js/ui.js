@@ -112,10 +112,10 @@ function infoBox(){ const d=document.createElement("div"); d.className="info"; r
    THEME
    ===================================================================== */
 const THEME_KEY="kingshot-theme";
-const getTheme=()=>{ const t=lsGet(THEME_KEY); return t==="light"||t==="dark"?t:"auto"; };
+const getTheme=()=>{ const t=lsGet(THEME_KEY); return t==="light"||t==="auto"?t:"dark"; }; // dark is the default
 function applyTheme(t){
   if(t==="light"||t==="dark"){ document.documentElement.setAttribute("data-theme",t); lsSet(THEME_KEY,t); }
-  else { document.documentElement.removeAttribute("data-theme"); lsDel(THEME_KEY); }
+  else { document.documentElement.removeAttribute("data-theme"); lsSet(THEME_KEY,"auto"); }
   const icon=t==="light"?"#i-sun":t==="dark"?"#i-moon":"#i-auto";
   $$(".themebtn use").forEach(u=>u.setAttribute("href",icon));
   $$(".themebtn").forEach(b=>b.setAttribute("aria-label",`Theme: ${t} — tap to change`));

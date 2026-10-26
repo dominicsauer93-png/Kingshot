@@ -15,7 +15,7 @@
 <meta name="apple-mobile-web-app-title" content="Kingshot">
 <script>
   // apply the saved theme before first paint (no flash)
-  (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t==="light"||t==="dark") document.documentElement.setAttribute("data-theme",t); }catch(e){} })();
+  (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t!=="light"&&t!=="auto") t="dark"; if(t!=="auto") document.documentElement.setAttribute("data-theme",t); }catch(e){} })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -159,6 +159,7 @@
       <div class="subnav" role="tablist" aria-label="Gear sections"></div>
 
       <section class="sec" data-sub="Hero Gear" data-key="Hero Gear">
+        <div class="card rcard" id="hgReport"></div>
         <div class="tiles t3 hgt" id="hgMats"></div>
         <div id="hgBody" class="mt"></div>
         <button class="add" id="addHg">+ Add gear piece</button>
@@ -180,6 +181,7 @@
       </section>
 
       <section class="sec" data-sub="Charms" data-key="Charms">
+        <div class="card rcard" id="charmReport"></div>
         <div class="tiles t2" id="charmMats"></div>
         <div class="info hgsum mt" id="charmNext"></div>
         <div class="stack mt" id="charmBody"></div>
@@ -204,6 +206,7 @@
 
 
       <section class="sec" data-sub="Governor" data-key="Governor Gear">
+        <div class="card rcard" id="govReport"></div>
         <div class="info" id="govPlan"></div>
         <div class="tiles mt" id="govTiles"></div>
         <div class="grid mt" style="--min:170px" id="govBody"></div>
@@ -269,7 +272,7 @@
         <p class="faint mt" style="font-size:13.5px">Tick the packs you own or buy. Ticking a card starts its 30-day (or 7-day) timer from today — change the date in ✎ if you bought it earlier. Home warns you 3 days before a card ends.</p>
       </section>
       <section class="sec" data-sub="Shop guide" data-key="Shop guide">
-        <h2>Shop guide <small>what to buy in every shop and pack</small></h2>
+        <h2>Shop guide</h2>
         <div id="shopGuide"></div>
       </section>
       <section class="sec" data-sub="Reminders" data-key="Reminders">

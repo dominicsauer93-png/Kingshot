@@ -2,7 +2,7 @@
 /* =====================================================================
    GEAR
    ===================================================================== */
-function renderGear(){ renderHeroGear(); renderWidgets(); renderCharms(); renderPets(); renderGov(); }
+function renderGear(){ renderReports(); renderHeroGear(); renderWidgets(); renderCharms(); renderPets(); renderGov(); }
 
 /* ---------- hero gear ---------- */
 function hgState(r){
