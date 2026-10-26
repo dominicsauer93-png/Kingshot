@@ -1552,7 +1552,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1588,10 +1588,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Widgets",
-      "Base": "Buildings",
-      "Plan": "Shop guide",
-      "Heroes": "Overview"
+      "Gear": "Governor",
+      "Base": "T11",
+      "Plan": "Shops & Packs",
+      "Heroes": "Mystic Trials"
     },
     "t11Open": {
       "nodes": false,
@@ -1618,13 +1618,11 @@
     "roleOpen": true,
     "heroAll": false,
     "evOpen": true,
-    "shSpare": true,
+    "shSpare": false,
     "petMaxOpen": true,
     "weekOpen": false,
     "todayAll": true,
-    "tierOpen": false,
-    "planOpen": true,
-    "sgOpen": 3
+    "tierOpen": false
   },
   "troopCounts": {
     "inf": {
@@ -2678,6 +2676,26 @@
       }
     },
     {
+      "d": "2026-10-26",
+      "v": {
+        "power": 335924750,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 469
+      }
+    },
+    {
       "d": "2026-10-24",
       "v": {
         "power": 335924750,
@@ -3247,6 +3265,48 @@
     "done": []
   },
   "packBudget": 100,
+  "income": {
+    "mg": {
+      "since": "2026-10-26",
+      "got": {},
+      "seen": 0
+    },
+    "mith": {
+      "since": "2026-10-26",
+      "got": {
+        "2026-10": 2
+      },
+      "seen": 4
+    },
+    "threads": {
+      "since": "2026-10-26",
+      "got": {
+        "2026-10": 130
+      },
+      "seen": 155
+    },
+    "designs": {
+      "since": "2026-10-26",
+      "got": {
+        "2026-10": 318
+      },
+      "seen": 318
+    },
+    "fh": {
+      "since": "2026-10-26",
+      "got": {
+        "2026-10": 44
+      },
+      "seen": 71
+    },
+    "gen": {
+      "since": "2026-10-26",
+      "got": {
+        "2026-10": 4
+      },
+      "seen": 22
+    }
+  },
   "packMonths": {
     "2026-10": {
       "spent": 54.96,
@@ -3257,40 +3317,6 @@
       "spent": 0,
       "closed": false,
       "note": "Plan: Path of Honor 14.99 · Charm card 14.99 · Hero Gear card 14.99 · Chameleos 7.99 = 52.96 · ~A$47 spare"
-    }
-  },
-  "income": {
-    "mg": {
-      "since": "2026-10-26",
-      "got": {},
-      "seen": 0
-    },
-    "mith": {
-      "since": "2026-10-26",
-      "got": {},
-      "seen": 4
-    },
-    "threads": {
-      "since": "2026-10-26",
-      "got": {},
-      "seen": 155
-    },
-    "designs": {
-      "since": "2026-10-26",
-      "got": {},
-      "seen": 318
-    },
-    "fh": {
-      "since": "2026-10-26",
-      "got": {},
-      "seen": 71
-    },
-    "gen": {
-      "since": "2026-10-26",
-      "got": {
-        "2026-10": 4
-      },
-      "seen": 22
     }
   },
   "battle": {
