@@ -30,6 +30,10 @@ const SHOP_DB=[
    skip:["Ava shards (10) — Ava is already 4★","General shards (12) when a season chest has your hero cheaper"],
    items:[["Ava shard",10,370],["General Mythic shard",12,100],["S6 shard chest",9,500],["S6 widget chest",18,300],["S5 shard chest",8,500],["S5 widget chest",16,300],["S4 shard chest",7,500],["S4 widget chest",14,300],["S3 shard chest",6,500],["S3 widget chest",12,300],["S2 shard chest",5,500],["S2 widget chest",10,300],["S1 shard chest",5,550],["S1 widget chest",10,300],["Epic shard (purple)",3,550],["10K Enhancement XP",1,10]],
    note:"Each chest gives 1 shard or 1 widget of your choice from that season (see Seasons below)."},
+  {n:"Arena Shop",cur:"Arena coins",when:"Refreshes weekly",seen:"2026-10-26",
+   best:["Custom Mythic Hero Gear chest (12,000) — every week, your #1 blocker","Lucky Hero Gear chest × 2 (3,750) — chance of Mythic","General Mythic shards (2,500) → Ava with what's left"],
+   skip:["Mithril — 10,000 for 1 (only if Mithril becomes the blocker)","Forgehammers — 1,625–2,500 for 1","Skill books, pet items, Epic / Rare shards"],
+   items:[["Pet medallion (−35%)",1560,1],["Forgehammer (−35%)",1625,1],["Custom Mythic Hero Gear chest",12000,1],["Lucky Hero Gear chest",3750,2],["Forgehammer",2500,5],["Hero shard (featured hero)",2000,5],["General Mythic shard",2500,3],["Mithril",10000,3],["Growth manual",240,30],["Nutrient potion",1200,5],["Pet medallion",2400,2],["Advanced taming mark?",4800,1],["Epic general shard",500,5],["Rare general shard",250,10],["Mythic Conquest / Expedition book",1000,10],["Epic Conquest / Expedition book",500,10],["Rare Conquest / Expedition book",150,10],["5K Enhancement XP",150,200]]},
   {n:"Champagne Fair",cur:"Vouchers",when:"Event, 2 days",seen:"2026-10-26",
    best:["S7 widget chest × 10 — bought 26 Oct (Ava needs 6, Wee & Woo 15)","S6 widget chest × 10 → Yang (850 each, he needs 34 for widget Lv 10)","Charm Designs × 10 (350)","Charm Guides × 10 (350)","Forgehammer × 1 with what's left (500)"],
    skip:["Mithril — 20,000 for 1","Skill books, pet items, gold, resource chests"],
@@ -71,7 +75,7 @@ const SHOP_DB=[
   {n:"Lucky Chip Pack (Hero Roulette)",cur:"US$",when:"Hero Roulette",seen:"2026-10-20",
    best:[],skip:["All under 3,000% — use gems (1,500 per token, Spin 10 = 9 tokens)"],items:[["Common — 5 tokens","US$1.99","2,540%"],["Uncommon — 10","US$4.99","2,180%"],["Rare — 20","US$9.99","2,140%"],["Epic — 40","US$19.99","2,120%"]]}
 ];
-const SHOP_MISSING=["Arena Shop (Mythic Gear)","Trial Shop (Mithril, Truegold Dust)","Alliance Shop","Swordland Shop","Tidal Shop","Alliance Championship Shop","KvK / Kingdom of Power shop"];
+const SHOP_MISSING=["Trial Shop (Mithril, Truegold Dust)","Alliance Shop","Swordland Shop","Tidal Shop","Alliance Championship Shop","KvK / Kingdom of Power shop"];
 
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
