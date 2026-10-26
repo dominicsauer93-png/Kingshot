@@ -9,8 +9,8 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 242,
-    "target": 7224,
+    "current": 149,
+    "target": 7008,
     "gold": 541570
   },
   "nodes": [
@@ -202,7 +202,7 @@
     },
     {
       "name": "Truegold Plating (Defense)",
-      "cur": 7,
+      "cur": 8,
       "max": 12,
       "costs": [
         54,
@@ -1124,7 +1124,7 @@
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "107",
+      "v": "101",
       "log": [
         {
           "d": "2026-09-15",
@@ -1165,12 +1165,16 @@
         {
           "d": "2026-10-20",
           "v": 107
+        },
+        {
+          "d": "2026-10-26",
+          "v": 101
         }
       ]
     },
     {
       "k": "Forest of Life (Pets)",
-      "v": "58",
+      "v": "61",
       "log": [
         {
           "d": "2026-09-15",
@@ -1207,12 +1211,16 @@
         {
           "d": "2026-10-21",
           "v": 58
+        },
+        {
+          "d": "2026-10-26",
+          "v": 61
         }
       ]
     },
     {
       "k": "Crystal Cave (Charms)",
-      "v": "70",
+      "v": "59",
       "log": [
         {
           "d": "2026-09-15",
@@ -1249,12 +1257,16 @@
         {
           "d": "2026-10-16",
           "v": 70
+        },
+        {
+          "d": "2026-10-26",
+          "v": 59
         }
       ]
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "124",
+      "v": "119",
       "log": [
         {
           "d": "2026-09-15",
@@ -1291,12 +1303,16 @@
         {
           "d": "2026-10-19",
           "v": 124
+        },
+        {
+          "d": "2026-10-26",
+          "v": 119
         }
       ]
     },
     {
       "k": "Molten Fort (Gov Gear)",
-      "v": "165",
+      "v": "143",
       "log": [
         {
           "d": "2026-09-15",
@@ -1337,12 +1353,16 @@
         {
           "d": "2026-10-19",
           "v": 165
+        },
+        {
+          "d": "2026-10-26",
+          "v": 143
         }
       ]
     },
     {
       "k": "Radiant Spire (ALL stats — full power)",
-      "v": "92",
+      "v": "86",
       "log": [
         {
           "d": "2026-09-15",
@@ -1379,22 +1399,26 @@
         {
           "d": "2026-10-19",
           "v": 92
+        },
+        {
+          "d": "2026-10-26",
+          "v": 86
         }
       ]
     }
   ],
   "tg": {
-    "have": 156,
-    "need": 3996,
-    "ttgHave": 29,
-    "ttgNeed": 439
+    "have": 169,
+    "need": 3726,
+    "ttgHave": 8,
+    "ttgNeed": 414
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 25353,
-      "threads": 25,
-      "vision": 559
+      "satin": 40501,
+      "threads": 155,
+      "vision": 587
     },
     "pieces": [
       {
@@ -1497,7 +1521,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1533,10 +1557,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Governor",
-      "Base": "T11",
-      "Plan": "Shops & Packs",
-      "Heroes": "Mystic Trials"
+      "Gear": "Pets",
+      "Base": "Buildings",
+      "Plan": "Shop guide",
+      "Heroes": "Overview"
     },
     "t11Open": {
       "nodes": false,
@@ -1571,15 +1595,15 @@
   },
   "troopCounts": {
     "inf": {
-      "cur": 503450,
+      "cur": 451677,
       "tgt": 1500000
     },
     "arc": {
-      "cur": 814214,
+      "cur": 761097,
       "tgt": 1500000
     },
     "cav": {
-      "cur": 398298,
+      "cur": 401676,
       "tgt": 500000
     }
   },
@@ -1590,9 +1614,9 @@
   "heroGear": {
     "have": {
       "xp": 5340,
-      "fh": 27,
+      "fh": 71,
       "mg": 0,
-      "mith": 2
+      "mith": 4
     },
     "rows": [
       {
@@ -1750,9 +1774,9 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 27,
+    "fhSeen": 71,
     "fhGot": {
-      "2026-10": 1902
+      "2026-10": 1966
     },
     "plan": [
       {
@@ -1807,8 +1831,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 43,
-      "designs": 80
+      "guides": 565,
+      "designs": 318
     },
     "rows": [
       {
@@ -2766,7 +2790,7 @@
     },
     {
       "n": "Barracks",
-      "stepIdx": 2,
+      "stepIdx": 5,
       "note": "Infantry tanks",
       "d": false
     },
@@ -3090,9 +3114,9 @@
   "pets": {
     "have": {
       "food": 12950,
-      "manuals": 1385,
-      "potions": 77,
-      "tmCommon": 22,
+      "manuals": 1451,
+      "potions": 83,
+      "tmCommon": 42,
       "tmAdv": 0,
       "medals": 4
     },
