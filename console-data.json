@@ -1552,7 +1552,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Plan",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1623,7 +1623,8 @@
     "weekOpen": false,
     "todayAll": true,
     "tierOpen": false,
-    "planOpen": true
+    "planOpen": true,
+    "sgOpen": 11
   },
   "troopCounts": {
     "inf": {
