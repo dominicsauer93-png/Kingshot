@@ -1622,7 +1622,8 @@
     "petMaxOpen": true,
     "weekOpen": false,
     "todayAll": true,
-    "tierOpen": false
+    "tierOpen": false,
+    "planOpen": true
   },
   "troopCounts": {
     "inf": {
@@ -3255,6 +3256,40 @@
       "spent": 0,
       "closed": false,
       "note": "Plan: Path of Honor 14.99 · Charm card 14.99 · Hero Gear card 14.99 · Chameleos 7.99 = 52.96 · ~A$47 spare"
+    }
+  },
+  "income": {
+    "mg": {
+      "since": "2026-10-26",
+      "got": {},
+      "seen": 0
+    },
+    "mith": {
+      "since": "2026-10-26",
+      "got": {},
+      "seen": 4
+    },
+    "threads": {
+      "since": "2026-10-26",
+      "got": {},
+      "seen": 155
+    },
+    "designs": {
+      "since": "2026-10-26",
+      "got": {},
+      "seen": 318
+    },
+    "fh": {
+      "since": "2026-10-26",
+      "got": {},
+      "seen": 71
+    },
+    "gen": {
+      "since": "2026-10-26",
+      "got": {
+        "2026-10": 4
+      },
+      "seen": 22
     }
   }
 }
