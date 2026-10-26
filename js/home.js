@@ -54,9 +54,10 @@ function renderEventMode(){
   // how long is left: "end not confirmed" when the game hasn't shown the end date yet
   const leftTxt=(x,a)=>x.endOpen?"end not confirmed":a.len-a.day?`${a.len-a.day} more day${a.len-a.day>1?"s":""}`:"last day";
   box.innerHTML=`<summary class="eh"><span class="et">⚡ ${esc(e.n||"Event")} is on</span><span class="ed">${cur.a.len>1&&!e.endOpen?`day ${cur.a.day} of ${cur.a.len} · `:e.endOpen?`day ${cur.a.day} · `:""}${leftTxt(e,cur.a)}${live.length>1?` · +${live.length-1} more`:""}</span></summary>
-    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}`+
+    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${battleFor(e)?`<button class="btn primary mt" id="evBattle">⚔ Open battle card</button>`:""}${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}`+
     (live.length>1?`<div class="eall"><div class="eall-h">Also on now</div>${live.slice(1).map(({e:x,a},i)=>`<button class="erow" data-i="${i+1}"${i>=3?" hidden":""}><span class="en">${esc(x.n||"Event")}</span><span class="ew">${x.endOpen?`day ${a.day} · end ?`:a.len>1?`day ${a.day}/${a.len}`:"today"}</span><span class="esp">${esc(spendFor(x)||"tap to add what to spend")}</span></button>`).join("")}${live.length>4?`<button class="emore" id="evMore">+ ${live.length-4} more</button>`:""}</div>`:"");
   bindAll(box,".erow",b=>openEventSheet(live[+b.dataset.i].e));
+  on("evBattle",()=>openBattle(e));
   on("evMore",()=>{ $$("#eventMode .erow[hidden]").forEach(r=>r.hidden=false); $("#evMore").remove(); });
   const want=state.ui.evOpen!=null?state.ui.evOpen:innerWidth>640; box.open=want; // open on PC, one line on phones until tapped
   box.ontoggle=()=>{ if(box.open!==want){ state.ui.evOpen=box.open; scheduleSave(); } };
@@ -69,6 +70,7 @@ function renderHome(){
     (ymd(d)!==gameToday()?` · game day ${gd.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})} until ${rs.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})}`:"")+" · Kingdom day "+kingdomDay();
   paintGoals();
   renderEventMode();
+  renderBagCheck(); renderTimelines();
   // daily + weekly checklists reset here (they live in Plan → Checklists now, not on Home)
   const t=state.today; const today=fcToday();
   if(t.routineDate!==today){ t.routine.forEach(r=>r.d=false); t.routineDate=today; scheduleSave(); }
@@ -120,6 +122,7 @@ function openEventSheet(ev){
       const paintNote=()=>{ nv.innerHTML=noteHtml(ev.note)||'<span class="faint">No notes yet.</span>'; }; paintNote();
       const ed=document.createElement("details"); ed.className="fold"; ed.innerHTML="<summary>Edit note</summary>"; const eb=document.createElement("div"); eb.className="fbody"; ed.appendChild(eb);
       eb.appendChild(fld("Note",{type:"area",rows:8,value:ev.note,set:v=>{ ev.note=v; paintNote(); },hint:"Start a new line for each point."})); f.appendChild(ed);
+      if(battleFor(ev)){ const bb=document.createElement("button"); bb.className="btn primary"; bb.textContent="⚔ Open battle card"; bb.onclick=()=>{ closeSheet(); openBattle(ev); }; f.appendChild(bb); }
       f.appendChild(fld("Event name",{value:ev.n,set:v=>ev.n=v}));
       f.appendChild(frow(fld("Date (any occurrence)",{type:"date",value:ev.date,set:v=>ev.date=v}),fld("Repeats every (days)",{type:"num",value:ev.every||0,get:()=>ev.every,set:v=>ev.every=Math.max(0,Math.floor(v)),hint:"0 = one-off"})));
       f.appendChild(frow(fld("Lasts (days)",{type:"num",value:evLen(ev),get:()=>evLen(ev),set:v=>ev.len=Math.max(1,Math.floor(v)||1)}),fld("Time (optional)",{type:"time",value:ev.time,set:v=>ev.time=v})));
@@ -173,7 +176,7 @@ function govNextStep(){ const g=state.govGear; if(!g||!g.pieces) return null; co
   if(!P.cur||!P.step.length) return null;
   const p=P.step.slice().sort((a,b)=>num(a.cur)-num(b.cur))[0]; return {p,P,to:num(p.cur)+1,need:govRem(num(p.cur),num(p.cur)+1)}; }
 function bldNextStep(){ const bl=(state.buildings||[]).find(b=>!b.d&&BUILD_TIERS[b.n]&&(b.stepIdx||0)<BUILD_TIERS[b.n].steps.length); return bl?{bl,st:BUILD_TIERS[bl.n].steps[bl.stepIdx||0]}:null; }
-const STEP_ORDER=["fh","wid","shard","charm","gov","bld","pet","t11","troop","mast"]; // main heroes, then whole-army stats
+const STEP_ORDER=["fh","wid","shard","charm","gov","mast","bld","pet","t11","troop"]; // main heroes, then whole-army stats
 function nextSteps(){
   const out=[], have=(o,k)=>num(o&&o[k]);
   // hero gear — same #1 as the Hero Gear tab

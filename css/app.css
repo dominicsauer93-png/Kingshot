@@ -540,3 +540,27 @@
   .sgrules{margin:6px 0;padding-left:20px} .sgrules li{margin:2px 0}
   .sgbest ol,.sgskip ul{margin:4px 0 8px;padding-left:22px} .sgbest li,.sgskip li{margin:3px 0}
   .sgbest b{color:var(--green)} .sgskip b{color:var(--muted)}
+
+  /* bag check + timelines */
+  .bcgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .bccell{display:flex;flex-direction:column;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel-2)}
+  .bccell span{font-size:13px;color:var(--faint)} .bccell em{font-style:normal;font-size:12.5px}
+  .bccell input{border:0;background:transparent;font:700 19px var(--f-mono);padding:2px 0;width:100%;color:var(--text)}
+  .tlrow{padding:8px 0;border-top:1px solid var(--line-soft)} .tlrow:first-of-type{margin-top:8px} .tlrow .bar{margin:4px 0 2px}
+  /* live shop advice */
+  .sglive{padding:10px 12px;border-radius:10px;background:var(--acc-soft);border:1px solid color-mix(in srgb,var(--acc) 40%,var(--line));margin-bottom:10px}
+  .sglive ol{margin:6px 0;padding-left:22px} .sglive li{margin:4px 0}
+  /* battle card */
+  .battle{position:fixed;inset:0;z-index:200;background:var(--bg);overflow:auto;padding:16px}
+  .battle.due{animation:btflash 1s infinite} @keyframes btflash{50%{background:color-mix(in srgb,var(--red) 25%,var(--bg))}}
+  .bt-in{max-width:440px;margin:0 auto}
+  .bt-big{font:800 56px var(--f-mono);text-align:center;margin:8px 0 0}
+  .bt-ring{position:relative;width:190px;height:190px;margin:10px auto} .bt-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+  .bt-track{fill:none;stroke:var(--panel-2);stroke-width:12} .bt-arc{fill:none;stroke:var(--acc);stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .4s linear}
+  .battle.due .bt-arc{stroke:var(--red)}
+  .bt-mid{position:absolute;inset:0;display:grid;place-content:center;text-align:center} .bt-mid b{font:800 42px var(--f-mono)} .bt-mid span{color:var(--faint);font-size:13.5px}
+  .bt-chips{display:flex;gap:6px;margin-top:10px} .bt-chips span{padding:4px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel-2);font-weight:800}
+  .bt-tips{margin:8px 0 0;padding-left:20px;color:var(--muted)}
+  /* weekly report */
+  .wspark{display:flex;align-items:flex-end;gap:4px;height:48px;margin-top:8px} .wspark i{flex:1;background:var(--acc);border-radius:3px 3px 0 0;opacity:.85}
+  .wdone{margin:0;padding-left:20px} .wdone li{margin:3px 0}
