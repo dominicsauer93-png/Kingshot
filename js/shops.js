@@ -52,6 +52,11 @@ const SHOP_DB=[
    skip:["General shards (Trial is 500)","Hero shards unless it's a hero you use","Speedups, pet items, books"],
    items:[["Gov gear gold chest (featured)",1000,1],["Master emblem? (blue book, featured)",15,250],["Gilded Threads",100,100],["Satin",1,10000],["Hero shard (pirate hero)",2000,10],["Blue crystal (?)",1500,15],["Master emblem? (blue book)",15,1000],["Artisan's Vision",500,5],["Growth manual",150,30],["Pet medallion",1500,2],["1 h speedup",400,5],["Advanced taming mark?",3000,1],["Mythic Expedition book",500,10],["General Mythic shard",2500,2]],
    note:"Threads every week: AC 100 + Swordland 50 + Tidal 25 (every 2 weeks)."},
+  {n:"KvK Shop (Kingdom of Power)",cur:"KvK gold medals (+ silver for Exclusive items)",when:"Refreshes weekly",seen:"2026-10-26",
+   best:["Truegold (2 each, 10) — very cheap, buy all","Charm Designs / Guides (6 each)","Mythic Conquest + Expedition books (6 each, 50) only with spare medals"],
+   skip:["7-day decorations (city skin, frame) unless you like them","5 min speedups"],
+   items:[["Exclusive (silver): 7-day frame",30,1],["Exclusive (silver): Truegold",2,50],["Exclusive (silver): General shard",25,3],["7-day city skin",150,1],["5 min troop speedup",2,100],["7-day nameplate",30,1],["Truegold",2,10],["Artisan's Vision",6,5],["Charm Design",6,"sold out"],["Charm Guide",6,5],["Mythic Expedition book",6,50],["Mythic Conquest book",6,50],["1 h speedup",5,3]],
+   note:"Exclusive (silver) items need silver KvK medals — Truegold 50 at 2 each is the best deal in the shop."},
   {n:"Champagne Fair",cur:"Vouchers",when:"Event, 2 days",seen:"2026-10-26",
    best:["S7 widget chest × 10 — bought 26 Oct (Ava needs 6, Wee & Woo 15)","S6 widget chest × 10 → Yang (850 each, he needs 34 for widget Lv 10)","Charm Designs × 10 (350)","Charm Guides × 10 (350)","Forgehammer × 1 with what's left (500)"],
    skip:["Mithril — 20,000 for 1","Skill books, pet items, gold, resource chests"],
@@ -93,7 +98,7 @@ const SHOP_DB=[
   {n:"Lucky Chip Pack (Hero Roulette)",cur:"US$",when:"Hero Roulette",seen:"2026-10-20",
    best:[],skip:["All under 3,000% — use gems (1,500 per token, Spin 10 = 9 tokens)"],items:[["Common — 5 tokens","US$1.99","2,540%"],["Uncommon — 10","US$4.99","2,180%"],["Rare — 20","US$9.99","2,140%"],["Epic — 40","US$19.99","2,120%"]]}
 ];
-const SHOP_MISSING=["Alliance Shop","KvK / Kingdom of Power shop"];
+const SHOP_MISSING=["Alliance Shop"];
 
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
