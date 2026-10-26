@@ -1588,10 +1588,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Pets",
+      "Gear": "Widgets",
       "Base": "Buildings",
       "Plan": "Shop guide",
-      "Heroes": "Shards"
+      "Heroes": "Overview"
     },
     "t11Open": {
       "nodes": false,
