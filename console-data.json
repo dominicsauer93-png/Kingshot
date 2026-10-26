@@ -1439,7 +1439,7 @@
     }
   ],
   "tg": {
-    "have": 169,
+    "have": 228,
     "need": 3726,
     "ttgHave": 8,
     "ttgNeed": 414
@@ -1552,7 +1552,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Plan",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1589,7 +1589,7 @@
       "Rally": "Heroes",
       "Data": "Update all",
       "Gear": "Hero Gear",
-      "Base": "T11",
+      "Base": "Resources",
       "Plan": "Shop guide",
       "Heroes": "Mystic Trials"
     },
@@ -1623,8 +1623,7 @@
     "weekOpen": false,
     "todayAll": true,
     "tierOpen": false,
-    "planOpen": true,
-    "sgOpen": 3
+    "planOpen": true
   },
   "troopCounts": {
     "inf": {
