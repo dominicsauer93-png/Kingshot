@@ -132,7 +132,7 @@ function initTheme(){
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
 const TABS=["Home","Heroes","Gear","Base","Plan","Data"];
-const SUBS={Heroes:["Overview","Roster","Shards","Masters","Mystic Trials"],Gear:["Widgets","Hero Gear","Governor","Charms","Pets"],Base:["T11","Troops","Buildings","Resources"],Plan:["Checklists","Shops & Packs","Reminders"],Data:["Update all","Account","Sync"]};
+const SUBS={Heroes:["Overview","Roster","Shards","Masters","Mystic Trials"],Gear:["Widgets","Hero Gear","Governor","Charms","Pets"],Base:["T11","Troops","Buildings","Resources"],Plan:["Shop guide","Shops & Packs","Reminders","Checklists"],Data:["Update all","Account","Sync"]};
 const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Heroes",Supply:"Heroes",Rally:"Heroes",Events:"Home",Vault:"Data"};
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',

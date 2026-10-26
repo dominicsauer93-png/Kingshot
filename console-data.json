@@ -506,11 +506,11 @@
   },
   "packs": [
     {
-      "t": "Sails Aloft — Common ×5",
-      "aud": 39.95,
+      "t": "Sails Aloft — Common",
+      "aud": 7.99,
       "kind": "once",
-      "d": false,
-      "note": "Voyage speedups: 500 × 1 h = ~62 sails. From 19 explorations → ~126, past the 120 milestone (+180 Designs). 3,600%. Speed up one sail at a time, keep the rest sailing"
+      "d": true,
+      "note": "Voyage speedups: 100 × 1 h. Bought 1 (Oct)."
     },
     {
       "t": "Dragon Value Pack",
@@ -1803,8 +1803,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 3,
-      "designs": 0
+      "guides": 43,
+      "designs": 80
     },
     "rows": [
       {
@@ -2798,10 +2798,11 @@
     },
     {
       "n": "Armament Competition (Type 1)",
-      "date": "2026-09-28",
+      "date": "2026-10-26",
       "every": 0,
       "time": "",
-      "note": "12–13 Oct (UTC) confirmed. Small stuff only — save big speedups for KvK. Rewards: Mythic Gear, gems, keys."
+      "note": "12–13 Oct (UTC) confirmed. Small stuff only — save big speedups for KvK. Rewards: Mythic Gear, gems, keys.",
+      "len": 2
     },
     {
       "n": "Officer Project (Type 1)",
@@ -2809,12 +2810,13 @@
       "every": 14,
       "time": "",
       "note": "14–15 Oct (UTC). Spend Forgehammers on hero gear mastery + level widgets. Rewards: Mythic Gear, gems, keys.",
-      "len": 2
+      "len": 2,
+      "endOpen": true
     },
     {
       "n": "Armament Competition (Type 2)",
       "date": "2026-10-02",
-      "every": 7,
+      "every": 0,
       "time": "",
       "note": "Small stuff only; keep Mithril for red gear"
     },
@@ -2836,11 +2838,12 @@
     },
     {
       "n": "Alliance Championship",
-      "date": "2026-10-12",
+      "date": "2026-10-26",
       "every": 0,
-      "len": 7,
+      "len": 4,
       "time": "",
-      "note": "12–18 Oct (UTC). Shop: Master Emblems first. Repeat pattern not confirmed — update with the next date."
+      "note": "12–18 Oct (UTC). Shop: Master Emblems first. Repeat pattern not confirmed — update with the next date.",
+      "endOpen": true
     },
     {
       "n": "Merchant Empire",
@@ -2862,37 +2865,41 @@
     },
     {
       "n": "Swordland Showdown",
-      "date": "2026-10-12",
-      "every": 0,
-      "len": 7,
-      "time": "",
-      "note": "12–18 Oct (UTC). Swordland Shop: Artisan's Vision first. Rewards include Mythic Gear + a chest.",
-      "imp": "high"
-    },
-    {
-      "n": "Sanctuary Battle",
-      "date": "2026-10-13",
+      "date": "2026-10-26",
       "every": 0,
       "len": 4,
       "time": "",
-      "note": "13–16 Oct (UTC). Alliance fight for Sanctuaries. Rewards include Thrud shards + books."
+      "note": "12–18 Oct (UTC). Swordland Shop: Artisan's Vision first. Rewards include Mythic Gear + a chest.",
+      "imp": "high",
+      "endOpen": true
     },
     {
-      "n": "Champion's Way",
-      "date": "2026-10-14",
+      "n": "Sanctuary Battle",
+      "date": "2026-10-27",
       "every": 0,
       "len": 3,
       "time": "",
-      "note": "14–16 Oct (UTC). Defeat Elite Rebels for Thrud (Mythic). Rewards: Thrud shards, Forgehammers, chest."
+      "note": "13–16 Oct (UTC). Alliance fight for Sanctuaries. Rewards include Thrud shards + books.",
+      "endOpen": true
+    },
+    {
+      "n": "Champion's Way",
+      "date": "2026-10-28",
+      "every": 0,
+      "len": 2,
+      "time": "",
+      "note": "14–16 Oct (UTC). Defeat Elite Rebels for Thrud (Mythic). Rewards: Thrud shards, Forgehammers, chest.",
+      "endOpen": true
     },
     {
       "n": "Hero Rally",
-      "date": "2026-10-12",
+      "date": "2026-10-26",
       "every": 0,
-      "len": 14,
+      "len": 4,
       "time": "",
       "spend": "Nothing — just do Daily Missions",
-      "note": "12–25 Oct (UTC). Daily Missions give Path Points. Rewards: Charles shards, Truegold, gems, 3 h speedups."
+      "note": "12–25 Oct (UTC). Daily Missions give Path Points. Rewards: Charles shards, Truegold, gems, 3 h speedups.",
+      "endOpen": true
     },
     {
       "n": "Hero Roulette",
@@ -2910,7 +2917,7 @@
       "len": 6,
       "time": "",
       "imp": "high",
-      "note": "Usually ~5 days. 1 exploration per sail, 12 a day max with 4 sails — 60 is reachable, 120 isn't without big speedups. 4th sail was A$7.99."
+      "note": "Usually ~5 days. 1 exploration per sail, 12 a day max with 4 sails — 60 is reachable, 120 isn't without big speedups. 4th sail was A$7.99.\n26 Oct: reached 60 explorations (80 Designs) on natural sails + 1 Sails Aloft pack. 120 needs ~450 h of speedups."
     },
     {
       "n": "Dragon Essence",
@@ -2919,13 +2926,13 @@
       "len": 7,
       "time": "",
       "imp": "normal",
-      "note": "7 days. Packs: Value A$7.99 (300 essence, 1 a day, 3,630%) — the rest are 25 essence per $ and under 3,000%. Searing Path event also gives essence."
+      "note": "7 days. Packs: Value A$7.99 (300 essence, 1 a day, 3,630%) — the rest are 25 essence per $ and under 3,000%. Searing Path event also gives essence.\nIts store is Dragon's Caravan (ended 25 Oct 24:00). Spend all essence before it ends — leftovers are lost."
     },
     {
       "n": "Strongest Governor",
       "date": "2026-10-19",
       "every": 0,
-      "len": 6,
+      "len": 7,
       "time": "",
       "imp": "top",
       "note": "Each day has a theme — spend only on that day's theme. Dates: check and fix."
@@ -2957,6 +2964,122 @@
       "time": "",
       "note": "Watchtower Intel → Dim Goldstone exchange. Truegold items sell out first — redeem them on day 1. Leftover stones: 10K XP, then resources.",
       "spend": "Dim Goldstone — Truegold first"
+    },
+    {
+      "n": "Flamedragon Tyrant",
+      "every": 0,
+      "time": "",
+      "note": "Ends 27 Oct (calendar). Start date not confirmed.",
+      "date": "2026-10-23",
+      "len": 5
+    },
+    {
+      "n": "Dragon Banquet",
+      "every": 0,
+      "time": "",
+      "note": "25–27 Oct (calendar).",
+      "date": "2026-10-25",
+      "len": 3
+    },
+    {
+      "n": "Championship Prediction",
+      "every": 0,
+      "time": "",
+      "note": "Ends 27 Oct (calendar).",
+      "date": "2026-10-23",
+      "len": 5
+    },
+    {
+      "n": "Cesares Fury",
+      "every": 0,
+      "time": "",
+      "note": "24–26 Oct (calendar).",
+      "date": "2026-10-24",
+      "len": 3
+    },
+    {
+      "n": "Champagne Fair",
+      "every": 0,
+      "time": "",
+      "note": "26 Oct 00:00 – 27 Oct 24:00 (UTC, confirmed)\nTrade fair — exchange vouchers (26,436 on 26 Oct)\nFull shop + best buys: Plan → Shop guide\nBought: 10 S7 widget chests (10,000) — not opened yet",
+      "date": "2026-10-26",
+      "len": 2,
+      "imp": "top",
+      "spend": "16,436 vouchers left — S6 chests, hammers, Designs, Guides"
+    },
+    {
+      "n": "Tri-Alliance Clash",
+      "every": 0,
+      "time": "",
+      "note": "",
+      "date": "2026-10-26",
+      "len": 4,
+      "endOpen": true
+    },
+    {
+      "n": "Alliance Mobilization",
+      "every": 0,
+      "time": "",
+      "note": "",
+      "date": "2026-10-26",
+      "len": 4,
+      "endOpen": true
+    },
+    {
+      "n": "Fishing Tournament",
+      "every": 0,
+      "time": "",
+      "note": "",
+      "date": "2026-10-27",
+      "len": 3,
+      "endOpen": true
+    },
+    {
+      "n": "Exclusive Gear Fund",
+      "every": 0,
+      "time": "",
+      "note": "Ends ~8 Nov (13d 23h on 26 Oct)\nYou're on the paid track — level 6, 35/50 on 26 Oct\nLevels 7–14: 154K gems, 204 hammers, 228 Lucky Hero Gear chests (chance of Mythic), 504 gov gear chests (random Satin / Threads / Vision)",
+      "date": "2026-10-26",
+      "len": 14,
+      "imp": "normal",
+      "spend": "Fund points — reach level 14 (paid track bought)"
+    },
+    {
+      "n": "Advanced Truegold Research",
+      "every": 0,
+      "time": "",
+      "len": 1,
+      "date": "2026-10-26",
+      "imp": "normal",
+      "note": "Unlocked day 500 (kingshot timeline)."
+    },
+    {
+      "n": "Generation 8 Heroes",
+      "every": 0,
+      "time": "",
+      "len": 1,
+      "date": "2026-12-07",
+      "imp": "top",
+      "spend": "Hall of Heroes now sells S7 — Ava / Wee & Woo widgets with Marks",
+      "note": "Diego, Liz, Luna (S8). S7 (Ava, Wee & Woo, Charles) shards + widgets unlock in Hall of Heroes.\nSave Marks of Valor from mid-November."
+    },
+    {
+      "n": "Generation 9 Heroes (predicted)",
+      "every": 0,
+      "time": "",
+      "len": 1,
+      "date": "2027-03-01",
+      "imp": "normal",
+      "note": "PREDICTED — may change.\nGen 7 heroes enter the gold key loot pool — free Ava / Wee & Woo / Charles shards."
+    },
+    {
+      "n": "Truegold 10",
+      "every": 0,
+      "time": "",
+      "len": 1,
+      "date": "2027-04-12",
+      "imp": "normal",
+      "note": "Kingshot timeline (day ~668)."
     }
   ],
   "masterNotesV": 2,
@@ -3062,5 +3185,12 @@
     "key": "Wavebound Voyage|2026-10-20",
     "done": []
   },
-  "packBudget": 100
+  "packBudget": 100,
+  "packMonths": {
+    "2026-10": {
+      "spent": 54.96,
+      "closed": true,
+      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99"
+    }
+  }
 }

@@ -93,6 +93,7 @@ const SEARCH_KW={
   "Build Order — TG6→TG8":"buildings town center tg truegold barracks range stable",
   "Resources & Speedups":"bread wood stone iron gold speedups",
   "Shops & Packs":"packs budget card monthly weekly shop shops aud spend trial arena alliance vip swordland tidal free",
+  "Shop guide":"shop guide best buy hall of heroes marks champagne vouchers dragon caravan weekly benefits widgets fund seasons",
   "Checklists":"routine daily weekly execute farm",
   "Reminders":"reminders notifications calendar ics ntfy alerts phone",
   "Today":"routine daily checklist",

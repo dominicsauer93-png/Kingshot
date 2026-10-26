@@ -50,21 +50,23 @@ function renderEventMode(){
   const box=$("#eventMode"), live=liveEvents();
   const cur=live[0]; box.hidden=!cur; if(!cur) return;
   const e=cur.e, steps=(EVENT_STEPS.find(([r])=>r.test(e.n||""))||[0,[]])[1], start=new Date(gameToday()+"T00:00:00"); start.setDate(start.getDate()-(cur.a.day-1));
-  const key=(e.n||"")+"|"+ymd(start); if(!state.eventTicks||state.eventTicks.key!==key) state.eventTicks={key,done:[]};
-  const items=steps.map((t,i)=>({t,d:state.eventTicks.done.includes(i)})), left=cur.a.len-cur.a.day, have=eventHave(e);
-  const nd=items.filter(x=>x.d).length;
-  box.innerHTML=`<summary class="eh"><span class="et">⚡ ${esc(e.n||"Event")} is on</span><span class="ed">${cur.a.len>1?`day ${cur.a.day} of ${cur.a.len} · `:""}${left?`${left} more day${left>1?"s":""}`:"last day"}${live.length>1?` · +${live.length-1} more`:""}${items.length?` · <b id="evDone">${nd}/${items.length} done</b>`:""}</span></summary>
-    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}<ul class="checks" id="evSteps"></ul>`+
-    (live.length>1?`<div class="eall"><div class="eall-h">Also on now</div>${live.slice(1).map(({e:x,a},i)=>`<button class="erow" data-i="${i+1}"${i>=3?" hidden":""}><span class="en">${esc(x.n||"Event")}</span><span class="ew">${a.len>1?`day ${a.day}/${a.len}`:"today"}</span><span class="esp">${esc(spendFor(x)||"tap to add what to spend")}</span></button>`).join("")}${live.length>4?`<button class="emore" id="evMore">+ ${live.length-4} more</button>`:""}</div>`:"");
+  const left=cur.a.len-cur.a.day, have=eventHave(e);
+  // how long is left: "end not confirmed" when the game hasn't shown the end date yet
+  const leftTxt=(x,a)=>x.endOpen?"end not confirmed":a.len-a.day?`${a.len-a.day} more day${a.len-a.day>1?"s":""}`:"last day";
+  box.innerHTML=`<summary class="eh"><span class="et">⚡ ${esc(e.n||"Event")} is on</span><span class="ed">${cur.a.len>1&&!e.endOpen?`day ${cur.a.day} of ${cur.a.len} · `:e.endOpen?`day ${cur.a.day} · `:""}${leftTxt(e,cur.a)}${live.length>1?` · +${live.length-1} more`:""}</span></summary>
+    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}`+
+    (live.length>1?`<div class="eall"><div class="eall-h">Also on now</div>${live.slice(1).map(({e:x,a},i)=>`<button class="erow" data-i="${i+1}"${i>=3?" hidden":""}><span class="en">${esc(x.n||"Event")}</span><span class="ew">${x.endOpen?`day ${a.day} · end ?`:a.len>1?`day ${a.day}/${a.len}`:"today"}</span><span class="esp">${esc(spendFor(x)||"tap to add what to spend")}</span></button>`).join("")}${live.length>4?`<button class="emore" id="evMore">+ ${live.length-4} more</button>`:""}</div>`:"");
   bindAll(box,".erow",b=>openEventSheet(live[+b.dataset.i].e));
   on("evMore",()=>{ $$("#eventMode .erow[hidden]").forEach(r=>r.hidden=false); $("#evMore").remove(); });
-  buildChecks($("#evSteps"),items,{tickOnly:true,onTick:()=>{ state.eventTicks.done=items.map((x,i)=>x.d?i:-1).filter(i=>i>=0); const d=$("#evDone"); if(d) d.textContent=`${state.eventTicks.done.length}/${items.length} done`; scheduleSave(); }});
   const want=state.ui.evOpen!=null?state.ui.evOpen:innerWidth>640; box.open=want; // open on PC, one line on phones until tapped
   box.ontoggle=()=>{ if(box.open!==want){ state.ui.evOpen=box.open; scheduleSave(); } };
 }
 function renderHome(){
   const d=new Date();
-  $("#homeSub").textContent=d.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})+" · Kingdom day "+kingdomDay();
+  // events run on the game day (UTC); before the daily reset your local date is a day ahead — say so
+  const gd=new Date(gameToday()+"T00:00:00"), rs=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()+1));
+  $("#homeSub").textContent=d.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})+
+    (ymd(d)!==gameToday()?` · game day ${gd.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})} until ${rs.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})}`:"")+" · Kingdom day "+kingdomDay();
   paintGoals();
   renderEventMode();
   // daily + weekly checklists reset here (they live in Plan → Checklists now, not on Home)
@@ -121,6 +123,7 @@ function openEventSheet(ev){
       f.appendChild(fld("Event name",{value:ev.n,set:v=>ev.n=v}));
       f.appendChild(frow(fld("Date (any occurrence)",{type:"date",value:ev.date,set:v=>ev.date=v}),fld("Repeats every (days)",{type:"num",value:ev.every||0,get:()=>ev.every,set:v=>ev.every=Math.max(0,Math.floor(v)),hint:"0 = one-off"})));
       f.appendChild(frow(fld("Lasts (days)",{type:"num",value:evLen(ev),get:()=>evLen(ev),set:v=>ev.len=Math.max(1,Math.floor(v)||1)}),fld("Time (optional)",{type:"time",value:ev.time,set:v=>ev.time=v})));
+      f.appendChild(fld("End date not confirmed yet",{type:"check",value:!!ev.endOpen,set:v=>{ if(v) ev.endOpen=true; else delete ev.endOpen; },hint:"Tick when the game hasn't shown when it ends. Untick once you know, and set the days."}));
       f.appendChild(fld("What to spend",{value:spendFor(ev),ph:"e.g. Speedups + Gov Gear",set:v=>ev.spend=v,hint:"Shown on Home while the event is on."}));
       f.appendChild(fld("Importance",{type:"select",value:ev.imp||"",options:[["","Auto"],["top","Top — show first"],["high","High"],["normal","Normal"],["low","Low"]],set:v=>{ if(v) ev.imp=v; else delete ev.imp; },hint:"When several events are on, the most important one leads the Home card."}));
       const inf=infoBox(); f.appendChild(inf);
