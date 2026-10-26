@@ -685,7 +685,8 @@
       "have": 5,
       "pos": 17,
       "tgt": 24,
-      "rally": false
+      "rally": false,
+      "note": "own shards only (events, Bear)"
     },
     {
       "n": "Charles",
@@ -693,7 +694,8 @@
       "have": 29,
       "pos": 18,
       "tgt": 24,
-      "rally": false
+      "rally": false,
+      "note": "Hero Rally shop — spend Hero Rally points here"
     },
     {
       "n": "Hilde",
@@ -783,8 +785,8 @@
     {
       "n": "Triton",
       "need": 700,
-      "have": 9,
-      "pos": 23,
+      "have": 0,
+      "pos": 24,
       "tgt": 24,
       "rally": false
     },
@@ -801,8 +803,9 @@
       "need": 940,
       "have": 0,
       "pos": 24,
-      "tgt": 24,
-      "rally": true
+      "tgt": 30,
+      "rally": true,
+      "note": "General shards go here (toward 5★)"
     },
     {
       "n": "Long Fei",
@@ -3207,7 +3210,7 @@
       }
     ]
   },
-  "shardGeneral": 108,
+  "shardGeneral": 18,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
