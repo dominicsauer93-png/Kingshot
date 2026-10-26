@@ -64,6 +64,10 @@ const SHOP_DB=[
    items:[["Common — 100 × 1 h voyage speedups, 2,500 gems","A$7.99","3,600%"],["Uncommon — 180 × 1 h, 5,000 gems","A$14.99","3,300%"],["Rare — 320 × 1 h, 10K gems","A$30.99","3,100%"]]},
   {n:"Dragon Value Pack",cur:"A$7.99",when:"Dragon Essence event, 1 a day",seen:"2026-10-19",
    best:["300 essence + 2,500 gems — best essence per A$"],skip:["Bigger Dragon packs (~25 essence per A$)"],items:[["Value — 300 essence, 2,500 gems","A$7.99","3,630%"]]},
+  {n:"Path of Honor (Hero Rally paid track)",cur:"A$14.99",when:"Hero Rally (~14 days), 31 levels × 90 points",seen:"2026-10-26",
+   best:["Pick 40 General Mythic shards (not Charles) — they go to Ava","4,800 gems + 140 Truegold + 12 keys make it good value overall — November maybe"],
+   skip:["Not worth it just for Charles","Free track has no shards — resources, XP, Epic books"],
+   items:[["Choose: 40 General Mythic shards OR 40 Charles shards","A$14.99","3,343%"],["4,800 gems · 140 Truegold · 12 + 12 Mythic skill books · 16 × 3 h speedups · 12 keys · 30 × 10 stamina","",""]]},
   {n:"Lucky Chip Pack (Hero Roulette)",cur:"US$",when:"Hero Roulette",seen:"2026-10-20",
    best:[],skip:["All under 3,000% — use gems (1,500 per token, Spin 10 = 9 tokens)"],items:[["Common — 5 tokens","US$1.99","2,540%"],["Uncommon — 10","US$4.99","2,180%"],["Rare — 20","US$9.99","2,140%"],["Epic — 40","US$19.99","2,120%"]]}
 ];
