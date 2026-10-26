@@ -1552,7 +1552,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -3291,5 +3291,11 @@
       },
       "seen": 22
     }
+  },
+  "battle": {
+    "key": "Eternity's Reach|2026-10-26",
+    "cnt": 29,
+    "start": 1792982853076,
+    "last": 1792982895207
   }
 }
