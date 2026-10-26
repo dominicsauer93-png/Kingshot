@@ -1588,7 +1588,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Widgets",
+      "Gear": "Hero Gear",
       "Base": "Buildings",
       "Plan": "Shop guide",
       "Heroes": "Mystic Trials"
@@ -1787,7 +1787,7 @@
       {
         "type": "Archer",
         "slot": "Boots (Lethality)",
-        "lvC": 120,
+        "lvC": 127,
         "lvT": 179,
         "mC": 12,
         "mT": 15,
