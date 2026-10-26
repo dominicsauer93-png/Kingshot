@@ -1616,7 +1616,7 @@
   },
   "heroGear": {
     "have": {
-      "xp": 5340,
+      "xp": 5940,
       "fh": 71,
       "mg": 0,
       "mith": 4
@@ -1985,7 +1985,7 @@
       {
         "hero": "Yang",
         "lvl": 9,
-        "have": 16,
+        "have": 26,
         "rally": true
       },
       {
@@ -2015,7 +2015,7 @@
       {
         "hero": "Wee & Woo",
         "lvl": 2,
-        "have": 0,
+        "have": 15,
         "rally": true
       },
       {
@@ -3032,11 +3032,11 @@
       "n": "Champagne Fair",
       "every": 0,
       "time": "",
-      "note": "26 Oct 00:00 – 27 Oct 24:00 (UTC, confirmed)\nTrade fair — exchange vouchers (26,436 on 26 Oct)\nFull shop + best buys: Plan → Shop guide\nBought: 10 S7 widget chests (10,000) — not opened yet",
+      "note": "26 Oct 00:00 – 27 Oct 24:00 (UTC, confirmed)\nTrade fair — exchange vouchers (26,436 on 26 Oct)\nFull shop + best buys: Plan → Shop guide\nBought: 10 S7 widget chests (10,000) — not opened yet\n26 Oct: spent — 10 S7 widgets, 10 S6 widgets (Yang), 10 Designs, 4 General shards, 6 × 100 XP",
       "date": "2026-10-26",
       "len": 2,
       "imp": "top",
-      "spend": "16,436 vouchers — S6 widgets × 10 (Yang), Designs × 10, Guides × 10, 1 hammer"
+      "spend": "Done — all vouchers spent"
     },
     {
       "n": "Tri-Alliance Clash",
@@ -3210,7 +3210,7 @@
       }
     ]
   },
-  "shardGeneral": 18,
+  "shardGeneral": 22,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
