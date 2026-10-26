@@ -57,16 +57,16 @@ const SHOP_DB=[
    skip:["7-day decorations (city skin, frame) unless you like them","5 min speedups"],
    items:[["Exclusive (silver): 7-day frame",30,1],["Exclusive (silver): Truegold",2,50],["Exclusive (silver): General shard",25,3],["7-day city skin",150,1],["5 min troop speedup",2,100],["7-day nameplate",30,1],["Truegold",2,10],["Artisan's Vision",6,5],["Charm Design",6,"sold out"],["Charm Guide",6,5],["Mythic Expedition book",6,50],["Mythic Conquest book",6,50],["1 h speedup",5,3]],
    note:"Exclusive (silver) items need silver KvK medals — Truegold 50 at 2 each is the best deal in the shop."},
-  {n:"Daily Shop (Mystery Shop)",cur:"Silver coins (you had 882,902)",when:"Refreshes daily · Wilson gives −10%",seen:"2026-10-27",
+  {n:"Alliance Shop — daily",cur:"Alliance coins (you had 882,902)",when:"Refreshes daily · Wilson gives −10%",seen:"2026-10-27",
    best:["Epic hero shards when on sale (−10% or better) — check if it's a hero you use","10 × 100 V-tokens (330, −50%)","1 h speedups at −50% (13,000)"],
    skip:["Relocation / teleport items unless you're moving","Building skins","5 min speedups"],
    items:[["1 h learning speedup (−10%)",23400,1],["Building skin? (−50%)",20000,1],["10 × 100 V-tokens (−50%)",330,5],["Alliance teleport (−50%)",33330,1],["Random teleport (−50%)",16500,1],["5 min learning speedup (−10%)",1980,4],["1 h building speedup (−50%)",13000,1],["Epic hero shard (−10%)",29700,2],["Alliance teleport (−80%)",13330,1],["Advanced teleport (−50%)",65000,1],["Alliance teleport (−10%)",60300,1],["5 min troop speedup (−10%)",1980,4]],
-   note:"Items and discounts change every day — only buy at −50% or more, and only things you'd use. You have plenty of silver."},
-  {n:"Weekly Shop (silver)",cur:"Silver coins",when:"Refreshes weekly · Wilson gives −10%",seen:"2026-10-27",
+   note:"Items and discounts change every day — only buy at −50% or more, and only things you'd use. Never shields."},
+  {n:"Alliance Shop — weekly",cur:"Alliance coins",when:"Refreshes weekly · Wilson gives −10%",seen:"2026-10-27",
    best:["Pet food ×1,000 bags (13,330, −80%, 15) — cheap pet food","Pet chest (20,000, −80%, 10) — mixed pet items","Epic hero shards (6,600, −80%, 2) if you use the hero","10 × 100 V-tokens (330, −50%, 5)"],
    skip:["Building skin, name tag, troop reassignment unless needed","100,000 scroll unless you know what it is"],
    items:[["1,000 pet food (−80%)",13330,15],["Pet chest (−80%)",20000,10],["Scroll (?) (−80%)",100000,1],["Epic hero shard (−80%)",6600,2],["Building skin? (−50%)",6500,1],["Name change tag (−50%)",6500,1],["10 × 100 V-tokens (−50%)",330,5],["Troop transfer? (−80%)",5200,1]],
-   note:"With 880K+ silver, buy the −80% pet items every week."},
+   note:"With 880K+ alliance coins, buy the −80% pet items every week. Never shields."},
   {n:"Champagne Fair",cur:"Vouchers",when:"Event, 2 days",seen:"2026-10-26",
    best:["S7 widget chest × 10 — bought 26 Oct (Ava needs 6, Wee & Woo 15)","S6 widget chest × 10 → Yang (850 each, he needs 34 for widget Lv 10)","Charm Designs × 10 (350)","Charm Guides × 10 (350)","Forgehammer × 1 with what's left (500)"],
    skip:["Mithril — 20,000 for 1","Skill books, pet items, gold, resource chests"],
@@ -108,7 +108,7 @@ const SHOP_DB=[
   {n:"Lucky Chip Pack (Hero Roulette)",cur:"US$",when:"Hero Roulette",seen:"2026-10-20",
    best:[],skip:["All under 3,000% — use gems (1,500 per token, Spin 10 = 9 tokens)"],items:[["Common — 5 tokens","US$1.99","2,540%"],["Uncommon — 10","US$4.99","2,180%"],["Rare — 20","US$9.99","2,140%"],["Epic — 40","US$19.99","2,120%"]]}
 ];
-const SHOP_MISSING=["Alliance Shop"];
+const SHOP_MISSING=[];
 
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
@@ -123,6 +123,6 @@ function renderShopGuide(){
       (s.note?`<p class="muted" style="margin:8px 0 0">${esc(s.note)}</p>`:"")+`</div></details>`).join("")+
     `<details class="fold mt"><summary><span class="grow">Hero seasons <small class="faint" style="font-weight:500">for Hall of Heroes chests</small></span></summary><div class="fbody"><table class="gtable"><tbody>${Object.entries(HERO_SEASON).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
     `<details class="fold mt"><summary><span class="grow">What the icons are</span></summary><div class="fbody"><table class="gtable"><tbody>${ITEM_KEY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
-    `<div class="info mt"><b>Still to add:</b> ${SHOP_MISSING.map(esc).join(" · ")}<br><span class="faint">Upload screenshots to the <b>shops/inbox</b> folder in the Kingshot repo (GitHub app → Add file → Upload files), then tell Claude “uploaded”.</span></div>`;
+    `<div class="info mt">${SHOP_MISSING.length?`<b>Still to add:</b> ${SHOP_MISSING.map(esc).join(" · ")}<br>`:"<b>All shops added.</b> New event shops or packs: "}<span class="faint">Upload screenshots to the <b>shops/inbox</b> folder in the Kingshot repo (GitHub app → Add file → Upload files), then tell Claude “uploaded”.</span></div>`;
   host.querySelectorAll("details.sgshop").forEach(d=>d.ontoggle=()=>{ if(d.open) state.ui.sgOpen=+d.dataset.i; else if(state.ui.sgOpen===+d.dataset.i) delete state.ui.sgOpen; scheduleSave(); });
 }
