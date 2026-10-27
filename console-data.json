@@ -663,8 +663,8 @@
     "attL": 322,
     "defW": 716,
     "defL": 65,
-    "leth": 73,
-    "hp": 58.8,
+    "leth": 74.3,
+    "hp": 69.1,
     "troopStatus": "T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot."
   },
   "resources": [
@@ -2767,8 +2767,8 @@
       "d": "2026-10-27",
       "v": {
         "power": 329725706,
-        "leth": 73,
-        "hp": 58.8,
+        "leth": 74.3,
+        "hp": 69.1,
         "attWR": 38.08,
         "defWR": 91.68,
         "p:Building": 9380343,
