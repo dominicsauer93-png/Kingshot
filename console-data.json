@@ -1468,7 +1468,7 @@
     "targetIdx": 18,
     "have": {
       "satin": 40501,
-      "threads": 155,
+      "threads": 201,
       "vision": 587
     },
     "pieces": [
@@ -1572,7 +1572,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1608,10 +1608,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Checklists",
-      "Gear": "Hero Gear",
+      "Gear": "Pets",
       "Base": "Resources",
       "Plan": "Shop guide",
-      "Heroes": "Roster",
+      "Heroes": "Overview",
       "Shop": "Paid"
     },
     "t11Open": {
@@ -1650,7 +1650,8 @@
       "gen",
       "designs"
     ],
-    "sgOpen": 9
+    "sgOpen": 9,
+    "bcMore": false
   },
   "troopCounts": {
     "inf": {
@@ -3365,9 +3366,9 @@
     "threads": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 130
+        "2026-10": 176
       },
-      "seen": 155
+      "seen": 201
     },
     "designs": {
       "since": "2026-10-26",
@@ -3412,14 +3413,14 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-10-27",
+    "d": "2026-10-28",
     "v": {
-      "mg": 1,
+      "mg": 5,
       "mith": 4,
-      "threads": 155,
+      "threads": 201,
       "designs": 318,
-      "fh": 71,
-      "gen": 22
+      "fh": 118,
+      "gen": 68
     }
   },
   "noShop": [
