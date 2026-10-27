@@ -1568,7 +1568,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1604,11 +1604,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Hero Gear",
-      "Base": "Resources",
+      "Gear": "Widgets",
+      "Base": "Buildings",
       "Plan": "Shop guide",
-      "Heroes": "Mystic Trials",
-      "Shop": "Free shops"
+      "Heroes": "Overview"
     },
     "t11Open": {
       "nodes": false,
@@ -1641,14 +1640,12 @@
     "todayAll": true,
     "tierOpen": false,
     "planOpen": true,
+    "sgOpen": 3,
     "bvPick": [
       "tg",
       "gen",
-      "designs",
-      "widgets",
-      "dust"
-    ],
-    "sgOpen": 9
+      "designs"
+    ]
   },
   "troopCounts": {
     "inf": {
