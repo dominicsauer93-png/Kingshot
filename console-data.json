@@ -1623,7 +1623,7 @@
       "Shards": false,
       "Masters": true,
       "Gov": true,
-      "Widgets": false,
+      "Widgets": true,
       "Charms": false,
       "T11": false,
       "Mystic": true,
