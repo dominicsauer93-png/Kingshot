@@ -67,6 +67,11 @@ const SHOP_DB=[
    skip:["Building skin, name tag, troop reassignment unless needed","100,000 scroll unless you know what it is"],
    items:[["1,000 pet food (−80%)",13330,15],["Pet chest (−80%)",20000,10],["Scroll (?) (−80%)",100000,1],["Epic hero shard (−80%)",6600,2],["Building skin? (−50%)",6500,1],["Name change tag (−50%)",6500,1],["10 × 100 V-tokens (−50%)",330,5],["Troop transfer? (−80%)",5200,1]],
    note:"With 880K+ alliance coins, buy the −80% pet items every week. Never shields."},
+  {n:"Halloween Party",cur:"Halloween Candy",when:"7 days (27 Oct – 2 Nov 2026)",seen:"2026-10-27",
+   best:["Daily: reach 300 Prankster Points → 2 General Mythic shards, 3 Forgehammers, 3 h speedup (every day!)","Candy Party Pack I is free — claim it (100 candy, 2 gold keys)","Spend candy in Coven Clash (20 per attack) — Witch hits drop Lucky Hero Gear chests (Mythic chance)","Audacious Adventure free track to level 21: General shards, Truegold, keys, chests","Surprising Symphony missions — finish them all for 20 wands, 70 Truegold, 2 General shards","Prankster King: do each day's stage (1 day each) — Power Boost, Beast Slay, Hero, Training, Hero Gear, Gather, Gov Gear"],
+   skip:["Candy Party Pack II (A$7.99, 4,400%) only if you'd use the candy — 1,000 candy + 70 Truegold + 2,500 gems","Top-up Benefits — only counts spending you'd do anyway","Masquerade wands — cosmetic town skins"],
+   items:[["Candy Party Pack I — 100 candy, 2 gold keys, resources","Free",""],["Candy Party Pack II — 2,500 gems, 1,000 candy, 18 custom chests, 70 Truegold, avatar frame","A$7.99","4,400%"],["Witchbane pass (Audacious Adventure, middle track)","paid",""],["Pranksterbane pass (Audacious Adventure, top track)","paid",""]],
+   note:"Unused candy turns into resource chests at the end. Coven Clash: 0.2% Prankster Time per attack (free attacks); Witch appears 20% of the time. Mission rewards are only resources."},
   {n:"Champagne Fair",cur:"Vouchers",when:"Event, 2 days",seen:"2026-10-26",
    best:["S7 widget chest × 10 — bought 26 Oct (Ava needs 6, Wee & Woo 15)","S6 widget chest × 10 → Yang (850 each, he needs 34 for widget Lv 10)","Charm Designs × 10 (350)","Charm Guides × 10 (350)","Forgehammer × 1 with what's left (500)"],
    skip:["Mithril — 20,000 for 1","Skill books, pet items, gold, resource chests"],
@@ -118,7 +123,7 @@ const EVENT_SHOPS=[
   [/officer project/i,"Officer Project"],[/fishing/i,"Fishing Tournament"],[/sanctuary/i,"Sanctuary Battle"],[/tri-alliance/i,"Tri-Alliance Clash"],
   [/alliance mobilization/i,"Alliance Mobilization"],[/armament/i,"Armament Competition"],[/strongest governor/i,"Strongest Governor"],
   [/merchant empire/i,"Merchant Empire"],[/alliance brawl/i,"Alliance Brawl"],[/golden glaives/i,"Golden Glaives"],[/flamedragon|dragon banquet/i,"Flamedragon Tyrant"],
-  [/mystic trial/i,"Mystic Trials"],[/finder'?s fortune/i,"Finder's Fortune"]];
+  [/halloween/i,"Halloween Party"],[/mystic trial/i,"Mystic Trials"],[/finder'?s fortune/i,"Finder's Fortune"]];
 const evShopSaved=name=>SHOP_DB.some(x=>x.n===name);
 const noShop=n=>(state.noShop||[]).includes(n); // events you've marked as having no shop
 function eventShopFor(e){ const m=EVENT_SHOPS.find(([re])=>re.test((e&&e.n)||"")); return m?{name:m[1],saved:evShopSaved(m[1])||noShop(m[1]),none:noShop(m[1])}:null; }
@@ -126,7 +131,7 @@ function eventShopProgress(){ const all=[...new Set(EVENT_SHOPS.map(x=>x[1]))]; 
 
 // the page: a simple shopping list first (one tile per shop, what to buy right now), details tucked below
 const SG_REGULAR=[["Trial Shop","Weekly"],["Arena Shop","Weekly"],["Alliance Championship Shop","Weekly"],["KvK Shop (Kingdom of Power)","Weekly"],["Swordland Shop","Every 2 weeks"],["Tidal Shop","Every 2 weeks"],["Alliance Shop — weekly","Weekly"],["Alliance Shop — daily","Daily"]];
-const SG_EVENT=["Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
+const SG_EVENT=["Halloween Party","Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
 const sgShort=n=>n.replace(/ \(.*\)$/,"").replace(/ Shop$/,"").replace(/^Alliance Shop — /,"Alliance ").replace(/^Alliance Championship$/,"Alliance Champ.");
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
