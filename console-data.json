@@ -1628,7 +1628,9 @@
     "bvPick": [
       "tg",
       "gen",
-      "designs"
+      "designs",
+      "widgets",
+      "dust"
     ],
     "sgOpen": 9
   },
