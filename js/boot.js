@@ -68,7 +68,7 @@ function renderUpdate(){
   $$("#qJump .chip").forEach(c=>c.onclick=()=>{ host.querySelectorAll("details.fold").forEach(d=>{ d.open=d.dataset.k===c.dataset.k; });
     const d=host.querySelector(`details.fold[data-k="${c.dataset.k}"]`); if(d) setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"start"}),30); });
 }
-const TAB_RENDER={Home:()=>renderHome(),Heroes:()=>renderRally(),Gear:()=>renderGear(),Base:()=>renderBase(),Plan:()=>renderPlan(),Data:()=>{ renderData(); renderUpdate(); }};
+const TAB_RENDER={Home:()=>renderHome(),Heroes:()=>renderRally(),Gear:()=>renderGear(),Base:()=>renderBase(),Shop:()=>renderPlan(),Data:()=>{ renderPlan(); renderData(); renderUpdate(); }};
 const dirtyTabs=new Set();
 function renderPrep(){ migrateEvents(); migrateMasterNotes(); if(!state.ui.sub) state.ui.sub={}; }
 function renderAll(){ renderPrep(); TABS.forEach(t=>TAB_RENDER[t]()); dirtyTabs.clear(); }
@@ -92,8 +92,8 @@ const SEARCH_KW={
   "Troop Plan":"troops train training",
   "Build Order — TG6→TG8":"buildings town center tg truegold barracks range stable",
   "Resources & Speedups":"bread wood stone iron gold speedups",
-  "Shops & Packs":"packs budget card monthly weekly shop shops aud spend trial arena alliance vip swordland tidal free",
-  "Shop guide":"shop guide best buy hall of heroes marks champagne vouchers dragon caravan weekly benefits widgets fund seasons",
+  "Shops & Packs":"packs paid budget card monthly weekly aud spend best value per dollar pick plan compare",
+  "Shop guide":"free shops trial arena alliance swordland tidal kvk coins shop guide best buy hall of heroes marks champagne vouchers dragon caravan weekly benefits widgets fund seasons",
   "Checklists":"routine daily weekly execute farm",
   "Reminders":"reminders notifications calendar ics ntfy alerts phone",
   "Today":"routine daily checklist",

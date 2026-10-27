@@ -12,6 +12,9 @@ const BAG_KEYS=[
   ["designs","Designs",()=>state.charms.have||(state.charms.have={}),"designs"],
   ["fh","Hammers",()=>state.heroGear.have,"fh"],
   ["gen","Gen. shards",()=>state,"shardGeneral"]];
+// the rest of the bag, one tap away (no change tracking — just keeps every number in one place)
+const BAG_MORE=[["Truegold",()=>state.tg,"have"],["Tempered TG",()=>state.tg,"ttgHave"],["TG Dust",()=>state.dust,"current"],["Gold",()=>state.dust,"gold"],
+  ["Satin",()=>state.govGear.have,"satin"],["Vision",()=>state.govGear.have,"vision"],["Guides",()=>state.charms.have,"guides"],["Gear XP",()=>state.heroGear.have,"xp"],["Pet food",()=>state.pets.have||(state.pets.have={}),"food"]];
 const bagVal=k=>{ const b=BAG_KEYS.find(x=>x[0]===k); return num(b[2]()[b[3]]); };
 
 /* ---------- income: every rise in the bag counts (spending doesn't), per month ---------- */
@@ -50,7 +53,13 @@ function renderBagCheck(){
   box.innerHTML=`<div class="rowb"><b style="font-size:16px">Bag check</b>${days==null?'<span class="tag warn">not checked yet</span>':days===0?'<span class="tag ok">checked today ✓</span>':`<span class="tag ${days>2?"warn":"plain"}">checked ${days} day${days>1?"s":""} ago</span>`}</div>
     <p class="muted" style="margin:4px 0 8px">Type what the game shows. Arrows = change since your last check.</p>
     <div class="bcgrid">${BAG_KEYS.map(([k,l])=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-k="${k}" value="${bagVal(k)}"><em data-ch="${k}">${ch(k)}</em></label>`).join("")}</div>
+    <details class="fold mt" id="bcMore"${state.ui.bcMore?" open":""}><summary><span class="grow">More numbers</span></summary><div class="fbody"><div class="bcgrid">${BAG_MORE.map(([l,o,k],i)=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-m="${i}" value="${num(o()[k])}"></label>`).join("")}</div></div></details>
+    ${(()=>{ const st=staleShops(); return st.length?`<button class="evcam mt" id="bcStale">📸 ${st.length} shop${st.length>1?"s":""} not checked for ${STALE_DAYS}+ days ›</button>`:""; })()}
     <div class="rowb mt"><span class="faint">Everything else: Update everything</span><button class="btn primary sm" id="bcSave">Save ✓</button></div>`;
+  box.querySelectorAll("[data-m]").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
+    x.onchange=()=>{ const [,o,k]=BAG_MORE[+x.dataset.m]; if(!/\d/.test(x.value)){ x.value=num(o()[k]); return; } o()[k]=Math.max(0,Math.round(num(x.value))); scheduleSave(); }; });
+  const bm=$("#bcMore"); bm.ontoggle=()=>{ state.ui.bcMore=bm.open; scheduleSave(); };
+  on("bcStale",()=>setTab("Shop","Free shops"));
   box.querySelectorAll("input").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
     x.onchange=()=>{ if(!/\d/.test(x.value)){ x.value=bagVal(x.dataset.k); return; } const b=BAG_KEYS.find(y=>y[0]===x.dataset.k); b[2]()[b[3]]=Math.max(0,Math.round(num(x.value))); box.querySelector(`[data-ch="${x.dataset.k}"]`).innerHTML=ch(x.dataset.k); scheduleSave(); }; });
   on("bcSave",()=>{ state.bagCheck={d:fcToday(),v:Object.fromEntries(BAG_KEYS.map(([k])=>[k,bagVal(k)]))}; afterEdit(); toast("Bag saved"); });

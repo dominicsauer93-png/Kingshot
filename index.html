@@ -248,48 +248,26 @@
     </div>
 
     <!-- ================= PLAN ================= -->
-    <div class="page" data-tab="Plan" hidden>
-      <div class="phead"><div><h1>Plan</h1><p>Daily and weekly routine, shops and packs.</p></div></div>
-      <div class="subnav" role="tablist" aria-label="Plan sections"></div>
-      <section class="sec" data-sub="Checklists" data-key="Checklists">
-        <div class="cols">
-          <div class="card"><h3>Daily routine</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every day.</p><ul class="checks" id="routineEdit"></ul></div>
-          <div class="card"><h3>Weekly</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every Monday.</p><ul class="checks" id="weekEdit"></ul></div>
-          <div class="card"><h3>Execute now</h3><ul class="checks" id="trackNow"></ul></div>
-          <div class="card"><h3>Farm quietly</h3><ul class="checks" id="trackFarm"></ul></div>
-        </div>
-      </section>
-      <section class="sec" data-sub="Shops &amp; Packs" data-key="Shops &amp; Packs">
+    <div class="page" data-tab="Shop" hidden>
+      <div class="phead"><div><h1>Shop</h1><p>What to buy with coins, and with money.</p></div></div>
+      <div class="subnav" role="tablist" aria-label="Shop sections"></div>
+      <section class="sec" data-sub="Free shops" data-key="Shop guide">
+        <div id="shopGuide"></div>
+        <details class="fold mt"><summary><span class="grow">Where each supply comes from</span></summary><div class="fbody">
         <h2>Free path <small>where each supply comes from</small></h2>
         <div class="card" style="padding:0;overflow:hidden"><table class="gtable" id="srcTable"></table></div>
         <h2 class="h2 mt2">Shop shopping list <small>buy in this order</small></h2>
         <div class="card" style="padding:0;overflow:hidden"><table class="gtable" id="shopTable"></table></div>
         <div class="info mt"><b>Gems:</b> save them for Hero Roulette when Wee &amp; Woo is featured. Don't spend gems on resources or speedups. <b>Speedups:</b> save for the matching event day.</div>
-        <h2 class="h2 mt2">Packs worth buying <small>AUD · tap ✎ to edit</small></h2>
-        <div class="tiles" id="packTiles"></div>
+        </div></details>
+      </section>
+      <section class="sec" data-sub="Paid" data-key="Shops &amp; Packs">
+        <div id="bestValue"></div>
+        <h2 class="h2 mt2">Your plan &amp; packs <small>tick what you buy · ✎ to edit</small></h2>
+        <div class="tiles" id="packTiles" hidden></div>
         <div class="card mt" style="padding:0;overflow:hidden" id="packList"></div>
         <button class="add" id="addPack">+ Add pack</button>
         <p class="faint mt" style="font-size:13.5px">Tick the packs you own or buy. Ticking a card starts its 30-day (or 7-day) timer from today — change the date in ✎ if you bought it earlier. Home warns you 3 days before a card ends.</p>
-      </section>
-      <section class="sec" data-sub="Shop guide" data-key="Shop guide">
-        <h2>Shop guide</h2>
-        <div id="shopGuide"></div>
-      </section>
-      <section class="sec" data-sub="Reminders" data-key="Reminders">
-        <h2>Reminders <small>so you never miss an event or a card</small></h2>
-        <div class="cols">
-          <div class="card"><h3>1 · Add to your calendar</h3>
-            <p class="lead" style="margin:0 0 10px">Works now, nothing to set up. Your phone's calendar reminds you.</p>
-            <ul class="tight" id="icsList"></ul>
-            <button class="btn primary mt" id="icsBtn">Download calendar file</button>
-            <p class="faint mt" style="font-size:13.5px">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
-          <div class="card"><h3>2 · Phone notifications (optional)</h3>
-            <p class="lead" style="margin:0 0 10px">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app.</p>
-            <ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
-              <li>On GitHub: repo → <b>Settings → Secrets and variables → Actions → New repository secret</b>. Name <code>NTFY_TOPIC</code>, value = the same topic name.</li>
-              <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol>
-            <p class="faint mt" style="font-size:13.5px">Keep the topic secret: anyone who knows it can read these notes. Nothing is sent until the secret exists.</p></div>
-        </div>
       </section>
     </div>
 
@@ -334,6 +312,30 @@
           </div>
         </div>
       </section>
+      <section class="sec" data-sub="Reminders" data-key="Reminders">
+        <h2>Reminders <small>so you never miss an event or a card</small></h2>
+        <div class="cols">
+          <div class="card"><h3>1 · Add to your calendar</h3>
+            <p class="lead" style="margin:0 0 10px">Works now, nothing to set up. Your phone's calendar reminds you.</p>
+            <ul class="tight" id="icsList"></ul>
+            <button class="btn primary mt" id="icsBtn">Download calendar file</button>
+            <p class="faint mt" style="font-size:13.5px">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
+          <div class="card"><h3>2 · Phone notifications (optional)</h3>
+            <p class="lead" style="margin:0 0 10px">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app.</p>
+            <ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
+              <li>On GitHub: repo → <b>Settings → Secrets and variables → Actions → New repository secret</b>. Name <code>NTFY_TOPIC</code>, value = the same topic name.</li>
+              <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol>
+            <p class="faint mt" style="font-size:13.5px">Keep the topic secret: anyone who knows it can read these notes. Nothing is sent until the secret exists.</p></div>
+        </div>
+      </section>
+      <section class="sec" data-sub="Checklists" data-key="Checklists">
+        <div class="cols">
+          <div class="card"><h3>Daily routine</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every day.</p><ul class="checks" id="routineEdit"></ul></div>
+          <div class="card"><h3>Weekly</h3><p class="lead" style="margin:0 0 6px">Shown on Home. Resets every Monday.</p><ul class="checks" id="weekEdit"></ul></div>
+          <div class="card"><h3>Execute now</h3><ul class="checks" id="trackNow"></ul></div>
+          <div class="card"><h3>Farm quietly</h3><ul class="checks" id="trackFarm"></ul></div>
+        </div>
+      </section>
     </div>
 
     <p class="foot">Kingshot Command Console · data saved on this device</p>
@@ -366,6 +368,7 @@
 <script src="js/data.js"></script>
 <script src="js/shops.js"></script>
 <script src="js/extras.js"></script>
+<script src="js/value.js"></script>
 <script src="js/boot.js"></script>
 </body>
 </html>
