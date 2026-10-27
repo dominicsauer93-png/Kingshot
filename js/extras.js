@@ -74,8 +74,11 @@ const RES_LABEL={mg:"Mythic Gear",mith:"Mithril",threads:"Threads",designs:"Desi
 function liveBuys(shop,N){
   N=N||blockerNeeds();
   const L=(shop.items||[]).filter(it=>typeof it[1]==="number").map(it=>{ const m=ITEM_RES.find(([re])=>re.test(it[0])); return m?{it,k:m[1],sub:m[2]}:null; }).filter(Boolean);
+  // Mithril, General shards and Lucky chests are far cheaper in some shops — skip them where they cost over 2× the cheapest
+  const cheap={}; SHOP_DB.forEach(sh=>(sh.items||[]).forEach(it=>{ const m=typeof it[1]==="number"&&ITEM_RES.find(([re])=>re.test(it[0])); if(m) cheap[m[1]+m[2]]=Math.min(cheap[m[1]+m[2]]||Infinity,it[1]); }));
+  const pricey=x=>["mith","gen","mg"].includes(x.k)&&x.it[1]>2*cheap[x.k+x.sub];
   const order=["mg","threads","designs","mith","gen","fh"];
-  const need=L.filter(x=>N[x.k]&&N[x.k].short>0).sort((a,b)=>order.indexOf(a.k)-order.indexOf(b.k)||a.sub-b.sub||a.it[1]-b.it[1]);
+  const need=L.filter(x=>N[x.k]&&N[x.k].short>0&&!pricey(x)).sort((a,b)=>order.indexOf(a.k)-order.indexOf(b.k)||a.sub-b.sub||a.it[1]-b.it[1]);
   const covered=L.filter(x=>!(N[x.k]&&N[x.k].short>0));
   return {need,covered,N}; }
 function liveBuysH(shop,N){
@@ -171,4 +174,46 @@ function renderReports(){
     ["Next up",cn?`${esc(cn.type)} charm Lv ${num(cn.lvl)} → ${num(cn.lvl)+1}`:"All at target ✓"],
     needRow(N,"designs","Designs (next 3)"),
     ["Guides",fmt(num(state.charms.have.guides))]]});
+}
+
+/* ---------- capture event shops: upload screenshots straight to shops/inbox, or mark "no shop" ---------- */
+function camMissing(all){
+  if(all) return eventShopProgress().missing.map(name=>({name,ev:null}));
+  const seen=new Set(); return liveEvents().map(x=>({ev:x.e,s:eventShopFor(x.e)})).filter(x=>x.s&&!x.s.saved&&!seen.has(x.s.name)&&seen.add(x.s.name)).map(x=>({name:x.s.name,ev:x.ev})); }
+async function shrinkShot(file){ // phone screenshots → max 1600 px JPEG, keeps uploads quick
+  const img=await createImageBitmap(file), k=Math.min(1,1600/Math.max(img.width,img.height)), c=document.createElement("canvas");
+  c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+  return c.toDataURL("image/jpeg",.85).split(",")[1]; }
+async function uploadShots(files,label,onStep){
+  const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok) throw new Error("Connect GitHub sync first (Data → Sync)");
+  let n=0;
+  for(const f of files){ n++; onStep&&onStep(n,files.length);
+    const path=`shops/inbox/${gameToday()}-${slug(label)}-${Date.now()}-${n}.jpg`;
+    const r=await fetch(`https://api.github.com/repos/${encodeURIComponent(syncCfg.owner)}/${encodeURIComponent(syncCfg.repo)}/contents/${path.split("/").map(encodeURIComponent).join("/")}`,
+      {method:"PUT",headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},
+       body:JSON.stringify({message:`shop screenshot: ${label}`,content:await shrinkShot(f),branch:syncCfg.branch||"main"})});
+    if(!r.ok) throw new Error(`Upload failed (${r.status})`); }
+  return n; }
+function openCamSheet(all){
+  openSheet({title:all?"Event shops to capture":"Shops to capture now",sub:"Screenshot each shop in the game, then upload here. No shop? Mark it and it stops asking.",build(f){
+    const synced=!!(syncCfg.owner&&syncCfg.repo&&loadTok());
+    const draw=()=>{ f.innerHTML=""; const L=camMissing(all);
+      if(!synced){ const w=infoBox(); w.innerHTML="Uploading needs GitHub sync on this device (Data → Sync). You can still mark events as “no shop”, or send screenshots in the chat."; f.appendChild(w); }
+      if(!L.length){ const d=document.createElement("div"); d.className="empty"; d.textContent="Nothing to capture ✓"; f.appendChild(d); }
+      L.forEach(x=>{ const row=document.createElement("div"); row.className="camrow";
+        row.innerHTML=`<div><b>${esc(x.ev?x.ev.n:x.name)}</b>${x.ev&&x.ev.n!==x.name?`<br><span class="faint">${esc(x.name)}</span>`:""}<span class="camst faint"></span></div>
+          <div class="camact">${synced?`<label class="btn primary sm">📸 Upload<input type="file" accept="image/*" multiple hidden></label>`:""}<button class="btn ghost sm" data-none>No shop</button></div>`;
+        const st=row.querySelector(".camst"), inp=row.querySelector("input");
+        if(inp) inp.onchange=async()=>{ const files=[...inp.files]; if(!files.length) return;
+          try{ const n=await uploadShots(files,x.name,(i,t)=>st.textContent=` · uploading ${i}/${t}…`); st.innerHTML=` · <span class="ok">${n} uploaded ✓</span>`; toast(`${n} screenshot${n>1?"s":""} uploaded — tell Claude “uploaded”`); }
+          catch(e){ st.innerHTML=` · <span class="bad">${esc(e.message)}</span>`; } inp.value=""; };
+        row.querySelector("[data-none]").onclick=()=>{ const snap=JSON.stringify(state); (state.noShop||(state.noShop=[])).push(x.name); afterEdit(); toast(`${x.name}: no shop`,snap); draw(); };
+        f.appendChild(row); });
+      if(synced){ const o=document.createElement("label"); o.className="btn ghost mt"; o.innerHTML=`Upload other shop / pack screenshots<input type="file" accept="image/*" multiple hidden>`;
+        const st=document.createElement("p"); st.className="faint"; const i2=o.querySelector("input");
+        i2.onchange=async()=>{ const files=[...i2.files]; if(!files.length) return; try{ const n=await uploadShots(files,"other",(a,t)=>st.textContent=`Uploading ${a}/${t}…`); st.innerHTML=`<span class="ok">${n} uploaded ✓</span> — tell Claude “uploaded”`; }catch(e){ st.innerHTML=`<span class="bad">${esc(e.message)}</span>`; } i2.value=""; };
+        f.appendChild(o); f.appendChild(st); }
+      const nb=state.noShop||[]; if(nb.length){ const p=document.createElement("p"); p.className="faint mt"; p.innerHTML=`Marked no shop: ${nb.map(esc).join(", ")} <button class="btn ghost sm" id="camUndoAll">Clear</button>`; f.appendChild(p);
+        p.querySelector("#camUndoAll").onclick=()=>{ state.noShop=[]; afterEdit(); draw(); }; } };
+    draw(); }});
 }
