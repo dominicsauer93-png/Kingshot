@@ -1572,7 +1572,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1887,7 +1887,7 @@
     ],
     "planDate": "2026-10-23",
     "chests": {
-      "lucky": 0,
+      "lucky": 73,
       "custom": 0,
       "log": []
     }
