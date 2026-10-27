@@ -39,7 +39,7 @@ function vNeeds(){
   out.designs=N.designs?N.designs.short:0;
   out.gen=N.gen?N.gen.short:0;
   const W=(state.widgets&&state.widgets.rows)||[]; out.widgets=["Ava","Wee & Woo"].reduce((t,h)=>{ const r=W.find(x=>x.hero===h); return t+(r?Math.max(0,widNext(num(r.lvl))-num(r.have)):0); },0);
-  out.lucky=N.mg&&N.mg.short?N.mg.short*40:0; // a Mythic Gear is roughly 1 in 40 Lucky chests
+  out.lucky=N.mg&&N.mg.short?Math.max(0,Math.round(N.mg.short/mythicRate().r)-num(hgChests().lucky)):0; // Lucky chests still needed after the ones in your bag (your logged rate, or ~1 in 40)
   out.dust=Math.max(0,computeTarget()-num(state.dust.current));
   return out; }
 const vY=(d,k)=>num(d.y[k])+(k==="gen"?num(d.y.gems)/GEMS_PER_SHARD:0);

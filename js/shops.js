@@ -43,7 +43,7 @@ const SHOP_DB=[
    best:["Gilded Threads × 50 (100 each) — your gov gear blocker","Charles shards (2,500, 6) — a second Charles source","Satin (1 each) with spare coins"],
    skip:["General shards (Trial is 500)","Hammers, speedups, XP, Guides, Vision"],
    items:[["Hero shard — Charles",2500,6],["Hero shard — Ava?",2500,6],["Hero shard — helmet hero (?)",2500,6],["General Mythic shard",2500,6],["100 Enhancement XP",250,40],["Forgehammer",1250,20],["Satin",1,5000],["Gilded Threads",100,50],["Artisan's Vision",500,30],["Charm Design",500,50],["Charm Guide",500,25],["1 h speedups (4 kinds)",250,50],["5K Enhancement XP",75,200]]},
-  {n:"Tidal Shop",cur:"Tidal coins",when:"Refreshes every 14 days",seen:"2026-10-26",
+  {n:"Tidal Shop",cur:"Tidal coins (from Tri-Alliance Clash)",when:"Refreshes every 14 days",seen:"2026-10-26",
    best:["Gilded Threads × 25 (100 each)","Satin (1 each)"],
    skip:["General shards (Trial is 500)","Designs (Trial is 250)","Hammers, speedups, pet items"],
    items:[["Advanced taming mark?",3000,2],["Growth manual",150,30],["Nutrient potion",750,5],["Pet medallion",1500,2],["General Mythic shard",2500,3],["100 Enhancement XP",250,20],["Forgehammer",1250,10],["Satin",1,2500],["Gilded Threads",100,25],["Artisan's Vision",500,15],["Charm Design",500,20],["Charm Guide",500,10],["1 h speedups (4 kinds)",250,20]]},
@@ -125,7 +125,7 @@ const EVENT_SHOPS=[
   [/dragon essence|dragon'?s caravan/i,"Dragon's Caravan"],[/hero rally/i,"Path of Honor (Hero Rally paid track)"],[/swordland/i,"Swordland Shop"],
   [/alliance championship$/i,"Alliance Championship Shop"],[/exclusive gear fund/i,"Exclusive Gear Fund"],[/hero roulette/i,"Lucky Chip Pack (Hero Roulette)"],
   [/wavebound voyage/i,"Sails Aloft (Voyage)"],
-  [/officer project/i,"Officer Project"],[/fishing/i,"Fishing Tournament"],[/sanctuary/i,"Sanctuary Battle"],[/tri-alliance/i,"Tri-Alliance Clash"],
+  [/officer project/i,"Officer Project"],[/fishing/i,"Fishing Tournament"],[/sanctuary/i,"Sanctuary Battle"],[/tri-alliance/i,"Tidal Shop"],
   [/alliance mobilization/i,"Alliance Mobilization"],[/armament/i,"Armament Competition"],[/strongest governor/i,"Strongest Governor"],
   [/merchant empire/i,"Merchant Empire"],[/alliance brawl/i,"Alliance Brawl"],[/golden glaives/i,"Golden Glaives"],[/flamedragon|dragon banquet/i,"Flamedragon Tyrant"],
   [/halloween/i,"Halloween Party"],[/mystic trial/i,"Mystic Trials"],[/finder'?s fortune/i,"Finder's Fortune"]];

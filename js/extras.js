@@ -14,7 +14,26 @@ const BAG_KEYS=[
   ["gen","Gen. shards",()=>state,"shardGeneral"]];
 // the rest of the bag, one tap away (no change tracking — just keeps every number in one place)
 const BAG_MORE=[["Truegold",()=>state.tg,"have"],["Tempered TG",()=>state.tg,"ttgHave"],["TG Dust",()=>state.dust,"current"],["Gold",()=>state.dust,"gold"],
-  ["Satin",()=>state.govGear.have,"satin"],["Vision",()=>state.govGear.have,"vision"],["Guides",()=>state.charms.have,"guides"],["Gear XP",()=>state.heroGear.have,"xp"],["Pet food",()=>state.pets.have||(state.pets.have={}),"food"]];
+  ["Lucky chests",()=>hgChests(),"lucky"],["Custom Mythic chests",()=>hgChests(),"custom"],["Satin",()=>state.govGear.have,"satin"],["Vision",()=>state.govGear.have,"vision"],["Guides",()=>state.charms.have,"guides"],["Gear XP",()=>state.heroGear.have,"xp"],["Pet food",()=>state.pets.have||(state.pets.have={}),"food"]];
+/* ---------- hero gear chests: unopened Lucky / Custom Mythic chests, and your real Mythic drop rate ---------- */
+const hgChests=()=>state.heroGear.chests||(state.heroGear.chests={lucky:0,custom:0,log:[]});
+function mythicRate(){ const L=hgChests().log||[], o=L.reduce((t,x)=>t+num(x.opened),0), m=L.reduce((t,x)=>t+num(x.mythic),0);
+  return o>=20?{r:m/o,learned:true,o,m}:{r:1/40,learned:false,o,m}; } // until 20 are logged, assume ~1 Mythic per 40 Lucky chests
+function openChestSheet(){ const C=hgChests(), H=state.heroGear.have;
+  openSheet({title:"Hero gear chests",sub:"Chests waiting to be opened, and what came out.",build(f){
+    f.appendChild(frow(fld("Lucky Hero Gear chests",{type:"num",value:C.lucky,get:()=>C.lucky,set:v=>C.lucky=v}),fld("Custom Mythic chests",{type:"num",value:C.custom,get:()=>C.custom,set:v=>C.custom=v})));
+    const inf=infoBox(); f.appendChild(inf);
+    const op=document.createElement("div"); op.className="card mt";
+    op.innerHTML=`<b>I opened Lucky chests</b><div class="frow mt"><label class="f"><span>How many opened</span><input id="chO" inputmode="numeric"></label><label class="f"><span>Mythic Gear got</span><input id="chM" inputmode="numeric"></label></div><button class="btn primary sm mt" id="chLog">Save — adds the Mythic to your bag</button>`;
+    f.appendChild(op);
+    const cu=document.createElement("button"); cu.className="btn mt"; cu.textContent="I opened 1 Custom Mythic chest (+1 Mythic Gear)"; f.appendChild(cu);
+    const rf=()=>{ const R=mythicRate(), nx=blockerNeeds().mg;
+      inf.innerHTML=`Expected from your Lucky chests: <b>~${(num(C.lucky)*R.r).toFixed(1)} Mythic Gear</b> <span class="faint">(${R.learned?`your rate: 1 in ${Math.round(1/R.r)} from ${fmt(R.o)} opened`:`assumed 1 in 40 — log ${20-R.o} more to learn your real rate`})</span>`+
+        (nx?`<br>Next Mythic need: <b>${esc(nx.what)}</b>${nx.short?` — ${nx.short} short`:" ✓"}`:""); };
+    op.querySelector("#chLog").onclick=()=>{ const o=Math.round(num(op.querySelector("#chO").value)), m=Math.round(num(op.querySelector("#chM").value)); if(!o) return;
+      const snap=JSON.stringify(state); (C.log||(C.log=[])).push({d:gameToday(),opened:o,mythic:m}); C.lucky=Math.max(0,num(C.lucky)-o); H.mg=num(H.mg)+m; afterEdit(); toast(`Logged ${o} chests → ${m} Mythic`,snap); openChestSheet(); }; // reopen so the chest counts show the new numbers
+    cu.onclick=()=>{ if(num(C.custom)<1) return; const snap=JSON.stringify(state); C.custom=num(C.custom)-1; H.mg=num(H.mg)+1; afterEdit(); toast("Custom Mythic chest opened (+1 Mythic)",snap); openChestSheet(); };
+    rf(); return rf; }}); }
 const bagVal=k=>{ const b=BAG_KEYS.find(x=>x[0]===k); return num(b[2]()[b[3]]); };
 
 /* ---------- income: every rise in the bag counts (spending doesn't), per month ---------- */
@@ -172,7 +191,9 @@ function renderReports(){
   const hp=hgPlanLeft()[0], pr=hp?null:hgPriority(state.heroGear.rows||[])[0];
   reportCard("hgReport",{title:"Hero Gear",pkey:"p:Hero Gear",doneRe:/helm|gloves|chest|boots|imbue|mastery/i,rows:[
     ["Next up",hp?`${esc(hp.type)} ${esc(hp.slot)} — ${esc(hgPlanWhat(hp))}`:pr?`${esc(pr.type)} ${esc(slotName(pr.slot))}`:"All done ✓"],
-    needRow(N,"mg","Mythic Gear"),needRow(N,"mith","Mithril"),needRow(N,"fh","Hammers")]});
+    needRow(N,"mg","Mythic Gear"),needRow(N,"mith","Mithril"),needRow(N,"fh","Hammers"),
+    (()=>{ const C=hgChests(), R=mythicRate(), n=num(C.lucky)+num(C.custom); return ["Chests to open",`<button class="btn sm${n?" primary":""}" id="hgChests">${n?`${fmt(num(C.lucky))} Lucky${num(C.custom)?` + ${num(C.custom)} Custom`:""} · ~${(num(C.lucky)*R.r+num(C.custom)).toFixed(1)} Mythic`:"Add chests"} ›</button>`]; })()]});
+  on("hgChests",openChestSheet);
   const gv=govNextStep();
   reportCard("govReport",{title:"Governor Gear",pkey:"p:Governor Gear",doneRe:/(gold|purple|red|blue|green) (t\d )?\d★/i,rows:[
     ["Next up",gv?`${esc(gv.p.name)} → ${esc((GOV_TIERS[gv.to]||[""])[0])}`:"Plan done ✓"],
