@@ -1552,7 +1552,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1592,7 +1592,7 @@
       "Base": "Resources",
       "Plan": "Shop guide",
       "Heroes": "Mystic Trials",
-      "Shop": "Paid"
+      "Shop": "Free shops"
     },
     "t11Open": {
       "nodes": false,
