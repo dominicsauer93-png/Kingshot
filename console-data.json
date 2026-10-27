@@ -574,6 +574,22 @@
       "kind": "once",
       "d": true,
       "note": "Voyage milestones give 500+ Charm Designs free — replaces the Charm Benefits Card"
+    },
+    {
+      "t": "Audacious Adventure — Witchbane",
+      "aud": 7.99,
+      "kind": "once",
+      "d": true,
+      "auto": "2026-10",
+      "note": "Halloween Party pass · bought 28 Oct"
+    },
+    {
+      "t": "Audacious Adventure — Pranksterbane",
+      "aud": 14.99,
+      "kind": "once",
+      "d": true,
+      "auto": "2026-10",
+      "note": "Halloween Party pass · bought 28 Oct"
     }
   ],
   "trackFarm": [
@@ -3287,9 +3303,9 @@
   "packBudget": 100,
   "packMonths": {
     "2026-10": {
-      "spent": 54.96,
+      "spent": 77.94,
       "closed": true,
-      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99"
+      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99 · Audacious passes 22.98"
     },
     "2026-11": {
       "spent": 0,

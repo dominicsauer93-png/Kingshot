@@ -50,13 +50,14 @@ function vPick(keys,onlyNow,budget,already){
   const need=vNeeds(), rem={}; keys.forEach(k=>rem[k]=need[k]);
   const bought=already||[], boughtOf=n=>bought.filter(p=>p.t.startsWith(n)).length;
   bought.forEach(p=>{ const d=VALUE_DB.find(x=>p.t.startsWith(x.n)); if(d&&!d.alt) keys.forEach(k=>rem[k]=Math.max(0,rem[k]-vY(d,k))); });
-  const cands=[]; VALUE_DB.filter(d=>!onlyNow||vOnNow(d)).forEach(d=>{ for(let c=boughtOf(d.n);c<(d.wk?4:1);c++) cands.push({d,c}); });
+  const owned=n=>(state.packs||[]).some(p=>p.d&&p.t.startsWith(n)); // one-off event passes you already bought (any month) aren't suggested again
+  const cands=[]; VALUE_DB.filter(d=>(!onlyNow||vOnNow(d))&&(d.wk||!owned(d.n)||boughtOf(d.n))).forEach(d=>{ for(let c=boughtOf(d.n);c<(d.wk?4:1);c++) cands.push({d,c}); });
   const gain=d=>{ const parts=keys.filter(k=>rem[k]>0&&vY(d,k)>0).map(k=>({k,v:Math.min(vY(d,k),rem[k])/need[k]})); return d.alt?parts.sort((a,b)=>b.v-a.v).slice(0,1):parts; };
   const picked=[]; let left=budget;
   const ready=x=>x.c===boughtOf(x.d.n)||picked.some(p=>p.d===x.d&&p.c===x.c-1); // week 2 only after week 1
   for(;;){ let best=null;
     cands.forEach(x=>{ if(x.used||!ready(x)) return; let par=null;
-      if(x.d.needs&&!picked.some(p=>p.d.n===x.d.needs)&&!boughtOf(x.d.needs)){ par=cands.find(y=>y.d.n===x.d.needs&&!y.used); if(!par) return; }
+      if(x.d.needs&&!picked.some(p=>p.d.n===x.d.needs)&&!boughtOf(x.d.needs)&&!owned(x.d.needs)){ par=cands.find(y=>y.d.n===x.d.needs&&!y.used); if(!par) return; }
       const cost=x.d.a+(par?par.d.a:0); if(cost>left) return;
       const v=[...gain(x.d),...(par?gain(par.d):[])].reduce((t,p)=>t+p.v,0)/cost;
       if(v>0&&(!best||v>best.v)) best={x,par,v}; });
