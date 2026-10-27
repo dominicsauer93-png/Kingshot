@@ -670,27 +670,27 @@
   "resources": [
     {
       "n": "General speedup (min)",
-      "h": "6003"
+      "h": "17076"
     },
     {
       "n": "Soldier Training speedup (min)",
-      "h": "1490"
+      "h": "8036"
     },
     {
       "n": "Construction speedup (min)",
-      "h": "6148"
+      "h": "13913"
     },
     {
       "n": "Research speedup (min)",
-      "h": "4285"
+      "h": "2387"
     },
     {
       "n": "Learning speedup (min)",
-      "h": "720"
+      "h": "1560"
     },
     {
       "n": "Soldier Healing speedup (min)",
-      "h": "18675"
+      "h": "28874"
     },
     {
       "n": "Bread",
@@ -744,7 +744,7 @@
     {
       "n": "Hilde",
       "need": 740,
-      "have": 7,
+      "have": 9,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -753,7 +753,7 @@
     {
       "n": "Marlin",
       "need": 700,
-      "have": 72,
+      "have": 73,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -813,7 +813,7 @@
     {
       "n": "Alcar",
       "need": 600,
-      "have": 49,
+      "have": 51,
       "pos": 24,
       "tgt": 24,
       "rally": false
@@ -821,7 +821,7 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 47,
+      "have": 51,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -1459,7 +1459,7 @@
     }
   ],
   "tg": {
-    "have": 480,
+    "have": 492,
     "need": 3726,
     "ttgHave": 8,
     "ttgNeed": 414
@@ -1467,9 +1467,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 40501,
-      "threads": 201,
-      "vision": 587
+      "satin": 46213,
+      "threads": 203,
+      "vision": 621
     },
     "pieces": [
       {
@@ -1902,8 +1902,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 565,
-      "designs": 318
+      "guides": 593,
+      "designs": 337
     },
     "rows": [
       {
@@ -3236,9 +3236,9 @@
   "pets": {
     "have": {
       "food": 12950,
-      "manuals": 1451,
-      "potions": 83,
-      "tmCommon": 42,
+      "manuals": 1504,
+      "potions": 90,
+      "tmCommon": 56,
       "tmAdv": 0,
       "medals": 4
     },
@@ -3329,7 +3329,7 @@
       }
     ]
   },
-  "shardGeneral": 68,
+  "shardGeneral": 73,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
