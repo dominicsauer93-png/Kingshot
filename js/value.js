@@ -76,11 +76,10 @@ function renderBestValue(){
   const {picked,left,need,rem}=vPick(keys,onlyNow,M.left,M.bought);
   const order=picked.map((p,i)=>({p,i,by:vBuyBy(p.d)})).sort((a,b)=>(a.by||"9")<(b.by||"9")?-1:(a.by||"9")>(b.by||"9")?1:a.i-b.i);
   const fdD=s=>new Date(s+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"});
-  const give=d=>d.alt?Object.entries(d.y).map(([k,v])=>`${fmt(v)} ${vLab(k)}`).join(" <i>or</i> "):Object.entries(d.y).map(([k,v])=>k==="gems"?`${fmt(v)} gems <i>(≈${Math.round(v/GEMS_PER_SHARD)} Roulette shards)</i>`:`${fmt(v)} ${vLab(k)}`).join(" · ");
+  const give=d=>d.alt?Object.entries(d.y).map(([k,v])=>`${fmt(v)} ${vLab(k)}`).join(" <i>or</i> "):Object.entries(d.y).map(([k,v])=>k==="gems"?`${fmt(v)} gems`:`${fmt(v)} ${vLab(k)}`).join(" · ");
   host.innerHTML=`<div class="card"><b style="font-size:16px">What do you want this month?</b>
       <div class="bvchips">${VALUE_ITEMS.map(([k,l])=>`<button class="chip" data-k="${k}" aria-pressed="${keys.includes(k)}">${l}${keys.includes(k)&&need[k]?` <small>· ${fmt(Math.round(need[k]))} short</small>`:""}</button>`).join("")}</div>
-      <label class="bvnow"><input type="checkbox" id="bvNow"${onlyNow?" checked":""}> Only deals on now</label>
-      <p class="faint" style="margin:6px 0 0;font-size:13.5px">Ranked by how much of what you're short of each A$ fills. Gems count as Hero Roulette shards.</p></div>`+
+      <label class="bvnow"><input type="checkbox" id="bvNow"${onlyNow?" checked":""}> Only deals on now</label></div>`+
     `<div class="card mt"><div class="rowb"><b style="font-size:16px">Best buys for ${esc(M.label)}</b><button class="btn ghost sm mono" id="bvBud">A$${M.left.toFixed(2)} left of ${M.bud} ✎</button></div>`+
     (M.bought.length?`<p class="faint" style="margin:4px 0 0">Bought so far: ${M.bought.map(p=>esc(p.t)).join(", ")}</p>`:"")+
     (picked.length?`<ol class="bvlist">${order.map(({p,by})=>`<li><div class="bvrow"><b>${esc(vName(p))}</b><span class="mono gold">A$${p.d.a.toFixed(2)}</span></div>
@@ -88,13 +87,12 @@ function renderBestValue(){
         ${by?`<br><span class="tag warn">buy by ${fdD(by)}</span>`:""}${p.d.note?` <span class="faint">${esc(p.d.note)}</span>`:""}</li>`).join("")}</ol>
       <div class="rcrows">${keys.map(k=>{ const got=need[k]-rem[k]; return need[k]?`<div class="rcrow"><span>${vLab(k)}</span><b>${got>0?`<span class="ok">+${fmt(Math.round(got))}</span>`:"+0"} of ${fmt(Math.round(need[k]))} short</b></div>`:`<div class="rcrow"><span>${vLab(k)}</span><b class="faint">not short ✓</b></div>`; }).join("")}
         <div class="rcrow"><span>Spend</span><b>A$${(M.left-left).toFixed(2)} · A$${left.toFixed(2)} left</b></div></div>
-      <button class="btn primary mt" id="bvUse">Use this as my ${esc(M.label)} plan</button>
-      <p class="faint" style="margin:6px 0 0;font-size:13.5px">Puts these in Shops &amp; Packs (replacing unbought plan items). Tick them there as you buy — they come off this budget.</p>`
+      <button class="btn primary mt" id="bvUse">Use this as my ${esc(M.label)} plan</button>`
       :`<p class="faint">${keys.length?"Nothing on now closes what you picked — untick “Only deals on now” to see what's coming.":"Pick at least one item above."}</p>`)+`</div>`+
     `<h3 class="sgsec">Best per A$, by item</h3>`+
     keys.map(k=>{ const per=d=>vY(d,k)/d.a, L=VALUE_DB.filter(d=>vY(d,k)>0).sort((a,b)=>per(b)-per(a)).slice(0,4); if(!L.length) return "";
       const f=v=>v>=10?fmt(Math.round(v)):v.toFixed(1);
-      return `<details class="fold mt"${k===keys[0]?" open":""}><summary><span class="grow">${vLab(k)}</span><small class="faint">best ${f(per(L[0]))} per A$</small></summary><div class="fbody">${L.map((d,i)=>`<div class="rcrow"><span>${i+1}. ${esc(d.n)} ${vOnNow(d)?'<span class="tag ok">on now</span>':""}${d.est?' <span class="tag plain">est.</span>':""}</span><b>${f(per(d))}/A$</b></div>`).join("")}</div></details>`; }).join("");
+      return `<details class="fold mt"><summary><span class="grow">${vLab(k)}</span><small class="faint">best ${f(per(L[0]))} per A$</small></summary><div class="fbody">${L.map((d,i)=>`<div class="rcrow"><span>${i+1}. ${esc(d.n)} ${vOnNow(d)?'<span class="tag ok">on now</span>':""}${d.est?' <span class="tag plain">est.</span>':""}</span><b>${f(per(d))}/A$</b></div>`).join("")}</div></details>`; }).join("");
   host.querySelectorAll(".bvchips .chip").forEach(c=>c.onclick=()=>{ const k=c.dataset.k, L=state.ui.bvPick, i=L.indexOf(k); if(i>-1) L.splice(i,1); else L.push(k); scheduleSave(); renderBestValue(); });
   const nw=$("#bvNow"); nw.onchange=()=>{ state.ui.bvNow=nw.checked; scheduleSave(); renderBestValue(); };
   on("bvBud",openPackBudgetSheet);

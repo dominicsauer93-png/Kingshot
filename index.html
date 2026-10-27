@@ -75,16 +75,15 @@
       <details class="evmode" id="eventMode" hidden></details>
       <div class="cols-3-2 mt2">
         <section class="sec" data-key="Do next">
-          <h2>Do next <small id="doCount"></small></h2>
-          <p class="faint" style="margin:-4px 0 10px;font-size:13.5px">Ready now first, then main heroes, then whole-army stats. Tap one to open it, or “I did this” to update the bag in one go.</p>
+          <h2>Today <small id="doCount"></small></h2>
           <div class="dolist" id="doNext"></div>
           <button class="btn mt" id="doMore">Show all</button>
         </section>
         <div>
-          <section class="sec" data-key="Bag check"><div class="card" id="bagCheck"></div><div class="card mt" id="timelines"></div></section>
+          <section class="sec" data-key="Bag check"><div class="card" id="bagCheck"></div><details class="fold mt" id="tlFold"><summary><span class="grow">Forecast</span><span class="faint" style="font-weight:500;font-size:14px">when you reach each goal</span></summary><div class="fbody" id="timelines"></div></details></section>
           <section class="sec" data-key="Upcoming Events">
-            <h2>Coming up <button class="btn sm" id="evAdd">+ Event</button></h2>
-            <div class="card"><div class="cal" id="evCal"></div><div class="evday" id="evDay" hidden></div><div class="stack mt" id="evUpcoming"></div>
+            <h2>Events <button class="btn sm" id="evAdd">+ Event</button></h2>
+            <div class="card"><div class="stack" id="evUpcoming"></div>
               <button class="btn sm ghost mt" id="evAll">All events</button></div>
           </section>
         </div>
@@ -93,18 +92,18 @@
 
     <!-- ================= RALLY ================= -->
     <div class="page" data-tab="Heroes" hidden>
-      <div class="phead"><div><h1>Heroes</h1><p>Your heroes, their shards, and how strong you are as a rally leader.</p></div></div>
+      <div class="phead"><div><h1>Heroes</h1></div></div>
       <div class="subnav" role="tablist" aria-label="Heroes sections"></div>
       <section class="sec" data-sub="Overview" data-key="This week">
-        <h2>This week <small>built from your history</small></h2>
+        <h2>This week</h2>
         <div id="weekReport"></div>
       </section>
       <section class="sec" data-sub="Overview" data-key="Combat Quality">
-        <h2>Combat quality <small>tap to update</small></h2>
+        <h2>Combat quality</h2>
         <div class="tiles" id="combatTiles"></div>
       </section>
       <section class="sec" data-sub="Overview" data-key="Progress">
-        <h2>Progress over time <small>saved once a day, automatically</small></h2>
+        <h2>Progress</h2>
         <div class="card">
           <div class="chips-row" id="progMetric" role="group" aria-label="What to chart"></div>
           <div class="rowb mt" style="align-items:flex-end"><div id="progHead"></div><div class="seg" id="progRange" role="group" aria-label="Time range"><button data-v="30">30d</button><button data-v="90">90d</button><button data-v="all">All</button></div></div>
@@ -113,12 +112,12 @@
         </div>
       </section>
       <section class="sec" data-sub="Overview" data-key="Power Grades">
-        <h2>Power grades <small>tap a pillar to edit</small></h2>
+        <h2>Power grades</h2>
         <div class="list" id="pillars"></div>
         <div class="legend"><span><span class="sw" style="background:var(--green)"></span>Ahead</span><span><span class="sw" style="background:var(--amber)"></span>Slightly behind</span><span><span class="sw" style="background:var(--red)"></span>Well behind</span><span><span class="sw" style="background:var(--text);opacity:.55"></span>Benchmark</span></div>
       </section>
       <section class="sec" data-sub="Roster" data-key="Hero Roles">
-        <h2>Your heroes <small>most used first · tap a hero</small></h2>
+        <h2>Your heroes</h2>
         <div class="grid" style="--min:260px" id="heroCards"></div>
         <button class="btn sm ghost mt" id="heroMore" hidden></button>
         <details class="fold mt2" id="roleFold"><summary><span class="grow">Best heroes for each battle</span><span class="faint" style="font-weight:500;font-size:14px">8 battle types</span></summary>
@@ -126,11 +125,10 @@
         <details class="fold" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="faint" style="font-weight:500;font-size:14px">S best → D worst</span></summary>
           <div class="fbody"><div class="seg" id="tierSeg" role="group" aria-label="Which heroes" style="max-width:320px"><button data-v="mine">My heroes</button><button data-v="all">All heroes</button></div>
           <div class="tierwrap mt"><table class="tiert" id="tierTable"></table></div></div></details>
-        <p class="faint mt" style="font-size:13.5px">Gen 8 tier lists, Oct 2026. Use score: S=4, A=3, B=2, C=1, D=0 per battle type; KvK and Bear rally lead count double (max 40). ⚔ = rally hero. Diego, Liz and Luna are Gen 8 (“soon”).</p>
       </section>
       <section class="sec" data-sub="Shards" data-key="Gold Hero Shards">
         <div class="tiles t2" id="shardTiles"></div>
-        <p class="muted mt" style="margin-bottom:8px">Type your shards in <b>Have</b>. When a hero has enough, tap <b>Upgrade</b> after you do it in game. Tap a name to set stars.</p>
+        <div class="mt"></div>
         <div class="shlist" id="goldShardBody"></div>
         <button class="add" id="addGoldShard">+ Add hero</button>
         <details class="fold mt"><summary>Where to get Gold Hero Shards</summary><div class="fbody howto">
@@ -139,13 +137,13 @@
       </section>
 
       <section class="sec" data-sub="Masters" data-key="Masters">
-        <h2>Masters <small>ranked for a rally leader</small></h2>
+        <h2>Masters</h2>
         <div class="info" id="mastNext"></div>
         <div class="grid mt" style="--min:300px" id="mastBody"></div>
         <button class="add" id="addMast">+ Add master</button>
       </section>
       <section class="sec" data-sub="Mystic Trials" data-key="Mystic Trials">
-        <h2>Mystic Trials <small>lower rank = better</small></h2>
+        <h2>Mystic Trials</h2>
         <div class="list" id="mysticBody"></div>
         <button class="add" id="addMystic">+ Add zone</button>
         <h2 class="h2 mt2">Progress</h2>
@@ -155,7 +153,7 @@
 
     <!-- ================= GEAR ================= -->
     <div class="page" data-tab="Gear" hidden>
-      <div class="phead"><div><h1>Gear</h1><p>Tap any card to update it.</p></div></div>
+      <div class="phead"><div><h1>Gear</h1></div></div>
       <div class="subnav" role="tablist" aria-label="Gear sections"></div>
 
       <section class="sec" data-sub="Hero Gear" data-key="Hero Gear">
@@ -216,7 +214,7 @@
 
     <!-- ================= BASE ================= -->
     <div class="page" data-tab="Base" hidden>
-      <div class="phead"><div><h1>Base</h1><p>Troops, T11 unlocks and buildings.</p></div></div>
+      <div class="phead"><div><h1>Base</h1></div></div>
       <div class="subnav" role="tablist" aria-label="Base sections"></div>
       <section class="sec" data-sub="T11" data-key="T11 Unlocks">
         <div id="t11Body"></div>
@@ -229,19 +227,19 @@
         </div>
       </section>
       <section class="sec" data-sub="Troops" data-key="Troop Plan">
-        <h2>Troop targets <small>shorthand works: 500k, 1.5m</small></h2>
+        <h2>Troops</h2>
         <div class="list" id="troopBody"></div>
       </section>
       <section class="sec" data-sub="Buildings" data-key="Build Order — TG6→TG8">
         <div class="tiles t2" id="tgTiles"></div>
         <p class="note-line" id="tgNote"></p>
-        <h2 class="h2 mt2">Build order <small>raise TC one tier, then the rest in this order</small></h2>
+        <h2 class="h2 mt2">Build order</h2>
         <div class="list" id="buildBody"></div>
         <button class="add" id="addBuild">+ Add building</button>
         <div class="card mt"><h3>Supplies left (all buildings → TG8)</h3><div class="kv" id="bldTotals"></div></div>
       </section>
       <section class="sec" data-sub="Resources" data-key="Resources &amp; Speedups">
-        <h2>Resources &amp; speedups <small>speedups in minutes</small></h2>
+        <h2>Resources &amp; speedups</h2>
         <div class="grid" style="--min:240px" id="resBody"></div>
         <button class="add" id="addRes">+ Add material</button>
       </section>
@@ -249,40 +247,37 @@
 
     <!-- ================= PLAN ================= -->
     <div class="page" data-tab="Shop" hidden>
-      <div class="phead"><div><h1>Shop</h1><p>What to buy with coins, and with money.</p></div></div>
+      <div class="phead"><div><h1>Shop</h1></div></div>
       <div class="subnav" role="tablist" aria-label="Shop sections"></div>
       <section class="sec" data-sub="Free shops" data-key="Shop guide">
         <div id="shopGuide"></div>
         <details class="fold mt"><summary><span class="grow">Where each supply comes from</span></summary><div class="fbody">
-        <h2>Free path <small>where each supply comes from</small></h2>
         <div class="card" style="padding:0;overflow:hidden"><table class="gtable" id="srcTable"></table></div>
-        <h2 class="h2 mt2">Shop shopping list <small>buy in this order</small></h2>
+        <h2 class="h2 mt2">Buy order</h2>
         <div class="card" style="padding:0;overflow:hidden"><table class="gtable" id="shopTable"></table></div>
         <div class="info mt"><b>Gems:</b> save them for Hero Roulette when Wee &amp; Woo is featured. Don't spend gems on resources or speedups. <b>Speedups:</b> save for the matching event day.</div>
         </div></details>
       </section>
       <section class="sec" data-sub="Paid" data-key="Shops &amp; Packs">
         <div id="bestValue"></div>
-        <h2 class="h2 mt2">Your plan &amp; packs <small>tick what you buy · ✎ to edit</small></h2>
+        <h2 class="h2 mt2">My packs</h2>
         <div class="tiles" id="packTiles" hidden></div>
         <div class="card mt" style="padding:0;overflow:hidden" id="packList"></div>
         <button class="add" id="addPack">+ Add pack</button>
-        <p class="faint mt" style="font-size:13.5px">Tick the packs you own or buy. Ticking a card starts its 30-day (or 7-day) timer from today — change the date in ✎ if you bought it earlier. Home warns you 3 days before a card ends.</p>
       </section>
     </div>
 
     <!-- ================= DATA ================= -->
     <div class="page" data-tab="Data" hidden>
-      <div class="phead"><div><h1>Data</h1><p>Update everything, account and sync.</p></div></div>
+      <div class="phead"><div><h1>Settings</h1></div></div>
       <div class="subnav" role="tablist" aria-label="Data sections"></div>
       <section class="sec" data-sub="Update all" data-key="Update all">
-        <h2>Update everything <small>one page · saves as you type</small></h2>
-        <p class="lead">Fill in what changed in-game. Every section of the console updates from here. Targets are set in each section.</p>
+        <h2>Update <small>saves as you type</small></h2>
         <div class="qjump" id="qJump" role="toolbar" aria-label="Jump to a group"></div>
         <div id="qBody"></div>
       </section>
       <section class="sec" data-sub="Account" data-key="Account">
-        <h2>Account <small>tap to edit</small></h2>
+        <h2>Account</h2>
         <div class="kvgrid" id="idstrip"></div>
         <h2 class="h2 mt2">Appearance</h2>
         <div class="card"><div class="seg" id="themeSeg" role="group" aria-label="Theme"><button data-v="auto">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button></div>
@@ -313,7 +308,7 @@
         </div>
       </section>
       <section class="sec" data-sub="Reminders" data-key="Reminders">
-        <h2>Reminders <small>so you never miss an event or a card</small></h2>
+        <h2>Reminders</h2>
         <div class="cols">
           <div class="card"><h3>1 · Add to your calendar</h3>
             <p class="lead" style="margin:0 0 10px">Works now, nothing to set up. Your phone's calendar reminds you.</p>
