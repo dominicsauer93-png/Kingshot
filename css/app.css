@@ -588,3 +588,11 @@
   .estages{margin:10px 0 4px} .est{display:grid;grid-template-columns:62px 130px 1fr;gap:8px;padding:6px 8px;border-radius:8px;font-size:14px;align-items:baseline}
   .est span{color:var(--faint)} .est em{font-style:normal;color:var(--muted)} .est.past{opacity:.45} .est.now{background:var(--acc-soft);outline:1px solid var(--acc)}
   @media (max-width:520px){ .est{grid-template-columns:52px 1fr} .est em{grid-column:2} }
+
+  .bvchips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+  .bvchips .chip[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+  .bvnow{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted)}
+  .bvlist{margin:8px 0 4px;padding-left:22px} .bvlist li{padding:8px 0;border-top:1px solid var(--line-soft)} .bvlist li:first-child{border-top:0}
+  .bvlist i{font-style:normal;color:var(--faint)}
+  .bvrow{display:flex;justify-content:space-between;gap:10px;align-items:baseline} .bvrow b{flex:1;min-width:0} .bvrow span{flex:none}
+  .bvchips .chip small{font-weight:500;opacity:.85}

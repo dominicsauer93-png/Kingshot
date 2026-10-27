@@ -78,7 +78,7 @@ function renderHome(){
   paintGoals();
   renderEventMode();
   renderBagCheck(); renderTimelines();
-  // daily + weekly checklists reset here (they live in Plan → Checklists now, not on Home)
+  // daily + weekly checklists reset here (they live in Data → Checklists now, not on Home)
   const t=state.today; const today=fcToday();
   if(t.routineDate!==today){ t.routine.forEach(r=>r.d=false); t.routineDate=today; scheduleSave(); }
   const pa=packAlerts(), al=$("#packAlert"); al.hidden=!pa.length;

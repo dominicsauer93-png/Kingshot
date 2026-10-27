@@ -139,7 +139,7 @@ function renderReminders(){
 function renderPlan(){
   const ae=document.activeElement, editing=ae&&ae.isContentEditable&&ae.closest("#routineEdit,#weekEdit,#trackNow,#trackFarm");
   if(!editing){ buildChecks($("#routineEdit"),state.today.routine,{onTick:()=>{}}); buildChecks($("#weekEdit"),state.weekly.items,{onTick:()=>{}}); buildChecks($("#trackNow"),state.trackNow); buildChecks($("#trackFarm"),state.trackFarm); }
-  renderShopsPacks(); renderReminders(); renderShopGuide();
+  renderShopsPacks(); renderReminders(); renderShopGuide(); renderBestValue();
 }
 function renderData(){
   $("#idstrip").innerHTML=idFields.map(([k,l])=>tileH({label:l,value:esc(k==="day"?kingdomDay():k==="power"&&num(state.account.power)>0?fmtBig(num(state.account.power)):(state.account[k]||"—")),txt:true})).join("");

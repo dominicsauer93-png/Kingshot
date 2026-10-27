@@ -125,6 +125,9 @@ const EVENT_SHOPS=[
   [/merchant empire/i,"Merchant Empire"],[/alliance brawl/i,"Alliance Brawl"],[/golden glaives/i,"Golden Glaives"],[/flamedragon|dragon banquet/i,"Flamedragon Tyrant"],
   [/halloween/i,"Halloween Party"],[/mystic trial/i,"Mystic Trials"],[/finder'?s fortune/i,"Finder's Fortune"]];
 const evShopSaved=name=>SHOP_DB.some(x=>x.n===name);
+const STALE_DAYS=45; // shop / deal data older than this gets a "check" marker
+const staleDays=d=>d?Math.round((new Date(gameToday())-new Date(d))/864e5):0;
+function staleShops(){ return SG_REGULAR.map(([n])=>SHOP_DB.find(s=>s.n===n)).filter(s=>s&&staleDays(s.seen)>STALE_DAYS); }
 const noShop=n=>(state.noShop||[]).includes(n); // events you've marked as having no shop
 function eventShopFor(e){ const m=EVENT_SHOPS.find(([re])=>re.test((e&&e.n)||"")); return m?{name:m[1],saved:evShopSaved(m[1])||noShop(m[1]),none:noShop(m[1])}:null; }
 function eventShopProgress(){ const all=[...new Set(EVENT_SHOPS.map(x=>x[1]))]; return {saved:all.filter(n=>evShopSaved(n)||noShop(n)).length,none:all.filter(noShop).length,total:all.length,missing:all.filter(n=>!evShopSaved(n)&&!noShop(n))}; }
@@ -139,7 +142,8 @@ function renderShopGuide(){
   const N=blockerNeeds(), idx=n=>SHOP_DB.findIndex(s=>s.n===n), full=!!state.ui.sgFull; // full = the raw database (item tables, packs, reference)
   const fdS=s=>s?new Date(s+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"}):"";
   const tile=([n,when])=>{ const s=SHOP_DB[idx(n)]; if(!s) return ""; const b=liveBuys(s,N).need, seen=new Set(), top=b.filter(x=>!seen.has(x.k)&&seen.add(x.k)).slice(0,2);
-    return `<button class="sgtile" data-i="${idx(n)}"><span class="sgt-h"><b>${esc(sgShort(n))}</b><small>${esc(when)}</small></span>`+
+    const old=staleDays(s.seen)>STALE_DAYS;
+    return `<button class="sgtile" data-i="${idx(n)}"><span class="sgt-h"><b>${esc(sgShort(n))}</b><small>${old?`<span class="warn">seen ${staleDays(s.seen)}d ago</span>`:esc(when)}</small></span>`+
       (top.length?top.map(x=>`<span class="sgt-buy">${esc(x.it[0].replace(/ \(.*\)/,""))}<em>${fmt(x.it[1])}</em></span>`).join(""):'<span class="sgt-none">Nothing you need ✓</span>')+`</button>`; };
   const fold=i=>{ const s=SHOP_DB[i]; return `<details class="fold mt sgshop"${state.ui.sgOpen===i?" open":""} data-i="${i}"><summary><span class="grow">${esc(s.n)}</span><small class="faint">${esc(s.cur)}</small></summary><div class="fbody">`+
       liveBuysH(s,N)+(s.best.length?`<div class="sgbest"><b>Usually buy</b><ol>${s.best.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:"")+
@@ -151,7 +155,8 @@ function renderShopGuide(){
   const liveEv=liveEvents().map(x=>eventShopFor(x.e)).filter(x=>x&&x.saved&&idx(x.name)>=0&&!SG_REGULAR.some(r=>r[0]===x.name)&&SHOP_DB[idx(x.name)].items.some(it=>typeof it[1]==="number")).map(x=>[x.name,"On now"]).filter((x,i,a)=>a.findIndex(y=>y[0]===x[0])===i);
   const blk=["mg","threads","designs","mith","gen"].filter(k=>N[k]&&N[k].short).map(k=>`${RES_LABEL[k]} <b>${fmt(N[k].short)}</b> short`);
   host.innerHTML=`<div class="card sghead"><b style="font-size:16px">Your shopping list</b><p class="muted" style="margin:2px 0 0">What to buy in each shop right now, from your bag. Tap a shop for details.</p>`+
-      (blk.length?`<p class="sgblk">Short of: ${blk.join(" · ")}</p>`:"")+`</div>`+
+      (blk.length?`<p class="sgblk">Short of: ${blk.join(" · ")}</p>`:"")+
+      (staleShops().length?`<p class="sgblk warn">📸 ${staleShops().length} shop${staleShops().length>1?"s":""} not checked for ${STALE_DAYS}+ days — screenshot ${staleShops().length>1?"them":"it"} so prices stay right.</p>`:"")+`</div>`+
     `<div class="sgtiles">${liveEv.map(tile).join("")}${SG_REGULAR.map(tile).join("")}</div>`+
     `<div class="sgprog mt"><div class="rowb"><b>Event shops saved</b><span class="mono">${ep.saved} / ${ep.total}</span></div>${barH(pc(ep.saved,ep.total),ep.saved===ep.total?"ok":"")}<div class="rowb" style="align-items:flex-end;gap:10px"><span class="faint" style="font-size:13.5px">${ep.missing.length?`${ep.missing.length} still to capture`:"All captured ✓"}${ep.none?` · ${ep.none} have no shop`:""}. Home shows 📸 when one is on.</span>${ep.missing.length?`<button class="btn sm" id="sgCam">📸 Capture</button>`:""}</div></div>`+
     (last&&mo[last].closed&&last===cur?`<p class="faint mt" style="margin-bottom:0">${new Date(last+"-01T00:00:00").toLocaleDateString(undefined,{month:"long"})} budget closed — A$${num(mo[last].spent).toFixed(2)} spent. Resets on the 1st.</p>`:"")+
