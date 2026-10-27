@@ -1515,7 +1515,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-27",
+    "routineDate": "2026-10-28",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1572,7 +1572,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1607,12 +1607,12 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Checklists",
+      "Data": "Update all",
       "Gear": "Hero Gear",
-      "Base": "Troops",
+      "Base": "Resources",
       "Plan": "Shop guide",
-      "Heroes": "Overview",
-      "Shop": "Free shops"
+      "Heroes": "Mystic Trials",
+      "Shop": "Paid"
     },
     "t11Open": {
       "nodes": false,
@@ -1628,7 +1628,7 @@
       "Shards": false,
       "Masters": true,
       "Gov": true,
-      "Widgets": true,
+      "Widgets": false,
       "Charms": false,
       "T11": false,
       "Mystic": true,
@@ -1645,12 +1645,12 @@
     "todayAll": true,
     "tierOpen": false,
     "planOpen": true,
-    "sgOpen": 10,
     "bvPick": [
       "tg",
       "gen",
       "designs"
-    ]
+    ],
+    "sgOpen": 9
   },
   "troopCounts": {
     "inf": {
@@ -2776,6 +2776,26 @@
     },
     {
       "d": "2026-10-27",
+      "v": {
+        "power": 329725706,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 471
+      }
+    },
+    {
+      "d": "2026-10-28",
       "v": {
         "power": 329725706,
         "leth": 74.3,
