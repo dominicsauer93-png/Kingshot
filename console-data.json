@@ -3370,6 +3370,10 @@
     {
       "d": "2026-10-26",
       "t": "Triton: 4★ T1 (−100 shards)"
+    },
+    {
+      "d": "2026-10-27",
+      "t": "Sanctuary Battle: no shop"
     }
   ],
   "bagCheck": {
@@ -3382,5 +3386,8 @@
       "fh": 71,
       "gen": 22
     }
-  }
+  },
+  "noShop": [
+    "Sanctuary Battle"
+  ]
 }
