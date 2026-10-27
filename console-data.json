@@ -1572,7 +1572,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1729,7 +1729,7 @@
       {
         "type": "Cavalry",
         "slot": "Helm (Lethality)",
-        "lvC": 120,
+        "lvC": 121,
         "lvT": 159,
         "mC": 12,
         "mT": 13,
