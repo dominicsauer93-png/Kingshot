@@ -1607,11 +1607,11 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Update all",
+      "Data": "Checklists",
       "Gear": "Hero Gear",
       "Base": "Resources",
       "Plan": "Shop guide",
-      "Heroes": "Shards",
+      "Heroes": "Roster",
       "Shop": "Paid"
     },
     "t11Open": {
