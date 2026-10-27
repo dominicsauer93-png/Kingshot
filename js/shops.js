@@ -109,11 +109,25 @@ const SHOP_DB=[
    best:[],skip:["All under 3,000% — use gems (1,500 per token, Spin 10 = 9 tokens)"],items:[["Common — 5 tokens","US$1.99","2,540%"],["Uncommon — 10","US$4.99","2,180%"],["Rare — 20","US$9.99","2,140%"],["Epic — 40","US$19.99","2,120%"]]}
 ];
 const SHOP_MISSING=[];
+// events that have (or may have) their own shop / exchange. shop = the SHOP_DB entry once it's saved.
+const EVENT_SHOPS=[
+  [/kvk|kingdom of power/i,"KvK Shop (Kingdom of Power)"],[/hall of heroes/i,"Hall of Heroes"],[/champagne/i,"Champagne Fair"],
+  [/dragon essence|dragon'?s caravan/i,"Dragon's Caravan"],[/hero rally/i,"Path of Honor (Hero Rally paid track)"],[/swordland/i,"Swordland Shop"],
+  [/alliance championship$/i,"Alliance Championship Shop"],[/exclusive gear fund/i,"Exclusive Gear Fund"],[/hero roulette/i,"Lucky Chip Pack (Hero Roulette)"],
+  [/wavebound voyage/i,"Sails Aloft (Voyage)"],
+  [/officer project/i,"Officer Project"],[/fishing/i,"Fishing Tournament"],[/sanctuary/i,"Sanctuary Battle"],[/tri-alliance/i,"Tri-Alliance Clash"],
+  [/alliance mobilization/i,"Alliance Mobilization"],[/armament/i,"Armament Competition"],[/strongest governor/i,"Strongest Governor"],
+  [/merchant empire/i,"Merchant Empire"],[/alliance brawl/i,"Alliance Brawl"],[/golden glaives/i,"Golden Glaives"],[/flamedragon|dragon banquet/i,"Flamedragon Tyrant"],
+  [/mystic trial/i,"Mystic Trials"],[/finder'?s fortune/i,"Finder's Fortune"]];
+const evShopSaved=name=>SHOP_DB.some(x=>x.n===name);
+const noShop=n=>(state.noShop||[]).includes(n); // events you've marked as having no shop
+function eventShopFor(e){ const m=EVENT_SHOPS.find(([re])=>re.test((e&&e.n)||"")); return m?{name:m[1],saved:evShopSaved(m[1])||noShop(m[1]),none:noShop(m[1])}:null; }
+function eventShopProgress(){ const all=[...new Set(EVENT_SHOPS.map(x=>x[1]))]; return {saved:all.filter(n=>evShopSaved(n)||noShop(n)).length,none:all.filter(noShop).length,total:all.length,missing:all.filter(n=>!evShopSaved(n)&&!noShop(n))}; }
 
 // the page: a simple shopping list first (one tile per shop, what to buy right now), details tucked below
 const SG_REGULAR=[["Trial Shop","Weekly"],["Arena Shop","Weekly"],["Alliance Championship Shop","Weekly"],["KvK Shop (Kingdom of Power)","Weekly"],["Swordland Shop","Every 2 weeks"],["Tidal Shop","Every 2 weeks"],["Alliance Shop — weekly","Weekly"],["Alliance Shop — daily","Daily"]];
 const SG_EVENT=["Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
-const sgShort=n=>n.replace(/ Shop$/,"").replace(/ \(Kingdom of Power\)/,"").replace(/^Alliance Shop — /,"Alliance ").replace(/^Alliance Championship$/,"Alliance Champ.");
+const sgShort=n=>n.replace(/ \(.*\)$/,"").replace(/ Shop$/,"").replace(/^Alliance Shop — /,"Alliance ").replace(/^Alliance Championship$/,"Alliance Champ.");
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
   const mo=state.packMonths||{}, cur=gameToday().slice(0,7), last=Object.keys(mo).sort().pop();
@@ -128,10 +142,13 @@ function renderShopGuide(){
       (full&&s.items.length?`<details class="fold mt"><summary><span class="grow">Everything it sells</span><small class="faint">seen ${fdS(s.seen)}</small></summary><div class="fbody" style="padding:0"><table class="gtable"><thead><tr><th>Item</th><th>Cost</th><th>${typeof s.items[0][2]==="number"?"Limit":"%"}</th></tr></thead><tbody>${s.items.map(([a,b,c])=>`<tr><td>${esc(a)}</td><td class="mono">${typeof b==="number"?fmt(b):esc(b)}</td><td class="mono">${typeof c==="number"?fmt(c):esc(c)}</td></tr>`).join("")}</tbody></table></div></details>`:"")+
       (s.note?`<p class="muted" style="margin:8px 0 0">${esc(s.note)}</p>`:"")+`</div></details>`; };
   const regIdx=SG_REGULAR.map(([n])=>idx(n)).filter(i=>i>=0), evIdx=SG_EVENT.map(idx).filter(i=>i>=0), packIdx=SHOP_DB.map((_,i)=>i).filter(i=>!regIdx.includes(i)&&!evIdx.includes(i));
+  const ep=eventShopProgress();
+  const liveEv=liveEvents().map(x=>eventShopFor(x.e)).filter(x=>x&&x.saved&&idx(x.name)>=0&&!SG_REGULAR.some(r=>r[0]===x.name)&&SHOP_DB[idx(x.name)].items.some(it=>typeof it[1]==="number")).map(x=>[x.name,"On now"]).filter((x,i,a)=>a.findIndex(y=>y[0]===x[0])===i);
   const blk=["mg","threads","designs","mith","gen"].filter(k=>N[k]&&N[k].short).map(k=>`${RES_LABEL[k]} <b>${fmt(N[k].short)}</b> short`);
   host.innerHTML=`<div class="card sghead"><b style="font-size:16px">Your shopping list</b><p class="muted" style="margin:2px 0 0">What to buy in each shop right now, from your bag. Tap a shop for details.</p>`+
       (blk.length?`<p class="sgblk">Short of: ${blk.join(" · ")}</p>`:"")+`</div>`+
-    `<div class="sgtiles">${SG_REGULAR.map(tile).join("")}</div>`+
+    `<div class="sgtiles">${liveEv.map(tile).join("")}${SG_REGULAR.map(tile).join("")}</div>`+
+    `<div class="sgprog mt"><div class="rowb"><b>Event shops saved</b><span class="mono">${ep.saved} / ${ep.total}</span></div>${barH(pc(ep.saved,ep.total),ep.saved===ep.total?"ok":"")}<div class="rowb" style="align-items:flex-end;gap:10px"><span class="faint" style="font-size:13.5px">${ep.missing.length?`${ep.missing.length} still to capture`:"All captured ✓"}${ep.none?` · ${ep.none} have no shop`:""}. Home shows 📸 when one is on.</span>${ep.missing.length?`<button class="btn sm" id="sgCam">📸 Capture</button>`:""}</div></div>`+
     (last&&mo[last].closed&&last===cur?`<p class="faint mt" style="margin-bottom:0">${new Date(last+"-01T00:00:00").toLocaleDateString(undefined,{month:"long"})} budget closed — A$${num(mo[last].spent).toFixed(2)} spent. Resets on the 1st.</p>`:"")+
     `<h3 class="sgsec">Shops</h3>`+regIdx.map(fold).join("")+
     `<h3 class="sgsec">Event shops</h3>`+evIdx.map(fold).join("")+
@@ -142,6 +159,7 @@ function renderShopGuide(){
     `<details class="fold mt"><summary><span class="grow">What the icons are</span></summary><div class="fbody"><table class="gtable"><tbody>${ITEM_KEY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
     `<p class="faint mt">New shop or pack? Send a screenshot, or upload it to <b>shops/inbox</b> in the Kingshot repo.</p>`:"")+
     `<button class="btn ghost sm mt" id="sgFull">${full?"Hide full shop data":"Show full shop data"}</button>`;
+  on("sgCam",()=>openCamSheet(true));
   on("sgFull",()=>{ state.ui.sgFull=!full; scheduleSave(); renderShopGuide(); });
   host.querySelectorAll(".sgtile").forEach(t=>t.onclick=()=>{ const d=host.querySelector(`details.sgshop[data-i="${t.dataset.i}"]`); if(d){ d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); } });
   host.querySelectorAll("details.sgshop").forEach(d=>d.ontoggle=()=>{ if(d.open) state.ui.sgOpen=+d.dataset.i; else if(state.ui.sgOpen===+d.dataset.i) delete state.ui.sgOpen; scheduleSave(); });
