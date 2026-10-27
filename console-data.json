@@ -3160,6 +3160,16 @@
       "date": "2027-04-12",
       "imp": "normal",
       "note": "Kingshot timeline (day ~668)."
+    },
+    {
+      "n": "Halloween Party",
+      "date": "2026-10-27",
+      "len": 7,
+      "every": 0,
+      "time": "",
+      "imp": "top",
+      "spend": "300 Prankster Points daily → 2 General shards + 3 hammers",
+      "note": "27 Oct – 2 Nov 2026 (confirmed)\nDaily: 300 Prankster Points → 2 General Mythic shards, 3 Forgehammers, 3 h speedup\nCoven Clash: 20 candy per attack, 2 Prankster Points each — Witch drops Lucky Hero Gear chests\nPrankster King: 7 one-day stages — Power Boost, Beast Slay, Hero, Training, Hero Gear, Gather, Gov Gear\nClaim free Candy Party Pack I\nUnused candy → resource chests at the end"
     }
   ],
   "masterNotesV": 2,
