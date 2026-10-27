@@ -1572,7 +1572,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1611,7 +1611,7 @@
       "Gear": "Hero Gear",
       "Base": "Resources",
       "Plan": "Shop guide",
-      "Heroes": "Mystic Trials",
+      "Heroes": "Shards",
       "Shop": "Paid"
     },
     "t11Open": {
@@ -3328,7 +3328,7 @@
       }
     ]
   },
-  "shardGeneral": 22,
+  "shardGeneral": 68,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3386,9 +3386,9 @@
     "gen": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 4
+        "2026-10": 66
       },
-      "seen": 22
+      "seen": 68
     }
   },
   "battle": {
