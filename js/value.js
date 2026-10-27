@@ -21,6 +21,8 @@ const VALUE_DB=[
   {n:"Audacious Adventure — Witchbane",seen:"2026-10-27",a:7.99,pc:"4,000%",on:/halloween/i,est:true,y:{tg:90,gen:5}},
   {n:"Audacious Adventure — Pranksterbane",seen:"2026-10-27",a:14.99,pc:"5,000%",on:/halloween/i,est:true,needs:"Audacious Adventure — Witchbane",y:{tg:180,gen:10}},
   {n:"Candy Party Pack II",seen:"2026-10-27",a:7.99,pc:"4,400%",on:/halloween/i,y:{tg:70,gems:2500}},
+  {n:"Fishing Pro pass",seen:"2026-10-27",a:7.99,pc:"3,000%",on:/fishing/i,est:true,y:{tg:50,gen:2}},
+  {n:"Fishing Master pass",seen:"2026-10-27",a:14.99,pc:"4,000%",on:/fishing/i,est:true,y:{tg:75}},
   {n:"Chameleos widgets (Ava)",seen:"2026-10-26",a:7.99,pc:"3,000%",on:/exclusive gear fund/i,y:{widgets:15}},
   {n:"Mortar widgets (Wee & Woo)",seen:"2026-10-26",a:7.99,pc:"3,000%",on:/exclusive gear fund/i,y:{widgets:15}}
 ];

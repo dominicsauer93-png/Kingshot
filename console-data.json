@@ -3132,10 +3132,11 @@
       "n": "Fishing Tournament",
       "every": 0,
       "time": "",
-      "note": "",
+      "note": "Ends ~29 Oct (2d 13h left on 27 Oct evening); Sunken Treasure Hunt ~30 Oct\nDreamweaver's Tide: 108/150 → Squads' Attack +2% permanent\nBait max 10, +1 every 3 h\nUnused tokens → resources at the end",
       "date": "2026-10-27",
       "len": 3,
-      "endOpen": true
+      "imp": "high",
+      "spend": "Bait before it caps · finish Dreamweaver's Tide (+2% attack)"
     },
     {
       "n": "Exclusive Gear Fund",

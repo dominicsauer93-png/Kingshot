@@ -67,6 +67,11 @@ const SHOP_DB=[
    skip:["Building skin, name tag, troop reassignment unless needed","100,000 scroll unless you know what it is"],
    items:[["1,000 pet food (−80%)",13330,15],["Pet chest (−80%)",20000,10],["Scroll (?) (−80%)",100000,1],["Epic hero shard (−80%)",6600,2],["Building skin? (−50%)",6500,1],["Name change tag (−50%)",6500,1],["10 × 100 V-tokens (−50%)",330,5],["Troop transfer? (−80%)",5200,1]],
    note:"With 880K+ alliance coins, buy the −80% pet items every week. Never shields."},
+  {n:"Fishing Tournament",cur:"Fishing Tokens / Points",when:"~3 days (ends ~29 Oct; Sunken Treasure Hunt ~30 Oct)",seen:"2026-10-27",
+   best:["Dreamweaver's Tide collection (108/150) → Squads' Attack +2% PERMANENT — top priority","Never let bait sit at 10 (refills 1 every 3 h) — fish ~3 times a day","Use Treasure Charts on Ocean Prospector — better fish and Ocean Chests","Daily Drill: 1,500 + 2,000 points · Season missions: 10K–50K points for chests","Spend all Fishing Tokens on Sunken Treasure Hunt before it ends (1% 5 General shards, 3% hammer, 13% Mythic manual)"],
+   skip:["Fishing Pro Set (A$1.49, 2,600%) — under 3,000%","Fishing Pro / Master passes unless budget allows — event ends before 1 Nov"],
+   items:[["Fishing Pro pass — +10% tokens/points, 50 Truegold, 5 hammers, 2 General shards, keys, charts","A$7.99","3,000%"],["Fishing Master pass — +20% tokens/points, 75 Truegold, promotion items, charts","A$14.99","4,000%"],["Fishing Pro Set — 500 gems, chart, shell, items","A$1.49","2,600%"],["Sunken Treasure Hunt — 1 hunt",1500,"tokens"],["Sunken Treasure Hunt — 10 hunts",15000,"tokens"]],
+   note:"Bait: start 5, +1 every 3 h, max 10. Power Cast multiplies points but uses that many baits. Vouchers add +0.5× each. Every 10 unused tokens → 10K resources at the end. Unused special items carry to the next session."},
   {n:"Halloween Party",cur:"Halloween Candy",when:"7 days (27 Oct – 2 Nov 2026)",seen:"2026-10-27",
    best:["Daily: reach 300 Prankster Points → 2 General Mythic shards, 3 Forgehammers, 3 h speedup (every day!)","Candy Party Pack I is free — claim it (100 candy, 2 gold keys)","Spend candy in Coven Clash (20 per attack) — Witch hits drop Lucky Hero Gear chests (Mythic chance)","Audacious Adventure free track to level 21: General shards, Truegold, keys, chests","Surprising Symphony missions — finish them all for 20 wands, 70 Truegold, 2 General shards","Prankster King: do each day's stage (1 day each) — Power Boost, Beast Slay, Hero, Training, Hero Gear, Gather, Gov Gear"],
    skip:["Candy Party Pack II (A$7.99, 4,400%) only if you'd use the candy — 1,000 candy + 70 Truegold + 2,500 gems","Top-up Benefits — only counts spending you'd do anyway","Masquerade wands — cosmetic town skins"],
@@ -134,7 +139,7 @@ function eventShopProgress(){ const all=[...new Set(EVENT_SHOPS.map(x=>x[1]))]; 
 
 // the page: a simple shopping list first (one tile per shop, what to buy right now), details tucked below
 const SG_REGULAR=[["Trial Shop","Weekly"],["Arena Shop","Weekly"],["Alliance Championship Shop","Weekly"],["KvK Shop (Kingdom of Power)","Weekly"],["Swordland Shop","Every 2 weeks"],["Tidal Shop","Every 2 weeks"],["Alliance Shop — weekly","Weekly"],["Alliance Shop — daily","Daily"]];
-const SG_EVENT=["Halloween Party","Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
+const SG_EVENT=["Halloween Party","Fishing Tournament","Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
 const sgShort=n=>n.replace(/ \(.*\)$/,"").replace(/ Shop$/,"").replace(/^Alliance Shop — /,"Alliance ").replace(/^Alliance Championship$/,"Alliance Champ.");
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
