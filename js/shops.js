@@ -159,23 +159,24 @@ function renderShopGuide(){
   const ep=eventShopProgress();
   const liveEv=liveEvents().map(x=>eventShopFor(x.e)).filter(x=>x&&x.saved&&idx(x.name)>=0&&!SG_REGULAR.some(r=>r[0]===x.name)&&SHOP_DB[idx(x.name)].items.some(it=>typeof it[1]==="number")).map(x=>[x.name,"On now"]).filter((x,i,a)=>a.findIndex(y=>y[0]===x[0])===i);
   const blk=["mg","threads","designs","mith","gen"].filter(k=>N[k]&&N[k].short).map(k=>`${RES_LABEL[k]} <b>${fmt(N[k].short)}</b> short`);
-  host.innerHTML=`<div class="card sghead"><b style="font-size:16px">Your shopping list</b><p class="muted" style="margin:2px 0 0">What to buy in each shop right now, from your bag. Tap a shop for details.</p>`+
+  host.innerHTML=`<div class="card sghead"><b style="font-size:16px">Buy now</b>`+
       (blk.length?`<p class="sgblk">Short of: ${blk.join(" · ")}</p>`:"")+
       (staleShops().length?`<p class="sgblk warn">📸 ${staleShops().length} shop${staleShops().length>1?"s":""} not checked for ${STALE_DAYS}+ days — screenshot ${staleShops().length>1?"them":"it"} so prices stay right.</p>`:"")+`</div>`+
     `<div class="sgtiles">${liveEv.map(tile).join("")}${SG_REGULAR.map(tile).join("")}</div>`+
-    `<div class="sgprog mt"><div class="rowb"><b>Event shops saved</b><span class="mono">${ep.saved} / ${ep.total}</span></div>${barH(pc(ep.saved,ep.total),ep.saved===ep.total?"ok":"")}<div class="rowb" style="align-items:flex-end;gap:10px"><span class="faint" style="font-size:13.5px">${ep.missing.length?`${ep.missing.length} still to capture`:"All captured ✓"}${ep.none?` · ${ep.none} have no shop`:""}. Home shows 📸 when one is on.</span>${ep.missing.length?`<button class="btn sm" id="sgCam">📸 Capture</button>`:""}</div></div>`+
+    `<div class="sgprog mt"><div class="rowb"><b>Shop photos</b><span class="mono">${ep.saved} / ${ep.total}</span></div>${barH(pc(ep.saved,ep.total),ep.saved===ep.total?"ok":"")}<div class="rowb" style="align-items:flex-end;gap:10px"><span class="faint" style="font-size:13.5px">${ep.missing.length?`${ep.missing.length} still to capture`:"All captured ✓"}${ep.none?` · ${ep.none} have no shop`:""}</span>${ep.missing.length?`<button class="btn sm" id="sgCam">📸 Capture</button>`:""}</div></div>`+
     (last&&mo[last].closed&&last===cur?`<p class="faint mt" style="margin-bottom:0">${new Date(last+"-01T00:00:00").toLocaleDateString(undefined,{month:"long"})} budget closed — A$${num(mo[last].spent).toFixed(2)} spent. Resets on the 1st.</p>`:"")+
-    `<h3 class="sgsec">Shops</h3>`+regIdx.map(fold).join("")+
+    (full?`<h3 class="sgsec">Shops</h3>`+regIdx.map(fold).join("")+
     `<h3 class="sgsec">Event shops</h3>`+evIdx.map(fold).join("")+
-    (full?`<h3 class="sgsec">Packs</h3>`+packIdx.map(fold).join("")+
+    `<h3 class="sgsec">Packs</h3>`+packIdx.map(fold).join("")+
     `<h3 class="sgsec">Reference</h3>`+
     `<details class="fold mt"><summary><span class="grow">How I pick</span></summary><div class="fbody"><ul class="sgrules">${SHOP_RULES.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></details>`+
     `<details class="fold mt"><summary><span class="grow">Hero seasons</span><small class="faint">Hall of Heroes chests</small></summary><div class="fbody"><table class="gtable"><tbody>${Object.entries(HERO_SEASON).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
     `<details class="fold mt"><summary><span class="grow">What the icons are</span></summary><div class="fbody"><table class="gtable"><tbody>${ITEM_KEY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
     `<p class="faint mt">New shop or pack? Send a screenshot, or upload it to <b>shops/inbox</b> in the Kingshot repo.</p>`:"")+
-    `<button class="btn ghost sm mt" id="sgFull">${full?"Hide full shop data":"Show full shop data"}</button>`;
+    `<button class="btn ghost sm mt" id="sgFull">${full?"Hide shop details":"All shop details"}</button>`;
   on("sgCam",()=>openCamSheet(true));
   on("sgFull",()=>{ state.ui.sgFull=!full; scheduleSave(); renderShopGuide(); });
-  host.querySelectorAll(".sgtile").forEach(t=>t.onclick=()=>{ const d=host.querySelector(`details.sgshop[data-i="${t.dataset.i}"]`); if(d){ d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); } });
+  host.querySelectorAll(".sgtile").forEach(t=>t.onclick=()=>{ const d=host.querySelector(`details.sgshop[data-i="${t.dataset.i}"]`); if(d){ d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); return; }
+    state.ui.sgFull=true; state.ui.sgOpen=+t.dataset.i; scheduleSave(); renderShopGuide(); const d2=host.querySelector(`details.sgshop[data-i="${t.dataset.i}"]`); if(d2){ d2.open=true; d2.scrollIntoView({behavior:"smooth",block:"start"}); } });
   host.querySelectorAll("details.sgshop").forEach(d=>d.ontoggle=()=>{ if(d.open) state.ui.sgOpen=+d.dataset.i; else if(state.ui.sgOpen===+d.dataset.i) delete state.ui.sgOpen; scheduleSave(); });
 }

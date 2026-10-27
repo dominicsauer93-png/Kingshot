@@ -75,8 +75,8 @@ function renderHeroGear(){
   else top.forEach(r=>{ const st=hgState(r); if(st.req) Object.entries(st.req).forEach(([k,v])=>n3[k]+=v); });
   const got=hgMonthGot(0);
   const nTile=(k,label,extra)=>{ const h=num(hg.have[k]), v=n3[k];
-    return tileH({id:"hgm_"+k,label,value:fmt(h),sub:(v?`need ${fmtK(v)} · `+(v>h?`<span class="bad">${fmtK(v-h)} short</span>`:`<span class="ok">enough ✓</span>`):"not needed next")+(extra?`<br><span class="faint">${extra}</span>`:""),p:v?pc(h,v):null,cls:v&&h>=v?"ok":""}); };
-  $("#hgMats").innerHTML=nTile("mg","Mythic Gear")+nTile("mith","Mithril")+nTile("fh","Hammers",`+${fmt(got)} this month`);
+    return tileH({id:"hgm_"+k,label,value:fmt(h),sub:v?(v>h?`<span class="bad">${fmtK(v-h)} short</span>`:`<span class="ok">enough ✓</span>`):(extra||"not needed"),p:v?pc(h,v):null,cls:v&&h>=v?"ok":""}); };
+  $("#hgMats").innerHTML=nTile("mg","Mythic Gear")+nTile("mith","Mithril")+nTile("fh","Hammers",`+${fmt(got)} this mo.`);
   $$("#hgMats .tile").forEach(t=>t.onclick=openHgMatsSheet);
   const host=$("#hgBody"); host.innerHTML="";
   const SRC={mg:"Arena Shop (Custom Mythic Gear Chest), Merchant Empire, Armament",mith:"Mystic Trials, Trial Shop, Arena Shop",fh:"VIP Shop, Trial Shop, Merchant Empire"};
@@ -307,15 +307,15 @@ function renderShards(){
     return `<div class="shrow2 ${maxed?"done":""}" data-i="${i}">
       <button class="sh2-id" data-i="${i}" aria-label="Edit ${esc(r.n||"hero")}"><span class="shr-rank">${rank}</span>
         <span class="sh2-who"><span class="sh2-name">${esc(r.n||"Hero")}${r.rally?" ⚔":""}</span>
-        <span class="sh2-star">${st?`<span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}`:'<span class="faint">tap to set stars</span>'} · Use ${heroUse(r.n)}</span></span></button>
+        <span class="sh2-star">${st?`<span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}`:'<span class="faint">tap to set stars</span>'} <span class="sh2-use">· Use ${heroUse(r.n)}</span></span></span></button>
       <label class="sh2-have">Have <input inputmode="numeric" data-i="${i}" value="${h}" aria-label="${esc(r.n)} shards in hand"></label>
-      <span class="sh2-out">${maxed?'<span class="ok">5★ max ✓</span>':!st?"":ready?`<button class="didit sh2-up" data-i="${i}">Upgrade → ${esc(starLabel(p+1))}</button>`:`next <b>${fmt(nx)}</b> · <span class="bad">${fmt(nx-h)} short</span>`}</span>
+      <span class="sh2-out">${maxed?'<span class="ok">5★ max ✓</span>':!st?"":ready?`<button class="didit sh2-up" data-i="${i}">Upgrade → ${esc(starLabel(p+1))}</button>`:`<span class="bad">${fmt(nx-h)} short</span> of ${fmt(nx)}`}</span>
       ${maxed||!st?"":barH(pc(h,nx),ready?"ok":"")}</div>`; };
   const grp=(t,sub)=>`<div class="shgrp"><span>${t}</span><small>${sub}</small></div>`;
-  b.innerHTML=(focus.length?grp("Focus now","general shards go here")+focus.map(row).join(""):"")+
-    (next.length?grp("Next up","when the focus heroes are done")+next.map(row).join(""):"")+
-    (spare.length?`<details class="shfold"${state.ui.shSpare?" open":""} data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"low use — tap to show")}</summary>${spare.map(row).join("")}</details>`:"")+
-    (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"5★ or enough shards")}</summary>${done.map(row).join("")}</details>`:"")||`<div class="empty">No heroes yet</div>`;
+  b.innerHTML=(focus.length?grp("Focus now","")+focus.map(row).join(""):"")+
+    (next.length?grp("Next up","")+next.map(row).join(""):"")+
+    (spare.length?`<details class="shfold"${state.ui.shSpare?" open":""} data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"")}</summary>${spare.map(row).join("")}</details>`:"")+
+    (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"")}</summary>${done.map(row).join("")}</details>`:"")||`<div class="empty">No heroes yet</div>`;
   b.querySelectorAll("details.shfold").forEach(d=>d.ontoggle=()=>{ state.ui[d.dataset.k]=d.open; scheduleSave(); });
   bindAll(b,".sh2-id",x=>openShardSheet(L[+x.dataset.i]));
   bindAll(b,".sh2-up",x=>{ const r=L[+x.dataset.i], p=num(r.pos), snap=JSON.stringify(state); r.pos=p+1; r.have=Math.max(0,num(r.have)-SHARD_LEAF[p]); afterEdit(); toast(`${r.n}: ${starLabel(p+1)} (−${SHARD_LEAF[p]} shards)`,snap); });

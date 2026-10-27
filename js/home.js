@@ -51,8 +51,10 @@ function liveEvents(){ return (state.events||[]).map(e=>({e,a:activeOcc(e)})).fi
 // Halloween Party → Prankster King: one stage a day (game days, UTC)
 const HALLOWEEN_STAGES=[["2026-10-27","Power Boost","build and research"],["2026-10-28","Beast Slay","stamina on beasts (also gets candy)"],["2026-10-29","Hero Development","recruit, use hero shards (6,000 pts per Mythic shard)"],
   ["2026-10-30","Soldier Training","train troops"],["2026-10-31","Hero Gear","spend hammers and XP"],["2026-11-01","Gather Resources","all marches gathering (also gets candy)"],["2026-11-02","Governor Gear","spend Threads and Satin"]];
-function stagesH(e){ if(!/halloween/i.test(e.n||"")) return ""; const t=gameToday();
-  return `<div class="estages"><b>Prankster King — one stage a day</b>${HALLOWEEN_STAGES.map(([d,n,w])=>`<div class="est${d===t?" now":d<t?" past":""}"><span>${new Date(d+"T00:00:00").toLocaleDateString(undefined,{weekday:"short",day:"numeric"})}</span><b>${esc(n)}</b><em>${esc(w)}</em></div>`).join("")}</div>`; }
+// short=true → today + tomorrow only (the full list sits in the fold)
+function stagesH(e,short){ if(!/halloween/i.test(e.n||"")) return ""; const t=gameToday(), i=HALLOWEEN_STAGES.findIndex(([d])=>d===t);
+  const L=short?(i<0?[]:HALLOWEEN_STAGES.slice(i,i+2)):HALLOWEEN_STAGES; if(!L.length) return "";
+  return `<div class="estages">${short?"":"<b>Prankster King — one stage a day</b>"}${L.map(([d,n,w])=>`<div class="est${d===t?" now":d<t?" past":""}"><span>${d===t&&short?"Today":new Date(d+"T00:00:00").toLocaleDateString(undefined,{weekday:"short",day:"numeric"})}</span><b>${esc(n)}</b><em>${esc(w)}</em></div>`).join("")}</div>`; }
 function renderEventMode(){
   const box=$("#eventMode"), live=liveEvents();
   const cur=live[0]; box.hidden=!cur; if(!cur) return;
@@ -61,12 +63,12 @@ function renderEventMode(){
   // how long is left: "end not confirmed" when the game hasn't shown the end date yet
   const leftTxt=(x,a)=>x.endOpen?"end not confirmed":a.len-a.day?`${a.len-a.day} more day${a.len-a.day>1?"s":""}`:"last day";
   box.innerHTML=`<summary class="eh"><span class="et">⚡ ${esc(e.n||"Event")} is on</span><span class="ed">${cur.a.len>1&&!e.endOpen?`day ${cur.a.day} of ${cur.a.len} · `:e.endOpen?`day ${cur.a.day} · `:""}${leftTxt(e,cur.a)}${live.length>1?` · +${live.length-1} more`:""}</span></summary>
-    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${(()=>{ const n=camMissing(false).length; return n?`<button class="evcam" id="evCam">📸 ${n} new shop${n>1?"s":""} to capture <span aria-hidden="true">›</span></button>`:""; })()}${battleFor(e)?`<button class="btn primary mt" id="evBattle">⚔ Open battle card</button>`:""}${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}${stagesH(e)}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}`+
-    (live.length>1?`<div class="eall"><div class="eall-h">Also on now</div>${live.slice(1).map(({e:x,a},i)=>`<button class="erow" data-i="${i+1}"${i>=3?" hidden":""}><span class="en">${esc(x.n||"Event")}${(()=>{ const sh=eventShopFor(x); return sh&&!sh.saved?" 📸":""; })()}</span><span class="ew">${x.endOpen?`day ${a.day} · end ?`:a.len>1?`day ${a.day}/${a.len}`:"today"}</span><span class="esp">${esc(spendFor(x)||"tap to add what to spend")}</span></button>`).join("")}${live.length>4?`<button class="emore" id="evMore">+ ${live.length-4} more</button>`:""}</div>`:"");
+    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${stagesH(e,true)}${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}${(()=>{ const n=camMissing(false).length, bt=battleFor(e); return n||bt?`<div class="ebtns">${bt?`<button class="btn primary sm" id="evBattle">⚔ Battle card</button>`:""}${n?`<button class="evcam" id="evCam">📸 ${n} shop${n>1?"s":""} to capture <span aria-hidden="true">›</span></button>`:""}</div>`:""; })()}`+
+    (steps.length||stagesH(e)?`<details class="efold"><summary>${steps.length?"How to play it":"Full schedule"}${steps.length&&stagesH(e)?" · full schedule":""}</summary>${stagesH(e)}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}</details>`:"")+
+    (live.length>1?`<details class="efold eall"><summary>${live.length-1} more event${live.length>2?"s":""} on now</summary>${live.slice(1).map(({e:x,a},i)=>`<button class="erow" data-i="${i+1}"><span class="en">${esc(x.n||"Event")}${(()=>{ const sh=eventShopFor(x); return sh&&!sh.saved?" 📸":""; })()}</span><span class="ew">${x.endOpen?`day ${a.day} · end ?`:a.len>1?`day ${a.day}/${a.len}`:"today"}</span><span class="esp">${esc(spendFor(x)||"tap to add what to spend")}</span></button>`).join("")}</details>`:"");
   bindAll(box,".erow",b=>openEventSheet(live[+b.dataset.i].e));
   on("evBattle",()=>openBattle(e));
   on("evCam",()=>openCamSheet(false));
-  on("evMore",()=>{ $$("#eventMode .erow[hidden]").forEach(r=>r.hidden=false); $("#evMore").remove(); });
   const want=state.ui.evOpen!=null?state.ui.evOpen:innerWidth>640; box.open=want; // open on PC, one line on phones until tapped
   box.ontoggle=()=>{ if(box.open!==want){ state.ui.evOpen=box.open; scheduleSave(); } };
 }
@@ -90,7 +92,6 @@ function renderHome(){
 }
 
 /* ---------- events ---------- */
-let calSel=null; // tapped calendar day (0 = today)
 function renderEvents(){
   const list=(state.events||[]).filter(e=>!activeOcc(e)).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days||String(a.e.time||"").localeCompare(String(b.e.time||"")));
   const up=$("#evUpcoming");
@@ -101,14 +102,6 @@ function renderEvents(){
       <span class="evwhen ${o.days===0?"now":""}">${whenTxt(o)}</span></button>`; }).join("")
     : `<div class="empty">Nothing new starting soon${liveEvents().length?" — what's on now is in the event card":""}.</div>`;
   bindAll(up,".evrow",b=>openEventSheet(state.events[+b.dataset.i]));
-  const t0=new Date(gameToday()+"T00:00:00"); let html="";
-  for(let i=0;i<14;i++){ const dd=new Date(t0.getTime()+i*DAY_MS), evs=(state.events||[]).filter(e=>occursOn(e,i)), names=evs.map(e=>e.n||"Event").join(", ");
-    html+=`<button class="cday ${i===0?"today":""}${calSel===i?" sel":""}" data-i="${i}" title="${esc(dd.toDateString()+(names?" — "+names:""))}"><div class="dh"><span>${dd.toLocaleDateString(undefined,{weekday:"short"})}</span><b>${dd.getDate()}</b></div><span class="dots">${evs.map(e=>`<i class="${/kvk|kingdom of power/i.test(e.n||"")?"k":/bear/i.test(e.n||"")?"b":e.imp==="top"?"t":""}"></i>`).join("")}</span>${names?`<span class="sr-only">${esc(names)}</span>`:""}</button>`; }
-  $("#evCal").innerHTML=html;
-  $$("#evCal .cday").forEach(b=>b.onclick=()=>{ calSel=calSel===+b.dataset.i?null:+b.dataset.i; renderEvents(); });
-  const dayBox=$("#evDay");
-  if(calSel==null){ dayBox.hidden=true; } else { const dd=new Date(t0.getTime()+calSel*DAY_MS), evs=(state.events||[]).filter(e=>{ for(let k=0;k<evLen(e);k++) if(occursOn(e,calSel-k)) return true; return false; });
-    dayBox.hidden=false; dayBox.innerHTML=`<b>${dd.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"short"})}</b>`+(evs.length?evs.map(e=>`<div><span>${esc(e.n||"Event")}</span>${spendFor(e)?" — "+esc(spendFor(e)):""}</div>`).join(""):`<div>No events.</div>`); }
   on("evAdd",()=>openEventSheet(null));
   on("evAll",openAllEventsSheet);
 }

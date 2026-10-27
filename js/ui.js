@@ -143,6 +143,7 @@ const TAB_ICON={
   Shop:'<path d="M5 8h14l-1.2 12.5H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
   Data:'<path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8 12h8M8 16h6"/>'
 };
+const LABEL={Data:"Settings","Free shops":"Coin shops",Paid:"Packs","Update all":"Update"}, lbl=s=>LABEL[s]||s; // shown names; keys, hashes and saved state keep the old ones
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 function setTab(tab,sub,scroll){
   tab=TAB_ALIAS[tab]||tab; if(!TABS.includes(tab)) tab="Home";
@@ -173,7 +174,7 @@ function tabFromHash(){
 }
 function buildNav(){
   const nav=$("#tabnav");
-  nav.innerHTML=TABS.map(t=>`<button class="tab" role="tab" data-tab="${t}" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span>${t}</span></button>`).join("");
+  nav.innerHTML=TABS.map(t=>`<button class="tab" role="tab" data-tab="${t}" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span>${lbl(t)}</span></button>`).join("");
   nav.querySelectorAll(".tab").forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
   nav.addEventListener("keydown",e=>{
     const k=e.key; if(!["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"].includes(k)) return;
@@ -182,7 +183,7 @@ function buildNav(){
   });
   Object.keys(SUBS).forEach(tab=>{
     const sn=$(`.page[data-tab="${tab}"] .subnav`); if(!sn) return;
-    sn.innerHTML=SUBS[tab].map(s=>`<button class="chip" role="tab" data-sub="${esc(s)}" aria-selected="false">${esc(s)}</button>`).join("");
+    sn.innerHTML=SUBS[tab].map(s=>`<button class="chip" role="tab" data-sub="${esc(s)}" aria-selected="false">${esc(lbl(s))}</button>`).join("");
     sn.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{ setTab(tab,c.dataset.sub,false); c.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"}); });
   });
   document.addEventListener("click",e=>{ const g=e.target.closest&&e.target.closest("[data-goto]"); if(!g) return; goToSection(null,g.dataset.goto); });

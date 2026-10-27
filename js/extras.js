@@ -69,12 +69,11 @@ function renderBagCheck(){
   const box=$("#bagCheck"); if(!box) return;
   const bc=state.bagCheck||{}, prev=bc.v||{}, days=bc.d?Math.round((new Date(fcToday())-new Date(bc.d))/864e5):null;
   const ch=k=>{ if(prev[k]==null) return '<span class="faint">—</span>'; const d=bagVal(k)-num(prev[k]); return d>0?`<span class="ok">▲ ${fmt(d)}</span>`:d<0?`<span class="bad">▼ ${fmt(-d)}</span>`:'<span class="faint">same</span>'; };
-  box.innerHTML=`<div class="rowb"><b style="font-size:16px">Bag check</b>${days==null?'<span class="tag warn">not checked yet</span>':days===0?'<span class="tag ok">checked today ✓</span>':`<span class="tag ${days>2?"warn":"plain"}">checked ${days} day${days>1?"s":""} ago</span>`}</div>
-    <p class="muted" style="margin:4px 0 8px">Type what the game shows. Arrows = change since your last check.</p>
+  box.innerHTML=`<div class="rowb"><b style="font-size:16px">My bag</b>${days==null?'<span class="tag warn">not checked yet</span>':days===0?'<span class="tag ok">checked today ✓</span>':`<span class="tag ${days>2?"warn":"plain"}">checked ${days} day${days>1?"s":""} ago</span>`}</div>
     <div class="bcgrid">${BAG_KEYS.map(([k,l])=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-k="${k}" value="${bagVal(k)}"><em data-ch="${k}">${ch(k)}</em></label>`).join("")}</div>
     <details class="fold mt" id="bcMore"${state.ui.bcMore?" open":""}><summary><span class="grow">More numbers</span></summary><div class="fbody"><div class="bcgrid">${BAG_MORE.map(([l,o,k],i)=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-m="${i}" value="${num(o()[k])}"></label>`).join("")}</div></div></details>
     ${(()=>{ const st=staleShops(); return st.length?`<button class="evcam mt" id="bcStale">📸 ${st.length} shop${st.length>1?"s":""} not checked for ${STALE_DAYS}+ days ›</button>`:""; })()}
-    <div class="rowb mt"><span class="faint">Everything else: Update everything</span><button class="btn primary sm" id="bcSave">Save ✓</button></div>`;
+    <div class="rowb mt" style="justify-content:flex-end"><button class="btn primary sm" id="bcSave">Save ✓</button></div>`;
   box.querySelectorAll("[data-m]").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
     x.onchange=()=>{ const [,o,k]=BAG_MORE[+x.dataset.m]; if(!/\d/.test(x.value)){ x.value=num(o()[k]); return; } o()[k]=Math.max(0,Math.round(num(x.value))); scheduleSave(); }; });
   const bm=$("#bcMore"); bm.ontoggle=()=>{ state.ui.bcMore=bm.open; scheduleSave(); };
@@ -89,11 +88,10 @@ function renderTimelines(){
   const box=$("#timelines"); if(!box) return;
   const N=blockerNeeds(), rows=[["threads","Threads"],["mg","Mythic Gear"],["designs","Designs"],["gen","General shards"],["mith","Mithril"]].filter(([k])=>N[k]);
   const days=incomeDays("fh");
-  box.innerHTML=`<div class="rowb"><b style="font-size:16px">How long until…</b><span class="faint">${days<7?`tracking ${days}/7 days`:"from what you collect"}</span></div>`+
+  box.innerHTML=(days<7?`<p class="faint" style="margin:0 0 6px;font-size:13.5px">Learning your income — ${days}/7 days of bag updates.</p>`:"")+
     rows.map(([k,l])=>{ const n=N[k], r=incomeRate(k), d=n.short&&r?Math.ceil(n.short/r):null;
       const when=!n.short?'<b class="ok">ready ✓</b>':r==null?'<span class="faint">tracking…</span>':r<=0?'<b class="bad">none coming in</b>':`<b class="${d<=7?"ok":d<=28?"warn":"bad"}">~${d<7?d+" day"+(d>1?"s":""):Math.round(d/7)+" week"+(Math.round(d/7)>1?"s":"")}</b>`;
-      return `<div class="tlrow"><div class="rowb"><span>${esc(n.what)}</span>${when}</div>${barH(pc(n.have,n.need),n.short?"":"ok")}<span class="faint" style="font-size:13px">${fmt(n.have)} / ${fmt(n.need)}${r!=null?` · +${r>=1?fmt(Math.round(r)):r.toFixed(1)} a day`:""}</span></div>`; }).join("")+
-    (days<7?`<p class="faint" style="margin:6px 0 0;font-size:13.5px">Timelines appear after a week of bag updates — every rise counts as income.</p>`:"");
+      return `<div class="tlrow"><div class="rowb"><span>${esc(n.what)}</span>${when}</div>${barH(pc(n.have,n.need),n.short?"":"ok")}<span class="faint" style="font-size:13px">${fmt(n.have)} / ${fmt(n.need)}${r!=null?` · +${r>=1?fmt(Math.round(r)):r.toFixed(1)} a day`:""}</span></div>`; }).join("");
 }
 
 /* ---------- Shop guide: live advice from the bag ---------- */
@@ -185,25 +183,12 @@ function reportCard(id,{title,pkey,rows,doneRe}){
     (sp.length>1&&hi>lo?`<div class="wspark">${sp.map(v=>`<i style="height:${hi>lo?20+80*(v-lo)/(hi-lo):60}%"></i>`).join("")}</div>`:"")+
     `<div class="rcrows">${rows.filter(Boolean).map(([a,b])=>`<div class="rcrow"><span>${a}</span><b>${b}</b></div>`).join("")}</div>`+
     (done.length?`<p style="margin:10px 0 4px"><b>Done this week</b></p><ul class="wdone">${done.slice(-5).reverse().map(x=>`<li>${esc(x.t)} <span class="faint">${esc(fd(x.d))}</span></li>`).join("")}</ul>`:""); }
-const needRow=(N,k,l)=>N[k]?[l,`${fmt(N[k].have)} / ${fmt(N[k].need)} ${N[k].short?`<span class="bad">${fmt(N[k].short)} short</span>`:'<span class="ok">✓</span>'}`]:null;
-function renderReports(){
-  const N=blockerNeeds();
-  const hp=hgPlanLeft()[0], pr=hp?null:hgPriority(state.heroGear.rows||[])[0];
+function renderReports(){ // power trend + done list; the tiles and next-up list below carry the numbers
   reportCard("hgReport",{title:"Hero Gear",pkey:"p:Hero Gear",doneRe:/helm|gloves|chest|boots|imbue|mastery/i,rows:[
-    ["Next up",hp?`${esc(hp.type)} ${esc(hp.slot)} — ${esc(hgPlanWhat(hp))}`:pr?`${esc(pr.type)} ${esc(slotName(pr.slot))}`:"All done ✓"],
-    needRow(N,"mg","Mythic Gear"),needRow(N,"mith","Mithril"),needRow(N,"fh","Hammers"),
     (()=>{ const C=hgChests(), R=mythicRate(), n=num(C.lucky)+num(C.custom); return ["Chests to open",`<button class="btn sm${n?" primary":""}" id="hgChests">${n?`${fmt(num(C.lucky))} Lucky${num(C.custom)?` + ${num(C.custom)} Custom`:""} · ~${(num(C.lucky)*R.r+num(C.custom)).toFixed(1)} Mythic`:"Add chests"} ›</button>`]; })()]});
   on("hgChests",openChestSheet);
-  const gv=govNextStep();
-  reportCard("govReport",{title:"Governor Gear",pkey:"p:Governor Gear",doneRe:/(gold|purple|red|blue|green) (t\d )?\d★/i,rows:[
-    ["Next up",gv?`${esc(gv.p.name)} → ${esc((GOV_TIERS[gv.to]||[""])[0])}`:"Plan done ✓"],
-    needRow(N,"threads","Threads"),
-    gv?["Satin",`${fmtK(num(state.govGear.have.satin))} / ${fmtK(gv.need.s)} ${num(state.govGear.have.satin)>=gv.need.s?'<span class="ok">✓</span>':'<span class="bad">short</span>'}`]:null]});
-  const cn=charmNextList(1)[0];
-  reportCard("charmReport",{title:"Charms",pkey:"p:Governor Charm",doneRe:/charm/i,rows:[
-    ["Next up",cn?`${esc(cn.type)} charm Lv ${num(cn.lvl)} → ${num(cn.lvl)+1}`:"All at target ✓"],
-    needRow(N,"designs","Designs (next 3)"),
-    ["Guides",fmt(num(state.charms.have.guides))]]});
+  reportCard("govReport",{title:"Governor Gear",pkey:"p:Governor Gear",doneRe:/(gold|purple|red|blue|green) (t\d )?\d★/i,rows:[]});
+  reportCard("charmReport",{title:"Charms",pkey:"p:Governor Charm",doneRe:/charm/i,rows:[]});
 }
 
 /* ---------- capture event shops: upload screenshots straight to shops/inbox, or mark "no shop" ---------- */
