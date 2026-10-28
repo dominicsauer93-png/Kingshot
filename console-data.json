@@ -590,6 +590,16 @@
       "d": true,
       "auto": "2026-10",
       "note": "Halloween Party pass · bought 28 Oct"
+    },
+    {
+      "t": "Ultra Value Monthly Card",
+      "aud": 14.99,
+      "first": 7.99,
+      "firstDone": true,
+      "kind": "month",
+      "note": "Daily gems + Stamina + 30 days VIP — best value",
+      "d": true,
+      "bought": "2026-10-28"
     }
   ],
   "trackFarm": [
@@ -3338,9 +3348,9 @@
   "packBudget": 100,
   "packMonths": {
     "2026-10": {
-      "spent": 77.94,
+      "spent": 92.93,
       "closed": true,
-      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99 · Audacious passes 22.98"
+      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99 · Audacious passes 22.98 · Ultra Monthly Card 14.99 (28 Oct)"
     },
     "2026-11": {
       "spent": 0,
