@@ -749,7 +749,8 @@
       "pos": 18,
       "tgt": 24,
       "rally": false,
-      "note": "Hero Rally shop — spend Hero Rally points here"
+      "note": "Hero Rally shop — spend Hero Rally points here",
+      "focus": true
     },
     {
       "n": "Hilde",
