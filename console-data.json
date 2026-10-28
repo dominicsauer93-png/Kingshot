@@ -779,7 +779,7 @@
     {
       "n": "Eric",
       "need": 700,
-      "have": 26,
+      "have": 28,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -796,7 +796,7 @@
     {
       "n": "Petra",
       "need": 500,
-      "have": 38,
+      "have": 39,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -854,7 +854,7 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 12,
+      "have": 20,
       "pos": 27,
       "tgt": 27,
       "rally": false
@@ -878,7 +878,7 @@
     {
       "n": "Vivian",
       "need": 0,
-      "have": 69,
+      "have": 73,
       "pos": 24,
       "tgt": 24,
       "rally": false
