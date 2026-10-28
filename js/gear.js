@@ -301,7 +301,7 @@ function renderShards(){
   const b=$("#goldShardBody");
   const starPos=r=>hasStars(r)?num(r.pos):-1, isDone=r=>{ const n=shardNeed(r); return (hasStars(r)&&num(r.pos)>=SHARD_MAX)||(n>0&&num(r.have)>=n); };
   const order=L.map((r,i)=>({r,i})).sort((a,c)=>heroUse(c.r.n)-heroUse(a.r.n)||starPos(c.r)-starPos(a.r)||String(a.r.n).localeCompare(String(c.r.n)));
-  const open=order.filter(x=>!isDone(x.r)), focus=open.slice(0,3), next=open.slice(3).filter(x=>heroUse(x.r.n)>=15), spare=open.slice(3).filter(x=>heroUse(x.r.n)<15), done=order.filter(x=>isDone(x.r));
+  const open=order.filter(x=>!isDone(x.r)), pin=open.filter(x=>x.r.focus), rest=open.filter(x=>!x.r.focus), focus=pin.concat(rest.slice(0,3)), next=rest.slice(3).filter(x=>heroUse(x.r.n)>=15), spare=rest.slice(3).filter(x=>heroUse(x.r.n)<15), done=order.filter(x=>isDone(x.r));
   let rank=0;
   const row=({r,i})=>{ rank++; const h=num(r.have),st=hasStars(r),p=num(r.pos),maxed=st&&p>=SHARD_MAX,nx=st&&!maxed?SHARD_LEAF[p]:0,ready=nx&&h>=nx;
     return `<div class="shrow2 ${maxed?"done":""}" data-i="${i}">
@@ -345,6 +345,7 @@ function openShardSheet(r){
       fld("Target",{type:"select",value:String(r.tgt==null?SHARD_MAX:num(r.tgt)),options:STAR_OPTS,set:v=>r.tgt=parseInt(v,10)})));
     f.appendChild(fld("Hero shards in hand",{type:"num",value:r.have,get:()=>r.have,set:v=>r.have=v}));
     f.appendChild(fld("Rally hero (⚔ marker)",{type:"check",value:r.rally,set:v=>r.rally=v}));
+    f.appendChild(fld("Focus hero",{type:"check",value:!!r.focus,set:v=>{ if(v) r.focus=true; else delete r.focus; },hint:"Shows under Focus now, with your top 3."}));
     const inf=infoBox(); f.appendChild(inf);
     const rf=()=>{ if(!hasStars(r)){ inf.innerHTML=`Set the star tier and the shards needed are worked out for you. (Old number: <b>${fmt(num(r.need))}</b>)`; return; }
       const n=shardNeed(r), h=num(r.have), p=num(r.pos), nx=p<SHARD_MAX?SHARD_LEAF[p]:0;
