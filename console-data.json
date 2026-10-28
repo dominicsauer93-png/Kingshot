@@ -1583,7 +1583,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1623,7 +1623,7 @@
       "Base": "Buildings",
       "Plan": "Shop guide",
       "Heroes": "Shards",
-      "Shop": "Paid"
+      "Shop": "Free shops"
     },
     "t11Open": {
       "nodes": false,
@@ -1661,8 +1661,9 @@
       "gen",
       "designs"
     ],
-    "sgOpen": 9,
-    "bcMore": false
+    "sgOpen": 2,
+    "bcMore": false,
+    "sgFull": true
   },
   "troopCounts": {
     "inf": {
