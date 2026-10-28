@@ -762,7 +762,7 @@
     {
       "n": "Zoe",
       "need": 600,
-      "have": 11,
+      "have": 12,
       "pos": 24,
       "tgt": 24,
       "rally": false
@@ -770,7 +770,7 @@
     {
       "n": "Jaeger",
       "need": 700,
-      "have": 36,
+      "have": 37,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -788,7 +788,7 @@
     {
       "n": "Rosa",
       "need": 500,
-      "have": 37,
+      "have": 38,
       "pos": 25,
       "tgt": 25,
       "rally": false
