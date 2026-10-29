@@ -1583,7 +1583,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1622,7 +1622,7 @@
       "Gear": "Charms",
       "Base": "Buildings",
       "Plan": "Shop guide",
-      "Heroes": "Shards",
+      "Heroes": "Masters",
       "Shop": "Paid"
     },
     "t11Open": {
