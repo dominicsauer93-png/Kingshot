@@ -1583,7 +1583,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1619,7 +1619,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Checklists",
-      "Gear": "Pets",
+      "Gear": "Charms",
       "Base": "Buildings",
       "Plan": "Shop guide",
       "Heroes": "Shards",
@@ -1651,7 +1651,7 @@
     "heroAll": false,
     "evOpen": true,
     "shSpare": true,
-    "petMaxOpen": true,
+    "petMaxOpen": false,
     "weekOpen": false,
     "todayAll": true,
     "tierOpen": false,
@@ -1954,7 +1954,7 @@
       },
       {
         "type": "Infantry",
-        "lvl": 6,
+        "lvl": 7,
         "tgt": 7,
         "st": 1
       },
