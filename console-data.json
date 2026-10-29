@@ -1623,7 +1623,7 @@
       "Base": "Buildings",
       "Plan": "Shop guide",
       "Heroes": "Shards",
-      "Shop": "Free shops"
+      "Shop": "Paid"
     },
     "t11Open": {
       "nodes": false,
@@ -1659,7 +1659,8 @@
     "bvPick": [
       "tg",
       "gen",
-      "designs"
+      "designs",
+      "dust"
     ],
     "sgOpen": 14,
     "bcMore": true,
