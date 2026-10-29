@@ -1470,10 +1470,10 @@
     }
   ],
   "tg": {
-    "have": 492,
-    "need": 3726,
-    "ttgHave": 8,
-    "ttgNeed": 414
+    "have": 261,
+    "need": 3486,
+    "ttgHave": 15,
+    "ttgNeed": 394
   },
   "govGear": {
     "targetIdx": 18,
@@ -2903,7 +2903,7 @@
   "buildings": [
     {
       "n": "Town Center",
-      "stepIdx": 0,
+      "stepIdx": 1,
       "note": "METRONOME — raise one tier to uncap the rest",
       "d": false
     },
