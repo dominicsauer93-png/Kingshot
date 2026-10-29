@@ -1583,7 +1583,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1662,7 +1662,7 @@
       "designs"
     ],
     "sgOpen": 2,
-    "bcMore": false,
+    "bcMore": true,
     "sgFull": true
   },
   "troopCounts": {
