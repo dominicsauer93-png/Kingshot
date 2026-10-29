@@ -9,9 +9,9 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 149,
+    "current": 202,
     "target": 6738,
-    "gold": 542730
+    "gold": 658540
   },
   "nodes": [
     {
@@ -974,11 +974,11 @@
       "note": "Best for Infantry · Health research\nNEXT: level 60 → 70 (needs Emblems)\nSkills: all Growth — low priority for combat",
       "skills": [
         {
-          "l": 7,
+          "l": 8,
           "t": "g"
         },
         {
-          "l": 6,
+          "l": 7,
           "t": "g"
         },
         {
@@ -1062,11 +1062,11 @@
     },
     {
       "n": "Isnor",
-      "l": "30",
+      "l": "40",
       "note": "Best for Archers · Attack research\nKindred Soul: +15% Lethality + Health\nNEXT: level 20 → 30 (needs Emblems)\nSkills: Combat skill 2 still locked",
       "skills": [
         {
-          "l": 4,
+          "l": 5,
           "t": "g"
         },
         {
@@ -1470,15 +1470,15 @@
     }
   ],
   "tg": {
-    "have": 261,
+    "have": 251,
     "need": 3486,
-    "ttgHave": 15,
+    "ttgHave": 17,
     "ttgNeed": 394
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 46213,
+      "satin": 48063,
       "threads": 203,
       "vision": 621
     },
@@ -1583,7 +1583,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1619,11 +1619,11 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Checklists",
-      "Gear": "Hero Gear",
+      "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Overview",
-      "Shop": "Free shops"
+      "Shop": "Paid"
     },
     "t11Open": {
       "nodes": false,
@@ -1661,7 +1661,8 @@
       "tg",
       "gen",
       "designs"
-    ]
+    ],
+    "bvNow": true
   },
   "troopCounts": {
     "inf": {
@@ -1684,7 +1685,7 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 118,
+      "fh": 158,
       "mg": 5,
       "mith": 4
     },
@@ -1844,9 +1845,9 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 118,
+    "fhSeen": 158,
     "fhGot": {
-      "2026-10": 2083
+      "2026-10": 2240
     },
     "plan": [
       {
@@ -1912,8 +1913,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 593,
-      "designs": 337
+      "guides": 586,
+      "designs": 263
     },
     "rows": [
       {
@@ -1942,7 +1943,7 @@
       {
         "type": "Cavalry",
         "lvl": 5,
-        "tgt": 10
+        "tgt": 6
       },
       {
         "type": "Cavalry",
@@ -3287,9 +3288,9 @@
     "have": {
       "food": 12950,
       "manuals": 1504,
-      "potions": 90,
-      "tmCommon": 56,
-      "tmAdv": 0,
+      "potions": 92,
+      "tmCommon": 67,
+      "tmAdv": 1,
       "medals": 4
     },
     "rows": [
@@ -3379,7 +3380,7 @@
       }
     ]
   },
-  "shardGeneral": 73,
+  "shardGeneral": 86,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3416,30 +3417,30 @@
     "threads": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 178
+        "2026-10": 379
       },
       "seen": 203
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 337
+        "2026-10": 598
       },
-      "seen": 337
+      "seen": 263
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 161
+        "2026-10": 318
       },
-      "seen": 118
+      "seen": 158
     },
     "gen": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 71
+        "2026-10": 149
       },
-      "seen": 73
+      "seen": 86
     }
   },
   "battle": {
