@@ -1583,7 +1583,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1619,7 +1619,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Checklists",
-      "Gear": "Hero Gear",
+      "Gear": "Pets",
       "Base": "Buildings",
       "Plan": "Shop guide",
       "Heroes": "Shards",
@@ -1661,7 +1661,7 @@
       "gen",
       "designs"
     ],
-    "sgOpen": 2,
+    "sgOpen": 14,
     "bcMore": true,
     "sgFull": true
   },
