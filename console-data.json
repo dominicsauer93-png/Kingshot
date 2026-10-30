@@ -3418,5 +3418,61 @@
   },
   "noShop": [
     "Sanctuary Battle"
-  ]
+  ],
+  "research": {
+    "battle": {
+      "seen": "2026-10-30",
+      "doneTiers": [
+        "I",
+        "II",
+        "III",
+        "IV"
+      ],
+      "max": 6,
+      "tiers": {
+        "V": {
+          "Survival Techniques": 5,
+          "Assault Techniques": 6,
+          "Regimental Expansion": 6,
+          "Close Combat": 6,
+          "Targeted Sniping": 6,
+          "Lance Upgrade": 5,
+          "Shield Upgrade": 4,
+          "Leathercraft": 5,
+          "Fortified Mail": 4,
+          "Weapons Prep": 6,
+          "Reprisal Tactics": 6,
+          "Precision Targeting": 6,
+          "Cavalry Charge": 6,
+          "Defensive Formations": 5,
+          "Picket Lines": 5,
+          "Bulwark Formations": 5,
+          "Special Defensive Training": 5
+        },
+        "VI": {
+          "Survival Techniques": 1,
+          "Assault Techniques": 1,
+          "Regimental Expansion": 0,
+          "Close Combat": 0,
+          "Targeted Sniping": 0,
+          "Lance Upgrade": 0,
+          "Shield Upgrade": 0,
+          "Leathercraft": 0,
+          "Fortified Mail": 0,
+          "Weapons Prep": 2,
+          "Reprisal Tactics": 2,
+          "Precision Targeting": 2,
+          "Cavalry Charge": 1,
+          "Defensive Formations": 1,
+          "Picket Lines": 1,
+          "Bulwark Formations": 1,
+          "Special Defensive Training": 1
+        }
+      }
+    },
+    "current": {
+      "n": "Bulwark Formations V",
+      "ends": "2026-11-04T23:10Z"
+    }
+  }
 }
