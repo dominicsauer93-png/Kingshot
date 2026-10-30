@@ -2,7 +2,7 @@
 /* =====================================================================
    BASE
    ===================================================================== */
-function renderBase(){ renderT11(); renderTroops(); renderBuildings(); renderRes(); }
+function renderBase(){ renderResearch(); renderT11(); renderTroops(); renderBuildings(); renderRes(); }
 function phaseTotals(list){ let gold=0,res=0,stone=0,iron=0,days=0; (list||[]).forEach(nd=>{ const k=nodeResKey(nd); if(!k) return; const R=NODE_RES[k], mx=nd.max||12; for(let i=Math.max(0,nd.cur);i<mx;i++){ if(R.gold[i]!=null){ gold+=R.gold[i]; res+=R.res[i]; stone+=R.stone[i]; iron+=R.iron[i]; days+=R.days[i]; } } }); return {gold,res,stone,iron,days}; }
 function nodeRowsH(list,key){
   return `<div class="nodes">`+list.map(nd=>{ const mx=nd.max||12, done=nd.cur>=mx, idx=state[key].indexOf(nd);
@@ -24,18 +24,24 @@ function renderT11(){
   const core=ph=>sortTree(coreNodes(state[ph.k]),ph.k);
   const tot=ph=>{ const t=phaseTotals(coreNodes(state[ph.k])); return `<div class="kv mt"><span>Dust <b class="gold">${fmt(phaseRem(ph))}</b></span><span>Gold <b>${fmtBig(t.gold)}</b></span><span>Research <b>~${Math.round(t.days)}d</b></span><span>Bread <b>${fmtBig(t.res)}</b></span><span>Wood <b>${fmtBig(t.res)}</b></span><span>Stone <b>${fmtBig(t.stone)}</b></span><span>Iron <b>${fmtBig(t.iron)}</b></span></div>`; };
   const gap=Math.max(0,tgt-cur);
-  let html=`<div class="card"><div class="rowb"><h3 style="margin:0">Now — T11 ${act.n}</h3>${tgt>0?(gap>0?tagH("bad",`${fmt(gap)} dust to go`):tagH("ok","dust gate met")):tagH("ok","unlocked ✓")}</div>
-    <div class="gate-hero"><span class="big">${fmt(cur)}</span><span class="of">/ ${fmt(tgt)} dust</span></div>${barH(pc(cur,tgt),"big"+(gap?"":" ok"))}
-    <div class="tiles t2 mt">${tileH({id:"t11Dust",label:"Dust in hand",value:fmt(cur),sub:"tap to update"})}${tileH({id:"t11Gold",label:"Gold in hand",value:fmtBig(gold),sub:gold<gT?`<span class="bad">${fmtBig(gT-gold)} short</span> of ${fmtBig(gT)}`:`<span class="ok">covers ${fmtBig(gT)}</span>`})}</div>
-    ${nodeRowsH(core(act),act.k)}${tot(act)}${laterH(state[act.k],act.k)}</div>`;
+  // compact: what's left on the active troop type, ranked; finished nodes on one line; everything else folded
+  const C=core(act), left=C.filter(nd=>nd.cur<(nd.max||12)), fin=C.filter(nd=>nd.cur>=(nd.max||12));
+  let html=`<div class="card dcard"><div class="dch"><h3>T11 ${act.n}</h3>${tgt>0?(gap>0?`<span class="pill a">${fmt(gap)} dust to go</span>`:'<span class="pill g">dust gate met</span>'):'<span class="pill g">unlocked ✓</span>'}</div>`+
+    left.map((nd,i)=>{ const mx=nd.max||12; return `<button class="drow t11n" data-k="${act.k}" data-i="${state[act.k].indexOf(nd)}"><span class="dn${i===0?" go":""}">${i+1}</span><span class="dt"><b>${esc(nd.name.replace(/^Truegold /,""))}</b><span>${nd.cur}/${mx}</span><span class="pbar"><i style="width:${pc(nd.cur,mx)}%"></i></span></span><span class="dv">${fmt(nodeRem(nd))}<small>dust</small></span></button>`; }).join("")+
+    (fin.length?`<div class="drow"><span class="dt"><span>${fin.map(nd=>`${esc(nd.name.replace(/^Truegold /,"").replace(/ \(.*\)/,""))} ${nd.cur}/${nd.max||12} ✓`).join(" · ")}</span></span></div>`:"")+
+    `<button class="drow" id="t11Gold"><span class="dt"><b>Gold</b><span>${gold<gT?`<span class="bad">${fmtBig(gT-gold)} short</span> of ${fmtBig(gT)}`:'<span class="ok">enough ✓</span>'}</span></span><span class="dv">${fmtBig(gold)}</span></button></div>`;
+  html+=`<details class="card dcard dfold mt" id="t11More"${state.ui.t11More?" open":""}><summary class="dch"><h3>More T11</h3><span class="faint" style="font-size:12.5px">${[...open,...done].map(ph=>ph.n).join(", ")}, after unlock ›</span></summary><div style="padding:0 14px 12px">${tot(act)}${laterH(state[act.k],act.k)}`;
   [...open,...done].forEach(ph=>{ const isDone=phaseRem(ph)<=0;
     html+=`<details class="fold mt" data-phase="${ph.k}" ${state.ui.t11Open[ph.k]?"open":""}><summary><span class="grow">${isDone?`Done — ${ph.n}s`:`Next — ${ph.n}`}</span>${isDone?tagH("ok","T11 unlocked ✓"):tagH("plain",fmt(phaseRem(ph))+" dust")}</summary><div class="fbody">${nodeRowsH(core(ph),ph.k)}${isDone?"":tot(ph)}${laterH(state[ph.k],ph.k)}</div></details>`; });
+  html+=`</div></details>`;
   const host=$("#t11Body"); host.innerHTML=html;
   host.querySelectorAll(".stepper button").forEach(b=>b.onclick=()=>{ const L=state[b.dataset.k], nd=L[+b.dataset.i], mx=nd.max||12; nd.cur=Math.max(0,Math.min(mx,nd.cur+ +b.dataset.d)); stepFocus=`${b.dataset.k}|${b.dataset.i}|${b.dataset.d}`; afterEdit(); });
   if(stepFocus){ const [k,i,d]=stepFocus.split("|"); const nb=host.querySelector(`.stepper button[data-k="${k}"][data-i="${i}"][data-d="${d}"]`); stepFocus=null; if(nb&&!nb.disabled) nb.focus({preventScroll:true}); }
   host.querySelectorAll("details[data-phase]").forEach(d=>d.ontoggle=()=>{ state.ui.t11Open[d.dataset.phase]=d.open; scheduleSave(); });
   host.querySelectorAll("details[data-later]").forEach(d=>d.ontoggle=()=>{ state.ui.laterOpen[d.dataset.later]=d.open; scheduleSave(); });
-  on("t11Dust",openDustSheet); on("t11Gold",openDustSheet);
+  on("t11Gold",openDustSheet);
+  host.querySelectorAll(".t11n").forEach(b=>b.onclick=()=>{ const nd=state[b.dataset.k][+b.dataset.i], mx=nd.max||12; openSheet({title:nd.name.replace(/^Truegold /,""),sub:`T11 node · max ${mx}`,build(f){ f.appendChild(fld("Level now",{type:"num",value:nd.cur,get:()=>nd.cur,set:v=>nd.cur=Math.max(0,Math.min(mx,Math.round(v)))})); const i=infoBox(); f.appendChild(i); const rf=()=>{ i.innerHTML=nd.cur>=mx?"Done ✓":`${fmt(nodeRem(nd))} dust to max`; }; rf(); return rf; }}); });
+  const tm=$("#t11More"); if(tm) tm.ontoggle=()=>{ state.ui.t11More=tm.open; scheduleSave(); };
   $$(".phName").forEach(e=>e.textContent=act.n);
   buildForecast();
 }
@@ -108,3 +114,53 @@ function openResSheet(r){ openSheet({title:r.n||"Material",build(f){
   f.appendChild(fld("Amount",{type:"num",value:r.h,get:()=>r.h,allowEmpty:true,set:v=>r.h=v===""?"":String(v),hint:"Shorthand works: 2.5b, 300m. Speedups in minutes."})); },
   onDelete:()=>{ const i=state.resources.indexOf(r); if(i>-1) state.resources.splice(i,1); }}); }
 
+
+/* ---------- Research: Research Academy (Battle / Growth / Economy) + War Academy, from your screenshots ---------- */
+const RES_TREES=[["battle","Battle"],["growth","Growth"],["economy","Economy"]];
+const RES_NEXT=["Defensive Formations","Picket Lines","Bulwark Formations","Special Defensive Training","Survival Techniques","Shield Upgrade","Leathercraft","Fortified Mail","Lance Upgrade"]; // tier V Health/Defense first
+// every unfinished node as {tree,key,label,lv,max,obj}
+function resNodes(){ const R=state.research||{}, out=[];
+  const B=R.battle; if(B&&B.tiers) Object.entries(B.tiers).forEach(([t,o])=>Object.keys(o).forEach(n=>out.push({tree:"battle",group:"Battle — tier "+t,label:`${n} ${t}`,lv:num(o[n]),max:B.max||6,obj:o,key:n})));
+  ["growth","economy"].forEach(k=>{ const T=R[k]; if(T&&T.nodes) Object.keys(T.nodes).forEach(n=>out.push({tree:k,group:k==="growth"?"Growth":"Economy",label:n,lv:num(T.nodes[n]),max:T.max||3,obj:T.nodes,key:n})); });
+  return out; }
+function resEnds(){ const c=(state.research||{}).current; return c&&c.ends?new Date(c.ends):null; }
+const resLeftTxt=ms=>{ if(ms<=0) return "done"; const m=Math.floor(ms/6e4), d=Math.floor(m/1440), h=Math.floor(m%1440/60); return d?`${d}d ${h}h`:`${h}h ${m%60}m`; };
+function resNextPick(){ const c=((state.research||{}).current||{}).n||"", N=resNodes().filter(x=>x.lv<x.max&&x.label!==c);
+  for(const n of RES_NEXT){ const x=N.find(y=>y.tree==="battle"&&y.key===n&&/ V$/.test(y.label)); if(x) return x; }
+  return N.filter(x=>x.tree==="battle").sort((a,b)=>a.lv/a.max-b.lv/b.max)[0]||N[0]; }
+function openResNodeSheet(x){ openSheet({title:x.label,sub:`${x.group} · max ${x.max}`,build(f){
+  f.appendChild(fld("Level now",{type:"num",value:x.lv,get:()=>num(x.obj[x.key]),set:v=>x.obj[x.key]=Math.max(0,Math.min(x.max,Math.round(v)))})); }}); }
+function openResGroupSheet(g){ openSheet({title:g,sub:"Tap a node to update its level.",build(f){
+  const draw=()=>{ const L=resNodes().filter(x=>x.group===g), open=L.filter(x=>x.lv<x.max).sort((a,b)=>a.lv/a.max-b.lv/b.max), done=L.filter(x=>x.lv>=x.max), cur=((state.research||{}).current||{}).n;
+    f.innerHTML=`<div class="card dcard">${open.map((x,i)=>`<button class="drow rsn" data-i="${L.indexOf(x)}"><span class="dt"><b>${esc(x.label)}</b><span>${x.label===cur?'<span class="ok">researching now</span>':""}</span><span class="pbar"><i style="width:${pc(x.lv,x.max)}%"></i></span></span><span class="dv">${x.lv}/${x.max}</span></button>`).join("")}
+      ${done.length?`<details class="dfold"><summary>Maxed (${done.length}) ›</summary>${done.map(x=>`<button class="drow rsn" data-i="${L.indexOf(x)}"><span class="dt"><b>${esc(x.label)}</b></span><span class="dv ok">MAX</span></button>`).join("")}</details>`:""}</div>`;
+    f.querySelectorAll(".rsn").forEach(b=>b.onclick=()=>openResNodeSheet(L[+b.dataset.i])); };
+  draw(); return draw; }}); }
+function openResCurrentSheet(){ const R=state.research||(state.research={}), c=R.current||(R.current={n:"",ends:""});
+  const opts=resNodes().filter(x=>x.lv<x.max).map(x=>[x.label,x.label]);
+  openSheet({title:"Researching now",sub:"Set what's researching and when it finishes.",build(f){
+    f.appendChild(fld("Research",{type:"select",value:c.n,options:[["","— none —"]].concat(opts),set:v=>c.n=v}));
+    f.appendChild(fld("Time left (days)",{type:"num",decimal:true,value:"",allowEmpty:true,ph:"e.g. 5.7",set:v=>{ if(v!=="") c.ends=new Date(Date.now()+num(v)*864e5).toISOString(); },hint:"Or tick below when it's done."}));
+    f.appendChild(fld("It's finished — add +1 level",{type:"check",value:false,set:v=>{ if(!v) return; const x=resNodes().find(y=>y.label===c.n); if(x) x.obj[x.key]=Math.min(x.max,x.lv+1); c.n=""; c.ends=""; }}));
+  }}); }
+function renderResearch(){ const box=$("#researchBody"); if(!box) return; const R=state.research||{};
+  const N=resNodes(), left=N.reduce((t,x)=>t+Math.max(0,x.max-x.lv),0), end=resEnds(), ms=end?end-Date.now():null, nx=resNextPick(), cur=R.current||{};
+  const groups=[...new Set(N.map(x=>x.group))].map(g=>{ const L=N.filter(x=>x.group===g), lv=L.reduce((t,x)=>t+x.lv,0), mx=L.reduce((t,x)=>t+x.max,0), open=L.filter(x=>x.lv<x.max).sort((a,b)=>b.lv/b.max-a.lv/a.max);
+    return {g,left:mx-lv,p:pc(lv,mx),sub:open.length?`${open.length} not maxed · ${esc(open[0].label)} ${open[0].lv}/${open[0].max}`:"all maxed ✓"}; });
+  const W=R.war||{}, ws=Object.entries(W.started||{});
+  const t11=computeTarget()-num(state.dust.current);
+  box.innerHTML=`<div class="kpis"><button class="kpi y" data-k="dust"><b>${fmt(num(state.dust.current))}</b><span>TG Dust</span></button><button class="kpi${ms!=null&&ms<=0?" g":""}" data-k="cur"><b>${ms==null?"—":resLeftTxt(ms)}</b><span>to finish</span></button><button class="kpi" data-k="left"><b>${fmt(left)}</b><span>levels left</span></button><button class="kpi" data-k="t11"><b>${t11>0?fmtK(t11):"✓"}</b><span>dust to T11</span></button></div>
+    <div class="rsgrid"><div><div class="card dcard"><div class="dch"><h3>Researching now</h3>${end?`<span class="pill ${ms<=0?"g":"y"}">${ms<=0?"finished — start the next":`done ${end.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}`}</span>`:""}</div>
+      ${cur.n?`<button class="drow" id="resCurRow"><span class="dt"><b>${esc(cur.n)}</b><span>${(()=>{ const x=N.find(y=>y.label===cur.n); return x?`${x.group} · ${x.lv}/${x.max} → ${x.lv+1}/${x.max}`:""; })()}</span></span><span class="dv">${ms==null?"":resLeftTxt(ms)}<small>${ms!=null&&ms>0?"left":""}</small></span></button>`:'<button class="drow" id="resSet" style="width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);font:inherit"><span class="dt"><span>Nothing set — tap to set it</span></span><span class="chev">›</span></button>'}
+      ${nx?`<p class="dnote">Next up: <b style="color:var(--text)">${esc(nx.label)}</b> (${nx.lv}/${nx.max}) — tier V Health/Defense first, then tier VI.</p>`:""}</div>
+    <div class="card dcard mt"><div class="dch"><h3>Research Academy</h3><span class="faint" style="font-size:12.5px">${R.battle&&R.battle.seen?`from screenshots ${esc(fd(R.battle.seen))}`:""}</span></div>
+      ${groups.map(x=>`<button class="drow rsg" data-g="${esc(x.g)}"><span class="dt"><b>${esc(x.g)}</b><span>${x.sub}</span><span class="pbar"><i class="${x.left?"":"ok"}" style="width:${x.p}%"></i></span></span><span class="dv">${fmt(x.left)}<small>left</small></span></button>`).join("")||'<p class="dnote">Upload Tech Research screenshots to start.</p>'}</div>
+    </div><div>${W.seen?`<div class="card dcard"><div class="dch"><h3>War Academy</h3><span class="faint" style="font-size:12.5px">Truegold advanced</span></div>
+      ${ws.map(([n,v],i)=>`<button class="drow rsw" data-i="${i}"><span class="dt"><b>${esc(n.replace(/^Side node (left|right) of Chests of Gold$/,"Side node ($1)"))}</b><span>started</span><span class="pbar"><i style="width:${pc(v,W.max||10)}%"></i></span></span><span class="dv">${v}/${W.max||10}</span></button>`).join("")}
+      ${W.next?`<div class="drow"><span class="dt"><b>${esc(W.next)}</b><span>next on the path</span></span><span class="dv">0/${W.max||10}</span></div>`:""}
+      <p class="dnote">Then ${esc((W.tree||[]).slice(2,5).join(" → "))} → … (all 0/${W.max||10})</p></div>`:""}</div></div>`;
+  box.querySelectorAll(".rsg").forEach(b=>b.onclick=()=>openResGroupSheet(b.dataset.g));
+  box.querySelectorAll(".rsw").forEach(b=>b.onclick=()=>{ const [n]=ws[+b.dataset.i]; openSheet({title:n,sub:"War Academy",build(f){ f.appendChild(fld("Level now",{type:"num",value:W.started[n],get:()=>W.started[n],set:v=>W.started[n]=Math.max(0,Math.min(W.max||10,Math.round(v)))})); f.appendChild(fld("Name",{value:n,set:v=>{ if(v&&v!==n){ W.started[v]=W.started[n]; delete W.started[n]; } }})); }}); });
+  on("resCurRow",openResCurrentSheet); on("resSet",openResCurrentSheet);
+  box.querySelectorAll(".kpi").forEach(b=>b.onclick=()=>{ const k=b.dataset.k; if(k==="cur") openResCurrentSheet(); else if(k==="dust"||k==="t11") $("#t11Body").scrollIntoView({behavior:"smooth"}); });
+}

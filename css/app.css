@@ -806,3 +806,12 @@
   .checks li{padding-top:7px;padding-bottom:7px}
   .sgtiles{gap:1px!important;background:var(--line-soft);border:1px solid color-mix(in srgb,var(--line) 75%,var(--gold) 25%);border-radius:16px;overflow:hidden}
   .sgtiles .sgtile{border:0;border-radius:0;box-shadow:none;background:var(--panel);background-image:none}
+  .rsg,.rsw,.rsn,#resCurRow{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);font:inherit}
+  .dv.ok{color:var(--green)}
+  #researchBody + * {margin-top:0}
+  .t11n,#t11Gold{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);font:inherit}
+  #t11More > summary,#fcFold > summary{cursor:pointer;list-style:none} #t11More > summary::-webkit-details-marker,#fcFold > summary::-webkit-details-marker{display:none}
+  #fcCard > h3{display:none}
+  .rsgrid{display:grid;gap:12px;margin-bottom:12px} .rsgrid > div{min-width:0}
+  @media (min-width:900px){ .rsgrid{grid-template-columns:1fr 1fr;align-items:start} .page[data-tab="Base"] .sec[data-key="T11 Unlocks"]{max-width:none} }
+  #researchBody .kpis{margin-bottom:12px}
