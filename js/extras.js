@@ -69,11 +69,10 @@ function renderBagCheck(){
   const box=$("#bagCheck"); if(!box) return;
   const bc=state.bagCheck||{}, prev=bc.v||{}, days=bc.d?Math.round((new Date(fcToday())-new Date(bc.d))/864e5):null;
   const ch=k=>{ if(prev[k]==null) return '<span class="faint">—</span>'; const d=bagVal(k)-num(prev[k]); return d>0?`<span class="ok">▲ ${fmt(d)}</span>`:d<0?`<span class="bad">▼ ${fmt(-d)}</span>`:'<span class="faint">same</span>'; };
-  box.innerHTML=`<div class="rowb"><b style="font-size:16px">My bag</b>${days==null?'<span class="tag warn">not checked yet</span>':days===0?'<span class="tag ok">checked today ✓</span>':`<span class="tag ${days>2?"warn":"plain"}">checked ${days} day${days>1?"s":""} ago</span>`}</div>
+  box.innerHTML=`<div class="dch"><h3>My bag</h3>${days==null?'<span class="pill a">not checked yet</span>':days===0?'<span class="pill g">checked today</span>':`<span class="pill${days>2?" a":""}">checked ${days} day${days>1?"s":""} ago</span>`}<button class="link" id="bcSave">Save ✓</button></div>
     <div class="bcgrid">${BAG_KEYS.map(([k,l])=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-k="${k}" value="${bagVal(k)}"><em data-ch="${k}">${ch(k)}</em></label>`).join("")}</div>
-    <details class="fold mt" id="bcMore"${state.ui.bcMore?" open":""}><summary><span class="grow">More numbers</span></summary><div class="fbody"><div class="bcgrid">${BAG_MORE.map(([l,o,k],i)=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-m="${i}" value="${num(o()[k])}"></label>`).join("")}</div></div></details>
-    ${(()=>{ const st=staleShops(); return st.length?`<button class="evcam mt" id="bcStale">📸 ${st.length} shop${st.length>1?"s":""} not checked for ${STALE_DAYS}+ days ›</button>`:""; })()}
-    <div class="rowb mt" style="justify-content:flex-end"><button class="btn primary sm" id="bcSave">Save ✓</button></div>`;
+    <details class="dfold" id="bcMore"${state.ui.bcMore?" open":""}><summary>More numbers ›</summary><div class="bcgrid">${BAG_MORE.map(([l,o,k],i)=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-m="${i}" value="${num(o()[k])}"></label>`).join("")}</div></details>
+    ${(()=>{ const st=staleShops(); return st.length?`<button class="drow" id="bcStale" style="width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text)"><span class="dt"><b>📸 ${st.length} shop${st.length>1?"s":""} not checked for ${STALE_DAYS}+ days</b></span><span class="chev">›</span></button>`:""; })()}`;
   box.querySelectorAll("[data-m]").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
     x.onchange=()=>{ const [,o,k]=BAG_MORE[+x.dataset.m]; if(!/\d/.test(x.value)){ x.value=num(o()[k]); return; } o()[k]=Math.max(0,Math.round(num(x.value))); scheduleSave(); }; });
   const bm=$("#bcMore"); bm.ontoggle=()=>{ state.ui.bcMore=bm.open; scheduleSave(); };
@@ -95,8 +94,9 @@ function freshList(){ const out=[], bc=state.bagCheck||{}, bd=bc.d?Math.round((n
   (state.events||[]).filter(e=>e.endOpen&&activeOcc(e)&&activeOcc(e).day>14).forEach(e=>out.push({t:`${e.n}: still no end date`,go:()=>openEventSheet(e)}));
   return out; }
 function renderFresh(){ const box=$("#fresh"); if(!box) return; const L=freshList(); box.hidden=!L.length; if(!L.length){ box.innerHTML=""; return; }
-  box.innerHTML=`<div class="card fresh mb"><b>Needs a check <span class="tag warn">${L.length}</span></b>${L.map((x,i)=>`<button class="frow2" data-i="${i}">${esc(x.t)} <span aria-hidden="true">›</span></button>`).join("")}</div>`;
-  bindAll(box,".frow2",b=>L[+b.dataset.i].go()); }
+  const all=!!state.ui.freshAll, show=all?L:L.slice(0,2);
+  box.innerHTML=`<div class="card dcard fresh"><div class="dch"><h3>Needs a check</h3><span class="pill a">${L.length}</span></div>${show.map((x,i)=>`<button class="drow frow2" data-i="${i}"><span class="dt"><b>${esc(x.t)}</b></span><span class="chev" aria-hidden="true">›</span></button>`).join("")}${L.length>2?`<button class="drow" id="freshMore"><span class="dt"><span>${all?"Show less":`+${L.length-2} more`}</span></span></button>`:""}</div>`;
+  bindAll(box,".frow2",b=>show[+b.dataset.i].go()); on("freshMore",()=>{ state.ui.freshAll=!all; scheduleSave(); renderFresh(); }); }
 
 /* ---------- Home: timelines ---------- */
 function renderTimelines(){
