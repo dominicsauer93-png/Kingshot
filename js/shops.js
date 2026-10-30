@@ -148,40 +148,33 @@ const SG_EVENT=["Halloween Party","Alliance Mobilization","Fishing Tournament","
 const sgShort=n=>n.replace(/ \(.*\)$/,"").replace(/ Shop$/,"").replace(/^Alliance Shop — /,"Alliance ").replace(/^Alliance Championship$/,"Alliance Champ.");
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
-  const mo=state.packMonths||{}, cur=gameToday().slice(0,7), last=Object.keys(mo).sort().pop();
-  const N=blockerNeeds(), idx=n=>SHOP_DB.findIndex(s=>s.n===n), full=!!state.ui.sgFull; // full = the raw database (item tables, packs, reference)
+  // (budget notes live on Packs)
+  const N=blockerNeeds(), idx=n=>SHOP_DB.findIndex(s=>s.n===n);
   const fdS=s=>s?new Date(s+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"}):"";
   const tile=([n,when])=>{ const s=SHOP_DB[idx(n)]; if(!s) return ""; const b=liveBuys(s,N).need, seen=new Set(), top=b.filter(x=>!seen.has(x.k)&&seen.add(x.k)).slice(0,2);
     const old=staleDays(s.seen)>STALE_DAYS;
     return `<button class="sgtile" data-i="${idx(n)}"><span class="sgt-h"><b>${esc(sgShort(n))}</b><small>${old?`<span class="warn">seen ${staleDays(s.seen)}d ago</span>`:esc(when)}</small></span>`+
       (top.length?top.map(x=>`<span class="sgt-buy">${esc(x.it[0].replace(/ \(.*\)/,""))}<em>${fmt(x.it[1])}</em></span>`).join(""):'<span class="sgt-none">Nothing you need ✓</span>')+`</button>`; };
-  const fold=i=>{ const s=SHOP_DB[i]; return `<details class="fold mt sgshop"${state.ui.sgOpen===i?" open":""} data-i="${i}"><summary><span class="grow">${esc(s.n)}</span><small class="faint">${esc(s.cur)}</small></summary><div class="fbody">`+
-      liveBuysH(s,N)+(s.best.length?`<div class="sgbest"><b>Usually buy</b><ol>${s.best.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:"")+
+  const shopBody=i=>{ const s=SHOP_DB[i]; return liveBuysH(s,N)+(s.best.length?`<div class="sgbest"><b>Usually buy</b><ol>${s.best.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:"")+
       (s.skip.length?`<div class="sgskip"><b>Skip</b><ul>${s.skip.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"")+
-      (full&&s.items.length?`<details class="fold mt"><summary><span class="grow">Everything it sells</span><small class="faint">seen ${fdS(s.seen)}</small></summary><div class="fbody" style="padding:0"><table class="gtable"><thead><tr><th>Item</th><th>Cost</th><th>${typeof s.items[0][2]==="number"?"Limit":"%"}</th></tr></thead><tbody>${s.items.map(([a,b,c])=>`<tr><td>${esc(a)}</td><td class="mono">${typeof b==="number"?fmt(b):esc(b)}</td><td class="mono">${typeof c==="number"?fmt(c):esc(c)}</td></tr>`).join("")}</tbody></table></div></details>`:"")+
-      (s.note?`<p class="muted" style="margin:8px 0 0">${esc(s.note)}</p>`:"")+`</div></details>`; };
+      (s.items.length?`<details class="fold mt"><summary><span class="grow">Everything it sells</span><small class="faint">seen ${fdS(s.seen)}</small></summary><div class="fbody" style="padding:0"><table class="gtable"><thead><tr><th>Item</th><th>Cost</th><th>${typeof s.items[0][2]==="number"?"Limit":"%"}</th></tr></thead><tbody>${s.items.map(([a,b,c])=>`<tr><td>${esc(a)}</td><td class="mono">${typeof b==="number"?fmt(b):esc(b)}</td><td class="mono">${typeof c==="number"?fmt(c):esc(c)}</td></tr>`).join("")}</tbody></table></div></details>`:"")+
+      (s.note?`<p class="muted" style="margin:8px 0 0">${esc(s.note)}</p>`:""); };
+  const fold=i=>{ const s=SHOP_DB[i]; return `<details class="fold sgshop"><summary><span class="grow">${esc(s.n)}</span><small class="faint">${esc(s.cur)}</small></summary><div class="fbody">${shopBody(i)}</div></details>`; };
   const regIdx=SG_REGULAR.map(([n])=>idx(n)).filter(i=>i>=0), evIdx=SG_EVENT.map(idx).filter(i=>i>=0), packIdx=SHOP_DB.map((_,i)=>i).filter(i=>!regIdx.includes(i)&&!evIdx.includes(i));
   const ep=eventShopProgress();
   const liveEv=liveEvents().map(x=>eventShopFor(x.e)).filter(x=>x&&x.saved&&idx(x.name)>=0&&!SG_REGULAR.some(r=>r[0]===x.name)&&SHOP_DB[idx(x.name)].items.some(it=>typeof it[1]==="number")).map(x=>[x.name,"On now"]).filter((x,i,a)=>a.findIndex(y=>y[0]===x[0])===i);
   const blk=["mg","threads","designs","mith","gen"].filter(k=>N[k]&&N[k].short).map(k=>`${RES_LABEL[k]} <b>${fmt(N[k].short)}</b> short`);
-  host.innerHTML=`<div class="card sghead"><b style="font-size:16px">Buy now</b>`+
-      (blk.length?`<p class="sgblk">Short of: ${blk.join(" · ")}</p>`:"")+
-      (staleShops().length?`<p class="sgblk warn">📸 ${staleShops().length} shop${staleShops().length>1?"s":""} not checked for ${STALE_DAYS}+ days — screenshot ${staleShops().length>1?"them":"it"} so prices stay right.</p>`:"")+`</div>`+
+  // the page is just what to buy; everything else opens in a panel
+  host.innerHTML=`<div class="card sghead"><b style="font-size:16px">Buy now</b>${blk.length?`<p class="sgblk">Short of: ${blk.join(" · ")}</p>`:""}</div>`+
     `<div class="sgtiles">${liveEv.map(tile).join("")}${SG_REGULAR.map(tile).join("")}</div>`+
-    `<div class="sgprog mt"><div class="rowb"><b>Shop photos</b><span class="mono">${ep.saved} / ${ep.total}</span></div>${barH(pc(ep.saved,ep.total),ep.saved===ep.total?"ok":"")}<div class="rowb" style="align-items:flex-end;gap:10px"><span class="faint" style="font-size:13.5px">${ep.missing.length?`${ep.missing.length} still to capture`:"All captured ✓"}${ep.none?` · ${ep.none} have no shop`:""}</span>${ep.missing.length?`<button class="btn sm" id="sgCam">📸 Capture</button>`:""}</div></div>`+
-    (last&&mo[last].closed&&last===cur?`<p class="faint mt" style="margin-bottom:0">${new Date(last+"-01T00:00:00").toLocaleDateString(undefined,{month:"long"})} budget closed — A$${num(mo[last].spent).toFixed(2)} spent. Resets on the 1st.</p>`:"")+
-    (full?`<h3 class="sgsec">Shops</h3>`+regIdx.map(fold).join("")+
-    `<h3 class="sgsec">Event shops</h3>`+evIdx.map(fold).join("")+
-    `<h3 class="sgsec">Packs</h3>`+packIdx.map(fold).join("")+
-    `<h3 class="sgsec">Reference</h3>`+
-    `<details class="fold mt"><summary><span class="grow">How I pick</span></summary><div class="fbody"><ul class="sgrules">${SHOP_RULES.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></details>`+
-    `<details class="fold mt"><summary><span class="grow">Hero seasons</span><small class="faint">Hall of Heroes chests</small></summary><div class="fbody"><table class="gtable"><tbody>${Object.entries(HERO_SEASON).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
-    `<details class="fold mt"><summary><span class="grow">What the icons are</span></summary><div class="fbody"><table class="gtable"><tbody>${ITEM_KEY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>`+
-    `<p class="faint mt">New shop or pack? Send a screenshot, or upload it to <b>shops/inbox</b> in the Kingshot repo.</p>`:"")+
-    `<button class="btn ghost sm mt" id="sgFull">${full?"Hide shop details":"All shop details"}</button>`;
+    `<div class="dlinks"><button class="link" id="sgAll">All shops &amp; packs ›</button><button class="link" id="sgSrc">Where supplies come from ›</button>${ep.missing.length?`<button class="link" id="sgCam">📸 ${ep.missing.length} shops to capture ›</button>`:""}</div>`;
   on("sgCam",()=>openCamSheet(true));
-  on("sgFull",()=>{ state.ui.sgFull=!full; scheduleSave(); renderShopGuide(); });
-  host.querySelectorAll(".sgtile").forEach(t=>t.onclick=()=>{ const d=host.querySelector(`details.sgshop[data-i="${t.dataset.i}"]`); if(d){ d.open=true; d.scrollIntoView({behavior:"smooth",block:"start"}); return; }
-    state.ui.sgFull=true; state.ui.sgOpen=+t.dataset.i; scheduleSave(); renderShopGuide(); const d2=host.querySelector(`details.sgshop[data-i="${t.dataset.i}"]`); if(d2){ d2.open=true; d2.scrollIntoView({behavior:"smooth",block:"start"}); } });
-  host.querySelectorAll("details.sgshop").forEach(d=>d.ontoggle=()=>{ if(d.open) state.ui.sgOpen=+d.dataset.i; else if(state.ui.sgOpen===+d.dataset.i) delete state.ui.sgOpen; scheduleSave(); });
+  host.querySelectorAll(".sgtile").forEach(t=>t.onclick=()=>{ const i=+t.dataset.i, sh=SHOP_DB[i]; openSheet({title:sh.n,sub:`${sh.cur}${sh.when?" · "+sh.when:""}`,build(f){ f.innerHTML=shopBody(i); }}); });
+  on("sgAll",()=>openSheet({title:"All shops & packs",sub:"Tap one to see what it sells.",build(f){
+    f.innerHTML=`<h3 class="sgsec">Shops</h3><div class="card dcard sggrp">${regIdx.map(fold).join("")}</div><h3 class="sgsec">Event shops</h3><div class="card dcard sggrp">${evIdx.map(fold).join("")}</div><h3 class="sgsec">Packs</h3><div class="card dcard sggrp">${packIdx.map(fold).join("")}</div>
+      <h3 class="sgsec">Reference</h3><div class="card dcard sggrp"><details class="fold"><summary><span class="grow">How I pick</span></summary><div class="fbody"><ul class="sgrules">${SHOP_RULES.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></details>
+      <details class="fold"><summary><span class="grow">Hero seasons</span></summary><div class="fbody"><table class="gtable"><tbody>${Object.entries(HERO_SEASON).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>
+      <details class="fold"><summary><span class="grow">What the icons are</span></summary><div class="fbody"><table class="gtable"><tbody>${ITEM_KEY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details></div>
+      <p class="faint mt" style="font-size:13.5px">New shop or pack? Upload a screenshot with 📸, or to shops/inbox in the repo.</p>`; }}));
+  on("sgSrc",()=>openSheet({title:"Where supplies come from",sub:"Free sources and buy order.",build(f){ const src=$("#srcFold .fbody"); f.innerHTML=src?src.innerHTML:""; }}));
 }

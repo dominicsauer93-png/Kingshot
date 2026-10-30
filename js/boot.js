@@ -94,7 +94,6 @@ const SEARCH_KW={
   "Resources & Speedups":"bread wood stone iron gold speedups",
   "Shops & Packs":"packs paid budget card monthly weekly aud spend best value per dollar pick plan compare",
   "Shop guide":"free shops trial arena alliance swordland tidal kvk coins shop guide best buy hall of heroes marks champagne vouchers dragon caravan weekly benefits widgets fund seasons",
-  "Checklists":"routine daily weekly execute farm",
   "Reminders":"reminders notifications calendar ics ntfy alerts phone",
   "Today":"routine daily checklist",
   "Upcoming Events":"events calendar kvk bear hunt hall of heroes armament",

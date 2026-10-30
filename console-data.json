@@ -201,8 +201,8 @@
       ]
     },
     {
-      "name": "Truegold Plating (Defense)",
-      "cur": 8,
+      "name": "Truegold Mauls (Attack)",
+      "cur": 9,
       "max": 12,
       "costs": [
         54,
@@ -239,8 +239,8 @@
       ]
     },
     {
-      "name": "Truegold Mauls (Attack)",
-      "cur": 9,
+      "name": "Truegold Plating (Defense)",
+      "cur": 8,
       "max": 12,
       "costs": [
         54,
