@@ -760,3 +760,38 @@
   .dorow .didit{align-self:center}
   #fresh .fresh{margin-bottom:12px}
   @media (max-width:640px){ .page[data-tab="Home"] .phead{flex-wrap:nowrap;align-items:flex-start} .page[data-tab="Home"] .phead .btn{flex:none;margin-top:4px} }
+  /* design v2 — all pages: quiet section labels, same rows */
+  .page:not([data-tab="Home"]) .sec > h2,.page:not([data-tab="Home"]) .sec > .h2,.sgsec{font:700 12.5px var(--f-body)!important;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)!important;margin:4px 2px 8px!important;-webkit-text-fill-color:currentColor;background:none}
+  .page:not([data-tab="Home"]) .sec > h2::after,.page:not([data-tab="Home"]) .sec > .h2::after{display:none}
+  .page:not([data-tab="Home"]) .sec > h2 small,.page:not([data-tab="Home"]) .sec > .h2 small{text-transform:none;letter-spacing:0;font-weight:500}
+  .prow,.lrow.drow{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);font:inherit}
+  .dcard > .drow:first-child{border-top:0}
+  .pbar{display:block!important;height:4px;border-radius:99px;background:var(--track);margin-top:5px;overflow:hidden}
+  .pbar i{display:block;height:100%;background:var(--gold);border-radius:99px} .pbar i.ok{background:var(--green)}
+  .spark{width:64px;height:22px;flex:none;display:block}
+  .wspark{margin:8px 0 2px}
+  #weekReport .rcrow b{font-size:14px}
+  .info{border-radius:14px;border:1px solid var(--line-soft);background:var(--panel);box-shadow:none}
+  .hgrow{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);font:inherit}
+  .hgr-ic{width:24px;height:24px;flex:none;display:grid;place-items:center;color:var(--muted)} .hgr-ic svg{width:18px;height:18px}
+  .hgrow .dt > span .tag{font-size:11px;padding:1px 6px;vertical-align:1px}
+  .pbar i.bad{background:var(--red)}
+  .dch .hgtroop{display:inline-flex;align-items:center;gap:6px;font:800 14.5px var(--f-disp);letter-spacing:.03em;color:var(--gold)} .dch .hgtroop svg{width:16px;height:16px}
+  .tiles .tile{padding:10px 12px}
+  .drow.vcard{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;border-radius:0;box-shadow:none;padding:10px 14px;color:var(--text);font:inherit;min-height:0;display:flex;flex-direction:row;background-image:none}
+  .drow.vcard::before,.drow.vcard::after{display:none}
+  .drow.vcard.dim .dt > b{color:var(--muted)}
+  .wrow .pips{display:flex!important;gap:3px;margin-top:6px} .wrow .pips span{flex:1;height:4px;border-radius:2px;background:var(--track)} .wrow .pips span.on{background:var(--gold)}
+  /* tiles = one flush grid, like My bag */
+  .page:not([data-tab="Home"]) .tiles{gap:1px;background:var(--line-soft);border:1px solid color-mix(in srgb,var(--line) 75%,var(--gold) 25%);border-radius:16px;overflow:hidden}
+  .page:not([data-tab="Home"]) .tiles .tile{border:0;border-radius:0;box-shadow:none;background:var(--panel);background-image:none;padding:10px 12px}
+  .page:not([data-tab="Home"]) .tiles .tile:hover{background:var(--panel-2)}
+  .page:not([data-tab="Home"]) .tiles .tile .v{font-size:19px}
+  #petMats .tile:last-child:nth-child(odd){grid-column:1/-1}
+  /* report card + its material tiles read as one card */
+  #hgReport,#charmReport{border-bottom-left-radius:0;border-bottom-right-radius:0;margin-bottom:0!important;border-bottom-color:var(--line-soft)}
+  #hgReport + .tiles,#charmReport + .tiles{border-top-left-radius:0;border-top-right-radius:0;border-top:0;margin-top:0!important}
+  .fhrow{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);font:inherit}
+  #pillars .lrow{border:0;border-top:1px solid var(--line-soft);border-radius:0;background:none;padding:10px 14px}
+  #pillars > .lrow:first-child{border-top:0}
+  #pillars .dfold > summary{padding:11px 14px;font-size:13.5px;color:var(--acc);font-weight:600}

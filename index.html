@@ -96,6 +96,7 @@
     <div class="page" data-tab="Heroes" hidden>
       <div class="phead"><div><h1>Heroes</h1></div></div>
       <div class="subnav" role="tablist" aria-label="Heroes sections"></div>
+      <section class="sec" data-sub="Overview" data-key="Focus heroes"><div id="focusHeroes"></div></section>
       <section class="sec" data-sub="Overview" data-key="This week">
         <h2>This week</h2>
         <div id="weekReport"></div>
@@ -115,7 +116,7 @@
       </section>
       <section class="sec" data-sub="Overview" data-key="Power Grades">
         <h2>Power grades</h2>
-        <div class="list" id="pillars"></div>
+        <div class="card dcard" id="pillars"></div>
         <div class="legend"><span><span class="sw" style="background:var(--green)"></span>Ahead</span><span><span class="sw" style="background:var(--amber)"></span>Slightly behind</span><span><span class="sw" style="background:var(--red)"></span>Well behind</span><span><span class="sw" style="background:var(--text);opacity:.55"></span>Benchmark</span></div>
       </section>
       <section class="sec" data-sub="Roster" data-key="Hero Roles">
@@ -148,8 +149,7 @@
         <h2>Mystic Trials</h2>
         <div class="list" id="mysticBody"></div>
         <button class="add" id="addMystic">+ Add zone</button>
-        <h2 class="h2 mt2">Progress</h2>
-        <div id="mysticChartWrap"></div>
+        <details class="fold mt2"><summary><span class="grow">Rank charts</span></summary><div class="fbody"><div id="mysticChartWrap"></div></div></details>
       </section>
     </div>
 
