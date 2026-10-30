@@ -81,7 +81,7 @@ function renderHome(){
     (ymd(d)!==gameToday()?` · game day ${gd.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})} until ${rs.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})}`:"")+" · Kingdom day "+kingdomDay();
   paintGoals();
   renderEventMode();
-  renderBagCheck(); renderTimelines();
+  renderFresh(); renderBagCheck(); renderTimelines();
   // daily + weekly checklists reset here (they live in Data → Checklists now, not on Home)
   const t=state.today; const today=fcToday();
   if(t.routineDate!==today){ t.routine.forEach(r=>r.d=false); t.routineDate=today; scheduleSave(); }
@@ -126,8 +126,8 @@ function openEventSheet(ev){
       eb.appendChild(fld("Note",{type:"area",rows:8,value:ev.note,set:v=>{ ev.note=v; paintNote(); },hint:"Start a new line for each point."})); f.appendChild(ed);
       if(battleFor(ev)){ const bb=document.createElement("button"); bb.className="btn primary"; bb.textContent="⚔ Open battle card"; bb.onclick=()=>{ closeSheet(); openBattle(ev); }; f.appendChild(bb); }
       f.appendChild(fld("Event name",{value:ev.n,set:v=>ev.n=v}));
-      f.appendChild(frow(fld("Date (any occurrence)",{type:"date",value:ev.date,set:v=>ev.date=v}),fld("Repeats every (days)",{type:"num",value:ev.every||0,get:()=>ev.every,set:v=>ev.every=Math.max(0,Math.floor(v)),hint:"0 = one-off"})));
-      f.appendChild(frow(fld("Lasts (days)",{type:"num",value:evLen(ev),get:()=>evLen(ev),set:v=>ev.len=Math.max(1,Math.floor(v)||1)}),fld("Time (optional)",{type:"time",value:ev.time,set:v=>ev.time=v})));
+      f.appendChild(frow(fld("Date (any occurrence)",{type:"date",value:ev.date,set:v=>{ ev.date=v; delete ev.guess; }}),fld("Repeats every (days)",{type:"num",value:ev.every||0,get:()=>ev.every,set:v=>ev.every=Math.max(0,Math.floor(v)),hint:"0 = one-off"})));
+      f.appendChild(frow(fld("Lasts (days)",{type:"num",value:evLen(ev),get:()=>evLen(ev),set:v=>{ ev.len=Math.max(1,Math.floor(v)||1); delete ev.guess; }}),fld("Time (optional)",{type:"time",value:ev.time,set:v=>ev.time=v})));
       f.appendChild(fld("End date not confirmed yet",{type:"check",value:!!ev.endOpen,set:v=>{ if(v) ev.endOpen=true; else delete ev.endOpen; },hint:"Tick when the game hasn't shown when it ends. Untick once you know, and set the days."}));
       f.appendChild(fld("What to spend",{value:spendFor(ev),ph:"e.g. Speedups + Gov Gear",set:v=>ev.spend=v,hint:"Shown on Home while the event is on."}));
       f.appendChild(fld("Importance",{type:"select",value:ev.imp||"",options:[["","Auto"],["top","Top — show first"],["high","High"],["normal","Normal"],["low","Low"]],set:v=>{ if(v) ev.imp=v; else delete ev.imp; },hint:"When several events are on, the most important one leads the Home card."}));

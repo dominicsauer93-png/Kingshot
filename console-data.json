@@ -506,34 +506,6 @@
   },
   "packs": [
     {
-      "t": "Path of Honor (Hero Rally)",
-      "aud": 14.99,
-      "kind": "once",
-      "d": false,
-      "note": "Nov — only if Hero Rally is still on after 1 Nov. Pick 40 General shards (→ Ava). Also 140 Truegold, 4,800 gems, 12 keys. 3,343%"
-    },
-    {
-      "t": "Weekly Benefits — Mythic Governor Charm",
-      "aud": 14.99,
-      "kind": "once",
-      "d": false,
-      "note": "Nov week 1 — 150 Designs + 150 Guides. 6,500%"
-    },
-    {
-      "t": "Weekly Benefits — Mythic Hero Gear",
-      "aud": 14.99,
-      "kind": "once",
-      "d": false,
-      "note": "Nov week 2 — 90 hammers + 120 Lucky Hero Gear chests (chance of Mythic). 7,500%. Check the Gear Fund's Mythic drop rate first"
-    },
-    {
-      "t": "Chameleos Widget Pack (Ava)",
-      "aud": 7.99,
-      "kind": "once",
-      "d": false,
-      "note": "Nov — 15 Ava widgets (she needs 35 for Lv 7). 3,000%"
-    },
-    {
       "t": "Sails Aloft — Common",
       "aud": 7.99,
       "kind": "once",
@@ -3160,7 +3132,8 @@
       "note": "",
       "date": "2026-10-26",
       "len": 4,
-      "endOpen": true
+      "endOpen": true,
+      "guess": true
     },
     {
       "n": "Fishing Tournament",
