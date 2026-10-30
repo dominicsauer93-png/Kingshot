@@ -77,6 +77,11 @@ const SHOP_DB=[
    skip:["Candy Party Pack II (A$7.99, 4,400%) only if you'd use the candy — 1,000 candy + 70 Truegold + 2,500 gems","Top-up Benefits — only counts spending you'd do anyway","Masquerade wands — cosmetic town skins"],
    items:[["Candy Party Pack I — 100 candy, 2 gold keys, resources","Free",""],["Candy Party Pack II — 2,500 gems, 1,000 candy, 18 custom chests, 70 Truegold, avatar frame","A$7.99","4,400%"],["Witchbane pass (Audacious Adventure, middle track)","paid",""],["Pranksterbane pass (Audacious Adventure, top track)","paid",""]],
    note:"Unused candy turns into resource chests at the end. Coven Clash: 0.2% Prankster Time per attack (free attacks); Witch appears 20% of the time. Mission rewards are only resources."},
+  {n:"Alliance Mobilization",cur:"Alliance Points (no shop)",when:"Every 2 weeks · rewards tallied Sunday 00:00 UTC",seen:"2026-10-30",
+   best:["Do your exclusive missions every day — the first one each day gives 200% Alliance Points","Custom Mission Voucher: pick a double-points mission (first each day); later voucher missions give 120%","Refresh exclusive missions you haven't accepted yet — don't abandon accepted ones (uses the attempt)","Stay in the alliance until the tally — leaving loses alliance rewards"],
+   skip:["Victorious Mobilization Pack unless you want Artisan's Vision — no shards"],
+   items:[["Mobilization Booster Pack — 4 vouchers, 1K gems, 4 General Mythic shards, 20 Truegold, 10 resource chests, 10 × 100 VIP?, 1 chest · 1 a day","A$2.99","4,000%"],["Victorious Mobilization Pack — 4 vouchers, 1K gems, 24 Artisan's Vision, 20 Truegold, 10 resource chests, 10 × 100 VIP?, 1 chest · 1 a day","A$2.99","4,000%"]],
+   note:"No coin shop — points come from alliance members' missions. Leagues: Rookie → Junior → Senior → Elite → Legendary; top 3 (milestone level 8) move up, bottom 3 drop. Needs TC 10 and an alliance of 15+."},
   {n:"Champagne Fair",cur:"Vouchers",when:"Event, 2 days",seen:"2026-10-26",
    best:["S7 widget chest × 10 — bought 26 Oct (Ava needs 6, Wee & Woo 15)","S6 widget chest × 10 → Yang (850 each, he needs 34 for widget Lv 10)","Charm Designs × 10 (350)","Charm Guides × 10 (350)","Forgehammer × 1 with what's left (500)"],
    skip:["Mithril — 20,000 for 1","Skill books, pet items, gold, resource chests"],
@@ -139,7 +144,7 @@ function eventShopProgress(){ const all=[...new Set(EVENT_SHOPS.map(x=>x[1]))]; 
 
 // the page: a simple shopping list first (one tile per shop, what to buy right now), details tucked below
 const SG_REGULAR=[["Trial Shop","Weekly"],["Arena Shop","Weekly"],["Alliance Championship Shop","Weekly"],["KvK Shop (Kingdom of Power)","Weekly"],["Swordland Shop","Every 2 weeks"],["Tidal Shop","Every 2 weeks"],["Alliance Shop — weekly","Weekly"],["Alliance Shop — daily","Daily"]];
-const SG_EVENT=["Halloween Party","Fishing Tournament","Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
+const SG_EVENT=["Halloween Party","Alliance Mobilization","Fishing Tournament","Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
 const sgShort=n=>n.replace(/ \(.*\)$/,"").replace(/ Shop$/,"").replace(/^Alliance Shop — /,"Alliance ").replace(/^Alliance Championship$/,"Alliance Champ.");
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;

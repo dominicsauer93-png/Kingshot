@@ -1690,6 +1690,15 @@
       "every": 2,
       "time": "",
       "note": ""
+    },
+    {
+      "n": "Alliance Mobilization",
+      "date": "2026-10-26",
+      "every": 14,
+      "len": 6,
+      "time": "",
+      "note": "New season every 2 weeks. Rewards tallied Sunday 00:00 UTC. First exclusive mission each day = 200% points.",
+      "spend": "Daily exclusive missions + vouchers"
     }
   ],
   "masterNotesV": 2,
