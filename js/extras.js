@@ -88,6 +88,7 @@ function freshList(){ const out=[], bc=state.bagCheck||{}, bd=bc.d?Math.round((n
   const st=staleShops(); if(st.length) out.push({t:`${st.length} shop price list${st.length>1?"s are":" is"} ${STALE_DAYS}+ days old`,go:()=>openCamSheet(true)});
   const vd=VALUE_DB.filter(d=>vOnNow(d)&&staleDays(d.seen)>STALE_DAYS); if(vd.length) out.push({t:`${vd.length} pack price${vd.length>1?"s":""} not seen for ${STALE_DAYS}+ days`,go:()=>setTab("Shop","Paid")});
   (state.packs||[]).filter(p=>p.d&&PACK_DAYS[p.kind]&&!p.bought).forEach(p=>out.push({t:`${p.t}: set the date you bought it`,go:()=>openPackSheet(p)}));
+  if(syncCfg.owner&&loadTok()&&!syncCfg.device) out.push({t:"Name this device (PC, Phone…) for sync",go:()=>{ setTab("Data","Sync"); setTimeout(()=>{ const d=$("#scDev"); if(d){ d.scrollIntoView({block:"center"}); d.focus(); } },150); }});
   if(state.stars==null) out.push({t:"Enter your Kingdom Stars balance",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
   if(state.fx==null) out.push({t:"Check the A$ per US$ rate for the web store",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
   { const e=typeof resEnds==="function"?resEnds():null, c=(state.research||{}).current; if(e&&c&&c.n&&e<=new Date()) out.unshift({t:`Research done: ${c.n} — start the next one`,go:()=>{ setTab("Base","Research"); setTimeout(openResCurrentSheet,150); }}); }

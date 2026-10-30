@@ -170,10 +170,11 @@ function syncStatus(msg,cls){
 function buildSync(){
   on("exportBtn",exportData);
   const fi=$("#importFile"); on("importBtn",()=>fi.click()); fi.onchange=()=>{ if(fi.files[0]) importData(fi.files[0]); fi.value=""; };
-  const o=$("#scOwner"), rp=$("#scRepo"), br=$("#scBranch"), pa=$("#scPath"), tk=$("#scTok"), onB=$("#scOn");
-  o.value=syncCfg.owner; rp.value=syncCfg.repo; br.value=syncCfg.branch||"main"; pa.value=syncCfg.path; onB.checked=!!syncCfg.on;
+  const o=$("#scOwner"), rp=$("#scRepo"), br=$("#scBranch"), pa=$("#scPath"), tk=$("#scTok"), onB=$("#scOn"), dv=$("#scDev");
+  o.value=syncCfg.owner; rp.value=syncCfg.repo; br.value=syncCfg.branch||"main"; pa.value=syncCfg.path; onB.checked=!!syncCfg.on; dv.value=syncCfg.device||"";
+  dv.onchange=()=>{ syncCfg.device=dv.value.trim(); saveCfg(syncCfg); toast(syncCfg.device?`This device: ${syncCfg.device}`:"Device name cleared"); if(typeof renderFresh==="function") renderFresh(); };
   if(loadTok()) tk.placeholder="•••••• (saved on this device)";
-  on("scSave",()=>{ syncCfg={owner:o.value.trim(),repo:rp.value.trim(),branch:(br.value.trim()||"main"),path:(pa.value.trim()||"kingshot/console-data.json"),on:onB.checked}; saveCfg(syncCfg);
+  on("scSave",()=>{ syncCfg={owner:o.value.trim(),repo:rp.value.trim(),branch:(br.value.trim()||"main"),path:(pa.value.trim()||"kingshot/console-data.json"),on:onB.checked,device:dv.value.trim()}; saveCfg(syncCfg);
     if(tk.value.trim()){ saveTok(tk.value.trim()); tk.value=""; tk.placeholder="•••••• (saved on this device)"; }
     syncStatus(loadTok()?"Connected — try Pull or Push":"Saved — add a token to connect",loadTok()?"ok":"warn"); paintSyncButtons(); });
   onB.onchange=()=>{ syncCfg.on=onB.checked; saveCfg(syncCfg); };

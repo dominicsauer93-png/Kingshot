@@ -230,7 +230,7 @@ async function ghGet(cfg,tok){
 }
 async function ghPut(cfg,tok,sha,urgent){
   const content=btoa(unescape(encodeURIComponent(JSON.stringify(state,null,2))));
-  const body={message:`console update ${new Date().toISOString()}`,content,branch:cfg.branch};
+  const body={message:`console update${cfg.device?` (${String(cfg.device).slice(0,30)})`:""} ${new Date().toISOString()}`,content,branch:cfg.branch}; // device name shows which device saved
   if(sha) body.sha=sha;
   const payload=JSON.stringify(body), keepalive=!!urgent&&payload.length<60000; // keepalive lets the save finish while the page closes
   let r=await fetch(ghUrl(cfg,false),{method:"PUT",keepalive,headers:{Authorization:`Bearer ${tok}`,Accept:"application/vnd.github+json","Content-Type":"application/json"},body:payload});
