@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Data",
     "collapsed": {},
     "density": "comfortable",
     "laterOpen": {},
@@ -1567,7 +1567,7 @@
     "mastOpen": {},
     "sub": {
       "Base": "T11",
-      "Data": "Sync",
+      "Data": "Checklists",
       "Heroes": "Overview",
       "Gear": "Widgets",
       "Shop": "Paid"
