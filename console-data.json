@@ -1568,7 +1568,7 @@
     "sub": {
       "Base": "T11",
       "Data": "Sync",
-      "Heroes": "Roster",
+      "Heroes": "Overview",
       "Gear": "Charms",
       "Shop": "Paid"
     },
