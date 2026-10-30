@@ -69,19 +69,17 @@ function renderShopsPacks(){
   on("pkBudget",openPackBudgetSheet);
   const bought=p=>p.d&&p.kind==="once"; // owned one-off unlocks are hidden in a fold at the bottom
   const rows=P.map((p,i)=>({p,i})), owned=rows.filter(x=>bought(x.p));
-  const packRow=({p,i},k)=>{ const n=packDaysLeft(p), rec=!!PACK_DAYS[p.kind];
-    return `<div class="pack${bought(p)?" owned":""}"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}">
-      <span><span class="pn">${esc(p.t)}</span>${bought(p)?" "+tagH("ok","Owned ✓"):""}<br><span class="pd">${esc(p.note||"")}</span>
-      ${p.d&&rec?`<span class="pl">${p.bought?packLeftH(n):'<span class="faint">set the date you bought it (✎)</span>'}${p.bought&&n<=3?`<button class="renew" data-i="${i}">Renewed today</button>`:""}</span>`:""}</span>
-      <span class="pp">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${packPrice(p).toFixed(2)}`}<small>${p.first&&!p.firstDone?"first buy · ":""}${PACK_PER[p.kind]||""}</small></span>
+  const packRow=({p,i})=>{ const n=packDaysLeft(p), rec=!!PACK_DAYS[p.kind];
+    const sub=p.d&&rec?(p.bought?packLeftH(n):'<span class="bad">set the bought date ✎</span>'):esc(p.note||"");
+    return `<div class="drow"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}">
+      <span class="dt"><b>${esc(p.t)}</b><span>${sub}${p.d&&rec&&p.bought&&n<=3?` <button class="renew" data-i="${i}">Renewed today</button>`:""}</span></span>
+      <span class="dv">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${packPrice(p).toFixed(2)}`}<small>${PACK_PER[p.kind]==="one-off"?"":PACK_PER[p.kind]||""}</small></span>
       <button class="shr-edit" data-i="${i}" aria-label="Edit ${esc(p.t)}"><svg aria-hidden="true"><use href="#i-pen"/></svg></button></div>`; };
   // this month's buys live in the plan above (always current); here: your cards, anything else you saved, what you own
   const cards=rows.filter(x=>x.p.d&&PACK_DAYS[x.p.kind]), other=rows.filter(x=>!x.p.d&&!x.p.auto);
-  const grp=(t,sub)=>`<div class="shgrp"><span>${t}</span><small>${sub}</small></div>`;
-  $("#packList").innerHTML=(cards.length?grp("My cards","renew when they end"+(cards.some(x=>!x.p.bought)?" · set the bought date (✎)":""))+cards.map(packRow).join(""):"")+
-    (other.length?grp("Saved for later","not in this month's plan")+other.map(packRow).join(""):"")+
-    (owned.length?`<details class="shfold"><summary>${grp(`Already owned (${owned.length})`,"untick if bought by mistake")}</summary>${owned.map(packRow).join("")}</details>`:"")+
-    `<p class="pknever">✕ <b>Never buy:</b> resource packs, random chests, big mixed bundles.</p>`;
+  $("#packList").innerHTML=`<div class="card dcard"><div class="dch"><h3>My cards</h3></div>${cards.map(packRow).join("")||'<p class="dnote">No cards ticked.</p>'}
+    ${other.length?`<div class="dsub">Saved for later</div>${other.map(packRow).join("")}`:""}
+    ${owned.length?`<details class="dfold"><summary>Already owned (${owned.length}) <span class="faint">· untick if bought by mistake</span></summary>${owned.map(packRow).join("")}</details>`:""}</div>`;
   $$("#packList input[data-i]").forEach(c=>c.onchange=()=>{ const p=P[+c.dataset.i]; p.d=c.checked;
     if(c.checked&&PACK_DAYS[p.kind]){ p.bought=fcToday(); if(p.first) p.firstDone=true; }
     packStars(p,c.checked?1:-1); afterEdit(); });

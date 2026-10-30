@@ -70,22 +70,24 @@
 
     <!-- ================= HOME ================= -->
     <div class="page" data-tab="Home">
-      <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn primary" data-goto="Update all"><svg width="17" height="17" aria-hidden="true"><use href="#i-pen"/></svg>Update everything</button></div>
+      <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn sm" data-goto="Update all"><svg width="15" height="15" aria-hidden="true"><use href="#i-pen"/></svg>Update</button></div>
+      <div class="kpis" id="kpis"></div>
       <button class="info" id="packAlert" hidden data-goto="Shops &amp; Packs" style="display:block;width:100%;text-align:left;margin-bottom:12px;border-color:var(--amber);background:var(--amber-soft);color:var(--text)"></button>
-      <details class="evmode" id="eventMode" hidden></details>
+      <div class="evmode" id="eventMode" hidden></div>
+      <div id="fresh"></div>
       <div class="cols-3-2 mt2">
-        <section class="sec" data-key="Do next">
-          <h2>Today <small id="doCount"></small></h2>
-          <div class="dolist" id="doNext"></div>
-          <button class="btn mt" id="doMore">Show all</button>
-        </section>
         <div>
-          <section class="sec" data-key="Bag check"><div id="fresh"></div><div class="card" id="bagCheck"></div><details class="fold mt" id="tlFold"><summary><span class="grow">Forecast</span><span class="faint" style="font-weight:500;font-size:14px">when you reach each goal</span></summary><div class="fbody" id="timelines"></div></details></section>
-          <section class="sec" data-key="Upcoming Events">
-            <h2>Events <button class="btn sm" id="evAdd">+ Event</button></h2>
-            <div class="card"><div class="stack" id="evUpcoming"></div>
-              <button class="btn sm ghost mt" id="evAll">All events</button></div>
+          <section class="sec" data-key="Do next">
+            <div class="card dcard"><div class="dch"><h3>Today <small id="doCount"></small></h3><button class="link" id="doMore">All ›</button></div>
+            <div id="doNext"></div></div>
           </section>
+          <section class="sec" data-key="Upcoming Events">
+            <div class="card dcard"><div class="dch"><h3>Events</h3><button class="link" id="evAll">All ›</button><button class="link" id="evAdd">+ Add</button></div><div id="evUpcoming"></div></div>
+          </section>
+        </div>
+        <div>
+          <section class="sec" data-key="Bag check"><div class="card dcard" id="bagCheck"></div>
+            <details class="card dcard dfold mt" id="tlFold"><summary class="dch"><h3>Forecast</h3><span class="faint" style="font-size:13px">when you reach each goal ›</span></summary><div class="fbody" id="timelines" style="padding:0 14px 12px"></div></details></section>
         </div>
       </div>
     </div>
@@ -260,9 +262,8 @@
       </section>
       <section class="sec" data-sub="Paid" data-key="Shops &amp; Packs">
         <div id="bestValue"></div>
-        <h2 class="h2 mt2">My cards &amp; packs</h2>
         <div class="tiles" id="packTiles" hidden></div>
-        <div class="card mt" style="padding:0;overflow:hidden" id="packList"></div>
+        <div class="mt" id="packList"></div>
         <button class="add" id="addPack">+ Add pack</button>
       </section>
     </div>

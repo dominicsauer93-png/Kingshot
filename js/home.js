@@ -63,23 +63,26 @@ function renderEventMode(){
   const left=cur.a.len-cur.a.day, have=eventHave(e);
   // how long is left: "end not confirmed" when the game hasn't shown the end date yet
   const leftTxt=(x,a)=>x.endOpen?"end not confirmed":a.len-a.day?`${a.len-a.day} more day${a.len-a.day>1?"s":""}`:"last day";
-  box.innerHTML=`<summary class="eh"><span class="et">⚡ ${esc(e.n||"Event")} is on</span><span class="ed">${cur.a.len>1&&!e.endOpen?`day ${cur.a.day} of ${cur.a.len} · `:e.endOpen?`day ${cur.a.day} · `:""}${leftTxt(e,cur.a)}${live.length>1?` · +${live.length-1} more`:""}</span></summary>
-    <div class="es"><b>Spend:</b> ${esc(spendFor(e)||"—")}</div>${stagesH(e,true)}${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}${(()=>{ const n=camMissing(false).length, bt=battleFor(e); return n||bt?`<div class="ebtns">${bt?`<button class="btn primary sm" id="evBattle">⚔ Battle card</button>`:""}${n?`<button class="evcam" id="evCam">📸 ${n} shop${n>1?"s":""} to capture <span aria-hidden="true">›</span></button>`:""}</div>`:""; })()}`+
-    (steps.length||stagesH(e)?`<details class="efold"><summary>${steps.length?"How to play it":"Full schedule"}${steps.length&&stagesH(e)?" · full schedule":""}</summary>${stagesH(e)}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}</details>`:"")+
-    (live.length>1?`<details class="efold eall"><summary>${live.length-1} more event${live.length>2?"s":""} on now</summary>${live.slice(1).map(({e:x,a},i)=>`<button class="erow" data-i="${i+1}"><span class="en">${esc(x.n||"Event")}${(()=>{ const sh=eventShopFor(x); return sh&&!sh.saved?" 📸":""; })()}</span><span class="ew">${x.endOpen?`day ${a.day} · end ?`:a.len>1?`day ${a.day}/${a.len}`:"today"}</span><span class="esp">${esc(spendFor(x)||"tap to add what to spend")}</span></button>`).join("")}</details>`:"");
-  bindAll(box,".erow",b=>openEventSheet(live[+b.dataset.i].e));
+  const st=(HALLOWEEN_STAGES.find(([d])=>d===gameToday())||[]), todayStage=/halloween/i.test(e.n||"")&&st[1]?`${st[1]} — ${st[2]}`:"";
+  const ncam=camMissing(false).length, bt=battleFor(e);
+  box.innerHTML=`<div class="eh"><span class="et">⚡ ${esc(e.n||"Event")}</span><span class="pill y">${cur.a.len>1&&!e.endOpen?`day ${cur.a.day} of ${cur.a.len}`:e.endOpen?`day ${cur.a.day} · end ?`:""}${!e.endOpen&&!(cur.a.len-cur.a.day)?" · last day":""}</span></div>
+    ${todayStage?`<p class="eline"><b>Today:</b> ${esc(todayStage)}</p>`:""}<p class="eline"><b>Spend:</b> ${esc(spendFor(e)||"—")}</p>
+    ${have.length?`<div class="ehave">${have.map(([l,v])=>`<span>${esc(l)} <b>${esc(v)}</b></span>`).join("")}</div>`:""}
+    <div class="eacts">${steps.length||stagesH(e)?`<button class="btn sm" id="evHow">How to play ›</button>`:""}${bt?`<button class="btn sm primary" id="evBattle">⚔ Battle card</button>`:""}${ncam?`<button class="btn sm" id="evCam">📸 ${ncam} shop${ncam>1?"s":""}</button>`:""}${live.length>1?`<button class="btn sm" id="evOthers">+${live.length-1} on now</button>`:""}</div>`;
+  on("evHow",()=>openSheet({title:e.n||"Event",sub:`${cur.a.len>1?`Day ${cur.a.day} of ${cur.a.len} · `:""}${leftTxt(e,cur.a)}`,build(f){ f.innerHTML=`${stagesH(e)}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}`; }}));
+  on("evOthers",()=>openSheet({title:"Also on now",sub:"Tap one to see or edit it.",build(f){ f.innerHTML=`<div class="list">${live.slice(1).map(({e:x,a},i)=>`<button class="lrow erow2" data-i="${i+1}"><span style="flex:1;min-width:0"><b>${esc(x.n||"Event")}${(()=>{ const sh=eventShopFor(x); return sh&&!sh.saved?" 📸":""; })()}</b><br><span class="faint" style="font-size:13px">${esc(spendFor(x)||"tap to add what to spend")}</span></span><span class="mono faint">${x.endOpen?`day ${a.day}`:a.len>1?`${a.day}/${a.len}`:"today"}</span></button>`).join("")}</div>`;
+    f.querySelectorAll(".erow2").forEach(b=>b.onclick=()=>openEventSheet(live[+b.dataset.i].e)); }}));
   on("evBattle",()=>openBattle(e));
   on("evCam",()=>openCamSheet(false));
-  const want=state.ui.evOpen!=null?state.ui.evOpen:innerWidth>640; box.open=want; // open on PC, one line on phones until tapped
-  box.ontoggle=()=>{ if(box.open!==want){ state.ui.evOpen=box.open; scheduleSave(); } };
 }
 function renderHome(){
   const d=new Date();
   // events run on the game day (UTC); before the daily reset your local date is a day ahead — say so
   const gd=new Date(gameToday()+"T00:00:00"), rs=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()+1));
-  $("#homeSub").textContent=d.toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})+
+  $("#homeSub").textContent=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})+
     (ymd(d)!==gameToday()?` · game day ${gd.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})} until ${rs.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})}`:"")+" · Kingdom day "+kingdomDay();
   paintGoals();
+  renderKpis();
   renderEventMode();
   renderFresh(); renderBagCheck(); renderTimelines();
   // daily + weekly checklists reset here (they live in Data → Checklists now, not on Home)
@@ -92,16 +95,25 @@ function renderHome(){
   renderEvents();
 }
 
+/* ---------- Home summary strip: the four numbers that matter today ---------- */
+function renderKpis(){ const box=$("#kpis"); if(!box) return;
+  const A=typeof vPlanAll==="function"?vPlanAll():null, w=typeof weekDelta==="function"?weekDelta("power"):null;
+  const nx=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past&&x.o.days>0&&!activeOcc(x.e)&&!(num(x.e.every)&&num(x.e.every)<=2)).sort((a,b)=>a.o.days-b.o.days||eventRank(a.e)-eventRank(b.e))[0];
+  const K=[
+    A?{v:`A$${Math.round(A.spare)}`,l:`${A.M.label.slice(0,3)} spare`,c:"y",go:()=>setTab("Shop","Paid")}:null,
+    {v:`${fmtK(num(state.stars))} ⭐`,l:"Stars",c:"",go:()=>setTab("Shop","Paid")},
+    w?{v:`${w.d>=0?"+":"−"}${fmtBig(Math.abs(w.d))}`,l:"power/wk",c:w.d>=0?"g":"r",go:()=>setTab("Heroes","Overview")}:{v:"—",l:"power/wk",c:""},
+    nx?{v:`${nx.o.days}d`,l:nx.e.n,c:"",go:()=>openEventSheet(nx.e)}:{v:"—",l:"next event",c:""}].filter(Boolean);
+  box.innerHTML=K.map((k,i)=>`<button class="kpi ${k.c}" data-i="${i}"><b>${esc(k.v)}</b><span>${esc(k.l)}</span></button>`).join("");
+  bindAll(box,".kpi",b=>{ const k=K[+b.dataset.i]; if(k.go) k.go(); }); }
+
 /* ---------- events ---------- */
 function renderEvents(){
   const list=(state.events||[]).filter(e=>!activeOcc(e)).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past).sort((a,b)=>a.o.days-b.o.days||String(a.e.time||"").localeCompare(String(b.e.time||"")));
   const up=$("#evUpcoming");
-  up.innerHTML=list.length?list.slice(0,4).map(({e,o},i)=>{ const dd=new Date(o.date+"T00:00:00");
-    return `<button class="lrow evrow" data-i="${state.events.indexOf(e)}" style="border:1px solid var(--line);border-radius:12px">
-      <span class="evdate"><span class="m" style="display:block">${dd.toLocaleDateString(undefined,{month:"short"})}</span><span class="d" style="display:block">${dd.getDate()}</span></span>
-      <span style="min-width:0"><span class="lt" style="display:block">${esc(e.n||"Event")}</span><span class="ls" style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${dd.toLocaleDateString(undefined,{weekday:"short"})}${e.time?" · "+esc(e.time):""} · ${repeatTxt(e)}${e.note?" · "+esc(e.note):""}</span></span>
-      <span class="evwhen ${o.days===0?"now":""}">${whenTxt(o)}</span></button>`; }).join("")
-    : `<div class="empty">Nothing new starting soon${liveEvents().length?" — what's on now is in the event card":""}.</div>`;
+  up.innerHTML=list.length?list.slice(0,4).map(({e,o})=>{ const dd=new Date(o.date+"T00:00:00");
+    return `<button class="drow evrow" data-i="${state.events.indexOf(e)}"><span class="dt"><b>${esc(e.n||"Event")}</b><span>${dd.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})}${e.time?" · "+esc(e.time):""} · ${repeatTxt(e)}${e.note?" · "+esc(e.note):""}</span></span><span class="dv${o.days===0?" ok":""}">${o.days===0?"today":o.days===1?"1d":o.days+"d"}</span></button>`; }).join("")
+    : `<p class="dnote">Nothing new starting soon${liveEvents().length?" — what's on now is in the event card":""}.</p>`;
   bindAll(up,".evrow",b=>openEventSheet(state.events[+b.dataset.i]));
   on("evAdd",()=>openEventSheet(null));
   on("evAll",openAllEventsSheet);
@@ -148,10 +160,10 @@ function openAllEventsSheet(){
 }
 
 /* ---------- Do next (one ranked list) ---------- */
-function doHtml(g,i){
-  return `<div class="dowrap"><button class="do ${i===0?"first":""}" data-i="${i}"><span class="n" aria-hidden="true">${i+1}</span>
-    <span style="min-width:0"><span class="t">${g.title}</span>${g.tag?` ${tagH("ok",g.tag)}`:""}<span class="d" style="display:block">${g.detail}</span></span><span class="chev" aria-hidden="true">›</span></button>`+
-    (g.apply?`<button class="didit" data-i="${i}" title="Spends the materials and moves it up a level — Undo if not">✓ I did this</button>`:"")+`</div>`;
+function doHtml(g,i){ // one row: number, task + detail, then ✓ Done (when ready) or ›
+  return `<div class="drow dorow"><button class="dogo" data-i="${i}"><span class="dn${g.ready?" go":""}" aria-hidden="true">${i+1}</span>
+    <span class="dt"><b>${g.title}</b><span>${g.ready?'<span class="ok">Ready</span> · ':""}${g.detail}</span></span></button>`+
+    (g.apply?`<button class="didit" data-i="${i}" title="Spends the materials and moves it up a level — Undo if not">✓ Done</button>`:`<span class="chev" aria-hidden="true">›</span>`)+`</div>`;
 }
 let lastGoals=[];
 /* ---------- next steps: one engine for every tab and Home ----------
@@ -231,11 +243,11 @@ function paintGoals(){
   const hs=$("#doNext"); if(!hs) return;
   const all=nextSteps(), showAll=!!state.ui.doAll, L=showAll?all:all.slice(0,3); lastGoals=all;
   const nReady=L.filter(g=>g.ready).length;
-  hs.innerHTML=L.map((g,i)=>(nReady&&i===0?`<div class="dohead ok">Ready now</div>`:"")+(nReady&&i===nReady?`<div class="dohead">Working towards</div>`:"")+doHtml(g,i)).join("")||`<div class="empty">Everything is at target ✓</div>`;
-  bindAll(hs,".do",b=>{ const g2=L[+b.dataset.i]; goToSection(null,g2.key,g2.open); });
+  hs.innerHTML=L.map((g,i)=>doHtml(g,i)).join("")||`<p class="dnote">Everything is at target ✓</p>`;
+  bindAll(hs,".dogo",b=>{ const g2=L[+b.dataset.i]; goToSection(null,g2.key,g2.open); });
   bindAll(hs,".didit",b=>{ const g2=L[+b.dataset.i], snap=JSON.stringify(state); g2.apply(); afterEdit(); toast("Done: "+g2.title.replace(/<[^>]+>/g,""),snap); });
-  $("#doCount").textContent=all.length?`${Math.min(all.length,L.length)} of ${all.length}`:"";
-  const mb=$("#doMore"); mb.hidden=all.length<=3; mb.textContent=showAll?"Show top 3":`Show all ${all.length}`;
+  $("#doCount").textContent="";
+  const mb=$("#doMore"); mb.hidden=all.length<=3; mb.textContent=showAll?"Top 3 ›":`All ${all.length} ›`;
   mb.onclick=()=>{ state.ui.doAll=!state.ui.doAll; paintGoals(); scheduleSave(); };
 }
 
