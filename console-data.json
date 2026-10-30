@@ -1583,87 +1583,31 @@
     ]
   },
   "ui": {
-    "tab": "Home",
-    "collapsed": {
-      "Hero Gear": false,
-      "Build Order — TG6→TG8": false,
-      "Troop Plan": false,
-      "T11 Unlocks": false,
-      "Widgets": false,
-      "Gold Hero Shards": true,
-      "Masters": true,
-      "Mystic Trials": true,
-      "Resources & Speedups": true,
-      "Pets": true
-    },
-    "density": "compact",
-    "mastOpen": {
-      "Aena": true,
-      "Isnor": true,
-      "Pan": true,
-      "Valora": true,
-      "Roman": true,
-      "Guinevere": true,
-      "Cassia": true,
-      "Wilson": true
-    },
+    "tab": "Shop",
+    "collapsed": {},
+    "density": "comfortable",
+    "laterOpen": {},
     "charmOpen": {
-      "Archer": false,
-      "Cavalry": true,
-      "Infantry": true
+      "Archer": true
     },
-    "laterOpen": {
-      "nodes": false,
-      "cavNodes": false
-    },
+    "mastOpen": {},
     "sub": {
-      "Rally": "Heroes",
-      "Data": "Checklists",
-      "Gear": "Charms",
-      "Base": "Buildings",
-      "Plan": "Shop guide",
-      "Heroes": "Masters",
+      "Base": "T11",
+      "Data": "Sync",
+      "Heroes": "Mystic Trials",
+      "Gear": "Widgets",
       "Shop": "Paid"
     },
-    "t11Open": {
-      "nodes": false,
-      "cavNodes": false
-    },
-    "doAll": false,
+    "progKey": "power",
+    "t11Open": {},
     "qOpen": {
-      "Bag": true,
-      "HG": true,
-      "Power": true,
-      "Buildings": true,
-      "Troops": false,
-      "Shards": false,
-      "Masters": true,
-      "Gov": true,
-      "Widgets": false,
-      "Charms": false,
-      "T11": false,
-      "Mystic": true,
-      "Pets": true
+      "Bag": true
     },
-    "tierAll": false,
-    "progKey": "attWR",
-    "roleOpen": true,
-    "heroAll": false,
-    "evOpen": true,
-    "shSpare": true,
-    "petMaxOpen": false,
-    "weekOpen": false,
-    "todayAll": true,
-    "tierOpen": false,
-    "planOpen": true,
     "bvPick": [
-      "tg",
-      "gen",
-      "designs",
+      "widgets",
+      "lucky",
       "dust"
     ],
-    "sgOpen": 14,
-    "bcMore": true,
     "sgFull": true
   },
   "troopCounts": {
@@ -2971,7 +2915,6 @@
       "d": false
     }
   ],
-  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
   "events": [
     {
       "n": "KvK",
@@ -3382,25 +3325,7 @@
       }
     ]
   },
-  "shardGeneral": 86,
   "shardRallySet": true,
-  "eventTicks": {
-    "key": "Wavebound Voyage|2026-10-20",
-    "done": []
-  },
-  "packBudget": 100,
-  "packMonths": {
-    "2026-10": {
-      "spent": 92.93,
-      "closed": true,
-      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99 · Audacious passes 22.98 · Ultra Monthly Card 14.99 (28 Oct)"
-    },
-    "2026-11": {
-      "spent": 0,
-      "closed": false,
-      "note": "Plan: Path of Honor 14.99 · Charm card 14.99 · Hero Gear card 14.99 · Chameleos 7.99 = 52.96 · ~A$47 spare"
-    }
-  },
   "income": {
     "mg": {
       "since": "2026-10-26",
@@ -3443,6 +3368,25 @@
         "2026-10": 149
       },
       "seen": 86
+    }
+  },
+  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
+  "shardGeneral": 86,
+  "eventTicks": {
+    "key": "Wavebound Voyage|2026-10-20",
+    "done": []
+  },
+  "packBudget": 100,
+  "packMonths": {
+    "2026-10": {
+      "spent": 92.93,
+      "closed": true,
+      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99 · Audacious passes 22.98 · Ultra Monthly Card 14.99 (28 Oct)"
+    },
+    "2026-11": {
+      "spent": 0,
+      "closed": false,
+      "note": "Plan: Path of Honor 14.99 · Charm card 14.99 · Hero Gear card 14.99 · Chameleos 7.99 = 52.96 · ~A$47 spare"
     }
   },
   "battle": {
