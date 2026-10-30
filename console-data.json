@@ -1585,7 +1585,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Heroes",
     "collapsed": {},
     "density": "comfortable",
     "laterOpen": {},
@@ -1596,7 +1596,7 @@
     "sub": {
       "Base": "T11",
       "Data": "Sync",
-      "Heroes": "Mystic Trials",
+      "Heroes": "Roster",
       "Gear": "Hero Gear",
       "Shop": "Paid"
     },
@@ -1609,7 +1609,8 @@
       "designs",
       "widgets"
     ],
-    "sgFull": true
+    "sgFull": true,
+    "roleOpen": false
   },
   "troopCounts": {
     "inf": {
@@ -3366,13 +3367,13 @@
     "gen": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 149
+        "2026-10": 248
       },
-      "seen": 86
+      "seen": 100
     }
   },
   "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
-  "shardGeneral": 86,
+  "shardGeneral": 100,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
     "done": []
