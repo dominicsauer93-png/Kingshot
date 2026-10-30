@@ -3473,6 +3473,35 @@
     "current": {
       "n": "Bulwark Formations V",
       "ends": "2026-11-04T23:10Z"
+    },
+    "war": {
+      "seen": "2026-10-30",
+      "title": "Truegold Tech Research — Advanced",
+      "started": {
+        "Chests of Gold": 4,
+        "Side node left of Chests of Gold": 4,
+        "Side node right of Chests of Gold": 2
+      },
+      "next": "Truegold Intel",
+      "max": 10,
+      "tree": [
+        "Chests of Gold",
+        "Truegold Intel",
+        "Limited Supply",
+        "Truegold Provisions I",
+        "Generation Truegold I",
+        "Truegold Bounties I",
+        "Heart of Gold I",
+        "Truegold Armaments I",
+        "Truegold Armor I",
+        "Truegold Provisions II",
+        "Generation Truegold II",
+        "Truegold Bounties II",
+        "Heart of Gold II",
+        "Truegold Armaments II",
+        "Truegold Armor II"
+      ],
+      "note": "Everything else 0/10 (troop stat grids between the named nodes); final node 0/100. Currency shown: 337."
     }
   }
 }
