@@ -207,7 +207,7 @@ function nextSteps(){
       apply:ready?()=>{ w.have=num(w.have)-nd; w.lvl=num(w.lvl)+1; }:null}); }
   // shards — most-used hero's next star step
   const sh=shardOrder().find(r=>hasStars(r)&&num(r.pos)<SHARD_MAX); if(sh){ const nd=SHARD_LEAF[num(sh.pos)], ready=num(sh.have)>=nd;
-    out.push({k:"shard",title:`${esc(sh.n)} → ${esc(starLabel(num(sh.pos)+1))}`,detail:`${fmt(num(sh.have))} / ${fmt(nd)} shards`+(ready?"":` · ${fmt(nd-num(sh.have))} short`),ready,open:()=>openShardSheet(sh),key:"Gold Hero Shards",
+    out.push({k:"shard",title:`${esc(sh.n)} → ${esc(starLabel(num(sh.pos)+1))}`,detail:`${fmt(num(sh.have))} / ${fmt(nd)} shards`+(ready?"":genOrder()[0]===sh&&num(sh.have)+num(state.shardGeneral)>=nd?' · <span class="ok">your General shards cover it</span>':` · ${fmt(nd-num(sh.have))} short`),ready,open:()=>openShardSheet(sh),key:"Gold Hero Shards",
       apply:ready?()=>{ sh.have=num(sh.have)-nd; sh.pos=num(sh.pos)+1; }:null}); }
   // charms — one level
   const c=state.charms||{have:{}}, cp=charmPlanLeft()[0], cr=cp?null:charmNextList(1)[0];

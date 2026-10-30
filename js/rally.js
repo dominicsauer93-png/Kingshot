@@ -14,13 +14,29 @@ function renderRally(){
   ["cAtt","cDef","cLeth","cHp"].forEach(id=>on(id,openCombatSheet));
   // pillars
   const pl=$("#pillars");
-  pl.innerHTML=state.pillars.map((p,i)=>{ const ratio=p.b>0?p.v/p.b:1, cls=ratio>=1?"ok":ratio>=0.85?"warn":"bad";
+  const prow=(p,i)=>{ const ratio=p.b>0?p.v/p.b:1, cls=ratio>=1?"ok":ratio>=0.85?"warn":"bad";
     return `<button class="lrow" data-i="${i}" style="grid-template-columns:1fr"><span class="pillar"><span class="pn">${esc(p.name)}</span>
       <span class="bar ${cls}"><i style="width:${Math.min(100,ratio*100).toFixed(1)}%"></i>${p.b>0?`<span class="bench" style="left:${Math.min(99,p.b/Math.max(p.v,p.b)*100).toFixed(1)}%"></span>`:""}</span>
-      <span class="pv">${fmtBig(p.v)} / ${fmtBig(p.b)}</span><span class="grade g-${esc(p.g||"")}">${esc(p.g)||"–"}</span></span></button>`; }).join("");
+      <span class="pv">${fmtBig(p.v)} / ${fmtBig(p.b)}</span><span class="grade g-${esc(p.g||"")}">${esc(p.g)||"–"}</span></span></button>`; };
+  // behind the benchmark first; areas you're ahead in fold away
+  const P=state.pillars.map((p,i)=>({p,i})), behind=P.filter(({p})=>p.b>0&&p.v<p.b), ahead=P.filter(x=>!behind.includes(x));
+  pl.innerHTML=(behind.length?behind.map(({p,i})=>prow(p,i)).join(""):'<p class="dnote">Ahead of the benchmark everywhere ✓</p>')+
+    (ahead.length?`<details class="dfold"><summary>Ahead in ${ahead.length} more ›</summary>${ahead.map(({p,i})=>prow(p,i)).join("")}</details>`:"");
   bindAll(pl,".lrow",b=>openPillarSheet(state.pillars[+b.dataset.i]));
-  renderWeekly(); renderProgress(); renderHeroCards(); renderHeroRoles(); renderShards(); renderMasters(); renderMystic();
+  renderFocusHeroes(); renderWeekly(); renderProgress(); renderHeroCards(); renderHeroRoles(); renderShards(); renderMasters(); renderMystic();
 }
+/* ---------- Focus heroes: shards, widgets and the next step for each focus hero, in one place ---------- */
+function renderFocusHeroes(){ const box=$("#focusHeroes"); if(!box) return;
+  const G=state.goldShards||[], W=(state.widgets&&state.widgets.rows)||[];
+  const F=G.filter(r=>r.rally||r.focus).sort((a,b)=>heroUse(b.n)-heroUse(a.n));
+  const gen=num(state.shardGeneral), gf=genOrder()[0]; // General shards go to this hero
+  if(!F.length){ box.innerHTML=""; return; }
+  box.innerHTML=`<div class="card dcard"><div class="dch"><h3>Focus heroes</h3><span class="faint" style="font-size:12.5px">stars · widgets · next step</span></div>`+F.map(r=>{
+    const st=hasStars(r), p=num(r.pos), nx=st&&p<SHARD_MAX?SHARD_LEAF[p]:0, h=num(r.have), w=W.find(x=>x.hero===r.n), wl=w?num(w.lvl):null, wn=w&&wl<10?widNext(wl):0;
+    const sh=!st?"set stars":p>=SHARD_MAX?'<span class="ok">5★ max</span>':h>=nx?`<span class="ok">${esc(starLabel(p+1))} ready</span>`:gf===r&&h+gen>=nx?`<span class="ok">${esc(starLabel(p+1))} ready with General shards</span>`:`${fmt(nx-h)} shards to ${esc(starLabel(p+1))}${gf===r&&gen?` (${fmt(gen)} General)`:""}`;
+    const wd=w==null?"":wl>=10?' · widgets <span class="ok">max</span>':num(w.have)>=wn?` · widgets <span class="ok">Lv ${wl+1} ready</span>`:` · widgets ${fmt(wn-num(w.have))} short`;
+    return `<button class="drow fhrow" data-n="${esc(r.n)}"><span class="dt"><b>${esc(r.n)} <span class="gold" style="font-weight:500">${st?starGlyphs(p):""}</span></b><span>${sh}${wd}</span></span><span class="dv">${st?esc(starLabel(p)):"—"}<small>${w?`widgets ${wl}/10`:""}</small></span></button>`; }).join("")+`</div>`;
+  bindAll(box,".fhrow",b=>openShardSheet(G.find(x=>x.n===b.dataset.n))); }
 function openCombatSheet(){
   const c=state.combat;
   openSheet({title:"Combat quality",sub:"From your battle reports and stats screen.",build(f){
@@ -195,14 +211,13 @@ function mastSkillLine(m){
 }
 function renderMasters(){
   const c=(state.masters||[]).map(m=>({m,info:MASTER_INFO[m.n],lv:num(m.l)})).filter(x=>x.info&&x.lv<100&&(x.info.best===MAIN_TROOP||x.info.best==="All squads")).sort((a,b)=>b.lv-a.lv)[0];
-  $("#mastNext").innerHTML=c?`<b>Level up next:</b> ${esc(c.m.n)} (${c.lv} → ${Math.min(100,(Math.floor(c.lv/10)+1)*10)}) — closest to its next breakpoint. Skill books: Cassia first.`:`All ${MAIN_TROOP} / all-squad masters are at Kindred Soul.`;
+  $("#mastNext").hidden=true; // master #1 in the list is the next one to level
   const L=state.masters.slice().sort((a,b)=>mastRank(a)-mastRank(b));
-  $("#mastBody").innerHTML=L.map((m,i)=>{ const info=MASTER_INFO[m.n], rk=MASTER_RANK[m.n], lv=num(m.l);
-    return `<button class="vcard ${lv>=100?"s-done":""}" data-i="${state.masters.indexOf(m)}">${EDIT_ICON}
-      <span class="vc-top">${rk?`<span class="rank">#${rk[0]}</span>`:""}<span class="vc-name">${esc(m.n)}</span>${info?tagH("gold",esc(info.best)):""}</span>
-      ${rk?`<span class="vc-line">${esc(rk[1])}</span>`:""}
-      <span class="vc-big">${lv}<small>/ 100 affinity</small></span>${barH(lv,lv>=100?"ok":"")}
-      <span class="vc-sub">${esc(mastSkillLine(m))}</span></button>`; }).join("");
+  const mb=$("#mastBody"); mb.className="card dcard mt"; mb.removeAttribute("style");
+  mb.innerHTML=L.map((m,i)=>{ const info=MASTER_INFO[m.n], rk=MASTER_RANK[m.n], lv=num(m.l);
+    return `<button class="drow vcard" data-i="${state.masters.indexOf(m)}">${rk?`<span class="dn${rk[0]===1?" go":""}">${rk[0]}</span>`:'<span class="dn">·</span>'}
+      <span class="dt"><b>${esc(m.n)}${info?` <span class="faint" style="font-weight:500">· ${esc(info.best)}</span>`:""}</b><span>${esc(mastSkillLine(m))}</span><span class="pbar"><i class="${lv>=100?"ok":""}" style="width:${Math.min(100,lv)}%"></i></span></span>
+      <span class="dv">${lv}<small>/ 100</small></span></button>`; }).join("");
   bindAll($("#mastBody"),".vcard",b=>openMastSheet(state.masters[+b.dataset.i]));
   on("addMast",()=>{ const m={n:"New master "+(state.masters.length+1),l:"0",note:""}; state.masters.push(m); afterEdit(); openMastSheet(m); });
 }
@@ -229,8 +244,11 @@ function openMastSheet(m){
 /* ---------- mystic trials ---------- */
 function renderMystic(){
   const b=$("#mysticBody");
-  b.innerHTML=state.mysticTrials.map((z,i)=>{ const log=(z.log||[]).slice().sort((a,c)=>a.d.localeCompare(c.d)); const d=log.length>1?log[log.length-1].v-log[0].v:0;
-    return `<button class="lrow" data-i="${i}"><span style="min-width:0"><span class="lt" style="display:block">${esc(z.k||"Zone")}</span><span class="ls">${log.length>1?(d<0?`<span class="ok">▼ ${fmt(-d)} better</span>`:d>0?`<span class="bad">▲ ${fmt(d)} worse</span>`:"no change"):"rank logs when you update it"}</span></span><span class="lv">${z.v!==""&&z.v!=null?"#"+fmt(num(z.v)):"—"}</span></button>`; }).join("");
+  const spark=log=>{ if(log.length<2) return ""; const v=log.map(e=>e.v), lo=Math.min(...v), hi=Math.max(...v), W=64, H=22;
+    const pts=v.map((x,k)=>`${(k/(v.length-1)*W).toFixed(1)},${(hi===lo?H/2:2+(x-lo)/(hi-lo)*(H-4)).toFixed(1)}`).join(" "); // lower rank = better = higher on the line
+    return `<svg class="spark" viewBox="0 0 ${W} ${H}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>`; };
+  b.className="card dcard"; b.innerHTML=state.mysticTrials.map((z,i)=>{ const log=(z.log||[]).slice().sort((a,c)=>a.d.localeCompare(c.d)); const d=log.length>1?log[log.length-1].v-log[0].v:0;
+    return `<button class="drow lrow" data-i="${i}"><span class="dt"><b>${esc(z.k||"Zone")}</b><span>${log.length>1?(d<0?`<span class="ok">▼ ${fmt(-d)} better</span>`:d>0?`<span class="bad">▲ ${fmt(d)} worse</span>`:"no change"):"rank logs when you update it"}</span></span><span class="${d<0?"ok":d>0?"bad":"faint"}">${spark(log)}</span><span class="dv">#${esc(String(z.v||"—"))}</span></button>`; }).join("");
   bindAll(b,".lrow",x=>openMysticSheet(state.mysticTrials[+x.dataset.i]));
   on("addMystic",()=>{ const z={k:"New zone",v:"",log:[]}; state.mysticTrials.push(z); afterEdit(); openMysticSheet(z); });
   paintMysticChart();

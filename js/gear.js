@@ -95,22 +95,19 @@ function renderHeroGear(){
       return `<div class="hgplan"><span class="hgnum">${i+1}</span><span class="hgp-t">${esc(x.type)} <b>${esc(x.slot)}</b> <span class="faint">${esc(hgPlanWhat(x))}</span>${x.gain?` <span class="gold">+${x.gain}%</span>`:""}<br><span class="hgp-c">${cost}</span></span><button class="didit hgp-done" data-i="${i}">✓ Done</button></div>`; }).join("")+
       `<span class="faint" style="font-size:13.5px">Tap Done after you do it in game — it spends the materials and updates the piece.</span>`;
     bindAll(d,".hgp-done",b=>{ const x=plan[+b.dataset.i], snap=JSON.stringify(state); hgPlanApply(x); afterEdit(); toast(`${x.type} ${x.slot}: done`,snap); }); }
-  host.appendChild(d);
+  if(plan.length) host.appendChild(d); // the optimiser plan keeps its box (Done buttons); otherwise the 1-2-3 on the rows say it
   HG_TYPES.forEach(type=>{
     const pieces=hg.rows.filter(r=>r.type===type); if(!pieces.length) return;
     const blk=pieces.find(r=>hgState(r).cls==="s-block"), rdy=pieces.find(r=>hgState(r).cls==="s-ready"), low=pieces.filter(r=>num(r.lvC)<119).sort((a,b)=>num(b.lvC)-num(a.lvC))[0];
     const next=blk?`next: ${slotName(blk.slot)} mastery`:low?`next: ${slotName(low.slot)} → Lv 119`:rdy?`ready: ${slotName(rdy.slot)} imbue`:"all on track";
-    const sec=document.createElement("div"); sec.className="mt";
-    sec.innerHTML=`<h2 class="h2"><span class="hgtroop">${hgIcon(TROOP_ICON[type])}${type}</span> <small>${esc(next)}</small></h2><div class="hggrid"></div>`;
-    const grid=sec.querySelector(".hggrid");
-    pieces.forEach(r=>{ const L=num(r.lvC), st=hgState(r), b=document.createElement("button"); b.className="hgcard "+st.cls;
-      b.innerHTML=`<span class="hgc-top"><span class="hgc-ic">${hgIcon(SLOT_ICON[slotName(r.slot).toLowerCase()]||SLOT_ICON.helm)}</span>
-          <span class="hgc-id"><span class="hgc-n">${esc(slotName(r.slot))}</span><span class="hgc-s">${esc(slotStat(r.slot))}</span></span>
-          <span class="hgc-lv"><b>${L}</b><small>Lv</small></span></span>${rank.has(r)?`<span class="hgnum hgc-rank${prio.now.has(r)?" go":""}">${rank.get(r)}</span>`:""}
-        <span class="hgc-mid"><span class="hgc-b">${hgBonus(L).toFixed(1)}%<small> bonus</small></span><span class="hgc-m">Mastery <b>${num(r.mC)}</b></span></span>
-        ${barH(pc(L,Math.max(num(r.lvT),L)),st.cls==="s-ready"||st.cls==="s-done"?"ok":st.cls==="s-block"?"bad":"")}
-        <span class="hgc-st">${st.tag}</span><span class="hgc-line">${st.line}</span>`;
-      b.onclick=()=>openHgSheet(r); grid.appendChild(b); });
+    // one card per troop type, one 2-line row per piece (tap for the full details)
+    const sec=document.createElement("div"); sec.className="card dcard mt";
+    sec.innerHTML=`<div class="dch"><h3><span class="hgtroop">${hgIcon(TROOP_ICON[type])}${type}</span></h3><span class="faint" style="font-size:12.5px">${esc(next)}</span></div>`;
+    pieces.forEach(r=>{ const L=num(r.lvC), st=hgState(r), b=document.createElement("button"); b.className="drow hgrow "+st.cls;
+      b.innerHTML=`${rank.has(r)?`<span class="dn${prio.now.has(r)?" go":""}">${rank.get(r)}</span>`:`<span class="hgr-ic">${hgIcon(SLOT_ICON[slotName(r.slot).toLowerCase()]||SLOT_ICON.helm)}</span>`}
+        <span class="dt"><b>${esc(slotName(r.slot))} <span class="faint" style="font-weight:500">· Lv ${L} · M${num(r.mC)}</span></b><span>${st.tag} ${st.line}</span><span class="pbar"><i class="${st.cls==="s-ready"||st.cls==="s-done"?"ok":st.cls==="s-block"?"bad":""}" style="width:${pc(L,Math.max(num(r.lvT),L))}%"></i></span></span>
+        <span class="dv">${hgBonus(L).toFixed(1)}%<small>${esc(slotStat(r.slot))}</small></span>`;
+      b.onclick=()=>openHgSheet(r); sec.appendChild(b); });
     host.appendChild(sec);
   });
   on("addHg",()=>{ const r={type:"Archer",slot:"New (stat)",lvC:0,lvT:0,mC:0,mT:0,xp:0,fh:0,mg:0,mith:0}; hg.rows.push(r); afterEdit(); openHgSheet(r); });
@@ -151,11 +148,10 @@ function renderWidgets(){
   on("wTot",()=>low&&openWidSheet(low));
   const b=$("#widBody");
   const L=w.rows.slice().sort((a,c)=>(!!c.rally)-(!!a.rally)||num(a.lvl)-num(c.lvl));
-  b.innerHTML=L.map(r=>{ const lvl=Math.max(0,Math.min(10,num(r.lvl))), have=num(r.have), next=widNext(lvl);
-    const cls=lvl>=10?"s-done":!r.rally?"s-dim":have>=next?"s-ready":"";
-    return `<button class="vcard ${cls}" data-i="${w.rows.indexOf(r)}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(r.hero||"Hero")}</span>${r.rally?tagH("acc","⚔ Rally"):""}</span>
-      <span class="vc-big">${lvl}<small>/ 10</small></span><span class="pips" aria-hidden="true">${Array.from({length:10},(_,i)=>`<span class="${i<lvl?"on":""}"></span>`).join("")}</span>
-      <span class="vc-line">${lvl>=10?`<span class="ok">MAX ✓</span> · ${fmt(have)} spare`:`Next: <b>${fmt(next)}</b> · have ${fmt(have)} ${have>=next?'<span class="ok">ready</span>':`<span class="bad">${fmt(next-have)} short</span>`}`}</span></button>`; }).join("");
+  b.className="card dcard mt"; b.removeAttribute("style");
+  b.innerHTML=`<div class="dch"><h3>Your heroes</h3><span class="faint" style="font-size:12.5px">rally heroes first · lowest first</span></div>`+L.map(r=>{ const lvl=Math.max(0,Math.min(10,num(r.lvl))), have=num(r.have), next=widNext(lvl);
+    const st=lvl>=10?`<span class="ok">MAX ✓</span> · ${fmt(have)} spare`:have>=next?`<span class="ok">ready</span> · ${fmt(have)} / ${fmt(next)}`:`<span class="bad">${fmt(next-have)} short</span> · ${fmt(have)} / ${fmt(next)}`;
+    return `<button class="drow vcard wrow${r.rally?"":" dim"}" data-i="${w.rows.indexOf(r)}"><span class="dt"><b>${esc(r.hero||"Hero")}${r.rally?' <span class="faint" style="font-weight:500">⚔</span>':""}</b><span>${st}</span><span class="pips" aria-hidden="true">${Array.from({length:10},(_,i)=>`<span class="${i<lvl?"on":""}"></span>`).join("")}</span></span><span class="dv">${lvl}<small>/ 10</small></span></button>`; }).join("");
   bindAll(b,".vcard",x=>openWidSheet(w.rows[+x.dataset.i]));
   on("addWid",()=>{ const r={hero:"",lvl:0,have:0}; w.rows.push(r); afterEdit(); openWidSheet(r); });
 }
@@ -196,13 +192,12 @@ function renderCharms(){
       return `<div class="hgplan"><span class="hgnum">${i+1}</span><span class="hgp-t">${what}<br><span class="hgp-c">${cost}</span></span><button class="didit chp-done" data-i="${i}">✓ Done</button></div>`; }).join("")+
       `<span class="faint" style="font-size:13.5px">Tap Done after you do it in game — it updates your Guides, Designs and the charm.</span>`;
     bindAll(nb,".chp-done",b=>{ const x=cpl[+b.dataset.i], snap=JSON.stringify(state); charmPlanApply(x); afterEdit(); toast("Charm plan step done",snap); }); }
-  $("#charmBody").innerHTML=order.map(type=>{ const rows=c.rows.filter(r=>r.type===type); if(!rows.length) return "";
-    let g=0,d=0,lv=0,tg=0,at=0; rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt,num(r.st)); g+=m.g; d+=m.d; lv+=r.lvl; tg+=r.tgt; if(r.lvl>=r.tgt) at++; });
-    const done=at===rows.length;
-    return `<button class="vcard ${done?"s-done":""}" data-t="${type}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${type} charms</span>${type==="Infantry"?tagH("gold","first"):""}<span class="vc-meta">avg Lv ${(lv/rows.length).toFixed(1)}</span></span>
-      <span class="charm6">${rows.map((r,i)=>`<span style="padding:6px 8px;border-radius:9px;border:1px solid ${r.lvl>=r.tgt?"var(--green)":"var(--line)"};background:var(--panel-2)"><span class="faint" style="font-size:12.5px;display:block">Charm ${i+1}</span><b class="mono">${r.lvl}</b>${num(r.st)?`<span class="faint mono" style="font-size:12.5px">·${num(r.st)}/5</span>`:""}<span class="faint mono" style="font-size:13px"> → ${r.tgt}</span></span>`).join("")}</span>
-      <span class="vc-line">${(()=>{ if(done) return '<span class="ok">All at target ✓</span>'; const nx=rows.filter(r=>r.lvl<r.tgt).sort((a,b)=>a.lvl-b.lvl)[0], k=CHARM_COSTS[nx.lvl];
-        return `Next: Charm ${rows.indexOf(nx)+1} Lv ${nx.lvl} → ${nx.lvl+1} · <b>${fmt(k[1])}</b> Designs + <b>${fmt(k[0])}</b> Guides <span class="faint">· ${at}/${rows.length} at target</span>`; })()}</span>${barH(pc(lv,tg),done?"ok":"")}</button>`; }).join("");
+  nb.hidden=!cpl.length; // without a plan the rows below show the next level for each troop
+  const cb=$("#charmBody"); cb.className="card dcard mt";
+  cb.innerHTML=`<div class="dch"><h3>Charms by troop</h3><span class="faint" style="font-size:12.5px">tap for all 6</span></div>`+order.map(type=>{ const rows=c.rows.filter(r=>r.type===type); if(!rows.length) return "";
+    let lv=0,tg=0,at=0; rows.forEach(r=>{ lv+=r.lvl; tg+=r.tgt; if(r.lvl>=r.tgt) at++; });
+    const done=at===rows.length, nx=done?null:rows.filter(r=>r.lvl<r.tgt).sort((a,b)=>a.lvl-b.lvl)[0], k=nx?CHARM_COSTS[nx.lvl]:null;
+    return `<button class="drow vcard" data-t="${type}"><span class="dt"><b>${type}${type==="Infantry"?' <span class="pill y" style="padding:1px 7px;font-size:11px">first</span>':""}</b><span>${done?'<span class="ok">All at target ✓</span>':`Charm ${rows.indexOf(nx)+1} → Lv ${nx.lvl+1} · ${fmt(k[1])} Designs, ${fmt(k[0])} Guides`}</span><span class="pbar"><i class="${done?"ok":""}" style="width:${pc(lv,tg)}%"></i></span></span><span class="dv">${(lv/rows.length).toFixed(1)}<small>avg Lv · ${at}/${rows.length}</small></span></button>`; }).join("");
   bindAll($("#charmBody"),".vcard",b=>openCharmSheet(b.dataset.t));
 }
 function openCharmMatsSheet(){
@@ -235,25 +230,24 @@ function renderPets(){
   P.rows.filter(r=>num(r.lvl)>0).forEach(r=>{ const c=petCost(r); if(c) Object.keys(t).forEach(k=>t[k]+=c[k]); });
   const M=[["food","Pet Food"],["manuals","Growth Manuals"],["potions","Nutrient Potions"],["medals","Medallions"]];
   const pn=petNextStep(), nxC=pn&&pn.cost; // shared with Home
-  $("#petNext").innerHTML=pn?`<b>Next up:</b> ${esc(pn.r.n)} Lv ${num(pn.r.lvl)} → ${pn.to} — tiles show what that needs.`:"";
+  $("#petNext").hidden=true; // pet #1 in the list is the next step; the tiles show what it needs
   $("#petMats").innerHTML=M.map(([k,l])=>stepTileH("pm_"+k,l,num(P.have[k]),nxC?nxC[k]:0,t[k])).join("")+
     tileH({id:"pm_tm",label:"Taming Marks",value:`${fmt(num(P.have.tmCommon))} · ${fmt(num(P.have.tmAdv))}`,sub:"common · advanced"});
   $$("#petMats .tile").forEach(x=>x.onclick=openPetMatsSheet);
   $("#petKvk").innerHTML=t.kvk?`Advancing your pets to target is worth <b class="gold">${fmt(t.kvk)}</b> KvK / Strongest Governor points (${fmt(t.ab)} Alliance Brawl) — save advances for those days.`:"";
   const b=$("#petBody");
   const atGoal=r=>{ const g=num(r.tgt)||num(r.max); return num(r.lvl)>0&&g>0&&num(r.lvl)>=g; };
-  const card=r=>{ const sk=PET_SKILL[r.n], info=PET_INFO[r.n], lv=num(r.lvl), mx=num(r.max), goal=num(r.tgt)||mx, done=goal>0&&lv>=goal, c=petCost(r), nextAdv=(Math.floor(lv/10)+1)*10;
-    const cls=!lv?"s-dim":done?"s-done":"";
-    return `<button class="vcard ${cls}" data-i="${P.rows.indexOf(r)}">${EDIT_ICON}<span class="vc-top">${sk&&sk[1]<=10?`<span class="rank">#${sk[1]}</span>`:""}<span class="vc-name">${esc(r.n||"Pet")}</span>${info?`<span class="vc-meta">Gen ${info.gen}</span>`:""}</span>
-      ${sk&&sk[0]?`<span class="vc-line"><b>${esc(sk[0])}</b>${sk[2]?" · "+esc(sk[2]):""}</span>`:sk&&sk[2]?`<span class="vc-line">${esc(sk[2])}</span>`:""}
-      <span class="vc-big">${lv}<small>/ ${goal||"?"}${num(r.tgt)?" target":""}</small></span>${barH(pc(lv,goal),done?"ok":"")}
-      <span class="vc-line">${!lv?"Not owned yet":done?'<span class="ok">At target ✓</span>':c?`Next advance Lv ${mx&&nextAdv>mx?mx:nextAdv} · to target: food ${c.exact?"":"~"}${fmtBig(c.food)}, manuals ${fmt(c.manuals)}`:""}</span></button>`; };
+  const row=r=>{ const sk=PET_SKILL[r.n], info=PET_INFO[r.n], lv=num(r.lvl), mx=num(r.max), goal=num(r.tgt)||mx, done=goal>0&&lv>=goal, nextAdv=(Math.floor(lv/10)+1)*10;
+    const what=sk&&sk[0]?sk[0]:sk&&sk[2]?sk[2]:info?`Gen ${info.gen}`:"";
+    const nx=!lv?"not owned yet":done?'<span class="ok">at target ✓</span>':`next Lv ${mx&&nextAdv>mx?mx:nextAdv}`;
+    return `<button class="drow prow" data-i="${P.rows.indexOf(r)}">${sk&&sk[1]<=10?`<span class="dn${sk[1]===1?" go":""}">${sk[1]}</span>`:'<span class="dn">·</span>'}<span class="dt"><b>${esc(r.n||"Pet")}</b><span>${esc(what)} · ${nx}</span><span class="pbar"><i style="width:${pc(lv,goal)}%"${done?' class="ok"':""}></i></span></span><span class="dv">${lv}<small>/ ${goal||"?"}</small></span></button>`; };
   const sorted=P.rows.slice().sort((a,c)=>petRank(a)-petRank(c)), act=sorted.filter(r=>!atGoal(r)), mxd=sorted.filter(atGoal);
-  b.innerHTML=act.map(card).join("");
-  const mh=$("#petMaxed"); mh.hidden=!mxd.length;
-  mh.innerHTML=`<summary><span class="grow">Pets at target <span class="faint" style="font-weight:500">(${mxd.length})</span></span></summary><div class="fbody"><div class="grid" style="--min:200px">${mxd.map(card).join("")}</div></div>`;
-  if(state.ui.petMaxOpen) mh.open=true; mh.ontoggle=()=>{ state.ui.petMaxOpen=mh.open; scheduleSave(); };
-  [b,mh].forEach(h=>bindAll(h,".vcard",x=>openPetSheet(P.rows[+x.dataset.i])));
+  b.className="card dcard mt"; b.removeAttribute("style");
+  b.innerHTML=`<div class="dch"><h3>Your pets</h3><span class="faint" style="font-size:12.5px">ranked for a rally leader · tap to edit</span></div>`+act.map(row).join("")+
+    (mxd.length?`<details class="dfold"${state.ui.petMaxOpen?" open":""} id="petMaxFold"><summary>At target (${mxd.length}) ›</summary>${mxd.map(row).join("")}</details>`:"");
+  const mh=$("#petMaxed"); mh.hidden=true; mh.innerHTML="";
+  const pf=$("#petMaxFold"); if(pf) pf.ontoggle=()=>{ state.ui.petMaxOpen=pf.open; scheduleSave(); };
+  bindAll(b,".prow",x=>openPetSheet(P.rows[+x.dataset.i]));
   on("addPet",()=>{ const r={n:"",lvl:0,tgt:0,max:0}; P.rows.push(r); afterEdit(); openPetSheet(r); });
 }
 function openPetMatsSheet(){
@@ -295,9 +289,13 @@ function renderShards(){
   if(!state.shardRallySet){ L.forEach(r=>{ r.rally=["Ava","Yang","Wee & Woo"].includes(r.n); }); state.shardRallySet=true; }
   const gen=num(state.shardGeneral), genFor=genOrder()[0]; // general shards → most-used hero still short
   const tn=top&&hasStars(top)?SHARD_LEAF[num(top.pos)]:0;
-  $("#shardTiles").innerHTML=(top?stepTileH("shNext",`Focus: ${esc(top.n)} → ${hasStars(top)?esc(starLabel(num(top.pos)+1)):"?"}`,num(top.have),tn,shardNeed(top)):tileH({label:"Focus hero",value:"All done",txt:true}))+
-    tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genFor?`use on <b>${esc(genFor.n)}</b>`:"any hero except Amadeus & Helga"});
-  on("shNext",()=>top&&openShardSheet(top)); on("shGen",openGeneralShardSheet);
+  // closest star = fewest shards to go (own + General shards for the General target)
+  const gstep=genFor&&hasStars(genFor)&&num(genFor.pos)<SHARD_MAX?SHARD_LEAF[num(genFor.pos)]-num(genFor.have):0, genCovers=gstep>0&&gen>=gstep;
+  const close=L.filter(r=>hasStars(r)&&num(r.pos)<SHARD_MAX&&(r.rally||r.focus)).map(r=>({r,left:SHARD_LEAF[num(r.pos)]-num(r.have)})).sort((a,b)=>a.left-b.left)[0];
+  $("#shardTiles").innerHTML=(close?tileH({id:"shNext",label:`Closest star: ${esc(close.r.n)} → ${esc(starLabel(num(close.r.pos)+1))}`,value:close.left<=0?"Ready":fmt(close.left)+" short",color:close.left<=0?"var(--green)":"",txt:true,sub:`${fmt(num(close.r.have))} / ${fmt(SHARD_LEAF[num(close.r.pos)])} shards`,p:pc(num(close.r.have),SHARD_LEAF[num(close.r.pos)]),cls:close.left<=0?"ok":""}):tileH({label:"Focus heroes",value:"All done",txt:true}))+
+    tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genFor?(genCovers?`<span class="ok">covers ${esc(genFor.n)} → ${esc(starLabel(num(genFor.pos)+1))} ✓</span>`:`use on <b>${esc(genFor.n)}</b>`):"any hero except Amadeus & Helga"});
+  on("shNext",()=>close&&openShardSheet(close.r));
+  on("shGen",openGeneralShardSheet);
   const b=$("#goldShardBody");
   const starPos=r=>hasStars(r)?num(r.pos):-1, isDone=r=>{ const n=shardNeed(r); return (hasStars(r)&&num(r.pos)>=SHARD_MAX)||(n>0&&num(r.have)>=n); };
   const order=L.map((r,i)=>({r,i})).sort((a,c)=>heroUse(c.r.n)-heroUse(a.r.n)||starPos(c.r)-starPos(a.r)||String(a.r.n).localeCompare(String(c.r.n)));
@@ -314,7 +312,7 @@ function renderShards(){
   const grp=(t,sub)=>`<div class="shgrp"><span>${t}</span><small>${sub}</small></div>`;
   b.innerHTML=(focus.length?grp("Focus now","")+focus.map(row).join(""):"")+
     (next.length?grp("Next up","")+next.map(row).join(""):"")+
-    (spare.length?`<details class="shfold"${state.ui.shSpare?" open":""} data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"")}</summary>${spare.map(row).join("")}</details>`:"")+
+    (spare.length?`<details class="shfold" data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"")}</summary>${spare.map(row).join("")}</details>`:"")+
     (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"")}</summary>${done.map(row).join("")}</details>`:"")||`<div class="empty">No heroes yet</div>`;
   b.querySelectorAll("details.shfold").forEach(d=>d.ontoggle=()=>{ state.ui[d.dataset.k]=d.open; scheduleSave(); });
   bindAll(b,".sh2-id",x=>openShardSheet(L[+x.dataset.i]));

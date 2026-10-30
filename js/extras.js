@@ -176,11 +176,11 @@ function renderWeekly(){
   const spark=H.filter(x=>x.d>=first.d).map(x=>num(x.v.power)), lo=Math.min(...spark), hi=Math.max(...spark);
   box.innerHTML=`<div class="card"><div class="rowb"><b style="font-size:16px">${esc(fd(first.d))} → ${esc(fd(last.d))}</b><span>${sgn(dlt("power"))} power</span></div>
     <div class="wspark">${spark.map(v=>`<i style="height:${hi>lo?20+80*(v-lo)/(hi-lo):60}%"></i>`).join("")}</div>
-    <table class="gtable mt"><tbody>
-      <tr><td>Hero stars</td><td class="mono">${sgn(dlt("stars"))}</td></tr>
-      <tr><td>Lethality / Health</td><td class="mono">${sgn(dlt("leth"))} / ${sgn(dlt("hp"))}</td></tr>
-      ${areas.map(([n,v])=>`<tr><td>${esc(n)} power</td><td class="mono">${sgn(v)}</td></tr>`).join("")}
-      <tr><td>Spent this month</td><td class="mono">A$${monthSpent(gameToday().slice(0,7)).toFixed(2)}</td></tr></tbody></table>
+    <div class="rcrows">
+      <div class="rcrow"><span>Hero stars</span><b class="mono">${sgn(dlt("stars"))}</b></div>
+      <div class="rcrow"><span>Lethality / Health</span><b class="mono">${sgn(dlt("leth"))} / ${sgn(dlt("hp"))}</b></div>
+      ${areas.map(([n,v])=>`<div class="rcrow"><span>${esc(n)} power</span><b class="mono">${sgn(v)}</b></div>`).join("")}
+      <div class="rcrow"><span>Spent this month</span><b class="mono">A$${monthSpent(gameToday().slice(0,7)).toFixed(2)}</b></div></div>
     ${done.length?`<p style="margin:10px 0 4px"><b>Done this week</b></p><ul class="wdone">${done.slice(-8).reverse().map(x=>`<li>${esc(x.t)} <span class="faint">${esc(fd(x.d))}</span></li>`).join("")}</ul>`:'<p class="faint" style="margin:10px 0 0">Upgrades you tick off with ✓ Done show up here.</p>'}
     ${up.length?`<p style="margin:10px 0 4px"><b>Coming next week</b></p><ul class="wdone">${up.map(x=>`<li>${esc(x.e.n)} <span class="faint">${whenTxt(x.o)}</span></li>`).join("")}</ul>`:""}</div>`;
 }
