@@ -218,15 +218,18 @@
     <div class="page" data-tab="Base" hidden>
       <div class="phead"><div><h1>Base</h1></div></div>
       <div class="subnav" role="tablist" aria-label="Base sections"></div>
-      <section class="sec" data-sub="T11" data-key="T11 Unlocks">
+      <section class="sec" data-sub="Research" data-key="Research"><div id="researchBody"></div></section>
+      <section class="sec" data-sub="Research" data-key="T11 Unlocks">
+        
         <div id="t11Body"></div>
-        <div class="card mt" id="fcCard">
+        <details class="card dcard dfold mt" id="fcFold"><summary class="dch"><h3>Unlock forecast</h3><span class="faint" style="font-size:12.5px">log dust + gold ›</span></summary><div style="padding:0 14px 12px"><div id="fcCard">
           <h3>Forecast — T11 <span class="phName">Infantry</span> unlock date</h3>
           <p class="lead" style="margin:0 0 10px">Log your Dust + Gold once per check-in. After two days it projects your unlock date.</p>
           <div class="rowb"><button class="btn primary" id="fcLog">＋ Log today's Dust + Gold</button><span class="tag ok" id="fcMsg" hidden></span></div>
           <div id="fcOut" class="mt"></div>
           <div id="fcHistory" class="mt"></div>
         </div>
+      </div></details>
       </section>
       <section class="sec" data-sub="Troops" data-key="Troop Plan">
         <h2>Troops</h2>

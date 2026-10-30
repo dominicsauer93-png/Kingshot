@@ -90,6 +90,7 @@ function freshList(){ const out=[], bc=state.bagCheck||{}, bd=bc.d?Math.round((n
   (state.packs||[]).filter(p=>p.d&&PACK_DAYS[p.kind]&&!p.bought).forEach(p=>out.push({t:`${p.t}: set the date you bought it`,go:()=>openPackSheet(p)}));
   if(state.stars==null) out.push({t:"Enter your Kingdom Stars balance",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
   if(state.fx==null) out.push({t:"Check the A$ per US$ rate for the web store",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
+  { const e=typeof resEnds==="function"?resEnds():null, c=(state.research||{}).current; if(e&&c&&c.n&&e<=new Date()) out.unshift({t:`Research done: ${c.n} — start the next one`,go:()=>{ setTab("Base","Research"); setTimeout(openResCurrentSheet,150); }}); }
   (state.events||[]).filter(e=>e.guess).forEach(e=>out.push({t:`${e.n}: dates are a guess — confirm them`,go:()=>openEventSheet(e)}));
   (state.events||[]).filter(e=>e.endOpen&&activeOcc(e)&&activeOcc(e).day>14).forEach(e=>out.push({t:`${e.n}: still no end date`,go:()=>openEventSheet(e)}));
   return out; }
