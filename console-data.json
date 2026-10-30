@@ -1583,7 +1583,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Gear",
     "collapsed": {},
     "density": "comfortable",
     "laterOpen": {},
@@ -1633,9 +1633,9 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 158,
+      "fh": 161,
       "mg": 5,
-      "mith": 4
+      "mith": 5
     },
     "rows": [
       {
@@ -1793,9 +1793,9 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 158,
+    "fhSeen": 161,
     "fhGot": {
-      "2026-10": 2240
+      "2026-10": 2400
     },
     "plan": [
       {
@@ -3339,9 +3339,9 @@
     "mith": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 2
+        "2026-10": 3
       },
-      "seen": 4
+      "seen": 5
     },
     "threads": {
       "since": "2026-10-26",
@@ -3360,9 +3360,9 @@
     "fh": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 318
+        "2026-10": 478
       },
-      "seen": 158
+      "seen": 161
     },
     "gen": {
       "since": "2026-10-26",
