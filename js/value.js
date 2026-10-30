@@ -47,8 +47,11 @@ function vNeeds(){
 const vY=(d,k)=>num(d.y[k])+(k==="gen"?num(d.y.gems)/GEMS_PER_SHARD:0);
 function vPlanMonth(){ const cur=gameToday().slice(0,7), mo=state.packMonths||{}, closed=mo[cur]&&mo[cur].closed;
   const d=new Date(cur+"-01T00:00:00Z"); if(closed) d.setUTCMonth(d.getUTCMonth()+1); const key=d.toISOString().slice(0,7);
-  const bought=(state.packs||[]).filter(p=>p.auto===key&&p.d), spent=num((mo[key]||{}).spent)+bought.reduce((t,p)=>t+num(p.aud),0), bud=num(state.packBudget)||100;
-  return {key,label:d.toLocaleDateString(undefined,{month:"long",timeZone:"UTC"}),left:Math.max(0,bud-spent),bud,spent,bought}; }
+  const bought=(state.packs||[]).filter(p=>p.auto===key&&p.d), bud=num(state.packBudget)||100;
+  // cards you own renew this month — set that money aside first (weekly cards ×4)
+  const renew=(state.packs||[]).filter(p=>p.d&&(p.kind==="month"||p.kind==="week")&&!p.auto).map(p=>({t:p.t,a:num(p.aud)*(p.kind==="week"?4:1)}));
+  const spent=num((mo[key]||{}).spent)+bought.reduce((t,p)=>t+num(p.aud),0)+renew.reduce((t,r)=>t+r.a,0);
+  return {key,label:d.toLocaleDateString(undefined,{month:"long",timeZone:"UTC"}),left:Math.max(0,bud-spent),bud,spent,bought,renew}; }
 // greedy: each step buys the deal that fills the most of your remaining gaps per A$ (an item stops counting once it's covered)
 function vPick(keys,onlyNow,budget,already){
   const need=vNeeds(), rem={}; keys.forEach(k=>rem[k]=need[k]);
@@ -63,12 +66,18 @@ function vPick(keys,onlyNow,budget,already){
     cands.forEach(x=>{ if(x.used||!ready(x)) return; let par=null;
       if(x.d.needs&&!picked.some(p=>p.d.n===x.d.needs)&&!boughtOf(x.d.needs)&&!owned(x.d.needs)){ par=cands.find(y=>y.d.n===x.d.needs&&!y.used); if(!par) return; }
       const cost=x.d.a+(par?par.d.a:0); if(cost>left) return;
-      const v=[...gain(x.d),...(par?gain(par.d):[])].reduce((t,p)=>t+p.v,0)/cost;
-      if(v>0&&(!best||v>best.v)) best={x,par,v}; });
-    if(!best||best.v<.004) break;
-    const add=x=>{ const g=gain(x.d); x.used=true; picked.push({d:x.d,c:x.c}); left-=x.d.a; g.forEach(p=>rem[p.k]=Math.max(0,rem[p.k]-vY(x.d,p.k))); };
+      const g=[...gain(x.d),...(par?gain(par.d):[])]; if(!g.length) return; // only packs that still fill a gap you ticked
+      if(vPc(x.d)&&vPc(x.d)<3000) return; // your rule: 3,000% or more
+      // one score, three factors: share of each gap it fills per A$ (×2 for blockers) × the game's value %
+      const sc=g.reduce((t,p)=>t+p.v*(VALUE_BLOCKERS.includes(p.k)?2:1),0)/cost*((vPc(x.d)||3000)/4000);
+      if(!best||sc>best.sc) best={x,par,sc}; });
+    if(!best) break;
+    const add=x=>{ const g=gain(x.d), why=g.map(p=>[p.k,Math.min(vY(x.d,p.k),rem[p.k]),vY(x.d,p.k)>=rem[p.k]]); x.used=true; picked.push({d:x.d,c:x.c,why}); left-=x.d.a; g.forEach(p=>rem[p.k]=Math.max(0,rem[p.k]-vY(x.d,p.k))); };
     if(best.par) add(best.par); add(best.x); }
   return {picked,left,need,rem}; }
+// "best" mixes three things: how much of your gaps it fills per A$, blockers count double, higher value % ranks higher
+const VALUE_BLOCKERS=["designs","lucky"]; // Charm Designs + Lucky chests (Mythic Gear) — Threads have no paid deal yet
+const vPc=d=>num(String(d.pc||"").replace(/[^\d.]/g,""));
 const vName=p=>p.d.n+(p.d.wk?` (week ${p.c+1})`:"");
 function renderBestValue(){
   const host=$("#bestValue"); if(!host) return;
@@ -76,17 +85,21 @@ function renderBestValue(){
   state.ui.bvPick=state.ui.bvPick.filter(k=>VALUE_ITEMS.some(x=>x[0]===k));
   const keys=state.ui.bvPick, onlyNow=state.ui.bvNow!==false, M=vPlanMonth();
   const {picked,left,need,rem}=vPick(keys,onlyNow,M.left,M.bought);
-  const order=picked.map((p,i)=>({p,i,by:vBuyBy(p.d)})).sort((a,b)=>(a.by||"9")<(b.by||"9")?-1:(a.by||"9")>(b.by||"9")?1:a.i-b.i);
+  const order=picked.map((p,i)=>({p,i,by:vBuyBy(p.d)})); // pick order = best buy first (most of your gaps per A$)
   const fdD=s=>new Date(s+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"});
+  // why it's in the plan: what it covers of your gaps when picked ("last" = it closes that gap)
+  const fv=v=>v>=10?fmt(Math.round(v)):(Math.round(v*10)/10).toString();
+  const why=p=>p.why&&p.why.length?`<span class="bvwhy">Covers ${p.why.map(([k,v,last])=>`${last?"your last ":""}${fv(v)} ${vLab(k)}${k==="gen"&&!num(p.d.y.gen)?" (as gems)":""}`).join(" + ")}</span>`:"";
   const give=d=>d.alt?Object.entries(d.y).map(([k,v])=>`${fmt(v)} ${vLab(k)}`).join(" <i>or</i> "):Object.entries(d.y).map(([k,v])=>k==="gems"?`${fmt(v)} gems`:`${fmt(v)} ${vLab(k)}`).join(" · ");
   host.innerHTML=`<div class="card"><b style="font-size:16px">What do you want this month?</b>
       <div class="bvchips">${VALUE_ITEMS.map(([k,l])=>`<button class="chip" data-k="${k}" aria-pressed="${keys.includes(k)}">${l}${keys.includes(k)&&need[k]?` <small>· ${fmt(Math.round(need[k]))} short</small>`:""}</button>`).join("")}</div>
       <label class="bvnow"><input type="checkbox" id="bvNow"${onlyNow?" checked":""}> Only deals on now</label></div>`+
     `<div class="card mt"><div class="rowb"><b style="font-size:16px">Best buys for ${esc(M.label)}</b><button class="btn ghost sm mono" id="bvBud">A$${M.left.toFixed(2)} left of ${M.bud} ✎</button></div>`+
+    (M.renew.length?`<p class="faint" style="margin:4px 0 0;font-size:13.5px">Set aside for renewals: ${M.renew.map(r=>`${esc(r.t)} A$${r.a.toFixed(2)}`).join(" · ")}</p>`:"")+
     (M.bought.length?`<p class="faint" style="margin:4px 0 0">Bought so far: ${M.bought.map(p=>esc(p.t)).join(", ")}</p>`:"")+
-    (picked.length?`<ol class="bvlist">${order.map(({p,by})=>`<li><div class="bvrow"><b>${esc(vName(p))}</b><span class="mono gold">A$${p.d.a.toFixed(2)}</span></div>
+    (picked.length?[order].map(L=>`<p class="faint" style="margin:6px 0 0;font-size:13.5px">Best buy first — blockers count double, higher % and more per A$ rank higher.</p><ol class="bvlist">${L.map(({p,by})=>`<li><div class="bvrow"><b>${esc(vName(p))}${p.why&&p.why.some(([k])=>VALUE_BLOCKERS.includes(k))?' <span class="tag bad">blocker</span>':""}</b><span class="mono gold">A$${p.d.a.toFixed(2)}</span></div>
         <span class="muted">${give(p.d)}</span>${p.d.pc?` <span class="faint">· ${p.d.pc}</span>`:""}${p.d.est?' <span class="tag plain">estimate</span>':""}${staleDays(p.d.seen)>STALE_DAYS?` <span class="tag warn">price seen ${staleDays(p.d.seen)}d ago — check</span>`:""}
-        ${by?`<br><span class="tag warn">buy by ${fdD(by)}</span>`:""}${p.d.note?` <span class="faint">${esc(p.d.note)}</span>`:""}</li>`).join("")}</ol>
+        ${why(p)}${by?` <span class="tag warn">buy by ${fdD(by)}</span>`:""}${p.d.note?` <span class="faint">${esc(p.d.note)}</span>`:""}</li>`).join("")}</ol>`).join("")+`
       <div class="rcrows">${keys.map(k=>{ const got=need[k]-rem[k]; return need[k]?`<div class="rcrow"><span>${vLab(k)}</span><b>${got>0?`<span class="ok">+${fmt(Math.round(got))}</span>`:"+0"} of ${fmt(Math.round(need[k]))} short</b></div>`:`<div class="rcrow"><span>${vLab(k)}</span><b class="faint">not short ✓</b></div>`; }).join("")}
         <div class="rcrow"><span>Spend</span><b>A$${(M.left-left).toFixed(2)} · A$${left.toFixed(2)} left</b></div></div>
       <button class="btn primary mt" id="bvUse">Use this as my ${esc(M.label)} plan</button>`
