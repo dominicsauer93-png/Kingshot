@@ -3502,6 +3502,37 @@
         "Truegold Armor II"
       ],
       "note": "Everything else 0/10 (troop stat grids between the named nodes); final node 0/100. Currency shown: 337."
+    },
+    "growth": {
+      "seen": "2026-10-30",
+      "max": 3,
+      "note": "Everything below these is MAX (incl. Command Tactics I–III)",
+      "nodes": {
+        "Bandaging V": 2,
+        "Ward Expansion VI": 2,
+        "Bandaging VI": 1,
+        "Tooling Up VII": 2,
+        "Ward Expansion VII": 1,
+        "Camp Expansion VII": 2,
+        "Tool Enhancement VII": 1,
+        "Bandaging VII": 0,
+        "Trainer Tools VII": 0
+      }
+    },
+    "economy": {
+      "seen": "2026-10-30",
+      "max": 3,
+      "note": "Everything below these is MAX",
+      "nodes": {
+        "Bread Output VI": 2,
+        "Stone Output V": 1,
+        "Wood Output VI": 1,
+        "Iron Output V": 1,
+        "Food Foraging VI": 1,
+        "Stone Gathering V": 2,
+        "Wood Gathering VI": 1,
+        "Iron Mining V": 0
+      }
     }
   }
 }
