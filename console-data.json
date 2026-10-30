@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1594,7 +1594,7 @@
       "Rally": "Heroes",
       "Data": "Update all",
       "Gear": "Pets",
-      "Base": "Resources",
+      "Base": "Research",
       "Plan": "Shop guide",
       "Heroes": "Overview",
       "Shop": "Paid"
