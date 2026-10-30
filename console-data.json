@@ -1500,7 +1500,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-10-30",
+    "routineDate": "2026-10-31",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1592,7 +1592,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Update all",
+      "Data": "Account",
       "Gear": "Pets",
       "Base": "Research",
       "Plan": "Shop guide",
@@ -2825,6 +2825,26 @@
     },
     {
       "d": "2026-10-30",
+      "v": {
+        "power": 329725706,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 471
+      }
+    },
+    {
+      "d": "2026-10-31",
       "v": {
         "power": 329725706,
         "leth": 74.3,
