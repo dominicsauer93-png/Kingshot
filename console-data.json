@@ -9,9 +9,9 @@
     "dayAnchor": "2025-07-26"
   },
   "dust": {
-    "current": 889,
+    "current": 149,
     "target": 13163,
-    "gold": 547820
+    "gold": 542730
   },
   "nodes": [
     {
@@ -801,42 +801,162 @@
     {
       "n": "Pan",
       "l": "90",
-      "note": "Lethality research — +15% Def at Kindred Soul · Best for Archers · push to 100 (Ways-and-Means / Falconer)"
+      "note": "Lethality research — +15% Def at Kindred Soul · Best for Archers · push to 100 (Ways-and-Means / Falconer)",
+      "skills": [
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        }
+      ]
     },
     {
       "n": "Valora",
       "l": "80",
-      "note": "Health research — +15% Atk at Kindred Soul · Best for Infantry · rally / Bear Hunt value"
+      "note": "Health research — +15% Atk at Kindred Soul · Best for Infantry · rally / Bear Hunt value",
+      "skills": [
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        }
+      ]
     },
     {
       "n": "Roman",
       "l": "60",
-      "note": "Attack research — +15% Atk/Def at Kindred Soul · Best for Cavalry"
+      "note": "Attack research — +15% Atk/Def at Kindred Soul · Best for Cavalry",
+      "skills": [
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        }
+      ]
     },
     {
       "n": "Wilson",
       "l": "40",
-      "note": "Health research — +10% Atk/Def at Kindred Soul · Best for Infantry"
+      "note": "Health research — +10% Atk/Def at Kindred Soul · Best for Infantry",
+      "skills": [
+        {
+          "l": 7,
+          "t": "g"
+        },
+        {
+          "l": 6,
+          "t": "g"
+        },
+        {
+          "l": 6,
+          "t": "g"
+        },
+        {
+          "l": 4,
+          "t": "g"
+        }
+      ]
     },
     {
       "n": "Cassia",
       "l": "30",
-      "note": "Defense research — +20% Lethality/Health at Kindred Soul · Best for all squads"
+      "note": "Defense research — +20% Lethality/Health at Kindred Soul · Best for all squads",
+      "skills": [
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        }
+      ]
     },
     {
       "n": "Guinevere",
       "l": "30",
-      "note": "Defense research — +15% Lethality/Health at Kindred Soul · Best for all squads"
+      "note": "Defense research — +15% Lethality/Health at Kindred Soul · Best for all squads",
+      "skills": [
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        }
+      ]
     },
     {
       "n": "Aena",
       "l": "0",
-      "note": "Lethality research — +15% Atk/Def at Kindred Soul · Best for Cavalry"
+      "note": "Lethality research — +15% Atk/Def at Kindred Soul · Best for Cavalry",
+      "skills": [
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        },
+        {
+          "l": 0
+        }
+      ]
     },
     {
       "n": "Isnor",
-      "l": "0",
-      "note": "Attack research — +15% Lethality/Health at Kindred Soul · Best for Archers"
+      "l": "30",
+      "note": "Attack research — +15% Lethality/Health at Kindred Soul · Best for Archers",
+      "skills": [
+        {
+          "l": 4,
+          "t": "g"
+        },
+        {
+          "l": 1,
+          "t": "c"
+        },
+        {
+          "l": 1,
+          "t": "g"
+        },
+        {
+          "l": 0,
+          "t": "g"
+        }
+      ]
     }
   ],
   "dustSrc": [
@@ -953,15 +1073,15 @@
     }
   ],
   "tg": {
-    "have": 0,
+    "have": 261,
     "need": 6777,
-    "ttgHave": 0,
+    "ttgHave": 15,
     "ttgNeed": 642
   },
   "govGear": {
     "targetIdx": 19,
     "have": {
-      "satin": 0,
+      "satin": 46213,
       "threads": 0,
       "vision": 0
     },
@@ -1025,28 +1145,88 @@
     ]
   },
   "ui": {
-    "tab": "Data",
-    "collapsed": {},
-    "density": "comfortable",
-    "laterOpen": {},
+    "tab": "Home",
+    "collapsed": {
+      "Hero Gear": false,
+      "Build Order — TG6→TG8": false,
+      "Troop Plan": false,
+      "T11 Unlocks": false,
+      "Widgets": false,
+      "Gold Hero Shards": true,
+      "Masters": true,
+      "Mystic Trials": true,
+      "Resources & Speedups": true,
+      "Pets": true
+    },
+    "density": "compact",
+    "mastOpen": {
+      "Aena": true,
+      "Isnor": true,
+      "Pan": true,
+      "Valora": true,
+      "Roman": true,
+      "Guinevere": true,
+      "Cassia": true,
+      "Wilson": true
+    },
     "charmOpen": {
-      "Archer": true
+      "Archer": false,
+      "Cavalry": true,
+      "Infantry": true
     },
-    "mastOpen": {},
+    "laterOpen": {
+      "nodes": false,
+      "cavNodes": false
+    },
     "sub": {
-      "Base": "T11",
-      "Data": "Sync"
+      "Rally": "Heroes",
+      "Data": "Checklists",
+      "Gear": "Charms",
+      "Base": "Buildings",
+      "Plan": "Shop guide",
+      "Heroes": "Masters",
+      "Shop": "Paid"
     },
-    "progKey": "power",
-    "t11Open": {},
+    "t11Open": {
+      "nodes": false,
+      "cavNodes": false
+    },
+    "doAll": false,
     "qOpen": {
-      "Bag": true
+      "Bag": true,
+      "HG": true,
+      "Power": true,
+      "Buildings": true,
+      "Troops": false,
+      "Shards": false,
+      "Masters": true,
+      "Gov": true,
+      "Widgets": false,
+      "Charms": false,
+      "T11": false,
+      "Mystic": true,
+      "Pets": true
     },
+    "tierAll": false,
+    "progKey": "attWR",
+    "roleOpen": true,
+    "heroAll": false,
+    "evOpen": true,
+    "shSpare": true,
+    "petMaxOpen": false,
+    "weekOpen": false,
+    "todayAll": true,
+    "tierOpen": false,
+    "planOpen": true,
     "bvPick": [
       "tg",
       "gen",
-      "designs"
-    ]
+      "designs",
+      "dust"
+    ],
+    "sgOpen": 14,
+    "bcMore": true,
+    "sgFull": true
   },
   "troopCounts": {
     "inf": {
@@ -1069,7 +1249,7 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 0,
+      "fh": 118,
       "mg": 0,
       "mith": 0
     },
@@ -1222,109 +1402,116 @@
     "open2": {
       "Archer": true
     },
+    "fhSeen": 118,
+    "fhGot": {
+      "2026-10": 2083
+    },
     "chests": {
       "lucky": 0,
       "custom": 0,
       "log": []
-    },
-    "fhSeen": 0
+    }
   },
   "charms": {
     "targetLvl": 0,
     "have": {
-      "guides": 0,
-      "designs": 0
+      "guides": 593,
+      "designs": 337
     },
     "rows": [
       {
         "type": "Cavalry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 6
       },
       {
         "type": "Cavalry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 6,
+        "st": 0
       },
       {
         "type": "Cavalry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 6,
+        "st": 1
       },
       {
         "type": "Cavalry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 5,
+        "tgt": 6,
+        "st": 1
       },
       {
         "type": "Cavalry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 5,
+        "tgt": 10
       },
       {
         "type": "Cavalry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 5,
+        "tgt": 6
       },
       {
         "type": "Infantry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7,
+        "st": 1
       },
       {
         "type": "Infantry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       },
       {
         "type": "Infantry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       },
       {
         "type": "Infantry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       },
       {
         "type": "Infantry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       },
       {
         "type": "Infantry",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       },
       {
         "type": "Archer",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       },
       {
         "type": "Archer",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       },
       {
         "type": "Archer",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       },
       {
         "type": "Archer",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 9,
+        "tgt": 10
       },
       {
         "type": "Archer",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       },
       {
         "type": "Archer",
-        "lvl": 0,
-        "tgt": 0
+        "lvl": 6,
+        "tgt": 7
       }
     ]
   },
@@ -1489,6 +1676,75 @@
       "stepIdx": 0
     }
   ],
+  "events": [
+    {
+      "n": "KvK",
+      "date": "",
+      "every": 14,
+      "time": "",
+      "note": ""
+    },
+    {
+      "n": "Bear Hunt",
+      "date": "",
+      "every": 2,
+      "time": "",
+      "note": ""
+    }
+  ],
+  "masterNotesV": 2,
+  "pets": {
+    "have": {
+      "food": 0,
+      "manuals": 0,
+      "potions": 90,
+      "tmCommon": 56,
+      "tmAdv": 0
+    },
+    "rows": []
+  },
+  "shardGeneral": 73,
+  "shardRallySet": true,
+  "income": {
+    "mg": {
+      "since": "2026-10-30",
+      "got": {},
+      "seen": 0
+    },
+    "mith": {
+      "since": "2026-10-30",
+      "got": {},
+      "seen": 0
+    },
+    "threads": {
+      "since": "2026-10-30",
+      "got": {
+        "2026-10": 178
+      },
+      "seen": 0
+    },
+    "designs": {
+      "since": "2026-10-30",
+      "got": {
+        "2026-10": 337
+      },
+      "seen": 337
+    },
+    "fh": {
+      "since": "2026-10-30",
+      "got": {
+        "2026-10": 161
+      },
+      "seen": 118
+    },
+    "gen": {
+      "since": "2026-10-30",
+      "got": {
+        "2026-10": 71
+      },
+      "seen": 73
+    }
+  },
   "step1": [
     {
       "t": "Promote staged T9 → T10 across the army",
@@ -1524,65 +1780,5 @@
       "t": "Promote T10 Archers → T11 on a KvK power stage",
       "d": false
     }
-  ],
-  "events": [
-    {
-      "n": "KvK",
-      "date": "",
-      "every": 14,
-      "time": "",
-      "note": ""
-    },
-    {
-      "n": "Bear Hunt",
-      "date": "",
-      "every": 2,
-      "time": "",
-      "note": ""
-    }
-  ],
-  "masterNotesV": 2,
-  "pets": {
-    "have": {
-      "food": 0,
-      "manuals": 0,
-      "potions": 0,
-      "tmCommon": 0,
-      "tmAdv": 0
-    },
-    "rows": []
-  },
-  "shardRallySet": true,
-  "income": {
-    "mg": {
-      "since": "2026-10-30",
-      "got": {},
-      "seen": 0
-    },
-    "mith": {
-      "since": "2026-10-30",
-      "got": {},
-      "seen": 0
-    },
-    "threads": {
-      "since": "2026-10-30",
-      "got": {},
-      "seen": 0
-    },
-    "designs": {
-      "since": "2026-10-30",
-      "got": {},
-      "seen": 0
-    },
-    "fh": {
-      "since": "2026-10-30",
-      "got": {},
-      "seen": 0
-    },
-    "gen": {
-      "since": "2026-10-30",
-      "got": {},
-      "seen": 0
-    }
-  }
+  ]
 }
