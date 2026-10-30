@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Home",
     "collapsed": {},
     "density": "comfortable",
     "laterOpen": {},
@@ -1566,11 +1566,11 @@
     },
     "mastOpen": {},
     "sub": {
-      "Base": "Troops",
-      "Data": "Checklists",
+      "Base": "T11",
+      "Data": "Update all",
       "Heroes": "Shards",
       "Gear": "Widgets",
-      "Shop": "Free shops"
+      "Shop": "Paid"
     },
     "progKey": "power",
     "t11Open": {},
