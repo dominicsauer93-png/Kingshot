@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Base",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1593,10 +1593,10 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Charms",
-      "Base": "Research",
+      "Gear": "Pets",
+      "Base": "Resources",
       "Plan": "Shop guide",
-      "Heroes": "Masters",
+      "Heroes": "Overview",
       "Shop": "Paid"
     },
     "t11Open": {
@@ -1638,7 +1638,8 @@
     ],
     "sgOpen": 14,
     "bcMore": true,
-    "sgFull": true
+    "sgFull": true,
+    "freshAll": true
   },
   "troopCounts": {
     "inf": {
@@ -3396,13 +3397,13 @@
     "gen": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 248
+        "2026-10": 348
       },
-      "seen": 100
+      "seen": 101
     }
   },
   "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
-  "shardGeneral": 100,
+  "shardGeneral": 101,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
     "done": []
