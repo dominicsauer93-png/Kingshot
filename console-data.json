@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Base",
     "collapsed": {},
     "density": "comfortable",
     "laterOpen": {},
@@ -1569,7 +1569,7 @@
       "Base": "T11",
       "Data": "Sync",
       "Heroes": "Overview",
-      "Gear": "Charms",
+      "Gear": "Widgets",
       "Shop": "Paid"
     },
     "progKey": "power",
