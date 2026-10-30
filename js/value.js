@@ -45,16 +45,37 @@ function vNeeds(){
   out.dust=Math.max(0,computeTarget()-num(state.dust.current));
   return out; }
 const vY=(d,k)=>num(d.y[k])+(k==="gen"?num(d.y.gems)/GEMS_PER_SHARD:0);
+// The month's money: real A$ (budget − renewals − Star packs) plus Stars (balance + Star packs not yet bought this month)
+const STAR_TIERS={0.99:99,1.49:99,2.99:199,4.99:299,7.99:499,14.99:999,30.99:1999,79.99:4999,159.99:9999}; // in-game A$ price → Stars (assumed; check one in game)
+const starsFor=a=>STAR_TIERS[num(a).toFixed(2)*1]||Math.round(num(a)/0.0155);
+const STAR_A=14.99/999; // ≈ A$ of packs per Star
+const fxRate=()=>(num(state.fx)||1.55)*(1+(state.fxFee==null?3:num(state.fxFee))/100); // A$ per US$ incl. your bank's foreign fee — set both in the ⭐ panel
+const WEB_STARS=[{id:"m",t:"Web store: 499 + 499 Stars",usd:4.99,stars:998},{id:"o",t:"Web store: 999 + 999 Stars (once ever)",usd:9.99,stars:1998,once:true}];
 function vPlanMonth(){ const cur=gameToday().slice(0,7), mo=state.packMonths||{}, closed=mo[cur]&&mo[cur].closed;
   const d=new Date(cur+"-01T00:00:00Z"); if(closed) d.setUTCMonth(d.getUTCMonth()+1); const key=d.toISOString().slice(0,7);
-  const bought=(state.packs||[]).filter(p=>p.auto===key&&p.d), bud=num(state.packBudget)||100;
+  const P=state.packs||[], bought=P.filter(p=>p.auto===key&&p.d&&!p.web), bud=num(state.packBudget)||100;
+  const thisMonth=p=>String(p.bought||"").slice(0,7)===key;
   // cards you own renew this month — set that money aside first (weekly cards ×4)
-  const renew=(state.packs||[]).filter(p=>p.d&&(p.kind==="month"||p.kind==="week")&&!p.auto).map(p=>({t:p.t,a:num(p.aud)*(p.kind==="week"?4:1)}));
-  const spent=num((mo[key]||{}).spent)+bought.reduce((t,p)=>t+num(p.aud),0)+renew.reduce((t,r)=>t+r.a,0);
-  return {key,label:d.toLocaleDateString(undefined,{month:"long",timeZone:"UTC"}),left:Math.max(0,bud-spent),bud,spent,bought,renew}; }
+  const renew=P.filter(p=>p.d&&(p.kind==="month"||p.kind==="week")&&!p.auto&&!num(p.stars)).map(p=>({t:p.t,a:num(p.aud)*(p.kind==="week"?4:1)}));
+  // Star packs: your Kingdom Special (in-game) + the cheap web store packs
+  const fund=P.filter(p=>p.d&&num(p.stars)&&!p.auto).map(p=>({t:p.t,a:num(p.aud),stars:num(p.stars),gen:num(p.gen),got:thisMonth(p)}))
+    .concat(WEB_STARS.filter(w=>w.once?!state.webOnceDone:state.webMonthly!==false).map(w=>({t:w.t,a:w.usd*fxRate(),usd:w.usd,stars:w.stars,web:w.id,once:w.once,got:w.once?false:state.webMonth===key})));
+  const cashOut=num((mo[key]||{}).spent)+bought.filter(p=>!p.viaStars).reduce((t,p)=>t+num(p.aud),0)+renew.reduce((t,r)=>t+r.a,0)+fund.reduce((t,f)=>t+f.a,0);
+  const cash=Math.max(0,bud-cashOut), stars=num(state.stars)+fund.filter(f=>!f.got).reduce((t,f)=>t+f.stars,0);
+  return {key,label:d.toLocaleDateString(undefined,{month:"long",timeZone:"UTC"}),cash,stars,left:cash+stars*STAR_A,bud,bought,renew,fund,extra:{gen:fund.reduce((t,f)=>t+num(f.gen),0)}}; }
+// pay with Stars where they go furthest (whole packs only — use as many Stars as possible), the rest in cash;
+// if the cash still runs out, drop the lowest-ranked picks
+function vPay(picked,M){ let L=picked.slice();
+  for(;;){ const cost=L.map(p=>starsFor(p.d.a)), S=Math.floor(M.stars), best=new Array(S+1).fill(null); best[0]=[];
+    cost.forEach((c,i)=>{ for(let v=S;v>=c;v--) if(!best[v]&&best[v-c]&&!best[v-c].includes(i)) best[v]=best[v-c].concat(i); });
+    let v=S; while(v>0&&!best[v]) v--; const viaS=new Set(best[v]);
+    const cash=L.reduce((t,p,i)=>t+(viaS.has(i)?0:p.d.a),0);
+    if(cash<=M.cash+0.005||!L.length) return {list:L.map((p,i)=>Object.assign({pay:viaS.has(i)?"stars":"cash",starCost:cost[i]},p)),starsLeft:S-v,cashLeft:M.cash-cash};
+    L.pop(); } }
+const STAR_WEB=[["499 + 499 Stars","US$4.99","100% bonus","Every month — about A$15 of packs for ~A$8"],["999 + 999 Stars","US$9.99","100% bonus","Once ever — about two A$14.99 packs"],["1,999 + 100 Stars + 20 General shards","US$19.99","5% + shards","Every month — same as Kingdom Special, +100 Stars"],["9,999 + 500 Stars + frame","US$99.99","5%","Monthly — only if you need that many"]];
 // greedy: each step buys the deal that fills the most of your remaining gaps per A$ (an item stops counting once it's covered)
-function vPick(keys,onlyNow,budget,already){
-  const need=vNeeds(), rem={}; keys.forEach(k=>rem[k]=need[k]);
+function vPick(keys,onlyNow,budget,already,extra){
+  const need=vNeeds(), rem={}; keys.forEach(k=>rem[k]=Math.max(0,need[k]-num((extra||{})[k]))); // extra = what Star packs already give (Kingdom Special's 20 shards)
   const bought=already||[], boughtOf=n=>bought.filter(p=>p.t.startsWith(n)).length;
   bought.forEach(p=>{ const d=VALUE_DB.find(x=>p.t.startsWith(x.n)); if(d&&!d.alt) keys.forEach(k=>rem[k]=Math.max(0,rem[k]-vY(d,k))); });
   const owned=n=>(state.packs||[]).some(p=>p.d&&p.t.startsWith(n)); // one-off event passes you already bought (any month) aren't suggested again
@@ -84,7 +105,8 @@ function renderBestValue(){
   if(!state.ui.bvPick) state.ui.bvPick=["tg","gen","designs"];
   state.ui.bvPick=state.ui.bvPick.filter(k=>VALUE_ITEMS.some(x=>x[0]===k));
   const keys=state.ui.bvPick, onlyNow=state.ui.bvNow!==false, M=vPlanMonth();
-  const {picked,left,need,rem}=vPick(keys,onlyNow,M.left,M.bought);
+  const pk=vPick(keys,onlyNow,M.left,M.bought,M.extra), need=pk.need, PAY=vPay(pk.picked,M), picked=PAY.list;
+  const rem={}; keys.forEach(k=>{ rem[k]=Math.max(0,need[k]-num(M.extra[k])); picked.forEach(p=>rem[k]=Math.max(0,rem[k]-vY(p.d,k))); });
   const order=picked.map((p,i)=>({p,i,by:vBuyBy(p.d)})); // pick order = best buy first (most of your gaps per A$)
   const fdD=s=>new Date(s+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"});
   // why it's in the plan: what it covers of your gaps when picked ("last" = it closes that gap)
@@ -94,16 +116,20 @@ function renderBestValue(){
   host.innerHTML=`<div class="card"><b style="font-size:16px">What do you want this month?</b>
       <div class="bvchips">${VALUE_ITEMS.map(([k,l])=>`<button class="chip" data-k="${k}" aria-pressed="${keys.includes(k)}">${l}${keys.includes(k)&&need[k]?` <small>· ${fmt(Math.round(need[k]))} short</small>`:""}</button>`).join("")}</div>
       <label class="bvnow"><input type="checkbox" id="bvNow"${onlyNow?" checked":""}> Only deals on now</label></div>`+
-    `<div class="card mt"><div class="rowb"><b style="font-size:16px">Best buys for ${esc(M.label)}</b><button class="btn ghost sm mono" id="bvBud">A$${M.left.toFixed(2)} left of ${M.bud} ✎</button></div>`+
+    `<div class="card mt"><div class="rowb"><b style="font-size:16px">Best buys for ${esc(M.label)}</b><button class="btn ghost sm mono" id="bvBud">A$${M.bud} budget ✎</button></div>`+
     (M.renew.length?`<p class="faint" style="margin:4px 0 0;font-size:13.5px">Set aside for renewals: ${M.renew.map(r=>`${esc(r.t)} A$${r.a.toFixed(2)}`).join(" · ")}</p>`:"")+
+    `<div class="bvfund"><div class="bvfund-h"><b>Stars first</b><button class="btn ghost sm" id="bvStars">⭐ ${fmt(num(state.stars))} now ✎</button></div>${M.fund.map(f=>`<div class="rcrow"><span>${esc(f.t)}${f.usd?` <small class="faint">US$${f.usd.toFixed(2)}</small>`:""}${f.gen?` <span class="tag ok">+${f.gen} General shards</span>`:""}${f.got?' <span class="tag plain">bought ✓</span>':""}</span><b>A$${f.a.toFixed(2)} → ${fmt(f.stars)} ⭐</b></div>`).join("")}
+      <div class="rcrow"><span>To spend on packs</span><b>${fmt(M.stars)} ⭐ + A$${M.cash.toFixed(2)}</b></div></div>`+
     (M.bought.length?`<p class="faint" style="margin:4px 0 0">Bought so far: ${M.bought.map(p=>esc(p.t)).join(", ")}</p>`:"")+
-    (picked.length?[order].map(L=>`<p class="faint" style="margin:6px 0 0;font-size:13.5px">Best buy first — blockers count double, higher % and more per A$ rank higher.</p><ol class="bvlist">${L.map(({p,by})=>`<li><div class="bvrow"><b>${esc(vName(p))}${p.why&&p.why.some(([k])=>VALUE_BLOCKERS.includes(k))?' <span class="tag bad">blocker</span>':""}</b><span class="mono gold">A$${p.d.a.toFixed(2)}</span></div>
+    (picked.length?[order].map(L=>`<p class="faint" style="margin:6px 0 0;font-size:13.5px">Best buy first — blockers count double, higher % and more per A$ rank higher.</p><ol class="bvlist">${L.map(({p,by})=>`<li><div class="bvrow"><b>${esc(vName(p))}${p.why&&p.why.some(([k])=>VALUE_BLOCKERS.includes(k))?' <span class="tag bad">blocker</span>':""}</b><span class="mono gold">${p.pay==="stars"?`${fmt(p.starCost)} ⭐`:`A$${p.d.a.toFixed(2)}`}</span></div>
         <span class="muted">${give(p.d)}</span>${p.d.pc?` <span class="faint">· ${p.d.pc}</span>`:""}${p.d.est?' <span class="tag plain">estimate</span>':""}${staleDays(p.d.seen)>STALE_DAYS?` <span class="tag warn">price seen ${staleDays(p.d.seen)}d ago — check</span>`:""}
         ${why(p)}${by?` <span class="tag warn">buy by ${fdD(by)}</span>`:""}${p.d.note?` <span class="faint">${esc(p.d.note)}</span>`:""}</li>`).join("")}</ol>`).join("")+`
       <div class="rcrows">${keys.map(k=>{ const got=need[k]-rem[k]; return need[k]?`<div class="rcrow"><span>${vLab(k)}</span><b>${got>0?`<span class="ok">+${fmt(Math.round(got))}</span>`:"+0"} of ${fmt(Math.round(need[k]))} short</b></div>`:`<div class="rcrow"><span>${vLab(k)}</span><b class="faint">not short ✓</b></div>`; }).join("")}
-        <div class="rcrow"><span>Spend</span><b>A$${(M.left-left).toFixed(2)} · A$${left.toFixed(2)} left</b></div></div>
+        <div class="rcrow"><span>Real money this month</span><b>A$${(M.bud-PAY.cashLeft).toFixed(2)} of A$${M.bud} · ${fmt(PAY.starsLeft)} ⭐ left</b></div></div>
       <button class="btn primary mt" id="bvUse">Use this as my ${esc(M.label)} plan</button>`
       :`<p class="faint">${keys.length?"Nothing on now closes what you picked — untick “Only deals on now” to see what's coming.":"Pick at least one item above."}</p>`)+`</div>`+
+    `<details class="fold mt"><summary><span class="grow">Cheaper Stars — web store</span><small class="faint">store.centurygames.com/kingshot</small></summary><div class="fbody"><table class="gtable"><tbody>${STAR_WEB.map(([a,b,c,d])=>`<tr><td><b>${esc(a)}</b><br><span class="faint">${esc(d)}</span></td><td class="mono">${esc(b)}</td><td>${esc(c)}</td></tr>`).join("")}</tbody></table>
+      <p class="faint" style="margin:8px 0 0;font-size:13.5px">1 Star = 1 US cent. Charged in US$ — your bank may add a foreign fee. Stars only pay for a whole pack, and buying Stars gives no Top-up Points (spending them does).</p></div></details>`+
     `<h3 class="sgsec">Best per A$, by item</h3>`+
     keys.map(k=>{ const per=d=>vY(d,k)/d.a, L=VALUE_DB.filter(d=>vY(d,k)>0).sort((a,b)=>per(b)-per(a)).slice(0,4); if(!L.length) return "";
       const f=v=>v>=10?fmt(Math.round(v)):v.toFixed(1);
@@ -111,8 +137,17 @@ function renderBestValue(){
   host.querySelectorAll(".bvchips .chip").forEach(c=>c.onclick=()=>{ const k=c.dataset.k, L=state.ui.bvPick, i=L.indexOf(k); if(i>-1) L.splice(i,1); else L.push(k); scheduleSave(); renderBestValue(); });
   const nw=$("#bvNow"); nw.onchange=()=>{ state.ui.bvNow=nw.checked; scheduleSave(); renderBestValue(); };
   on("bvBud",openPackBudgetSheet);
+  on("bvStars",()=>openSheet({title:"Kingdom Stars",sub:"Balance, web store packs and exchange rate.",build(f){
+    f.appendChild(fld("Stars you have now",{type:"num",value:num(state.stars),get:()=>num(state.stars),set:v=>state.stars=Math.max(0,Math.round(v)),hint:"Ticking packs updates this for you — fix it here if it drifts."}));
+    f.appendChild(frow(fld("A$ per US$ (web store)",{type:"num",decimal:true,value:num(state.fx)||1.55,get:()=>num(state.fx)||1.55,set:v=>state.fx=v}),
+      fld("Bank foreign fee %",{type:"num",decimal:true,value:state.fxFee==null?3:num(state.fxFee),get:()=>state.fxFee==null?3:num(state.fxFee),set:v=>state.fxFee=v,hint:"Many cards charge ~3%; 0 if yours doesn't."})));
+    f.appendChild(fld("Buy the US$4.99 web pack (499 + 499 Stars) each month",{type:"check",value:state.webMonthly!==false,set:v=>state.webMonthly=v}));
+    f.appendChild(fld("I've bought the once-only US$9.99 pack (999 + 999)",{type:"check",value:!!state.webOnceDone,set:v=>state.webOnceDone=v}));
+    const i=infoBox(); f.appendChild(i);
+    const rf=()=>{ i.innerHTML=`≈ <b>A$${(num(state.stars)*STAR_A).toFixed(2)}</b> of packs. In-game Star prices (assumed): A$2.99 = 199 · A$7.99 = 499 · A$14.99 = 999.`; }; rf(); return rf; }}));
   on("bvUse",()=>{ const snap=JSON.stringify(state), P=state.packs||(state.packs=[]);
     for(let i=P.length-1;i>=0;i--) if(!P[i].d&&(P[i].auto||/^Nov\b/.test(P[i].note||""))) P.splice(i,1); // replace unbought plan items
-    order.slice().reverse().forEach(({p,by})=>P.unshift({t:vName(p),aud:p.d.a,kind:"once",d:false,auto:M.key,note:[`${M.label} plan`,by?`buy by ${fdD(by)}`:"",p.d.pc||"",p.d.note||""].filter(Boolean).join(" · ")}));
+    order.slice().reverse().forEach(({p,by})=>P.unshift({t:vName(p),aud:p.d.a,kind:"once",d:false,auto:M.key,viaStars:p.pay==="stars"||undefined,note:[`${M.label} plan`,p.pay==="stars"?`pay ${fmt(p.starCost)} ⭐`:"",by?`buy by ${fdD(by)}`:"",p.d.pc||"",p.d.note||""].filter(Boolean).join(" · ")}));
+    M.fund.filter(f=>f.web&&!f.got).reverse().forEach(f=>P.unshift({t:f.t,aud:+f.a.toFixed(2),kind:"once",d:false,auto:M.key,web:f.web,addStars:f.stars,note:`${M.label} plan · buy first on store.centurygames.com/kingshot · US$${f.usd.toFixed(2)} → ${fmt(f.stars)} ⭐`}));
     afterEdit(); toast(`${M.label} plan saved to Shops & Packs`,snap); });
 }

@@ -73,14 +73,15 @@ function renderShopsPacks(){
     return `<div class="pack${bought(p)?" owned":""}"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}">
       <span><span class="pn">${bought(p)?"":`${k+1}. `}${esc(p.t)}</span>${bought(p)?" "+tagH("ok","Owned ✓"):""}<br><span class="pd">${esc(p.note||"")}</span>
       ${p.d&&rec?`<span class="pl">${p.bought?packLeftH(n):'<span class="faint">set the date you bought it (✎)</span>'}${p.bought&&n<=3?`<button class="renew" data-i="${i}">Renewed today</button>`:""}</span>`:""}</span>
-      <span class="pp">A$${packPrice(p).toFixed(2)}<small>${p.first&&!p.firstDone?"first buy · ":""}${PACK_PER[p.kind]||""}</small></span>
+      <span class="pp">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${packPrice(p).toFixed(2)}`}<small>${p.first&&!p.firstDone?"first buy · ":""}${PACK_PER[p.kind]||""}</small></span>
       <button class="shr-edit" data-i="${i}" aria-label="Edit ${esc(p.t)}"><svg aria-hidden="true"><use href="#i-pen"/></svg></button></div>`; };
   $("#packList").innerHTML=rows.filter(x=>!bought(x.p)).map(packRow).join("")+
     `<div class="pack never"><span class="rk">✕</span><span><span class="pn">Never buy</span><br><span class="pd">Resource packs, random chests, big mixed bundles. Extra only: event packs with Mithril or Mythic shards.</span></span><span></span><span></span></div>`+
     (owned.length?`<details class="shfold"><summary><div class="shgrp"><span>Already owned (${owned.length})</span><small>untick if bought by mistake</small></div></summary>${owned.map(packRow).join("")}</details>`:"");
   $$("#packList input[data-i]").forEach(c=>c.onchange=()=>{ const p=P[+c.dataset.i]; p.d=c.checked;
-    if(c.checked&&PACK_DAYS[p.kind]){ p.bought=fcToday(); if(p.first) p.firstDone=true; } afterEdit(); });
-  $$("#packList .renew").forEach(b=>b.onclick=()=>{ const p=P[+b.dataset.i], snap=JSON.stringify(state); p.bought=fcToday(); p.firstDone=true; afterEdit(); toast(`${p.t} renewed`,snap); });
+    if(c.checked&&PACK_DAYS[p.kind]){ p.bought=fcToday(); if(p.first) p.firstDone=true; }
+    packStars(p,c.checked?1:-1); afterEdit(); });
+  $$("#packList .renew").forEach(b=>b.onclick=()=>{ const p=P[+b.dataset.i], snap=JSON.stringify(state); p.bought=fcToday(); p.firstDone=true; packStars(p,1); afterEdit(); toast(`${p.t} renewed`,snap); });
   bindAll($("#packList"),".shr-edit",b=>openPackSheet(P[+b.dataset.i]));
   on("addPack",()=>{ const p={t:"New pack",aud:0,kind:"once",note:"",d:false}; P.push(p); afterEdit(); openPackSheet(p); });
 }
@@ -88,10 +89,16 @@ function openPackBudgetSheet(){
   openSheet({title:"Monthly budget",sub:"What you're happy to spend each month on cards and packs.",build(f){
     f.appendChild(fld("Budget (A$ per month)",{type:"num",decimal:true,value:state.packBudget||"",get:()=>state.packBudget||"",set:v=>state.packBudget=v,ph:"e.g. 30"}));
     const inf=infoBox(); f.appendChild(inf);
-    const rf=()=>{ const P=state.packs||[], mo=P.filter(p=>p.d).reduce((t,p)=>t+packMonthly(p),0), b=num(state.packBudget);
-      inf.innerHTML=`Ticked cards cost <b>A$${mo.toFixed(2)}</b> a month (weekly cards × 52 ÷ 12).`+(b?` That leaves <b class="${b-mo<0?"bad":"ok"}">A$${(b-mo).toFixed(2)}</b>.`:""); };
+    const rf=()=>{ const P=state.packs||[], mo=P.filter(p=>p.d&&!num(p.stars)).reduce((t,p)=>t+packMonthly(p),0), b=num(state.packBudget);
+      inf.innerHTML=`Ticked cards cost <b>A$${mo.toFixed(2)}</b> a month (weekly cards × 52 ÷ 12; Star packs not counted — their Stars pay for packs).`+(b?` That leaves <b class="${b-mo<0?"bad":"ok"}">A$${(b-mo).toFixed(2)}</b>.`:""); };
     rf(); return rf; }});
 }
+// Stars move with your ticks: Star packs add, packs paid with Stars spend (unticking undoes it)
+function packStars(p,dir){ let ch=0;
+  if(num(p.stars)) ch+=num(p.stars); if(num(p.addStars)) ch+=num(p.addStars);
+  if(p.viaStars) ch-=starsFor(p.aud);
+  if(p.web==="m"&&dir>0) state.webMonth=p.auto; if(p.web==="o") state.webOnceDone=dir>0;
+  if(ch) state.stars=Math.max(0,num(state.stars)+ch*dir); }
 function openPackSheet(p){
   openSheet({title:p.t||"Pack",sub:"Price, type and when you bought it.",build(f){
     f.appendChild(fld("Name",{value:p.t,set:v=>p.t=v}));
@@ -102,6 +109,7 @@ function openPackSheet(p){
         fld("Bought on",{type:"date",value:p.bought||"",set:v=>p.bought=v})));
       f.appendChild(fld("I've used the first-buy price",{type:"check",value:!!p.firstDone,set:v=>p.firstDone=v}));
     }
+    f.appendChild(fld("Paid with Stars",{type:"check",value:!!p.viaStars,set:v=>{ if(v) p.viaStars=true; else delete p.viaStars; },hint:"Ticking the pack then takes its Stars off your balance."}));
     f.appendChild(fld("Note",{value:p.note,set:v=>p.note=v}));
     const inf=infoBox(); f.appendChild(inf);
     const rf=()=>{ const n=packDaysLeft(p); inf.innerHTML=p.kind==="once"?(p.d?"Owned ✓ — hidden under “Already owned”.":"Permanent once bought."):!p.d?"Tick it on the list when you buy it — the timer starts from today.":p.bought?`${packLeftH(n)} · costs <b>A$${packMonthly(p).toFixed(2)}</b> a month`:"Set the date you bought it to see days left."; };

@@ -668,3 +668,9 @@
   #tlFold .tlrow:first-child{margin-top:0}
   .bvgrp{margin:12px 0 0;font:700 12.5px var(--f-body);text-transform:uppercase;letter-spacing:.05em;color:var(--gold)}
   .bvwhy{display:block;font-size:13.5px;color:var(--green);margin-top:2px}
+  .bvstars{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:6px 0 0;font-size:13.5px}
+  .bvfund{margin:8px 0 0;padding:8px 12px;border-radius:12px;background:var(--sunk);border:1px solid var(--line-soft)}
+  .bvfund-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px}
+  .bvfund .rcrow:last-child b{color:var(--gold)}
+  .bvfund .rcrow b{white-space:nowrap}
+  @media (max-width:520px){ .bvfund .rcrow{flex-wrap:wrap;row-gap:2px} .bvfund .rcrow > span{flex:1 1 100%} .bvfund .rcrow > b{margin-left:auto} }
