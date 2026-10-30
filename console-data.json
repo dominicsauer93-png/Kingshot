@@ -1,22 +1,22 @@
 {
   "account": {
-    "tc": "Truegold Lv. 6",
-    "day": "425",
-    "power": "242,423,358",
-    "vip": "8",
+    "tc": "Truegold Lv. 7",
+    "day": "485",
+    "power": "329725706",
+    "vip": "9",
     "spender": "Low–mid",
-    "goal": "All-round",
-    "dayAnchor": "2025-07-26"
+    "goal": "Main - all out attack ",
+    "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 149,
-    "target": 13163,
-    "gold": 542730
+    "current": 202,
+    "target": 6738,
+    "gold": 658540
   },
   "nodes": [
     {
       "name": "Truegold Archers (unlock)",
-      "cur": 0,
+      "cur": 1,
       "max": 1,
       "costs": [
         2236
@@ -24,7 +24,7 @@
     },
     {
       "name": "Truegold Bracers (Health)",
-      "cur": 0,
+      "cur": 8,
       "max": 8,
       "costs": [
         40,
@@ -39,7 +39,7 @@
     },
     {
       "name": "Truegold Bows (Lethality)",
-      "cur": 0,
+      "cur": 8,
       "max": 8,
       "costs": [
         40,
@@ -54,7 +54,7 @@
     },
     {
       "name": "Truegold Vests (Defense)",
-      "cur": 0,
+      "cur": 12,
       "max": 12,
       "costs": [
         54,
@@ -73,7 +73,7 @@
     },
     {
       "name": "Truegold Legionaries (Rally Capacity)",
-      "cur": 0,
+      "cur": 12,
       "max": 12,
       "costs": [
         83,
@@ -92,7 +92,7 @@
     },
     {
       "name": "Truegold Arrows (Attack)",
-      "cur": 0,
+      "cur": 12,
       "max": 12,
       "costs": [
         54,
@@ -172,7 +172,7 @@
     },
     {
       "name": "Truegold Shields (Health)",
-      "cur": 0,
+      "cur": 8,
       "max": 8,
       "costs": [
         40,
@@ -187,7 +187,7 @@
     },
     {
       "name": "Truegold Blades (Lethality)",
-      "cur": 0,
+      "cur": 8,
       "max": 8,
       "costs": [
         40,
@@ -202,7 +202,7 @@
     },
     {
       "name": "Truegold Plating (Defense)",
-      "cur": 0,
+      "cur": 8,
       "max": 12,
       "costs": [
         54,
@@ -221,7 +221,7 @@
     },
     {
       "name": "Truegold Legionaries (Rally Capacity)",
-      "cur": 0,
+      "cur": 9,
       "max": 12,
       "costs": [
         83,
@@ -240,7 +240,7 @@
     },
     {
       "name": "Truegold Mauls (Attack)",
-      "cur": 0,
+      "cur": 9,
       "max": 12,
       "costs": [
         54,
@@ -311,8 +311,16 @@
   ],
   "cavNodes": [
     {
-      "name": "Truegold Charge (Lethality)",
+      "name": "Truegold Cavalry (unlock)",
       "cur": 0,
+      "max": 1,
+      "costs": [
+        2236
+      ]
+    },
+    {
+      "name": "Truegold Charge (Lethality)",
+      "cur": 6,
       "max": 8,
       "costs": [
         40,
@@ -327,7 +335,7 @@
     },
     {
       "name": "Truegold Farriery (Health)",
-      "cur": 0,
+      "cur": 7,
       "max": 8,
       "costs": [
         40,
@@ -342,7 +350,7 @@
     },
     {
       "name": "Truegold Lances (Attack)",
-      "cur": 0,
+      "cur": 6,
       "max": 12,
       "costs": [
         54,
@@ -361,7 +369,7 @@
     },
     {
       "name": "Truegold Legionaries (Rally Capacity)",
-      "cur": 0,
+      "cur": 6,
       "max": 12,
       "costs": [
         83,
@@ -380,7 +388,7 @@
     },
     {
       "name": "Truegold Platecraft (Defense)",
-      "cur": 0,
+      "cur": 6,
       "max": 12,
       "costs": [
         54,
@@ -395,14 +403,6 @@
         324,
         388,
         480
-      ]
-    },
-    {
-      "name": "Truegold Cavalry (unlock)",
-      "cur": 0,
-      "max": 1,
-      "costs": [
-        2236
       ]
     },
     {
@@ -459,7 +459,19 @@
   ],
   "trackNow": [
     {
-      "t": "Finish the T10 transition (promote T9 → T10)",
+      "t": "Widgets: keep all 3 rally heroes (Inf, Cav, Archer) at the same level — lowest first",
+      "d": false
+    },
+    {
+      "t": "Hero Gear: Archer + Cavalry pieces to Red +19 (Lv 119) first, then main hero gear",
+      "d": false
+    },
+    {
+      "t": "Forgehammers: keep Hero Gear mastery one step behind your next imbuement",
+      "d": false
+    },
+    {
+      "t": "No pets/buffs active? Infantry Gov Gear → Infantry charms → Archers (charms = Lethality + Health)",
       "d": false
     },
     {
@@ -483,10 +495,6 @@
         "d": false
       },
       {
-        "t": "VIP Shop — Forgehammers + 100 Enhancement XP",
-        "d": false
-      },
-      {
         "t": "Trial Shop — Truegold Dust first, then Mithril",
         "d": false
       },
@@ -498,193 +506,221 @@
   },
   "packs": [
     {
+      "t": "Path of Honor (Hero Rally)",
+      "aud": 14.99,
+      "kind": "once",
+      "d": false,
+      "note": "Nov — only if Hero Rally is still on after 1 Nov. Pick 40 General shards (→ Ava). Also 140 Truegold, 4,800 gems, 12 keys. 3,343%"
+    },
+    {
+      "t": "Weekly Benefits — Mythic Governor Charm",
+      "aud": 14.99,
+      "kind": "once",
+      "d": false,
+      "note": "Nov week 1 — 150 Designs + 150 Guides. 6,500%"
+    },
+    {
+      "t": "Weekly Benefits — Mythic Hero Gear",
+      "aud": 14.99,
+      "kind": "once",
+      "d": false,
+      "note": "Nov week 2 — 90 hammers + 120 Lucky Hero Gear chests (chance of Mythic). 7,500%. Check the Gear Fund's Mythic drop rate first"
+    },
+    {
+      "t": "Chameleos Widget Pack (Ava)",
+      "aud": 7.99,
+      "kind": "once",
+      "d": false,
+      "note": "Nov — 15 Ava widgets (she needs 35 for Lv 7). 3,000%"
+    },
+    {
+      "t": "Sails Aloft — Common",
+      "aud": 7.99,
+      "kind": "once",
+      "d": true,
+      "note": "Voyage speedups: 100 × 1 h. Bought 1 (Oct)."
+    },
+    {
+      "t": "Dragon Value Pack",
+      "aud": 7.99,
+      "kind": "once",
+      "d": true,
+      "note": "1 of 3 bought — skipping the rest this month (budget went to Voyage speedups). Spend the essence on Wee & Woo, then Ava shards"
+    },
+    {
+      "t": "Kingdom Special Pack",
+      "aud": 30.99,
+      "kind": "month",
+      "d": true,
+      "note": "1,999 Kingdom Stars + 20 hero shards — monthly reset"
+    },
+    {
       "t": "2nd construction queue",
       "aud": 4.99,
       "kind": "once",
       "note": "Permanent — doubles building speed",
-      "d": false
-    },
-    {
-      "t": "Ultra Value Monthly Card",
-      "aud": 14.99,
-      "first": 7.99,
-      "kind": "month",
-      "note": "Daily gems + Stamina + 30 days VIP — best value",
-      "d": false
-    },
-    {
-      "t": "Weekly Benefits Card",
-      "aud": 7.99,
-      "kind": "week",
-      "note": "Governor gear materials + speedups",
-      "d": false
+      "d": true
     },
     {
       "t": "Extra march queue",
       "aud": 5.99,
       "kind": "once",
       "note": "Permanent — more gathering and rallies",
-      "d": false
+      "d": true
     },
     {
-      "t": "Intel Monthly Card",
+      "t": "Wavebound Voyage — 4th sailing",
       "aud": 7.99,
+      "kind": "once",
+      "d": true,
+      "note": "Voyage milestones give 500+ Charm Designs free — replaces the Charm Benefits Card"
+    },
+    {
+      "t": "Audacious Adventure — Witchbane",
+      "aud": 7.99,
+      "kind": "once",
+      "d": true,
+      "auto": "2026-10",
+      "note": "Halloween Party pass · bought 28 Oct"
+    },
+    {
+      "t": "Audacious Adventure — Pranksterbane",
+      "aud": 14.99,
+      "kind": "once",
+      "d": true,
+      "auto": "2026-10",
+      "note": "Halloween Party pass · bought 28 Oct"
+    },
+    {
+      "t": "Ultra Value Monthly Card",
+      "aud": 14.99,
+      "first": 7.99,
+      "firstDone": true,
       "kind": "month",
-      "note": "Steady extras if you log in daily",
-      "d": false
+      "note": "Daily gems + Stamina + 30 days VIP — best value",
+      "d": true,
+      "bought": "2026-10-28"
     }
   ],
   "trackFarm": [
     {
-      "t": "Farm Truegold Dust toward the T11 Archer unlock",
+      "t": "Farm Truegold Dust toward the T11 Infantry unlock",
       "d": false
     },
     {
       "t": "Push Pan 90 → 100 (Ways-and-Means / Falconer skills)",
-      "d": false
-    },
-    {
-      "t": "Slowly level the 4 laggard masters to lift the grade",
       "d": false
     }
   ],
   "pillars": [
     {
       "name": "Building",
-      "v": 8430563,
-      "b": 7687198,
+      "v": 9380343,
+      "b": 8097059,
       "g": "S"
     },
     {
       "name": "Troop",
-      "v": 133235265,
-      "b": 164531870,
-      "g": "A"
+      "v": 182796490,
+      "b": 188581313,
+      "g": "S"
     },
     {
       "name": "Hero",
-      "v": 26297916,
-      "b": 21305631,
+      "v": 33584735,
+      "b": 23484260,
       "g": "SS"
     },
     {
       "name": "Hero Gear",
-      "v": 9921154,
-      "b": 10062833,
+      "v": 14470618,
+      "b": 14161916,
       "g": "S"
     },
     {
       "name": "Governor Gear",
-      "v": 7013520,
-      "b": 7831641,
-      "g": "A"
+      "v": 9216720,
+      "b": 9567008,
+      "g": "S"
     },
     {
       "name": "Governor Charm",
-      "v": 10120000,
-      "b": 8258400,
+      "v": 12748800,
+      "b": 9383040,
       "g": "SS"
     },
     {
       "name": "Tech",
-      "v": 17625620,
-      "b": 11141492,
+      "v": 28579920,
+      "b": 14483939,
       "g": "SS"
     },
     {
       "name": "Pet",
-      "v": 19643520,
-      "b": 20673792,
+      "v": 22993080,
+      "b": 22741171,
       "g": "S"
     },
     {
       "name": "Master",
-      "v": 10135800,
-      "b": 25148000,
+      "v": 15955000,
+      "b": 32440800,
       "g": "C"
     }
   ],
   "combat": {
-    "attW": 160,
-    "attL": 211,
-    "defW": 672,
-    "defL": 55,
-    "leth": 66.5,
-    "hp": 49,
+    "attW": 198,
+    "attL": 322,
+    "defW": 716,
+    "defL": 65,
+    "leth": 74.3,
+    "hp": 69.1,
     "troopStatus": "T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot."
   },
   "resources": [
     {
       "n": "General speedup (min)",
-      "h": ""
+      "h": "17076"
     },
     {
       "n": "Soldier Training speedup (min)",
-      "h": ""
+      "h": "8036"
     },
     {
       "n": "Construction speedup (min)",
-      "h": ""
+      "h": "13913"
     },
     {
       "n": "Research speedup (min)",
-      "h": ""
+      "h": "2387"
     },
     {
       "n": "Learning speedup (min)",
-      "h": ""
+      "h": "1560"
     },
     {
       "n": "Soldier Healing speedup (min)",
-      "h": ""
+      "h": "28874"
     },
     {
       "n": "Bread",
-      "h": "2.29B"
+      "h": "1660000000"
     },
     {
       "n": "Wood",
-      "h": "2.29B"
+      "h": "1340000000"
     },
     {
       "n": "Stone",
-      "h": "275.77M"
+      "h": "52070000"
     },
     {
       "n": "Iron",
-      "h": "215.72M"
+      "h": "157290000"
     },
     {
       "n": "Gold",
-      "h": "218K"
-    },
-    {
-      "n": "Soldier Training speedup",
-      "h": "~11 days"
-    },
-    {
-      "n": "General speedup",
-      "h": "~9.5 days"
-    },
-    {
-      "n": "Soldier Healing speedup",
-      "h": "~7.5 days"
-    },
-    {
-      "n": "Construction speedup",
-      "h": "~2 days"
-    },
-    {
-      "n": "Research speedup",
-      "h": "~11 hours"
-    },
-    {
-      "n": "Mithril (hero gear)",
-      "h": "10"
-    },
-    {
-      "n": "Research Speed (stat)",
-      "h": "61.2%"
+      "h": "1030000"
     }
   ],
   "goldShards": [
@@ -692,180 +728,257 @@
       "n": "Saul",
       "need": 900,
       "have": 0,
-      "rally": false
+      "pos": 18,
+      "tgt": 18,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Amadeus",
       "need": 940,
-      "have": 0,
-      "rally": false
+      "have": 5,
+      "pos": 17,
+      "tgt": 24,
+      "rally": false,
+      "note": "own shards only (events, Bear)"
     },
     {
       "n": "Charles",
       "need": 463,
-      "have": 0,
-      "rally": false
+      "have": 29,
+      "pos": 18,
+      "tgt": 24,
+      "rally": false,
+      "note": "Hero Rally shop — spend Hero Rally points here",
+      "focus": true
     },
     {
       "n": "Hilde",
       "need": 740,
-      "have": 0,
-      "rally": false
+      "have": 9,
+      "pos": 23,
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Marlin",
       "need": 700,
-      "have": 0,
-      "rally": false
+      "have": 73,
+      "pos": 23,
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Zoe",
       "need": 600,
-      "have": 0,
+      "have": 12,
+      "pos": 24,
+      "tgt": 24,
       "rally": false
     },
     {
       "n": "Jaeger",
       "need": 700,
-      "have": 0,
-      "rally": false
+      "have": 37,
+      "pos": 23,
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Eric",
       "need": 700,
-      "have": 0,
-      "rally": false
+      "have": 28,
+      "pos": 23,
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Rosa",
       "need": 500,
-      "have": 0,
+      "have": 38,
+      "pos": 25,
+      "tgt": 25,
       "rally": false
     },
     {
       "n": "Petra",
       "need": 500,
-      "have": 0,
+      "have": 39,
+      "pos": 25,
+      "tgt": 25,
       "rally": false
     },
     {
       "n": "Margot",
       "need": 700,
-      "have": 0,
-      "rally": false
+      "have": 60,
+      "pos": 23,
+      "tgt": 23,
+      "rally": false,
+      "note": "free shards only"
     },
     {
       "n": "Alcar",
       "need": 600,
-      "have": 0,
+      "have": 51,
+      "pos": 24,
+      "tgt": 24,
       "rally": false
     },
     {
       "n": "Thrud",
       "need": 800,
-      "have": 0,
+      "have": 51,
+      "pos": 25,
+      "tgt": 25,
       "rally": false
     },
     {
       "n": "Triton",
       "need": 700,
       "have": 0,
+      "pos": 25,
+      "tgt": 24,
       "rally": false
     },
     {
       "n": "Sophia",
       "need": 100,
-      "have": 0,
+      "have": 1,
+      "pos": 29,
+      "tgt": 29,
       "rally": false
     },
     {
       "n": "Ava",
       "need": 940,
       "have": 0,
-      "rally": true
+      "pos": 24,
+      "tgt": 30,
+      "rally": true,
+      "note": "General shards go here (toward 5★)"
     },
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 0,
+      "have": 20,
+      "pos": 27,
+      "tgt": 27,
       "rally": false
     },
     {
       "n": "Yang",
       "need": 300,
-      "have": 0,
+      "have": 1,
+      "pos": 27,
+      "tgt": 27,
       "rally": true
+    },
+    {
+      "n": "Wee & Woo",
+      "need": 0,
+      "have": 12,
+      "pos": 24,
+      "tgt": 24,
+      "rally": true
+    },
+    {
+      "n": "Vivian",
+      "need": 0,
+      "have": 73,
+      "pos": 24,
+      "tgt": 24,
+      "rally": false
     }
   ],
   "masters": [
     {
       "n": "Pan",
       "l": "90",
-      "note": "Lethality research — +15% Def at Kindred Soul · Best for Archers · push to 100 (Ways-and-Means / Falconer)",
+      "note": "Best for Archers · Lethality research\nSKILLS = Growth only → spend books on Cassia first, Pan last\n1. Skill 2 Good Steward 4→5 — 3,200 books (XP ✓, Close 1 ✓)\n2. Then Skill 4 Ways and Means 9→10 — unlocks after step 1 (900 books, XP ✓)",
       "skills": [
         {
-          "l": 0
+          "l": 5,
+          "max": true,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "max": true,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 10,
+          "t": "g"
         }
       ]
     },
     {
       "n": "Valora",
-      "l": "80",
-      "note": "Health research — +15% Atk at Kindred Soul · Best for Infantry · rally / Bear Hunt value",
+      "l": "90",
+      "note": "Best for Infantry · Health research · Bear Hunt\nNEXT SKILLS (after Cassia)\n1. Skill 3 4→5 — 4,000 books (XP ✓)\n2. Skill 2 4→5 — 3,200 books + Relationship Close 2 ✗\n3. Then Skill 4 Savage Advantage 9→10 — unlocks after steps 1+2 (900 books, XP ✓)",
       "skills": [
         {
-          "l": 0
+          "l": 10,
+          "max": true,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 4,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 4,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 9,
+          "t": "c"
         }
       ]
     },
     {
       "n": "Roman",
       "l": "60",
-      "note": "Attack research — +15% Atk/Def at Kindred Soul · Best for Cavalry",
+      "note": "Best for Cavalry · Attack research\nNEXT: level 60 → 70 (needs Emblems)\nSkills: all 4 at Lv7 / 10 — Combat skills 1 + 4 first",
       "skills": [
         {
-          "l": 0
+          "l": 7,
+          "t": "c"
         },
-        {
-          "l": 0
-        },
-        {
-          "l": 0
-        },
-        {
-          "l": 0
-        }
-      ]
-    },
-    {
-      "n": "Wilson",
-      "l": "40",
-      "note": "Health research — +10% Atk/Def at Kindred Soul · Best for Infantry",
-      "skills": [
         {
           "l": 7,
           "t": "g"
         },
         {
-          "l": 6,
+          "l": 7,
+          "t": "g"
+        },
+        {
+          "l": 7,
+          "t": "c"
+        }
+      ]
+    },
+    {
+      "n": "Wilson",
+      "l": "60",
+      "note": "Best for Infantry · Health research\nNEXT: level 60 → 70 (needs Emblems)\nSkills: all Growth — low priority for combat",
+      "skills": [
+        {
+          "l": 8,
+          "t": "g"
+        },
+        {
+          "l": 7,
           "t": "g"
         },
         {
@@ -880,68 +993,80 @@
     },
     {
       "n": "Cassia",
-      "l": "30",
-      "note": "Defense research — +20% Lethality/Health at Kindred Soul · Best for all squads",
+      "l": "40",
+      "note": "Best for ALL troops · Defense research\nKindred Soul: +20% Lethality + Health (best combat buff)\nBOOKS GO HERE FIRST (skill books in hand: 3,388)\n1. Skill 1 Recruiter 6→7 — ready now (1,800 books ✓, XP ✓)\n2. Gift Cassia to Casual 1 Affinity — unlocks Skill 4 (+5,000 Rally Capacity) and Skill 2\n3. Skill 3 Commando 4→5 (Lethality + Health) — 3,000 books ✓, XP 53,400 / 595,800 ✗ (tap Learn)\n4. Skill 2 Firepower 5→6 (Attack + Defense) — 2,500 books ✓, XP ✓, needs Casual 1\nNEXT LEVEL: 40 → 50 (needs Emblems)",
       "skills": [
         {
-          "l": 0
+          "l": 6,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 4,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 0,
+          "t": "c"
         }
       ]
     },
     {
       "n": "Guinevere",
-      "l": "30",
-      "note": "Defense research — +15% Lethality/Health at Kindred Soul · Best for all squads",
+      "l": "50",
+      "note": "Best for ALL troops · Defense research\nKindred Soul: +15% Lethality + Health\nRelationship: Casual 1 (+7.65% Lethality + Health)\nNEXT: Advance to Casual 2 — needs 60 Guinevere tokens (have 1) → +8.25% Lethality + Health, Holy Sword Domain Lv5 → 6\nSkills: Combat skills 3 + 4 first (skill 4 now unlocked)",
       "skills": [
         {
-          "l": 0
+          "l": 6,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 3,
+          "t": "c"
         }
       ]
     },
     {
       "n": "Aena",
-      "l": "0",
-      "note": "Lethality research — +15% Atk/Def at Kindred Soul · Best for Cavalry",
+      "l": "30",
+      "note": "Best for Cavalry · Lethality research\nNEXT: level 30 → 40 (needs Emblems)\nSkills: all Growth — low priority",
       "skills": [
         {
-          "l": 0
+          "l": 4,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 1,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 0,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 0,
+          "t": "g"
         }
       ]
     },
     {
       "n": "Isnor",
-      "l": "30",
-      "note": "Attack research — +15% Lethality/Health at Kindred Soul · Best for Archers",
+      "l": "40",
+      "note": "Best for Archers · Attack research\nKindred Soul: +15% Lethality + Health\nNEXT: level 20 → 30 (needs Emblems)\nSkills: Combat skill 2 still locked",
       "skills": [
         {
-          "l": 4,
+          "l": 5,
           "t": "g"
         },
         {
@@ -999,118 +1124,403 @@
       "d": false
     }
   ],
-  "notes": "",
+  "notes": "KvK PLAN (do on KvK gear days for points) — saved 2026-09-24\n• Governor Gear: Infantry 1 Gold 0★ → Gold 1★ — 23,000 Satin · 230 Threads · 40 Vision = 225,000 KvK points (+2.5% Infantry Attack/Defense, +61,200 power). Leaves 9,577 Satin · 27 Threads · 438 Vision; Gilded Threads are the bottleneck (next Gold 0★ → 1★ needs 230).\n• Hero Gear (Early Game Combat plan) — MOVED to Officer Project Wed 30 Sep: Infantry Chest Mastery 11→12, Archer Helm Mastery 11→12, Cavalry Helm Mastery 10→11 (350 Forgehammers · 5 Mythic Gear); Archer Chest Lv 80→93 and Archer Gloves Lv 80→91 — DONE 2026-09-24. Skip the Cavalry Gloves reforge / Chest +1 swap (costs 50 XP, no gain).\n• T11 Archers: unlock needs 2,236 Dust (have 1,776 → 460 short) + 1M Gold (covered). Unlock research is ~91 days base time — start it before KvK and use Research/General speedups on the KvK research day for points. Then promote as many T10 Archers to T11 as possible (each ~+27 power: 126 vs 99).\n\nWEEK PLAN 27 Sep – 5 Oct 2026 (saved 2026-09-27)\n• Sun 27: collect Fishing (gold hero shards) + Champagne Fair (Charm Designs/Guides, widget chests); all gathering marches out.\n• Mon 28–Tue 29 Armament Competition T1: light spending only — speedups score double on Mon 5 Oct (KvK + Armament again).\n• Wed 30–Thu 1 Officer Project T1: spend Forgehammers on the Hero Gear mastery plan (350 × 6,000 ≈ 2.1M pts; final reward gives Forgehammers back) + any widgets (12,000 each).\n• Fri 2–Sat 3 Armament Competition T2: small stuff only; keep the 2 Mithril for red gear.\n• Sun 4: prep — stock healing speedups, pet skills off cooldown.\n• Mon 5 KvK + Armament T1: Gov Gear Infantry 1 Gold 0★→1★, speedups, pet advances on matching KvK days; turn on Panther + Elephant + Bison + War Bear skills before fights.\n• Swordland / TAC / Sanctuary / Alliance Championship: pet combat skills on, keep Healing speedups for between rounds.",
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
-      "v": "170",
+      "v": "87",
       "log": [
         {
-          "d": "2026-09-24",
-          "v": 170
+          "d": "2026-09-15",
+          "v": 151
+        },
+        {
+          "d": "2026-09-18",
+          "v": 128
+        },
+        {
+          "d": "2026-09-19",
+          "v": 126
+        },
+        {
+          "d": "2026-09-21",
+          "v": 124
+        },
+        {
+          "d": "2026-09-23",
+          "v": 122
+        },
+        {
+          "d": "2026-09-29",
+          "v": 111
+        },
+        {
+          "d": "2026-10-10",
+          "v": 104
+        },
+        {
+          "d": "2026-10-11",
+          "v": 101
+        },
+        {
+          "d": "2026-10-16",
+          "v": 102
+        },
+        {
+          "d": "2026-10-19",
+          "v": 98
+        },
+        {
+          "d": "2026-10-20",
+          "v": 94
+        },
+        {
+          "d": "2026-10-26",
+          "v": 87
         }
       ]
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "157",
+      "v": "105",
       "log": [
         {
-          "d": "2026-09-24",
-          "v": 157
+          "d": "2026-09-15",
+          "v": 135
+        },
+        {
+          "d": "2026-09-18",
+          "v": 127
+        },
+        {
+          "d": "2026-09-19",
+          "v": 125
+        },
+        {
+          "d": "2026-09-21",
+          "v": 123
+        },
+        {
+          "d": "2026-09-23",
+          "v": 103
+        },
+        {
+          "d": "2026-10-05",
+          "v": 106
+        },
+        {
+          "d": "2026-10-10",
+          "v": 109
+        },
+        {
+          "d": "2026-10-16",
+          "v": 114
+        },
+        {
+          "d": "2026-10-19",
+          "v": 116
+        },
+        {
+          "d": "2026-10-20",
+          "v": 107
+        },
+        {
+          "d": "2026-10-26",
+          "v": 101
+        },
+        {
+          "d": "2026-10-27",
+          "v": 105
         }
       ]
     },
     {
       "k": "Forest of Life (Pets)",
-      "v": "90",
+      "v": "61",
       "log": [
         {
+          "d": "2026-09-15",
+          "v": 80
+        },
+        {
+          "d": "2026-09-18",
+          "v": 58
+        },
+        {
+          "d": "2026-09-23",
+          "v": 44
+        },
+        {
           "d": "2026-09-24",
-          "v": 90
+          "v": 48
+        },
+        {
+          "d": "2026-09-29",
+          "v": 49
+        },
+        {
+          "d": "2026-10-05",
+          "v": 54
+        },
+        {
+          "d": "2026-10-10",
+          "v": 64
+        },
+        {
+          "d": "2026-10-16",
+          "v": 59
+        },
+        {
+          "d": "2026-10-21",
+          "v": 58
+        },
+        {
+          "d": "2026-10-26",
+          "v": 61
         }
       ]
     },
     {
       "k": "Crystal Cave (Charms)",
-      "v": "139",
+      "v": "59",
       "log": [
         {
+          "d": "2026-09-15",
+          "v": 126
+        },
+        {
+          "d": "2026-09-18",
+          "v": 101
+        },
+        {
+          "d": "2026-09-19",
+          "v": 100
+        },
+        {
+          "d": "2026-09-21",
+          "v": 99
+        },
+        {
+          "d": "2026-09-23",
+          "v": 97
+        },
+        {
           "d": "2026-09-24",
-          "v": 139
+          "v": 88
+        },
+        {
+          "d": "2026-10-05",
+          "v": 74
+        },
+        {
+          "d": "2026-10-10",
+          "v": 78
+        },
+        {
+          "d": "2026-10-16",
+          "v": 70
+        },
+        {
+          "d": "2026-10-26",
+          "v": 59
         }
       ]
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "174",
+      "v": "119",
       "log": [
         {
-          "d": "2026-09-24",
-          "v": 174
+          "d": "2026-09-15",
+          "v": 169
+        },
+        {
+          "d": "2026-09-18",
+          "v": 161
+        },
+        {
+          "d": "2026-09-19",
+          "v": 158
+        },
+        {
+          "d": "2026-09-21",
+          "v": 153
+        },
+        {
+          "d": "2026-09-26",
+          "v": 156
+        },
+        {
+          "d": "2026-09-29",
+          "v": 157
+        },
+        {
+          "d": "2026-10-05",
+          "v": 159
+        },
+        {
+          "d": "2026-10-10",
+          "v": 122
+        },
+        {
+          "d": "2026-10-19",
+          "v": 124
+        },
+        {
+          "d": "2026-10-26",
+          "v": 119
         }
       ]
     },
     {
       "k": "Molten Fort (Gov Gear)",
-      "v": "280",
+      "v": "143",
       "log": [
         {
-          "d": "2026-09-24",
-          "v": 280
+          "d": "2026-09-15",
+          "v": 263
+        },
+        {
+          "d": "2026-09-18",
+          "v": 204
+        },
+        {
+          "d": "2026-09-19",
+          "v": 200
+        },
+        {
+          "d": "2026-09-21",
+          "v": 196
+        },
+        {
+          "d": "2026-09-26",
+          "v": 176
+        },
+        {
+          "d": "2026-09-29",
+          "v": 177
+        },
+        {
+          "d": "2026-10-05",
+          "v": 176
+        },
+        {
+          "d": "2026-10-10",
+          "v": 175
+        },
+        {
+          "d": "2026-10-16",
+          "v": 166
+        },
+        {
+          "d": "2026-10-19",
+          "v": 165
+        },
+        {
+          "d": "2026-10-26",
+          "v": 143
         }
       ]
     },
     {
       "k": "Radiant Spire (ALL stats — full power)",
-      "v": "163",
+      "v": "86",
       "log": [
         {
-          "d": "2026-09-24",
-          "v": 163
+          "d": "2026-09-15",
+          "v": 131
+        },
+        {
+          "d": "2026-09-18",
+          "v": 122
+        },
+        {
+          "d": "2026-09-19",
+          "v": 120
+        },
+        {
+          "d": "2026-09-21",
+          "v": 111
+        },
+        {
+          "d": "2026-09-29",
+          "v": 112
+        },
+        {
+          "d": "2026-10-05",
+          "v": 111
+        },
+        {
+          "d": "2026-10-11",
+          "v": 92
+        },
+        {
+          "d": "2026-10-16",
+          "v": 96
+        },
+        {
+          "d": "2026-10-19",
+          "v": 92
+        },
+        {
+          "d": "2026-10-26",
+          "v": 86
         }
       ]
     }
   ],
   "tg": {
-    "have": 261,
-    "need": 6777,
-    "ttgHave": 15,
-    "ttgNeed": 642
+    "have": 251,
+    "need": 3486,
+    "ttgHave": 17,
+    "ttgNeed": 394
   },
   "govGear": {
-    "targetIdx": 19,
+    "targetIdx": 18,
     "have": {
-      "satin": 46213,
-      "threads": 0,
-      "vision": 0
+      "satin": 48063,
+      "threads": 203,
+      "vision": 621
     },
     "pieces": [
       {
         "name": "Cav 1",
-        "cur": 10
+        "cur": 15
       },
       {
         "name": "Cav 2",
-        "cur": 10
+        "cur": 14
       },
       {
         "name": "Inf 1",
-        "cur": 10
+        "cur": 19
       },
       {
         "name": "Inf 2",
-        "cur": 12
+        "cur": 18
       },
       {
         "name": "Archer 1",
-        "cur": 11
+        "cur": 16
       },
       {
         "name": "Archer 2",
         "cur": 19
       }
-    ]
+    ],
+    "plan": [
+      {
+        "name": "Inf 1",
+        "to": 19,
+        "gain": 2.55
+      },
+      {
+        "name": "Cav 1",
+        "to": 15,
+        "gain": 2.55
+      }
+    ],
+    "planDate": "2026-10-23"
   },
   "forecast": {
     "log": []
@@ -1118,7 +1528,7 @@
   "today": {
     "routineDate": "2026-10-30",
     "kvkDate": "",
-    "bearDate": "",
+    "bearDate": "2026-09-15",
     "kvkPeriod": 14,
     "bearPeriod": 2,
     "routine": [
@@ -1141,11 +1551,39 @@
       {
         "t": "Claim house / suppression gold",
         "d": false
+      },
+      {
+        "t": "Queues busy — construction, research, training",
+        "d": false
+      },
+      {
+        "t": "Daily Missions + VIP daily chest",
+        "d": false
+      },
+      {
+        "t": "Mystic Trials (Mithril)",
+        "d": false
+      },
+      {
+        "t": "Arena attempts (tokens → Mythic gear chest)",
+        "d": false
+      },
+      {
+        "t": "Pet Adventures sent (Pet Food, Taming Marks)",
+        "d": false
+      },
+      {
+        "t": "Terrors with Stamina (hero shards)",
+        "d": false
+      },
+      {
+        "t": "Alliance helps, donations, chests",
+        "d": false
       }
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1185,7 +1623,7 @@
       "Base": "Buildings",
       "Plan": "Shop guide",
       "Heroes": "Masters",
-      "Shop": "Free shops"
+      "Shop": "Paid"
     },
     "t11Open": {
       "nodes": false,
@@ -1230,193 +1668,255 @@
   },
   "troopCounts": {
     "inf": {
-      "cur": 0,
+      "cur": 453424,
       "tgt": 1500000
     },
     "arc": {
-      "cur": 0,
+      "cur": 761097,
       "tgt": 1500000
     },
     "cav": {
-      "cur": 0,
+      "cur": 403014,
       "tgt": 500000
     }
   },
   "bear": {
     "arrows": 0,
-    "members": 0
+    "members": 85
   },
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 118,
-      "mg": 0,
-      "mith": 0
+      "fh": 158,
+      "mg": 5,
+      "mith": 4
     },
     "rows": [
       {
         "type": "Infantry",
         "slot": "Helm (Lethality)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 113,
+        "lvT": 179,
+        "mC": 11,
+        "mT": 15,
+        "xp": 314230,
+        "fh": 650,
+        "mg": 28,
+        "mith": 60
       },
       {
         "type": "Infantry",
         "slot": "Gloves (Health)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 139,
+        "lvT": 200,
+        "mC": 13,
+        "mT": 18,
+        "xp": 377720,
+        "fh": 800,
+        "mg": 60,
+        "mith": 140
       },
       {
         "type": "Infantry",
         "slot": "Chest (Health)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 139,
+        "lvT": 179,
+        "mC": 13,
+        "mT": 17,
+        "xp": 212400,
+        "fh": 750,
+        "mg": 35,
+        "mith": 50
       },
       {
         "type": "Infantry",
         "slot": "Boots (Lethality)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 102,
+        "lvT": 200,
+        "mC": 11,
+        "mT": 15,
+        "xp": 498990,
+        "fh": 650,
+        "mg": 48,
+        "mith": 150
       },
       {
         "type": "Cavalry",
         "slot": "Helm (Lethality)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 121,
+        "lvT": 159,
+        "mC": 12,
+        "mT": 13,
+        "xp": 165600,
+        "fh": 250,
+        "mg": 13,
+        "mith": 30
       },
       {
         "type": "Cavalry",
         "slot": "Gloves (Health)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 101,
+        "lvT": 139,
+        "mC": 10,
+        "mT": 12,
+        "xp": 155630,
+        "fh": 230,
+        "mg": 8,
+        "mith": 10
       },
       {
         "type": "Cavalry",
         "slot": "Chest (Health)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 101,
+        "lvT": 139,
+        "mC": 10,
+        "mT": 12,
+        "xp": 154080,
+        "fh": 230,
+        "mg": 8,
+        "mith": 10
       },
       {
         "type": "Cavalry",
         "slot": "Boots (Lethality)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 119,
+        "lvT": 159,
+        "mC": 11,
+        "mT": 12,
+        "xp": 211510,
+        "fh": 230,
+        "mg": 11,
+        "mith": 30
       },
       {
         "type": "Archer",
         "slot": "Helm (Lethality)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 139,
+        "lvT": 179,
+        "mC": 12,
+        "mT": 15,
+        "xp": 212400,
+        "fh": 420,
+        "mg": 22,
+        "mith": 50
       },
       {
         "type": "Archer",
         "slot": "Gloves (Health)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 101,
+        "lvT": 139,
+        "mC": 10,
+        "mT": 12,
+        "xp": 132530,
+        "fh": 420,
+        "mg": 8,
+        "mith": 10
       },
       {
         "type": "Archer",
         "slot": "Chest (Health)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 101,
+        "lvT": 139,
+        "mC": 10,
+        "mT": 12,
+        "xp": 127930,
+        "fh": 330,
+        "mg": 8,
+        "mith": 10
       },
       {
         "type": "Archer",
         "slot": "Boots (Lethality)",
-        "lvC": 0,
-        "lvT": 0,
-        "mC": 0,
-        "mT": 0,
-        "xp": 0,
-        "fh": 0,
-        "mg": 0,
-        "mith": 0
+        "lvC": 127,
+        "lvT": 179,
+        "mC": 12,
+        "mT": 15,
+        "xp": 285700,
+        "fh": 540,
+        "mg": 27,
+        "mith": 60
       }
     ],
-    "open2": {
+    "open": {
+      "Infantry": true,
+      "Cavalry": true,
       "Archer": true
     },
-    "fhSeen": 118,
-    "fhGot": {
-      "2026-10": 2083
+    "open2": {
+      "Archer": true,
+      "Cavalry": true,
+      "Infantry": true
     },
+    "fhSeen": 158,
+    "fhGot": {
+      "2026-10": 2240
+    },
+    "plan": [
+      {
+        "type": "Infantry",
+        "slot": "Helm",
+        "mTo": 11,
+        "fh": 110,
+        "mg": 1,
+        "mith": 0,
+        "gain": 6.2
+      },
+      {
+        "type": "Infantry",
+        "slot": "Chest",
+        "mTo": 13,
+        "fh": 130,
+        "mg": 3,
+        "mith": 0,
+        "gain": 10.4
+      },
+      {
+        "type": "Infantry",
+        "slot": "Boots",
+        "mTo": 11,
+        "fh": 110,
+        "mg": 1,
+        "mith": 0,
+        "gain": 5.6
+      },
+      {
+        "type": "Cavalry",
+        "slot": "Helm",
+        "lvTo": 120,
+        "mTo": 12,
+        "fh": 120,
+        "mg": 5,
+        "mith": 10,
+        "gain": 8.5
+      },
+      {
+        "type": "Archer",
+        "slot": "Boots",
+        "lvTo": 120,
+        "fh": 0,
+        "mg": 3,
+        "mith": 10,
+        "gain": 1.3
+      }
+    ],
+    "planDate": "2026-10-23",
     "chests": {
-      "lucky": 0,
+      "lucky": 22,
       "custom": 0,
-      "log": []
+      "log": [
+        {
+          "d": "2026-10-27",
+          "opened": 77,
+          "mythic": 4
+        }
+      ]
     }
   },
   "charms": {
-    "targetLvl": 0,
+    "targetLvl": 10,
     "have": {
-      "guides": 593,
-      "designs": 337
+      "guides": 586,
+      "designs": 263
     },
     "rows": [
       {
@@ -1445,7 +1945,7 @@
       {
         "type": "Cavalry",
         "lvl": 5,
-        "tgt": 10
+        "tgt": 6
       },
       {
         "type": "Cavalry",
@@ -1454,7 +1954,7 @@
       },
       {
         "type": "Infantry",
-        "lvl": 6,
+        "lvl": 7,
         "tgt": 7,
         "st": 1
       },
@@ -1513,11 +2013,105 @@
         "lvl": 6,
         "tgt": 7
       }
-    ]
+    ],
+    "plan": [
+      {
+        "kind": "x",
+        "g": 686,
+        "d": 343,
+        "done": true
+      },
+      {
+        "type": "Cavalry",
+        "i": 2,
+        "toL": 6,
+        "toS": 0,
+        "g": 120,
+        "d": 300,
+        "gain": 5
+      },
+      {
+        "type": "Cavalry",
+        "i": 3,
+        "toL": 6,
+        "toS": 0,
+        "g": 120,
+        "d": 300,
+        "gain": 5
+      },
+      {
+        "type": "Cavalry",
+        "i": 4,
+        "toL": 5,
+        "toS": 1,
+        "g": 24,
+        "d": 60,
+        "gain": 1
+      },
+      {
+        "type": "Infantry",
+        "i": 1,
+        "toL": 6,
+        "toS": 1,
+        "g": 28,
+        "d": 80,
+        "gain": 1
+      }
+    ],
+    "planDate": "2026-10-23"
   },
   "widgets": {
     "have": 0,
-    "rows": [],
+    "rows": [
+      {
+        "hero": "Yang",
+        "lvl": 9,
+        "have": 26,
+        "rally": true
+      },
+      {
+        "hero": "Amadeus",
+        "lvl": 6,
+        "have": 19,
+        "rally": true
+      },
+      {
+        "hero": "Ava",
+        "lvl": 6,
+        "have": 0,
+        "rally": true
+      },
+      {
+        "hero": "Long Fei",
+        "lvl": 4,
+        "have": 10,
+        "rally": false
+      },
+      {
+        "hero": "Sophia",
+        "lvl": 2,
+        "have": 0,
+        "rally": false
+      },
+      {
+        "hero": "Wee & Woo",
+        "lvl": 2,
+        "have": 15,
+        "rally": true
+      },
+      {
+        "hero": "Charles",
+        "lvl": 2,
+        "have": 0,
+        "rally": true
+      },
+      {
+        "hero": "Triton",
+        "lvl": 2,
+        "have": 0,
+        "rally": true
+      }
+    ],
     "rallySet": true
   },
   "heroInfo": {
@@ -1527,50 +2121,751 @@
     "Sophia": {
       "type": "Cavalry"
     },
-    "Ava": {},
-    "Yang": {},
-    "Triton": {},
-    "Charles": {},
-    "Amadeus": {},
-    "Thrud": {}
+    "Ava": {
+      "type": "Cavalry"
+    },
+    "Yang": {
+      "type": "Archer"
+    },
+    "Triton": {
+      "type": "Infantry"
+    },
+    "Charles": {
+      "type": "Infantry"
+    },
+    "Amadeus": {
+      "type": "Infantry"
+    },
+    "Thrud": {
+      "type": "Cavalry"
+    },
+    "Margot": {
+      "type": "Cavalry"
+    },
+    "Petra": {
+      "type": "Cavalry"
+    },
+    "Vivian": {
+      "type": "Archer"
+    },
+    "Rosa": {
+      "type": "Archer"
+    },
+    "Long Fei": {
+      "type": "Infantry"
+    },
+    "Saul": {
+      "type": "Cavalry"
+    },
+    "Alcar": {
+      "type": "Infantry"
+    },
+    "Hilde": {
+      "type": "Cavalry"
+    },
+    "Zoe": {
+      "type": "Infantry"
+    },
+    "Jaeger": {
+      "type": "Cavalry"
+    },
+    "Eric": {
+      "type": "Infantry"
+    },
+    "Marlin": {
+      "type": "Archer"
+    }
   },
   "history": [
     {
+      "d": "2026-09-23",
+      "v": {
+        "power": 280011200,
+        "leth": 69,
+        "hp": 54.7,
+        "attWR": 41.04,
+        "defWR": 91.74,
+        "p:Building": 9022739,
+        "p:Troop": 152267192,
+        "p:Hero": 30208822,
+        "p:Hero Gear": 12429581,
+        "p:Governor Gear": 8665920,
+        "p:Governor Charm": 11484000,
+        "p:Tech": 19405245,
+        "p:Pet": 21985560,
+        "p:Master": 13010200
+      }
+    },
+    {
+      "d": "2026-09-24",
+      "v": {
+        "power": 280011200,
+        "leth": 69,
+        "hp": 54.7,
+        "attWR": 41.04,
+        "defWR": 91.74,
+        "p:Building": 9022739,
+        "p:Troop": 152267192,
+        "p:Hero": 30208822,
+        "p:Hero Gear": 12429581,
+        "p:Governor Gear": 8665920,
+        "p:Governor Charm": 11484000,
+        "p:Tech": 19405245,
+        "p:Pet": 21985560,
+        "p:Master": 13010200
+      }
+    },
+    {
+      "d": "2026-09-25",
+      "v": {
+        "power": 280011200,
+        "leth": 69,
+        "hp": 54.7,
+        "attWR": 41.04,
+        "defWR": 91.74,
+        "p:Building": 9022739,
+        "p:Troop": 152267192,
+        "p:Hero": 30208822,
+        "p:Hero Gear": 12429581,
+        "p:Governor Gear": 8665920,
+        "p:Governor Charm": 11484000,
+        "p:Tech": 19405245,
+        "p:Pet": 21985560,
+        "p:Master": 13010200
+      }
+    },
+    {
+      "d": "2026-09-26",
+      "v": {
+        "power": 280011200,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 41.16,
+        "defWR": 91.62,
+        "p:Building": 9053835,
+        "p:Troop": 160478855,
+        "p:Hero": 31127963,
+        "p:Hero Gear": 12445111,
+        "p:Governor Gear": 8727120,
+        "p:Governor Charm": 11608000,
+        "p:Tech": 19414245,
+        "p:Pet": 22021560,
+        "p:Master": 13955200
+      }
+    },
+    {
+      "d": "2026-09-27",
+      "v": {
+        "power": 280011200,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 41.16,
+        "defWR": 91.62,
+        "p:Building": 9053835,
+        "p:Troop": 160478855,
+        "p:Hero": 31127963,
+        "p:Hero Gear": 12445111,
+        "p:Governor Gear": 8727120,
+        "p:Governor Charm": 11608000,
+        "p:Tech": 19414245,
+        "p:Pet": 22021560,
+        "p:Master": 13955200
+      }
+    },
+    {
+      "d": "2026-09-28",
+      "v": {
+        "power": 280011200,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 41.16,
+        "defWR": 91.62,
+        "p:Building": 9053835,
+        "p:Troop": 160478855,
+        "p:Hero": 31127963,
+        "p:Hero Gear": 12445111,
+        "p:Governor Gear": 8727120,
+        "p:Governor Charm": 11608000,
+        "p:Tech": 19414245,
+        "p:Pet": 22021560,
+        "p:Master": 13955200
+      }
+    },
+    {
+      "d": "2026-09-29",
+      "v": {
+        "power": 297568497,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 41.16,
+        "defWR": 91.62,
+        "p:Building": 9078171,
+        "p:Troop": 168806389,
+        "p:Hero": 31141823,
+        "p:Hero Gear": 12480789,
+        "p:Governor Gear": 8727120,
+        "p:Governor Charm": 11608000,
+        "p:Tech": 19414245,
+        "p:Pet": 22021560,
+        "p:Master": 14279000
+      }
+    },
+    {
+      "d": "2026-09-30",
+      "v": {
+        "power": 297568497,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 41.16,
+        "defWR": 91.62,
+        "p:Building": 9078171,
+        "p:Troop": 168806389,
+        "p:Hero": 31141823,
+        "p:Hero Gear": 12480789,
+        "p:Governor Gear": 8727120,
+        "p:Governor Charm": 11608000,
+        "p:Tech": 19414245,
+        "p:Pet": 22021560,
+        "p:Master": 14279000
+      }
+    },
+    {
+      "d": "2026-10-01",
+      "v": {
+        "power": 297568497,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9078171,
+        "p:Troop": 168806389,
+        "p:Hero": 31141823,
+        "p:Hero Gear": 12480789,
+        "p:Governor Gear": 8727120,
+        "p:Governor Charm": 11608000,
+        "p:Tech": 19414245,
+        "p:Pet": 22021560,
+        "p:Master": 14279000
+      }
+    },
+    {
+      "d": "2026-10-02",
+      "v": {
+        "power": 297568497,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9078171,
+        "p:Troop": 168806389,
+        "p:Hero": 31141823,
+        "p:Hero Gear": 12480789,
+        "p:Governor Gear": 8727120,
+        "p:Governor Charm": 11608000,
+        "p:Tech": 19414245,
+        "p:Pet": 22021560,
+        "p:Master": 14279000,
+        "stars": 451
+      }
+    },
+    {
+      "d": "2026-10-04",
+      "v": {
+        "power": 301800000,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9078171,
+        "p:Troop": 168806389,
+        "p:Hero": 31141823,
+        "p:Hero Gear": 12480789,
+        "p:Governor Gear": 8727120,
+        "p:Governor Charm": 11608000,
+        "p:Tech": 19414245,
+        "p:Pet": 22021560,
+        "p:Master": 14279000,
+        "stars": 451
+      }
+    },
+    {
+      "d": "2026-10-05",
+      "v": {
+        "power": 301800000,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9175515,
+        "p:Troop": 171500084,
+        "p:Hero": 31961792,
+        "p:Hero Gear": 12947511,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 19442445,
+        "p:Pet": 22021560,
+        "p:Master": 14867000,
+        "stars": 455
+      }
+    },
+    {
+      "d": "2026-10-06",
+      "v": {
+        "power": 301800000,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9175515,
+        "p:Troop": 171500084,
+        "p:Hero": 31961792,
+        "p:Hero Gear": 12947511,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 19442445,
+        "p:Pet": 22021560,
+        "p:Master": 14867000,
+        "stars": 455
+      }
+    },
+    {
+      "d": "2026-10-07",
+      "v": {
+        "power": 301800000,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9175515,
+        "p:Troop": 171500084,
+        "p:Hero": 31961792,
+        "p:Hero Gear": 12947511,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 19442445,
+        "p:Pet": 22021560,
+        "p:Master": 14867000,
+        "stars": 455
+      }
+    },
+    {
+      "d": "2026-10-08",
+      "v": {
+        "power": 301800000,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9175515,
+        "p:Troop": 171500084,
+        "p:Hero": 31961792,
+        "p:Hero Gear": 12947511,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 19442445,
+        "p:Pet": 22021560,
+        "p:Master": 14867000,
+        "stars": 455
+      }
+    },
+    {
+      "d": "2026-10-09",
+      "v": {
+        "power": 301800000,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9175515,
+        "p:Troop": 171500084,
+        "p:Hero": 31961792,
+        "p:Hero Gear": 12947511,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 19442445,
+        "p:Pet": 22021560,
+        "p:Master": 14867000,
+        "stars": 457
+      }
+    },
+    {
+      "d": "2026-10-10",
+      "v": {
+        "power": 319037386,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9229595,
+        "p:Troop": 179073395,
+        "p:Hero": 32354610,
+        "p:Hero Gear": 12955861,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 27588945,
+        "p:Pet": 22229640,
+        "p:Master": 14940000,
+        "stars": 458
+      }
+    },
+    {
+      "d": "2026-10-11",
+      "v": {
+        "power": 319037386,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9229595,
+        "p:Troop": 179073395,
+        "p:Hero": 32354610,
+        "p:Hero Gear": 12955861,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 27588945,
+        "p:Pet": 22229640,
+        "p:Master": 14940000,
+        "stars": 458
+      }
+    },
+    {
+      "d": "2026-10-12",
+      "v": {
+        "power": 319037386,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9229595,
+        "p:Troop": 179073395,
+        "p:Hero": 32354610,
+        "p:Hero Gear": 12955861,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 11980000,
+        "p:Tech": 27588945,
+        "p:Pet": 22229640,
+        "p:Master": 14940000,
+        "stars": 458
+      }
+    },
+    {
+      "d": "2026-10-14",
+      "v": {
+        "power": 325541709,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 458
+      }
+    },
+    {
+      "d": "2026-10-15",
+      "v": {
+        "power": 325541709,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 462
+      }
+    },
+    {
+      "d": "2026-10-16",
+      "v": {
+        "power": 327880096,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 462
+      }
+    },
+    {
+      "d": "2026-10-17",
+      "v": {
+        "power": 332501453,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 462
+      }
+    },
+    {
       "d": "2026-10-19",
       "v": {
-        "power": 242423358,
-        "leth": 66.5,
-        "hp": 49,
-        "attWR": 43.13,
-        "defWR": 92.43,
-        "p:Building": 8430563,
-        "p:Troop": 133235265,
-        "p:Hero": 26297916,
-        "p:Hero Gear": 9921154,
-        "p:Governor Gear": 7013520,
-        "p:Governor Charm": 10120000,
-        "p:Tech": 17625620,
-        "p:Pet": 19643520,
-        "p:Master": 10135800
+        "power": 332501453,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 462
+      }
+    },
+    {
+      "d": "2026-10-20",
+      "v": {
+        "power": 335924750,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 463
+      }
+    },
+    {
+      "d": "2026-10-21",
+      "v": {
+        "power": 335924750,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 469
+      }
+    },
+    {
+      "d": "2026-10-22",
+      "v": {
+        "power": 335924750,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 469
+      }
+    },
+    {
+      "d": "2026-10-23",
+      "v": {
+        "power": 335924750,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 469
+      }
+    },
+    {
+      "d": "2026-10-24",
+      "v": {
+        "power": 335924750,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 469
+      }
+    },
+    {
+      "d": "2026-10-25",
+      "v": {
+        "power": 335924750,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 469
+      }
+    },
+    {
+      "d": "2026-10-26",
+      "v": {
+        "power": 335924750,
+        "leth": 73,
+        "hp": 58.8,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9287731,
+        "p:Troop": 183568900,
+        "p:Hero": 32483632,
+        "p:Hero Gear": 13168561,
+        "p:Governor Gear": 8788320,
+        "p:Governor Charm": 12228000,
+        "p:Tech": 27923445,
+        "p:Pet": 22701120,
+        "p:Master": 15392000,
+        "stars": 471
+      }
+    },
+    {
+      "d": "2026-10-27",
+      "v": {
+        "power": 329725706,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 471
+      }
+    },
+    {
+      "d": "2026-10-28",
+      "v": {
+        "power": 329725706,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 471
+      }
+    },
+    {
+      "d": "2026-10-29",
+      "v": {
+        "power": 329725706,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 471
       }
     },
     {
       "d": "2026-10-30",
       "v": {
-        "power": 242423358,
-        "leth": 66.5,
-        "hp": 49,
-        "attWR": 43.13,
-        "defWR": 92.43,
-        "p:Building": 8430563,
-        "p:Troop": 133235265,
-        "p:Hero": 26297916,
-        "p:Hero Gear": 9921154,
-        "p:Governor Gear": 7013520,
-        "p:Governor Charm": 10120000,
-        "p:Tech": 17625620,
-        "p:Pet": 19643520,
-        "p:Master": 10135800
+        "power": 329725706,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 471
       }
     }
   ],
@@ -1629,165 +2924,559 @@
   "buildings": [
     {
       "n": "Town Center",
-      "note": "METRONOME — raise one tier to uncap the rest, then repeat",
-      "d": false,
-      "stepIdx": 0
+      "stepIdx": 1,
+      "note": "METRONOME — raise one tier to uncap the rest",
+      "d": false
     },
     {
       "n": "Range",
+      "stepIdx": 5,
       "note": "Archer line — your main combat",
-      "d": false,
-      "stepIdx": 0
+      "d": false
     },
     {
       "n": "War Academy",
+      "stepIdx": 10,
       "note": "Research speed + T11 gate",
-      "d": false,
-      "stepIdx": 0
+      "d": false
     },
     {
       "n": "Embassy",
+      "stepIdx": 5,
       "note": "Rally/garrison capacity — events",
-      "d": false,
-      "stepIdx": 0
+      "d": false
     },
     {
       "n": "Command Center",
+      "stepIdx": 5,
       "note": "March capacity — rally contribution",
-      "d": false,
-      "stepIdx": 0
+      "d": false
     },
     {
       "n": "Barracks",
+      "stepIdx": 5,
       "note": "Infantry tanks",
-      "d": false,
-      "stepIdx": 0
+      "d": false
     },
     {
       "n": "Stable",
+      "stepIdx": 5,
       "note": "Cavalry (off-focus) — defer",
-      "d": false,
-      "stepIdx": 0
+      "d": false
     },
     {
       "n": "Infirmary",
+      "stepIdx": 5,
       "note": "Healing sustain — defer, big",
-      "d": false,
-      "stepIdx": 0
+      "d": false
     }
   ],
+  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
   "events": [
     {
       "n": "KvK",
-      "date": "",
-      "every": 14,
+      "date": "2026-10-05",
+      "every": 0,
       "time": "",
-      "note": ""
+      "note": "Gov Gear Inf 1 Gold 0★→1★ (225k pts), speedups (also Armament T1), pet advances, pet combat skills on",
+      "len": 7
     },
     {
       "n": "Bear Hunt",
-      "date": "",
+      "date": "2026-09-15",
       "every": 2,
       "time": "",
       "note": ""
     },
     {
-      "n": "Alliance Mobilization",
+      "n": "Armament Competition (Type 1)",
       "date": "2026-10-26",
+      "every": 0,
+      "time": "",
+      "note": "12–13 Oct (UTC) confirmed. Small stuff only — save big speedups for KvK. Rewards: Mythic Gear, gems, keys.",
+      "len": 2
+    },
+    {
+      "n": "Officer Project (Type 1)",
+      "date": "2026-10-14",
       "every": 14,
+      "time": "",
+      "note": "14–15 Oct (UTC). Spend Forgehammers on hero gear mastery + level widgets. Rewards: Mythic Gear, gems, keys.",
+      "len": 2,
+      "endOpen": true
+    },
+    {
+      "n": "Armament Competition (Type 2)",
+      "date": "2026-10-02",
+      "every": 0,
+      "time": "",
+      "note": "Small stuff only; keep Mithril for red gear"
+    },
+    {
+      "n": "Hall of Heroes",
+      "date": "2026-09-27",
+      "every": 0,
+      "time": "",
+      "note": "Not weekly — wasn't on the 11 Oct calendar. Set the next date when it shows in-game. 3 days: Marks of Valor → widgets / shards for Ava, Wee & Woo, Yang."
+    },
+    {
+      "n": "Finder's Fortune",
+      "date": "2026-10-11",
+      "every": 0,
+      "len": 3,
+      "time": "",
+      "note": "Sun 11 – Tue 13 Oct (in-game calendar, UTC)",
+      "imp": "high"
+    },
+    {
+      "n": "Alliance Championship",
+      "date": "2026-10-26",
+      "every": 0,
+      "len": 4,
+      "time": "",
+      "note": "12–18 Oct (UTC). Shop: Master Emblems first. Repeat pattern not confirmed — update with the next date.",
+      "endOpen": true
+    },
+    {
+      "n": "Merchant Empire",
+      "date": "2026-10-12",
+      "every": 0,
+      "len": 7,
+      "time": "",
+      "note": "12 Oct – 18 Oct 04:00 (UTC). Rewards: Mythic Gear, Forgehammers, Nutrient Potions, Growth Manuals."
+    },
+    {
+      "n": "Alliance Brawl",
+      "date": "2026-10-12",
+      "every": 0,
+      "len": 7,
+      "time": "",
+      "note": "12 Oct – 18 Oct 12:00 (UTC). Rewards: Truegold, Mythic Gear, building items.",
+      "imp": "top",
+      "spend": "Do each day's Brawl task — it scores for the whole alliance"
+    },
+    {
+      "n": "Swordland Showdown",
+      "date": "2026-10-26",
+      "every": 0,
+      "len": 4,
+      "time": "",
+      "note": "12–18 Oct (UTC). Swordland Shop: Artisan's Vision first. Rewards include Mythic Gear + a chest.",
+      "imp": "high",
+      "endOpen": true
+    },
+    {
+      "n": "Sanctuary Battle",
+      "date": "2026-10-27",
+      "every": 0,
+      "len": 3,
+      "time": "",
+      "note": "13–16 Oct (UTC). Alliance fight for Sanctuaries. Rewards include Thrud shards + books.",
+      "endOpen": true
+    },
+    {
+      "n": "Champion's Way",
+      "date": "2026-10-28",
+      "every": 0,
+      "len": 2,
+      "time": "",
+      "note": "14–16 Oct (UTC). Defeat Elite Rebels for Thrud (Mythic). Rewards: Thrud shards, Forgehammers, chest.",
+      "endOpen": true
+    },
+    {
+      "n": "Hero Rally",
+      "date": "2026-10-26",
+      "every": 0,
+      "len": 4,
+      "time": "",
+      "spend": "Nothing — just do Daily Missions",
+      "note": "12–25 Oct (UTC). Daily Missions give Path Points. Rewards: Charles shards, Truegold, gems, 3 h speedups.",
+      "endOpen": true
+    },
+    {
+      "n": "Hero Roulette",
+      "date": "2026-10-20",
+      "every": 0,
+      "len": 4,
+      "time": "",
+      "imp": "high",
+      "note": "Usually ~3 days. Gems 1,500 per token. 120 spins from 45 = 102,000 gems. Last run: Oct 2026, 120K gem fund."
+    },
+    {
+      "n": "Wavebound Voyage",
+      "date": "2026-10-20",
+      "every": 0,
       "len": 6,
       "time": "",
-      "note": "New season every 2 weeks. Rewards tallied Sunday 00:00 UTC. First exclusive mission each day = 200% points.",
-      "spend": "Daily exclusive missions + vouchers"
+      "imp": "high",
+      "note": "Usually ~5 days. 1 exploration per sail, 12 a day max with 4 sails — 60 is reachable, 120 isn't without big speedups. 4th sail was A$7.99.\n26 Oct: reached 60 explorations (80 Designs) on natural sails + 1 Sails Aloft pack. 120 needs ~450 h of speedups."
+    },
+    {
+      "n": "Dragon Essence",
+      "date": "2026-10-19",
+      "every": 0,
+      "len": 7,
+      "time": "",
+      "imp": "normal",
+      "note": "7 days. Packs: Value A$7.99 (300 essence, 1 a day, 3,630%) — the rest are 25 essence per $ and under 3,000%. Searing Path event also gives essence.\nIts store is Dragon's Caravan (ended 25 Oct 24:00). Spend all essence before it ends — leftovers are lost."
+    },
+    {
+      "n": "Strongest Governor",
+      "date": "2026-10-19",
+      "every": 0,
+      "len": 7,
+      "time": "",
+      "imp": "top",
+      "note": "Each day has a theme — spend only on that day's theme. Dates: check and fix."
+    },
+    {
+      "n": "Eternity's Reach",
+      "date": "2026-10-20",
+      "every": 14,
+      "len": 1,
+      "time": "21:00",
+      "note": "⚠️ RECALL EVERY 60 SECONDS! Last time: 9 recalls (45K). Rank 10 did 20 (100K). 11 more = top 10 (55 Designs + 5,000 gems)\n~30 min game mode — gather Copper Ore\nRanking pays Charm Designs / Guides / gems:\n1st: 150 / 95 / 8,000\n2nd: 115 / 75 / 7,000\n3rd: 85 / 55 / 6,000\n4–5: 65 / 45 / 5,500\n6–10: 55 / 40 / 5,000\n11–20: 47 / 38 / 4,500\n21–50: 47 / 38 / 4,000\n51–100: 38 / 34 / 2,000\n101–200: 30 / 30 / 1,000\n201–500: 22 / 22 / 600\nYield targets: 10 Charm Guides at 75K, 100K, 150K\nFractured veins: 200 copper a second\nSkill 3: 5,000 copper per common vein (1 min cooldown)\nWinning the center is worth less than gathering\nLast run 20 Oct: rank 20 · 370K copper (rank 1: 698K)\nBiggest gap: common-vein bonus 45K vs 115K — recall more often\nRank 1 also had 54K from Master Isnor (Lv 60 vs your Lv 30)\nRank 1 skipped Cesares and took a skill that earns over time (28K)\nRank 10 (423K) played the same way — 20 common-vein triggers vs your 9 made almost all the gap. 11 more recalls = top 10\nHistory (rank · copper):\n20 Oct: 20 · 370,337\n6 Oct: 21 · 355,546\n22 Sep: 61 · 230,764\n8 Sep: 49 · 291,747\n25 Aug: 13 · 383,822 (best)\n28 Jul: 24 · 343,471\n30 Jun: 30 · 313,112\n2 Jun: 32 · 315,402\n19 May: 30 · 325,852\n5 May: 38 · 294,054\nTop 10 needs about 420K+",
+      "imp": "high",
+      "spend": "⚠️ RECALL 1 MARCH EVERY 60 SECONDS — ALL EVENT! 11 more recalls = TOP 10"
+    },
+    {
+      "n": "Defeat Nearby Beasts",
+      "date": "2026-10-20",
+      "every": 0,
+      "len": 3,
+      "time": "",
+      "note": "~3 days. Targets: 30 resources · 50 XP + 5 min speedups · 80 = 5 Expedition manuals, 5 Conquest books, 5 keys, 5 potions. Ranking: hero shards, gems, speedups.",
+      "spend": "Stamina on beasts — reach 80 points"
+    },
+    {
+      "n": "Golden Glaives",
+      "date": "2026-10-20",
+      "every": 0,
+      "len": 1,
+      "time": "",
+      "note": "Watchtower Intel → Dim Goldstone exchange. Truegold items sell out first — redeem them on day 1. Leftover stones: 10K XP, then resources.",
+      "spend": "Dim Goldstone — Truegold first"
+    },
+    {
+      "n": "Flamedragon Tyrant",
+      "every": 0,
+      "time": "",
+      "note": "Ends 27 Oct (calendar). Start date not confirmed.",
+      "date": "2026-10-23",
+      "len": 5
+    },
+    {
+      "n": "Dragon Banquet",
+      "every": 0,
+      "time": "",
+      "note": "25–27 Oct (calendar).",
+      "date": "2026-10-25",
+      "len": 3
+    },
+    {
+      "n": "Championship Prediction",
+      "every": 0,
+      "time": "",
+      "note": "Ends 27 Oct (calendar).",
+      "date": "2026-10-23",
+      "len": 5
+    },
+    {
+      "n": "Cesares Fury",
+      "every": 0,
+      "time": "",
+      "note": "24–26 Oct (calendar).",
+      "date": "2026-10-24",
+      "len": 3
+    },
+    {
+      "n": "Champagne Fair",
+      "every": 0,
+      "time": "",
+      "note": "26 Oct 00:00 – 27 Oct 24:00 (UTC, confirmed)\nTrade fair — exchange vouchers (26,436 on 26 Oct)\nFull shop + best buys: Plan → Shop guide\nBought: 10 S7 widget chests (10,000) — not opened yet\n26 Oct: spent — 10 S7 widgets, 10 S6 widgets (Yang), 10 Designs, 4 General shards, 6 × 100 XP",
+      "date": "2026-10-26",
+      "len": 2,
+      "imp": "low",
+      "spend": "Done — all vouchers spent"
+    },
+    {
+      "n": "Tri-Alliance Clash",
+      "every": 0,
+      "time": "",
+      "note": "",
+      "date": "2026-10-26",
+      "len": 4,
+      "endOpen": true
+    },
+    {
+      "n": "Alliance Mobilization",
+      "every": 0,
+      "time": "",
+      "note": "",
+      "date": "2026-10-26",
+      "len": 4,
+      "endOpen": true
+    },
+    {
+      "n": "Fishing Tournament",
+      "every": 0,
+      "time": "",
+      "note": "Ends ~29 Oct (2d 13h left on 27 Oct evening); Sunken Treasure Hunt ~30 Oct\nDreamweaver's Tide: 108/150 → Squads' Attack +2% permanent\nBait max 10, +1 every 3 h\nUnused tokens → resources at the end",
+      "date": "2026-10-27",
+      "len": 3,
+      "imp": "high",
+      "spend": "Bait before it caps · finish Dreamweaver's Tide (+2% attack)"
+    },
+    {
+      "n": "Exclusive Gear Fund",
+      "every": 0,
+      "time": "",
+      "note": "Ends ~8 Nov (13d 23h on 26 Oct)\nYou're on the paid track — level 6, 35/50 on 26 Oct\nLevels 7–14: 154K gems, 204 hammers, 228 Lucky Hero Gear chests (chance of Mythic), 504 gov gear chests (random Satin / Threads / Vision)",
+      "date": "2026-10-26",
+      "len": 14,
+      "imp": "normal",
+      "spend": "Fund points — reach level 14 (paid track bought)"
+    },
+    {
+      "n": "Advanced Truegold Research",
+      "every": 0,
+      "time": "",
+      "len": 1,
+      "date": "2026-10-26",
+      "imp": "normal",
+      "note": "Unlocked day 500 (kingshot timeline)."
+    },
+    {
+      "n": "Generation 8 Heroes",
+      "every": 0,
+      "time": "",
+      "len": 1,
+      "date": "2026-12-07",
+      "imp": "top",
+      "spend": "Hall of Heroes now sells S7 — Ava / Wee & Woo widgets with Marks",
+      "note": "Diego, Liz, Luna (S8). S7 (Ava, Wee & Woo, Charles) shards + widgets unlock in Hall of Heroes.\nSave Marks of Valor from mid-November."
+    },
+    {
+      "n": "Generation 9 Heroes (predicted)",
+      "every": 0,
+      "time": "",
+      "len": 1,
+      "date": "2027-03-01",
+      "imp": "normal",
+      "note": "PREDICTED — may change.\nGen 7 heroes enter the gold key loot pool — free Ava / Wee & Woo / Charles shards."
+    },
+    {
+      "n": "Truegold 10",
+      "every": 0,
+      "time": "",
+      "len": 1,
+      "date": "2027-04-12",
+      "imp": "normal",
+      "note": "Kingshot timeline (day ~668)."
+    },
+    {
+      "n": "Halloween Party",
+      "date": "2026-10-27",
+      "len": 7,
+      "every": 0,
+      "time": "",
+      "imp": "top",
+      "spend": "300 Prankster Points every day → 2 General shards + 3 hammers",
+      "note": "27 Oct – 2 Nov 2026 (confirmed)\nDaily: 300 Prankster Points → 2 General Mythic shards, 3 Forgehammers, 3 h speedup\nCoven Clash: 20 candy per attack, 2 Prankster Points each — Witch drops Lucky Hero Gear chests\nPrankster King: 7 one-day stages — Power Boost, Beast Slay, Hero, Training, Hero Gear, Gather, Gov Gear\nClaim free Candy Party Pack I\nUnused candy → resource chests at the end"
     }
   ],
   "masterNotesV": 2,
   "pets": {
     "have": {
-      "food": 0,
-      "manuals": 0,
-      "potions": 90,
-      "tmCommon": 56,
-      "tmAdv": 0
+      "food": 12950,
+      "manuals": 1504,
+      "potions": 92,
+      "tmCommon": 67,
+      "tmAdv": 1,
+      "medals": 4
     },
-    "rows": []
+    "rows": [
+      {
+        "n": "Gray Wolf",
+        "lvl": 50,
+        "tgt": 0,
+        "max": 50
+      },
+      {
+        "n": "Bison",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 60
+      },
+      {
+        "n": "Lynx",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 60
+      },
+      {
+        "n": "Cheetah",
+        "lvl": 61,
+        "tgt": 0,
+        "max": 70
+      },
+      {
+        "n": "Moose",
+        "lvl": 70,
+        "tgt": 0,
+        "max": 70
+      },
+      {
+        "n": "Lion",
+        "lvl": 70,
+        "tgt": 0,
+        "max": 80
+      },
+      {
+        "n": "Grizzly Bear",
+        "lvl": 70,
+        "tgt": 0,
+        "max": 80
+      },
+      {
+        "n": "Giant Rhino",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Mighty Bison",
+        "lvl": 70,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Alpha Black Panther",
+        "lvl": 80,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Great Moose",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Ironclad War Elephant",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Regal White Lion",
+        "lvl": 60,
+        "tgt": 0,
+        "max": 100
+      },
+      {
+        "n": "Ironclad War Bear",
+        "lvl": 56,
+        "tgt": 0,
+        "max": 100
+      }
+    ]
   },
-  "shardGeneral": 73,
+  "shardGeneral": 86,
   "shardRallySet": true,
+  "eventTicks": {
+    "key": "Wavebound Voyage|2026-10-20",
+    "done": []
+  },
+  "packBudget": 100,
+  "packMonths": {
+    "2026-10": {
+      "spent": 92.93,
+      "closed": true,
+      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99 · Audacious passes 22.98 · Ultra Monthly Card 14.99 (28 Oct)"
+    },
+    "2026-11": {
+      "spent": 0,
+      "closed": false,
+      "note": "Plan: Path of Honor 14.99 · Charm card 14.99 · Hero Gear card 14.99 · Chameleos 7.99 = 52.96 · ~A$47 spare"
+    }
+  },
   "income": {
     "mg": {
-      "since": "2026-10-30",
-      "got": {},
-      "seen": 0
+      "since": "2026-10-26",
+      "got": {
+        "2026-10": 5
+      },
+      "seen": 5
     },
     "mith": {
-      "since": "2026-10-30",
-      "got": {},
-      "seen": 0
+      "since": "2026-10-26",
+      "got": {
+        "2026-10": 2
+      },
+      "seen": 4
     },
     "threads": {
-      "since": "2026-10-30",
+      "since": "2026-10-26",
       "got": {
-        "2026-10": 178
+        "2026-10": 379
       },
-      "seen": 0
+      "seen": 203
     },
     "designs": {
-      "since": "2026-10-30",
+      "since": "2026-10-26",
       "got": {
-        "2026-10": 337
+        "2026-10": 598
       },
-      "seen": 337
+      "seen": 263
     },
     "fh": {
-      "since": "2026-10-30",
+      "since": "2026-10-26",
       "got": {
-        "2026-10": 161
+        "2026-10": 318
       },
-      "seen": 118
+      "seen": 158
     },
     "gen": {
-      "since": "2026-10-30",
+      "since": "2026-10-26",
       "got": {
-        "2026-10": 71
+        "2026-10": 149
       },
-      "seen": 73
+      "seen": 86
     }
   },
-  "step1": [
+  "battle": {
+    "key": "Eternity's Reach|2026-10-26",
+    "cnt": 29,
+    "start": 1792982853076,
+    "last": 1792982895207
+  },
+  "doneLog": [
     {
-      "t": "Promote staged T9 → T10 across the army",
-      "d": false
+      "d": "2026-10-26",
+      "t": "Triton: 4★ T1 (−100 shards)"
     },
     {
-      "t": "Time promotions to the KvK ‘Increase Power’ stage",
-      "d": false
+      "d": "2026-10-27",
+      "t": "Sanctuary Battle: no shop"
     },
     {
-      "t": "Complete a full T10 base before chasing T11",
-      "d": false
+      "d": "2026-10-27",
+      "t": "Logged 77 chests → 4 Mythic"
     }
   ],
-  "step2": [
-    {
-      "t": "Grind Archer node A to 12 (+6)",
-      "d": false
-    },
-    {
-      "t": "Finish Archer node B to 12 (+2)",
-      "d": false
-    },
-    {
-      "t": "Finish Archer node C to 12 (+3)",
-      "d": false
-    },
-    {
-      "t": "Buy final unlock node (2,200 Dust + 1M Gold)",
-      "d": false
-    },
-    {
-      "t": "Promote T10 Archers → T11 on a KvK power stage",
-      "d": false
+  "bagCheck": {
+    "d": "2026-10-28",
+    "v": {
+      "mg": 5,
+      "mith": 4,
+      "threads": 201,
+      "designs": 318,
+      "fh": 118,
+      "gen": 68
     }
+  },
+  "noShop": [
+    "Sanctuary Battle"
   ]
 }

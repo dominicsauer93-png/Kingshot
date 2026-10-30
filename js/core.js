@@ -276,7 +276,8 @@ async function syncPull(silent){
     const unsynced=isPending()||syncPending||(base&&!jeq(base,local));
     let merged=false;
     const noUi=o=>{ const c=Object.assign({},o); delete c.ui; return c; };
-    if(unsynced){ state=mergeSeed(merge3(base||data,local,data)); merged=!jeq(noUi(state),noUi(mergeSeed(data))); } // no base yet: keep this device's unsynced edits
+    // never synced on this device: GitHub wins — a fresh browser's starter data must never overwrite the real thing
+    if(unsynced&&base){ state=mergeSeed(merge3(base,local,data)); merged=!jeq(noUi(state),noUi(mergeSeed(data))); }
     else state=mergeSeed(data);
     setSyncBase(data); renderAll(); if(typeof buildLayout==="function") buildLayout(); await persistLocal();
     if(merged){ setPending(true); syncPending=true; await syncPush(true); syncStatus("Merged this device's changes with GitHub ✓","ok"); }
@@ -286,6 +287,9 @@ async function syncPull(silent){
 async function syncPush(silent,urgent){
   const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok){ if(!silent) syncStatus("Fill in repo + token first","err"); return; }
   syncPending=false; clearTimeout(syncTimer);
+  if(!syncBase()){ // first sync on this device: load GitHub's copy instead of pushing starter data over it
+    if(urgent) return;
+    try{ const cur=await ghGet(syncCfg,tok); if(cur.data){ await syncPull(true); syncStatus("Loaded your data from GitHub ✓","ok"); return; } }catch(e){ syncStatus(e.message,"err"); return; } }
   syncStatus("Pushing…");
   const mergeRemote=async()=>{ const cur=await ghGet(syncCfg,tok); let changed=false;
     if(cur.data&&cur.sha!==remoteSha){ const base=syncBase();
