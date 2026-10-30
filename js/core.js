@@ -18,9 +18,9 @@ const SEED = {
   infNodes:[
     {name:"Truegold Shields (Health)",   cur:0, max:8,  costs:[40,56,74,102,136,184,248,334]},
     {name:"Truegold Blades (Lethality)", cur:0, max:8,  costs:[40,56,74,102,136,184,248,334]},
-    {name:"Truegold Plating (Defense)",  cur:0, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
-    {name:"Truegold Legionaries (Rally Capacity)", cur:0, max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
     {name:"Truegold Mauls (Attack)",     cur:0, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
+    {name:"Truegold Legionaries (Rally Capacity)", cur:0, max:12, costs:[83,102,125,150,184,225,276,334,418,502,602,744]},
+    {name:"Truegold Plating (Defense)",  cur:0, max:12, costs:[54,66,81,97,118,145,178,216,270,324,388,480]},
     {name:"Truegold Infantry (unlock)", cur:0, max:1, costs:[2236]},
     {name:"Truegold Infantry Healing",  cur:0, max:10, costs:[102,137,188,255,341,459,612,836,1100,1500]},
     {name:"Truegold Infantry Aid",      cur:0, max:10, costs:[51,68,94,127,170,229,306,418,561,765]},

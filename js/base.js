@@ -73,10 +73,10 @@ function renderBuildings(){
   const plan=per=>{ const refines=Math.ceil(ttgShort/per), weeks=Math.ceil(refines/T1), full=Math.floor(refines/T1), rest=refines-full*T1;
     const cost=full*wkTG+Math.min(rest,7)*10+Math.max(0,rest-7)*20; return {refines,weeks,cost,total:tgShort+cost}; };
   const minP=plan(1), avgP=plan(2);
-  $("#tgNote").innerHTML=ttgShort?`<b>Truegold target incl. refining for ${fmt(ttgShort)} TTG:</b> minimum <b>${fmt(minP.total)} TG</b> (worst luck, ~${minP.weeks} weeks) · average <b>${fmt(avgP.total)} TG</b> (~${avgP.weeks} weeks).<br><span class="faint">${fmt(tgShort)} TG for buildings + refining at Tier 1 only (20 refines a week, 20 TG each, first of the day half price; 1–3 TTG each). Tier 2+ is 50–160 TG a refine — only worth it if you're in a hurry.</span>`
+  $("#tgNote").innerHTML=ttgShort?`<details class="dfold tgfold"><summary>Refining ${fmt(ttgShort)} TTG needs <b>${fmt(avgP.total)} TG</b> on average (~${avgP.weeks} weeks) ›</summary><p class="faint" style="margin:6px 0 0">Worst luck: ${fmt(minP.total)} TG (~${minP.weeks} weeks). ${fmt(tgShort)} TG for buildings + refining at Tier 1 only (20 refines a week, 20 TG each, first of the day half price; 1–3 TTG each). Tier 2+ is 50–160 TG a refine — only worth it if you're in a hurry.</p></details>`
     :"Tempered Truegold covered ✓ — keep refining Tier 1 weekly for the next tier. Defer Stable &amp; Infirmary.";
   $("#buildBody").innerHTML=state.buildings.map((bl,k)=>{ const r=bldRem(bl);
-    return `<button class="lrow" data-i="${k}" ${bl.d?'style="opacity:.6"':""}><span style="min-width:0"><span class="lt" style="display:block"><span class="faint mono">${k+1}.</span> ${esc(bl.n)}</span><span class="ls">${bl.d?"done ✓":`${esc(r.cur)} → TG 8`}${bl.note?" · "+esc(bl.note):""}</span></span><span class="lv">${bl.d?tagH("ok","done"):`${fmt(r.tg)} TG<br><span class="faint" style="font-weight:500">${fmt(r.ttg)} TTG</span>`}</span></button>`; }).join("");
+    return `<button class="lrow" data-i="${k}" ${bl.d?'style="opacity:.6"':""}><span style="min-width:0"><span class="lt" style="display:block"><span class="faint mono">${k+1}.</span> ${esc(bl.n)}</span><span class="ls">${bl.d?"done ✓":`${esc(r.cur)} → TG 8`}</span></span><span class="lv">${bl.d?tagH("ok","done"):`${fmt(r.tg)} TG<br><span class="faint" style="font-weight:500">${fmt(r.ttg)} TTG</span>`}</span></button>`; }).join("");
   bindAll($("#buildBody"),".lrow",b=>openBuildingSheet(state.buildings[+b.dataset.i]));
   $("#bldTotals").innerHTML=`<span>Wood <b>${fmtBig(w)}</b></span><span>Bread <b>${fmtBig(w)}</b></span><span>Stone <b>${fmtBig(s)}</b></span><span>Iron <b>${fmtBig(i)}</b></span><span>Truegold <b class="gold">${fmt(tg)}</b></span><span>Tempered TG <b class="gold">${fmt(ttg)}</b></span>`;
   on("addBuild",()=>{ const bl={n:"New building",stepIdx:0,note:"",d:false}; state.buildings.push(bl); afterEdit(); openBuildingSheet(bl); });
@@ -96,8 +96,11 @@ function openBuildingSheet(bl){
 }
 function renderRes(){
   migrateResources();
-  $("#resBody").innerHTML=state.resources.map((r,i)=>`<button class="tile" data-i="${i}"><span class="l"><span>${esc(r.n||"Material")}</span></span><span class="v">${String(r.h||"").trim()===""?"—":fmtBig(num(r.h))}</span></button>`).join("");
-  bindAll($("#resBody"),".tile",b=>openResSheet(state.resources[+b.dataset.i]));
+  const rb=$("#resBody"); rb.className="card dcard"; rb.removeAttribute("style");
+  const isSp=r=>/\(min\)/.test(r.n||""), rrow=(r,i)=>`<button class="drow resrow" data-i="${i}"><span class="dt"><b>${esc(String(r.n||"Material").replace(/ speedup \(min\)/," speedups"))}</b>${isSp(r)&&num(r.h)?`<span>${minsTxt(r.h)}</span>`:""}</span><span class="dv">${String(r.h||"").trim()===""?"—":fmtBig(num(r.h))}<small>${isSp(r)?"min":""}</small></span></button>`;
+  const R=state.resources.map((r,i)=>({r,i}));
+  rb.innerHTML=`<div class="dch"><h3>Speedups</h3></div>${R.filter(x=>isSp(x.r)).map(x=>rrow(x.r,x.i)).join("")}<div class="dsub">Resources</div>${R.filter(x=>!isSp(x.r)).map(x=>rrow(x.r,x.i)).join("")}`;
+  bindAll(rb,".resrow",b=>openResSheet(state.resources[+b.dataset.i]));
   on("addRes",()=>{ const r={n:"New material",h:""}; state.resources.push(r); afterEdit(); openResSheet(r); });
 }
 function openResSheet(r){ openSheet({title:r.n||"Material",build(f){
