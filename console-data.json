@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Heroes",
     "collapsed": {},
     "density": "comfortable",
     "laterOpen": {},
@@ -1566,11 +1566,11 @@
     },
     "mastOpen": {},
     "sub": {
-      "Base": "T11",
+      "Base": "Troops",
       "Data": "Checklists",
-      "Heroes": "Overview",
+      "Heroes": "Shards",
       "Gear": "Widgets",
-      "Shop": "Paid"
+      "Shop": "Free shops"
     },
     "progKey": "power",
     "t11Open": {},
@@ -1582,7 +1582,8 @@
       "widgets"
     ],
     "sgFull": true,
-    "roleOpen": false
+    "roleOpen": false,
+    "doAll": true
   },
   "troopCounts": {
     "inf": {
