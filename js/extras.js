@@ -91,7 +91,7 @@ function freshList(){ const out=[], bc=state.bagCheck||{}, bd=bc.d?Math.round((n
   if(syncCfg.owner&&loadTok()&&!syncCfg.device) out.push({t:"Name this device (PC, Phone…) for sync",go:()=>{ setTab("Data","Sync"); setTimeout(()=>{ const d=$("#scDev"); if(d){ d.scrollIntoView({block:"center"}); d.focus(); } },150); }});
   if(state.stars==null) out.push({t:"Enter your Kingdom Stars balance",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
   if(state.fx==null) out.push({t:"Check the A$ per US$ rate for the web store",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
-  { const e=typeof resEnds==="function"?resEnds():null, c=(state.research||{}).current; if(e&&c&&c.n&&e<=new Date()) out.unshift({t:`Research done: ${c.n} — start the next one`,go:()=>{ setTab("Base","Research"); setTimeout(openResCurrentSheet,150); }}); }
+  { const e=typeof resEnds==="function"?resEnds():null, c=(state.research||{}).current; if(e&&c&&c.n&&e<=new Date()) out.unshift({t:`Research done: ${c.n} — start the next one`,go:()=>{ setTab("Town","Research"); setTimeout(openResCurrentSheet,150); }}); }
   (state.events||[]).filter(e=>e.guess).forEach(e=>out.push({t:`${e.n}: dates are a guess — confirm them`,go:()=>openEventSheet(e)}));
   (state.events||[]).filter(e=>e.endOpen&&activeOcc(e)&&activeOcc(e).day>14).forEach(e=>out.push({t:`${e.n}: still no end date`,go:()=>openEventSheet(e)}));
   return out; }
@@ -164,7 +164,7 @@ function openBattle(e){
   paint(); if(B.start) run();
 }
 
-/* ---------- Heroes → Overview: weekly report ---------- */
+/* ---------- Progress → Overview: weekly report ---------- */
 function logDone(msg){ const L=state.doneLog||(state.doneLog=[]); L.push({d:gameToday(),t:String(msg)}); if(L.length>200) L.splice(0,L.length-200); }
 function renderWeekly(){
   const box=$("#weekReport"); if(!box) return;
@@ -217,7 +217,7 @@ async function shrinkShot(file){ // phone screenshots → max 1600 px JPEG, keep
   c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext("2d").drawImage(img,0,0,c.width,c.height);
   return c.toDataURL("image/jpeg",.85).split(",")[1]; }
 async function uploadShots(files,label,onStep){
-  const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok) throw new Error("Connect GitHub sync first (Data → Sync)");
+  const tok=loadTok(); if(!syncCfg.owner||!syncCfg.repo||!tok) throw new Error("Connect GitHub sync first (Settings → Sync)");
   let n=0;
   for(const f of files){ n++; onStep&&onStep(n,files.length);
     const path=`shops/inbox/${gameToday()}-${slug(label)}-${Date.now()}-${n}.jpg`;
@@ -235,7 +235,7 @@ function openCamSheet(all){
   openSheet({title:all?"Event shops to capture":"Shops to capture now",sub:"Screenshot each shop in the game, then upload here. No shop? Mark it and it stops asking.",build(f){
     const synced=!!(syncCfg.owner&&syncCfg.repo&&loadTok());
     const draw=()=>{ f.innerHTML=""; const L=camMissing(all);
-      if(!synced){ const w=infoBox(); w.innerHTML="Uploading needs GitHub sync on this device (Data → Sync). You can still mark events as “no shop”, or send screenshots in the chat."; f.appendChild(w); }
+      if(!synced){ const w=infoBox(); w.innerHTML="Uploading needs GitHub sync on this device (Settings → Sync). You can still mark events as “no shop”, or send screenshots in the chat."; f.appendChild(w); }
       if(!L.length){ const d=document.createElement("div"); d.className="empty"; d.textContent="Nothing to capture ✓"; f.appendChild(d); }
       L.forEach(x=>{ const row=document.createElement("div"); row.className="camrow";
         row.innerHTML=`<div><b>${esc(x.ev?x.ev.n:x.name)}</b>${x.ev&&x.ev.n!==x.name?`<br><span class="faint">${esc(x.name)}</span>`:""}<span class="camst faint"></span></div>

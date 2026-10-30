@@ -802,7 +802,7 @@
   .sggrp > details.fold{margin:0!important;border:0;border-top:1px solid var(--line-soft);border-radius:0;box-shadow:none;background:none;background-image:none}
   .sggrp > details.fold:first-child{border-top:0}
   .sggrp > details.fold > summary{padding:11px 14px}
-  .page[data-tab="Data"] .card h3,.page[data-tab="Base"] .card h3{font:700 15.5px var(--f-body);letter-spacing:0;text-transform:none;color:var(--text);-webkit-text-fill-color:currentColor;background:none}
+  .page[data-tab="Data"] .card h3,.page[data-tab="Town"] .card h3{font:700 15.5px var(--f-body);letter-spacing:0;text-transform:none;color:var(--text);-webkit-text-fill-color:currentColor;background:none}
   .checks li{padding-top:7px;padding-bottom:7px}
   .sgtiles{gap:1px!important;background:var(--line-soft);border:1px solid color-mix(in srgb,var(--line) 75%,var(--gold) 25%);border-radius:16px;overflow:hidden}
   .sgtiles .sgtile{border:0;border-radius:0;box-shadow:none;background:var(--panel);background-image:none}
@@ -813,5 +813,5 @@
   #t11More > summary,#fcFold > summary{cursor:pointer;list-style:none} #t11More > summary::-webkit-details-marker,#fcFold > summary::-webkit-details-marker{display:none}
   #fcCard > h3{display:none}
   .rsgrid{display:grid;gap:12px;margin-bottom:12px} .rsgrid > div{min-width:0}
-  @media (min-width:900px){ .rsgrid{grid-template-columns:1fr 1fr;align-items:start} .page[data-tab="Base"] .sec[data-key="T11 Unlocks"]{max-width:none} }
+  @media (min-width:900px){ .rsgrid{grid-template-columns:1fr 1fr;align-items:start} .page[data-tab="Town"] .sec[data-key="T11 Unlocks"]{max-width:none} }
   #researchBody .kpis{margin-bottom:12px}
