@@ -59,10 +59,16 @@ function vPlanMonth(){ const cur=gameToday().slice(0,7), mo=state.packMonths||{}
   const renew=P.filter(p=>p.d&&(p.kind==="month"||p.kind==="week")&&!p.auto&&!num(p.stars)).map(p=>({t:p.t,a:num(p.aud)*(p.kind==="week"?4:1)}));
   // Star packs: your Kingdom Special (in-game) + the cheap web store packs
   const fund=P.filter(p=>p.d&&num(p.stars)&&!p.auto).map(p=>({t:p.t,a:num(p.aud),stars:num(p.stars),gen:num(p.gen),got:thisMonth(p)}))
-    .concat(WEB_STARS.filter(w=>w.once?!state.webOnceDone:state.webMonthly!==false).map(w=>({t:w.t,a:w.usd*fxRate(),usd:w.usd,stars:w.stars,web:w.id,once:w.once,got:w.once?false:state.webMonth===key})));
+    .concat(WEB_STARS.filter(w=>w.once?(!state.webOnceDone||state.webOnceMonth===key):state.webMonthly!==false).map(w=>({t:w.t,a:w.usd*fxRate(),usd:w.usd,stars:w.stars,web:w.id,once:w.once,got:w.once?!!state.webOnceDone:state.webMonth===key})));
   const cashOut=num((mo[key]||{}).spent)+bought.filter(p=>!p.viaStars).reduce((t,p)=>t+num(p.aud),0)+renew.reduce((t,r)=>t+r.a,0)+fund.reduce((t,f)=>t+f.a,0);
   const cash=Math.max(0,bud-cashOut), stars=num(state.stars)+fund.filter(f=>!f.got).reduce((t,f)=>t+f.stars,0);
   return {key,label:d.toLocaleDateString(undefined,{month:"long",timeZone:"UTC"}),cash,stars,left:cash+stars*STAR_A,bud,bought,renew,fund,extra:{gen:fund.reduce((t,f)=>t+num(f.gen),0)}}; }
+// real money spent in a month, worked out from your ticks (a closed month keeps the total you entered)
+function monthSpent(key){ const mo=(state.packMonths||{})[key]||{}; if(mo.closed) return num(mo.spent);
+  const P=state.packs||[], inM=p=>String(p.bought||"").slice(0,7)===key;
+  return num(mo.spent)+P.filter(p=>p.auto===key&&p.d&&!p.viaStars).reduce((t,p)=>t+num(p.aud),0)
+    +P.filter(p=>p.d&&PACK_DAYS[p.kind]&&inM(p)).reduce((t,p)=>t+num(p.aud),0)
+    +(state.webMonth===key?4.99*fxRate():0)+(state.webOnceMonth===key?9.99*fxRate():0); }
 // pay with Stars where they go furthest (whole packs only — use as many Stars as possible), the rest in cash;
 // if the cash still runs out, drop the lowest-ranked picks
 function vPay(picked,M){ let L=picked.slice();
@@ -99,6 +105,9 @@ function vPick(keys,onlyNow,budget,already,extra){
 // "best" mixes three things: how much of your gaps it fills per A$, blockers count double, higher value % ranks higher
 const VALUE_BLOCKERS=["designs","lucky"]; // Charm Designs + Lucky chests (Mythic Gear) — Threads have no paid deal yet
 const vPc=d=>num(String(d.pc||"").replace(/[^\d.]/g,""));
+const vWhen=d=>{ if(d.on==="always") return "any time"; const e=(state.events||[]).find(x=>d.on.test(x.n||"")); if(!e) return "event only"; const o=nextOcc(e); return o&&!o.past?`${e.n} · ${whenTxt(o)}`:e.n; };
+// weekly cards: one a week — week 2 from 7 days after the month (or today) starts
+const vWeekStart=(key,c)=>{ const t=gameToday(), s0=t.slice(0,7)===key?t:key+"-01", d=new Date(s0+"T00:00:00"); d.setDate(d.getDate()+7*c); return ymd(d); };
 const vName=p=>p.d.n+(p.d.wk?` (week ${p.c+1})`:"");
 function renderBestValue(){
   const host=$("#bestValue"); if(!host) return;
@@ -118,22 +127,21 @@ function renderBestValue(){
       <label class="bvnow"><input type="checkbox" id="bvNow"${onlyNow?" checked":""}> Only deals on now</label></div>`+
     `<div class="card mt"><div class="rowb"><b style="font-size:16px">Best buys for ${esc(M.label)}</b><button class="btn ghost sm mono" id="bvBud">A$${M.bud} budget ✎</button></div>`+
     (M.renew.length?`<p class="faint" style="margin:4px 0 0;font-size:13.5px">Set aside for renewals: ${M.renew.map(r=>`${esc(r.t)} A$${r.a.toFixed(2)}`).join(" · ")}</p>`:"")+
-    `<div class="bvfund"><div class="bvfund-h"><b>Stars first</b><button class="btn ghost sm" id="bvStars">⭐ ${fmt(num(state.stars))} now ✎</button></div>${M.fund.map(f=>`<div class="rcrow"><span>${esc(f.t)}${f.usd?` <small class="faint">US$${f.usd.toFixed(2)}</small>`:""}${f.gen?` <span class="tag ok">+${f.gen} General shards</span>`:""}${f.got?' <span class="tag plain">bought ✓</span>':""}</span><b>A$${f.a.toFixed(2)} → ${fmt(f.stars)} ⭐</b></div>`).join("")}
+    `<div class="bvfund"><div class="bvfund-h"><b>Stars first</b><button class="btn ghost sm" id="bvStars">⭐ ${fmt(num(state.stars))} now ✎</button></div>${M.fund.map((f,fi)=>`<div class="rcrow"><span><input type="checkbox" class="cbx bvtick" data-f="${fi}"${f.got?" checked":""} aria-label="Bought ${esc(f.t)}"> ${esc(f.t)}${f.usd?` <small class="faint">US$${f.usd.toFixed(2)}</small>`:` <small class="faint">tick when it renews</small>`}${f.gen?` <span class="tag ok">+${f.gen} General shards</span>`:""}</span><b>A$${f.a.toFixed(2)} → ${fmt(f.stars)} ⭐</b></div>`).join("")}
       <div class="rcrow"><span>To spend on packs</span><b>${fmt(M.stars)} ⭐ + A$${M.cash.toFixed(2)}</b></div></div>`+
-    (M.bought.length?`<p class="faint" style="margin:4px 0 0">Bought so far: ${M.bought.map(p=>esc(p.t)).join(", ")}</p>`:"")+
-    (picked.length?[order].map(L=>`<p class="faint" style="margin:6px 0 0;font-size:13.5px">Best buy first — blockers count double, higher % and more per A$ rank higher.</p><ol class="bvlist">${L.map(({p,by})=>`<li><div class="bvrow"><b>${esc(vName(p))}${p.why&&p.why.some(([k])=>VALUE_BLOCKERS.includes(k))?' <span class="tag bad">blocker</span>':""}</b><span class="mono gold">${p.pay==="stars"?`${fmt(p.starCost)} ⭐`:`A$${p.d.a.toFixed(2)}`}</span></div>
+    (M.bought.length?`<div class="bvbought">${M.bought.map(p=>`<label class="bvb"><input type="checkbox" class="cbx" data-b="${state.packs.indexOf(p)}" checked> <s>${esc(p.t)}</s> <span class="faint">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${num(p.aud).toFixed(2)}`} · bought ✓</span></label>`).join("")}</div>`:"")+
+    (picked.length?[order].map(L=>`<p class="faint" style="margin:6px 0 0;font-size:13.5px">Best buy first — tick each one as you buy it. Blockers count double; higher % and more per A$ rank higher.</p><ol class="bvlist">${L.map(({p,by},pi)=>`<li><div class="bvrow"><b><input type="checkbox" class="cbx bvtick" data-p="${pi}" aria-label="Bought ${esc(vName(p))}"> ${esc(vName(p))}${p.why&&p.why.some(([k])=>VALUE_BLOCKERS.includes(k))?' <span class="tag bad">blocker</span>':""}</b><span class="mono gold">${p.pay==="stars"?`${fmt(p.starCost)} ⭐`:`A$${p.d.a.toFixed(2)}`}</span></div>
         <span class="muted">${give(p.d)}</span>${p.d.pc?` <span class="faint">· ${p.d.pc}</span>`:""}${p.d.est?' <span class="tag plain">estimate</span>':""}${staleDays(p.d.seen)>STALE_DAYS?` <span class="tag warn">price seen ${staleDays(p.d.seen)}d ago — check</span>`:""}
-        ${why(p)}${by?` <span class="tag warn">buy by ${fdD(by)}</span>`:""}${p.d.note?` <span class="faint">${esc(p.d.note)}</span>`:""}</li>`).join("")}</ol>`).join("")+`
+        ${why(p)}${p.d.wk&&p.c?` <span class="tag plain">from ${fdD(vWeekStart(M.key,p.c))}</span>`:""}${by?` <span class="tag warn">buy by ${fdD(by)}</span>`:""}${p.d.note?` <span class="faint">${esc(p.d.note)}</span>`:""}</li>`).join("")}</ol>`).join("")+`
       <div class="rcrows">${keys.map(k=>{ const got=need[k]-rem[k]; return need[k]?`<div class="rcrow"><span>${vLab(k)}</span><b>${got>0?`<span class="ok">+${fmt(Math.round(got))}</span>`:"+0"} of ${fmt(Math.round(need[k]))} short</b></div>`:`<div class="rcrow"><span>${vLab(k)}</span><b class="faint">not short ✓</b></div>`; }).join("")}
-        <div class="rcrow"><span>Real money this month</span><b>A$${(M.bud-PAY.cashLeft).toFixed(2)} of A$${M.bud} · ${fmt(PAY.starsLeft)} ⭐ left</b></div></div>
-      <button class="btn primary mt" id="bvUse">Use this as my ${esc(M.label)} plan</button>`
+        <div class="rcrow"><span>Real money this month</span><b>A$${(M.bud-PAY.cashLeft).toFixed(2)} of A$${M.bud} · ${fmt(PAY.starsLeft)} ⭐ left</b></div></div>`
       :`<p class="faint">${keys.length?"Nothing on now closes what you picked — untick “Only deals on now” to see what's coming.":"Pick at least one item above."}</p>`)+`</div>`+
-    `<details class="fold mt"><summary><span class="grow">Cheaper Stars — web store</span><small class="faint">store.centurygames.com/kingshot</small></summary><div class="fbody"><table class="gtable"><tbody>${STAR_WEB.map(([a,b,c,d])=>`<tr><td><b>${esc(a)}</b><br><span class="faint">${esc(d)}</span></td><td class="mono">${esc(b)}</td><td>${esc(c)}</td></tr>`).join("")}</tbody></table>
+    `<details class="fold mt"><summary><span class="grow">Cheaper Stars — web store</span></summary><div class="fbody"><p class="faint" style="margin:0 0 6px;font-size:13.5px">store.centurygames.com/kingshot</p><table class="gtable"><tbody>${STAR_WEB.map(([a,b,c,d])=>`<tr><td><b>${esc(a)}</b><br><span class="faint">${esc(d)}</span></td><td class="mono">${esc(b)}</td><td>${esc(c)}</td></tr>`).join("")}</tbody></table>
       <p class="faint" style="margin:8px 0 0;font-size:13.5px">1 Star = 1 US cent. Charged in US$ — your bank may add a foreign fee. Stars only pay for a whole pack, and buying Stars gives no Top-up Points (spending them does).</p></div></details>`+
-    `<h3 class="sgsec">Best per A$, by item</h3>`+
-    keys.map(k=>{ const per=d=>vY(d,k)/d.a, L=VALUE_DB.filter(d=>vY(d,k)>0).sort((a,b)=>per(b)-per(a)).slice(0,4); if(!L.length) return "";
+    `<h3 class="sgsec">Cheapest source of each item</h3>`+
+    keys.map(k=>{ const per=d=>vY(d,k)/d.a, L=VALUE_DB.filter(d=>vY(d,k)>0&&!(vPc(d)&&vPc(d)<3000)).sort((a,b)=>per(b)-per(a)).slice(0,4); if(!L.length) return "";
       const f=v=>v>=10?fmt(Math.round(v)):v.toFixed(1);
-      return `<details class="fold mt"><summary><span class="grow">${vLab(k)}</span><small class="faint">best ${f(per(L[0]))} per A$</small></summary><div class="fbody">${L.map((d,i)=>`<div class="rcrow"><span>${i+1}. ${esc(d.n)} ${vOnNow(d)?'<span class="tag ok">on now</span>':""}${d.est?' <span class="tag plain">est.</span>':""}</span><b>${f(per(d))}/A$</b></div>`).join("")}</div></details>`; }).join("");
+      return `<details class="fold mt"><summary><span class="grow">${vLab(k)}</span><small class="faint">best ${f(per(L[0]))} per A$</small></summary><div class="fbody">${L.map((d,i)=>`<div class="rcrow"><span>${i+1}. ${esc(d.n)}${d.pc?` <span class="faint">${d.pc}</span>`:""} ${vOnNow(d)?'<span class="tag ok">on now</span>':`<span class="tag plain">${esc(vWhen(d))}</span>`}${d.est?' <span class="tag plain">est.</span>':""}</span><b>${f(per(d))}/A$</b></div>`).join("")}</div></details>`; }).join("");
   host.querySelectorAll(".bvchips .chip").forEach(c=>c.onclick=()=>{ const k=c.dataset.k, L=state.ui.bvPick, i=L.indexOf(k); if(i>-1) L.splice(i,1); else L.push(k); scheduleSave(); renderBestValue(); });
   const nw=$("#bvNow"); nw.onchange=()=>{ state.ui.bvNow=nw.checked; scheduleSave(); renderBestValue(); };
   on("bvBud",openPackBudgetSheet);
@@ -145,9 +153,14 @@ function renderBestValue(){
     f.appendChild(fld("I've bought the once-only US$9.99 pack (999 + 999)",{type:"check",value:!!state.webOnceDone,set:v=>state.webOnceDone=v}));
     const i=infoBox(); f.appendChild(i);
     const rf=()=>{ i.innerHTML=`≈ <b>A$${(num(state.stars)*STAR_A).toFixed(2)}</b> of packs. In-game Star prices (assumed): A$2.99 = 199 · A$7.99 = 499 · A$14.99 = 999.`; }; rf(); return rf; }}));
-  on("bvUse",()=>{ const snap=JSON.stringify(state), P=state.packs||(state.packs=[]);
-    for(let i=P.length-1;i>=0;i--) if(!P[i].d&&(P[i].auto||/^Nov\b/.test(P[i].note||""))) P.splice(i,1); // replace unbought plan items
-    order.slice().reverse().forEach(({p,by})=>P.unshift({t:vName(p),aud:p.d.a,kind:"once",d:false,auto:M.key,viaStars:p.pay==="stars"||undefined,note:[`${M.label} plan`,p.pay==="stars"?`pay ${fmt(p.starCost)} ⭐`:"",by?`buy by ${fdD(by)}`:"",p.d.pc||"",p.d.note||""].filter(Boolean).join(" · ")}));
-    M.fund.filter(f=>f.web&&!f.got).reverse().forEach(f=>P.unshift({t:f.t,aud:+f.a.toFixed(2),kind:"once",d:false,auto:M.key,web:f.web,addStars:f.stars,note:`${M.label} plan · buy first on store.centurygames.com/kingshot · US$${f.usd.toFixed(2)} → ${fmt(f.stars)} ⭐`}));
-    afterEdit(); toast(`${M.label} plan saved to Shops & Packs`,snap); });
+  // ticking: a plan pack → a bought record for this month; a Star pack → Stars in; untick undoes it
+  host.querySelectorAll("input[data-p]").forEach(c=>c.onchange=()=>{ const {p}=order[+c.dataset.p], snap=JSON.stringify(state);
+    const r={t:vName(p),aud:p.d.a,kind:"once",d:true,auto:M.key,bought:fcToday(),note:`${M.label} plan${p.d.pc?" · "+p.d.pc:""}`}; if(p.pay==="stars") r.viaStars=true;
+    (state.packs||(state.packs=[])).push(r); packStars(r,1); afterEdit(); toast(`Bought: ${r.t}`,snap); });
+  host.querySelectorAll("input[data-b]").forEach(c=>c.onchange=()=>{ const i=+c.dataset.b, r=state.packs[i], snap=JSON.stringify(state); packStars(r,-1); state.packs.splice(i,1); afterEdit(); toast(`Unticked: ${r.t}`,snap); });
+  host.querySelectorAll("input[data-f]").forEach(c=>c.onchange=()=>{ const f=M.fund[+c.dataset.f], snap=JSON.stringify(state), on=c.checked;
+    if(f.web==="m"){ state.webMonth=on?M.key:null; }
+    else if(f.web==="o"){ state.webOnceDone=on; state.webOnceMonth=on?M.key:null; }
+    else { const pk=state.packs.find(x=>x.t===f.t); if(pk){ if(on){ pk.prevBought=pk.bought; pk.bought=fcToday(); } else { pk.bought=pk.prevBought; delete pk.prevBought; } } }
+    state.stars=Math.max(0,num(state.stars)+(on?1:-1)*f.stars); afterEdit(); toast(`${f.t}: ${on?"+":"−"}${fmt(f.stars)} ⭐`,snap); });
 }

@@ -83,6 +83,21 @@ function renderBagCheck(){
   on("bcSave",()=>{ state.bagCheck={d:fcToday(),v:Object.fromEntries(BAG_KEYS.map(([k])=>[k,bagVal(k)]))}; afterEdit(); toast("Bag saved"); });
 }
 
+/* ---------- Home: what's out of date — the console can't read the game, so it says what to refresh ---------- */
+function freshList(){ const out=[], bc=state.bagCheck||{}, bd=bc.d?Math.round((new Date(fcToday())-new Date(bc.d))/864e5):null;
+  if(bd==null||bd>2) out.push({t:bd==null?"Bag numbers never checked":`Bag numbers checked ${bd} days ago`,go:()=>{ const b=$("#bagCheck"); if(b){ b.scrollIntoView({behavior:"smooth",block:"center"}); const i=b.querySelector("input"); if(i) i.focus(); } }});
+  const st=staleShops(); if(st.length) out.push({t:`${st.length} shop price list${st.length>1?"s are":" is"} ${STALE_DAYS}+ days old`,go:()=>openCamSheet(true)});
+  const vd=VALUE_DB.filter(d=>vOnNow(d)&&staleDays(d.seen)>STALE_DAYS); if(vd.length) out.push({t:`${vd.length} pack price${vd.length>1?"s":""} not seen for ${STALE_DAYS}+ days`,go:()=>setTab("Shop","Paid")});
+  (state.packs||[]).filter(p=>p.d&&PACK_DAYS[p.kind]&&!p.bought).forEach(p=>out.push({t:`${p.t}: set the date you bought it`,go:()=>openPackSheet(p)}));
+  if(state.stars==null) out.push({t:"Enter your Kingdom Stars balance",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
+  if(state.fx==null) out.push({t:"Check the A$ per US$ rate for the web store",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
+  (state.events||[]).filter(e=>e.guess).forEach(e=>out.push({t:`${e.n}: dates are a guess — confirm them`,go:()=>openEventSheet(e)}));
+  (state.events||[]).filter(e=>e.endOpen&&activeOcc(e)&&activeOcc(e).day>14).forEach(e=>out.push({t:`${e.n}: still no end date`,go:()=>openEventSheet(e)}));
+  return out; }
+function renderFresh(){ const box=$("#fresh"); if(!box) return; const L=freshList(); box.hidden=!L.length; if(!L.length){ box.innerHTML=""; return; }
+  box.innerHTML=`<div class="card fresh mb"><b>Needs a check <span class="tag warn">${L.length}</span></b>${L.map((x,i)=>`<button class="frow2" data-i="${i}">${esc(x.t)} <span aria-hidden="true">›</span></button>`).join("")}</div>`;
+  bindAll(box,".frow2",b=>L[+b.dataset.i].go()); }
+
 /* ---------- Home: timelines ---------- */
 function renderTimelines(){
   const box=$("#timelines"); if(!box) return;
@@ -165,7 +180,7 @@ function renderWeekly(){
       <tr><td>Hero stars</td><td class="mono">${sgn(dlt("stars"))}</td></tr>
       <tr><td>Lethality / Health</td><td class="mono">${sgn(dlt("leth"))} / ${sgn(dlt("hp"))}</td></tr>
       ${areas.map(([n,v])=>`<tr><td>${esc(n)} power</td><td class="mono">${sgn(v)}</td></tr>`).join("")}
-      <tr><td>Spent this month</td><td class="mono">${mo?`A$${num(mo.spent).toFixed(2)}`:"—"}</td></tr></tbody></table>
+      <tr><td>Spent this month</td><td class="mono">A$${monthSpent(gameToday().slice(0,7)).toFixed(2)}</td></tr></tbody></table>
     ${done.length?`<p style="margin:10px 0 4px"><b>Done this week</b></p><ul class="wdone">${done.slice(-8).reverse().map(x=>`<li>${esc(x.t)} <span class="faint">${esc(fd(x.d))}</span></li>`).join("")}</ul>`:'<p class="faint" style="margin:10px 0 0">Upgrades you tick off with ✓ Done show up here.</p>'}
     ${up.length?`<p style="margin:10px 0 4px"><b>Coming next week</b></p><ul class="wdone">${up.map(x=>`<li>${esc(x.e.n)} <span class="faint">${whenTxt(x.o)}</span></li>`).join("")}</ul>`:""}</div>`;
 }
