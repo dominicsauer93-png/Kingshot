@@ -1604,9 +1604,11 @@
       "Bag": true
     },
     "bvPick": [
+      "dust",
+      "designs",
       "widgets",
-      "lucky",
-      "dust"
+      "gen",
+      "tg"
     ],
     "sgFull": true
   },
