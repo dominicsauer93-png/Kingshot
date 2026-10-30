@@ -224,6 +224,11 @@ async function uploadShots(files,label,onStep){
        body:JSON.stringify({message:`shop screenshot: ${label}`,content:await shrinkShot(f),branch:syncCfg.branch||"main"})});
     if(!r.ok) throw new Error(`Upload failed (${r.status})`); }
   return n; }
+// Settings → Sync: upload any screenshots under a label of your choice (shops/inbox, same as shop captures)
+function buildUpload(){ const inp=$("#upFiles"), lab=$("#upLabel"), st=$("#upStatus"); if(!inp) return;
+  inp.onchange=async()=>{ const files=[...inp.files]; if(!files.length) return; const name=(lab.value||"").trim()||"screenshot";
+    try{ const n=await uploadShots(files,name,(i,t)=>st.textContent=`Uploading ${i}/${t}…`); st.innerHTML=`<span class="ok">${n} uploaded ✓ — tell Claude “uploaded”</span>`; toast(`${n} screenshot${n>1?"s":""} uploaded`); lab.value=""; }
+    catch(e){ st.innerHTML=`<span class="bad">${esc(e.message)}</span>`; } inp.value=""; }; }
 function openCamSheet(all){
   openSheet({title:all?"Event shops to capture":"Shops to capture now",sub:"Screenshot each shop in the game, then upload here. No shop? Mark it and it stops asking.",build(f){
     const synced=!!(syncCfg.owner&&syncCfg.repo&&loadTok());

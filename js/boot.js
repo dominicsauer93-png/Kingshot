@@ -213,7 +213,7 @@ function initStatic(){
   if(Array.isArray(state.buildings)) state.buildings.forEach(bl=>{ if(bl.stepIdx===undefined) bl.stepIdx=0; delete bl.t; delete bl.tg; delete bl.ttg; delete bl.time; });
   if(state.account && !state.account.dayAnchor){ const d=parseInt(state.account.day)||443; const a=new Date(); a.setUTCDate(a.getUTCDate()-(d-1)); state.account.dayAnchor=a.toISOString().slice(0,10); }
   state.ui.tab=TAB_ALIAS[state.ui.tab]||state.ui.tab;
-  renderAll(); buildSync(); initCommaFormatting(); initNoDrag();
+  renderAll(); buildSync(); buildUpload(); initCommaFormatting(); initNoDrag();
   const fromHash=tabFromHash(); setTab(fromHash?fromHash[0]:state.ui.tab, fromHash?fromHash[1]:undefined, false);
   const persists=hasStore||lsSet("__probe__","1"); if(!persists) setSaveUI("err","Session only");
   if(syncCfg.on && syncCfg.owner && loadTok()) syncPull(true);
