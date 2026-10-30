@@ -132,22 +132,26 @@ function initTheme(){
 /* =====================================================================
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
-const TABS=["Home","Heroes","Gear","Base","Shop","Data"];
-const SUBS={Heroes:["Overview","Roster","Shards","Masters","Mystic Trials"],Gear:["Widgets","Hero Gear","Governor","Charms","Pets"],Base:["Research","Buildings","Troops","Resources"],Shop:["Free shops","Paid"],Data:["Update all","Account","Sync","Reminders"]};
-const TAB_ALIAS={Army:"Base",Build:"Base",Power:"Heroes",Supply:"Heroes",Rally:"Heroes",Plan:"Shop",Events:"Home",Vault:"Data"};
+const TABS=["Home","Heroes","Governor","Town","Shop","Progress","Data"], NAV=TABS.filter(t=>t!=="Data"); // Settings (Data) opens from the ⚙ button
+const SUBS={Heroes:["Formations","Shards","Hero Gear","Widgets"],Governor:["Gov Gear","Charms","Pets","Masters"],Town:["Research","Buildings","Troops","Resources"],Shop:["Free shops","Paid"],Progress:["Overview","Mystic Trials"],Data:["Account","Sync","Reminders","Update all"]};
+const TAB_ALIAS={Army:"Town",Build:"Town",Base:"Town",Gear:"Governor",Power:"Progress",Supply:"Heroes",Rally:"Heroes",Plan:"Shop",Events:"Home",Vault:"Data",Settings:"Data"};
+const SUB_ALIAS={Roster:"Formations",Heroes:"Formations",Governor:"Gov Gear",T11:"Research"}; // old tab names
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
   Heroes:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',
-  Gear:'<path d="M12 2.5l8 3v6c0 5-3.5 8.8-8 10.5C7.5 20.3 4 16.5 4 11.5v-6z"/><path d="M12 7v10M8 11h8"/>',
-  Base:'<path d="M4 21V9l4-3 4 3 4-3 4 3v12z"/><path d="M10 21v-5h4v5M4 13h16"/>',
+  Governor:'<path d="M12 2.5l8 3v6c0 5-3.5 8.8-8 10.5C7.5 20.3 4 16.5 4 11.5v-6z"/><path d="M12 7v10M8 11h8"/>',
+  Town:'<path d="M4 21V9l4-3 4 3 4-3 4 3v12z"/><path d="M10 21v-5h4v5M4 13h16"/>',
   Shop:'<path d="M5 8h14l-1.2 12.5H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
+  Progress:'<path d="M4 20V11M10 20V5M16 20v-6M20 20H3"/>',
   Data:'<path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8 12h8M8 16h6"/>'
 };
-const LABEL={Data:"Settings","Free shops":"Coin shops",Paid:"Packs","Update all":"Update"}, lbl=s=>LABEL[s]||s; // shown names; keys, hashes and saved state keep the old ones
+const LABEL={Data:"Settings","Free shops":"Coin shops",Paid:"Packs"}, lbl=s=>LABEL[s]||s; // shown names; keys, hashes and saved state keep the old ones
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 function setTab(tab,sub,scroll){
   tab=TAB_ALIAS[tab]||tab; if(!TABS.includes(tab)) tab="Home";
   if(!state.ui.sub) state.ui.sub={};
+  sub=SUB_ALIAS[sub]||sub;
+  if(sub&&!(SUBS[tab]||[]).includes(sub)){ const o=Object.keys(SUBS).find(k=>SUBS[k].includes(sub)); if(o) tab=o; } // section lives on another page now
   if(SUBS[tab]){ if(sub&&SUBS[tab].includes(sub)) state.ui.sub[tab]=sub; if(!SUBS[tab].includes(state.ui.sub[tab])) state.ui.sub[tab]=SUBS[tab][0]; }
   const s=SUBS[tab]?state.ui.sub[tab]:null;
   const changed=state.ui.tab!==tab;
@@ -166,7 +170,7 @@ function setTab(tab,sub,scroll){
 function tabFromHash(){
   let [t,s]=(location.hash||"").replace(/^#/,"").split("/");
   let tab=TABS.find(x=>slug(x)===t)||TAB_ALIAS[Object.keys(TAB_ALIAS).find(k=>slug(k)===t)]; if(!tab) return null;
-  if(s==="heroes") s="roster"; // old link names
+  if(s==="heroes"||s==="roster") s="formations"; if(s==="governor") s="gov-gear"; if(s==="t11") s="research"; // old link names
   if(s==="shop-guide") s="free-shops"; if(s==="best-value"||s==="shops-packs") s="paid";
   let sub=SUBS[tab]&&SUBS[tab].find(x=>slug(x)===s);
   if(s&&!sub){ const o=Object.keys(SUBS).find(k=>SUBS[k].some(x=>slug(x)===s)); if(o){ tab=o; sub=SUBS[o].find(x=>slug(x)===s); } } // section moved to another tab
@@ -174,11 +178,12 @@ function tabFromHash(){
 }
 function buildNav(){
   const nav=$("#tabnav");
-  nav.innerHTML=TABS.map(t=>`<button class="tab" role="tab" data-tab="${t}" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span>${lbl(t)}</span></button>`).join("");
+  nav.innerHTML=NAV.map(t=>`<button class="tab" role="tab" data-tab="${t}" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span>${lbl(t)}</span></button>`).join("");
   nav.querySelectorAll(".tab").forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+  $$(".setbtn").forEach(b=>b.onclick=()=>setTab("Data"));
   nav.addEventListener("keydown",e=>{
     const k=e.key; if(!["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"].includes(k)) return;
-    const d=(k==="ArrowRight"||k==="ArrowDown")?1:-1, i=TABS.indexOf(state.ui.tab), n=TABS[(i+d+TABS.length)%TABS.length];
+    const d=(k==="ArrowRight"||k==="ArrowDown")?1:-1, i=NAV.indexOf(state.ui.tab), n=NAV[(i+d+NAV.length)%NAV.length];
     setTab(n); nav.querySelector(`[data-tab="${n}"]`).focus(); e.preventDefault();
   });
   Object.keys(SUBS).forEach(tab=>{

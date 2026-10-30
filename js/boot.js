@@ -68,7 +68,7 @@ function renderUpdate(){
   $$("#qJump .chip").forEach(c=>c.onclick=()=>{ host.querySelectorAll("details.fold").forEach(d=>{ d.open=d.dataset.k===c.dataset.k; });
     const d=host.querySelector(`details.fold[data-k="${c.dataset.k}"]`); if(d) setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"start"}),30); });
 }
-const TAB_RENDER={Home:()=>renderHome(),Heroes:()=>renderRally(),Gear:()=>renderGear(),Base:()=>renderBase(),Shop:()=>renderPlan(),Data:()=>{ renderPlan(); renderData(); renderUpdate(); }};
+const TAB_RENDER={Home:()=>renderHome(),Heroes:()=>{ renderRally(); renderGear(); },Governor:()=>{ renderRally(); renderGear(); },Town:()=>renderBase(),Progress:()=>renderRally(),Shop:()=>renderPlan(),Data:()=>{ renderPlan(); renderData(); renderUpdate(); }};
 const dirtyTabs=new Set();
 function renderPrep(){ migrateEvents(); migrateMasterNotes(); if(!state.ui.sub) state.ui.sub={}; }
 function renderAll(){ renderPrep(); TABS.forEach(t=>TAB_RENDER[t]()); dirtyTabs.clear(); }
@@ -144,7 +144,7 @@ function parseDur(v){ const t=String(v||"").toLowerCase().trim(); if(!t) return 
   let m=0, ok=false; t.replace(/(\d+(?:\.\d+)?)\s*(d|day|days|h|hr|hrs|hour|hours|m|min|mins|minute|minutes)\b/g,(_,n,u)=>{ ok=true; n=parseFloat(n); m+=u[0]==="d"?n*1440:u[0]==="h"?n*60:n; return ""; });
   return ok?Math.round(m):null; }
 function openQuickSheet(){
-  openSheet({title:"Quick update",sub:"The numbers you change most. Everything else is in Data → Update all.",build(f){
+  openSheet({title:"Quick update",sub:"The numbers you change most. Everything else is in Settings → Update all.",build(f){
     const sub=t=>{ const h=document.createElement("div"); h.className="qsub"; h.textContent=t; f.appendChild(h); };
     const N=(label,obj,k,o)=>fld(label,Object.assign({type:"num",value:obj[k],get:()=>obj[k],set:v=>obj[k]=v},o||{}));
     const H=state.heroGear.have, G=state.govGear.have||(state.govGear.have={}), C=state.charms.have||(state.charms.have={});

@@ -50,7 +50,7 @@
       </div>
       <div class="rowb">
         <span class="save" role="status" aria-live="polite"><span class="dot" id="saveDot"></span><span id="saveTxt">Saved</span></span>
-        <button class="iconbtn themebtn" title="Theme" aria-label="Change theme"><svg aria-hidden="true"><use href="#i-auto"/></svg></button>
+        <span><button class="iconbtn setbtn" title="Settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button> <button class="iconbtn themebtn" title="Theme" aria-label="Change theme"><svg aria-hidden="true"><use href="#i-auto"/></svg></button></span>
       </div>
       <div class="faint" id="syncMini" style="font-size:13px"></div>
     </div>
@@ -63,6 +63,7 @@
  <button class="iconbtn" id="searchTop" title="Search" aria-label="Search"><svg aria-hidden="true"><use href="#i-search"/></svg></button>
     <button class="iconbtn" id="mSync" title="Sync with GitHub" aria-label="Sync with GitHub" hidden><svg aria-hidden="true"><use href="#i-sync"/></svg></button>
     <button class="iconbtn themebtn" title="Theme" aria-label="Change theme"><svg aria-hidden="true"><use href="#i-auto"/></svg></button>
+    <button class="iconbtn setbtn" title="Settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
   </header>
 
   <main class="main" id="main">
@@ -92,34 +93,12 @@
       </div>
     </div>
 
-    <!-- ================= RALLY ================= -->
+    <!-- ================= HEROES ================= -->
     <div class="page" data-tab="Heroes" hidden>
       <div class="phead"><div><h1>Heroes</h1></div></div>
       <div class="subnav" role="tablist" aria-label="Heroes sections"></div>
-      <section class="sec" data-sub="Overview" data-key="Focus heroes"><div id="focusHeroes"></div></section>
-      <section class="sec" data-sub="Overview" data-key="This week">
-        <h2>This week</h2>
-        <div id="weekReport"></div>
-      </section>
-      <section class="sec" data-sub="Overview" data-key="Combat Quality">
-        <h2>Combat quality</h2>
-        <div class="tiles" id="combatTiles"></div>
-      </section>
-      <section class="sec" data-sub="Overview" data-key="Progress">
-        <h2>Progress</h2>
-        <div class="card">
-          <div class="chips-row" id="progMetric" role="group" aria-label="What to chart"></div>
-          <div class="rowb mt" style="align-items:flex-end"><div id="progHead"></div><div class="seg" id="progRange" role="group" aria-label="Time range"><button data-v="30">30d</button><button data-v="90">90d</button><button data-v="all">All</button></div></div>
-          <div class="pchart mt" id="progChart"></div>
-          <details class="fold mt" id="progTblWrap"><summary><span class="grow">Show the numbers</span></summary><div class="fbody" id="progTbl"></div></details>
-        </div>
-      </section>
-      <section class="sec" data-sub="Overview" data-key="Power Grades">
-        <h2>Power grades</h2>
-        <div class="card dcard" id="pillars"></div>
-        <div class="legend"><span><span class="sw" style="background:var(--green)"></span>Ahead</span><span><span class="sw" style="background:var(--amber)"></span>Slightly behind</span><span><span class="sw" style="background:var(--red)"></span>Well behind</span><span><span class="sw" style="background:var(--text);opacity:.55"></span>Benchmark</span></div>
-      </section>
-      <section class="sec" data-sub="Roster" data-key="Hero Roles">
+      <section class="sec" data-sub="Formations" data-key="Focus heroes"><div id="focusHeroes"></div></section>
+      <section class="sec" data-sub="Formations" data-key="Hero Roles">
         <h2>Your heroes</h2>
         <div class="grid" style="--min:260px" id="heroCards"></div>
         <button class="btn sm ghost mt" id="heroMore" hidden></button>
@@ -138,25 +117,6 @@
           <ul><li><b>Modes:</b> Arena leaderboard, advanced Intel Missions, Conquest stages</li><li><b>Shops:</b> VIP Shop, Swordland Shop, Hall of Heroes</li><li><b>Other:</b> recruitment, fishing &amp; events, packs</li></ul>
           General Mythic shards fit any Mythic hero — except Amadeus and Helga.</div></details>
       </section>
-
-      <section class="sec" data-sub="Masters" data-key="Masters">
-        <h2>Masters</h2>
-        <div class="info" id="mastNext"></div>
-        <div class="grid mt" style="--min:300px" id="mastBody"></div>
-        <button class="add" id="addMast">+ Add master</button>
-      </section>
-      <section class="sec" data-sub="Mystic Trials" data-key="Mystic Trials">
-        <h2>Mystic Trials</h2>
-        <div class="list" id="mysticBody"></div>
-        <button class="add" id="addMystic">+ Add zone</button>
-        <details class="fold mt2"><summary><span class="grow">Rank charts</span></summary><div class="fbody"><div id="mysticChartWrap"></div></div></details>
-      </section>
-    </div>
-
-    <!-- ================= GEAR ================= -->
-    <div class="page" data-tab="Gear" hidden>
-      <div class="phead"><div><h1>Gear</h1></div></div>
-      <div class="subnav" role="tablist" aria-label="Gear sections"></div>
 
       <section class="sec" data-sub="Hero Gear" data-key="Hero Gear">
         <div class="card rcard" id="hgReport"></div>
@@ -180,6 +140,19 @@
           Lv 0 → 10 costs 275 widgets (5, 10, 15 … 50 per level). Keep your three rally heroes level — lowest first.</div></details>
       </section>
 
+    </div>
+
+    <!-- ================= GOVERNOR ================= -->
+    <div class="page" data-tab="Governor" hidden>
+      <div class="phead"><div><h1>Governor</h1></div></div>
+      <div class="subnav" role="tablist" aria-label="Governor sections"></div>
+      <section class="sec" data-sub="Gov Gear" data-key="Governor Gear">
+        <div class="card rcard" id="govReport"></div>
+        <div class="info" id="govPlan"></div>
+        <div class="tiles mt" id="govTiles"></div>
+        <div class="grid mt" style="--min:170px" id="govBody"></div>
+        <p class="note-line" id="govNote"></p>
+      </section>
       <section class="sec" data-sub="Charms" data-key="Charms">
         <div class="card rcard" id="charmReport"></div>
         <div class="tiles t2" id="charmMats"></div>
@@ -205,19 +178,18 @@
       </section>
 
 
-      <section class="sec" data-sub="Governor" data-key="Governor Gear">
-        <div class="card rcard" id="govReport"></div>
-        <div class="info" id="govPlan"></div>
-        <div class="tiles mt" id="govTiles"></div>
-        <div class="grid mt" style="--min:170px" id="govBody"></div>
-        <p class="note-line" id="govNote"></p>
+      <section class="sec" data-sub="Masters" data-key="Masters">
+        <h2>Masters</h2>
+        <div class="info" id="mastNext"></div>
+        <div class="grid mt" style="--min:300px" id="mastBody"></div>
+        <button class="add" id="addMast">+ Add master</button>
       </section>
     </div>
 
-    <!-- ================= BASE ================= -->
-    <div class="page" data-tab="Base" hidden>
-      <div class="phead"><div><h1>Base</h1></div></div>
-      <div class="subnav" role="tablist" aria-label="Base sections"></div>
+    <!-- ================= TOWN ================= -->
+    <div class="page" data-tab="Town" hidden>
+      <div class="phead"><div><h1>Town</h1></div></div>
+      <div class="subnav" role="tablist" aria-label="Town sections"></div>
       <section class="sec" data-sub="Research" data-key="Research"><div id="researchBody"></div></section>
       <section class="sec" data-sub="Research" data-key="T11 Unlocks">
         
@@ -249,6 +221,41 @@
         <button class="add" id="addRes">+ Add material</button>
       </section>
     </div>
+
+    <!-- ================= PROGRESS ================= -->
+    <div class="page" data-tab="Progress" hidden>
+      <div class="phead"><div><h1>Progress</h1></div></div>
+      <div class="subnav" role="tablist" aria-label="Progress sections"></div>
+      <section class="sec" data-sub="Overview" data-key="This week">
+        <h2>This week</h2>
+        <div id="weekReport"></div>
+      </section>
+      <section class="sec" data-sub="Overview" data-key="Combat Quality">
+        <h2>Combat quality</h2>
+        <div class="tiles" id="combatTiles"></div>
+      </section>
+      <section class="sec" data-sub="Overview" data-key="Progress">
+        <h2>Progress</h2>
+        <div class="card">
+          <div class="chips-row" id="progMetric" role="group" aria-label="What to chart"></div>
+          <div class="rowb mt" style="align-items:flex-end"><div id="progHead"></div><div class="seg" id="progRange" role="group" aria-label="Time range"><button data-v="30">30d</button><button data-v="90">90d</button><button data-v="all">All</button></div></div>
+          <div class="pchart mt" id="progChart"></div>
+          <details class="fold mt" id="progTblWrap"><summary><span class="grow">Show the numbers</span></summary><div class="fbody" id="progTbl"></div></details>
+        </div>
+      </section>
+      <section class="sec" data-sub="Overview" data-key="Power Grades">
+        <h2>Power grades</h2>
+        <div class="card dcard" id="pillars"></div>
+        <div class="legend"><span><span class="sw" style="background:var(--green)"></span>Ahead</span><span><span class="sw" style="background:var(--amber)"></span>Slightly behind</span><span><span class="sw" style="background:var(--red)"></span>Well behind</span><span><span class="sw" style="background:var(--text);opacity:.55"></span>Benchmark</span></div>
+      </section>
+      <section class="sec" data-sub="Mystic Trials" data-key="Mystic Trials">
+        <h2>Mystic Trials</h2>
+        <div class="list" id="mysticBody"></div>
+        <button class="add" id="addMystic">+ Add zone</button>
+        <details class="fold mt2"><summary><span class="grow">Rank charts</span></summary><div class="fbody"><div id="mysticChartWrap"></div></div></details>
+      </section>
+    </div>
+
 
     <!-- ================= PLAN ================= -->
     <div class="page" data-tab="Shop" hidden>

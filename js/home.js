@@ -102,7 +102,7 @@ function renderKpis(){ const box=$("#kpis"); if(!box) return;
   const K=[
     A?{v:`A$${Math.round(A.spare)}`,l:`${A.M.label.slice(0,3)} spare`,c:"y",go:()=>setTab("Shop","Paid")}:null,
     {v:`${fmtK(num(state.stars))} ⭐`,l:"Stars",c:"",go:()=>setTab("Shop","Paid")},
-    w?{v:`${w.d>=0?"+":"−"}${fmtBig(Math.abs(w.d))}`,l:"power/wk",c:w.d>=0?"g":"r",go:()=>setTab("Heroes","Overview")}:{v:"—",l:"power/wk",c:""},
+    w?{v:`${w.d>=0?"+":"−"}${fmtBig(Math.abs(w.d))}`,l:"power/wk",c:w.d>=0?"g":"r",go:()=>setTab("Progress","Overview")}:{v:"—",l:"power/wk",c:""},
     nx?{v:`${nx.o.days}d`,l:nx.e.n,c:"",go:()=>openEventSheet(nx.e)}:{v:"—",l:"next event",c:""}].filter(Boolean);
   box.innerHTML=K.map((k,i)=>`<button class="kpi ${k.c}" data-i="${i}"><b>${esc(k.v)}</b><span>${esc(k.l)}</span></button>`).join("");
   bindAll(box,".kpi",b=>{ const k=K[+b.dataset.i]; if(k.go) k.go(); }); }
