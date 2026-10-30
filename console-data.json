@@ -876,16 +876,22 @@
       "note": "Best for Archers · Lethality research\nSKILLS = Growth only → spend books on Cassia first, Pan last\n1. Skill 2 Good Steward 4→5 — 3,200 books (XP ✓, Close 1 ✓)\n2. Then Skill 4 Ways and Means 9→10 — unlocks after step 1 (900 books, XP ✓)",
       "skills": [
         {
-          "l": 0
+          "l": 5,
+          "max": true,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "max": true,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 10,
+          "t": "g"
         }
       ]
     },
@@ -895,16 +901,21 @@
       "note": "Best for Infantry · Health research · Bear Hunt\nNEXT SKILLS (after Cassia)\n1. Skill 3 4→5 — 4,000 books (XP ✓)\n2. Skill 2 4→5 — 3,200 books + Relationship Close 2 ✗\n3. Then Skill 4 Savage Advantage 9→10 — unlocks after steps 1+2 (900 books, XP ✓)",
       "skills": [
         {
-          "l": 0
+          "l": 10,
+          "max": true,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 4,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 4,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 9,
+          "t": "c"
         }
       ]
     },
@@ -914,16 +925,20 @@
       "note": "Best for Cavalry · Attack research\nNEXT: level 60 → 70 (needs Emblems)\nSkills: all 4 at Lv7 / 10 — Combat skills 1 + 4 first",
       "skills": [
         {
-          "l": 0
+          "l": 7,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 7,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 7,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 7,
+          "t": "c"
         }
       ]
     },
@@ -933,16 +948,20 @@
       "note": "Best for Infantry · Health research\nNEXT: level 60 → 70 (needs Emblems)\nSkills: all Growth — low priority for combat",
       "skills": [
         {
-          "l": 0
+          "l": 8,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 7,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 6,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 4,
+          "t": "g"
         }
       ]
     },
@@ -952,16 +971,20 @@
       "note": "Best for ALL troops · Defense research\nKindred Soul: +20% Lethality + Health (best combat buff)\nBOOKS GO HERE FIRST (skill books in hand: 3,388)\n1. Skill 1 Recruiter 6→7 — ready now (1,800 books ✓, XP ✓)\n2. Gift Cassia to Casual 1 Affinity — unlocks Skill 4 (+5,000 Rally Capacity) and Skill 2\n3. Skill 3 Commando 4→5 (Lethality + Health) — 3,000 books ✓, XP 53,400 / 595,800 ✗ (tap Learn)\n4. Skill 2 Firepower 5→6 (Attack + Defense) — 2,500 books ✓, XP ✓, needs Casual 1\nNEXT LEVEL: 40 → 50 (needs Emblems)",
       "skills": [
         {
-          "l": 0
+          "l": 6,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 4,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 0,
+          "t": "c"
         }
       ]
     },
@@ -971,16 +994,20 @@
       "note": "Best for ALL troops · Defense research\nKindred Soul: +15% Lethality + Health\nRelationship: Casual 1 (+7.65% Lethality + Health)\nNEXT: Advance to Casual 2 — needs 60 Guinevere tokens (have 1) → +8.25% Lethality + Health, Holy Sword Domain Lv5 → 6\nSkills: Combat skills 3 + 4 first (skill 4 now unlocked)",
       "skills": [
         {
-          "l": 0
+          "l": 6,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 5,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 3,
+          "t": "c"
         }
       ]
     },
@@ -990,16 +1017,20 @@
       "note": "Best for Cavalry · Lethality research\nNEXT: level 30 → 40 (needs Emblems)\nSkills: all Growth — low priority",
       "skills": [
         {
-          "l": 0
+          "l": 4,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 1,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 0,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 0,
+          "t": "g"
         }
       ]
     },
@@ -1009,16 +1040,20 @@
       "note": "Best for Archers · Attack research\nKindred Soul: +15% Lethality + Health\nNEXT: level 20 → 30 (needs Emblems)\nSkills: Combat skill 2 still locked",
       "skills": [
         {
-          "l": 0
+          "l": 5,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 1,
+          "t": "c"
         },
         {
-          "l": 0
+          "l": 1,
+          "t": "g"
         },
         {
-          "l": 0
+          "l": 0,
+          "t": "g"
         }
       ]
     }

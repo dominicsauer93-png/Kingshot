@@ -250,6 +250,8 @@ const isPending=()=>!!lsGet(PEND_KEY);
 const jeq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const isObj=x=>x&&typeof x==="object"&&!Array.isArray(x);
 function itemId(x){ if(!isObj(x)) return null; for(const k of ["n","name","hero","k","slot","t","d"]) if(x[k]!=null&&x[k]!=="") return k+":"+x[k]+(x.type?"|"+x.type:""); return null; }
+// all zeros / empty — what a fresh or half-loaded device fills in by default
+const blankish=x=>x==null||x===""||x===0||x==="0"||x===false||(Array.isArray(x)?x.every(blankish):isObj(x)?Object.values(x).every(blankish):false);
 function merge3(b,l,r){
   if(jeq(l,r)) return l; if(jeq(l,b)) return r; if(jeq(r,b)) return l;
   if(isObj(l)&&isObj(r)){ const o={}, B=isObj(b)?b:{};
@@ -258,7 +260,7 @@ function merge3(b,l,r){
   if(Array.isArray(l)&&Array.isArray(r)){
     const ids=a=>a.map(itemId), li=ids(l), ri=ids(r), B=Array.isArray(b)?b:[], bi=ids(B);
     const uniq=a=>a.every(x=>x!=null)&&new Set(a).size===a.length;
-    if(!uniq(li)||!uniq(ri)) return l; // no stable ids — this device wins
+    if(!uniq(li)||!uniq(ri)) return blankish(l)&&!blankish(r)?r:l; // no stable ids — this device wins, unless it only holds empty defaults
     const bm=new Map(B.map((x,i)=>[bi[i],x])), rm=new Map(r.map((x,i)=>[ri[i],x])), out=[];
     l.forEach((x,i)=>{ const id=li[i];
       if(rm.has(id)) out.push(merge3(bm.get(id),x,rm.get(id)));
