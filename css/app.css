@@ -885,3 +885,25 @@
   .upcols{display:grid;gap:12px} .upcols > div{min-width:0} .upcols > div > .card + *{margin-top:12px}
   .umat{white-space:nowrap}
   @media (min-width:900px){ .upcols{grid-template-columns:1fr 1fr;align-items:start} .upcols .ublk{grid-template-columns:1fr} }
+  /* Packs v3: wallet ring, next best buy, list progress */
+  .wallet{border-radius:22px;padding:16px;border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);background:linear-gradient(135deg,var(--sh-hero1),var(--sh-hero2) 60%,var(--sh-hero3))}
+  .wrow{display:flex;gap:16px;align-items:center}
+  .wring{position:relative;width:104px;height:104px;flex:none} .wring svg{width:100%;height:100%} .wring circle{transition:stroke-dasharray .8s ease}
+  .wrt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1} .wrt b{font:800 19px var(--f-mono)} .wrt small{font:700 10px var(--f-body);color:var(--faint);margin-top:4px;text-transform:uppercase;letter-spacing:.06em}
+  .wleg{flex:1;min-width:0} .wleg div{display:flex;justify-content:space-between;gap:8px;padding:3px 0;font-size:13px;color:var(--muted)} .wleg b{font:700 13px var(--f-mono);color:var(--text)} .wleg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:7px}
+  .wpills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+  .wp{text-align:left;border-radius:14px;padding:9px 10px;background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--line-soft);color:var(--text);font:inherit;cursor:pointer;min-width:0}
+  .wp b{display:block;font:800 15px var(--f-mono);white-space:nowrap} .wp span{display:block;font-size:11px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nbuy{border-radius:22px;padding:14px 16px;border:1px solid color-mix(in srgb,var(--acc) 45%,transparent);background:linear-gradient(160deg,color-mix(in srgb,var(--acc) 22%,transparent),var(--panel) 70%)}
+  .nb-ey{margin:0;font:800 10.5px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--acc-2)}
+  .nbuy h3{margin:4px 0 2px;font:800 18px var(--f-body);color:var(--text)} .nb-s{margin:0;font-size:12.5px;color:var(--muted)}
+  .nb-g{display:flex;gap:6px;margin:10px 0} .nb-g div{flex:1;border-radius:12px;padding:8px;text-align:center;background:color-mix(in srgb,var(--bg) 55%,transparent)} .nb-g b{display:block;font:800 15px var(--f-mono)} .nb-g span{font-size:10.5px;color:var(--faint)}
+  .nb-gap{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:4px 0}
+  .nb-b{display:flex;gap:8px;margin-top:12px;align-items:center}
+  .nb-buy{flex:1;font:800 13.5px var(--f-body);padding:11px;border-radius:13px;border:0;cursor:pointer;color:#03211d;background:linear-gradient(180deg,#38d6c3,#1f9e8f);box-shadow:0 8px 16px -10px rgba(47,196,178,.9)}
+  .lprog{display:flex;align-items:center;gap:10px;padding:0 14px 10px;font-size:12.5px;color:var(--muted)} .lprog .mbar{flex:1;margin:0;height:6px}
+  .drow .dt > b .ptag{margin:0 0 0 4px;vertical-align:1px}
+  #bvAll{width:100%;background:none;border-left:0;border-right:0;border-bottom:0;font:inherit}
+  .sgtile{position:relative;cursor:pointer}
+  .sgtick{display:block;width:100%;margin-top:8px;padding:6px 8px;border-radius:9px;border:1px dashed var(--line);background:none;color:var(--acc);font:700 12px var(--f-body);cursor:pointer;text-align:center}
+  .sgtile.sgdone{opacity:.62} .sgtile.sgdone .sgtick{border-style:solid;border-color:transparent;background:var(--green-soft);color:var(--green)}

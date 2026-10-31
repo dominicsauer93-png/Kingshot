@@ -130,20 +130,35 @@ function renderBestValue(){
   const seg=[["Cards",M.renew.reduce((t,r)=>t+r.a,0),"var(--blue)"],["Kingdom",M.fund.filter(f=>!f.web).reduce((t,f)=>t+f.a,0),"var(--gold)"],["Web Stars",M.fund.filter(f=>f.web).reduce((t,f)=>t+f.a,0),"var(--acc)"],["Packs",picked.filter(p=>p.pay==="cash").reduce((t,p)=>t+p.d.a,0)+M.bought.filter(p=>!p.viaStars).reduce((t,p)=>t+num(p.aud),0),"var(--green)"]].filter(x=>x[1]>0);
   const isBlk=p=>p.why&&p.why.some(([k])=>VALUE_BLOCKERS.includes(k));
   const sub=(p,by)=>{ const bits=[give(p.d)]; if(by) bits.unshift(`<span class="bad">buy by ${fdD(by)}</span>`); else if(p.d.wk&&p.c) bits.push(`from ${fdD(vWeekStart(M.key,p.c))}`); else if(p.d.pc) bits.push(p.d.pc); return bits.join(" · "); };
+  // wallet ring: where the month's real money goes
+  const spentTot=seg.reduce((t,x)=>t+x[1],0), RR=40, CC=2*Math.PI*RR; let off=0;
+  const ring=seg.map(([l,v,c])=>{ const len=Math.min(1,v/M.bud)*CC, el=`<circle cx="50" cy="50" r="${RR}" fill="none" stroke="${c}" stroke-width="13" stroke-dasharray="${len.toFixed(1)} ${CC.toFixed(1)}" stroke-dashoffset="${(-off).toFixed(1)}" transform="rotate(-90 50 50)"/>`; off+=len; return el; }).join("");
+  const nBought=M.fund.filter(f=>f.got).length+M.bought.length, nAll=M.fund.length+M.bought.length+order.length;
+  const skip=(state.ui.bvSkip||{})[M.key]||[], nxi=order.findIndex(({p})=>!skip.includes(vName(p))), nx=nxi>=0?order[nxi]:null;
+  const nextH=nx?(()=>{ const {p,by}=nx, w=(p.why||[])[0], ys=Object.entries(p.d.y).slice(0,3);
+    return `<div class="nbuy mt"><p class="nb-ey">Next best buy${by?` · <span class="bad">by ${fdD(by)}</span>`:""}</p><h3>${esc(vShort(p))}</h3><p class="nb-s">${p.d.pc?`${p.d.pc} · `:""}${isBlk(p)?"fixes a blocker":"best value left"}</p>
+      <div class="nb-g">${ys.map(([k,v])=>`<div><b>${fmtK(v)}</b><span>${k==="gems"?"gems":vLab(k)}</span></div>`).join("")}</div>
+      ${w?`<div class="nb-gap"><span>${vLab(w[0])} gap</span><span>fills <b class="ok">${fv(w[1])}</b> of ${fmt(Math.round(need[w[0]]))}</span></div><div class="mbar"><i style="width:${Math.min(100,w[1]/Math.max(1,need[w[0]])*100)}%;background:var(--green)"></i></div>`:""}
+      <div class="nb-b"><button class="nb-buy" id="bvNextBuy">✓ I bought it · ${p.pay==="stars"?`−${fmt(p.starCost)} ⭐`:`A$${p.d.a.toFixed(2)}`}</button><button class="btn sm" id="bvNextSkip">Skip</button></div></div>`; })():"";
+  const LIM=6, showAll=!!state.ui.bvAll;
+  const rows=[...M.fund.map((f,fi)=>`<label class="drow${f.got?" done":""}"><input type="checkbox" class="cbx" data-f="${fi}"${f.got?" checked":""}><span class="dt"><b>${esc(f.t.replace(/^Web store: /,"Web "))}</b><span>+${fmt(f.stars)} ⭐${f.gen?` · ${f.gen} General shards`:""} · ${f.web?(f.once?"web, once ever":"web, monthly"):"monthly"}</span></span><span class="dv">A$${f.a.toFixed(2)}</span></label>`),
+    ...M.bought.map(p=>`<label class="drow done"><input type="checkbox" class="cbx" data-b="${state.packs.indexOf(p)}" checked><span class="dt"><b>${esc(p.t)}</b><span>bought ✓</span></span><span class="dv">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${num(p.aud).toFixed(2)}`}</span></label>`),
+    ...order.map(({p,by},pi)=>`<label class="drow"><input type="checkbox" class="cbx" data-p="${pi}"><span class="dt"><b>${esc(vShort(p))}${isBlk(p)?' <em class="ptag r">blocker</em>':""}${by?` <em class="ptag y">by ${fdD(by)}</em>`:""}</b><span>${sub(p,null)}</span></span><span class="dv">${p.pay==="stars"?`${fmt(p.starCost)} ⭐`:`A$${p.d.a.toFixed(2)}`}</span></label>`)];
   host.innerHTML=
-    `<div class="card dcard"><div class="dch"><h3>${esc(M.label)}</h3><button class="pill" id="bvItems">Planning for ${keys.length} item${keys.length===1?"":"s"} ✎</button><button class="pill" id="bvBud">A$${M.bud} ✎</button></div>
-      <div class="meter"><div class="big"><b>A$${A.planned.toFixed(2)}</b><span>planned · A$${A.spare.toFixed(2)} spare</span></div>
-      <div class="mbar">${seg.map(([l,v,c])=>`<i style="width:${Math.min(100,v/M.bud*100)}%;background:${c}" title="${l} A$${v.toFixed(2)}"></i>`).join("")}</div>
-      <div class="legend">${seg.map(([l,v,c])=>`<span><i style="background:${c}"></i>${l} A$${v.toFixed(0)}</span>`).join("")}</div></div></div>`+
-    `<div class="card dcard mt"><div class="dch"><h3>1 · Get Stars</h3><button class="pill y" id="bvStars">${fmt(M.stars)} ⭐ ✎</button></div>
-      ${M.fund.map((f,fi)=>`<label class="drow"><input type="checkbox" class="cbx" data-f="${fi}"${f.got?" checked":""}><span class="dt"><b>${esc(f.t.replace(/^Web store: /,"Web "))}</b><span>${f.web?`web store · ${f.once?"once ever":"monthly"}`:`${f.gen?`+${f.gen} General shards · `:""}monthly`}</span></span><span class="dv">A$${f.a.toFixed(2)}<small>${fmt(f.stars)} ⭐</small></span></label>`).join("")}
-      ${M.renew.length?`<p class="dnote">Set aside: ${M.renew.map(r=>`${esc(r.t)} A$${r.a.toFixed(2)}`).join(" · ")}</p>`:""}</div>`+
-    `<div class="card dcard mt"><div class="dch"><h3>2 · Buy, best first</h3><button class="link" id="bvWhy">Why? ›</button></div>
-      ${M.bought.map(p=>`<label class="drow done"><input type="checkbox" class="cbx" data-b="${state.packs.indexOf(p)}" checked><span class="dt"><b>${esc(p.t)}</b><span>bought ✓</span></span><span class="dv">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${num(p.aud).toFixed(2)}`}</span></label>`).join("")}
-      ${order.map(({p,by},pi)=>`<label class="drow"><input type="checkbox" class="cbx" data-p="${pi}"><span class="dt"><b>${isBlk(p)?'<i class="bdot" title="blocker"></i>':""}${esc(vShort(p))}</b><span>${sub(p,by)}</span></span><span class="dv">${p.pay==="stars"?`${fmt(p.starCost)} ⭐`:`A$${p.d.a.toFixed(2)}`}</span></label>`).join("")||`<p class="dnote">${keys.length?"Nothing on now closes what you picked.":"Pick what to plan for (✎ above)."}</p>`}
+    `<div class="wallet"><div class="wrow"><div class="wring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="${RR}" fill="none" stroke="var(--track)" stroke-width="13"/>${ring}</svg><div class="wrt"><b>A$${Math.round(spentTot)}</b><small>of A$${M.bud}</small></div></div>
+      <div class="wleg">${seg.map(([l,v,c])=>`<div><span><i style="background:${c}"></i>${l}</span><b>A$${v.toFixed(0)}</b></div>`).join("")}</div></div>
+      <div class="wpills"><button class="wp" id="bvStars"><b class="gold">${fmt(M.stars)} ⭐</b><span>Stars ✎</span></button><button class="wp" id="bvBud"><b class="ok">A$${A.spare.toFixed(2)}</b><span>left ✎</span></button><div class="wp"><b>${nBought} / ${nAll}</b><span>bought</span></div></div></div>`+
+    nextH+
+    `<div class="card dcard mt"><div class="dch"><h3>${esc(M.label)} list</h3><button class="pill" id="bvItems">${keys.length} item${keys.length===1?"":"s"} ✎</button><button class="link" id="bvWhy">Why? ›</button></div>
+      <div class="lprog"><span class="mbar"><i style="width:${nAll?nBought/nAll*100:0}%;background:var(--acc)"></i></span><span>${nBought} of ${nAll}</span></div>
+      ${(showAll?rows:rows.slice(0,LIM)).join("")||`<p class="dnote">${keys.length?"Nothing on now closes what you picked.":"Pick what to plan for (✎ above)."}</p>`}
+      ${rows.length>LIM?`<button class="drow" id="bvAll"><span class="dt"><span class="link">${showAll?"Show less":`+${rows.length-LIM} more`} ›</span></span></button>`:""}
       ${keys.length?`<div class="cov">${keys.map(k=>{ const n=Math.round(need[k]); if(!n) return `<span>${vLab(k)}</span><span class="mini"><i style="width:100%;background:var(--green)"></i></span><b>✓</b>`; const got=n-Math.round(rem[k]); return `<span>${vLab(k)}</span><span class="mini"><i style="width:${Math.min(100,got/n*100)}%${got>=n?";background:var(--green)":""}"></i></span><b>${fmt(got)}/${fmt(n)}</b>`; }).join("")}</div>`:""}
-      <p class="dnote"><i class="bdot"></i>blocker · ⭐ pay with Stars · tick as you buy</p></div>`+
+      ${M.renew.length?`<p class="dnote">Also renewing: ${M.renew.map(r=>`${esc(r.t)} A$${r.a.toFixed(2)}`).join(" · ")}</p>`:""}</div>`+
     `<div class="dlinks"><button class="link" id="bvCheap">Cheapest source of each item ›</button><button class="link" id="bvWeb">Cheaper Stars ›</button><button class="link" id="bvNever">Never buy ›</button></div>`;
+  on("bvAll",()=>{ state.ui.bvAll=!showAll; scheduleSave(); renderBestValue(); });
+  on("bvNextSkip",()=>{ const S=state.ui.bvSkip||(state.ui.bvSkip={}); (S[M.key]||(S[M.key]=[])).push(vName(nx.p)); scheduleSave(); renderBestValue(); });
+  on("bvNextBuy",()=>{ const c=host.querySelector(`input[data-p="${nxi}"]`); if(c){ c.checked=true; c.dispatchEvent(new Event("change")); } });
   // sheets for the detail that used to sit on the page
   on("bvItems",()=>openSheet({title:"Plan for",sub:"What should the plan close this month?",build(f){
     const draw=()=>{ f.innerHTML=`<div class="bvchips">${VALUE_ITEMS.map(([k,l])=>`<button class="chip" data-k="${k}" aria-pressed="${state.ui.bvPick.includes(k)}">${l}${need[k]?` <small>· ${fmt(Math.round(need[k]))} short</small>`:""}</button>`).join("")}</div><label class="bvnow"><input type="checkbox" id="bvNow"${A.onlyNow?" checked":""}> Only deals on now</label>`;
