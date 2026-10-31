@@ -3541,8 +3541,8 @@
       "title": "Truegold Tech Research — Advanced",
       "started": {
         "Chests of Gold": 4,
-        "Side node left of Chests of Gold": 4,
-        "Side node right of Chests of Gold": 2
+        "Truegold Weaponry": 4,
+        "Truegold Barracks": 2
       },
       "next": "Truegold Intel",
       "max": 10,
@@ -3550,20 +3550,467 @@
         "Chests of Gold",
         "Truegold Intel",
         "Limited Supply",
+        "Truegold Weaponry",
+        "Truegold Barracks",
+        "Truegold Infirmaries",
+        "Quick Bandage",
+        "Auric Mauls I",
+        "Auric Plating I",
+        "Auric Destruction I",
+        "Golden Shield I",
+        "Truegold Lances I",
+        "Golden Mantle I",
+        "True Shock I",
+        "Golden Horseshoes I",
+        "Auric Arrowheads I",
+        "Auric Pauldrons I",
+        "Golden Bows I",
+        "Auric Bracers I",
         "Truegold Provisions I",
         "Generation Truegold I",
-        "Truegold Bounties I",
-        "Heart of Gold I",
         "Truegold Armaments I",
         "Truegold Armor I",
+        "Truegold Bounties I",
+        "Heart of Gold I",
+        "Auric Mauls II",
+        "Auric Plating II",
+        "Auric Destruction II",
+        "Golden Shield II",
+        "Truegold Lances II",
+        "Golden Mantle II",
+        "True Shock II",
+        "Golden Horseshoes II",
+        "Auric Arrowheads II",
+        "Auric Pauldrons II",
+        "Golden Bows II",
+        "Auric Bracers II",
         "Truegold Provisions II",
         "Generation Truegold II",
+        "Truegold Armaments II",
+        "Truegold Armor II",
         "Truegold Bounties II",
         "Heart of Gold II",
-        "Truegold Armaments II",
-        "Truegold Armor II"
+        "Auric Mauls III",
+        "Auric Plating III",
+        "Auric Destruction III",
+        "Golden Shield III",
+        "Truegold Lances III",
+        "Golden Mantle III",
+        "True Shock III",
+        "Golden Horseshoes III",
+        "Auric Arrowheads III",
+        "Auric Pauldrons III",
+        "Golden Bows III",
+        "Auric Bracers III",
+        "Auric Mauls IV",
+        "Auric Plating IV",
+        "Auric Destruction IV",
+        "Golden Shield IV",
+        "Truegold Lances IV",
+        "Golden Mantle IV",
+        "True Shock IV",
+        "Golden Horseshoes IV",
+        "Auric Arrowheads IV",
+        "Auric Pauldrons IV",
+        "Golden Bows IV",
+        "Auric Bracers IV",
+        "Auric Mauls V",
+        "Auric Plating V",
+        "Auric Destruction V",
+        "Golden Shield V",
+        "Truegold Lances V",
+        "Golden Mantle V",
+        "True Shock V",
+        "Golden Horseshoes V",
+        "Auric Arrowheads V",
+        "Auric Pauldrons V",
+        "Golden Bows V",
+        "Auric Bracers V",
+        "Auric Mauls VI",
+        "Auric Plating VI",
+        "Auric Destruction VI",
+        "Golden Shield VI",
+        "Truegold Lances VI",
+        "Golden Mantle VI",
+        "True Shock VI",
+        "Golden Horseshoes VI",
+        "Auric Arrowheads VI",
+        "Auric Pauldrons VI",
+        "Golden Bows VI",
+        "Auric Bracers VI",
+        "Truegold Provisions III"
       ],
-      "note": "Everything else 0/10 (troop stat grids between the named nodes); final node 0/100. Currency shown: 337."
+      "note": "Node list + War Academy tier needed, from your table (31 Oct). Side nodes by Chests of Gold = Weaponry (left) and Barracks (right) — my best match from the icons.",
+      "nodes": [
+        {
+          "n": "Chests of Gold",
+          "req": "TG5"
+        },
+        {
+          "n": "Truegold Intel",
+          "req": "TG5"
+        },
+        {
+          "n": "Limited Supply",
+          "req": "TG5"
+        },
+        {
+          "n": "Truegold Weaponry",
+          "req": "TG5"
+        },
+        {
+          "n": "Truegold Barracks",
+          "req": "TG5"
+        },
+        {
+          "n": "Truegold Infirmaries",
+          "req": "TG5"
+        },
+        {
+          "n": "Quick Bandage",
+          "req": "TG5"
+        },
+        {
+          "n": "Auric Mauls I",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Plating I",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Destruction I",
+          "req": "TG6"
+        },
+        {
+          "n": "Golden Shield I",
+          "req": "TG6"
+        },
+        {
+          "n": "Truegold Lances I",
+          "req": "TG6"
+        },
+        {
+          "n": "Golden Mantle I",
+          "req": "TG6"
+        },
+        {
+          "n": "True Shock I",
+          "req": "TG6"
+        },
+        {
+          "n": "Golden Horseshoes I",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Arrowheads I",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Pauldrons I",
+          "req": "TG6"
+        },
+        {
+          "n": "Golden Bows I",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Bracers I",
+          "req": "TG6"
+        },
+        {
+          "n": "Truegold Provisions I",
+          "req": "TG6"
+        },
+        {
+          "n": "Generation Truegold I",
+          "req": "TG7"
+        },
+        {
+          "n": "Truegold Armaments I",
+          "req": "TG8"
+        },
+        {
+          "n": "Truegold Armor I",
+          "req": "TG8"
+        },
+        {
+          "n": "Truegold Bounties I",
+          "req": "TG8"
+        },
+        {
+          "n": "Heart of Gold I",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Mauls II",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Plating II",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Destruction II",
+          "req": "TG6"
+        },
+        {
+          "n": "Golden Shield II",
+          "req": "TG6"
+        },
+        {
+          "n": "Truegold Lances II",
+          "req": "TG6"
+        },
+        {
+          "n": "Golden Mantle II",
+          "req": "TG6"
+        },
+        {
+          "n": "True Shock II",
+          "req": "TG6"
+        },
+        {
+          "n": "Golden Horseshoes II",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Arrowheads II",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Pauldrons II",
+          "req": "TG6"
+        },
+        {
+          "n": "Golden Bows II",
+          "req": "TG6"
+        },
+        {
+          "n": "Auric Bracers II",
+          "req": "TG6"
+        },
+        {
+          "n": "Truegold Provisions II",
+          "req": "TG6"
+        },
+        {
+          "n": "Generation Truegold II",
+          "req": "TG7"
+        },
+        {
+          "n": "Truegold Armaments II",
+          "req": "TG8"
+        },
+        {
+          "n": "Truegold Armor II",
+          "req": "TG8"
+        },
+        {
+          "n": "Truegold Bounties II",
+          "req": "TG8"
+        },
+        {
+          "n": "Heart of Gold II",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Mauls III",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Plating III",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Destruction III",
+          "req": "TG7"
+        },
+        {
+          "n": "Golden Shield III",
+          "req": "TG7"
+        },
+        {
+          "n": "Truegold Lances III",
+          "req": "TG7"
+        },
+        {
+          "n": "Golden Mantle III",
+          "req": "TG7"
+        },
+        {
+          "n": "True Shock III",
+          "req": "TG7"
+        },
+        {
+          "n": "Golden Horseshoes III",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Arrowheads III",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Pauldrons III",
+          "req": "TG7"
+        },
+        {
+          "n": "Golden Bows III",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Bracers III",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Mauls IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Plating IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Destruction IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Golden Shield IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Truegold Lances IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Golden Mantle IV",
+          "req": "TG7"
+        },
+        {
+          "n": "True Shock IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Golden Horseshoes IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Arrowheads IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Pauldrons IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Golden Bows IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Bracers IV",
+          "req": "TG7"
+        },
+        {
+          "n": "Auric Mauls V",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Plating V",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Destruction V",
+          "req": "TG8"
+        },
+        {
+          "n": "Golden Shield V",
+          "req": "TG8"
+        },
+        {
+          "n": "Truegold Lances V",
+          "req": "TG8"
+        },
+        {
+          "n": "Golden Mantle V",
+          "req": "TG8"
+        },
+        {
+          "n": "True Shock V",
+          "req": "TG8"
+        },
+        {
+          "n": "Golden Horseshoes V",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Arrowheads V",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Pauldrons V",
+          "req": "TG8"
+        },
+        {
+          "n": "Golden Bows V",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Bracers V",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Mauls VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Plating VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Destruction VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Golden Shield VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Truegold Lances VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Golden Mantle VI",
+          "req": "TG8"
+        },
+        {
+          "n": "True Shock VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Golden Horseshoes VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Arrowheads VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Pauldrons VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Golden Bows VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Auric Bracers VI",
+          "req": "TG8"
+        },
+        {
+          "n": "Truegold Provisions III",
+          "req": "TG8"
+        }
+      ]
     },
     "growth": {
       "seen": "2026-10-30",
