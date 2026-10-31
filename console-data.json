@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1592,7 +1592,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
+      "Data": "Sync",
       "Gear": "Pets",
       "Base": "Research",
       "Plan": "Shop guide",
@@ -1663,7 +1663,7 @@
     "have": {
       "xp": 0,
       "fh": 161,
-      "mg": 6,
+      "mg": 5,
       "mith": 5
     },
     "rows": [
@@ -1876,18 +1876,13 @@
     ],
     "planDate": "2026-10-23",
     "chests": {
-      "lucky": 0,
+      "lucky": 22,
       "custom": 0,
       "log": [
         {
           "d": "2026-10-27",
           "opened": 77,
           "mythic": 4
-        },
-        {
-          "d": "2026-10-31",
-          "opened": 26,
-          "mythic": 1
         }
       ]
     }
@@ -3387,9 +3382,9 @@
     "mg": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 6
+        "2026-10": 5
       },
-      "seen": 6
+      "seen": 5
     },
     "mith": {
       "since": "2026-10-26",
@@ -3468,10 +3463,6 @@
     {
       "d": "2026-10-31",
       "t": "Done: Wee &amp; Woo widget Lv 2 → 3"
-    },
-    {
-      "d": "2026-10-31",
-      "t": "Logged 26 chests → 1 Mythic"
     }
   ],
   "bagCheck": {
