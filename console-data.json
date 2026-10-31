@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1597,7 +1597,7 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
+      "Heroes": "Widgets",
       "Shop": "Free shops",
       "Governor": "Pets",
       "Progress": "Overview",
