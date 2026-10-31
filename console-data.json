@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1598,7 +1598,7 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Widgets",
-      "Shop": "Free shops",
+      "Shop": "Paid",
       "Governor": "Pets",
       "Progress": "Overview",
       "Town": "Research"
@@ -3470,6 +3470,10 @@
     {
       "d": "2026-10-31",
       "t": "Done: Archer 1: Gold 2★ → Gold 3★"
+    },
+    {
+      "d": "2026-10-31",
+      "t": "Web store: 999 + 999 Stars: +1,998 ⭐"
     }
   ],
   "bagCheck": {
@@ -4049,5 +4053,7 @@
       }
     }
   },
-  "stars": 4
+  "stars": 2002,
+  "webOnceDone": true,
+  "webOnceMonth": "2026-11"
 }
