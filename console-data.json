@@ -524,9 +524,10 @@
       "aud": 30.99,
       "kind": "month",
       "d": true,
-      "note": "1,999 Kingdom Stars (≈ two A$14.99 packs) + 20 General Mythic shards (blank — any hero) — monthly reset. Stars pay for other packs.",
+      "note": "1,999 Kingdom Stars (≈ two A$14.99 packs) + 20 General Mythic shards (blank — any hero) — monthly reset. Stars pay for other packs. Resets on the 1st (shared limit with the web store, where it gives +100 Stars).",
       "stars": 1999,
-      "gen": 20
+      "gen": 20,
+      "resetDay": 1
     },
     {
       "t": "2nd construction queue",

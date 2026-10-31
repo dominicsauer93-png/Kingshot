@@ -49,8 +49,8 @@ const vY=(d,k)=>num(d.y[k])+(k==="gen"?num(d.y.gems)/GEMS_PER_SHARD:0);
 const STAR_TIERS={0.99:99,1.49:99,2.99:199,4.99:299,7.99:499,14.99:999,30.99:1999,79.99:4999,159.99:9999}; // in-game A$ price → Stars (assumed; check one in game)
 const starsFor=a=>STAR_TIERS[num(a).toFixed(2)*1]||Math.round(num(a)/0.0155);
 const STAR_A=14.99/999; // ≈ A$ of packs per Star
-const fxRate=()=>(num(state.fx)||1.55)*(1+(state.fxFee==null?3:num(state.fxFee))/100); // A$ per US$ incl. your bank's foreign fee — set both in the ⭐ panel
-const WEB_STARS=[{id:"m",t:"Web store: 499 + 499 Stars",usd:4.99,stars:998},{id:"o",t:"Web store: 999 + 999 Stars (once ever)",usd:9.99,stars:1998,once:true}];
+// web store prices are in A$ (store.centurygames.com shows AU$) — no exchange rate needed
+const WEB_STARS=[{id:"m",t:"Web store: 499 + 499 Stars",aud:7.99,stars:998},{id:"o",t:"Web store: 999 + 999 Stars",aud:14.99,stars:1998,once:true}];
 function vPlanMonth(){ const cur=gameToday().slice(0,7), mo=state.packMonths||{}, closed=mo[cur]&&mo[cur].closed;
   const d=new Date(cur+"-01T00:00:00Z"); if(closed) d.setUTCMonth(d.getUTCMonth()+1); const key=d.toISOString().slice(0,7);
   const P=state.packs||[], bought=P.filter(p=>p.auto===key&&p.d&&!p.web), bud=num(state.packBudget)||100;
@@ -59,7 +59,7 @@ function vPlanMonth(){ const cur=gameToday().slice(0,7), mo=state.packMonths||{}
   const renew=P.filter(p=>p.d&&(p.kind==="month"||p.kind==="week")&&!p.auto&&!num(p.stars)).map(p=>({t:p.t,a:num(p.aud)*(p.kind==="week"?4:1)}));
   // Star packs: your Kingdom Special (in-game) + the cheap web store packs
   const fund=P.filter(p=>p.d&&num(p.stars)&&!p.auto).map(p=>({t:p.t,a:num(p.aud),stars:num(p.stars),gen:num(p.gen),got:thisMonth(p)}))
-    .concat(WEB_STARS.filter(w=>w.once?(!state.webOnceDone||state.webOnceMonth===key):state.webMonthly!==false).map(w=>({t:w.t,a:w.usd*fxRate(),usd:w.usd,stars:w.stars,web:w.id,once:w.once,got:w.once?!!state.webOnceDone:state.webMonth===key})));
+    .concat(WEB_STARS.filter(w=>w.once?(!state.webOnceDone||state.webOnceMonth===key):state.webMonthly!==false).map(w=>({t:w.t,a:w.aud,stars:w.stars,web:w.id,once:w.once,got:w.once?!!state.webOnceDone:state.webMonth===key})));
   const cashOut=num((mo[key]||{}).spent)+bought.filter(p=>!p.viaStars).reduce((t,p)=>t+num(p.aud),0)+renew.reduce((t,r)=>t+r.a,0)+fund.reduce((t,f)=>t+f.a,0);
   const cash=Math.max(0,bud-cashOut), stars=num(state.stars)+fund.filter(f=>!f.got).reduce((t,f)=>t+f.stars,0);
   return {key,label:d.toLocaleDateString(undefined,{month:"long",timeZone:"UTC"}),cash,stars,left:cash+stars*STAR_A,bud,bought,renew,fund,extra:{gen:fund.reduce((t,f)=>t+num(f.gen),0)}}; }
@@ -68,7 +68,7 @@ function monthSpent(key){ const mo=(state.packMonths||{})[key]||{}; if(mo.closed
   const P=state.packs||[], inM=p=>String(p.bought||"").slice(0,7)===key;
   return num(mo.spent)+P.filter(p=>p.auto===key&&p.d&&!p.viaStars).reduce((t,p)=>t+num(p.aud),0)
     +P.filter(p=>p.d&&PACK_DAYS[p.kind]&&inM(p)).reduce((t,p)=>t+num(p.aud),0)
-    +(state.webMonth===key?4.99*fxRate():0)+(state.webOnceMonth===key?9.99*fxRate():0); }
+    +(state.webMonth===key?7.99:0)+(state.webOnceMonth===key?14.99:0); }
 // pay with Stars where they go furthest (whole packs only — use as many Stars as possible), the rest in cash;
 // if the cash still runs out, drop the lowest-ranked picks
 function vPay(picked,M){ let L=picked.slice();
@@ -78,7 +78,7 @@ function vPay(picked,M){ let L=picked.slice();
     const cash=L.reduce((t,p,i)=>t+(viaS.has(i)?0:p.d.a),0);
     if(cash<=M.cash+0.005||!L.length) return {list:L.map((p,i)=>Object.assign({pay:viaS.has(i)?"stars":"cash",starCost:cost[i]},p)),starsLeft:S-v,cashLeft:M.cash-cash};
     L.pop(); } }
-const STAR_WEB=[["499 + 499 Stars","US$4.99","100% bonus","Every month — about A$15 of packs for ~A$8"],["999 + 999 Stars","US$9.99","100% bonus","Once ever — about two A$14.99 packs"],["1,999 + 100 Stars + 20 General shards","US$19.99","5% + shards","Every month — same as Kingdom Special, +100 Stars"],["9,999 + 500 Stars + frame","US$99.99","5%","Monthly — only if you need that many"]];
+const STAR_WEB=[["499 + 499 Stars","A$7.99","100% bonus","Monthly — about one A$14.99 pack for A$7.99"],["999 + 999 Stars","A$14.99","100% bonus","Once ever — about two A$14.99 packs"],["1,999 + 100 Stars + 20 General shards","exclusive","5% + shards","Monthly — your Kingdom Special, +100 Stars on the web"],["9,999 + 500 Stars + frame","A$159.99","5%","Monthly — only if you need that many"],["Other Star bundles","A$4.49–1,599","5%","No better than buying packs in game"]];
 // greedy: each step buys the deal that fills the most of your remaining gaps per A$ (an item stops counting once it's covered)
 function vPick(keys,onlyNow,budget,already,extra){
   const need=vNeeds(), rem={}; keys.forEach(k=>rem[k]=Math.max(0,need[k]-num((extra||{})[k]))); // extra = what Star packs already give (Kingdom Special's 20 shards)
@@ -136,7 +136,7 @@ function renderBestValue(){
       <div class="mbar">${seg.map(([l,v,c])=>`<i style="width:${Math.min(100,v/M.bud*100)}%;background:${c}" title="${l} A$${v.toFixed(2)}"></i>`).join("")}</div>
       <div class="legend">${seg.map(([l,v,c])=>`<span><i style="background:${c}"></i>${l} A$${v.toFixed(0)}</span>`).join("")}</div></div></div>`+
     `<div class="card dcard mt"><div class="dch"><h3>1 · Get Stars</h3><button class="pill y" id="bvStars">${fmt(M.stars)} ⭐ ✎</button></div>
-      ${M.fund.map((f,fi)=>`<label class="drow"><input type="checkbox" class="cbx" data-f="${fi}"${f.got?" checked":""}><span class="dt"><b>${esc(f.t.replace(/^Web store: /,"Web "))}</b><span>${f.usd?`US$${f.usd.toFixed(2)} · ${f.once?"once ever":"monthly"}`:`${f.gen?`+${f.gen} General shards · `:""}monthly`}</span></span><span class="dv">A$${f.a.toFixed(2)}<small>${fmt(f.stars)} ⭐</small></span></label>`).join("")}
+      ${M.fund.map((f,fi)=>`<label class="drow"><input type="checkbox" class="cbx" data-f="${fi}"${f.got?" checked":""}><span class="dt"><b>${esc(f.t.replace(/^Web store: /,"Web "))}</b><span>${f.web?`web store · ${f.once?"once ever":"monthly"}`:`${f.gen?`+${f.gen} General shards · `:""}monthly`}</span></span><span class="dv">A$${f.a.toFixed(2)}<small>${fmt(f.stars)} ⭐</small></span></label>`).join("")}
       ${M.renew.length?`<p class="dnote">Set aside: ${M.renew.map(r=>`${esc(r.t)} A$${r.a.toFixed(2)}`).join(" · ")}</p>`:""}</div>`+
     `<div class="card dcard mt"><div class="dch"><h3>2 · Buy, best first</h3><button class="link" id="bvWhy">Why? ›</button></div>
       ${M.bought.map(p=>`<label class="drow done"><input type="checkbox" class="cbx" data-b="${state.packs.indexOf(p)}" checked><span class="dt"><b>${esc(p.t)}</b><span>bought ✓</span></span><span class="dv">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${num(p.aud).toFixed(2)}`}</span></label>`).join("")}
@@ -156,16 +156,14 @@ function renderBestValue(){
     const ff=v=>v>=10?fmt(Math.round(v)):v.toFixed(1);
     f.innerHTML=keys.map(k=>{ const per=d=>vY(d,k)/d.a, L=VALUE_DB.filter(d=>vY(d,k)>0&&!(vPc(d)&&vPc(d)<3000)).sort((a,b)=>per(b)-per(a)).slice(0,4); if(!L.length) return "";
       return `<h3 class="sgsec">${vLab(k)}</h3><div class="list">${L.map((d,i)=>`<div class="lrow"><span style="min-width:0;flex:1">${i+1}. ${esc(d.n)}${d.pc?` <span class="faint">${d.pc}</span>`:""}<br><span class="${vOnNow(d)?"ok":"faint"}" style="font-size:13px">${vOnNow(d)?"on now":esc(vWhen(d))}</span></span><b class="mono">${ff(per(d))}/A$</b></div>`).join("")}</div>`; }).join("")||'<p class="faint">Pick what to plan for first.</p>'; }}));
-  on("bvWeb",()=>openSheet({title:"Cheaper Stars",sub:"store.centurygames.com/kingshot — charged in US$.",build(f){
+  on("bvWeb",()=>openSheet({title:"Cheaper Stars",sub:"store.centurygames.com/kingshot — prices in A$.",build(f){
     f.innerHTML=`<div class="list">${STAR_WEB.map(([a,b,c,d])=>`<div class="lrow"><span style="flex:1;min-width:0"><b>${esc(a)}</b><br><span class="faint" style="font-size:13.5px">${esc(d)}</span></span><span class="mono" style="text-align:right">${esc(b)}<br><span class="faint" style="font-size:12px">${esc(c)}</span></span></div>`).join("")}</div><p class="faint mt" style="font-size:13.5px">1 Star = 1 US cent. Your bank may add a foreign fee. Stars only pay for a whole pack; buying Stars gives no Top-up Points (spending them does).</p>`; }}));
   on("bvNever",()=>openSheet({title:"Never buy",sub:"Your rule.",build(f){ f.innerHTML=`<ul class="tight"><li>Resource packs</li><li>Random chests</li><li>Big mixed bundles</li><li>Anything under 3,000%</li></ul><p class="faint mt" style="font-size:13.5px">Extra only: event packs with Mithril or Mythic shards.</p>`; }}));
   on("bvBud",openPackBudgetSheet);
-  on("bvStars",()=>openSheet({title:"Kingdom Stars",sub:"Balance, web store packs and exchange rate.",build(f){
+  on("bvStars",()=>openSheet({title:"Kingdom Stars",sub:"Balance and web store packs.",build(f){
     f.appendChild(fld("Stars you have now",{type:"num",value:num(state.stars),get:()=>num(state.stars),set:v=>state.stars=Math.max(0,Math.round(v)),hint:"Ticking packs updates this for you — fix it here if it drifts."}));
-    f.appendChild(frow(fld("A$ per US$ (web store)",{type:"num",decimal:true,value:num(state.fx)||1.55,get:()=>num(state.fx)||1.55,set:v=>state.fx=v}),
-      fld("Bank foreign fee %",{type:"num",decimal:true,value:state.fxFee==null?3:num(state.fxFee),get:()=>state.fxFee==null?3:num(state.fxFee),set:v=>state.fxFee=v,hint:"Many cards charge ~3%; 0 if yours doesn't."})));
-    f.appendChild(fld("Buy the US$4.99 web pack (499 + 499 Stars) each month",{type:"check",value:state.webMonthly!==false,set:v=>state.webMonthly=v}));
-    f.appendChild(fld("I've bought the once-only US$9.99 pack (999 + 999)",{type:"check",value:!!state.webOnceDone,set:v=>state.webOnceDone=v}));
+    f.appendChild(fld("Buy the A$7.99 web pack (499 + 499 Stars) each month",{type:"check",value:state.webMonthly!==false,set:v=>state.webMonthly=v}));
+    f.appendChild(fld("I've bought the once-only A$14.99 pack (999 + 999)",{type:"check",value:!!state.webOnceDone,set:v=>state.webOnceDone=v}));
     const i=infoBox(); f.appendChild(i);
     const rf=()=>{ i.innerHTML=`≈ <b>A$${(num(state.stars)*STAR_A).toFixed(2)}</b> of packs. In-game Star prices (assumed): A$2.99 = 199 · A$7.99 = 499 · A$14.99 = 999.`; }; rf(); return rf; }}));
   // ticking: a plan pack → a bought record for this month; a Star pack → Stars in; untick undoes it
