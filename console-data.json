@@ -1454,7 +1454,7 @@
     "targetIdx": 18,
     "have": {
       "satin": 37393,
-      "threads": 91,
+      "threads": 144,
       "vision": 613
     },
     "pieces": [
@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1599,7 +1599,7 @@
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
       "Shop": "Free shops",
-      "Governor": "Gov Gear",
+      "Governor": "Pets",
       "Progress": "Overview",
       "Town": "Research"
     },
@@ -1665,7 +1665,7 @@
     "have": {
       "xp": 0,
       "fh": 247,
-      "mg": 5,
+      "mg": 6,
       "mith": 5
     },
     "rows": [
@@ -3289,10 +3289,10 @@
     "have": {
       "food": 43320,
       "manuals": 1570,
-      "potions": 96,
+      "potions": 101,
       "tmCommon": 67,
       "tmAdv": 1,
-      "medals": 4
+      "medals": 38
     },
     "rows": [
       {
@@ -3404,9 +3404,9 @@
     "mg": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 5
+        "2026-10": 6
       },
-      "seen": 5
+      "seen": 6
     },
     "mith": {
       "since": "2026-10-26",
@@ -3418,9 +3418,9 @@
     "threads": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 527
+        "2026-10": 580
       },
-      "seen": 91
+      "seen": 144
     },
     "designs": {
       "since": "2026-10-26",
@@ -3475,9 +3475,9 @@
   "bagCheck": {
     "d": "2026-10-31",
     "v": {
-      "mg": 5,
+      "mg": 6,
       "mith": 5,
-      "threads": 351,
+      "threads": 91,
       "designs": 273,
       "fh": 247,
       "gen": 111
