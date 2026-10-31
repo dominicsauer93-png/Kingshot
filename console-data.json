@@ -1476,7 +1476,7 @@
       },
       {
         "name": "Archer 1",
-        "cur": 17
+        "cur": 18
       },
       {
         "name": "Archer 2",
@@ -1597,9 +1597,9 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
+      "Heroes": "Widgets",
       "Shop": "Paid",
-      "Governor": "Masters",
+      "Governor": "Charms",
       "Progress": "Overview",
       "Town": "Research"
     },
@@ -2056,8 +2056,8 @@
       },
       {
         "hero": "Ava",
-        "lvl": 6,
-        "have": 15,
+        "lvl": 7,
+        "have": 5,
         "rally": true
       },
       {
@@ -2075,12 +2075,12 @@
       {
         "hero": "Wee & Woo",
         "lvl": 3,
-        "have": 0,
+        "have": 15,
         "rally": true
       },
       {
         "hero": "Charles",
-        "lvl": 2,
+        "lvl": 3,
         "have": 0,
         "rally": true
       },
