@@ -2054,7 +2054,7 @@
       {
         "hero": "Ava",
         "lvl": 6,
-        "have": 0,
+        "have": 15,
         "rally": true
       },
       {
@@ -3286,9 +3286,9 @@
   "masterNotesV": 2,
   "pets": {
     "have": {
-      "food": 12950,
-      "manuals": 1504,
-      "potions": 92,
+      "food": 43320,
+      "manuals": 1570,
+      "potions": 96,
       "tmCommon": 67,
       "tmAdv": 1,
       "medals": 4
