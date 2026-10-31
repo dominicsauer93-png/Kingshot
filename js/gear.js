@@ -375,9 +375,10 @@ function renderGov(){
   const g=state.govGear; if(!g.have) g.have={satin:0,threads:0,vision:0};
   const P=govPlan(), cur=P.cur; const {s,t,v}=P.need;
   const at=cur?(cur.who==="main"?g.pieces.filter(p=>!govIsCav(p)):g.pieces.filter(govIsCav)).filter(p=>num(p.cur)>=cur.to).length:6, of=cur?(cur.who==="main"?g.pieces.filter(p=>!govIsCav(p)).length:g.pieces.filter(govIsCav).length):6;
-  $("#govPlan").innerHTML=`<b>Your plan:</b> Infantry + Archer go up a tier first, Cavalry stays one tier behind.<br>`+
-    P.goals.map((G,idx)=>({G,idx})).filter(({G,idx})=>idx===P.ci-1||idx===P.ci||(idx>P.ci&&(G.who==="main"?state.govGear.pieces.filter(p=>!govIsCav(p)):state.govGear.pieces.filter(govIsCav)).some(p=>num(p.cur)<G.to))).slice(0,4).map(({G,idx})=>{ const done=idx<P.ci||P.ci<0, now=idx===P.ci;
-      return `<span class="${done?"ok":now?"":"faint"}">${done?"✓":now?"▶":"·"} ${esc(P.label(G))}</span>${now&&P.step.length?` <span class="faint">— next: ${P.step.map(p=>`${esc(p.name)} (${esc(GOV_TIERS[num(p.cur)][0])})`).join(", ")}</span>`:""}`; }).join("<br>");
+  const planH=`Infantry + Archer go up a tier first, Cavalry stays one tier behind.<br>`+P.goals.map((G,idx)=>({G,idx})).filter(({G,idx})=>idx===P.ci-1||idx===P.ci||(idx>P.ci&&(G.who==="main"?state.govGear.pieces.filter(p=>!govIsCav(p)):state.govGear.pieces.filter(govIsCav)).some(p=>num(p.cur)<G.to))).slice(0,4).map(({G,idx})=>{ const done=idx<P.ci||P.ci<0, now=idx===P.ci; return `<span class="${done?"ok":now?"":"faint"}">${done?"✓":now?"▶":"·"} ${esc(P.label(G))}</span>`; }).join("<br>");
+  const gn0=govNextStep();
+  $("#govPlan").innerHTML=`<button class="drow" id="govPlanBtn" style="width:100%;background:none;border:0;color:var(--text);font:inherit;padding:0">${ico("shield","y")}<span class="dt"><b>Next: ${gn0?`${esc(gn0.p.name)} → ${esc((GOV_TIERS[gn0.to]||[""])[0])}`:"plan done ✓"}</b><span>${cur?`${esc(GOV_TIERS[cur.to][0])} step · ${at}/${of} there`:""} · tap for the plan</span></span><span class="chev">›</span></button>`;
+  on("govPlanBtn",()=>openSheet({title:"Governor Gear plan",sub:"",build(f){ f.innerHTML=`<p style="margin:0;line-height:1.7">${planH}</p>`; }}));
   const gpl=govPlanLeft();
   if(gpl.length){ const bag={s:num(g.have.satin),t:num(g.have.threads),v:num(g.have.vision)};
     $("#govPlan").innerHTML=`<b>Optimiser plan</b> <span class="faint">${g.planDate?"· "+esc(fd(g.planDate)):""}</span>`+gpl.map((x,i)=>{ const p=govPlanPiece(x), n=govRem(num(p.cur),x.to);
@@ -392,10 +393,11 @@ function renderGov(){
     mt("gvS","Satin",s,num(g.have.satin))+mt("gvG","Gilded Threads",t,num(g.have.threads))+mt("gvV","Artisan's Vision",v,num(g.have.vision));
   on("gvT",()=>P.step[0]&&openGovPieceSheet(P.step[0])); ["gvS","gvG","gvV"].forEach(id=>on(id,openGovMatsSheet));
   const b=$("#govBody");
-  b.innerHTML=g.pieces.map((p,i)=>{ const tgt=P.tgtOf(p), done=p.cur>=tgt, r=govRem(p.cur,tgt);
-    return `<button class="vcard ${done?"s-done":""}" data-i="${i}">${EDIT_ICON}<span class="vc-top"><span class="vc-name">${esc(p.name||"Piece")}</span></span><span class="vc-big" style="font:700 17px var(--f-body);color:var(--text)">${esc(GOV_TIERS[p.cur]?GOV_TIERS[p.cur][0]:"—")}</span>${barH(tgt>0?pc(p.cur,tgt):100,done?"ok":"")}<span class="vc-line">${done?'<span class="ok">At target ✓</span>':(P.cur&&P.cur.who!==(govIsCav(p)?"cav":"main"))?`<span class="faint">waits — ${esc(GOV_TIERS[tgt][0])} after ${govIsCav(p)?"Inf + Archer go up":"Cavalry catches up"}</span>`:`→ ${esc(GOV_TIERS[tgt][0])} · ${fmtBig(r.s)} Satin`}</span></button>`; }).join("");
+  b.className="card dcard mt"; b.removeAttribute("style");
+  b.innerHTML=`<div class="dch"><h3>Your pieces</h3><span class="faint" style="font-size:12.5px">tap to update</span></div>`+g.pieces.map((p,i)=>({p,i})).sort((x,y)=>(x.p.cur>=P.tgtOf(x.p))-(y.p.cur>=P.tgtOf(y.p))||num(x.p.cur)-num(y.p.cur)).map(({p,i})=>{ const tgt=P.tgtOf(p), done=p.cur>=tgt, nx=np===p;
+    return `<button class="drow vcard" data-i="${i}">${ico("shield",done?"g":nx?"y":"")}<span class="dt"><b>${esc(p.name||"Piece")}</b><span>${done?'<span class="ok">at target ✓</span>':nx?'<span class="gold">next to upgrade</span>':govIsCav(p)?"waits for Inf + Archer":`→ ${esc((GOV_TIERS[tgt]||[""])[0])}`}</span><span class="pbar"><i class="${done?"ok":""}" style="width:${tgt>0?pc(p.cur,tgt):100}%"></i></span></span><span class="dv" style="font-family:var(--f-body);font-weight:700">${esc(GOV_TIERS[p.cur]?GOV_TIERS[p.cur][0]:"—")}</span></button>`; }).join("");
   bindAll(b,".vcard",x=>openGovPieceSheet(g.pieces[+x.dataset.i]));
-  $("#govNote").innerHTML=(np?`Materials above: the next upgrade, <b>${esc(np.name)}</b> → ${esc((GOV_TIERS[num(np.cur)+1]||[""])[0])}. The faint line is the whole current step. `:"")+"Each card shows that piece's own target (Cavalry's is one tier lower).";
+  $("#govNote").innerHTML=""; // the Next row and the piece rows say it
 }
 const govOpts=()=>GOV_TIERS.map((r,i)=>[String(i),r[0]]);
 function openGovTargetSheet(){ const g=state.govGear; openSheet({title:"Governor Gear target",sub:"All 6 pieces aim for this tier.",build(f){ f.appendChild(fld("Target tier",{type:"select",value:String(g.targetIdx),options:govOpts(),set:v=>g.targetIdx=parseInt(v,10)})); }}); }

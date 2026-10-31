@@ -123,7 +123,7 @@ function openPackSheet(p){
 /* ---------- reminders: calendar file (.ics) ---------- */
 function icsItems(){ const out=[];
   (state.events||[]).forEach(e=>{ if(!e.date) return; out.push({kind:"event",e,label:`${e.n}${num(e.every)?` · ${repeatTxt(e)}`:""}`}); });
-  (state.packs||[]).forEach(p=>{ const n=packDaysLeft(p); if(n==null) return; const end=new Date(p.bought+"T00:00:00"); end.setDate(end.getDate()+PACK_DAYS[p.kind]); out.push({kind:"card",p,end:ymd(end),label:`${p.t} ends ${fd(ymd(end))}`}); });
+  (state.packs||[]).forEach(p=>{ const n=packDaysLeft(p); if(n==null) return; const end=new Date(fcToday()+"T00:00:00"); end.setDate(end.getDate()+n); out.push({kind:"card",p,end:ymd(end),label:`${p.t} ${p.resetDay?"renews":"ends"} ${fd(ymd(end))}`}); }); // works for fixed-day renewals too
   return out; }
 function icsText(){
   const z=n=>String(n).padStart(2,"0"), dt=s=>s.replace(/-/g,""), stamp=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+/,"");
@@ -141,7 +141,8 @@ function icsText(){
         "BEGIN:VALARM","ACTION:DISPLAY",`DESCRIPTION:${esc2(p.t+" ends in 3 days")}`,"TRIGGER:-P2DT15H","END:VALARM","END:VEVENT"); } });
   L.push("END:VCALENDAR"); return L.join("\r\n")+"\r\n"; }
 function renderReminders(){
-  const I=icsItems(); $("#icsList").innerHTML=I.length?I.map(x=>`<li>${esc(x.label)}</li>`).join(""):`<li>No events or ticked cards yet.</li>`;
+  const I=icsItems(), el=$("#icsWrap"); if(!el) return; // the full list folds away — it's long
+  el.innerHTML=`<details class="dfold" id="icsFold"><summary>${I.length} events and cards in the file ›</summary><ul class="tight" id="icsList">${I.length?I.map(x=>`<li>${esc(x.label)}</li>`).join(""):`<li>No events or ticked cards yet.</li>`}</ul></details>`;
   let hint=lsGet("kingshot-ntfy-hint"); // kept on this device only — never synced, the repo is public
   if(!hint){ hint="kingshot-"+Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,8); lsSet("kingshot-ntfy-hint",hint); }
   $("#ntfyTopic").textContent=hint;
@@ -188,6 +189,7 @@ function buildSync(){
     const b=document.createElement("button"); b.className="btn primary"; b.textContent="⭱ Push (save to GitHub)"; b.onclick=()=>{ closeSheet(); syncPush(false); };
     r.append(a,b); f.appendChild(r); const i=infoBox(); i.textContent=$("#syncStatus").textContent; f.appendChild(i); }}); });
   if(!syncCfg.owner||!loadTok()) syncStatus("Not connected — file backup works without this","");
+  const su=$("#scSetup"); if(su) su.open=!(syncCfg.owner&&loadTok()&&syncCfg.device); // set up once, then it folds away
   paintSyncButtons();
 }
 function paintSyncButtons(){ const c=!!(syncCfg.owner&&syncCfg.repo&&loadTok()); $("#sideSync").hidden=!c; $("#mSync").hidden=!c; }
