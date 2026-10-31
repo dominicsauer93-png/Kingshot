@@ -1598,7 +1598,9 @@
       "Plan": "Shop guide",
       "Heroes": "Overview",
       "Shop": "Paid",
-      "Governor": "Gov Gear"
+      "Governor": "Gov Gear",
+      "Progress": "Overview",
+      "Town": "Research"
     },
     "t11Open": {
       "nodes": false,
