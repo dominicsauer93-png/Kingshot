@@ -72,7 +72,7 @@ function renderBagCheck(){
   box.innerHTML=`<div class="dch"><h3>My bag</h3>${days==null?'<span class="pill a">not checked yet</span>':days===0?'<span class="pill g">checked today</span>':`<span class="pill${days>2?" a":""}">checked ${days} day${days>1?"s":""} ago</span>`}<button class="link" id="bcSave">Save ✓</button></div>
     <div class="bcgrid">${BAG_KEYS.map(([k,l])=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-k="${k}" value="${bagVal(k)}"><em data-ch="${k}">${ch(k)}</em></label>`).join("")}</div>
     <details class="dfold" id="bcMore"${state.ui.bcMore?" open":""}><summary>More numbers ›</summary><div class="bcgrid">${BAG_MORE.map(([l,o,k],i)=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-m="${i}" value="${num(o()[k])}"></label>`).join("")}</div></details>
-    ${(()=>{ const st=staleShops(); return st.length?`<button class="drow" id="bcStale" style="width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text)"><span class="dt"><b>📸 ${st.length} shop${st.length>1?"s":""} not checked for ${STALE_DAYS}+ days</b></span><span class="chev">›</span></button>`:""; })()}`;
+    ${(()=>{ const st=staleShops(); return st.length?`<button class="drow" id="bcStale" style="width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text)"><span class="dt"><b>${icoI("camera")} ${st.length} shop${st.length>1?"s":""} not checked for ${STALE_DAYS}+ days</b></span><span class="chev">›</span></button>`:""; })()}`;
   box.querySelectorAll("[data-m]").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
     x.onchange=()=>{ const [,o,k]=BAG_MORE[+x.dataset.m]; if(!/\d/.test(x.value)){ x.value=num(o()[k]); return; } o()[k]=Math.max(0,Math.round(num(x.value))); scheduleSave(); }; });
   const bm=$("#bcMore"); bm.ontoggle=()=>{ state.ui.bcMore=bm.open; scheduleSave(); };
@@ -139,7 +139,7 @@ function openBattle(e){
   const key=(e.n||"")+"|"+gameToday(); if(!state.battle||state.battle.key!==key) state.battle={key,cnt:0,start:null,last:null};
   const B=state.battle, ov=document.createElement("div"); ov.className="battle"; document.body.appendChild(ov);
   const lastRun=String(e.note||"").split("\n").find(l=>/^Last run/i.test(l))||"";
-  ov.innerHTML=`<div class="bt-in"><div class="rowb"><b style="font-size:18px">⚔ ${esc(e.n)}</b><button class="btn sm ghost" id="btClose">Close</button></div>
+  ov.innerHTML=`<div class="bt-in"><div class="rowb"><b style="font-size:18px">${icoI("sword")} ${esc(e.n)}</b><button class="btn sm ghost" id="btClose">Close</button></div>
     <div class="bt-big" id="btLeft">${cfg.mins}:00</div><div class="faint" style="text-align:center">left in the session</div>
     <div class="bt-ring"><svg viewBox="0 0 170 170"><circle cx="85" cy="85" r="74" class="bt-track"/><circle cx="85" cy="85" r="74" class="bt-arc" id="btArc" stroke-dasharray="465" stroke-dashoffset="0"/></svg><div class="bt-mid"><b id="btRec">1:00</b><span>next recall</span></div></div>
     <div class="rowb"><span>Recalls</span><b><span id="btCnt">${B.cnt}</span> / ${cfg.target} <span class="faint">top 10 pace</span></b></div><div id="btBar"></div>
@@ -238,7 +238,7 @@ function openCamSheet(all){
       if(!L.length){ const d=document.createElement("div"); d.className="empty"; d.textContent="Nothing to capture ✓"; f.appendChild(d); }
       L.forEach(x=>{ const row=document.createElement("div"); row.className="camrow";
         row.innerHTML=`<div><b>${esc(x.ev?x.ev.n:x.name)}</b>${x.ev&&x.ev.n!==x.name?`<br><span class="faint">${esc(x.name)}</span>`:""}<span class="camst faint"></span></div>
-          <div class="camact">${synced?`<label class="btn primary sm">📸 Upload<input type="file" accept="image/*" multiple hidden></label>`:""}<button class="btn ghost sm" data-none>No shop</button></div>`;
+          <div class="camact">${synced?`<label class="btn primary sm">${icoI("camera")} Upload<input type="file" accept="image/*" multiple hidden></label>`:""}<button class="btn ghost sm" data-none>No shop</button></div>`;
         const st=row.querySelector(".camst"), inp=row.querySelector("input");
         if(inp) inp.onchange=async()=>{ const files=[...inp.files]; if(!files.length) return;
           try{ const n=await uploadShots(files,x.name,(i,t)=>st.textContent=` · uploading ${i}/${t}…`); st.innerHTML=` · <span class="ok">${n} uploaded ✓</span>`; toast(`${n} screenshot${n>1?"s":""} uploaded — tell Claude “uploaded”`); }

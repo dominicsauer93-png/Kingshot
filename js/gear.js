@@ -151,7 +151,7 @@ function renderWidgets(){
   b.className="card dcard mt"; b.removeAttribute("style");
   b.innerHTML=`<div class="dch"><h3>Your heroes</h3><span class="faint" style="font-size:12.5px">rally heroes first · lowest first</span></div>`+L.map(r=>{ const lvl=Math.max(0,Math.min(10,num(r.lvl))), have=num(r.have), next=widNext(lvl);
     const st=lvl>=10?`<span class="ok">MAX ✓</span> · ${fmt(have)} spare`:have>=next?`<span class="ok">ready</span> · ${fmt(have)} / ${fmt(next)}`:`<span class="bad">${fmt(next-have)} short</span> · ${fmt(have)} / ${fmt(next)}`;
-    return `<button class="drow vcard wrow${r.rally?"":" dim"}" data-i="${w.rows.indexOf(r)}"><span class="dt"><b>${esc(r.hero||"Hero")}${r.rally?' <span class="faint" style="font-weight:500">⚔</span>':""}</b><span>${st}</span><span class="pips" aria-hidden="true">${Array.from({length:10},(_,i)=>`<span class="${i<lvl?"on":""}"></span>`).join("")}</span></span><span class="dv">${lvl}<small>/ 10</small></span></button>`; }).join("");
+    return `<button class="drow vcard wrow${r.rally?"":" dim"}" data-i="${w.rows.indexOf(r)}"><span class="dt"><b>${esc(r.hero||"Hero")}${r.rally?` <span class="faint">${icoI("sword")}</span>`:""}</b><span>${st}</span><span class="pips" aria-hidden="true">${Array.from({length:10},(_,i)=>`<span class="${i<lvl?"on":""}"></span>`).join("")}</span></span><span class="dv">${lvl}<small>/ 10</small></span></button>`; }).join("");
   bindAll(b,".vcard",x=>openWidSheet(w.rows[+x.dataset.i]));
   on("addWid",()=>{ const r={hero:"",lvl:0,have:0}; w.rows.push(r); afterEdit(); openWidSheet(r); });
 }
@@ -304,7 +304,7 @@ function renderShards(){
   const row=({r,i})=>{ rank++; const h=num(r.have),st=hasStars(r),p=num(r.pos),maxed=st&&p>=SHARD_MAX,nx=st&&!maxed?SHARD_LEAF[p]:0,ready=nx&&h>=nx;
     return `<div class="shrow2 ${maxed?"done":""}" data-i="${i}">
       <button class="sh2-id" data-i="${i}" aria-label="Edit ${esc(r.n||"hero")}"><span class="shr-rank">${rank}</span>
-        <span class="sh2-who"><span class="sh2-name">${esc(r.n||"Hero")}${r.rally?" ⚔":""}</span>
+        <span class="sh2-who"><span class="sh2-name">${esc(r.n||"Hero")}${r.rally?" "+icoI("sword"):""}</span>
         <span class="sh2-star">${st?`<span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}`:'<span class="faint">tap to set stars</span>'} <span class="sh2-use">· Use ${heroUse(r.n)}</span></span></span></button>
       <label class="sh2-have">Have <input inputmode="numeric" data-i="${i}" value="${h}" aria-label="${esc(r.n)} shards in hand"></label>
       <span class="sh2-out">${maxed?'<span class="ok">5★ max ✓</span>':!st?"":ready?`<button class="didit sh2-up" data-i="${i}">Upgrade → ${esc(starLabel(p+1))}</button>`:`<span class="bad">${fmt(nx-h)} short</span> of ${fmt(nx)}`}</span>

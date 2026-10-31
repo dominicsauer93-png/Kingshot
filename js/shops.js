@@ -172,7 +172,7 @@ function renderShopGuide(){
   // the page is just what to buy; everything else opens in a panel
   host.innerHTML=`<div class="card sghead"><b style="font-size:16px">Buy now</b>${blk.length?`<p class="sgblk">Short of: ${blk.join(" · ")}</p>`:""}</div>`+
     `<div class="sgtiles">${liveEv.map(tile).join("")}${SG_REGULAR.map(tile).join("")}</div>`+
-    `<div class="dlinks"><button class="link" id="sgAll">All shops &amp; packs ›</button><button class="link" id="sgSrc">Where supplies come from ›</button>${ep.missing.length?`<button class="link" id="sgCam">📸 ${ep.missing.length} shops to capture ›</button>`:""}</div>`;
+    `<div class="dlinks"><button class="link" id="sgAll">All shops &amp; packs ›</button><button class="link" id="sgSrc">Where supplies come from ›</button>${ep.missing.length?`<button class="link" id="sgCam">${icoI("camera")} ${ep.missing.length} shops to capture ›</button>`:""}</div>`;
   on("sgCam",()=>openCamSheet(true));
   host.querySelectorAll(".sgtick").forEach(b=>b.onclick=e=>{ e.stopPropagation(); const n=b.dataset.n, w=b.dataset.w, T=state.shopTicks||(state.shopTicks={}), k=shopPeriod(w), snap=JSON.stringify(state); if(T[n]===k) delete T[n]; else T[n]=k; afterEdit(); toast(T[n]?`${sgShort(n)}: bought this ${w==="Daily"?"day":w==="Weekly"?"week":"cycle"} ✓`:`${sgShort(n)}: unticked`,snap); });
   const withBuys=SG_REGULAR.filter(([n])=>{ const sh=SHOP_DB[idx(n)]; return sh&&liveBuys(sh,N).need.length; }), nDone=withBuys.filter(([n,w])=>shopDone(n,w)).length, sgh=host.querySelector(".sghead b"); if(sgh) sgh.insertAdjacentHTML("afterend",` <span class="pill${nDone===withBuys.length?" g":""}" style="margin-left:6px">${nDone} / ${withBuys.length} shops done</span>`);
@@ -182,6 +182,6 @@ function renderShopGuide(){
       <h3 class="sgsec">Reference</h3><div class="card dcard sggrp"><details class="fold"><summary><span class="grow">How I pick</span></summary><div class="fbody"><ul class="sgrules">${SHOP_RULES.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></details>
       <details class="fold"><summary><span class="grow">Hero seasons</span></summary><div class="fbody"><table class="gtable"><tbody>${Object.entries(HERO_SEASON).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>
       <details class="fold"><summary><span class="grow">What the icons are</span></summary><div class="fbody"><table class="gtable"><tbody>${ITEM_KEY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details></div>
-      <p class="faint mt" style="font-size:13.5px">New shop or pack? Upload a screenshot with 📸, or to shops/inbox in the repo.</p>`; }}));
+      <p class="faint mt" style="font-size:13.5px">New shop or pack? Upload a screenshot from Settings → Sync, or to shops/inbox in the repo.</p>`; }}));
   on("sgSrc",()=>openSheet({title:"Where supplies come from",sub:"Free sources and buy order.",build(f){ const src=$("#srcFold .fbody"); f.innerHTML=src?src.innerHTML:""; }}));
 }

@@ -72,9 +72,9 @@ function renderEventMode(){
     <p class="eey">${ico("bolt")} Live now</p><h2 class="etitle">${esc(e.n||"Event")}</h2>
     ${todayStage?`<p class="eline"><b>Today:</b> ${esc(todayStage)}</p>`:""}
     <div class="echips"><span class="echip">${esc(spendFor(e)||"Tap How to play")}</span>${have.slice(0,2).map(([l,v])=>`<span class="echip">${esc(l)} ${esc(v)}</span>`).join("")}</div>
-    <div class="eacts">${steps.length||stagesH(e)?`<button class="btn sm" id="evHow">How to play ›</button>`:""}${bt?`<button class="btn sm primary" id="evBattle">⚔ Battle card</button>`:""}${ncam?`<button class="btn sm" id="evCam">📸 ${ncam}</button>`:""}${live.length>1?`<button class="btn sm" id="evOthers">+${live.length-1} on now</button>`:""}</div>`;
+    <div class="eacts">${steps.length||stagesH(e)?`<button class="btn sm" id="evHow">How to play ›</button>`:""}${bt?`<button class="btn sm primary" id="evBattle">${icoI("sword")} Battle card</button>`:""}${ncam?`<button class="btn sm" id="evCam">${icoI("camera")} ${ncam}</button>`:""}${live.length>1?`<button class="btn sm" id="evOthers">+${live.length-1} on now</button>`:""}</div>`;
   on("evHow",()=>openSheet({title:e.n||"Event",sub:`${cur.a.len>1?`Day ${cur.a.day} of ${cur.a.len} · `:""}${leftTxt(e,cur.a)}`,build(f){ f.innerHTML=`${stagesH(e)}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}`; }}));
-  on("evOthers",()=>openSheet({title:"Also on now",sub:"Tap one to see or edit it.",build(f){ f.innerHTML=`<div class="list">${live.slice(1).map(({e:x,a},i)=>`<button class="lrow erow2" data-i="${i+1}"><span style="flex:1;min-width:0"><b>${esc(x.n||"Event")}${(()=>{ const sh=eventShopFor(x); return sh&&!sh.saved?" 📸":""; })()}</b><br><span class="faint" style="font-size:13px">${esc(spendFor(x)||"tap to add what to spend")}</span></span><span class="mono faint">${x.endOpen?`day ${a.day}`:a.len>1?`${a.day}/${a.len}`:"today"}</span></button>`).join("")}</div>`;
+  on("evOthers",()=>openSheet({title:"Also on now",sub:"Tap one to see or edit it.",build(f){ f.innerHTML=`<div class="list">${live.slice(1).map(({e:x,a},i)=>`<button class="lrow erow2" data-i="${i+1}"><span style="flex:1;min-width:0"><b>${esc(x.n||"Event")}${(()=>{ const sh=eventShopFor(x); return sh&&!sh.saved?" "+icoI("camera"):""; })()}</b><br><span class="faint" style="font-size:13px">${esc(spendFor(x)||"tap to add what to spend")}</span></span><span class="mono faint">${x.endOpen?`day ${a.day}`:a.len>1?`${a.day}/${a.len}`:"today"}</span></button>`).join("")}</div>`;
     f.querySelectorAll(".erow2").forEach(b=>b.onclick=()=>openEventSheet(live[+b.dataset.i].e)); }}));
   on("evBattle",()=>openBattle(e));
   on("evCam",()=>openCamSheet(false));
@@ -143,7 +143,7 @@ function openEventSheet(ev){
       const paintNote=()=>{ nv.innerHTML=noteHtml(ev.note)||'<span class="faint">No notes yet.</span>'; }; paintNote();
       const ed=document.createElement("details"); ed.className="fold"; ed.innerHTML="<summary>Edit note</summary>"; const eb=document.createElement("div"); eb.className="fbody"; ed.appendChild(eb);
       eb.appendChild(fld("Note",{type:"area",rows:8,value:ev.note,set:v=>{ ev.note=v; paintNote(); },hint:"Start a new line for each point."})); f.appendChild(ed);
-      if(battleFor(ev)){ const bb=document.createElement("button"); bb.className="btn primary"; bb.textContent="⚔ Open battle card"; bb.onclick=()=>{ closeSheet(); openBattle(ev); }; f.appendChild(bb); }
+      if(battleFor(ev)){ const bb=document.createElement("button"); bb.className="btn primary"; bb.textContent="Open battle card"; bb.onclick=()=>{ closeSheet(); openBattle(ev); }; f.appendChild(bb); }
       f.appendChild(fld("Event name",{value:ev.n,set:v=>ev.n=v}));
       f.appendChild(frow(fld("Date (any occurrence)",{type:"date",value:ev.date,set:v=>{ ev.date=v; delete ev.guess; }}),fld("Repeats every (days)",{type:"num",value:ev.every||0,get:()=>ev.every,set:v=>ev.every=Math.max(0,Math.floor(v)),hint:"0 = one-off"})));
       f.appendChild(frow(fld("Lasts (days)",{type:"num",value:evLen(ev),get:()=>evLen(ev),set:v=>{ ev.len=Math.max(1,Math.floor(v)||1); delete ev.guess; }}),fld("Time (optional)",{type:"time",value:ev.time,set:v=>ev.time=v})));
@@ -272,7 +272,11 @@ const ICO={star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1
   bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
   lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
   sword:'<path d="M14.5 3.5H20v5.5L9 20l-5-5zM6.5 13.5l4 4M3 21l2.5-2.5"/>',
-  shield:'<path d="M12 2.5l8 3v6c0 5-3.5 8.8-8 10.5C7.5 20.3 4 16.5 4 11.5v-6z"/>'};
+  shield:'<path d="M12 2.5l8 3v6c0 5-3.5 8.8-8 10.5C7.5 20.3 4 16.5 4 11.5v-6z"/>',
+  camera:'<path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/>',
+  down:'<path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/>',up:'<path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/>'};
+// small inline icon that sits in text or a button, sized like the text
+const icoI=k=>`<svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[k]}</svg>`;
 const ico=(k,c)=>`<span class="pico${c?" "+c:""}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[k]||ICO.star}</svg></span>`;
 const STEP_ICO={fh:"hammer",wid:"gem",shard:"star",charm:"gem",gov:"shield",bld:"flask",pet:"star",t11:"flask",troop:"sword",mast:"star"};
 // everything that matters today, from all your data: ready upgrades, deadlines, resets, blockers
