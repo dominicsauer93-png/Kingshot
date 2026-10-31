@@ -132,12 +132,13 @@ function initTheme(){
 /* =====================================================================
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
-const TABS=["Home","Heroes","Governor","Town","Shop","Progress","Data"], NAV=TABS.filter(t=>t!=="Data"); // Settings (Data) opens from the ⚙ button
+const TABS=["Home","Upgrade","Heroes","Governor","Town","Shop","Progress","Data"], NAV=TABS.filter(t=>t!=="Data"); // Settings (Data) opens from the ⚙ button
 const SUBS={Heroes:["Formations","Shards","Hero Gear","Widgets"],Governor:["Gov Gear","Charms","Pets","Masters"],Town:["Research","Buildings","Troops","Resources"],Shop:["Free shops","Paid"],Progress:["Overview","Mystic Trials"],Data:["Account","Sync","Reminders","Update all"]};
 const TAB_ALIAS={Army:"Town",Build:"Town",Base:"Town",Gear:"Governor",Power:"Progress",Supply:"Heroes",Rally:"Heroes",Plan:"Shop",Events:"Home",Vault:"Data",Settings:"Data"};
 const SUB_ALIAS={Roster:"Formations",Heroes:"Formations",Governor:"Gov Gear",T11:"Research"}; // old tab names
 const TAB_ICON={
   Home:'<path d="M4 21V10l3-2V4h3v2l2-1.5L14 6V4h3v4l3 2v11h-6v-5h-4v5z"/>',
+  Upgrade:'<path d="M12 20V5M6 11l6-6 6 6"/><path d="M5 20h14"/>',
   Heroes:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',
   Governor:'<path d="M12 2.5l8 3v6c0 5-3.5 8.8-8 10.5C7.5 20.3 4 16.5 4 11.5v-6z"/><path d="M12 7v10M8 11h8"/>',
   Town:'<path d="M4 21V9l4-3 4 3 4-3 4 3v12z"/><path d="M10 21v-5h4v5M4 13h16"/>',
@@ -180,7 +181,8 @@ function buildNav(){
   const nav=$("#tabnav");
   nav.innerHTML=NAV.map(t=>`<button class="tab" role="tab" data-tab="${t}" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span>${lbl(t)}</span></button>`).join("");
   nav.querySelectorAll(".tab").forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
-  $$(".setbtn").forEach(b=>b.onclick=()=>setTab("Data"));
+  // ⚙: on phones Progress lives here too (the bottom bar has room for 6)
+  $$(".setbtn").forEach(b=>b.onclick=()=>{ if(innerWidth>640) return setTab("Data"); openSheet({title:"More",sub:"",build(f){ f.innerHTML=`<div class="list"><button class="lrow" data-t="Progress"><span style="flex:1"><b>Progress</b><br><span class="faint" style="font-size:13px">This week, power chart, grades, Mystic Trials</span></span><span class="chev">›</span></button><button class="lrow" data-t="Data"><span style="flex:1"><b>Settings</b><br><span class="faint" style="font-size:13px">Account, sync, reminders, update all, theme</span></span><span class="chev">›</span></button></div>`; f.querySelectorAll("[data-t]").forEach(x=>x.onclick=()=>{ closeSheet(); setTab(x.dataset.t); }); }}); });
   nav.addEventListener("keydown",e=>{
     const k=e.key; if(!["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"].includes(k)) return;
     const d=(k==="ArrowRight"||k==="ArrowDown")?1:-1, i=NAV.indexOf(state.ui.tab), n=NAV[(i+d+NAV.length)%NAV.length];

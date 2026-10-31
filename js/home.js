@@ -204,44 +204,44 @@ function nextSteps(){
   const hg=state.heroGear||{rows:[],have:{}}, H=hg.have||{};
   const hp=(hg.rows||[]).length?hgPriority(hg.rows):[], top=hp.find(r=>hp.now.has(r)&&hgState(r).req)||hp[0], plan=hgPlanLeft()[0];
   if(plan){ const ready=["fh","mg","mith"].every(k=>num(H[k])>=num(plan[k]));
-    out.push({k:"fh",title:`${esc(plan.type)} ${esc(plan.slot)} ${esc(hgPlanWhat(plan))}`,detail:[["fh","Hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(plan[k])).map(([k,l])=>`<span class="${num(H[k])>=num(plan[k])?"ok":"bad"}">${l} ${fmt(num(H[k]))}/${fmt(num(plan[k]))} ${num(H[k])>=num(plan[k])?"✓":"✗"}</span>`).join(" · ")+(plan.gain?` · <span class="gold">+${plan.gain}%</span>`:""),ready,open:()=>openHgSheet(hgPlanRow(plan)),key:"Hero Gear",apply:ready?()=>hgPlanApply(plan):null}); }
+    out.push({k:"fh",title:`${esc(plan.type)} ${esc(plan.slot)} ${esc(hgPlanWhat(plan))}`,detail:[["fh","Hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(plan[k])).map(([k,l])=>`<span class="${num(H[k])>=num(plan[k])?"ok":"bad"}">${l} ${fmt(num(H[k]))}/${fmt(num(plan[k]))} ${num(H[k])>=num(plan[k])?"✓":"✗"}</span>`).join(" · ")+(plan.gain?` · <span class="gold">+${plan.gain}%</span>`:""), ready,mats:[["fh","Hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(plan[k])).map(([k,l])=>({l,h:num(H[k]),n:num(plan[k])})),gain:plan.gain?`+${plan.gain}%`:"",open:()=>openHgSheet(hgPlanRow(plan)),key:"Hero Gear",apply:ready?()=>hgPlanApply(plan):null}); }
   else if(top){ const st=hgState(top), nx=HG_IMB.find(x=>x[0]>num(top.lvC)), ready=!!st.req&&hp.now.has(top), block=st.cls==="s-block";
-    out.push({k:"fh",title:`${esc(top.type)} ${esc(slotName(top.slot))} ${block?`mastery ${num(top.mC)} → ${nx[1]}`:st.req?`Lv ${nx[0]} imbue`:`XP to Lv ${nx[0]-1}`}`,detail:st.req?hgReqH(st.req):esc(st.line),ready,open:()=>openHgSheet(top),key:"Hero Gear",
+    out.push({k:"fh",title:`${esc(top.type)} ${esc(slotName(top.slot))} ${block?`mastery ${num(top.mC)} → ${nx[1]}`:st.req?`Lv ${nx[0]} imbue`:`XP to Lv ${nx[0]-1}`}`,detail:st.req?hgReqH(st.req):esc(st.line),ready,mats:st.req?Object.entries(st.req).map(([k,v])=>({l:HG_MAT[k][0],h:num(H[HG_MAT[k][1]]),n:v})):[],open:()=>openHgSheet(top),key:"Hero Gear",
       apply:ready?()=>{ Object.entries(st.req).forEach(([k,v])=>H[HG_MAT[k][1]]=num(H[HG_MAT[k][1]])-v); if(block) top.mC=nx[1]; else top.lvC=nx[0]; }:null}); }
   // widgets — lowest rally hero first
   const w=widNextRow(); if(w){ const nd=widNext(num(w.lvl)), ready=num(w.have)>=nd;
-    out.push({k:"wid",title:`${esc(w.hero||"Hero")} widget Lv ${num(w.lvl)} → ${num(w.lvl)+1}`,detail:ready?`${fmt(nd)} widgets — you have ${fmt(num(w.have))}`:`${fmt(nd-num(w.have))} widgets short`,ready,open:()=>openWidSheet(w),key:"Widgets",
+    out.push({k:"wid",title:`${esc(w.hero||"Hero")} widget Lv ${num(w.lvl)} → ${num(w.lvl)+1}`,detail:ready?`${fmt(nd)} widgets — you have ${fmt(num(w.have))}`:`${fmt(nd-num(w.have))} widgets short`,ready,mats:[{l:"Widgets",h:num(w.have),n:nd}],open:()=>openWidSheet(w),key:"Widgets",
       apply:ready?()=>{ w.have=num(w.have)-nd; w.lvl=num(w.lvl)+1; }:null}); }
   // shards — most-used hero's next star step
   const sh=shardOrder().find(r=>hasStars(r)&&num(r.pos)<SHARD_MAX); if(sh){ const nd=SHARD_LEAF[num(sh.pos)], gen=genOrder()[0]===sh?num(state.shardGeneral):0, useGen=num(sh.have)<nd&&num(sh.have)+gen>=nd, ready=num(sh.have)>=nd||useGen;
-    out.push({k:"shard",title:`${esc(sh.n)} → ${esc(starLabel(num(sh.pos)+1))}`,detail:useGen?`Use ${fmt(nd-num(sh.have))} of your ${fmt(gen)} General shards`:`${fmt(num(sh.have))} / ${fmt(nd)} shards`+(ready?"":` · ${fmt(nd-num(sh.have))} short`),ready,open:()=>openShardSheet(sh),key:"Gold Hero Shards",
+    out.push({k:"shard",title:`${esc(sh.n)} → ${esc(starLabel(num(sh.pos)+1))}`,detail:useGen?`Use ${fmt(nd-num(sh.have))} of your ${fmt(gen)} General shards`:`${fmt(num(sh.have))} / ${fmt(nd)} shards`+(ready?"":` · ${fmt(nd-num(sh.have))} short`),ready,mats:[{l:useGen||gen?"Shards incl. General":"Shards",h:num(sh.have)+gen,n:nd}],open:()=>openShardSheet(sh),key:"Gold Hero Shards",
       apply:ready?()=>{ if(useGen){ state.shardGeneral=num(state.shardGeneral)-(nd-num(sh.have)); sh.have=0; } else sh.have=num(sh.have)-nd; sh.pos=num(sh.pos)+1; }:null,useGen,genUse:useGen?nd-num(sh.have):0}); }
   // charms — one level
   const c=state.charms||{have:{}}, cp=charmPlanLeft()[0], cr=cp?null:charmNextList(1)[0];
   if(cp){ const gH=have(c.have,"guides"), dH=have(c.have,"designs"), ready=gH>=cp.g&&(cp.kind==="x"||dH>=cp.d), r=cp.kind==="x"?null:charmPlanRow(cp);
     out.push({k:"charm",title:cp.kind==="x"?`Charm exchange: ${fmt(cp.g)} Guides → ${fmt(cp.d)} Designs`:`${esc(cp.type)} Charm ${cp.i} ${charmLvH(r)} → ${cp.toS?`Lv ${cp.toL} · ${cp.toS}/5`:`Lv ${cp.toL}`}`,
-      detail:cp.kind==="x"?"Step 1 of the optimiser's charm plan":`${fmt(cp.d)} Designs + ${fmt(cp.g)} Guides`+(cp.gain?` · <span class="gold">+${cp.gain}%</span>`:""),ready,open:()=>openCharmSheet(cp.type||"Cavalry"),key:"Charms",apply:ready?()=>charmPlanApply(cp):null}); }
+      detail:cp.kind==="x"?"Step 1 of the optimiser's charm plan":`${fmt(cp.d)} Designs + ${fmt(cp.g)} Guides`+(cp.gain?` · <span class="gold">+${cp.gain}%</span>`:""),ready,mats:cp.kind==="x"?[{l:"Guides",h:gH,n:cp.g}]:[{l:"Designs",h:dH,n:cp.d},{l:"Guides",h:gH,n:cp.g}],gain:cp.gain?`+${cp.gain}%`:"",open:()=>openCharmSheet(cp.type||"Cavalry"),key:"Charms",apply:ready?()=>charmPlanApply(cp):null}); }
   if(cr){ const k=CHARM_COSTS[num(cr.lvl)], gH=have(c.have,"guides"), dH=have(c.have,"designs"), ready=gH>=k[0]&&dH>=k[1];
     const idx=c.rows.filter(x=>x.type===cr.type).indexOf(cr)+1;
-    out.push({k:"charm",title:`${esc(cr.type)} Charm ${idx} Lv ${num(cr.lvl)} → ${num(cr.lvl)+1}`,detail:ready?`${fmt(k[1])} Designs + ${fmt(k[0])} Guides`:[dH<k[1]?`${fmt(k[1]-dH)} Designs`:"",gH<k[0]?`${fmt(k[0]-gH)} Guides`:""].filter(Boolean).join(" + ")+" short",ready,open:()=>openCharmSheet(cr.type),key:"Charms",
+    out.push({k:"charm",title:`${esc(cr.type)} Charm ${idx} Lv ${num(cr.lvl)} → ${num(cr.lvl)+1}`,detail:ready?`${fmt(k[1])} Designs + ${fmt(k[0])} Guides`:[dH<k[1]?`${fmt(k[1]-dH)} Designs`:"",gH<k[0]?`${fmt(k[0]-gH)} Guides`:""].filter(Boolean).join(" + ")+" short",ready,mats:[{l:"Designs",h:dH,n:k[1]},{l:"Guides",h:gH,n:k[0]}],open:()=>openCharmSheet(cr.type),key:"Charms",
       apply:ready?()=>{ c.have.guides=gH-k[0]; c.have.designs=dH-k[1]; cr.lvl=num(cr.lvl)+1; }:null}); }
   // governor gear — one piece, one tier
   const gv=govNextStep(); if(gv){ const G=state.govGear.have||{}, n=gv.need, ready=have(G,"satin")>=n.s&&have(G,"threads")>=n.t&&have(G,"vision")>=n.v;
-    out.push({k:"gov",title:`${esc(gv.p.name)}: ${esc(GOV_TIERS[num(gv.p.cur)][0])} → ${esc((GOV_TIERS[gv.to]||[""])[0])}`,detail:ready?"You have the materials":[have(G,"satin")<n.s?`${fmtK(n.s-have(G,"satin"))} Satin`:"",have(G,"threads")<n.t?`${fmt(n.t-have(G,"threads"))} Threads`:"",have(G,"vision")<n.v?`${fmt(n.v-have(G,"vision"))} Vision`:""].filter(Boolean).join(" + ")+" short",ready,open:()=>openGovPieceSheet(gv.p),key:"Governor Gear",
+    out.push({k:"gov",title:`${esc(gv.p.name)}: ${esc(GOV_TIERS[num(gv.p.cur)][0])} → ${esc((GOV_TIERS[gv.to]||[""])[0])}`,detail:ready?"You have the materials":[have(G,"satin")<n.s?`${fmtK(n.s-have(G,"satin"))} Satin`:"",have(G,"threads")<n.t?`${fmt(n.t-have(G,"threads"))} Threads`:"",have(G,"vision")<n.v?`${fmt(n.v-have(G,"vision"))} Vision`:""].filter(Boolean).join(" + ")+" short",ready,mats:[{l:"Satin",h:have(G,"satin"),n:n.s},{l:"Threads",h:have(G,"threads"),n:n.t},{l:"Vision",h:have(G,"vision"),n:n.v}].filter(m=>m.n),open:()=>openGovPieceSheet(gv.p),key:"Governor Gear",
       apply:ready?()=>{ G.satin=have(G,"satin")-n.s; G.threads=have(G,"threads")-n.t; G.vision=have(G,"vision")-n.v; gv.p.cur=gv.to; }:null}); }
   // buildings — next step of the first building in your build order
   const bn=bldNextStep(); if(bn){ const t=state.tg, ready=num(t.have)>=bn.st.tg&&num(t.ttgHave)>=bn.st.ttg;
-    out.push({k:"bld",title:`${esc(bn.bl.n)} → ${esc(bn.st.to)}`,detail:`${fmt(bn.st.tg)} Truegold`+(bn.st.ttg?` + ${fmt(bn.st.ttg)} TTG`:"")+(ready?"":` · ${fmt(Math.max(0,bn.st.tg-num(t.have)))} TG short`),ready,open:()=>openBuildingSheet(bn.bl),key:"Build Order — TG6→TG8",
+    out.push({k:"bld",title:`${esc(bn.bl.n)} → ${esc(bn.st.to)}`,detail:`${fmt(bn.st.tg)} Truegold`+(bn.st.ttg?` + ${fmt(bn.st.ttg)} TTG`:"")+(ready?"":` · ${fmt(Math.max(0,bn.st.tg-num(t.have)))} TG short`),ready,mats:[{l:"Truegold",h:num(t.have),n:bn.st.tg},{l:"TTG",h:num(t.ttgHave),n:bn.st.ttg}].filter(m=>m.n),open:()=>openBuildingSheet(bn.bl),key:"Build Order — TG6→TG8",
       apply:ready?()=>{ t.have=num(t.have)-bn.st.tg; t.ttgHave=num(t.ttgHave)-bn.st.ttg; bn.bl.stepIdx=(bn.bl.stepIdx||0)+1; }:null}); }
   // pets — next advance of your top pet
   const pn=petNextStep(); if(pn&&pn.cost){ const PH=state.pets.have||{}, M=["food","manuals","potions","medals"], ready=M.every(k=>have(PH,k)>=pn.cost[k]);
-    out.push({k:"pet",title:`${esc(pn.r.n)} Lv ${num(pn.r.lvl)} → ${pn.to}`,detail:ready?"Materials ready — save the advance for a KvK / SG day":M.filter(k=>have(PH,k)<pn.cost[k]).map(k=>`${fmtK(pn.cost[k]-have(PH,k))} ${{food:"food",manuals:"manuals",potions:"potions",medals:"medallions"}[k]}`).join(" + ")+" short",ready,open:()=>openPetSheet(pn.r),key:"Pets",
+    out.push({k:"pet",title:`${esc(pn.r.n)} Lv ${num(pn.r.lvl)} → ${pn.to}`,detail:ready?"Materials ready — save the advance for a KvK / SG day":M.filter(k=>have(PH,k)<pn.cost[k]).map(k=>`${fmtK(pn.cost[k]-have(PH,k))} ${{food:"food",manuals:"manuals",potions:"potions",medals:"medallions"}[k]}`).join(" + ")+" short",ready,mats:M.filter(k=>pn.cost[k]).map(k=>({l:{food:"Food",manuals:"Manuals",potions:"Potions",medals:"Medallions"}[k],h:have(PH,k),n:pn.cost[k]})),open:()=>openPetSheet(pn.r),key:"Pets",
       apply:ready?()=>{ M.forEach(k=>PH[k]=have(PH,k)-pn.cost[k]); pn.r.lvl=pn.to; }:null}); }
   // progress goals (no materials to spend)
   const tgt=computeTarget(), cur=num(state.dust.current), cn=closestNode();
-  if(tgt>cur) out.push({k:"t11",title:`Unlock T11 ${activePhase().n}`,detail:`${fmt(tgt-cur)} Dust to go`+(cn?` · closest node: ${esc(cn.n.name.replace(/ \(.*/,""))}`:""),key:"T11 Unlocks"});
+  if(tgt>cur) out.push({k:"t11",title:`Unlock T11 ${activePhase().n}`,detail:`${fmt(tgt-cur)} Dust to go`+(cn?` · closest node: ${esc(cn.n.name.replace(/ \(.*/,""))}`:""),mats:[{l:"Dust",h:cur,n:tgt}],key:"T11 Unlocks"});
   const tc=state.troopCounts||{}; const tr=[["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]].map(([k,l])=>({k,l,c:num(tc[k]&&tc[k].cur),t:num(tc[k]&&tc[k].tgt)})).filter(x=>x.t>0&&x.c<x.t).sort((a,b)=>a.c/a.t-b.c/b.t)[0];
-  if(tr) out.push({k:"troop",title:`Train ${tr.l}`,detail:`${fmt(tr.t-tr.c)} to reach ${fmt(tr.t)}`,open:()=>openTroopSheet(tr.k,tr.l),key:"Troop Plan"});
+  if(tr) out.push({k:"troop",title:`Train ${tr.l}`,detail:`${fmt(tr.t-tr.c)} to reach ${fmt(tr.t)}`,mats:[{l:tr.l,h:tr.c,n:tr.t}],open:()=>openTroopSheet(tr.k,tr.l),key:"Troop Plan"});
   const mc=(state.masters||[]).map(m=>({m,info:MASTER_INFO[m.n],lv:num(m.l)})).filter(x=>x.info&&x.lv<100&&(x.info.best===MAIN_TROOP||x.info.best==="All squads")).sort((a,b)=>b.lv-a.lv)[0];
   if(mc){ const n2=Math.min(100,(Math.floor(mc.lv/10)+1)*10); out.push({k:"mast",title:`${esc(mc.m.n)} affinity ${mc.lv} → ${n2}`,detail:n2===100?"Kindred Soul unlocks the research tree":"Emblems needed at the breakpoint",open:()=>openMastSheet(mc.m),key:"Masters"}); }
   return out.map((g,i)=>(g.tag=g.ready?"Ready":"",g)).sort((a,b)=>(b.ready?1:0)-(a.ready?1:0)||STEP_ORDER.indexOf(a.k)-STEP_ORDER.indexOf(b.k));
@@ -290,3 +290,33 @@ function renderPlanToday(){ const box=$("#doNext"); if(!box) return; const P=pla
   bindAll(box,".pgo",b=>{ const x=L[+b.dataset.i]; if(x.open) x.open(); });
   bindAll(box,".pdone",b=>{ const x=L[+b.dataset.i], snap=JSON.stringify(state); x.apply(); afterEdit(); toast("Done: "+x.title.replace(/<[^>]+>/g,""),snap); });
   const mb=$("#doMore"); if(mb){ mb.hidden=P.length<=4; mb.textContent=all?"Less ›":`All ${P.length} ›`; mb.onclick=()=>{ state.ui.planAll=!all; scheduleSave(); renderPlanToday(); }; } }
+
+/* =====================================================================
+   UPGRADE — every upgrade in one place: ready now, what holds you back, next (closest first)
+   ===================================================================== */
+const UP_GROUP={fh:"Heroes",wid:"Heroes",shard:"Heroes",charm:"Governor",gov:"Governor",pet:"Governor",mast:"Governor",bld:"Town",t11:"Town",troop:"Town"};
+const UP_SRC={mg:["Mythic Gear","Arena Shop chest · Lucky chests",()=>setTab("Shop","Free shops")],mith:["Mithril","Trial Shop · Arena Shop",()=>setTab("Shop","Free shops")],
+  threads:["Threads","Swordland · Alliance Champ.",()=>setTab("Shop","Free shops")],designs:["Designs","Charm card · Trial Shop",()=>setTab("Shop","Paid")],
+  gen:["General shards","Kingdom pack · Trial Shop",()=>setTab("Shop","Paid")],fh:["Hammers","VIP · Trial Shop",()=>setTab("Shop","Free shops")]};
+const upPct=g=>g.mats&&g.mats.length?Math.round(g.mats.reduce((t,m)=>t+Math.min(1,m.n?m.h/m.n:1),0)/g.mats.length*100):null;
+// nextSteps gives one step per area; add the other heroes that are ready too (widgets, own shards)
+function upgradeList(){ const S=nextSteps().slice(), seen=new Set(S.map(g=>g.title));
+  ((state.widgets&&state.widgets.rows)||[]).filter(r=>r.rally&&num(r.lvl)<10).forEach(r=>{ const nd=widNext(num(r.lvl)); const t=`${esc(r.hero||"Hero")} widget Lv ${num(r.lvl)} → ${num(r.lvl)+1}`;
+    if(!seen.has(t)&&num(r.have)>=nd){ seen.add(t); S.push({k:"wid",title:t,detail:`${fmt(nd)} widgets — you have ${fmt(num(r.have))}`,ready:true,mats:[{l:"Widgets",h:num(r.have),n:nd}],open:()=>openWidSheet(r),key:"Widgets",apply:()=>{ r.have=num(r.have)-nd; r.lvl=num(r.lvl)+1; }}); } });
+  (state.goldShards||[]).filter(r=>(r.rally||r.focus)&&hasStars(r)&&num(r.pos)<SHARD_MAX).forEach(r=>{ const nd=SHARD_LEAF[num(r.pos)], t=`${esc(r.n)} → ${esc(starLabel(num(r.pos)+1))}`;
+    if(!seen.has(t)&&num(r.have)>=nd){ seen.add(t); S.push({k:"shard",title:t,detail:`${fmt(num(r.have))} / ${fmt(nd)} shards`,ready:true,mats:[{l:"Shards",h:num(r.have),n:nd}],open:()=>openShardSheet(r),key:"Gold Hero Shards",apply:()=>{ r.have=num(r.have)-nd; r.pos=num(r.pos)+1; }}); } });
+  return S; }
+function renderUpgrade(){ const box=$("#upBody"); if(!box) return; const f=state.ui.upF||"All";
+  const L=upgradeList().filter(g=>f==="All"||UP_GROUP[g.k]===f), ready=L.filter(g=>g.ready), next=L.filter(g=>!g.ready).sort((a,b)=>(upPct(b)??-1)-(upPct(a)??-1));
+  const N=blockerNeeds(), blk=Object.keys(UP_SRC).filter(k=>N[k]&&N[k].short).slice(0,3);
+  const mat=m=>`<span class="umat${m.h>=m.n?"":" no"}">${esc(m.l)} ${fmtK(m.h)}/${fmtK(m.n)} ${m.h>=m.n?"✓":"✗"}</span>`;
+  const row=(g,i,isReady)=>{ const p=upPct(g); return `<div class="urow"><button class="ugo" data-i="${i}" data-r="${isReady?1:0}">${ico(STEP_ICO[g.k],isReady?"g":"")}<span class="dt"><b>${g.title}</b><span>${esc(UP_GROUP[g.k]||"")}${g.gain?` · <span class="ok">${esc(g.gain)}</span>`:""}</span></span>${p!=null&&!isReady?`<span class="upct"><b>${p}%</b><small>ready</small></span>`:""}</button>
+    ${g.mats&&g.mats.length?`<div class="umats">${g.mats.map(mat).join("")}${isReady&&g.apply?`<button class="pdone udo" data-i="${i}">Do it</button>`:""}</div>`:isReady&&g.apply?`<div class="umats"><button class="pdone udo" data-i="${i}">Do it</button></div>`:""}</div>`; };
+  box.innerHTML=`<div class="upf">${["All","Heroes","Governor","Town"].map(x=>`<button class="chip" data-f="${x}" aria-selected="${x===f}">${x}</button>`).join("")}</div>
+    <div class="upcols"><div><div class="card dcard"><div class="dch"><h3>Ready now</h3><span class="faint" style="font-size:12.5px">you have the materials</span></div>${ready.map((g,i)=>row(g,i,true)).join("")||'<p class="dnote">Nothing ready yet — see what\'s holding you back below.</p>'}</div>
+    ${blk.length?`<div class="cuphead mt"><h3>What's holding you back</h3></div><div class="ublk">${blk.map(k=>`<button class="ubk" data-k="${k}"><b>${fmtK(N[k].short)}</b><span>${UP_SRC[k][0]} short</span><em>${UP_SRC[k][1]} ›</em></button>`).join("")}</div>`:""}
+    </div><div><div class="card dcard"><div class="dch"><h3>Next upgrades</h3><span class="faint" style="font-size:12.5px">closest first</span></div>${next.map((g,i)=>row(g,i,false)).join("")||'<p class="dnote">All caught up ✓</p>'}</div></div></div>`;
+  box.querySelectorAll(".upf .chip").forEach(b=>b.onclick=()=>{ state.ui.upF=b.dataset.f; scheduleSave(); renderUpgrade(); });
+  box.querySelectorAll(".ugo").forEach(b=>b.onclick=()=>{ const g=(b.dataset.r==="1"?ready:next)[+b.dataset.i]; goToSection(null,g.key,g.open); });
+  box.querySelectorAll(".udo").forEach(b=>b.onclick=()=>{ const g=ready[+b.dataset.i], snap=JSON.stringify(state); g.apply(); afterEdit(); toast("Done: "+g.title.replace(/<[^>]+>/g,""),snap); });
+  box.querySelectorAll(".ubk").forEach(b=>b.onclick=()=>UP_SRC[b.dataset.k][2]()); }
