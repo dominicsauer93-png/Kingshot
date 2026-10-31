@@ -68,7 +68,7 @@ function renderUpdate(){
   $$("#qJump .chip").forEach(c=>c.onclick=()=>{ host.querySelectorAll("details.fold").forEach(d=>{ d.open=d.dataset.k===c.dataset.k; });
     const d=host.querySelector(`details.fold[data-k="${c.dataset.k}"]`); if(d) setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"start"}),30); });
 }
-const TAB_RENDER={Home:()=>renderHome(),Heroes:()=>{ renderRally(); renderGear(); },Governor:()=>{ renderRally(); renderGear(); },Town:()=>renderBase(),Progress:()=>renderRally(),Shop:()=>renderPlan(),Data:()=>{ renderPlan(); renderData(); renderUpdate(); }};
+const TAB_RENDER={Home:()=>renderHome(),Upgrade:()=>renderUpgrade(),Heroes:()=>{ renderRally(); renderGear(); },Governor:()=>{ renderRally(); renderGear(); },Town:()=>renderBase(),Progress:()=>renderRally(),Shop:()=>renderPlan(),Data:()=>{ renderPlan(); renderData(); renderUpdate(); }};
 const dirtyTabs=new Set();
 function renderPrep(){ migrateEvents(); migrateMasterNotes(); if(!state.ui.sub) state.ui.sub={}; }
 function renderAll(){ renderPrep(); TABS.forEach(t=>TAB_RENDER[t]()); dirtyTabs.clear(); }
