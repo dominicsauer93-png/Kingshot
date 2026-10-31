@@ -2,7 +2,7 @@
   "account": {
     "tc": "Truegold Lv. 7",
     "day": "485",
-    "power": "329725706",
+    "power": "334299846",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "Main - all out attack ",
@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1596,9 +1596,9 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Formations",
+      "Heroes": "Shards",
       "Shop": "Paid",
-      "Governor": "Gov Gear",
+      "Governor": "Charms",
       "Progress": "Overview",
       "Town": "Research"
     },
@@ -1606,7 +1606,7 @@
       "nodes": false,
       "cavNodes": false
     },
-    "doAll": false,
+    "doAll": true,
     "qOpen": {
       "Bag": true,
       "HG": true,
@@ -2847,7 +2847,7 @@
     {
       "d": "2026-10-31",
       "v": {
-        "power": 329725706,
+        "power": 334299846,
         "leth": 74.3,
         "hp": 69.1,
         "attWR": 38.08,
