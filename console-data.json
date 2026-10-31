@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Progress",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1597,11 +1597,11 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Shards",
+      "Heroes": "Hero Gear",
       "Shop": "Paid",
       "Governor": "Charms",
       "Progress": "Overview",
-      "Town": "Research"
+      "Town": "Buildings"
     },
     "t11Open": {
       "nodes": false,
