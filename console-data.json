@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -3474,6 +3474,10 @@
     {
       "d": "2026-10-31",
       "t": "Web store: 999 + 999 Stars: +1,998 ⭐"
+    },
+    {
+      "d": "2026-10-31",
+      "t": "Web store: 499 + 499 Stars: +998 ⭐"
     }
   ],
   "bagCheck": {
@@ -4053,7 +4057,8 @@
       }
     }
   },
-  "stars": 2002,
+  "stars": 3000,
   "webOnceDone": true,
-  "webOnceMonth": "2026-11"
+  "webOnceMonth": "2026-11",
+  "webMonth": "2026-11"
 }
