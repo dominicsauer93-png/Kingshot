@@ -1592,15 +1592,12 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Sync",
+      "Data": "Account",
       "Gear": "Pets",
       "Base": "Research",
       "Plan": "Shop guide",
       "Heroes": "Widgets",
-      "Shop": "Paid",
-      "Town": "Research",
-      "Progress": "Overview",
-      "Governor": "Gov Gear"
+      "Shop": "Paid"
     },
     "t11Open": {
       "nodes": false,
