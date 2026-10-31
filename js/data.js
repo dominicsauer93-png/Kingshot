@@ -50,6 +50,7 @@ const packMonthly=p=>p.kind==="month"?num(p.aud):p.kind==="week"?num(p.aud)*52/1
 const PACK_DAYS={month:30,week:7}, PACK_PER={once:"one-off",month:"per month",week:"per week"};
 const packPrice=p=>p.first&&!p.firstDone?num(p.first):num(p.aud); // first-buy price only until you've bought it once
 function packDaysLeft(p){ // ticked card: days until it runs out (negative = ended)
+  if(p.d&&p.resetDay){ const t=new Date(fcToday()+"T00:00:00"), n=new Date(t.getFullYear(),t.getMonth()+(t.getDate()>=p.resetDay?1:0),p.resetDay); return Math.round((n-t)/864e5); } // resets on a fixed day each month
   if(!p.d||!PACK_DAYS[p.kind]||!p.bought) return null;
   const end=new Date(p.bought+"T00:00:00"); end.setDate(end.getDate()+PACK_DAYS[p.kind]);
   return Math.round((end-new Date(fcToday()+"T00:00:00"))/864e5);
@@ -70,9 +71,9 @@ function renderShopsPacks(){
   const bought=p=>p.d&&p.kind==="once"; // owned one-off unlocks are hidden in a fold at the bottom
   const rows=P.map((p,i)=>({p,i})), owned=rows.filter(x=>bought(x.p));
   const packRow=({p,i})=>{ const n=packDaysLeft(p), rec=!!PACK_DAYS[p.kind];
-    const sub=p.d&&rec?(p.bought?packLeftH(n):'<span class="bad">set the bought date ✎</span>'):esc(p.note||"");
+    const sub=p.d&&rec?(p.bought||p.resetDay?packLeftH(n)+(p.resetDay?' <span class="faint">· renews on the 1st</span>':""):'<span class="bad">set the bought date ✎</span>'):esc(p.note||"");
     return `<div class="drow"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}">
-      <span class="dt"><b>${esc(p.t)}</b><span>${sub}${p.d&&rec&&p.bought&&n<=3?` <button class="renew" data-i="${i}">Renewed today</button>`:""}</span></span>
+      <span class="dt"><b>${esc(p.t)}</b><span>${sub}${p.d&&rec&&(p.bought||p.resetDay)&&n<=3?` <button class="renew" data-i="${i}">Renewed today</button>`:""}</span></span>
       <span class="dv">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${packPrice(p).toFixed(2)}`}<small>${PACK_PER[p.kind]==="one-off"?"":PACK_PER[p.kind]||""}</small></span>
       <button class="shr-edit" data-i="${i}" aria-label="Edit ${esc(p.t)}"><svg aria-hidden="true"><use href="#i-pen"/></svg></button></div>`; };
   // this month's buys live in the plan above (always current); here: your cards, anything else you saved, what you own

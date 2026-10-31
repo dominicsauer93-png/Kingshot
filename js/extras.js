@@ -87,10 +87,9 @@ function freshList(){ const out=[], bc=state.bagCheck||{}, bd=bc.d?Math.round((n
   if(bd==null||bd>2) out.push({t:bd==null?"Bag numbers never checked":`Bag numbers checked ${bd} days ago`,go:()=>{ const b=$("#bagCheck"); if(b){ b.scrollIntoView({behavior:"smooth",block:"center"}); const i=b.querySelector("input"); if(i) i.focus(); } }});
   const st=staleShops(); if(st.length) out.push({t:`${st.length} shop price list${st.length>1?"s are":" is"} ${STALE_DAYS}+ days old`,go:()=>openCamSheet(true)});
   const vd=VALUE_DB.filter(d=>vOnNow(d)&&staleDays(d.seen)>STALE_DAYS); if(vd.length) out.push({t:`${vd.length} pack price${vd.length>1?"s":""} not seen for ${STALE_DAYS}+ days`,go:()=>setTab("Shop","Paid")});
-  (state.packs||[]).filter(p=>p.d&&PACK_DAYS[p.kind]&&!p.bought).forEach(p=>out.push({t:`${p.t}: set the date you bought it`,go:()=>openPackSheet(p)}));
+  (state.packs||[]).filter(p=>p.d&&PACK_DAYS[p.kind]&&!p.bought&&!p.resetDay).forEach(p=>out.push({t:`${p.t}: set the date you bought it`,go:()=>openPackSheet(p)}));
   if(syncCfg.owner&&loadTok()&&!syncCfg.device) out.push({t:"Name this device (PC, Phone…) for sync",go:()=>{ setTab("Data","Sync"); setTimeout(()=>{ const d=$("#scDev"); if(d){ d.scrollIntoView({block:"center"}); d.focus(); } },150); }});
   if(state.stars==null) out.push({t:"Enter your Kingdom Stars balance",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
-  if(state.fx==null) out.push({t:"Check the A$ per US$ rate for the web store",go:()=>{ setTab("Shop","Paid"); setTimeout(()=>{ const b=$("#bvStars"); if(b) b.click(); },150); }});
   { const e=typeof resEnds==="function"?resEnds():null, c=(state.research||{}).current; if(e&&c&&c.n&&e<=new Date()) out.unshift({t:`Research done: ${c.n} — start the next one`,go:()=>{ setTab("Town","Research"); setTimeout(openResCurrentSheet,150); }}); }
   (state.events||[]).filter(e=>e.guess).forEach(e=>out.push({t:`${e.n}: dates are a guess — confirm them`,go:()=>openEventSheet(e)}));
   (state.events||[]).filter(e=>e.endOpen&&activeOcc(e)&&activeOcc(e).day>14).forEach(e=>out.push({t:`${e.n}: still no end date`,go:()=>openEventSheet(e)}));

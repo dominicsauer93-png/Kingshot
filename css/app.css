@@ -815,3 +815,5 @@
   .rsgrid{display:grid;gap:12px;margin-bottom:12px} .rsgrid > div{min-width:0}
   @media (min-width:900px){ .rsgrid{grid-template-columns:1fr 1fr;align-items:start} .page[data-tab="Town"] .sec[data-key="T11 Unlocks"]{max-width:none} }
   #researchBody .kpis{margin-bottom:12px}
+  .rsw2,#warAll{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);font:inherit}
+  .rsw2.dim .dt > b{color:var(--faint)}
