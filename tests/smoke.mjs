@@ -18,7 +18,7 @@ for (const [w, h, label] of [[390, 844, "phone"], [1280, 900, "pc"]]) {
   const errs = []; p.on("pageerror", e => errs.push(e.message));
   await p.goto("file://" + page + "#home");
   await p.evaluate(d => localStorage.setItem("kingshot-console-v1", d), data);
-  await p.reload(); await p.waitForFunction(() => document.querySelector("#doNext .dorow")); await p.waitForTimeout(500);
+  await p.reload(); await p.waitForFunction(() => document.querySelector("#doNext .pstep")); await p.waitForTimeout(500);
   const tabs = await p.evaluate(() => Object.entries({ Home: [], ...SUBS }).flatMap(([t, s]) => s.length ? s.map(x => [t, x]) : [[t, null]]));
   for (const [t, s] of tabs) {
     await p.evaluate(([t, s]) => setTab(t, s), [t, s]); await p.waitForTimeout(120);
@@ -31,7 +31,7 @@ for (const [w, h, label] of [[390, 844, "phone"], [1280, 900, "pc"]]) {
   // core features
   check(await p.evaluate(() => typeof merge3 === "function" && merge3({a:1,b:1},{a:2,b:1},{a:1,b:3}).a === 2 && merge3({a:1,b:1},{a:2,b:1},{a:1,b:3}).b === 3), `${label}: two-device merge keeps both edits`);
   await p.evaluate(() => setTab("Home")); await p.waitForTimeout(150);
-  check(await p.locator("#doNext .dorow").count() > 0, `${label}: Home Do next renders`);
+  check(await p.locator("#doNext .pstep").count() > 0, `${label}: Home Do next renders`);
   await p.evaluate(() => openSearch()); await p.fill("#srchIn", "shards"); await p.waitForTimeout(100);
   check(await p.locator("#srchList button").count() > 0, `${label}: search finds sections`);
   await p.evaluate(() => closeSearch());
