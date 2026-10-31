@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Upgrade",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1597,7 +1597,7 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
+      "Heroes": "Hero Gear",
       "Shop": "Paid",
       "Governor": "Charms",
       "Progress": "Overview",
@@ -1641,7 +1641,8 @@
       "designs"
     ],
     "bvNow": true,
-    "freshAll": true
+    "freshAll": true,
+    "upF": "Heroes"
   },
   "troopCounts": {
     "inf": {
