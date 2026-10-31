@@ -105,11 +105,11 @@
       <div class="subnav" role="tablist" aria-label="Heroes sections"></div>
       <section class="sec" data-sub="Formations" data-key="Focus heroes"><div id="focusHeroes"></div></section>
       <section class="sec" data-sub="Formations" data-key="Hero Roles">
-        <h2>Your heroes</h2>
-        <div class="grid" style="--min:260px" id="heroCards"></div>
+        <h2 class="mt2">Best for each battle</h2>
+        <div id="roleBest"></div>
+        <details id="roleFold" hidden></details>
+        <div class="mt2" id="heroCards"></div>
         <button class="btn sm ghost mt" id="heroMore" hidden></button>
-        <details class="fold mt2" id="roleFold"><summary><span class="grow">Best heroes for each battle</span><span class="faint" style="font-weight:500;font-size:14px">8 battle types</span></summary>
-          <div class="fbody"><div class="grid" style="--min:250px" id="roleBest"></div></div></details>
         <details class="fold" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="faint" style="font-weight:500;font-size:14px">S best → D worst</span></summary>
           <div class="fbody"><div class="seg" id="tierSeg" role="group" aria-label="Which heroes" style="max-width:320px"><button data-v="mine">My heroes</button><button data-v="all">All heroes</button></div>
           <div class="tierwrap mt"><table class="tiert" id="tierTable"></table></div></div></details>
@@ -314,11 +314,13 @@
             <h3>GitHub sync</h3>
             <p class="lead" style="margin:0 0 10px">Reads and writes a JSON file in your repo. The token stays on this device and is never committed.</p>
             <div class="form">
+              <details class="dfold" id="scSetup"><summary>Connection settings ›</summary>
               <div class="frow"><label class="f"><span>Owner</span><input id="scOwner" placeholder="your-username" autocomplete="off"></label><label class="f"><span>Repo</span><input id="scRepo" autocomplete="off"></label></div>
               <div class="frow"><label class="f"><span>Branch</span><input id="scBranch" placeholder="main" autocomplete="off"></label><label class="f"><span>File path</span><input id="scPath" autocomplete="off"></label></div>
               <label class="f"><span>Device name</span><input id="scDev" placeholder="e.g. PC, Phone, iPad" autocomplete="off"><em>Shown on each sync, so you can tell devices apart. Stays on this device.</em></label>
               <label class="f"><span>Fine-grained token</span><input id="scTok" type="password" placeholder="github_pat_…" autocomplete="off"><em>Contents: Read + Write, this repo only.</em></label>
               <label class="fcheck"><input type="checkbox" class="cbx" id="scOn"> Auto-push my edits</label>
+              </details>
               <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="scSave">Save &amp; connect</button><button class="btn" id="scPull">⭳ Pull now</button><button class="btn" id="scPush">⭱ Push now</button><button class="btn danger" id="scForget">Forget token</button></div>
               <div class="info" id="syncStatus" role="status">Not connected</div>
             </div>
@@ -335,7 +337,7 @@
         <div class="cols">
           <div class="card"><h3>1 · Add to your calendar</h3>
             <p class="lead" style="margin:0 0 10px">Works now, nothing to set up. Your phone's calendar reminds you.</p>
-            <ul class="tight" id="icsList"></ul>
+            <div id="icsWrap"></div>
             <button class="btn primary mt" id="icsBtn">Download calendar file</button>
             <p class="faint mt" style="font-size:13.5px">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
           <div class="card"><h3>2 · Phone notifications (optional)</h3>

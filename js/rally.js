@@ -35,7 +35,7 @@ function renderFocusHeroes(){ const box=$("#focusHeroes"); if(!box) return;
     const st=hasStars(r), p=num(r.pos), nx=st&&p<SHARD_MAX?SHARD_LEAF[p]:0, h=num(r.have), w=W.find(x=>x.hero===r.n), wl=w?num(w.lvl):null, wn=w&&wl<10?widNext(wl):0;
     const sh=!st?"set stars":p>=SHARD_MAX?'<span class="ok">5★ max</span>':h>=nx?`<span class="ok">${esc(starLabel(p+1))} ready</span>`:gf===r&&h+gen>=nx?`<span class="ok">${esc(starLabel(p+1))} ready with General shards</span>`:`${fmt(nx-h)} shards to ${esc(starLabel(p+1))}${gf===r&&gen?` (${fmt(gen)} General)`:""}`;
     const wd=w==null?"":wl>=10?' · widgets <span class="ok">max</span>':num(w.have)>=wn?` · widgets <span class="ok">Lv ${wl+1} ready</span>`:` · widgets ${fmt(wn-num(w.have))} short`;
-    return `<button class="drow fhrow" data-n="${esc(r.n)}"><span class="dt"><b>${esc(r.n)} <span class="gold" style="font-weight:500">${st?starGlyphs(p):""}</span></b><span>${sh}${wd}</span></span><span class="dv">${st?esc(starLabel(p)):"—"}<small>${w?`widgets ${wl}/10`:""}</small></span></button>`; }).join("")+`</div>`;
+    return `<button class="drow fhrow" data-n="${esc(r.n)}">${heroAv(r.n)}<span class="dt"><b>${esc(r.n)} <span class="gold" style="font-weight:500">${st?starGlyphs(p):""}</span></b><span>${sh}${wd}</span></span><span class="dv">${st?esc(starLabel(p)):"—"}<small>${w?`widgets ${wl}/10`:""}</small></span></button>`; }).join("")+`</div>`;
   bindAll(box,".fhrow",b=>openShardSheet(G.find(x=>x.n===b.dataset.n))); }
 function openCombatSheet(){
   const c=state.combat;
@@ -79,11 +79,13 @@ function heroRoster(){ // your heroes = the Gold Hero Shards list
 }
 function renderHeroRoles(){
   const mine=heroRoster(), gen8=HERO_GEN8.map(heroKey);
-  $("#roleBest").innerHTML=HERO_ROLES.map(([role,label])=>{
-    const L=Object.values(mine).filter(h=>TIER_OF[heroKey(h.n)][role]).sort((a,b)=>TIER_PTS[TIER_OF[heroKey(b.n)][role]]-TIER_PTS[TIER_OF[heroKey(a.n)][role]]||b.pos-a.pos).slice(0,3);
-    const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
-    return `<div class="rolecard"><h3>${esc(label)}</h3><ol>${L.map(h=>`<li>${trH(TIER_OF[heroKey(h.n)][role])}<span class="nm">${esc(h.n)}${h.rally?" ⚔":""}</span><span class="gold" style="font-size:13px;letter-spacing:1px">${starGlyphs(h.pos)}</span></li>`).join("")}</ol>
-      ${soon.length?`<span class="soon">Gen 8 soon: ${soon.map(esc).join(", ")} (S)</span>`:""}</div>`; }).join("");
+  const R=HERO_ROLES.find(([r])=>r===state.ui.roleSel)||HERO_ROLES[0], [role,label]=R;
+  const L=Object.values(mine).filter(h=>TIER_OF[heroKey(h.n)][role]).sort((a,b)=>TIER_PTS[TIER_OF[heroKey(b.n)][role]]-TIER_PTS[TIER_OF[heroKey(a.n)][role]]||b.pos-a.pos).slice(0,3);
+  const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
+  $("#roleBest").innerHTML=`<div class="rolechips">${HERO_ROLES.map(([r,l,sh])=>`<button class="chip" data-r="${r}" aria-selected="${r===role}">${esc(sh||l)}</button>`).join("")}</div>
+    <div class="card dcard mt"><div class="dch"><h3>${esc(label)}</h3><span class="faint" style="font-size:12.5px">your best 3</span></div>${L.map(h=>`<div class="drow">${heroAv(h.n)}<span class="dt"><b>${esc(h.n)}${h.rally?' <span class="faint" style="font-weight:500">⚔</span>':""}</b><span class="gold" style="letter-spacing:1px">${starGlyphs(h.pos)}</span></span>${trH(TIER_OF[heroKey(h.n)][role])}</div>`).join("")}
+    ${soon.length?`<p class="dnote">Gen 8 soon: ${soon.map(esc).join(", ")} (S)</p>`:""}</div>`;
+  $$("#roleBest .rolechips .chip").forEach(b=>b.onclick=()=>{ state.ui.roleSel=b.dataset.r; scheduleSave(); renderHeroRoles(); });
   [["#roleFold","roleOpen"],["#tierFold","tierOpen"]].forEach(([id,k])=>{ const d=$(id); d.open=!!state.ui[k]; d.ontoggle=()=>{ if(state.ui[k]!==d.open){ state.ui[k]=d.open; scheduleSave(); } }; });
   const mode=state.ui.tierAll?"all":"mine";
   $$("#tierSeg button").forEach(b=>{ b.setAttribute("aria-pressed",String(b.dataset.v===mode)); b.onclick=()=>{ state.ui.tierAll=b.dataset.v==="all"; scheduleSave(); renderHeroRoles(); }; });
@@ -93,6 +95,10 @@ function renderHeroRoles(){
     keys.map(k=>{ const t=TIER_OF[k], h=mine[k], s8=gen8.includes(k);
       return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" ⚔":""}${s8?' <span class="tag plain" style="padding:2px 6px;font-size:10.5px">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
 }
+
+/* ---------- hero avatar badge: initial, coloured by troop type ---------- */
+const AV_COL={Infantry:"av-i",Archer:"av-a",Cavalry:"av-c"};
+const heroAv=n=>{ const t=(state.heroInfo&&state.heroInfo[n]&&state.heroInfo[n].type)||""; return `<span class="hav ${AV_COL[t]||""}" aria-hidden="true">${esc(String(n||"?").replace(/[^A-Za-z]/g,"").slice(0,1)||"?")}</span>`; };
 
 /* ---------- hero pages: everything about one hero in one place ---------- */
 const HERO_TYPES=["Infantry","Cavalry","Archer"];
@@ -113,13 +119,12 @@ function heroFacts(n){
     opts.sort((a,b)=>a[0]-b[0]); next=opts.length?"Closest: "+opts[0][1]:st!=null&&st>=SHARD_MAX?"5★ max ✓":"Set stars on the Shards page"; }
   return {sr,wr,t,info,st,have,nextCost,shortAll,wl,wNext,wHave,S,next,use:heroUse(n),gear:info.type?heroGearSum(info.type):null};
 }
-function heroCardH(n,rank){ const f=heroFacts(n); // kept short: who, stars, the one next thing — the rest is in the hero sheet
-  return `<button class="vcard hcard" data-h="${esc(n)}">${EDIT_ICON}<span class="vc-top"><span class="shr-rank">${rank}</span><span class="vc-name">${esc(n)}${f.sr&&f.sr.rally?" ⚔":""}</span>${tagH(f.use>=25?"acc":"plain","Use "+f.use)}</span>
-    <span class="vc-sub">${f.st!=null?`<span class="gold" style="letter-spacing:1px">${starGlyphs(f.st)}</span> ${esc(starLabel(f.st))}`:'<span class="faint">stars not set</span>'}${f.info.type?` · ${esc(f.info.type)}`:""}${f.wr?` · widget Lv ${f.wl}`:""}</span>
-    <span class="hnext">${f.next}</span></button>`; }
+function heroCardH(n,rank){ const f=heroFacts(n); // one row: badge, name + stars, the one next thing, use score
+  return `<button class="drow hrow hcard" data-h="${esc(n)}">${heroAv(n)}<span class="dt"><b>${esc(n)}${f.sr&&f.sr.rally?' <span class="faint" style="font-weight:500">⚔</span>':""} <span class="gold hstars">${f.st!=null?starGlyphs(f.st):""}</span></b><span>${f.st!=null?esc(starLabel(f.st)):"stars not set"}${f.info.type?` · ${esc(f.info.type)}`:""}${f.wr?` · widget ${f.wl}`:""}</span><span class="hnext2">${f.next}</span></span><span class="dv${f.use>=25?" ok":""}">${f.use}<small>use</small></span></button>`; }
 function renderHeroCards(){
   const mine=Object.values(heroRoster()).sort((a,b)=>heroUse(b.n)-heroUse(a.n)||b.pos-a.pos), all=!!state.ui.heroAll, L=all?mine:mine.slice(0,6);
-  $("#heroCards").innerHTML=L.map((h,i)=>heroCardH(h.n,i+1)).join("")||`<div class="empty">Add heroes on the Shards page.</div>`;
+  const hc=$("#heroCards"); hc.className="card dcard"; hc.removeAttribute("style");
+  hc.innerHTML=`<div class="dch"><h3>Your heroes</h3><span class="faint" style="font-size:12.5px">most used first</span></div>`+(L.map((h,i)=>heroCardH(h.n,i+1)).join("")||`<p class="dnote">Add heroes on the Shards page.</p>`);
   bindAll($("#heroCards"),".hcard",b=>openHeroSheet(b.dataset.h));
   const m=$("#heroMore"); m.hidden=mine.length<=6; m.textContent=all?"Show top 6":`Show all ${mine.length} heroes`; m.onclick=()=>{ state.ui.heroAll=!all; scheduleSave(); renderHeroCards(); };
 }

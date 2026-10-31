@@ -907,3 +907,18 @@
   .sgtile{position:relative;cursor:pointer}
   .sgtick{display:block;width:100%;margin-top:8px;padding:6px 8px;border-radius:9px;border:1px dashed var(--line);background:none;color:var(--acc);font:700 12px var(--f-body);cursor:pointer;text-align:center}
   .sgtile.sgdone{opacity:.62} .sgtile.sgdone .sgtick{border-style:solid;border-color:transparent;background:var(--green-soft);color:var(--green)}
+  /* Formations + Gov Gear v3 */
+  .hav{width:40px;height:40px;border-radius:13px;flex:none;display:grid;place-items:center;font:900 17px var(--f-disp);color:#1a1206;background:linear-gradient(145deg,#e9d9b8,#a8977a)}
+  .hav.av-c{background:linear-gradient(145deg,#ffdf8a,#c98a1e)} .hav.av-a{background:linear-gradient(145deg,#c9b8ff,#7258d8);color:#140c2c} .hav.av-i{background:linear-gradient(145deg,#8fe6da,#1f9e8f);color:#032420}
+  .hrow,.fhrow{width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);font:inherit}
+  .hstars{font-weight:500;letter-spacing:1px;font-size:12px}
+  .hnext2{display:block!important;font-size:12.5px;color:var(--muted)!important;white-space:normal!important;margin-top:2px}
+  .rolechips{display:flex;gap:6px;flex-wrap:wrap}
+  .rolechips .chip[aria-selected="true"]{background:var(--gold);color:#1a1206;border-color:var(--gold)}
+  #roleBest .drow .tr,#roleBest .drow .tier{flex:none}
+  #govPlan{padding:12px 14px!important}
+  #govPlan .dt > b{white-space:normal}
+  #govPlanBtn{text-align:left!important}
+  #icsFold > summary{padding:8px 0;color:var(--acc);font-weight:600;font-size:14px;cursor:pointer}
+  #scSetup > summary{padding:6px 0 10px;color:var(--acc);font-weight:600;font-size:14px;cursor:pointer}
+  #scSetup[open] > summary{color:var(--muted)}
