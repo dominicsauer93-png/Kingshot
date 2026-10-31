@@ -1444,17 +1444,17 @@
     }
   ],
   "tg": {
-    "have": 251,
+    "have": 406,
     "need": 3486,
-    "ttgHave": 17,
+    "ttgHave": 21,
     "ttgNeed": 394
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 48063,
-      "threads": 203,
-      "vision": 621
+      "satin": 63393,
+      "threads": 351,
+      "vision": 658
     },
     "pieces": [
       {
@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1592,11 +1592,11 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Checklists",
+      "Data": "Update all",
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Overview",
+      "Heroes": "Formations",
       "Shop": "Paid",
       "Governor": "Gov Gear",
       "Progress": "Overview",
@@ -1639,7 +1639,8 @@
       "gen",
       "designs"
     ],
-    "bvNow": true
+    "bvNow": true,
+    "freshAll": true
   },
   "troopCounts": {
     "inf": {
@@ -1662,7 +1663,7 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 161,
+      "fh": 247,
       "mg": 5,
       "mith": 5
     },
@@ -1822,9 +1823,9 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 161,
+    "fhSeen": 247,
     "fhGot": {
-      "2026-10": 2400
+      "2026-10": 2486
     },
     "plan": [
       {
@@ -1891,7 +1892,7 @@
     "targetLvl": 10,
     "have": {
       "guides": 586,
-      "designs": 263
+      "designs": 273
     },
     "rows": [
       {
@@ -3210,8 +3211,9 @@
       "note": "",
       "date": "2026-10-26",
       "len": 4,
+      "guess": true,
       "endOpen": true,
-      "guess": true
+      "imp": "top"
     },
     {
       "n": "Fishing Tournament",
@@ -3378,7 +3380,7 @@
       }
     ]
   },
-  "shardGeneral": 101,
+  "shardGeneral": 111,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3415,30 +3417,30 @@
     "threads": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 379
+        "2026-10": 527
       },
-      "seen": 203
+      "seen": 351
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 598
+        "2026-10": 608
       },
-      "seen": 263
+      "seen": 273
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 478
+        "2026-10": 564
       },
-      "seen": 161
+      "seen": 247
     },
     "gen": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 348
+        "2026-10": 358
       },
-      "seen": 101
+      "seen": 111
     }
   },
   "battle": {
@@ -3466,14 +3468,14 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-10-28",
+    "d": "2026-10-31",
     "v": {
       "mg": 5,
-      "mith": 4,
-      "threads": 201,
-      "designs": 318,
-      "fh": 118,
-      "gen": 68
+      "mith": 5,
+      "threads": 351,
+      "designs": 273,
+      "fh": 247,
+      "gen": 111
     }
   },
   "noShop": [
