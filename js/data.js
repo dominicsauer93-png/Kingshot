@@ -185,8 +185,8 @@ function buildSync(){
   on("sidePull",()=>syncPull(false)); on("sidePush",()=>syncPush(false));
   on("mSync",()=>{ openSheet({title:"Sync with GitHub",sub:syncCfg.owner+"/"+syncCfg.repo,build(f){
     const r=document.createElement("div"); r.className="frow";
-    const a=document.createElement("button"); a.className="btn"; a.textContent="⭳ Pull (get latest)"; a.onclick=()=>{ closeSheet(); syncPull(false); };
-    const b=document.createElement("button"); b.className="btn primary"; b.textContent="⭱ Push (save to GitHub)"; b.onclick=()=>{ closeSheet(); syncPush(false); };
+    const a=document.createElement("button"); a.className="btn"; a.innerHTML=icoI("down")+" Pull (get latest)"; a.onclick=()=>{ closeSheet(); syncPull(false); };
+    const b=document.createElement("button"); b.className="btn primary"; b.innerHTML=icoI("up")+" Push (save to GitHub)"; b.onclick=()=>{ closeSheet(); syncPush(false); };
     r.append(a,b); f.appendChild(r); const i=infoBox(); i.textContent=$("#syncStatus").textContent; f.appendChild(i); }}); });
   if(!syncCfg.owner||!loadTok()) syncStatus("Not connected — file backup works without this","");
   const su=$("#scSetup"); if(su) su.open=!(syncCfg.owner&&loadTok()&&syncCfg.device); // set up once, then it folds away

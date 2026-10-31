@@ -83,7 +83,7 @@ function renderHeroRoles(){
   const L=Object.values(mine).filter(h=>TIER_OF[heroKey(h.n)][role]).sort((a,b)=>TIER_PTS[TIER_OF[heroKey(b.n)][role]]-TIER_PTS[TIER_OF[heroKey(a.n)][role]]||b.pos-a.pos).slice(0,3);
   const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
   $("#roleBest").innerHTML=`<div class="rolechips">${HERO_ROLES.map(([r,l,sh])=>`<button class="chip" data-r="${r}" aria-selected="${r===role}">${esc(sh||l)}</button>`).join("")}</div>
-    <div class="card dcard mt"><div class="dch"><h3>${esc(label)}</h3><span class="faint" style="font-size:12.5px">your best 3</span></div>${L.map(h=>`<div class="drow">${heroAv(h.n)}<span class="dt"><b>${esc(h.n)}${h.rally?' <span class="faint" style="font-weight:500">⚔</span>':""}</b><span class="gold" style="letter-spacing:1px">${starGlyphs(h.pos)}</span></span>${trH(TIER_OF[heroKey(h.n)][role])}</div>`).join("")}
+    <div class="card dcard mt"><div class="dch"><h3>${esc(label)}</h3><span class="faint" style="font-size:12.5px">your best 3</span></div>${L.map(h=>`<div class="drow">${heroAv(h.n)}<span class="dt"><b>${esc(h.n)}${h.rally?` <span class="faint">${icoI("sword")}</span>`:""}</b><span class="gold" style="letter-spacing:1px">${starGlyphs(h.pos)}</span></span>${trH(TIER_OF[heroKey(h.n)][role])}</div>`).join("")}
     ${soon.length?`<p class="dnote">Gen 8 soon: ${soon.map(esc).join(", ")} (S)</p>`:""}</div>`;
   $$("#roleBest .rolechips .chip").forEach(b=>b.onclick=()=>{ state.ui.roleSel=b.dataset.r; scheduleSave(); renderHeroRoles(); });
   [["#roleFold","roleOpen"],["#tierFold","tierOpen"]].forEach(([id,k])=>{ const d=$(id); d.open=!!state.ui[k]; d.ontoggle=()=>{ if(state.ui[k]!==d.open){ state.ui[k]=d.open; scheduleSave(); } }; });
@@ -93,7 +93,7 @@ function renderHeroRoles(){
   keys.sort((a,b)=>heroUse(TIER_OF[b].name)-heroUse(TIER_OF[a].name)||TIER_OF[a].name.localeCompare(TIER_OF[b].name));
   $("#tierTable").innerHTML=`<thead><tr><th>Hero</th>${HERO_ROLES.map(([,,s])=>`<th>${esc(s)}</th>`).join("")}<th>Use</th></tr></thead><tbody>`+
     keys.map(k=>{ const t=TIER_OF[k], h=mine[k], s8=gen8.includes(k);
-      return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" ⚔":""}${s8?' <span class="tag plain" style="padding:2px 6px;font-size:10.5px">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
+      return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" "+icoI("sword"):""}${s8?' <span class="tag plain" style="padding:2px 6px;font-size:10.5px">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
 }
 
 /* ---------- hero avatar badge: initial, coloured by troop type ---------- */
@@ -120,7 +120,7 @@ function heroFacts(n){
   return {sr,wr,t,info,st,have,nextCost,shortAll,wl,wNext,wHave,S,next,use:heroUse(n),gear:info.type?heroGearSum(info.type):null};
 }
 function heroCardH(n,rank){ const f=heroFacts(n); // one row: badge, name + stars, the one next thing, use score
-  return `<button class="drow hrow hcard" data-h="${esc(n)}">${heroAv(n)}<span class="dt"><b>${esc(n)}${f.sr&&f.sr.rally?' <span class="faint" style="font-weight:500">⚔</span>':""} <span class="gold hstars">${f.st!=null?starGlyphs(f.st):""}</span></b><span>${f.st!=null?esc(starLabel(f.st)):"stars not set"}${f.info.type?` · ${esc(f.info.type)}`:""}${f.wr?` · widget ${f.wl}`:""}</span><span class="hnext2">${f.next}</span></span><span class="dv${f.use>=25?" ok":""}">${f.use}<small>use</small></span></button>`; }
+  return `<button class="drow hrow hcard" data-h="${esc(n)}">${heroAv(n)}<span class="dt"><b>${esc(n)}${f.sr&&f.sr.rally?` <span class="faint">${icoI("sword")}</span>`:""} <span class="gold hstars">${f.st!=null?starGlyphs(f.st):""}</span></b><span>${f.st!=null?esc(starLabel(f.st)):"stars not set"}${f.info.type?` · ${esc(f.info.type)}`:""}${f.wr?` · widget ${f.wl}`:""}</span><span class="hnext2">${f.next}</span></span><span class="dv${f.use>=25?" ok":""}">${f.use}<small>use</small></span></button>`; }
 function renderHeroCards(){
   const mine=Object.values(heroRoster()).sort((a,b)=>heroUse(b.n)-heroUse(a.n)||b.pos-a.pos), all=!!state.ui.heroAll, L=all?mine:mine.slice(0,6);
   const hc=$("#heroCards"); hc.className="card dcard"; hc.removeAttribute("style");
@@ -237,7 +237,7 @@ function openMastSheet(m){
     [0,1,2,3].forEach(i=>{ const s=skOf(i), cap=skillCap(m.n,i);
       const row=document.createElement("div"); row.className="frow";
       row.appendChild(fld(`Skill ${i+1} level${cap?` (max ${cap})`:""}`,{type:"num",value:s.l,get:()=>s.l,set:v=>s.l=v,min:0,max:cap||99,hint:"0 = locked"}));
-      row.appendChild(fld(`Skill ${i+1} type`,{type:"select",value:s.t||"",options:[["","—"],["c","⚔ Combat"],["g","🔨 Growth"]],set:v=>s.t=v}));
+      row.appendChild(fld(`Skill ${i+1} type`,{type:"select",value:s.t||"",options:[["","—"],["c","Combat"],["g","Growth"]],set:v=>s.t=v}));
       sk.appendChild(row); });
     if(info){ const facts=infoBox(); facts.innerHTML=`<b>Talent:</b> ${esc(info.talent)}<br><b>Research:</b> ${esc(info.research)} · best for ${esc(info.best)}<br><b>Kindred Soul:</b> ${esc(info.ks)}<br><b>Unlocks with:</b> ${esc(info.unlock)}`; f.appendChild(facts); }
     f.appendChild(fld("Your note",{type:"area",rows:5,value:m.note,set:v=>m.note=v}));
