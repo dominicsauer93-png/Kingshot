@@ -1453,9 +1453,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 63393,
-      "threads": 351,
-      "vision": 658
+      "satin": 37393,
+      "threads": 91,
+      "vision": 613
     },
     "pieces": [
       {
@@ -1476,7 +1476,7 @@
       },
       {
         "name": "Archer 1",
-        "cur": 16
+        "cur": 17
       },
       {
         "name": "Archer 2",
@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1599,7 +1599,7 @@
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
       "Shop": "Free shops",
-      "Governor": "Charms",
+      "Governor": "Gov Gear",
       "Progress": "Overview",
       "Town": "Research"
     },
@@ -3420,7 +3420,7 @@
       "got": {
         "2026-10": 527
       },
-      "seen": 351
+      "seen": 91
     },
     "designs": {
       "since": "2026-10-26",
@@ -3466,6 +3466,10 @@
     {
       "d": "2026-10-31",
       "t": "Done: Wee &amp; Woo widget Lv 2 → 3"
+    },
+    {
+      "d": "2026-10-31",
+      "t": "Done: Archer 1: Gold 2★ → Gold 3★"
     }
   ],
   "bagCheck": {
