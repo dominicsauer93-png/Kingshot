@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Progress",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1601,7 +1601,7 @@
       "Shop": "Paid",
       "Governor": "Charms",
       "Progress": "Overview",
-      "Town": "Buildings"
+      "Town": "Research"
     },
     "t11Open": {
       "nodes": false,
