@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1599,7 +1599,8 @@
       "Heroes": "Widgets",
       "Shop": "Paid",
       "Governor": "Gov Gear",
-      "Town": "Research"
+      "Town": "Research",
+      "Progress": "Overview"
     },
     "t11Open": {
       "nodes": false,
