@@ -145,6 +145,9 @@ function eventShopProgress(){ const all=[...new Set(EVENT_SHOPS.map(x=>x[1]))]; 
 // the page: a simple shopping list first (one tile per shop, what to buy right now), details tucked below
 const SG_REGULAR=[["Trial Shop","Weekly"],["Arena Shop","Weekly"],["Alliance Championship Shop","Weekly"],["KvK Shop (Kingdom of Power)","Weekly"],["Swordland Shop","Every 2 weeks"],["Tidal Shop","Every 2 weeks"],["Alliance Shop — weekly","Weekly"],["Alliance Shop — daily","Daily"]];
 const SG_EVENT=["Halloween Party","Alliance Mobilization","Fishing Tournament","Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
+// weekly tick-list: a shop ticked this period shows done; it resets when the shop refreshes
+function shopPeriod(when){ const t=gameToday(); if(/daily/i.test(when)) return t; const wk=weekKey(); if(/2 weeks/i.test(when)){ const n=Math.floor(new Date(wk+"T00:00:00Z").getTime()/(7*864e5)); return "2w"+Math.floor(n/2); } return wk; }
+const shopDone=(n,when)=>(state.shopTicks||{})[n]===shopPeriod(when);
 const sgShort=n=>n.replace(/ \(.*\)$/,"").replace(/ Shop$/,"").replace(/^Alliance Shop — /,"Alliance ").replace(/^Alliance Championship$/,"Alliance Champ.");
 function renderShopGuide(){
   const host=$("#shopGuide"); if(!host) return;
@@ -153,8 +156,10 @@ function renderShopGuide(){
   const fdS=s=>s?new Date(s+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"}):"";
   const tile=([n,when])=>{ const s=SHOP_DB[idx(n)]; if(!s) return ""; const b=liveBuys(s,N).need, seen=new Set(), top=b.filter(x=>!seen.has(x.k)&&seen.add(x.k)).slice(0,2);
     const old=staleDays(s.seen)>STALE_DAYS;
-    return `<button class="sgtile" data-i="${idx(n)}"><span class="sgt-h"><b>${esc(sgShort(n))}</b><small>${old?`<span class="warn">seen ${staleDays(s.seen)}d ago</span>`:esc(when)}</small></span>`+
-      (top.length?top.map(x=>`<span class="sgt-buy">${esc(x.it[0].replace(/ \(.*\)/,""))}<em>${fmt(x.it[1])}</em></span>`).join(""):'<span class="sgt-none">Nothing you need ✓</span>')+`</button>`; };
+    const done=shopDone(n,when);
+    return `<div class="sgtile${done?" sgdone":""}" data-i="${idx(n)}" role="button" tabindex="0"><span class="sgt-h"><b>${esc(sgShort(n))}</b><small>${old?`<span class="warn">seen ${staleDays(s.seen)}d ago</span>`:esc(when)}</small></span>`+
+      (top.length?top.map(x=>`<span class="sgt-buy">${esc(x.it[0].replace(/ \(.*\)/,""))}<em>${fmt(x.it[1])}</em></span>`).join(""):'<span class="sgt-none">Nothing you need ✓</span>')+
+      (top.length?`<button class="sgtick" data-n="${esc(n)}" data-w="${esc(when)}" aria-label="Bought from ${esc(n)} this ${esc(when)}">${done?"✓ bought":"Mark bought"}</button>`:"")+`</div>`; };
   const shopBody=i=>{ const s=SHOP_DB[i]; return liveBuysH(s,N)+(s.best.length?`<div class="sgbest"><b>Usually buy</b><ol>${s.best.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>`:"")+
       (s.skip.length?`<div class="sgskip"><b>Skip</b><ul>${s.skip.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`:"")+
       (s.items.length?`<details class="fold mt"><summary><span class="grow">Everything it sells</span><small class="faint">seen ${fdS(s.seen)}</small></summary><div class="fbody" style="padding:0"><table class="gtable"><thead><tr><th>Item</th><th>Cost</th><th>${typeof s.items[0][2]==="number"?"Limit":"%"}</th></tr></thead><tbody>${s.items.map(([a,b,c])=>`<tr><td>${esc(a)}</td><td class="mono">${typeof b==="number"?fmt(b):esc(b)}</td><td class="mono">${typeof c==="number"?fmt(c):esc(c)}</td></tr>`).join("")}</tbody></table></div></details>`:"")+
@@ -169,6 +174,8 @@ function renderShopGuide(){
     `<div class="sgtiles">${liveEv.map(tile).join("")}${SG_REGULAR.map(tile).join("")}</div>`+
     `<div class="dlinks"><button class="link" id="sgAll">All shops &amp; packs ›</button><button class="link" id="sgSrc">Where supplies come from ›</button>${ep.missing.length?`<button class="link" id="sgCam">📸 ${ep.missing.length} shops to capture ›</button>`:""}</div>`;
   on("sgCam",()=>openCamSheet(true));
+  host.querySelectorAll(".sgtick").forEach(b=>b.onclick=e=>{ e.stopPropagation(); const n=b.dataset.n, w=b.dataset.w, T=state.shopTicks||(state.shopTicks={}), k=shopPeriod(w), snap=JSON.stringify(state); if(T[n]===k) delete T[n]; else T[n]=k; afterEdit(); toast(T[n]?`${sgShort(n)}: bought this ${w==="Daily"?"day":w==="Weekly"?"week":"cycle"} ✓`:`${sgShort(n)}: unticked`,snap); });
+  const withBuys=SG_REGULAR.filter(([n])=>{ const sh=SHOP_DB[idx(n)]; return sh&&liveBuys(sh,N).need.length; }), nDone=withBuys.filter(([n,w])=>shopDone(n,w)).length, sgh=host.querySelector(".sghead b"); if(sgh) sgh.insertAdjacentHTML("afterend",` <span class="pill${nDone===withBuys.length?" g":""}" style="margin-left:6px">${nDone} / ${withBuys.length} shops done</span>`);
   host.querySelectorAll(".sgtile").forEach(t=>t.onclick=()=>{ const i=+t.dataset.i, sh=SHOP_DB[i]; openSheet({title:sh.n,sub:`${sh.cur}${sh.when?" · "+sh.when:""}`,build(f){ f.innerHTML=shopBody(i); }}); });
   on("sgAll",()=>openSheet({title:"All shops & packs",sub:"Tap one to see what it sells.",build(f){
     f.innerHTML=`<h3 class="sgsec">Shops</h3><div class="card dcard sggrp">${regIdx.map(fold).join("")}</div><h3 class="sgsec">Event shops</h3><div class="card dcard sggrp">${evIdx.map(fold).join("")}</div><h3 class="sgsec">Packs</h3><div class="card dcard sggrp">${packIdx.map(fold).join("")}</div>
