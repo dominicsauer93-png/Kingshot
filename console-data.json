@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1592,15 +1592,13 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
+      "Data": "Checklists",
       "Gear": "Pets",
-      "Base": "Research",
+      "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
+      "Heroes": "Overview",
       "Shop": "Paid",
-      "Governor": "Gov Gear",
-      "Town": "Research",
-      "Progress": "Overview"
+      "Governor": "Gov Gear"
     },
     "t11Open": {
       "nodes": false,
@@ -1616,33 +1614,30 @@
       "Shards": false,
       "Masters": true,
       "Gov": true,
-      "Widgets": false,
+      "Widgets": true,
       "Charms": false,
       "T11": false,
       "Mystic": true,
       "Pets": true
     },
     "tierAll": false,
-    "progKey": "attWR",
+    "progKey": "power",
     "roleOpen": true,
     "heroAll": false,
     "evOpen": true,
     "shSpare": true,
-    "petMaxOpen": false,
+    "petMaxOpen": true,
     "weekOpen": false,
     "todayAll": true,
     "tierOpen": false,
     "planOpen": true,
+    "sgOpen": 10,
     "bvPick": [
       "tg",
       "gen",
-      "designs",
-      "dust"
+      "designs"
     ],
-    "sgOpen": 14,
-    "bcMore": true,
-    "sgFull": true,
-    "freshAll": true
+    "bvNow": true
   },
   "troopCounts": {
     "inf": {
@@ -2787,6 +2782,26 @@
       }
     },
     {
+      "d": "2026-10-29",
+      "v": {
+        "power": 329725706,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 471
+      }
+    },
+    {
       "d": "2026-10-28",
       "v": {
         "power": 329725706,
@@ -2808,26 +2823,6 @@
     },
     {
       "d": "2026-10-29",
-      "v": {
-        "power": 329725706,
-        "leth": 74.3,
-        "hp": 69.1,
-        "attWR": 38.08,
-        "defWR": 91.68,
-        "p:Building": 9380343,
-        "p:Troop": 182796490,
-        "p:Hero": 33584735,
-        "p:Hero Gear": 14470618,
-        "p:Governor Gear": 9216720,
-        "p:Governor Charm": 12748800,
-        "p:Tech": 28579920,
-        "p:Pet": 22993080,
-        "p:Master": 15955000,
-        "stars": 471
-      }
-    },
-    {
-      "d": "2026-10-30",
       "v": {
         "power": 329725706,
         "leth": 74.3,
@@ -2969,6 +2964,7 @@
       "d": false
     }
   ],
+  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
   "events": [
     {
       "n": "KvK",
@@ -3380,7 +3376,25 @@
       }
     ]
   },
+  "shardGeneral": 101,
   "shardRallySet": true,
+  "eventTicks": {
+    "key": "Wavebound Voyage|2026-10-20",
+    "done": []
+  },
+  "packBudget": 100,
+  "packMonths": {
+    "2026-10": {
+      "spent": 92.93,
+      "closed": true,
+      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99 · Audacious passes 22.98 · Ultra Monthly Card 14.99 (28 Oct)"
+    },
+    "2026-11": {
+      "spent": 0,
+      "closed": false,
+      "note": "Plan: Path of Honor 14.99 · Charm card 14.99 · Hero Gear card 14.99 · Chameleos 7.99 = 52.96 · ~A$47 spare"
+    }
+  },
   "income": {
     "mg": {
       "since": "2026-10-26",
@@ -3423,25 +3437,6 @@
         "2026-10": 348
       },
       "seen": 101
-    }
-  },
-  "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
-  "shardGeneral": 101,
-  "eventTicks": {
-    "key": "Wavebound Voyage|2026-10-20",
-    "done": []
-  },
-  "packBudget": 100,
-  "packMonths": {
-    "2026-10": {
-      "spent": 92.93,
-      "closed": true,
-      "note": "Kingdom Special 30.99 · Voyage 4th sail 7.99 · Dragon Value 7.99 · Sails Aloft 7.99 · Audacious passes 22.98 · Ultra Monthly Card 14.99 (28 Oct)"
-    },
-    "2026-11": {
-      "spent": 0,
-      "closed": false,
-      "note": "Plan: Path of Honor 14.99 · Charm card 14.99 · Hero Gear card 14.99 · Chameleos 7.99 = 52.96 · ~A$47 spare"
     }
   },
   "battle": {
