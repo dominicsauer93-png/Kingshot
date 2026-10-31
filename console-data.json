@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1642,7 +1642,8 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "Heroes"
+    "upF": "Heroes",
+    "bvAll": true
   },
   "troopCounts": {
     "inf": {
