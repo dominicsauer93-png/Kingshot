@@ -1557,7 +1557,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1592,12 +1592,14 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Sync",
+      "Data": "Account",
       "Gear": "Pets",
       "Base": "Research",
       "Plan": "Shop guide",
       "Heroes": "Widgets",
-      "Shop": "Paid"
+      "Shop": "Paid",
+      "Governor": "Gov Gear",
+      "Town": "Research"
     },
     "t11Open": {
       "nodes": false,
@@ -3594,5 +3596,6 @@
         "Iron Mining V": 0
       }
     }
-  }
+  },
+  "stars": 4
 }
