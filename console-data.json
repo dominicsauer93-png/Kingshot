@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Upgrade",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1599,7 +1599,7 @@
       "Plan": "Shop guide",
       "Heroes": "Widgets",
       "Shop": "Paid",
-      "Governor": "Pets",
+      "Governor": "Charms",
       "Progress": "Overview",
       "Town": "Research"
     },
