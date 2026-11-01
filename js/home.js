@@ -252,7 +252,7 @@ function paintGoals(){
   const nReady=L.filter(g=>g.ready).length;
   hs.innerHTML=L.map((g,i)=>doHtml(g,i)).join("")||`<p class="dnote">Everything is at target ✓</p>`;
   bindAll(hs,".dogo",b=>{ const g2=L[+b.dataset.i]; goToSection(null,g2.key,g2.open); });
-  bindAll(hs,".didit",b=>{ const g2=L[+b.dataset.i], snap=JSON.stringify(state); g2.apply(); afterEdit(); toast("Done: "+g2.title.replace(/<[^>]+>/g,""),snap); });
+  bindAll(hs,".didit",b=>{ const g2=L[+b.dataset.i], snap=JSON.stringify(state); g2.apply(); pgNoteDone(g2.k); afterEdit(); toast("Done: "+g2.title.replace(/<[^>]+>/g,""),snap); });
   $("#doCount").textContent="";
   const mb=$("#doMore"); mb.hidden=all.length<=3; mb.textContent=showAll?"Top 3 ›":`All ${all.length} ›`;
   mb.onclick=()=>{ state.ui.doAll=!state.ui.doAll; paintGoals(); scheduleSave(); };
@@ -281,7 +281,7 @@ const ico=(k,c)=>`<span class="pico${c?" "+c:""}"><svg viewBox="0 0 24 24" fill=
 const STEP_ICO={fh:"hammer",wid:"gem",shard:"star",charm:"gem",gov:"shield",bld:"flask",pet:"star",t11:"flask",troop:"sword",mast:"star"};
 // everything that matters today, from all your data: ready upgrades, deadlines, resets, blockers
 function planToday(){ const out=[], S=nextSteps(), today=gameToday();
-  S.filter(g=>g.ready).slice(0,3).forEach(g=>out.push({ico:STEP_ICO[g.k],tone:"g",tag:"ready now",title:g.title,detail:g.detail,apply:g.apply,open:()=>goToSection(null,g.key,g.open)}));
+  S.filter(g=>g.ready).slice(0,3).forEach(g=>out.push({k:g.k,ico:STEP_ICO[g.k],tone:"g",tag:"ready now",title:g.title,detail:g.detail,apply:g.apply,open:()=>goToSection(null,g.key,g.open)}));
   (state.packs||[]).filter(p=>p.d&&PACK_DAYS[p.kind]).forEach(p=>{ const n=packDaysLeft(p); if(n!=null&&n<=1) out.push({ico:"cart",tone:"y",tag:n<=0?"renews today":"renews tomorrow",title:`Renew ${p.t}`,detail:num(p.stars)?`+${fmt(num(p.stars))} ⭐${num(p.gen)?` and ${p.gen} General shards`:""}`:`A$${num(p.aud).toFixed(2)}`,open:()=>setTab("Shop","Paid")}); });
   liveEvents().forEach(({e,a})=>{ const left=a.len-a.day; if(!e.endOpen&&left<=1&&/halloween|fishing|dragon|voyage|champagne/i.test(e.n||"")) out.push({ico:"clock",tone:"r",tag:left?"ends tomorrow":"ends today",title:`${e.n}: use everything`,detail:spendFor(e)||"Spend leftover event currency",open:()=>openEventSheet(e)}); });
   if(typeof vPlanAll==="function"){ const A=vPlanAll(); A.picked.forEach(p=>{ const by=vBuyBy(p.d); if(by){ const d=Math.round((new Date(by+"T00:00:00")-new Date(today+"T00:00:00"))/864e5); if(d<=2) out.push({ico:"cart",tone:"y",tag:d<=0?"buy today":`buy by ${new Date(by+"T00:00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"})}`,title:vShort(p),detail:p.pay==="stars"?`${fmt(p.starCost)} ⭐`:`A$${p.d.a.toFixed(2)}`,open:()=>setTab("Shop","Paid")}); } }); }
@@ -292,7 +292,7 @@ function planToday(){ const out=[], S=nextSteps(), today=gameToday();
 function renderPlanToday(){ const box=$("#doNext"); if(!box) return; const P=planToday(), all=!!state.ui.planAll, L=all?P:P.slice(0,4);
   box.innerHTML=L.map((x,i)=>`<div class="pstep"><button class="pgo" data-i="${i}">${ico(x.ico,x.tone)}<span class="dt"><b>${x.title}</b><span>${x.detail}</span><em class="ptag ${x.tone}">${esc(x.tag)}</em></span></button>${x.apply?`<button class="pdone" data-i="${i}">Done</button>`:'<span class="chev" aria-hidden="true">›</span>'}</div>`).join("")||'<p class="dnote">Nothing urgent — everything is on track ✓</p>';
   bindAll(box,".pgo",b=>{ const x=L[+b.dataset.i]; if(x.open) x.open(); });
-  bindAll(box,".pdone",b=>{ const x=L[+b.dataset.i], snap=JSON.stringify(state); x.apply(); afterEdit(); toast("Done: "+x.title.replace(/<[^>]+>/g,""),snap); });
+  bindAll(box,".pdone",b=>{ const x=L[+b.dataset.i], snap=JSON.stringify(state); x.apply(); pgNoteDone(x.k); afterEdit(); toast("Done: "+x.title.replace(/<[^>]+>/g,""),snap); });
   const mb=$("#doMore"); if(mb){ mb.hidden=P.length<=4; mb.textContent=all?"Less ›":`All ${P.length} ›`; mb.onclick=()=>{ state.ui.planAll=!all; scheduleSave(); renderPlanToday(); }; } }
 
 /* =====================================================================
@@ -310,17 +310,42 @@ function upgradeList(){ const S=nextSteps().slice(), seen=new Set(S.map(g=>g.tit
   (state.goldShards||[]).filter(r=>(r.rally||r.focus)&&hasStars(r)&&num(r.pos)<SHARD_MAX).forEach(r=>{ const nd=SHARD_LEAF[num(r.pos)], t=`${esc(r.n)} → ${esc(starLabel(num(r.pos)+1))}`;
     if(!seen.has(t)&&num(r.have)>=nd){ seen.add(t); S.push({k:"shard",title:t,detail:`${fmt(num(r.have))} / ${fmt(nd)} shards`,ready:true,mats:[{l:"Shards",h:num(r.have),n:nd}],open:()=>openShardSheet(r),key:"Gold Hero Shards",apply:()=>{ r.have=num(r.have)-nd; r.pos=num(r.pos)+1; }}); } });
   return S; }
-function renderUpgrade(){ const box=$("#upBody"); if(!box) return; const f=state.ui.upF||"All";
-  const L=upgradeList().filter(g=>f==="All"||UP_GROUP[g.k]===f), ready=L.filter(g=>g.ready), next=L.filter(g=>!g.ready).sort((a,b)=>(upPct(b)??-1)-(upPct(a)??-1));
+function renderUpgrade(){ const box=$("#upBody"); if(!box) return; const f=state.ui.upF||"All", byPow=state.ui.upSort==="power"; pgLearn();
+  const pw=g=>(pgOf(g.k)||{}).v||0;
+  const L=upgradeList().filter(g=>f==="All"||UP_GROUP[g.k]===f), ready=L.filter(g=>g.ready).sort((a,b)=>byPow?pw(b)-pw(a):0), next=L.filter(g=>!g.ready).sort((a,b)=>byPow?pw(b)-pw(a)||(upPct(b)??-1)-(upPct(a)??-1):(upPct(b)??-1)-(upPct(a)??-1));
   const N=blockerNeeds(), blk=Object.keys(UP_SRC).filter(k=>N[k]&&N[k].short).slice(0,3);
   const mat=m=>`<span class="umat${m.h>=m.n?"":" no"}">${esc(m.l)} ${fmtK(m.h)}/${fmtK(m.n)} ${m.h>=m.n?"✓":"✗"}</span>`;
-  const row=(g,i,isReady)=>{ const p=upPct(g); return `<div class="urow"><button class="ugo" data-i="${i}" data-r="${isReady?1:0}">${ico(STEP_ICO[g.k],isReady?"g":"")}<span class="dt"><b>${g.title}</b><span>${esc(UP_GROUP[g.k]||"")}${g.gain?` · <span class="ok">${esc(g.gain)}</span>`:""}</span></span>${p!=null&&!isReady?`<span class="upct"><b>${p}%</b><small>ready</small></span>`:""}</button>
+  const row=(g,i,isReady)=>{ const p=upPct(g); return `<div class="urow"><button class="ugo" data-i="${i}" data-r="${isReady?1:0}">${ico(STEP_ICO[g.k],isReady?"g":"")}<span class="dt"><b>${g.title}</b><span>${esc(UP_GROUP[g.k]||"")}${g.gain?` · <span class="ok">${esc(g.gain)}</span>`:""}</span>${PG_AREA[g.k]?(()=>{ const P=pgOf(g.k); return `<span class="upow${P?"":" none"}" data-k="${g.k}">${P?`+${fmtK(P.v)} power <small>${esc(P.src)}</small>`:"+ add power gain"}</span>`; })():""}</span>${p!=null&&!isReady?`<span class="upct"><b>${p}%</b><small>ready</small></span>`:""}</button>
     ${g.mats&&g.mats.length?`<div class="umats">${g.mats.map(mat).join("")}${isReady&&g.apply?`<button class="pdone udo" data-i="${i}">Do it</button>`:""}</div>`:isReady&&g.apply?`<div class="umats"><button class="pdone udo" data-i="${i}">Do it</button></div>`:""}</div>`; };
-  box.innerHTML=`<div class="upf">${["All","Heroes","Governor","Town"].map(x=>`<button class="chip" data-f="${x}" aria-selected="${x===f}">${x}</button>`).join("")}</div>
+  box.innerHTML=`<div class="upf">${["All","Heroes","Governor","Town"].map(x=>`<button class="chip" data-f="${x}" aria-selected="${x===f}">${x}</button>`).join("")}<button class="chip upsort" id="upSort">${byPow?"Sort: most power":"Sort: closest"} ⇅</button></div>
     <div class="upcols"><div><div class="card dcard"><div class="dch"><h3>Ready now</h3><span class="faint" style="font-size:12.5px">you have the materials</span></div>${ready.map((g,i)=>row(g,i,true)).join("")||'<p class="dnote">Nothing ready yet — see what\'s holding you back below.</p>'}</div>
     ${blk.length?`<div class="cuphead mt"><h3>What's holding you back</h3></div><div class="ublk">${blk.map(k=>`<button class="ubk" data-k="${k}"><b>${fmtK(N[k].short)}</b><span>${UP_SRC[k][0]} short</span><em>${UP_SRC[k][1]} ›</em></button>`).join("")}</div>`:""}
-    </div><div><div class="card dcard"><div class="dch"><h3>Next upgrades</h3><span class="faint" style="font-size:12.5px">closest first</span></div>${next.map((g,i)=>row(g,i,false)).join("")||'<p class="dnote">All caught up ✓</p>'}</div></div></div>`;
-  box.querySelectorAll(".upf .chip").forEach(b=>b.onclick=()=>{ state.ui.upF=b.dataset.f; scheduleSave(); renderUpgrade(); });
+    </div><div><div class="card dcard"><div class="dch"><h3>Next upgrades</h3><span class="faint" style="font-size:12.5px">${byPow?"most power first":"closest first"}</span></div>${next.map((g,i)=>row(g,i,false)).join("")||'<p class="dnote">All caught up ✓</p>'}</div></div></div>`;
+  box.querySelectorAll(".upf .chip[data-f]").forEach(b=>b.onclick=()=>{ state.ui.upF=b.dataset.f; scheduleSave(); renderUpgrade(); });
+  on("upSort",()=>{ state.ui.upSort=byPow?"close":"power"; scheduleSave(); renderUpgrade(); });
+  box.querySelectorAll(".upow").forEach(b=>b.onclick=e=>{ e.stopPropagation(); openPgSheet(b.dataset.k); });
   box.querySelectorAll(".ugo").forEach(b=>b.onclick=()=>{ const g=(b.dataset.r==="1"?ready:next)[+b.dataset.i]; goToSection(null,g.key,g.open); });
-  box.querySelectorAll(".udo").forEach(b=>b.onclick=()=>{ const g=ready[+b.dataset.i], snap=JSON.stringify(state); g.apply(); afterEdit(); toast("Done: "+g.title.replace(/<[^>]+>/g,""),snap); });
+  box.querySelectorAll(".udo").forEach(b=>b.onclick=()=>{ const g=ready[+b.dataset.i], snap=JSON.stringify(state); g.apply(); pgNoteDone(g.k); afterEdit(); toast("Done: "+g.title.replace(/<[^>]+>/g,""),snap); });
   box.querySelectorAll(".ubk").forEach(b=>b.onclick=()=>UP_SRC[b.dataset.k][2]()); }
+
+/* ---------- power gain per upgrade: what you enter (from the game's "Power +X"), what the dashboard learns, guide figures ---------- */
+const PG_AREA={fh:"Hero Gear",wid:"Hero",shard:"Hero",charm:"Governor Charm",gov:"Governor Gear",pet:"Pet",bld:"Building",mast:"Master"};
+const PG_NAME={fh:"Hero gear step",wid:"Widget level",shard:"Hero star step",charm:"Charm level",gov:"Gov gear tier",pet:"Pet advance",bld:"Building step",mast:"Master breakpoint"};
+const pgStore=()=>state.pgain||(state.pgain={});
+function pgOf(k){ const P=pgStore()[k]||{}; if(num(P.you)) return {v:num(P.you),src:"you"};
+  const L=P.learned||[]; if(L.length) return {v:Math.round(L.reduce((t,x)=>t+x,0)/L.length),src:`learned ×${L.length}`};
+  if(num(P.guide)) return {v:num(P.guide),src:"guide"}; return null; }
+const pillarV=a=>{ const p=(state.pillars||[]).find(x=>x.name===a); return p?num(p.v):null; };
+// on Done: remember the area's power now; when that power is next updated, the rise is shared across the upgrades done since
+function pgNoteDone(k){ const a=PG_AREA[k]; if(!a) return; const base=pillarV(a); if(base==null) return;
+  const Q=state.pgPending||(state.pgPending=[]); Q.push({k,a,base,d:fcToday()}); }
+function pgLearn(){ const Q=state.pgPending||[]; if(!Q.length) return; const keep=[];
+  [...new Set(Q.map(x=>x.a))].forEach(a=>{ const L=Q.filter(x=>x.a===a), now=pillarV(a), base=L[0].base;
+    if(now==null||now===base){ keep.push(...L); return; }
+    const each=(now-base)/L.length; if(each>0) L.forEach(x=>{ const P=pgStore()[x.k]||(pgStore()[x.k]={}); (P.learned||(P.learned=[])).push(Math.round(each)); if(P.learned.length>8) P.learned.shift(); }); });
+  state.pgPending=keep; }
+function openPgSheet(k){ const P=pgStore()[k]||(pgStore()[k]={});
+  openSheet({title:PG_NAME[k]||"Power gain",sub:"Power gained by one upgrade of this kind.",build(f){
+    f.appendChild(fld("Power from the game (the “Power +” on the upgrade screen)",{type:"num",allowEmpty:true,value:P.you||"",get:()=>P.you||"",set:v=>{ if(v===""||!num(v)) delete P.you; else P.you=Math.round(num(v)); },hint:"Shorthand works: 45k, 1.2m. Leave empty to use the learned or guide figure."}));
+    const i=infoBox(); f.appendChild(i);
+    const rf=()=>{ const L=P.learned||[]; i.innerHTML=`Learned from your updates: <b>${L.length?L.map(fmtK).join(", "):"none yet"}</b><br>Guide figure: <b>${num(P.guide)?fmtK(P.guide):"—"}</b><br><span class="faint">Learned figures come from your power grades: tap Done on an upgrade, then update that area's power on Progress → Power grades.</span>`; }; rf(); return rf; }}); }

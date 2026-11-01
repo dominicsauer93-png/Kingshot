@@ -897,3 +897,6 @@
   #scSetup > summary{padding:6px 0 10px;color:var(--acc);font-weight:600;font-size:14px;cursor:pointer}
   #scSetup[open] > summary{color:var(--muted)}
   .icoi{width:1.05em;height:1.05em;vertical-align:-.16em;flex:none;display:inline-block}
+  .upow{display:inline-block!important;margin-top:4px;font:800 11.5px var(--f-body)!important;padding:2px 8px;border-radius:7px;background:var(--gold-soft);color:var(--gold)!important;cursor:pointer;width:fit-content}
+  .upow small{font-weight:600;color:var(--faint);margin-left:3px} .upow.none{background:none;border:1px dashed var(--line);color:var(--acc)!important}
+  .upsort{margin-left:auto}
