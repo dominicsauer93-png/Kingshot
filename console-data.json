@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Upgrade",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1598,7 +1598,7 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Formations",
-      "Shop": "Paid",
+      "Shop": "Free shops",
       "Governor": "Gov Gear",
       "Progress": "Overview",
       "Town": "Research"
@@ -1670,7 +1670,7 @@
       "xp": 0,
       "fh": 251,
       "mg": 6,
-      "mith": 5
+      "mith": 6
     },
     "rows": [
       {
@@ -3441,9 +3441,10 @@
     "mith": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 3
+        "2026-10": 3,
+        "2026-11": 1
       },
-      "seen": 5
+      "seen": 6
     },
     "threads": {
       "since": "2026-10-26",
