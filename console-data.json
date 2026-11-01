@@ -1445,7 +1445,7 @@
     }
   ],
   "tg": {
-    "have": 166,
+    "have": 477,
     "need": 3246,
     "ttgHave": 1,
     "ttgNeed": 374
@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1598,10 +1598,10 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
-      "Shop": "Paid",
+      "Shop": "Free shops",
       "Governor": "Gov Gear",
       "Progress": "Overview",
-      "Town": "Research"
+      "Town": "Buildings"
     },
     "t11Open": {
       "nodes": false,
@@ -1645,16 +1645,7 @@
     "upF": "All",
     "bvAll": true,
     "roleSel": "arena",
-    "bcMore": true,
-    "bvSkip": {
-      "2026-11": [
-        "Truegold Weekly Card (week 1)",
-        "Truegold Weekly Card (week 2)",
-        "Truegold Weekly Card (week 3)",
-        "Weekly Benefits — Mythic Governor Charm (week 1)",
-        "Weekly Benefits — Mythic Governor Charm (week 2)"
-      ]
-    }
+    "bcMore": true
   },
   "troopCounts": {
     "inf": {
@@ -2961,7 +2952,7 @@
     {
       "n": "Town Center",
       "stepIdx": 2,
-      "note": "METRONOME — raise one tier to uncap the rest",
+      "note": "",
       "d": false
     },
     {
