@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1597,7 +1597,7 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Formations",
+      "Heroes": "Shards",
       "Shop": "Free shops",
       "Governor": "Gov Gear",
       "Progress": "Overview",
@@ -1626,7 +1626,7 @@
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": false,
+    "heroAll": true,
     "evOpen": true,
     "shSpare": true,
     "petMaxOpen": true,
@@ -1644,7 +1644,7 @@
     "freshAll": true,
     "upF": "All",
     "bvAll": true,
-    "roleSel": "solo",
+    "roleSel": "arena",
     "bcMore": true
   },
   "troopCounts": {
