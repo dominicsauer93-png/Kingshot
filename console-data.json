@@ -1454,7 +1454,7 @@
     "targetIdx": 18,
     "have": {
       "satin": 37393,
-      "threads": 144,
+      "threads": 57,
       "vision": 613
     },
     "pieces": [
@@ -3446,7 +3446,7 @@
       "got": {
         "2026-10": 580
       },
-      "seen": 144
+      "seen": 57
     },
     "designs": {
       "since": "2026-10-26",
