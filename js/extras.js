@@ -68,18 +68,24 @@ function blockerNeeds(){
 function renderBagCheck(){
   const box=$("#bagCheck"); if(!box) return;
   const bc=state.bagCheck||{}, prev=bc.v||{}, days=bc.d?Math.round((new Date(fcToday())-new Date(bc.d))/864e5):null;
-  const ch=k=>{ if(prev[k]==null) return '<span class="faint">—</span>'; const d=bagVal(k)-num(prev[k]); return d>0?`<span class="ok">▲ ${fmt(d)}</span>`:d<0?`<span class="bad">▼ ${fmt(-d)}</span>`:'<span class="faint">same</span>'; };
+  const need=blockerNeeds(), BLK=["mg","threads","designs"];
+  // every item, in the same order as the app's pages (Heroes → Governor → Town)
+  const T=k=>{ const b=BAG_KEYS.find(x=>x[0]===k); return [b[1],b[2],b[3],k]; }, M=l=>{ const b=BAG_MORE.find(x=>x[0]===l); return [b[0],b[1],b[2],"m:"+l]; };
+  const GROUPS=[["Heroes","star",[T("gen"),T("mg"),T("mith"),T("fh"),M("Gear XP"),M("Lucky chests"),M("Custom Mythic chests")]],
+    ["Governor","shield",[T("threads"),M("Satin"),M("Vision"),T("designs"),M("Guides")]],
+    ["Town","flask",[M("Truegold"),M("Tempered TG"),M("TG Dust"),M("Gold")]]];
+  const ALL=GROUPS.flatMap(g=>g[2]), val=it=>num(it[1]()[it[2]]);
+  const ch=it=>{ const p=prev[it[3]]; if(p==null) return '<span class="faint">—</span>'; const d=val(it)-num(p); return d>0?`<span class="ok">▲ ${fmt(d)}</span>`:d<0?`<span class="bad">▼ ${fmt(-d)}</span>`:'<span class="faint">same</span>'; };
+  const sub=it=>{ const n=need[it[3]]; return n&&n.need?`<small class="${n.short?"bad":"ok"}" title="${esc(n.what)}">${n.short?`${fmt(n.short)} short for next`:"enough for next ✓"}</small>`:""; };
+  const row=(it,i)=>`<label class="bcrow"><span class="bcl">${BLK.includes(it[3])?'<i class="bdot"></i>':""}${it[0]}${sub(it)}</span><em data-ch="${i}">${ch(it)}</em><input inputmode="numeric" data-i="${i}" value="${fmt(val(it))}"></label>`;
+  let n=0;
   box.innerHTML=`<div class="dch"><h3>My bag</h3>${days==null?'<span class="pill a">not checked yet</span>':days===0?'<span class="pill g">checked today</span>':`<span class="pill${days>2?" a":""}">checked ${days} day${days>1?"s":""} ago</span>`}<button class="link" id="bcSave">Save ✓</button></div>
-    <div class="bcgrid">${BAG_KEYS.map(([k,l])=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-k="${k}" value="${bagVal(k)}"><em data-ch="${k}">${ch(k)}</em></label>`).join("")}</div>
-    <details class="dfold" id="bcMore"${state.ui.bcMore?" open":""}><summary>More numbers ›</summary><div class="bcgrid">${BAG_MORE.map(([l,o,k],i)=>`<label class="bccell"><span>${l}</span><input inputmode="numeric" data-m="${i}" value="${num(o()[k])}"></label>`).join("")}</div></details>
+    ${GROUPS.map(([t,ic,items])=>`<div class="bcgrp"><div class="bcgh">${icoI(ic)} ${t}</div>${items.map(it=>row(it,n++)).join("")}</div>`).join("")}
     ${(()=>{ const st=staleShops(); return st.length?`<button class="drow" id="bcStale" style="width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text)"><span class="dt"><b>${icoI("camera")} ${st.length} shop${st.length>1?"s":""} not checked for ${STALE_DAYS}+ days</b></span><span class="chev">›</span></button>`:""; })()}`;
-  box.querySelectorAll("[data-m]").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
-    x.onchange=()=>{ const [,o,k]=BAG_MORE[+x.dataset.m]; if(!/\d/.test(x.value)){ x.value=num(o()[k]); return; } o()[k]=Math.max(0,Math.round(num(x.value))); scheduleSave(); }; });
-  const bm=$("#bcMore"); bm.ontoggle=()=>{ state.ui.bcMore=bm.open; scheduleSave(); };
   on("bcStale",()=>setTab("Shop","Free shops"));
-  box.querySelectorAll("input").forEach(x=>{ x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
-    x.onchange=()=>{ if(!/\d/.test(x.value)){ x.value=bagVal(x.dataset.k); return; } const b=BAG_KEYS.find(y=>y[0]===x.dataset.k); b[2]()[b[3]]=Math.max(0,Math.round(num(x.value))); box.querySelector(`[data-ch="${x.dataset.k}"]`).innerHTML=ch(x.dataset.k); scheduleSave(); }; });
-  on("bcSave",()=>{ state.bagCheck={d:fcToday(),v:Object.fromEntries(BAG_KEYS.map(([k])=>[k,bagVal(k)]))}; afterEdit(); toast("Bag saved"); });
+  box.querySelectorAll("[data-i]").forEach(x=>{ const it=ALL[+x.dataset.i]; x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
+    x.onchange=()=>{ if(!/\d/.test(x.value)){ x.value=fmt(val(it)); return; } it[1]()[it[2]]=Math.max(0,Math.round(num(x.value))); x.value=fmt(val(it)); box.querySelector(`[data-ch="${x.dataset.i}"]`).innerHTML=ch(it); scheduleSave(); }; });
+  on("bcSave",()=>{ state.bagCheck={d:fcToday(),v:Object.fromEntries(ALL.map(it=>[it[3],val(it)]))}; afterEdit(); toast("Bag saved"); });
 }
 
 /* ---------- Home: what's out of date — the console can't read the game, so it says what to refresh ---------- */
