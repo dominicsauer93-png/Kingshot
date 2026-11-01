@@ -818,7 +818,7 @@
       "have": 0,
       "pos": 25,
       "tgt": 24,
-      "rally": false
+      "rally": true
     },
     {
       "n": "Sophia",
@@ -1643,7 +1643,8 @@
     "bvNow": true,
     "freshAll": true,
     "upF": "All",
-    "bvAll": true
+    "bvAll": true,
+    "roleSel": "solo"
   },
   "troopCounts": {
     "inf": {
@@ -3240,8 +3241,8 @@
       "date": "2026-10-26",
       "len": 4,
       "guess": true,
-      "endOpen": true,
-      "imp": "top"
+      "imp": "top",
+      "endOpen": true
     },
     {
       "n": "Fishing Tournament",
