@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1644,7 +1644,8 @@
     "freshAll": true,
     "upF": "All",
     "bvAll": true,
-    "roleSel": "solo"
+    "roleSel": "solo",
+    "bcMore": true
   },
   "troopCounts": {
     "inf": {
