@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1598,7 +1598,7 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Widgets",
-      "Shop": "Free shops",
+      "Shop": "Paid",
       "Governor": "Pets",
       "Progress": "Overview",
       "Town": "Research"
@@ -1665,7 +1665,7 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 247,
+      "fh": 251,
       "mg": 6,
       "mith": 5
     },
@@ -1825,9 +1825,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 247,
+    "fhSeen": 251,
     "fhGot": {
-      "2026-10": 2486
+      "2026-10": 2486,
+      "2026-11": 4
     },
     "plan": [
       {
@@ -3458,9 +3459,10 @@
     "fh": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 564
+        "2026-10": 564,
+        "2026-11": 4
       },
-      "seen": 247
+      "seen": 251
     },
     "gen": {
       "since": "2026-10-26",
