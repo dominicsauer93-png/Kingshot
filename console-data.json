@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Upgrade",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1597,9 +1597,9 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Formations",
-      "Shop": "Paid",
-      "Governor": "Charms",
+      "Heroes": "Widgets",
+      "Shop": "Free shops",
+      "Governor": "Pets",
       "Progress": "Overview",
       "Town": "Research"
     },
@@ -1641,10 +1641,7 @@
       "designs"
     ],
     "bvNow": true,
-    "freshAll": true,
-    "upF": "All",
-    "bvAll": true,
-    "roleSel": "solo"
+    "freshAll": true
   },
   "troopCounts": {
     "inf": {
