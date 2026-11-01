@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -4089,7 +4089,7 @@
       }
     }
   },
-  "stars": 3000,
+  "stars": 1003,
   "webOnceDone": true,
   "webOnceMonth": "2026-11",
   "webMonth": "2026-11"
