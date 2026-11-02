@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -3583,7 +3583,7 @@
           "Regimental Expansion": 6,
           "Close Combat": 6,
           "Targeted Sniping": 6,
-          "Lance Upgrade": 5,
+          "Lance Upgrade": 6,
           "Shield Upgrade": 4,
           "Leathercraft": 5,
           "Fortified Mail": 4,
@@ -3618,7 +3618,7 @@
       }
     },
     "current": {
-      "n": "Lance Upgrade V",
+      "n": "",
       "ends": ""
     },
     "war": {
@@ -4108,7 +4108,7 @@
         "Tooling Up VII": 2,
         "Ward Expansion VII": 1,
         "Camp Expansion VII": 2,
-        "Tool Enhancement VII": 1,
+        "Tool Enhancement VII": 2,
         "Bandaging VII": 0,
         "Trainer Tools VII": 0
       }
