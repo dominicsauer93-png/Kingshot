@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Progress",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1599,7 +1599,7 @@
       "Plan": "Shop guide",
       "Heroes": "Widgets",
       "Shop": "Free shops",
-      "Governor": "Pets",
+      "Governor": "Masters",
       "Progress": "Overview",
       "Town": "Research"
     },
@@ -1648,15 +1648,15 @@
   },
   "troopCounts": {
     "inf": {
-      "cur": 453424,
+      "cur": 462002,
       "tgt": 1500000
     },
     "arc": {
-      "cur": 761097,
+      "cur": 770878,
       "tgt": 1500000
     },
     "cav": {
-      "cur": 403014,
+      "cur": 411992,
       "tgt": 500000
     }
   },
@@ -3618,7 +3618,7 @@
       }
     },
     "current": {
-      "n": "",
+      "n": "Special Defensive Training V",
       "ends": ""
     },
     "war": {
