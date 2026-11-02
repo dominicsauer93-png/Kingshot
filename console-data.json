@@ -1482,7 +1482,7 @@
     "targetIdx": 18,
     "have": {
       "satin": 29475,
-      "threads": 57,
+      "threads": 91,
       "vision": 616
     },
     "pieces": [
@@ -1586,7 +1586,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1622,7 +1622,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Account",
-      "Gear": "Pets",
+      "Gear": "Widgets",
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Overview",
@@ -1930,7 +1930,7 @@
     "targetLvl": 10,
     "have": {
       "guides": 610,
-      "designs": 388
+      "designs": 394
     },
     "rows": [
       {
@@ -3526,17 +3526,18 @@
     "threads": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 580
+        "2026-10": 580,
+        "2026-11": 34
       },
-      "seen": 57
+      "seen": 91
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 38656
+        "2026-11": 38662
       },
-      "seen": 388
+      "seen": 394
     },
     "fh": {
       "since": "2026-10-26",
@@ -3600,24 +3601,14 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-11-01",
+    "d": "2026-11-03",
     "v": {
-      "gen": 136,
-      "mg": 6,
-      "mith": 6,
-      "fh": 251,
-      "m:Gear XP": 0,
-      "m:Lucky chests": 23,
-      "m:Custom Mythic chests": 0,
-      "threads": 57,
-      "m:Satin": 37393,
-      "m:Vision": 613,
-      "designs": 273,
-      "m:Guides": 586,
-      "m:Truegold": 477,
-      "m:Tempered TG": 1,
-      "m:TG Dust": 337,
-      "m:Gold": 658540
+      "mg": 7,
+      "mith": 7,
+      "threads": 91,
+      "designs": 394,
+      "fh": 283,
+      "gen": 147
     }
   },
   "noShop": [
