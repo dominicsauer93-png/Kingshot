@@ -26,7 +26,7 @@ const ITEM_KEY=[
 ];
 const SHOP_DB=[
   {n:"Hall of Heroes",cur:"Marks of Valor",when:"During Hall of Heroes",seen:"2026-11-02",
-   best:["10K Enhancement XP × 10 — 1 Mark each","Triton widgets (S6 widget chest, 18) × 15 → Lv 2 → 3 (270) — rates above Yang as joiner and garrison","Yang widgets (S6, 18) — 24 to Lv 10, when Marks allow","Amadeus widgets (S1, 10) only if spare — Bear only","From mid-Nov: save Marks — S7 (Ava, Wee & Woo widgets) unlocks with Gen 8 on ~7 Dec"],
+   best:["10K Enhancement XP × 10 — 1 Mark each","Amadeus shards (S1 shard chest, 5) × 35 → next star step (175) — only cheap source; his packs are dear","Triton widgets (S6 widget chest, 18) with the rest — top up from the Alliance Championship shop (S6 widget chest, 850)","Yang widgets (S6, 18) — 24 to Lv 10, when Marks allow","From mid-Nov: save Marks — S7 (Ava, Wee & Woo widgets) unlocks with Gen 8 on ~7 Dec"],
    skip:["Ava shards (10) — Ava is already 4★","Triton / Yang shards — both at their star target","General shards (12) when a season chest has your hero cheaper"],
    items:[["Ava shard",10,370],["General Mythic shard",12,100],["S6 shard chest",9,500],["S6 widget chest",18,300],["S5 shard chest",8,500],["S5 widget chest",16,300],["S4 shard chest",7,500],["S4 widget chest",14,300],["S3 shard chest",6,500],["S3 widget chest",12,300],["S2 shard chest",5,500],["S2 widget chest",10,300],["S1 shard chest",5,550],["S1 widget chest",10,300],["Epic shard (purple)",3,550],["10K Enhancement XP",1,10]],
    note:"Each chest gives 1 shard or 1 widget of your choice from that season (see Seasons below)."},
