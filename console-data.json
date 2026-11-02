@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Upgrade",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1598,7 +1598,7 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Widgets",
-      "Shop": "Free shops",
+      "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Overview",
       "Town": "Research"
@@ -1643,7 +1643,7 @@
     "bvNow": true,
     "freshAll": true,
     "bcMore": true,
-    "upF": "All",
+    "upF": "Governor",
     "t11More": false
   },
   "troopCounts": {
