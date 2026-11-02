@@ -1445,7 +1445,7 @@
     }
   ],
   "tg": {
-    "have": 92,
+    "have": 196,
     "need": 3006,
     "ttgHave": 2,
     "ttgNeed": 354
@@ -1453,9 +1453,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 37393,
+      "satin": 29475,
       "threads": 57,
-      "vision": 613
+      "vision": 616
     },
     "pieces": [
       {
@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1593,12 +1593,12 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Update all",
+      "Data": "Account",
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Widgets",
-      "Shop": "Paid",
+      "Shop": "Free shops",
       "Governor": "Pets",
       "Progress": "Overview",
       "Town": "Research"
@@ -1643,7 +1643,7 @@
     "bvNow": true,
     "freshAll": true,
     "bcMore": true,
-    "upF": "Town",
+    "upF": "All",
     "t11More": false
   },
   "troopCounts": {
@@ -1666,9 +1666,9 @@
   },
   "heroGear": {
     "have": {
-      "xp": 0,
-      "fh": 256,
-      "mg": 6,
+      "xp": 2830,
+      "fh": 282,
+      "mg": 7,
       "mith": 6
     },
     "rows": [
@@ -1827,10 +1827,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 256,
+    "fhSeen": 282,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 258
+      "2026-11": 538
     },
     "plan": [
       {
@@ -1882,7 +1882,7 @@
     ],
     "planDate": "2026-10-23",
     "chests": {
-      "lucky": 23,
+      "lucky": 38,
       "custom": 0,
       "log": [
         {
@@ -1901,8 +1901,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 586,
-      "designs": 273
+      "guides": 610,
+      "designs": 309
     },
     "rows": [
       {
@@ -3337,10 +3337,10 @@
   "pets": {
     "have": {
       "food": 43320,
-      "manuals": 1570,
-      "potions": 101,
-      "tmCommon": 67,
-      "tmAdv": 1,
+      "manuals": 1625,
+      "potions": 107,
+      "tmCommon": 89,
+      "tmAdv": 2,
       "medals": 38
     },
     "rows": [
@@ -3430,7 +3430,7 @@
       }
     ]
   },
-  "shardGeneral": 136,
+  "shardGeneral": 147,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3453,9 +3453,10 @@
     "mg": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 6
+        "2026-10": 6,
+        "2026-11": 1
       },
-      "seen": 6
+      "seen": 7
     },
     "mith": {
       "since": "2026-10-26",
@@ -3475,25 +3476,26 @@
     "designs": {
       "since": "2026-10-26",
       "got": {
-        "2026-10": 608
+        "2026-10": 608,
+        "2026-11": 306
       },
-      "seen": 273
+      "seen": 309
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 258
+        "2026-11": 538
       },
-      "seen": 256
+      "seen": 282
     },
     "gen": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 25
+        "2026-11": 36
       },
-      "seen": 136
+      "seen": 147
     }
   },
   "battle": {
