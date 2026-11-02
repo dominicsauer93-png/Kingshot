@@ -2086,7 +2086,7 @@
       {
         "hero": "Amadeus",
         "lvl": 6,
-        "have": 19,
+        "have": 35,
         "rally": true
       },
       {
@@ -2122,7 +2122,7 @@
       {
         "hero": "Triton",
         "lvl": 2,
-        "have": 0,
+        "have": 7,
         "rally": true
       }
     ],
