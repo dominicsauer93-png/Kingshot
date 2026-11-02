@@ -25,6 +25,7 @@ const VALUE_DB=[
   {n:"Victorious Mobilization Pack",seen:"2026-10-30",a:2.99,pc:"4,000%",on:/alliance mobilization/i,y:{tg:20,gems:1000},note:"1 a day · + 24 Artisan's Vision"},
   {n:"Fishing Pro pass",seen:"2026-10-27",a:7.99,pc:"3,000%",on:/fishing/i,est:true,y:{tg:50,gen:2}},
   {n:"Fishing Master pass",seen:"2026-10-27",a:14.99,pc:"4,000%",on:/fishing/i,est:true,y:{tg:75}},
+  {n:"Treasure Cove — Day 1",seen:"2026-11-02",a:7.99,pc:"4,500%",on:/treasure cove/i,y:{tg:85,gems:2500},note:"+ 50× 1h speedups. Days 2–5 unlock daily; all 5 = grand prize (5× Mithril?)"},
   {n:"Chameleos widgets (Ava)",seen:"2026-10-26",a:7.99,pc:"3,000%",on:/exclusive gear fund/i,y:{widgets:15}},
   {n:"Mortar widgets (Wee & Woo)",seen:"2026-10-26",a:7.99,pc:"3,000%",on:/exclusive gear fund/i,y:{widgets:15}}
 ];
