@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1593,7 +1593,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
+      "Data": "Update all",
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
@@ -1618,7 +1618,7 @@
       "Masters": true,
       "Gov": true,
       "Widgets": true,
-      "Charms": false,
+      "Charms": true,
       "T11": false,
       "Mystic": true,
       "Pets": true
@@ -1902,7 +1902,7 @@
     "targetLvl": 10,
     "have": {
       "guides": 610,
-      "designs": 309
+      "designs": 388
     },
     "rows": [
       {
@@ -3477,9 +3477,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 306
+        "2026-11": 38656
       },
-      "seen": 309
+      "seen": 388
     },
     "fh": {
       "since": "2026-10-26",
