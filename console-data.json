@@ -2,7 +2,7 @@
   "account": {
     "tc": "Truegold Lv. 7",
     "day": "485",
-    "power": "334299846",
+    "power": "336179141",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "Main - all out attack ",
@@ -1586,7 +1586,7 @@
     ]
   },
   "ui": {
-    "tab": "Progress",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1621,11 +1621,11 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Update all",
+      "Data": "Account",
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
+      "Heroes": "Overview",
       "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Mystic Trials",
@@ -2945,7 +2945,7 @@
     {
       "d": "2026-11-03",
       "v": {
-        "power": 334299846,
+        "power": 336179141,
         "leth": 74.3,
         "hp": 69.1,
         "attWR": 38.08,
