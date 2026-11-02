@@ -25,7 +25,11 @@ const VALUE_DB=[
   {n:"Victorious Mobilization Pack",seen:"2026-10-30",a:2.99,pc:"4,000%",on:/alliance mobilization/i,y:{tg:20,gems:1000},note:"1 a day · + 24 Artisan's Vision"},
   {n:"Fishing Pro pass",seen:"2026-10-27",a:7.99,pc:"3,000%",on:/fishing/i,est:true,y:{tg:50,gen:2}},
   {n:"Fishing Master pass",seen:"2026-10-27",a:14.99,pc:"4,000%",on:/fishing/i,est:true,y:{tg:75}},
-  {n:"Treasure Cove — Day 1",seen:"2026-11-02",a:7.99,pc:"4,500%",on:/treasure cove/i,y:{tg:85,gems:2500},note:"+ 50× 1h speedups. Days 2–5 unlock daily; all 5 = grand prize (5× Mithril?)"},
+  {n:"Treasure Cove — Day 1",seen:"2026-11-02",a:7.99,pc:"4,500%",on:/treasure cove/i,y:{tg:85,gems:2500},note:"+ 50× 1h speedups. Buy all 5 days → grand prize: 5 Mithril"},
+  {n:"Treasure Cove — Day 2",seen:"2026-11-02",a:7.99,pc:"4,800%",on:/treasure cove/i,needs:"Treasure Cove — Day 1",y:{tg:85,gen:10,gems:2500},note:"Unlocks 3 Nov"},
+  {n:"Treasure Cove — Day 3",seen:"2026-11-02",a:7.99,pc:"4,900%",on:/treasure cove/i,needs:"Treasure Cove — Day 2",y:{gen:10,gems:2500},note:"Unlocks 4 Nov · + 20× chest item"},
+  {n:"Treasure Cove — Day 4",seen:"2026-11-02",a:7.99,pc:"5,000%",on:/treasure cove/i,needs:"Treasure Cove — Day 3",y:{designs:85,gems:2500},note:"Unlocks 5 Nov · + 85 Guides?"},
+  {n:"Treasure Cove — Day 5",seen:"2026-11-02",a:7.99,pc:"5,100%",on:/treasure cove/i,needs:"Treasure Cove — Day 4",y:{gems:2500},note:"Unlocks 6 Nov · + 36 Forgehammers · completes the set → 5 Mithril + 12.5K gems"},
   {n:"Chameleos widgets (Ava)",seen:"2026-10-26",a:7.99,pc:"3,000%",on:/exclusive gear fund/i,y:{widgets:15}},
   {n:"Mortar widgets (Wee & Woo)",seen:"2026-10-26",a:7.99,pc:"3,000%",on:/exclusive gear fund/i,y:{widgets:15}}
 ];
