@@ -1445,10 +1445,10 @@
     }
   ],
   "tg": {
-    "have": 477,
-    "need": 3246,
-    "ttgHave": 1,
-    "ttgNeed": 374
+    "have": 92,
+    "need": 3006,
+    "ttgHave": 2,
+    "ttgNeed": 354
   },
   "govGear": {
     "targetIdx": 18,
@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1642,7 +1642,8 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "bcMore": true
+    "bcMore": true,
+    "upF": "Town"
   },
   "troopCounts": {
     "inf": {
@@ -2968,7 +2969,7 @@
   "buildings": [
     {
       "n": "Town Center",
-      "stepIdx": 2,
+      "stepIdx": 3,
       "note": "",
       "d": false
     },
@@ -3589,7 +3590,7 @@
           "Cavalry Charge": 6,
           "Defensive Formations": 5,
           "Picket Lines": 5,
-          "Bulwark Formations": 5,
+          "Bulwark Formations": 6,
           "Special Defensive Training": 5
         },
         "VI": {
@@ -3614,8 +3615,8 @@
       }
     },
     "current": {
-      "n": "Bulwark Formations V",
-      "ends": "2026-11-04T23:10Z"
+      "n": "Lance Upgrade V",
+      "ends": ""
     },
     "war": {
       "seen": "2026-10-30",
