@@ -480,7 +480,7 @@
     }
   ],
   "weekly": {
-    "week": "2026-10-26",
+    "week": "2026-11-02",
     "items": [
       {
         "t": "Bear Hunt — join every rally",
@@ -1501,7 +1501,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-11-01",
+    "routineDate": "2026-11-02",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1558,7 +1558,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1597,9 +1597,9 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Shards",
+      "Heroes": "Widgets",
       "Shop": "Paid",
-      "Governor": "Gov Gear",
+      "Governor": "Pets",
       "Progress": "Overview",
       "Town": "Research"
     },
@@ -1626,7 +1626,7 @@
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": true,
+    "heroAll": false,
     "evOpen": true,
     "shSpare": true,
     "petMaxOpen": true,
@@ -1642,19 +1642,7 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "All",
-    "bvAll": true,
-    "roleSel": "arena",
-    "bcMore": true,
-    "bvSkip": {
-      "2026-11": [
-        "Truegold Weekly Card (week 1)",
-        "Truegold Weekly Card (week 2)",
-        "Truegold Weekly Card (week 3)",
-        "Weekly Benefits — Mythic Governor Charm (week 1)",
-        "Weekly Benefits — Mythic Governor Charm (week 2)"
-      ]
-    }
+    "bcMore": true
   },
   "troopCounts": {
     "inf": {
@@ -2886,6 +2874,26 @@
     },
     {
       "d": "2026-11-01",
+      "v": {
+        "power": 334299846,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 471
+      }
+    },
+    {
+      "d": "2026-11-02",
       "v": {
         "power": 334299846,
         "leth": 74.3,
