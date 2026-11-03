@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Gear",
+    "tab": "Base",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1631,7 +1631,7 @@
       "Rally": "Heroes",
       "Data": "Account",
       "Gear": "Charms",
-      "Base": "Resources",
+      "Base": "T11",
       "Plan": "Shop guide",
       "Heroes": "Masters",
       "Shop": "Paid",
