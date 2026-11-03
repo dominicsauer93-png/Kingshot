@@ -1537,7 +1537,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-11-03",
+    "routineDate": "2026-11-04",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1629,11 +1629,11 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Update all",
-      "Gear": "Pets",
-      "Base": "Troops",
+      "Data": "Account",
+      "Gear": "Charms",
+      "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
+      "Heroes": "Masters",
       "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Mystic Trials",
@@ -2929,6 +2929,26 @@
     },
     {
       "d": "2026-11-03",
+      "v": {
+        "power": 336179141,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 475
+      }
+    },
+    {
+      "d": "2026-11-04",
       "v": {
         "power": 336179141,
         "leth": 74.3,
