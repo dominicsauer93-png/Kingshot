@@ -1,7 +1,7 @@
 // Offline support for the installed app.
 // The page is fetched network-first so updates show straight away; the cached copy is only used offline.
 // GitHub API calls (sync) are never cached.
-const CACHE = "kingshot-v49";
+const CACHE = "kingshot-v50";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png",
   "./css/app.css", "./js/core.js", "./js/ui.js", "./js/home.js", "./js/rally.js", "./js/gear.js", "./js/base.js", "./js/data.js", "./js/shops.js", "./js/extras.js", "./js/value.js", "./js/boot.js"];
 
@@ -20,7 +20,7 @@ self.addEventListener("fetch", e => {
   if (!sameOrigin && !isFont) return;                       // e.g. api.github.com — always live
   if (sameOrigin && /console-data\.json$/.test(url.pathname)) return;
   e.respondWith(
-    fetch(req).then(res => {
+    fetch(sameOrigin ? (req.mode === "navigate" ? new Request(req.url, { cache: "no-cache", credentials: "same-origin" }) : new Request(req, { cache: "no-cache" })) : req).then(res => { // no-cache: always ask GitHub Pages for the newest file (it otherwise keeps old copies for 10 min)
       if (res.ok || res.type === "opaque") { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); }
       return res;
     }).catch(() => caches.match(req).then(hit => hit || (req.mode === "navigate" ? caches.match("./index.html") : undefined)))
