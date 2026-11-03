@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1633,7 +1633,7 @@
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Masters",
+      "Heroes": "Formations",
       "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Mystic Trials",
@@ -1680,7 +1680,8 @@
     "freshAll": true,
     "bcMore": true,
     "upF": "Town",
-    "t11More": false
+    "t11More": false,
+    "roleSel": "arena"
   },
   "troopCounts": {
     "inf": {
