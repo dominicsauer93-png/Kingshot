@@ -82,14 +82,17 @@ function renderHeroRoles(){
   const R=HERO_ROLES.find(([r])=>r===state.ui.roleSel)||HERO_ROLES[0], [role,label]=R;
   // within a tier: stars (star steps) + widget level ×2 — a widget level is worth about 2 star steps
   const wid=h=>{ const w=((state.widgets&&state.widgets.rows)||[]).find(x=>x.hero===h.n); return w?num(w.lvl):0; }, score=h=>h.pos+2*wid(h);
-  const ranked=Object.values(mine).filter(h=>TIER_OF[heroKey(h.n)][role]).sort((a,b)=>TIER_PTS[TIER_OF[heroKey(b.n)][role]]-TIER_PTS[TIER_OF[heroKey(a.n)][role]]||score(b)-score(a)), L=ranked.slice(0,3);
+  const ranked=Object.values(mine).filter(h=>TIER_OF[heroKey(h.n)][role]).sort((a,b)=>TIER_PTS[TIER_OF[heroKey(b.n)][role]]-TIER_PTS[TIER_OF[heroKey(a.n)][role]]||score(b)-score(a));
+  // a march takes one hero per troop type — best Infantry, Cavalry and Archer (joiner roles: just the best 3, only their first skill counts)
+  const MARCH=["kvkLead","gar","gar64","bearLead","solo"], tOf=h=>(state.heroInfo&&state.heroInfo[h.n]&&state.heroInfo[h.n].type)||"";
+  const L=MARCH.includes(role)?HERO_TYPES.map(t=>ranked.find(h=>tOf(h)===t)).filter(Boolean):ranked.slice(0,3);
   // Arena: 5 heroes — 2 Infantry tanks in front, the 3 best others behind
   const typ=h=>(state.heroInfo&&state.heroInfo[h.n]&&state.heroInfo[h.n].type)||"";
   const fr=role==="arena"?ranked.filter(h=>typ(h)==="Infantry").slice(0,2):[], bk=role==="arena"?ranked.filter(h=>!fr.includes(h)&&typ(h)!=="Infantry").slice(0,5-fr.length):[];
   const hrow=h=>`<div class="drow">${heroAv(h.n)}<span class="dt"><b>${esc(h.n)}${h.rally?` <span class="faint">${icoI("sword")}</span>`:""}</b><span class="gold" style="letter-spacing:1px">${starGlyphs(h.pos)}${wid(h)?` <span class="faint" style="letter-spacing:0">· widget Lv ${wid(h)}</span>`:""}</span></span>${trH(TIER_OF[heroKey(h.n)][role])}</div>`;
   const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
   $("#roleBest").innerHTML=`<div class="rolechips">${HERO_ROLES.map(([r,l,sh])=>`<button class="chip" data-r="${r}" aria-selected="${r===role}">${esc(sh||l)}</button>`).join("")}</div>
-    <div class="card dcard mt"><div class="dch"><h3>${esc(label)}</h3><span class="faint" style="font-size:12.5px">${fr.length?"your best 5 · formation":"your best 3"}</span></div>${fr.length?`<div class="fmrow">Front row <span class="faint">· Infantry tanks</span></div>${fr.map(hrow).join("")}<div class="fmrow">Back row <span class="faint">· damage</span></div>${bk.map(hrow).join("")}`:L.map(hrow).join("")}
+    <div class="card dcard mt"><div class="dch"><h3>${esc(label)}</h3><span class="faint" style="font-size:12.5px">${fr.length?"your best 5 · formation":MARCH.includes(role)?"best of each troop type":"your best 3"}</span></div>${fr.length?`<div class="fmrow">Front row <span class="faint">· Infantry tanks</span></div>${fr.map(hrow).join("")}<div class="fmrow">Back row <span class="faint">· damage</span></div>${bk.map(hrow).join("")}`:L.map(hrow).join("")}
     ${soon.length?`<p class="dnote">Gen 8 soon: ${soon.map(esc).join(", ")} (S)</p>`:""}</div>`;
   $$("#roleBest .rolechips .chip").forEach(b=>b.onclick=()=>{ state.ui.roleSel=b.dataset.r; scheduleSave(); renderHeroRoles(); });
   [["#roleFold","roleOpen"],["#tierFold","tierOpen"]].forEach(([id,k])=>{ const d=$(id); d.open=!!state.ui[k]; d.ontoggle=()=>{ if(state.ui[k]!==d.open){ state.ui[k]=d.open; scheduleSave(); } }; });
