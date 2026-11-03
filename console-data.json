@@ -1586,7 +1586,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Gear",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1622,7 +1622,7 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Account",
-      "Gear": "Widgets",
+      "Gear": "Hero Gear",
       "Base": "Resources",
       "Plan": "Shop guide",
       "Heroes": "Shards",
@@ -1696,7 +1696,7 @@
     "have": {
       "xp": 2830,
       "fh": 283,
-      "mg": 7,
+      "mg": 9,
       "mith": 7
     },
     "rows": [
@@ -1910,7 +1910,7 @@
     ],
     "planDate": "2026-10-23",
     "chests": {
-      "lucky": 38,
+      "lucky": 0,
       "custom": 0,
       "log": [
         {
@@ -1922,6 +1922,11 @@
           "d": "2026-10-31",
           "opened": 60,
           "mythic": 0
+        },
+        {
+          "d": "2026-11-03",
+          "opened": 44,
+          "mythic": 2
         }
       ]
     }
@@ -3511,9 +3516,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 6,
-        "2026-11": 1
+        "2026-11": 3
       },
-      "seen": 7
+      "seen": 9
     },
     "mith": {
       "since": "2026-10-26",
@@ -3598,6 +3603,10 @@
     {
       "d": "2026-11-01",
       "t": "Done: Town Center → TG 7.2"
+    },
+    {
+      "d": "2026-11-03",
+      "t": "Logged 44 chests → 2 Mythic"
     }
   ],
   "bagCheck": {
