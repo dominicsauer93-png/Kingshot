@@ -720,8 +720,8 @@
     {
       "n": "Charles",
       "need": 463,
-      "have": 29,
-      "pos": 18,
+      "have": 0,
+      "pos": 22,
       "tgt": 24,
       "rally": false,
       "note": "Hero Rally shop — spend Hero Rally points here",
@@ -2959,7 +2959,7 @@
         "p:Tech": 28579920,
         "p:Pet": 22993080,
         "p:Master": 15955000,
-        "stars": 471
+        "stars": 475
       }
     }
   ],
@@ -3487,7 +3487,7 @@
       }
     ]
   },
-  "shardGeneral": 147,
+  "shardGeneral": 21,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3551,9 +3551,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 36
+        "2026-11": 55
       },
-      "seen": 147
+      "seen": 21
     }
   },
   "battle": {
