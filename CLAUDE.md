@@ -4,13 +4,13 @@
 When the user mentions Eternity's Reach (or says it's on / coming up), open your reply in CAPITALS with:
 
 **RECALL ONE MARCH EVERY 60 SECONDS — THE WHOLE EVENT!**
-- Last run (20 Oct 2026): rank 20, 370K copper. Only 9 common-vein recalls = 45K.
-- Rank 10 (423K) played the same way but did 20 recalls = 100K. That was almost the whole gap.
-- 11 more recalls = top 10 = 55 Charm Designs + 40 Guides + 5,000 gems (vs 47 / 38 / 4,500).
-- Keep beating everyone on Scattered Copper Ore (you had 52.8K vs their 28.3K).
+- Last run (3 Nov 2026): rank 16, 382,860 copper (2nd best). 17 common-vein recalls paid = 85K (up from 9). 23 were tapped — 6 came too early or off a common vein.
+- Rank 10 had 437,573 — 55K more. Rank 1 (614K) got 80K from Peak occupation and 40.5K from Master Isnor (Lv 70); you got 0 from both (Isnor Lv 40).
+- Top 10 = 55 Charm Designs + 40 Guides + 5,000 gems (vs 47 / 38 / 4,500).
+- Keep beating everyone on Scattered Copper Ore (41.3K vs rank 1's 27.3K).
 - Skill order: Right, Right, Left, Left, Right. Skip the Peak. Save Skill 5 for Vein Outbursts.
 
-- Runs every 14 days at 9 pm Brisbane (11:00 UTC). Best ever: rank 13 with 383,822 (25 Aug 2026). Top 10 needs about 420K+.
+- Runs every 14 days at 9 pm Brisbane (11:00 UTC). Best ever: rank 13 with 383,822 (25 Aug 2026). Top 10 needed 437.6K on 3 Nov.
 
 Full guide, ranking table and full history: the Eternity's Reach event note in `console-data.json`.
 
