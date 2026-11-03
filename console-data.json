@@ -1586,7 +1586,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1625,7 +1625,7 @@
       "Gear": "Widgets",
       "Base": "Resources",
       "Plan": "Shop guide",
-      "Heroes": "Overview",
+      "Heroes": "Shards",
       "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Mystic Trials",
