@@ -9,9 +9,9 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 128,
+    "current": 105,
     "target": 6414,
-    "gold": 658540
+    "gold": 6010
   },
   "nodes": [
     {
@@ -1489,9 +1489,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 29475,
+      "satin": 30075,
       "threads": 91,
-      "vision": 616
+      "vision": 617
     },
     "pieces": [
       {
@@ -1629,11 +1629,11 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
-      "Gear": "Charms",
-      "Base": "T11",
+      "Data": "Update all",
+      "Gear": "Pets",
+      "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Masters",
+      "Heroes": "Widgets",
       "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Mystic Trials",
@@ -1890,7 +1890,7 @@
     ],
     "planDate": "2026-10-23",
     "chests": {
-      "lucky": 0,
+      "lucky": 44,
       "custom": 0,
       "log": [
         {
@@ -1914,7 +1914,7 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 610,
+      "guides": 612,
       "designs": 394
     },
     "rows": [
@@ -3590,14 +3590,23 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-11-03",
+    "d": "2026-11-02",
     "v": {
+      "gen": 147,
       "mg": 7,
       "mith": 7,
-      "threads": 91,
-      "designs": 394,
       "fh": 283,
-      "gen": 147
+      "m:Gear XP": 2830,
+      "m:Lucky chests": 44,
+      "threads": 91,
+      "m:Satin": 30075,
+      "m:Vision": 617,
+      "designs": 388,
+      "m:Guides": 612,
+      "m:Truegold": 196,
+      "m:Tempered TG": 2,
+      "m:TG Dust": 105,
+      "m:Gold": 6010
     }
   },
   "noShop": [
