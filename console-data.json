@@ -730,7 +730,7 @@
     {
       "n": "Hilde",
       "need": 740,
-      "have": 9,
+      "have": 10,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -748,7 +748,7 @@
     {
       "n": "Zoe",
       "need": 600,
-      "have": 12,
+      "have": 13,
       "pos": 24,
       "tgt": 24,
       "rally": false
@@ -756,7 +756,7 @@
     {
       "n": "Jaeger",
       "need": 700,
-      "have": 37,
+      "have": 39,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -765,7 +765,7 @@
     {
       "n": "Eric",
       "need": 700,
-      "have": 28,
+      "have": 29,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -774,7 +774,7 @@
     {
       "n": "Rosa",
       "need": 500,
-      "have": 38,
+      "have": 39,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -782,7 +782,7 @@
     {
       "n": "Petra",
       "need": 500,
-      "have": 39,
+      "have": 40,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -807,7 +807,7 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 51,
+      "have": 79,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -840,7 +840,7 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 20,
+      "have": 43,
       "pos": 27,
       "tgt": 27,
       "rally": false
@@ -856,7 +856,7 @@
     {
       "n": "Wee & Woo",
       "need": 0,
-      "have": 12,
+      "have": 79,
       "pos": 24,
       "tgt": 24,
       "rally": true
@@ -864,7 +864,7 @@
     {
       "n": "Vivian",
       "need": 0,
-      "have": 73,
+      "have": 95,
       "pos": 24,
       "tgt": 24,
       "rally": false
@@ -1103,7 +1103,7 @@
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
-      "v": "82",
+      "v": "80",
       "log": [
         {
           "d": "2026-09-15",
@@ -1156,12 +1156,16 @@
         {
           "d": "2026-11-02",
           "v": 82
+        },
+        {
+          "d": "2026-11-03",
+          "v": 80
         }
       ]
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "83",
+      "v": "77",
       "log": [
         {
           "d": "2026-09-15",
@@ -1214,6 +1218,10 @@
         {
           "d": "2026-11-02",
           "v": 83
+        },
+        {
+          "d": "2026-11-03",
+          "v": 77
         }
       ]
     },
@@ -1586,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1625,7 +1633,7 @@
       "Gear": "Hero Gear",
       "Base": "Resources",
       "Plan": "Shop guide",
-      "Heroes": "Shards",
+      "Heroes": "Masters",
       "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Mystic Trials",
@@ -3562,10 +3570,10 @@
     }
   },
   "battle": {
-    "key": "Eternity's Reach|2026-10-26",
-    "cnt": 29,
-    "start": 1792982853076,
-    "last": 1792982895207
+    "key": "Eternity's Reach|2026-11-03",
+    "cnt": 0,
+    "start": null,
+    "last": null
   },
   "doneLog": [
     {
