@@ -5,7 +5,7 @@ When the user mentions Eternity's Reach (or says it's on / coming up), open your
 
 **RECALL ONE MARCH EVERY 60 SECONDS — THE WHOLE EVENT!**
 - Last run (3 Nov 2026): rank 16, 382,860 copper (2nd best). 17 common-vein recalls paid = 85K (up from 9). 23 were tapped — 6 came too early or off a common vein.
-- Rank 10 had 437,573 — 55K more. Rank 1 (614K) got 80K from Peak occupation and 40.5K from Master Isnor (Lv 70); you got 0 from both (Isnor Lv 40).
+- Rank 10 had 437,573 — 55K more. Rank 1 (614K) got 80K from Peak occupation and 40.5K from Master Isnor (Lv 70); you got 0 from both (Isnor Lv 40). The Peak is heavily contested in your kingdom — keep skipping it.
 - Top 10 = 55 Charm Designs + 40 Guides + 5,000 gems (vs 47 / 38 / 4,500).
 - Keep beating everyone on Scattered Copper Ore (41.3K vs rank 1's 27.3K).
 - Skill order: Right, Right, Left, Left, Right. Skip the Peak. Save Skill 5 for Vein Outbursts.
