@@ -152,7 +152,7 @@ function openBattle(e){
     <div class="bt-chips">${cfg.chips.map(c=>`<span>${c}</span>`).join("")}</div>
     <ul class="bt-tips">${cfg.tips.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>
     <div class="rowb mt"><button class="btn primary" id="btGo">${B.start?"Running":"Start"}</button><button class="btn" id="btHit">I recalled ✓</button></div>
-    <button class="btn ghost sm mt" id="btDone">Finish — save to the event note</button>
+    <div class="rowb mt"><button class="btn ghost sm" id="btReset">Reset clock</button><button class="btn ghost sm" id="btDone">Finish — save to the event note</button></div>
     ${lastRun?`<p class="faint" style="margin:8px 0 0">${esc(lastRun)}</p>`:""}</div>`;
   const $o=s=>ov.querySelector(s), mmss=s=>`${Math.floor(s/60)}:${String(Math.max(0,s%60)).padStart(2,"0")}`;
   let buzzed=false;
@@ -164,6 +164,8 @@ function openBattle(e){
   const run=()=>{ clearInterval(battleTimer); battleTimer=setInterval(paint,500); paint(); };
   on("btGo",()=>{ if(!B.start){ B.start=Date.now(); B.last=null; scheduleSave(); } $o("#btGo").textContent="Running"; run(); });
   on("btHit",()=>{ B.cnt++; B.last=Date.now(); scheduleSave(); paint(); });
+  on("btReset",()=>{ if(!confirm("Reset the clock and recall count to zero?")) return; clearInterval(battleTimer); B.start=null; B.last=null; B.cnt=0; scheduleSave();
+    $o("#btLeft").textContent=mmss(cfg.mins*60); $o("#btRec").textContent=mmss(cfg.every); $o("#btArc").setAttribute("stroke-dashoffset",0); ov.classList.remove("due"); $o("#btGo").textContent="Start"; paint(); });
   on("btClose",()=>{ clearInterval(battleTimer); ov.remove(); });
   on("btDone",()=>{ const line=`${gameToday()}: ${B.cnt} recalls (battle card)`; e.note=String(e.note||"").replace(/\s*$/,"")+"\n"+line; clearInterval(battleTimer); ov.remove(); afterEdit(); toast("Saved to the event note — add your rank and copper there"); });
   paint(); if(B.start) run();
