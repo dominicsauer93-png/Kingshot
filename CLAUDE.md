@@ -5,9 +5,9 @@ When the user mentions Eternity's Reach (or says it's on / coming up), open your
 
 **RECALL ONE MARCH EVERY 60 SECONDS — THE WHOLE EVENT!**
 - Last run (3 Nov 2026): rank 16, 382,860 copper (2nd best). 17 common-vein recalls paid = 85K (up from 9). 23 were tapped — 6 came too early or off a common vein.
-- Rank 10 had 437,573 — 55K more. Rank 1 (614K) got 80K from Peak occupation and 40.5K from Master Isnor (Lv 70); you got 0 from both (Isnor Lv 40). The Peak is heavily contested in your kingdom — keep skipping it.
+- Rank 10 had 437,573 — 55K more, with no Peak and no Master Isnor copper (same as you). Their extra: veins +30.3K, 4 more paid recalls +20K, Scattered Ore +10.4K. You beat them on Cesares (42K vs 36K).
 - Top 10 = 55 Charm Designs + 40 Guides + 5,000 gems (vs 47 / 38 / 4,500).
-- Keep beating everyone on Scattered Copper Ore (41.3K vs rank 1's 27.3K).
+- Scattered Copper Ore: 41.3K — rank 10 got 51.7K, so grab more of it.
 - Skill order: Right, Right, Left, Left, Right. Skip the Peak. Save Skill 5 for Vein Outbursts.
 
 - Runs every 14 days at 9 pm Brisbane (11:00 UTC). Best ever: rank 13 with 383,822 (25 Aug 2026). Top 10 needed 437.6K on 3 Nov.
