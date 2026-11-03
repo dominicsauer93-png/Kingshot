@@ -1629,11 +1629,11 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
+      "Data": "Sync",
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
+      "Heroes": "Formations",
       "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Mystic Trials",
@@ -1681,7 +1681,7 @@
     "bcMore": true,
     "upF": "Town",
     "t11More": false,
-    "roleSel": "arena"
+    "roleSel": "solo"
   },
   "troopCounts": {
     "inf": {
