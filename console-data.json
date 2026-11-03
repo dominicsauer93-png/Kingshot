@@ -3543,9 +3543,9 @@
   },
   "battle": {
     "key": "Eternity's Reach|2026-11-03",
-    "cnt": 3,
-    "start": 1793701645653,
-    "last": 1793701760505
+    "cnt": 0,
+    "start": null,
+    "last": null
   },
   "doneLog": [
     {
