@@ -312,7 +312,7 @@ function renderShards(){
   const grp=(t,sub)=>`<div class="shgrp"><span>${t}</span><small>${sub}</small></div>`;
   b.innerHTML=(focus.length?grp("Focus now","")+focus.map(row).join(""):"")+
     (next.length?grp("Next up","")+next.map(row).join(""):"")+
-    (spare.length?`<details class="shfold" data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"")}</summary>${spare.map(row).join("")}</details>`:"")+
+    (spare.length?`<details class="shfold"${state.ui.shSpare?" open":""} data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"")}</summary>${spare.map(row).join("")}</details>`:"")+
     (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"")}</summary>${done.map(row).join("")}</details>`:"")||`<div class="empty">No heroes yet</div>`;
   b.querySelectorAll("details.shfold").forEach(d=>d.ontoggle=()=>{ state.ui[d.dataset.k]=d.open; scheduleSave(); });
   bindAll(b,".sh2-id",x=>openShardSheet(L[+x.dataset.i]));
