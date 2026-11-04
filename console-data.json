@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1633,7 +1633,7 @@
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
+      "Heroes": "Widgets",
       "Shop": "Paid",
       "Governor": "Charms",
       "Progress": "Mystic Trials",
