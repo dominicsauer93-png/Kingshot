@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1844,7 +1844,7 @@
       {
         "type": "Archer",
         "slot": "Boots (Lethality)",
-        "lvC": 138,
+        "lvC": 139,
         "lvT": 179,
         "mC": 12,
         "mT": 15,
