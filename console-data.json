@@ -3695,15 +3695,16 @@
     },
     "current": {
       "n": "Special Defensive Training V",
-      "ends": ""
+      "ends": "2026-11-10T03:59:17.732Z"
     },
     "war": {
       "seen": "2026-10-30",
       "title": "Truegold Tech Research — Advanced",
       "started": {
-        "Chests of Gold": 4,
+        "Chests of Gold": 5,
         "Truegold Weaponry": 4,
-        "Truegold Barracks": 2
+        "Truegold Barracks": 2,
+        "Truegold Intel": 2
       },
       "next": "Truegold Intel",
       "max": 10,
