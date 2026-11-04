@@ -1633,7 +1633,7 @@
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Shards",
+      "Heroes": "Hero Gear",
       "Shop": "Paid",
       "Governor": "Pets",
       "Progress": "Mystic Trials",
@@ -1844,7 +1844,7 @@
       {
         "type": "Archer",
         "slot": "Boots (Lethality)",
-        "lvC": 136,
+        "lvC": 138,
         "lvT": 179,
         "mC": 12,
         "mT": 15,
