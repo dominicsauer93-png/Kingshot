@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -3402,8 +3402,8 @@
       "food": 43320,
       "manuals": 1625,
       "potions": 107,
-      "tmCommon": 102,
-      "tmAdv": 3,
+      "tmCommon": 0,
+      "tmAdv": 2,
       "medals": 38
     },
     "rows": [
