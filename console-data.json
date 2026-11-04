@@ -840,7 +840,7 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 43,
+      "have": 49,
       "pos": 27,
       "tgt": 27,
       "rally": false
@@ -856,7 +856,7 @@
     {
       "n": "Wee & Woo",
       "need": 0,
-      "have": 79,
+      "have": 201,
       "pos": 24,
       "tgt": 24,
       "rally": true
@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1633,9 +1633,9 @@
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Formations",
+      "Heroes": "Shards",
       "Shop": "Paid",
-      "Governor": "Masters",
+      "Governor": "Gov Gear",
       "Progress": "Mystic Trials",
       "Town": "Research"
     },
