@@ -856,8 +856,8 @@
     {
       "n": "Wee & Woo",
       "need": 0,
-      "have": 201,
-      "pos": 24,
+      "have": 1,
+      "pos": 26,
       "tgt": 24,
       "rally": true
     },
@@ -2965,7 +2965,7 @@
         "p:Tech": 28579920,
         "p:Pet": 22993080,
         "p:Master": 15955000,
-        "stars": 475
+        "stars": 477
       }
     }
   ],
@@ -3608,6 +3608,14 @@
     {
       "d": "2026-11-03",
       "t": "Logged 44 chests → 2 Mythic"
+    },
+    {
+      "d": "2026-11-04",
+      "t": "Wee & Woo: 4★ T1 (−100 shards)"
+    },
+    {
+      "d": "2026-11-04",
+      "t": "Wee & Woo: 4★ T2 (−100 shards)"
     }
   ],
   "bagCheck": {
