@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 99,
+    "current": 194,
     "target": 6414,
     "gold": 181440
   },
@@ -1481,7 +1481,7 @@
     }
   ],
   "tg": {
-    "have": 58,
+    "have": 89,
     "need": 3006,
     "ttgHave": 21,
     "ttgNeed": 354
@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1629,7 +1629,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Sync",
+      "Data": "Update all",
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
@@ -1637,7 +1637,7 @@
       "Shop": "Paid",
       "Governor": "Pets",
       "Progress": "Mystic Trials",
-      "Town": "Troops"
+      "Town": "Research"
     },
     "t11Open": {
       "nodes": false,
@@ -2078,7 +2078,7 @@
       {
         "hero": "Ava",
         "lvl": 7,
-        "have": 0,
+        "have": 5,
         "rally": true
       },
       {
@@ -2096,7 +2096,7 @@
       {
         "hero": "Wee & Woo",
         "lvl": 3,
-        "have": 15,
+        "have": 20,
         "rally": true
       },
       {
