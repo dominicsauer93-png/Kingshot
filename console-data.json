@@ -2,7 +2,7 @@
   "account": {
     "tc": "Truegold Lv. 7",
     "day": "485",
-    "power": "336179141",
+    "power": "338633161",
     "vip": "9",
     "spender": "Low–mid",
     "goal": "Main - all out attack ",
@@ -1103,7 +1103,7 @@
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
-      "v": "80",
+      "v": "81",
       "log": [
         {
           "d": "2026-09-15",
@@ -1160,12 +1160,16 @@
         {
           "d": "2026-11-03",
           "v": 80
+        },
+        {
+          "d": "2026-11-05",
+          "v": 81
         }
       ]
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "77",
+      "v": "79",
       "log": [
         {
           "d": "2026-09-15",
@@ -1222,12 +1226,16 @@
         {
           "d": "2026-11-03",
           "v": 77
+        },
+        {
+          "d": "2026-11-05",
+          "v": 79
         }
       ]
     },
     {
       "k": "Forest of Life (Pets)",
-      "v": "60",
+      "v": "53",
       "log": [
         {
           "d": "2026-09-15",
@@ -1272,12 +1280,16 @@
         {
           "d": "2026-11-02",
           "v": 60
+        },
+        {
+          "d": "2026-11-05",
+          "v": 53
         }
       ]
     },
     {
       "k": "Crystal Cave (Charms)",
-      "v": "55",
+      "v": "56",
       "log": [
         {
           "d": "2026-09-15",
@@ -1322,6 +1334,10 @@
         {
           "d": "2026-11-02",
           "v": 55
+        },
+        {
+          "d": "2026-11-05",
+          "v": 56
         }
       ]
     },
@@ -1481,7 +1497,7 @@
     }
   ],
   "tg": {
-    "have": 89,
+    "have": 128,
     "need": 3006,
     "ttgHave": 21,
     "ttgNeed": 354
@@ -1489,9 +1505,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 54324,
-      "threads": 243,
-      "vision": 617
+      "satin": 62754,
+      "threads": 327,
+      "vision": 651
     },
     "pieces": [
       {
@@ -1594,7 +1610,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1637,7 +1653,7 @@
       "Shop": "Paid",
       "Governor": "Charms",
       "Progress": "Mystic Trials",
-      "Town": "Research"
+      "Town": "Buildings"
     },
     "t11Open": {
       "nodes": false,
@@ -1679,7 +1695,7 @@
     "bvNow": true,
     "freshAll": true,
     "bcMore": true,
-    "upF": "Town",
+    "upF": "All",
     "t11More": false,
     "roleSel": "solo"
   },
@@ -1703,8 +1719,8 @@
   },
   "heroGear": {
     "have": {
-      "xp": 1200,
-      "fh": 285,
+      "xp": 40,
+      "fh": 306,
       "mg": 9,
       "mith": 7
     },
@@ -1864,10 +1880,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 285,
+    "fhSeen": 306,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 541
+      "2026-11": 844
     },
     "plan": [
       {
@@ -1916,7 +1932,7 @@
     "targetLvl": 10,
     "have": {
       "guides": 549,
-      "designs": 68
+      "designs": 76
     },
     "rows": [
       {
@@ -2971,7 +2987,7 @@
     {
       "d": "2026-11-05",
       "v": {
-        "power": 336179141,
+        "power": 338633161,
         "leth": 74.3,
         "hp": 69.1,
         "attWR": 38.08,
@@ -3420,9 +3436,9 @@
   "pets": {
     "have": {
       "food": 43320,
-      "manuals": 1625,
-      "potions": 107,
-      "tmCommon": 0,
+      "manuals": 1695,
+      "potions": 115,
+      "tmCommon": 3,
       "tmAdv": 2,
       "medals": 38
     },
@@ -3513,7 +3529,7 @@
       }
     ]
   },
-  "shardGeneral": 31,
+  "shardGeneral": 36,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3553,33 +3569,33 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 580,
-        "2026-11": 186
+        "2026-11": 510
       },
-      "seen": 243
+      "seen": 327
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 38777
+        "2026-11": 38846
       },
-      "seen": 68
+      "seen": 76
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 541
+        "2026-11": 844
       },
-      "seen": 285
+      "seen": 306
     },
     "gen": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 65
+        "2026-11": 70
       },
-      "seen": 31
+      "seen": 36
     }
   },
   "battle": {
