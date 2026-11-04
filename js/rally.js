@@ -54,20 +54,20 @@ function openPillarSheet(p){
     r(); return r; }});
 }
 
-/* ---------- hero tier lists (Gen 8, Oct 2026) ---------- */
+/* ---------- hero tier lists — Kingshot Optimizer, Gen 7 view, Nov 2026. Gen 8 heroes (Diego, Liz, Luna) kept from the Oct lists ---------- */
 const HERO_ROLES=[ // [key, label, short, weight] — rally-lead roles count double (you lead rallies)
   ["kvkLead","KvK rally lead","KvK lead",2],["kvkJoin","KvK joiner","KvK join",1],["gar","Garrison lead","Garrison",1],["gar64","60/40 garrison","60/40",1],
   ["bearLead","Bear rally lead","Bear lead",2],["bearJoin","Bear joiner","Bear join",1],["solo","Solo march","Solo",1],["arena","Arena / Conquest","Arena",1]];
 const HERO_GEN8=["Diego","Liz","Luna"];
 const HERO_TIERS={
-  kvkLead:{S:"Ava,Diego,Luna",A:"Charles,Triton,Liz,Yang",B:"Long Fei,Sophia,Thrud,Wee & Woo",C:"Saul,Zoe,Helga,Jabel,Hilde,Eric,Jaeger,Marlin,Margot,Amadeus,Alcar,Petra,Vivian,Rosa",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Quinn,Gordon,Howard,Chenko"},
-  kvkJoin:{S:"Amadeus,Saul,Gordon,Chenko,Yeonwoo,Amane,Hilde,Margot,Triton,Wee & Woo,Ava,Diego,Luna",A:"Howard,Quinn,Rosa,Fahd,Vivian,Charles,Eric",B:"Petra,Thrud,Yang",C:"Jabel,Helga,Marlin,Zoe,Jaeger,Alcar,Long Fei,Sophia,Liz",D:"Olive,Seth,Forrest,Edwin,Diana"},
-  gar:{S:"Wee & Woo,Diego,Liz",A:"Charles,Thrud,Sophia,Luna",B:"Yang,Margot,Triton,Ava,Vivian",C:"Helga,Amadeus,Jabel,Petra,Saul,Marlin,Zoe,Eric,Hilde,Rosa,Alcar,Jaeger,Long Fei",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Quinn,Gordon,Howard,Chenko"},
+  kvkLead:{S:"Triton,Yang,Charles,Ava,Diego,Luna",A:"Thrud,Sophia,Wee & Woo,Liz",B:"Long Fei,Rosa",C:"Saul,Zoe,Helga,Jabel,Hilde,Eric,Jaeger,Marlin,Margot,Amadeus,Alcar,Petra,Vivian",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Quinn,Gordon,Howard,Chenko"},
+  kvkJoin:{S:"Amadeus,Saul,Gordon,Chenko,Yeonwoo,Amane,Hilde,Eric,Margot,Triton,Wee & Woo,Ava,Diego,Luna",A:"Howard,Quinn,Rosa,Fahd,Vivian,Charles",B:"Petra,Thrud,Yang",C:"Jabel,Helga,Marlin,Zoe,Jaeger,Alcar,Long Fei,Sophia,Liz",D:"Olive,Seth,Forrest,Edwin,Diana"},
+  gar:{S:"Thrud,Sophia,Charles,Wee & Woo,Diego,Liz",A:"Ava,Vivian,Triton,Luna",B:"Yang,Margot,Long Fei",C:"Helga,Amadeus,Jabel,Petra,Saul,Marlin,Zoe,Eric,Hilde,Rosa,Alcar,Jaeger",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Quinn,Gordon,Howard,Chenko"},
   gar64:{S:"Sophia,Triton,Wee & Woo,Charles,Diego,Liz",A:"Thrud,Saul,Ava",B:"Jaeger,Alcar,Long Fei,Margot",C:"Helga,Amadeus,Jabel,Petra,Rosa,Marlin,Zoe,Hilde,Yang,Eric,Vivian,Luna",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Quinn,Gordon,Howard,Chenko"}, // Kingshot Optimizer, Gen 7 view, Nov 2026 (Gen 8 heroes kept from the Oct list)
-  bearLead:{S:"Amadeus,Ava,Luna",A:"Helga,Petra,Wee & Woo,Yang",B:"Diego,Liz",C:"Margot,Triton,Alcar,Zoe,Thrud,Rosa,Vivian",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Howard,Eric,Gordon,Quinn,Yeonwoo,Amane,Chenko,Saul,Jabel,Hilde,Charles,Long Fei,Sophia,Marlin,Jaeger"},
+  bearLead:{S:"Amadeus,Yang,Ava,Luna",A:"Helga,Petra,Wee & Woo",B:"Alcar,Rosa,Thrud,Vivian,Zoe,Diego,Liz",C:"Marlin,Jaeger,Margot,Long Fei,Triton,Sophia",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Howard,Eric,Gordon,Quinn,Yeonwoo,Amane,Chenko,Saul,Jabel,Hilde,Charles"},
   bearJoin:{S:"Amadeus,Chenko,Yeonwoo,Amane,Margot,Vivian,Ava,Wee & Woo,Luna",A:"Petra",B:"Rosa,Yang",C:"Jaeger,Thrud,Hilde,Marlin,Liz",D:"Jabel,Saul,Helga,Quinn,Diana,Gordon,Howard,Fahd,Olive,Seth,Forrest,Edwin,Zoe,Eric,Alcar,Long Fei,Triton,Sophia,Charles,Diego"},
-  solo:{S:"Ava,Diego,Liz,Luna",A:"Thrud,Sophia,Charles,Triton,Wee & Woo",B:"Long Fei,Yang",C:"Helga,Zoe,Saul,Jabel,Hilde,Marlin,Amadeus,Eric,Petra,Margot,Alcar,Rosa,Jaeger,Vivian",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Gordon,Quinn,Howard,Chenko"},
-  arena:{S:"Yang,Charles,Wee & Woo,Diego,Liz,Luna",A:"Thrud,Sophia,Triton,Ava",B:"Margot,Long Fei,Vivian",C:"Petra,Rosa,Alcar",D:"Edwin,Forrest,Seth,Olive,Fahd,Diana,Gordon,Amane,Howard,Quinn,Chenko,Yeonwoo,Helga,Saul,Hilde,Jabel,Jaeger,Zoe,Marlin,Eric,Amadeus"}};
+  solo:{S:"Triton,Charles,Ava,Wee & Woo,Diego,Liz,Luna",A:"Thrud,Sophia,Yang",B:"Long Fei,Vivian",C:"Helga,Zoe,Saul,Jabel,Hilde,Marlin,Amadeus,Eric,Petra,Margot,Alcar,Rosa,Jaeger",D:"Olive,Seth,Forrest,Edwin,Diana,Fahd,Yeonwoo,Amane,Gordon,Quinn,Howard,Chenko"},
+  arena:{S:"Triton,Yang,Charles,Ava,Wee & Woo,Diego,Liz,Luna",A:"Thrud,Long Fei,Sophia,Vivian",B:"Alcar,Margot",C:"Eric,Amadeus,Petra,Rosa",D:"Edwin,Forrest,Seth,Olive,Fahd,Diana,Gordon,Amane,Howard,Quinn,Chenko,Yeonwoo,Helga,Saul,Hilde,Jabel,Jaeger,Zoe,Marlin"}};
 const heroKey=n=>String(n||"").toLowerCase().replace(/\s+/g," ").trim();
 const TIER_OF={}; Object.entries(HERO_TIERS).forEach(([role,t])=>Object.entries(t).forEach(([g,list])=>list.split(",").forEach(h=>{ (TIER_OF[heroKey(h)]??={name:h})[role]=g; })));
 const TIER_PTS={S:4,A:3,B:2,C:1,D:0};
