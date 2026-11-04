@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1915,8 +1915,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 689,
-      "designs": 447
+      "guides": 549,
+      "designs": 68
     },
     "rows": [
       {
@@ -1960,7 +1960,7 @@
       },
       {
         "type": "Infantry",
-        "lvl": 6,
+        "lvl": 7,
         "tgt": 7
       },
       {
@@ -3541,9 +3541,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 38715
+        "2026-11": 38777
       },
-      "seen": 447
+      "seen": 68
     },
     "fh": {
       "since": "2026-10-26",
