@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -3427,7 +3427,7 @@
       },
       {
         "n": "Cheetah",
-        "lvl": 61,
+        "lvl": 64,
         "tgt": 0,
         "max": 70
       },
