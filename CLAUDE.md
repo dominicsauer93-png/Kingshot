@@ -20,3 +20,6 @@ Full guide, ranking table and full history: the Eternity's Reach event note in `
 - Rules: only packs at 3,000%+; rank by blockers (Mythic Gear, Gilded Threads, Charm Designs); heroes to 4★; monthly budget A$100, resets on the 1st.
 - Hall of Heroes sells every season except the newest. Seasons: S7 Ava, Wee & Woo, Charles · S6 Triton, Sophia, Yang · S5 Long Fei, Thrud, Vivian · S4 Margot, Rosa, Alcar · S3 Eric, Petra, Jaeger · S2 Zoe, Hilde, Marlin · S1 Helga, Jabel, Amadeus, Saul.
 - Only use confirmed numbers; mark guesses.
+
+## Releasing code changes
+- Run `node scripts/bump.mjs` before committing any change to js/, css/ or index.html. It bumps the cache name in sw.js and the `?v=` on every file in index.html, so devices load the new files straight away.
