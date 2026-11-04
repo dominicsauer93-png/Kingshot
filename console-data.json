@@ -1481,7 +1481,7 @@
     }
   ],
   "tg": {
-    "have": 47,
+    "have": 58,
     "need": 3006,
     "ttgHave": 21,
     "ttgNeed": 354
@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1637,7 +1637,7 @@
       "Shop": "Paid",
       "Governor": "Pets",
       "Progress": "Mystic Trials",
-      "Town": "Research"
+      "Town": "Troops"
     },
     "t11Open": {
       "nodes": false,
@@ -1685,15 +1685,15 @@
   },
   "troopCounts": {
     "inf": {
-      "cur": 462002,
+      "cur": 464738,
       "tgt": 1500000
     },
     "arc": {
-      "cur": 770878,
+      "cur": 774014,
       "tgt": 1500000
     },
     "cav": {
-      "cur": 411992,
+      "cur": 414728,
       "tgt": 500000
     }
   },
