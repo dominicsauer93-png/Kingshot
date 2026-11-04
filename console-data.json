@@ -1594,7 +1594,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1635,7 +1635,7 @@
       "Plan": "Shop guide",
       "Heroes": "Shards",
       "Shop": "Paid",
-      "Governor": "Gov Gear",
+      "Governor": "Pets",
       "Progress": "Mystic Trials",
       "Town": "Research"
     },
@@ -3402,8 +3402,8 @@
       "food": 43320,
       "manuals": 1625,
       "potions": 107,
-      "tmCommon": 89,
-      "tmAdv": 2,
+      "tmCommon": 102,
+      "tmAdv": 3,
       "medals": 38
     },
     "rows": [
@@ -3475,7 +3475,7 @@
       },
       {
         "n": "Ironclad War Elephant",
-        "lvl": 60,
+        "lvl": 67,
         "tgt": 0,
         "max": 100
       },
