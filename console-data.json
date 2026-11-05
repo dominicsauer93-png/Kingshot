@@ -1610,7 +1610,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1649,9 +1649,9 @@
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
+      "Heroes": "Shards",
       "Shop": "Paid",
-      "Governor": "Charms",
+      "Governor": "Gov Gear",
       "Progress": "Mystic Trials",
       "Town": "Research"
     },
@@ -1907,7 +1907,7 @@
     ],
     "planDate": "2026-10-23",
     "chests": {
-      "lucky": 44,
+      "lucky": 0,
       "custom": 0,
       "log": [
         {
