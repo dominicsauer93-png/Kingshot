@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 194,
+    "current": 196,
     "target": 6414,
     "gold": 181440
   },
@@ -1497,17 +1497,17 @@
     }
   ],
   "tg": {
-    "have": 128,
+    "have": 243,
     "need": 3006,
-    "ttgHave": 21,
+    "ttgHave": 24,
     "ttgNeed": 354
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 62754,
-      "threads": 327,
-      "vision": 651
+      "satin": 88916,
+      "threads": 515,
+      "vision": 690
     },
     "pieces": [
       {
@@ -1610,7 +1610,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1728,8 +1728,8 @@
   },
   "heroGear": {
     "have": {
-      "xp": 40,
-      "fh": 46,
+      "xp": 140,
+      "fh": 51,
       "mg": 3,
       "mith": 7
     },
@@ -1889,10 +1889,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 46,
+    "fhSeen": 51,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 844
+      "2026-11": 895
     },
     "plan": [
       {
@@ -1940,8 +1940,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 549,
-      "designs": 76
+      "guides": 629,
+      "designs": 156
     },
     "rows": [
       {
@@ -3548,25 +3548,25 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 580,
-        "2026-11": 510
+        "2026-11": 1020
       },
-      "seen": 327
+      "seen": 515
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 38846
+        "2026-11": 39001
       },
-      "seen": 76
+      "seen": 156
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 844
+        "2026-11": 895
       },
-      "seen": 46
+      "seen": 51
     },
     "gen": {
       "since": "2026-10-26",
