@@ -79,7 +79,17 @@ function renderEventMode(){
   on("evBattle",()=>openBattle(e));
   on("evCam",()=>openCamSheet(false));
 }
+/* ---------- Home: your time vs game time (UTC), ticking every second ---------- */
+let clockTimer=null;
+function paintClock(){ const el=$("#clockStrip"); if(!el) return; const d=new Date(), p2=n=>String(n).padStart(2,"0");
+  const off=-d.getTimezoneOffset(), oh=Math.trunc(off/60), om=Math.abs(off%60), offTxt=`${off>=0?"+":"−"}${Math.abs(oh)}${om?":"+p2(om):""}h`;
+  const loc=d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit",second:"2-digit"}), locD=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
+  const utc=`${p2(d.getUTCHours())}:${p2(d.getUTCMinutes())}:${p2(d.getUTCSeconds())}`, utcD=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});
+  const into=d.getUTCHours()*3600+d.getUTCMinutes()*60+d.getUTCSeconds(), left=86400-into, rs=new Date(d.getTime()+left*1000);
+  el.innerHTML=`<div class="clk-c"><span>Your time</span><b>${loc}</b><small>${locD}</small></div><div class="clk-o">${offTxt}</div><div class="clk-c clk-g"><span>Game time (UTC)</span><b>${utc}</b><small>${utcD}</small></div>
+    <div class="clk-r"><span>Daily reset in <b>${Math.floor(left/3600)}h ${p2(Math.floor(left%3600/60))}m ${p2(left%60)}s</b> · ${rs.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})} your time</span><i style="width:${(into/864).toFixed(2)}%"></i></div>`; }
 function renderHome(){
+  paintClock(); if(!clockTimer) clockTimer=setInterval(()=>{ if(!document.hidden&&$("#clockStrip")&&$("#clockStrip").offsetParent) paintClock(); },1000);
   const d=new Date();
   // events run on the game day (UTC); before the daily reset your local date is a day ahead — say so
   const gd=new Date(gameToday()+"T00:00:00"), rs=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()+1));
