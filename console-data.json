@@ -1610,7 +1610,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1646,12 +1646,12 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Pets",
-      "Base": "Troops",
+      "Gear": "Charms",
+      "Base": "T11",
       "Plan": "Shop guide",
       "Heroes": "Widgets",
       "Shop": "Paid",
-      "Governor": "Masters",
+      "Governor": "Charms",
       "Progress": "Mystic Trials",
       "Town": "Research"
     },
@@ -1695,9 +1695,9 @@
     "bvNow": true,
     "freshAll": true,
     "bcMore": true,
-    "upF": "Governor",
+    "upF": "All",
     "t11More": false,
-    "roleSel": "gar"
+    "roleSel": "solo"
   },
   "troopCounts": {
     "inf": {
