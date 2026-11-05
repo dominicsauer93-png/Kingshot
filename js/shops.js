@@ -120,6 +120,11 @@ const SHOP_DB=[
    best:["Pick 40 General Mythic shards (not Charles) — they go to Ava","4,800 gems + 140 Truegold + 12 keys make it good value overall — November maybe"],
    skip:["Not worth it just for Charles","Free track has no shards — resources, XP, Epic books"],
    items:[["Choose: 40 General Mythic shards OR 40 Charles shards","A$14.99","3,343%"],["4,800 gems · 140 Truegold · 12 + 12 Mythic skill books · 16 × 3 h speedups · 12 keys · 30 × 10 stamina","",""]]},
+  {n:"Blizzard Shop",cur:"Blizzard coins",when:"Blizzard event",seen:"2026-11-05",
+   best:["Charm Designs × 30 (500 each = 15,000) — your blocker, uses all your coins","With more coins: Truegold (250, 60) then Truegold Dust (150, 100) — the cheapest per coin"],
+   skip:["Mythic General shard (6,000) — poorest value per coin","Lucky Hero Gear chests (1,000) — Mythic Gear covered for your next step","100 Enhancement XP parts","Charm Guides (500) — Designs run out first"],
+   items:[["Truegold",250,60],["Truegold Dust",150,100],["Tempered Truegold?",5000,3],["Charm Design",500,30],["Charm Guide",500,30],["Mythic General Hero shard",6000,5],["Lucky Hero Gear chest",1000,15],["100 Enhancement XP part",500,30]],
+   note:"Had 15,050 coins on 5 Nov. Value per 1,000 coins (A$): Dust 0.30 · Truegold 0.22 · Designs 0.20 · Lucky chest 0.13 · General shard 0.06."},
   {n:"Lucky Chip Pack (Hero Roulette)",cur:"US$",when:"Hero Roulette",seen:"2026-10-20",
    best:[],skip:["All under 3,000% — use gems (1,500 per token, Spin 10 = 9 tokens)"],items:[["Common — 5 tokens","US$1.99","2,540%"],["Uncommon — 10","US$4.99","2,180%"],["Rare — 20","US$9.99","2,140%"],["Epic — 40","US$19.99","2,120%"]]}
 ];
