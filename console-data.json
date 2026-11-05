@@ -3410,6 +3410,16 @@
       "every": 0,
       "time": "",
       "note": "Seen 2 Nov with 6d 19h left (ends ~9 Nov). 5 packs at $7.99, one unlocks each day (Day 5 unlocks ~6 Nov). Buy all 5 → grand prize of your choice.\nDay 1 4,500%: 2,500 gems, 85 Truegold, 50× 1h speedups\nDay 2 4,800%: 2,500 gems, 85 Truegold, 10 General shards\nDay 3 4,900%: 2,500 gems, 10 General shards, 20 Pet Advancement custom chests\nDay 4 5,000%: 2,500 gems, 85 Charm Guides, 85 Charm Designs\nDay 5 5,100%: 2,500 gems, 38 Gov Gear Materials chests, 36 Forgehammers\nEvery day also: 25× '100' item, 60× chest\nGrand prize (pick 1): Mithril ×5 · Truegold ×450 · General shards ×50 · Forgehammer ×180 · Lucky Hero Gear chests ×180 · 100 Enhancement XP ×330 · 1h speedups ×250 · Artisan's Vision ×340 · Gov Gear Materials chests ×140 · Pet Advancement custom chests ×90 · Charm Guides ×300 · Charm Designs ×300 (best: Designs are the biggest blocker). Plus 12.5K gems, 50× 1h speedups, 2× 1K item, 100 chests."
+    },
+    {
+      "n": "Viking Vengeance",
+      "date": "2026-11-05",
+      "time": "11:30",
+      "len": 1,
+      "every": 0,
+      "imp": "high",
+      "note": "Alliance event — Viking waves attack members' cities. Source of Satin / Gilded Threads (your Threads blocker).\nBefore it starts: all troops home, use your Garrison lineup (Charles · Sophia · Wee & Woo), heal wounded.\nRepeat schedule not known yet — set 'every' when it's confirmed.",
+      "spend": "Troops home + garrison lineup set before 11:30"
     }
   ],
   "masterNotesV": 2,
