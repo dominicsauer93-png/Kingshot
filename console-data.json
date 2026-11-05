@@ -527,7 +527,8 @@
       "note": "1,999 Kingdom Stars (≈ two A$14.99 packs) + 20 General Mythic shards (blank — any hero) — monthly reset. Stars pay for other packs. Resets on the 1st (shared limit with the web store, where it gives +100 Stars).",
       "stars": 1999,
       "gen": 20,
-      "resetDay": 1
+      "resetDay": 1,
+      "bought": "2026-11-06"
     },
     {
       "t": "2nd construction queue",
@@ -3670,6 +3671,10 @@
     {
       "d": "2026-11-05",
       "t": "Done: Cavalry Boots Mastery 11 → 12"
+    },
+    {
+      "d": "2026-11-05",
+      "t": "Kingdom Special Pack: +1,999 ⭐"
     }
   ],
   "bagCheck": {
@@ -4260,7 +4265,7 @@
       }
     }
   },
-  "stars": 4,
+  "stars": 2003,
   "webOnceDone": true,
   "webOnceMonth": "2026-11",
   "webMonth": "2026-11",
