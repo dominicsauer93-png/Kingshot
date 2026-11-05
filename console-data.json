@@ -1610,7 +1610,7 @@
     ]
   },
   "ui": {
-    "tab": "Upgrade",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1720,8 +1720,8 @@
   "heroGear": {
     "have": {
       "xp": 40,
-      "fh": 306,
-      "mg": 9,
+      "fh": 46,
+      "mg": 3,
       "mith": 7
     },
     "rows": [
@@ -1742,7 +1742,7 @@
         "slot": "Gloves (Health)",
         "lvC": 139,
         "lvT": 200,
-        "mC": 13,
+        "mC": 14,
         "mT": 18,
         "xp": 377720,
         "fh": 800,
@@ -1814,7 +1814,7 @@
         "slot": "Boots (Lethality)",
         "lvC": 119,
         "lvT": 159,
-        "mC": 11,
+        "mC": 12,
         "mT": 12,
         "xp": 211510,
         "fh": 230,
@@ -1880,7 +1880,7 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 306,
+    "fhSeen": 46,
     "fhGot": {
       "2026-10": 2486,
       "2026-11": 844
@@ -2087,8 +2087,8 @@
       },
       {
         "hero": "Amadeus",
-        "lvl": 6,
-        "have": 35,
+        "lvl": 7,
+        "have": 0,
         "rally": true
       },
       {
@@ -2111,8 +2111,8 @@
       },
       {
         "hero": "Wee & Woo",
-        "lvl": 3,
-        "have": 20,
+        "lvl": 4,
+        "have": 0,
         "rally": true
       },
       {
@@ -3535,7 +3535,7 @@
         "2026-10": 6,
         "2026-11": 3
       },
-      "seen": 9
+      "seen": 3
     },
     "mith": {
       "since": "2026-10-26",
@@ -3567,7 +3567,7 @@
         "2026-10": 564,
         "2026-11": 844
       },
-      "seen": 306
+      "seen": 46
     },
     "gen": {
       "since": "2026-10-26",
@@ -3632,6 +3632,14 @@
     {
       "d": "2026-11-04",
       "t": "Wee & Woo: 4★ T2 (−100 shards)"
+    },
+    {
+      "d": "2026-11-05",
+      "t": "Done: Infantry Gloves Mastery 13 → 14"
+    },
+    {
+      "d": "2026-11-05",
+      "t": "Done: Cavalry Boots Mastery 11 → 12"
     }
   ],
   "bagCheck": {
@@ -4233,6 +4241,18 @@
       "a": "Building",
       "base": 9380343,
       "d": "2026-11-01"
+    },
+    {
+      "k": "fh",
+      "a": "Hero Gear",
+      "base": 14470618,
+      "d": "2026-11-05"
+    },
+    {
+      "k": "fh",
+      "a": "Hero Gear",
+      "base": 14470618,
+      "d": "2026-11-05"
     }
   ],
   "webMonthly": true
