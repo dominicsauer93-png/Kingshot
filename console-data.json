@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 196,
+    "current": 31,
     "target": 6414,
     "gold": 181440
   },
@@ -1507,17 +1507,17 @@
     }
   ],
   "tg": {
-    "have": 173,
-    "need": 3006,
-    "ttgHave": 4,
-    "ttgNeed": 354
+    "have": 256,
+    "need": 2766,
+    "ttgHave": 7,
+    "ttgNeed": 334
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 58916,
-      "threads": 215,
-      "vision": 635
+      "satin": 74116,
+      "threads": 365,
+      "vision": 685
     },
     "pieces": [
       {
@@ -1620,7 +1620,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Upgrade",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1705,7 +1705,7 @@
     "bvNow": true,
     "freshAll": true,
     "bcMore": true,
-    "upF": "All",
+    "upF": "Governor",
     "t11More": false,
     "roleSel": "solo"
   },
@@ -1738,7 +1738,7 @@
       {
         "type": "Infantry",
         "slot": "Helm (Lethality)",
-        "lvC": 113,
+        "lvC": 114,
         "lvT": 179,
         "mC": 11,
         "mT": 15,
@@ -1786,7 +1786,7 @@
       {
         "type": "Cavalry",
         "slot": "Helm (Lethality)",
-        "lvC": 122,
+        "lvC": 123,
         "lvT": 159,
         "mC": 12,
         "mT": 13,
@@ -1890,10 +1890,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 51,
+    "fhSeen": 87,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 895
+      "2026-11": 931
     },
     "plan": [
       {
@@ -1941,8 +1941,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 714,
-      "designs": 571
+      "guides": 717,
+      "designs": 574
     },
     "rows": [
       {
@@ -3589,33 +3589,33 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 580,
-        "2026-11": 1020
+        "2026-11": 1382
       },
-      "seen": 215
+      "seen": 365
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 39031
+        "2026-11": 39985
       },
-      "seen": 186
+      "seen": 574
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 895
+        "2026-11": 931
       },
-      "seen": 51
+      "seen": 87
     },
     "gen": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 70
+        "2026-11": 90
       },
-      "seen": 36
+      "seen": 56
     }
   },
   "battle": {
@@ -4295,22 +4295,22 @@
       "d": "2026-11-01"
     },
     {
-      "k": "fh",
-      "a": "Hero Gear",
-      "base": 14470618,
-      "d": "2026-11-05"
-    },
-    {
-      "k": "fh",
-      "a": "Hero Gear",
-      "base": 14470618,
-      "d": "2026-11-05"
-    },
-    {
       "k": "bld",
       "a": "Building",
       "base": 9380343,
       "d": "2026-11-06"
+    },
+    {
+      "k": "fh",
+      "a": "Hero Gear",
+      "base": 14470618,
+      "d": "2026-11-05"
+    },
+    {
+      "k": "fh",
+      "a": "Hero Gear",
+      "base": 14470618,
+      "d": "2026-11-05"
     },
     {
       "k": "gov",
