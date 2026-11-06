@@ -576,6 +576,15 @@
       "note": "Daily gems + Stamina + 30 days VIP — best value",
       "d": true,
       "bought": "2026-10-28"
+    },
+    {
+      "t": "Treasure Cove — all 5 days",
+      "aud": 7.99,
+      "kind": "once",
+      "d": true,
+      "auto": "2026-11",
+      "bought": "2026-11-06",
+      "note": "November plan · 4,860% · 1,996 ⭐ + A$7.99 · grand prize: 300 Charm Designs"
     }
   ],
   "trackFarm": [
@@ -1498,7 +1507,7 @@
     }
   ],
   "tg": {
-    "have": 3,
+    "have": 173,
     "need": 3006,
     "ttgHave": 4,
     "ttgNeed": 354
@@ -1721,7 +1730,7 @@
   "heroGear": {
     "have": {
       "xp": 140,
-      "fh": 51,
+      "fh": 87,
       "mg": 3,
       "mith": 7
     },
@@ -1932,8 +1941,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 629,
-      "designs": 186
+      "guides": 714,
+      "designs": 571
     },
     "rows": [
       {
@@ -3540,7 +3549,7 @@
       }
     ]
   },
-  "shardGeneral": 36,
+  "shardGeneral": 56,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -4273,7 +4282,7 @@
       }
     }
   },
-  "stars": 2003,
+  "stars": 7,
   "webOnceDone": true,
   "webOnceMonth": "2026-11",
   "webMonth": "2026-11",
