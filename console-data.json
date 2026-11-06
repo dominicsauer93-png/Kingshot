@@ -1498,17 +1498,17 @@
     }
   ],
   "tg": {
-    "have": 243,
+    "have": 3,
     "need": 3006,
-    "ttgHave": 24,
+    "ttgHave": 4,
     "ttgNeed": 354
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 88916,
-      "threads": 515,
-      "vision": 690
+      "satin": 58916,
+      "threads": 215,
+      "vision": 635
     },
     "pieces": [
       {
@@ -1525,7 +1525,7 @@
       },
       {
         "name": "Inf 2",
-        "cur": 18
+        "cur": 19
       },
       {
         "name": "Archer 1",
@@ -1611,7 +1611,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -3061,7 +3061,7 @@
   "buildings": [
     {
       "n": "Town Center",
-      "stepIdx": 3,
+      "stepIdx": 4,
       "note": "",
       "d": false
     },
@@ -3582,7 +3582,7 @@
         "2026-10": 580,
         "2026-11": 1020
       },
-      "seen": 515
+      "seen": 215
     },
     "designs": {
       "since": "2026-10-26",
@@ -3675,6 +3675,14 @@
     {
       "d": "2026-11-05",
       "t": "Kingdom Special Pack: +1,999 ⭐"
+    },
+    {
+      "d": "2026-11-06",
+      "t": "Done: Town Center → TG 7.4"
+    },
+    {
+      "d": "2026-11-06",
+      "t": "Done: Inf 2: Gold T1 0★ → Gold T1 1★"
     }
   ],
   "bagCheck": {
@@ -4288,6 +4296,18 @@
       "a": "Hero Gear",
       "base": 14470618,
       "d": "2026-11-05"
+    },
+    {
+      "k": "bld",
+      "a": "Building",
+      "base": 9380343,
+      "d": "2026-11-06"
+    },
+    {
+      "k": "gov",
+      "a": "Governor Gear",
+      "base": 9216720,
+      "d": "2026-11-06"
     }
   ],
   "webMonthly": true
