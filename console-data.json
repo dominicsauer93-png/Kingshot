@@ -3436,11 +3436,11 @@
   "pets": {
     "have": {
       "food": 43320,
-      "manuals": 1695,
-      "potions": 115,
-      "tmCommon": 3,
+      "manuals": 1283,
+      "potions": 19,
+      "tmCommon": 10,
       "tmAdv": 2,
-      "medals": 38
+      "medals": 0
     },
     "rows": [
       {
