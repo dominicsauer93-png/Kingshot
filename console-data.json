@@ -1515,9 +1515,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 74116,
-      "threads": 365,
-      "vision": 685
+      "satin": 44116,
+      "threads": 65,
+      "vision": 630
     },
     "pieces": [
       {
@@ -1538,7 +1538,7 @@
       },
       {
         "name": "Archer 1",
-        "cur": 18
+        "cur": 19
       },
       {
         "name": "Archer 2",
@@ -3611,7 +3611,7 @@
         "2026-10": 580,
         "2026-11": 1382
       },
-      "seen": 365
+      "seen": 65
     },
     "designs": {
       "since": "2026-10-26",
@@ -3712,6 +3712,10 @@
     {
       "d": "2026-11-06",
       "t": "Done: Inf 2: Gold T1 0★ → Gold T1 1★"
+    },
+    {
+      "d": "2026-11-06",
+      "t": "Done: Archer 1: Gold T1 0★ → Gold T1 1★"
     }
   ],
   "bagCheck": {
@@ -4337,6 +4341,12 @@
       "a": "Governor Gear",
       "base": 9216720,
       "d": "2026-11-06"
+    },
+    {
+      "k": "gov",
+      "a": "Governor Gear",
+      "base": 9216720,
+      "d": "2026-11-07"
     }
   ],
   "webMonthly": true
