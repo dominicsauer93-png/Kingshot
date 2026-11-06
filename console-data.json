@@ -1941,8 +1941,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 717,
-      "designs": 574
+      "guides": 577,
+      "designs": 174
     },
     "rows": [
       {
@@ -1991,7 +1991,7 @@
       },
       {
         "type": "Infantry",
-        "lvl": 6,
+        "lvl": 7,
         "tgt": 7
       },
       {
@@ -3619,7 +3619,7 @@
         "2026-10": 608,
         "2026-11": 39985
       },
-      "seen": 574
+      "seen": 174
     },
     "fh": {
       "since": "2026-10-26",
@@ -3716,6 +3716,10 @@
     {
       "d": "2026-11-06",
       "t": "Done: Archer 1: Gold T1 0★ → Gold T1 1★"
+    },
+    {
+      "d": "2026-11-06",
+      "t": "Done: Infantry Charm 3 Lv 6 → 7"
     }
   ],
   "bagCheck": {
@@ -4346,6 +4350,12 @@
       "k": "gov",
       "a": "Governor Gear",
       "base": 9216720,
+      "d": "2026-11-07"
+    },
+    {
+      "k": "charm",
+      "a": "Governor Charm",
+      "base": 12748800,
       "d": "2026-11-07"
     }
   ],
