@@ -1563,7 +1563,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-11-07",
+    "routineDate": "2026-11-08",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1620,7 +1620,7 @@
     ]
   },
   "ui": {
-    "tab": "Upgrade",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1659,9 +1659,9 @@
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Shards",
+      "Heroes": "Formations",
       "Shop": "Paid",
-      "Governor": "Gov Gear",
+      "Governor": "Pets",
       "Progress": "Mystic Trials",
       "Town": "Research"
     },
@@ -1707,7 +1707,7 @@
     "bcMore": true,
     "upF": "Governor",
     "t11More": false,
-    "roleSel": "solo"
+    "roleSel": "arena"
   },
   "troopCounts": {
     "inf": {
@@ -2935,7 +2935,7 @@
       }
     },
     {
-      "d": "2026-11-02",
+      "d": "2026-11-04",
       "v": {
         "power": 334299846,
         "leth": 74.3,
@@ -2952,26 +2952,6 @@
         "p:Pet": 22993080,
         "p:Master": 15955000,
         "stars": 471
-      }
-    },
-    {
-      "d": "2026-11-03",
-      "v": {
-        "power": 336179141,
-        "leth": 74.3,
-        "hp": 69.1,
-        "attWR": 38.08,
-        "defWR": 91.68,
-        "p:Building": 9380343,
-        "p:Troop": 182796490,
-        "p:Hero": 33584735,
-        "p:Hero Gear": 14470618,
-        "p:Governor Gear": 9216720,
-        "p:Governor Charm": 12748800,
-        "p:Tech": 28579920,
-        "p:Pet": 22993080,
-        "p:Master": 15955000,
-        "stars": 475
       }
     },
     {
@@ -3016,6 +2996,26 @@
     },
     {
       "d": "2026-11-07",
+      "v": {
+        "power": 338633161,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 477
+      }
+    },
+    {
+      "d": "2026-11-08",
       "v": {
         "power": 338633161,
         "leth": 74.3,
