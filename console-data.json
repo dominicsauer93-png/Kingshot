@@ -1620,7 +1620,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Progress",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -4279,7 +4279,7 @@
       }
     }
   },
-  "stars": 7,
+  "stars": 107,
   "webOnceDone": true,
   "webOnceMonth": "2026-11",
   "webMonth": "2026-11",
