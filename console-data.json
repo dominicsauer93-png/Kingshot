@@ -3145,15 +3145,15 @@
     },
     {
       "n": "Armament Competition (Type 1)",
-      "date": "2026-10-26",
-      "every": 0,
+      "date": "2026-11-09",
+      "every": 14,
       "time": "",
       "note": "12–13 Oct (UTC) confirmed. Small stuff only — save big speedups for KvK. Rewards: Mythic Gear, gems, keys.",
       "len": 2
     },
     {
       "n": "Officer Project (Type 1)",
-      "date": "2026-10-14",
+      "date": "2026-11-11",
       "every": 14,
       "time": "",
       "note": "14–15 Oct (UTC). Spend Forgehammers on hero gear mastery + level widgets. Rewards: Mythic Gear, gems, keys.",
@@ -3177,8 +3177,8 @@
     },
     {
       "n": "Finder's Fortune",
-      "date": "2026-10-11",
-      "every": 0,
+      "date": "2026-11-08",
+      "every": 28,
       "len": 3,
       "time": "",
       "note": "Sun 11 – Tue 13 Oct (in-game calendar, UTC)",
@@ -3186,8 +3186,8 @@
     },
     {
       "n": "Alliance Championship",
-      "date": "2026-10-26",
-      "every": 0,
+      "date": "2026-11-09",
+      "every": 14,
       "len": 4,
       "time": "",
       "note": "12–18 Oct (UTC). Shop: Master Emblems first. Repeat pattern not confirmed — update with the next date.",
@@ -3195,16 +3195,16 @@
     },
     {
       "n": "Merchant Empire",
-      "date": "2026-10-12",
-      "every": 0,
+      "date": "2026-11-09",
+      "every": 28,
       "len": 7,
       "time": "",
       "note": "12 Oct – 18 Oct 04:00 (UTC). Rewards: Mythic Gear, Forgehammers, Nutrient Potions, Growth Manuals."
     },
     {
       "n": "Alliance Brawl",
-      "date": "2026-10-12",
-      "every": 0,
+      "date": "2026-11-09",
+      "every": 28,
       "len": 7,
       "time": "",
       "note": "12 Oct – 18 Oct 12:00 (UTC). Rewards: Truegold, Mythic Gear, building items.",
@@ -3213,8 +3213,8 @@
     },
     {
       "n": "Swordland Showdown",
-      "date": "2026-10-26",
-      "every": 0,
+      "date": "2026-11-09",
+      "every": 14,
       "len": 4,
       "time": "",
       "note": "12–18 Oct (UTC). Swordland Shop: Artisan's Vision first. Rewards include Mythic Gear + a chest.",
@@ -3223,8 +3223,8 @@
     },
     {
       "n": "Sanctuary Battle",
-      "date": "2026-10-27",
-      "every": 0,
+      "date": "2026-11-10",
+      "every": 14,
       "len": 3,
       "time": "",
       "note": "13–16 Oct (UTC). Alliance fight for Sanctuaries. Rewards include Thrud shards + books.",
@@ -3232,8 +3232,8 @@
     },
     {
       "n": "Champion's Way",
-      "date": "2026-10-28",
-      "every": 0,
+      "date": "2026-11-11",
+      "every": 14,
       "len": 2,
       "time": "",
       "note": "14–16 Oct (UTC). Defeat Elite Rebels for Thrud (Mythic). Rewards: Thrud shards, Forgehammers, chest.",
@@ -3241,12 +3241,12 @@
     },
     {
       "n": "Hero Rally",
-      "date": "2026-10-26",
-      "every": 0,
+      "date": "2026-11-09",
+      "every": 14,
       "len": 4,
       "time": "",
       "spend": "Nothing — just do Daily Missions",
-      "note": "12–25 Oct (UTC). Daily Missions give Path Points. Rewards: Charles shards, Truegold, gems, 3 h speedups.",
+      "note": "12–25 Oct (UTC). Daily Missions give Path Points. Rewards: Charles shards, Truegold, gems, 3 h speedups.\nPath of Honor (A$14.99, pick 40 General shards) — best value per A$ seen (1.60×).",
       "endOpen": true
     },
     {
@@ -3459,6 +3459,22 @@
       "imp": "high",
       "note": "Alliance event — Viking waves attack members' cities. Source of Satin / Gilded Threads (your Threads blocker).\nBefore it starts: all troops home, use your Garrison lineup (Charles · Sophia · Wee & Woo), heal wounded.\nRepeat schedule not known yet — set 'every' when it's confirmed.",
       "spend": "Troops home + garrison lineup set before 11:30"
+    },
+    {
+      "n": "Kingdom Transfer",
+      "date": "2026-11-08",
+      "len": 5,
+      "every": 0,
+      "time": "",
+      "note": "Seen on the 8 Nov calendar — runs past 12 Nov (end not shown)."
+    },
+    {
+      "n": "Swordland Summit League",
+      "date": "2026-11-06",
+      "len": 7,
+      "every": 0,
+      "time": "",
+      "note": "Match Missions, Outcome Prediction, Summit Contest — running before 6 Nov and past 12 Nov (start/end not shown)."
     }
   ],
   "masterNotesV": 2,
