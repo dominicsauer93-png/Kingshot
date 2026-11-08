@@ -9,9 +9,9 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 31,
+    "current": 63,
     "target": 6414,
-    "gold": 181440
+    "gold": 431880
   },
   "nodes": [
     {
@@ -1507,17 +1507,17 @@
     }
   ],
   "tg": {
-    "have": 256,
+    "have": 407,
     "need": 2766,
-    "ttgHave": 7,
+    "ttgHave": 11,
     "ttgNeed": 334
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 44116,
-      "threads": 65,
-      "vision": 630
+      "satin": 61899,
+      "threads": 219,
+      "vision": 634
     },
     "pieces": [
       {
@@ -1620,7 +1620,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1661,7 +1661,7 @@
       "Plan": "Shop guide",
       "Heroes": "Widgets",
       "Shop": "Paid",
-      "Governor": "Pets",
+      "Governor": "Charms",
       "Progress": "Overview",
       "Town": "Resources"
     },
@@ -1704,7 +1704,7 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "All",
+    "upF": "Town",
     "bvAll": true,
     "roleSel": "arena",
     "bcMore": true,
@@ -1738,8 +1738,8 @@
   },
   "heroGear": {
     "have": {
-      "xp": 140,
-      "fh": 87,
+      "xp": 3300,
+      "fh": 120,
       "mg": 3,
       "mith": 7
     },
@@ -1899,10 +1899,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 87,
+    "fhSeen": 120,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 931
+      "2026-11": 964
     },
     "plan": [
       {
@@ -1950,8 +1950,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 577,
-      "designs": 174
+      "guides": 864,
+      "designs": 300
     },
     "rows": [
       {
@@ -3538,7 +3538,7 @@
       }
     ]
   },
-  "shardGeneral": 56,
+  "shardGeneral": 106,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3578,33 +3578,33 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 580,
-        "2026-11": 1382
+        "2026-11": 1536
       },
-      "seen": 65
+      "seen": 219
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 39985
+        "2026-11": 40111
       },
-      "seen": 174
+      "seen": 300
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 931
+        "2026-11": 964
       },
-      "seen": 87
+      "seen": 120
     },
     "gen": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 90
+        "2026-11": 140
       },
-      "seen": 56
+      "seen": 106
     }
   },
   "battle": {
@@ -3692,24 +3692,24 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-11-04",
+    "d": "2026-11-08",
     "v": {
-      "gen": 31,
-      "mg": 9,
+      "gen": 106,
+      "mg": 3,
       "mith": 7,
-      "fh": 285,
-      "m:Gear XP": 1200,
-      "m:Lucky chests": 44,
+      "fh": 120,
+      "m:Gear XP": 3300,
+      "m:Lucky chests": 0,
       "m:Custom Mythic chests": 0,
-      "threads": 243,
-      "m:Satin": 54324,
-      "m:Vision": 617,
-      "designs": 447,
-      "m:Guides": 689,
-      "m:Truegold": 47,
-      "m:Tempered TG": 21,
-      "m:TG Dust": 99,
-      "m:Gold": 181440
+      "threads": 219,
+      "m:Satin": 61899,
+      "m:Vision": 634,
+      "designs": 300,
+      "m:Guides": 864,
+      "m:Truegold": 407,
+      "m:Tempered TG": 11,
+      "m:TG Dust": 63,
+      "m:Gold": 431880
     }
   },
   "noShop": [
