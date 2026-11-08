@@ -1620,7 +1620,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1661,9 +1661,9 @@
       "Plan": "Shop guide",
       "Heroes": "Widgets",
       "Shop": "Paid",
-      "Governor": "Charms",
+      "Governor": "Masters",
       "Progress": "Overview",
-      "Town": "Resources"
+      "Town": "Buildings"
     },
     "t11Open": {
       "nodes": false,
