@@ -944,3 +944,12 @@
 .clk-r b{color:var(--text);font-variant-numeric:tabular-nums}
 .clk-r i{display:block;height:4px;border-radius:2px;background:var(--acc);margin-top:6px;opacity:.8}
 @media (max-width:420px){.clk-c b{font-size:18px}}
+/* Master plan */
+.mp-pool{display:flex;flex-wrap:wrap;gap:6px 16px;padding:8px 14px;font-size:13.5px;color:var(--faint)}
+.mp-pool b{color:var(--text);font-family:var(--f-mono)}
+.mp-c{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:4px 12px 8px;padding:10px 12px;border-radius:12px;border:1px solid var(--acc);background:var(--panel-2)}
+.mp-c div{display:flex;flex-direction:column;min-width:0}.mp-c span{font-size:13px;color:var(--faint)}
+.mp-c em{font-style:normal;font-weight:700;font-size:13px;text-align:right}
+.mp-r{width:100%;background:none;border:0;border-top:1px solid var(--line-soft);color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.dv.warn{color:var(--gold,#e9b949)}
+.mp-r .dv{font-family:inherit;font-weight:600}

@@ -14,7 +14,7 @@ const BAG_KEYS=[
   ["gen","Gen. shards",()=>state,"shardGeneral"]];
 // the rest of the bag, one tap away (no change tracking — just keeps every number in one place)
 const BAG_MORE=[["Truegold",()=>state.tg,"have"],["Tempered TG",()=>state.tg,"ttgHave"],["TG Dust",()=>state.dust,"current"],["Gold",()=>state.dust,"gold"],
-  ["Lucky chests",()=>hgChests(),"lucky"],["Custom Mythic chests",()=>hgChests(),"custom"],["Satin",()=>state.govGear.have,"satin"],["Vision",()=>state.govGear.have,"vision"],["Guides",()=>state.charms.have,"guides"],["Gear XP",()=>state.heroGear.have,"xp"],["Pet food",()=>state.pets.have||(state.pets.have={}),"food"]];
+  ["Lucky chests",()=>hgChests(),"lucky"],["Custom Mythic chests",()=>hgChests(),"custom"],["Satin",()=>state.govGear.have,"satin"],["Vision",()=>state.govGear.have,"vision"],["Guides",()=>state.charms.have,"guides"],["Gear XP",()=>state.heroGear.have,"xp"],["Pet food",()=>state.pets.have||(state.pets.have={}),"food"],["Master Emblems",()=>state.masterRes||(state.masterRes={}),"emblems"],["Skill books",()=>state.masterRes||(state.masterRes={}),"books"]];
 /* ---------- hero gear chests: unopened Lucky / Custom Mythic chests, and your real Mythic drop rate ---------- */
 const hgChests=()=>state.heroGear.chests||(state.heroGear.chests={lucky:0,custom:0,log:[]});
 function mythicRate(){ const L=hgChests().log||[], o=L.reduce((t,x)=>t+num(x.opened),0), m=L.reduce((t,x)=>t+num(x.mythic),0);
@@ -72,7 +72,7 @@ function renderBagCheck(){
   // every item, in the same order as the app's pages (Heroes → Governor → Town)
   const T=k=>{ const b=BAG_KEYS.find(x=>x[0]===k); return [b[1],b[2],b[3],k]; }, M=l=>{ const b=BAG_MORE.find(x=>x[0]===l); return [b[0],b[1],b[2],"m:"+l]; };
   const GROUPS=[["Heroes","star",[T("gen"),T("mg"),T("mith"),T("fh"),M("Gear XP"),M("Lucky chests"),M("Custom Mythic chests")]],
-    ["Governor","shield",[T("threads"),M("Satin"),M("Vision"),T("designs"),M("Guides")]],
+    ["Governor","shield",[T("threads"),M("Satin"),M("Vision"),T("designs"),M("Guides"),M("Master Emblems"),M("Skill books")]],
     ["Town","flask",[M("Truegold"),M("Tempered TG"),M("TG Dust"),M("Gold")]]];
   const ALL=GROUPS.flatMap(g=>g[2]), val=it=>num(it[1]()[it[2]]);
   const ch=it=>{ const p=prev[it[3]]; if(p==null) return '<span class="faint">—</span>'; const d=val(it)-num(p); return d>0?`<span class="ok">▲ ${fmt(d)}</span>`:d<0?`<span class="bad">▼ ${fmt(-d)}</span>`:'<span class="faint">same</span>'; };
