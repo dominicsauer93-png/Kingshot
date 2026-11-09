@@ -1678,7 +1678,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1714,14 +1714,14 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Pets",
-      "Base": "Troops",
+      "Gear": "Charms",
+      "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
-      "Shop": "Free shops",
-      "Governor": "Masters",
-      "Progress": "Overview",
-      "Town": "Resources"
+      "Heroes": "Formations",
+      "Shop": "Paid",
+      "Governor": "Pets",
+      "Progress": "Mystic Trials",
+      "Town": "Research"
     },
     "t11Open": {
       "nodes": false,
@@ -1729,24 +1729,24 @@
     },
     "doAll": true,
     "qOpen": {
-      "Bag": false,
-      "HG": false,
+      "Bag": true,
+      "HG": true,
       "Power": true,
-      "Buildings": false,
+      "Buildings": true,
       "Troops": false,
-      "Shards": false,
-      "Masters": false,
-      "Gov": false,
-      "Widgets": false,
-      "Charms": false,
+      "Shards": true,
+      "Masters": true,
+      "Gov": true,
+      "Widgets": true,
+      "Charms": true,
       "T11": false,
       "Mystic": true,
-      "Pets": false
+      "Pets": true
     },
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": true,
+    "heroAll": false,
     "evOpen": true,
     "shSpare": true,
     "petMaxOpen": true,
@@ -1762,19 +1762,10 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "Town",
-    "bvAll": true,
-    "roleSel": "arena",
     "bcMore": true,
-    "bvSkip": {
-      "2026-11": [
-        "Truegold Weekly Card (week 1)",
-        "Truegold Weekly Card (week 2)",
-        "Truegold Weekly Card (week 3)",
-        "Weekly Benefits — Mythic Governor Charm (week 1)",
-        "Weekly Benefits — Mythic Governor Charm (week 2)"
-      ]
-    }
+    "upF": "Governor",
+    "t11More": false,
+    "roleSel": "arena"
   },
   "troopCounts": {
     "inf": {
@@ -3043,6 +3034,46 @@
     },
     {
       "d": "2026-11-06",
+      "v": {
+        "power": 338633161,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 477
+      }
+    },
+    {
+      "d": "2026-11-07",
+      "v": {
+        "power": 338633161,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 38.08,
+        "defWR": 91.68,
+        "p:Building": 9380343,
+        "p:Troop": 182796490,
+        "p:Hero": 33584735,
+        "p:Hero Gear": 14470618,
+        "p:Governor Gear": 9216720,
+        "p:Governor Charm": 12748800,
+        "p:Tech": 28579920,
+        "p:Pet": 22993080,
+        "p:Master": 15955000,
+        "stars": 477
+      }
+    },
+    {
+      "d": "2026-11-08",
       "v": {
         "power": 338633161,
         "leth": 74.3,
