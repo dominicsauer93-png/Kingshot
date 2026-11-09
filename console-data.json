@@ -3725,6 +3725,14 @@
     {
       "d": "2026-11-06",
       "t": "Done: Infantry Charm 3 Lv 6 → 7"
+    },
+    {
+      "d": "2026-11-09",
+      "t": "Alliance Brawl: no shop"
+    },
+    {
+      "d": "2026-11-09",
+      "t": "Merchant Empire: no shop"
     }
   ],
   "bagCheck": {
@@ -3749,7 +3757,9 @@
     }
   },
   "noShop": [
-    "Sanctuary Battle"
+    "Sanctuary Battle",
+    "Alliance Brawl",
+    "Merchant Empire"
   ],
   "research": {
     "battle": {
