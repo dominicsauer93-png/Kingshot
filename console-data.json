@@ -1655,7 +1655,7 @@
     ]
   },
   "ui": {
-    "tab": "Progress",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1776,7 +1776,7 @@
       "xp": 3300,
       "fh": 152,
       "mg": 3,
-      "mith": 7
+      "mith": 8
     },
     "rows": [
       {
@@ -3641,9 +3641,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 3,
-        "2026-11": 2
+        "2026-11": 3
       },
-      "seen": 7
+      "seen": 8
     },
     "threads": {
       "since": "2026-10-26",
