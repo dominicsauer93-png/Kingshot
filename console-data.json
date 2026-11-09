@@ -654,13 +654,19 @@
     }
   ],
   "combat": {
-    "attW": 198,
-    "attL": 322,
-    "defW": 716,
-    "defL": 65,
+    "attW": 205,
+    "attL": 355,
+    "defW": 753,
+    "defL": 67,
     "leth": 74.3,
     "hp": 69.1,
-    "troopStatus": "T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot."
+    "troopStatus": "T9 → T10 transition (this KvK). T11 not unlocked. Attacker record is the weak spot.",
+    "wins": 958,
+    "losses": 422,
+    "scouts": 30,
+    "kills": 11233098,
+    "troopLosses": 3048960,
+    "statsDate": "2026-11-09"
   },
   "resources": [
     {
@@ -3029,8 +3035,8 @@
         "power": 338633161,
         "leth": 74.3,
         "hp": 69.1,
-        "attWR": 38.08,
-        "defWR": 91.68,
+        "attWR": 36.61,
+        "defWR": 91.83,
         "p:Building": 9380343,
         "p:Troop": 182796490,
         "p:Hero": 33584735,
