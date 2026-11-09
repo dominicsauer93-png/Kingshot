@@ -269,7 +269,7 @@ function renderMystic(){
 }
 function openMysticSheet(z){
   openSheet({title:z.k||"Zone",sub:"Your rank is logged by date each time you change it.",build(f){
-    f.appendChild(fld("Zone",{value:z.k,set:v=>z.k=v}));
+    if(z.k==="New zone"||!z.k) f.appendChild(fld("Zone name",{value:"",ph:"e.g. Coliseum",set:v=>z.k=v||"New zone"})); // names are fixed once set
     f.appendChild(fld("Rank",{type:"num",value:z.v,get:()=>z.v,allowEmpty:true,set:v=>{ z.v=v===""?"":String(v); if(v!=="") mysticLogEntry(z); }}));
   },onDelete:()=>{ const i=state.mysticTrials.indexOf(z); if(i>-1) state.mysticTrials.splice(i,1); }});
 }
