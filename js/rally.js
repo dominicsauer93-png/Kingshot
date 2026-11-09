@@ -223,6 +223,37 @@ function mastSkillLine(m){
   const have=S.reduce((t,x,i)=>t+(caps[i]?Math.min(num(x&&x.l),caps[i]):0),0), tot=caps.reduce((t,c)=>t+c,0);
   return "Skills "+[0,1,2,3].map(i=>{ const x=S[i]||{}; return num(x.l)?(skillIsMax(x,skillCap(m.n,i))?"MAX":"Lv"+num(x.l)):"🔒"; }).join(" · ")+(tot?` (${have}/${tot})`:"");
 }
+/* ---------- Master plan: Cassia first, without missing cheap upgrades ----------
+   Each master's own emblems can only go to that master, so spending them never slows Cassia.
+   Universal emblems are shared — using them on someone else delays Cassia by (used ÷ weekly rate) days. */
+const mRes=()=>state.masterRes||(state.masterRes={emblems:0,books:0,rate:""});
+// Emblem cost to reach each class (Lv 10, 20 … 100) and power per class — three tables from the advancement screens
+const M_TAB={a:{em:[8,16,24,32,40,48,56,64,72,80],pw:86400,buff:"+0.6% Attack + Defense"},
+  c:{em:[10,20,30,40,50,60,70,80,90,100],pw:108000,buff:"+0.6% Lethality + Health"},
+  b:{em:[20,40,80,120,160,200,240,280,320,360],pw:144000,buff:"+0.8% Lethality + Health"}};
+const M_TAB_OF={Cassia:"b",Guinevere:"c",Isnor:"c"}; // best guess — others use the 8-step table
+const mTab=m=>M_TAB[m.ctab||M_TAB_OF[m.n]||"a"];
+const mNextCost=m=>{ if(m.lvlCost!==""&&m.lvlCost!=null&&num(m.lvlCost)) return num(m.lvlCost); const i=Math.floor(num(m.l)/10); return i<10?mTab(m).em[i]:0; };
+function mastPlanH(){ const R=mRes(), U=num(R.emblems), rate=num(R.rate), M=state.masters||[], C=M.find(m=>m.n==="Cassia");
+  const days=n=>rate>0?Math.ceil(n/rate*7):null, dTxt=n=>{ const x=days(n); return x==null?"set your weekly rate":x<=1?"about 1 day":`about ${x} days`; };
+  let cas="";
+  if(C){ const cost=mNextCost(C), have=num(C.em)+U, lv=num(C.l);
+    cas=`<div class="mp-c"><div><b>Cassia · Lv ${lv} → ${Math.min(100,lv+10)}</b><span>${cost?`${fmt(cost)} Emblems · +${fmt(mTab(C).pw)} power · you have ${fmt(num(C.em))} own + ${fmt(U)} universal`:"Kindred Soul reached"}</span></div>
+      <em class="${cost&&have>=cost?"ok":cost?"bad":"faint"}">${!cost?"cost?":have>=cost?"ready ✓":`${fmt(cost-have)} short${rate>0?` · ${dTxt(cost-have)}`:""}`}</em></div>`; }
+  const side=M.filter(m=>m.n!=="Cassia"&&num(m.l)<100).sort((a,b)=>mastRank(a)-mastRank(b)).map(m=>{ const cost=mNextCost(m), own=num(m.em), useU=Math.max(0,cost-own), lv=num(m.l);
+    const st=!cost?['faint',"cost?"]:useU===0?['ok',"free — own Emblems cover it"]:useU>U?['bad',`${fmt(useU-U)} short`]:['warn',`uses ${fmt(useU)} universal${rate>0?` · delays Cassia ${dTxt(useU)}`:""}`];
+    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · Lv ${lv} → ${Math.min(100,lv+10)}</b><span>${fmt(cost)} Emblems · +${fmt(mTab(m).pw)} power · ${fmt(own)} own</span></span><span class="dv ${st[0]}" style="font-size:12.5px;white-space:normal;text-align:right;max-width:46%">${st[1]}</span></button>`; }).join("");
+  let left=num(R.books); const bk=M.filter(m=>m.bookNext&&num(m.bookNext.books)).sort((a,b)=>mastRank(a)-mastRank(b)).map(m=>{ const n=num(m.bookNext.books), ok=left>=n; if(ok) left-=n;
+    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · ${esc(m.bookNext.what||"next skill")}</b><span>${fmt(n)} books</span></span><span class="dv ${ok?"ok":"bad"}" style="font-size:12.5px">${ok?"ready ✓":`${fmt(n-left)} short`}</span></button>`; }).join("");
+  return `<div class="card dcard"><div class="dch"><h3>Master plan</h3><button class="link" id="mpRes">Emblems & books ✎</button></div>
+    <div class="mp-pool"><span><b>${fmt(U)}</b> universal Emblems</span><span><b>${rate?fmt(rate):"?"}</b> a week</span><span><b>${fmt(num(R.books))}</b> skill books</span></div>
+    ${cas}<p class="fmrow">Other masters' levels <span class="faint">· own Emblems never slow Cassia</span></p>${side}
+    ${bk?`<p class="fmrow">Skill books <span class="faint">· best master first</span></p>${bk}`:""}
+    <p class="dnote">Tap a master to set its own Emblems, next level cost and next book step.</p></div>`; }
+function openMastResSheet(){ const R=mRes(); openSheet({title:"Emblems & books",sub:"Shared master materials.",build(f){
+  f.appendChild(fld("Universal Master Emblems",{type:"num",value:R.emblems,get:()=>R.emblems,set:v=>R.emblems=v}));
+  f.appendChild(fld("Universal Emblems you get per week (about)",{type:"num",value:R.rate,get:()=>R.rate,allowEmpty:true,set:v=>R.rate=v,hint:"Used to say how many days a side upgrade delays Cassia."}));
+  f.appendChild(fld("Skill books",{type:"num",value:R.books,get:()=>R.books,set:v=>R.books=v})); }}); }
 function renderMasters(){
   const c=(state.masters||[]).map(m=>({m,info:MASTER_INFO[m.n],lv:num(m.l)})).filter(x=>x.info&&x.lv<100&&(x.info.best===MAIN_TROOP||x.info.best==="All squads")).sort((a,b)=>b.lv-a.lv)[0];
   $("#mastNext").hidden=true; // master #1 in the list is the next one to level
@@ -233,6 +264,7 @@ function renderMasters(){
       <span class="dt"><b>${esc(m.n)}${info?` <span class="faint" style="font-weight:500">· ${esc(info.best)}</span>`:""}</b><span>${esc(mastSkillLine(m))}</span><span class="pbar"><i class="${lv>=100?"ok":""}" style="width:${Math.min(100,lv)}%"></i></span></span>
       <span class="dv">${lv}<small>/ 100</small></span></button>`; }).join("");
   bindAll($("#mastBody"),".vcard",b=>openMastSheet(state.masters[+b.dataset.i]));
+  const mp=$("#mastPlan"); if(mp){ mp.innerHTML=mastPlanH(); on("mpRes",openMastResSheet); mp.querySelectorAll(".mp-r").forEach(b=>b.onclick=()=>{ const m=state.masters.find(x=>x.n===b.dataset.n); if(m) openMastSheet(m); }); }
   on("addMast",()=>{ const m={n:"New master "+(state.masters.length+1),l:"0",note:""}; state.masters.push(m); afterEdit(); openMastSheet(m); });
 }
 function openMastSheet(m){
@@ -240,6 +272,10 @@ function openMastSheet(m){
   openSheet({title:m.n,sub:info?info.title:"Custom master",build(f){
     if(!info) f.appendChild(fld("Name",{value:m.n,set:v=>m.n=v}));
     f.appendChild(fld("Affinity level (0–100)",{type:"num",value:m.l,get:()=>m.l,set:v=>m.l=String(v),min:0,max:100}));
+    f.appendChild(frow(fld(`${m.n}'s own Emblems`,{type:"num",value:num(m.em),get:()=>m.em,set:v=>m.em=v}),fld("Emblems for next level",{type:"num",value:m.lvlCost,get:()=>m.lvlCost,allowEmpty:true,ph:String(mNextCost(Object.assign({},m,{lvlCost:""}))),set:v=>m.lvlCost=v,hint:"Leave empty to use the cost table."})));
+    f.appendChild(fld("Cost table",{type:"select",value:m.ctab||M_TAB_OF[m.n]||"a",options:[["a","8 → 80 Emblems · 86,400 power · Attack + Defense"],["c","10 → 100 · 108,000 power · Lethality + Health"],["b","20 → 360 · 144,000 power · Lethality + Health"]],set:v=>m.ctab=v}));
+    const bn=m.bookNext||(m.bookNext={what:"",books:""});
+    f.appendChild(frow(fld("Next skill step",{value:bn.what,ph:"e.g. Skill 3 4 → 5",set:v=>bn.what=v}),fld("Books for it",{type:"num",value:bn.books,get:()=>bn.books,allowEmpty:true,set:v=>bn.books=v})));
     const how=infoBox(); f.appendChild(how);
     const sk=document.createElement("div"); sk.className="stack"; f.appendChild(sk);
     const skOf=i=>{ if(!Array.isArray(m.skills)) m.skills=[{l:0},{l:0},{l:0},{l:0}]; return m.skills[i]||(m.skills[i]={l:0}); };

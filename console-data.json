@@ -919,7 +919,13 @@
           "l": 10,
           "t": "g"
         }
-      ]
+      ],
+      "em": 15,
+      "lvlCost": "",
+      "bookNext": {
+        "what": "Skill 2 Good Steward 4 → 5",
+        "books": 3200
+      }
     },
     {
       "n": "Valora",
@@ -943,7 +949,13 @@
           "l": 9,
           "t": "c"
         }
-      ]
+      ],
+      "em": 12,
+      "lvlCost": "",
+      "bookNext": {
+        "what": "Skill 3 4 → 5",
+        "books": 4000
+      }
     },
     {
       "n": "Roman",
@@ -966,7 +978,9 @@
           "l": 7,
           "t": "c"
         }
-      ]
+      ],
+      "em": 17,
+      "lvlCost": ""
     },
     {
       "n": "Wilson",
@@ -989,7 +1003,9 @@
           "l": 4,
           "t": "g"
         }
-      ]
+      ],
+      "em": 4,
+      "lvlCost": ""
     },
     {
       "n": "Cassia",
@@ -1012,7 +1028,13 @@
           "l": 0,
           "t": "c"
         }
-      ]
+      ],
+      "em": 20,
+      "lvlCost": "",
+      "bookNext": {
+        "what": "Skill 1 Recruiter 6 → 7",
+        "books": 1800
+      }
     },
     {
       "n": "Guinevere",
@@ -1035,7 +1057,9 @@
           "l": 3,
           "t": "c"
         }
-      ]
+      ],
+      "em": 4,
+      "lvlCost": ""
     },
     {
       "n": "Aena",
@@ -1058,12 +1082,14 @@
           "l": 0,
           "t": "g"
         }
-      ]
+      ],
+      "em": 4,
+      "lvlCost": ""
     },
     {
       "n": "Isnor",
       "l": "40",
-      "note": "Best for Archers · Attack research\nKindred Soul: +15% Lethality + Health\nNEXT: level 20 → 30 (needs Emblems)\nSkills: Combat skill 2 still locked",
+      "note": "Best for Archers · Attack research\nKindred Soul: +15% Lethality + Health\nNEXT: level 40 → 50 (needs Emblems)\nSkills: Combat skill 2 still locked",
       "skills": [
         {
           "l": 5,
@@ -1081,7 +1107,9 @@
           "l": 0,
           "t": "g"
         }
-      ]
+      ],
+      "em": 0,
+      "lvlCost": ""
     }
   ],
   "dustSrc": [
@@ -4386,5 +4414,12 @@
     }
   },
   "pgPending": [],
-  "webMonthly": true
+  "webMonthly": true,
+  "masterRes": {
+    "emblems": 47,
+    "books": 3572,
+    "rate": "",
+    "seen": "2026-11-09",
+    "note": "1 Catherine Emblem in bag (master not unlocked/tracked yet)"
+  }
 }
