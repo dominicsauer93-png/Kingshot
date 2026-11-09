@@ -1582,17 +1582,12 @@
     ],
     "plan": [
       {
-        "name": "Inf 1",
-        "to": 19,
-        "gain": 2.55
-      },
-      {
-        "name": "Cav 1",
+        "name": "Cav 2",
         "to": 15,
         "gain": 2.55
       }
     ],
-    "planDate": "2026-10-23"
+    "planDate": "2026-11-09"
   },
   "forecast": {
     "log": []
@@ -3168,7 +3163,7 @@
       "date": "2026-10-05",
       "every": 0,
       "time": "",
-      "note": "Gov Gear Inf 1 Gold 0★→1★ (225k pts), speedups (also Armament T1), pet advances, pet combat skills on",
+      "note": "Gov Gear Inf 1 Gold 0★→1★ (225k pts), speedups (also Armament T1), pet advances, pet combat skills on\nNEXT Gov Gear day: Cav 2 necklace Gold 0★ → 1★ (23,000 Satin · 230 Threads · 40 Vision, +61,200 power) — saved for the points",
       "len": 7
     },
     {
