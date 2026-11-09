@@ -1688,7 +1688,7 @@
       "Heroes": "Hero Gear",
       "Shop": "Free shops",
       "Governor": "Masters",
-      "Progress": "Mystic Trials",
+      "Progress": "Overview",
       "Town": "Buildings"
     },
     "t11Open": {
@@ -1697,19 +1697,19 @@
     },
     "doAll": true,
     "qOpen": {
-      "Bag": true,
-      "HG": true,
+      "Bag": false,
+      "HG": false,
       "Power": true,
-      "Buildings": true,
+      "Buildings": false,
       "Troops": false,
       "Shards": false,
-      "Masters": true,
-      "Gov": true,
-      "Widgets": true,
+      "Masters": false,
+      "Gov": false,
+      "Widgets": false,
       "Charms": false,
       "T11": false,
       "Mystic": true,
-      "Pets": true
+      "Pets": false
     },
     "tierAll": false,
     "progKey": "power",
