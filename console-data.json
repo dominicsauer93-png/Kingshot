@@ -4476,7 +4476,7 @@
       "inf": 4,
       "cav": 6,
       "arc": 90,
-      "note": "Bear join — only the first hero's skill counts"
+      "note": ""
     },
     {
       "n": "Bear join · KrJ",
@@ -4488,7 +4488,7 @@
       "inf": 4,
       "cav": 6,
       "arc": 90,
-      "note": "Bear join — only the first hero's skill counts"
+      "note": ""
     },
     {
       "n": "Bear join · ARP",
@@ -4500,7 +4500,7 @@
       "inf": 4,
       "cav": 6,
       "arc": 90,
-      "note": "Bear join — only the first hero's skill counts"
+      "note": ""
     },
     {
       "n": "Bear join · Dav",
@@ -4512,7 +4512,7 @@
       "inf": 4,
       "cav": 6,
       "arc": 90,
-      "note": "Bear join — only the first hero's skill counts"
+      "note": ""
     },
     {
       "n": "Bear join · YAY",
@@ -4524,7 +4524,7 @@
       "inf": 4,
       "cav": 6,
       "arc": 90,
-      "note": "Bear join — only the first hero's skill counts"
+      "note": ""
     }
   ]
 }
