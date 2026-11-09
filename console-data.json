@@ -4365,50 +4365,31 @@
   "webOnceDone": true,
   "webOnceMonth": "2026-11",
   "webMonth": "2026-11",
-  "pgain": {},
-  "pgPending": [
-    {
-      "k": "bld",
-      "a": "Building",
-      "base": 9380343,
-      "d": "2026-11-01"
+  "pgain": {
+    "bld": {
+      "learned": [
+        135200,
+        135200
+      ]
     },
-    {
-      "k": "bld",
-      "a": "Building",
-      "base": 9380343,
-      "d": "2026-11-06"
+    "fh": {
+      "learned": [
+        457888,
+        457888
+      ]
     },
-    {
-      "k": "fh",
-      "a": "Hero Gear",
-      "base": 14470618,
-      "d": "2026-11-05"
+    "gov": {
+      "learned": [
+        122400,
+        122400
+      ]
     },
-    {
-      "k": "fh",
-      "a": "Hero Gear",
-      "base": 14470618,
-      "d": "2026-11-05"
-    },
-    {
-      "k": "gov",
-      "a": "Governor Gear",
-      "base": 9216720,
-      "d": "2026-11-06"
-    },
-    {
-      "k": "gov",
-      "a": "Governor Gear",
-      "base": 9216720,
-      "d": "2026-11-07"
-    },
-    {
-      "k": "charm",
-      "a": "Governor Charm",
-      "base": 12748800,
-      "d": "2026-11-07"
+    "charm": {
+      "learned": [
+        272800
+      ]
     }
-  ],
+  },
+  "pgPending": [],
   "webMonthly": true
 }
