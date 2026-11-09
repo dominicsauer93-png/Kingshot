@@ -4452,5 +4452,79 @@
     "rate": "",
     "seen": "2026-11-09",
     "note": "1 Catherine Emblem in bag (master not unlocked/tracked yet)"
-  }
+  },
+  "formations": [
+    {
+      "n": "Bear lead (LED)",
+      "heroes": [
+        "Amadeus",
+        "Yang",
+        "Ava"
+      ],
+      "inf": 4,
+      "cav": 4,
+      "arc": 92,
+      "note": "Leads your own Bear rally — don't use LED to join"
+    },
+    {
+      "n": "Bear join · QUD",
+      "heroes": [
+        "Vivian",
+        "Long Fei",
+        "Sophia"
+      ],
+      "inf": 4,
+      "cav": 6,
+      "arc": 90,
+      "note": "Bear join — only the first hero's skill counts"
+    },
+    {
+      "n": "Bear join · KrJ",
+      "heroes": [
+        "Chenko",
+        "Diana",
+        "Howard"
+      ],
+      "inf": 4,
+      "cav": 6,
+      "arc": 90,
+      "note": "Bear join — only the first hero's skill counts"
+    },
+    {
+      "n": "Bear join · ARP",
+      "heroes": [
+        "Yeonwoo",
+        "Fahd",
+        "Eric"
+      ],
+      "inf": 4,
+      "cav": 6,
+      "arc": 90,
+      "note": "Bear join — only the first hero's skill counts"
+    },
+    {
+      "n": "Bear join · Dav",
+      "heroes": [
+        "Amane",
+        "Gordon",
+        "Alcar"
+      ],
+      "inf": 4,
+      "cav": 6,
+      "arc": 90,
+      "note": "Bear join — only the first hero's skill counts"
+    },
+    {
+      "n": "Bear join · YAY",
+      "heroes": [
+        "Margot",
+        "Marlin",
+        "Zoe"
+      ],
+      "inf": 4,
+      "cav": 6,
+      "arc": 90,
+      "note": "Bear join — only the first hero's skill counts"
+    }
+  ]
 }

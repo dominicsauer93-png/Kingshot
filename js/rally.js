@@ -23,7 +23,7 @@ function renderRally(){
   pl.innerHTML=(behind.length?behind.map(({p,i})=>prow(p,i)).join(""):'<p class="dnote">Ahead of the benchmark everywhere ✓</p>')+
     (ahead.length?`<details class="dfold"><summary>Ahead in ${ahead.length} more ›</summary>${ahead.map(({p,i})=>prow(p,i)).join("")}</details>`:"");
   bindAll(pl,".lrow",b=>openPillarSheet(state.pillars[+b.dataset.i]));
-  renderFocusHeroes(); renderWeekly(); renderProgress(); renderHeroCards(); renderHeroRoles(); renderShards(); renderMasters(); renderMystic();
+  renderFocusHeroes(); renderWeekly(); renderProgress(); renderHeroCards(); renderHeroRoles(); renderMyForms(); renderShards(); renderMasters(); renderMystic();
 }
 /* ---------- Focus heroes: shards, widgets and the next step for each focus hero, in one place ---------- */
 function renderFocusHeroes(){ const box=$("#focusHeroes"); if(!box) return;
@@ -77,6 +77,23 @@ function heroRoster(){ // your heroes = the Gold Hero Shards list
   const m={}; (state.goldShards||[]).forEach(r=>{ const k=heroKey(r.n); if(TIER_OF[k]) m[k]={n:TIER_OF[k].name,pos:hasStars(r)?num(r.pos):0,rally:!!r.rally,r}; });
   return m;
 }
+/* ---------- My formations: your own saved lineups + troop mix ---------- */
+const FORM_SEED=[];
+function renderMyForms(){ const box=$("#myForms"); if(!box) return; if(!state.formations) state.formations=JSON.parse(JSON.stringify(FORM_SEED));
+  const F=state.formations, bar=f=>{ const t=Math.max(1,num(f.inf)+num(f.cav)+num(f.arc)); return `<span class="fmix"><i class="mi" style="width:${num(f.inf)/t*100}%"></i><i class="mc" style="width:${num(f.cav)/t*100}%"></i><i class="ma" style="width:${num(f.arc)/t*100}%"></i></span>`; };
+  box.innerHTML=`<div class="card dcard">${F.map((f,i)=>`<button class="drow fmrow2" data-i="${i}"><span class="dt"><b>${esc(f.n||"Formation")}</b><span>${f.heroes.filter(Boolean).map(esc).join(" · ")||'<span class="faint">no heroes yet</span>'}</span>${f.note?`<small class="faint">${esc(f.note)}</small>`:""}</span><span class="fmr">${bar(f)}<small>${num(f.inf)}/${num(f.cav)}/${num(f.arc)}</small></span></button>`).join("")||'<p class="dnote">No formations yet.</p>'}
+    <button class="drow fmrow2" id="fmAdd"><span class="dt"><span class="link">+ Add formation</span></span></button><p class="dnote">Troop mix = Infantry / Cavalry / Archers %.</p></div>`;
+  box.querySelectorAll(".fmrow2[data-i]").forEach(b=>b.onclick=()=>openFormSheet(F[+b.dataset.i]));
+  on("fmAdd",()=>{ const f={n:"New formation",heroes:["","",""],inf:10,cav:10,arc:80,note:""}; F.push(f); afterEdit(); openFormSheet(f); }); }
+function openFormSheet(f){ const mine=[...new Set([...(state.goldShards||[]).map(r=>r.n),...Object.values(TIER_OF).map(t=>t.name),...f.heroes])].filter(Boolean).sort(), opts=[["","— none —"]].concat(mine.map(n=>[n,n+((state.heroInfo&&state.heroInfo[n]&&state.heroInfo[n].type)?` (${state.heroInfo[n].type})`:"")]));
+  openSheet({title:f.n||"Formation",sub:"Your lineup and troop mix.",build(fm){
+    fm.appendChild(fld("Name",{value:f.n,set:v=>f.n=v,ph:"e.g. Bear lead"}));
+    [0,1,2].map(j=>fm.appendChild(fld(j?`Hero ${j+1}`:"Hero 1 — the one whose skill counts when joining",{type:"select",value:f.heroes[j]||"",options:opts,set:v=>f.heroes[j]=v})));
+    const inf=infoBox(), tot=()=>num(f.inf)+num(f.cav)+num(f.arc);
+    fm.appendChild(frow(fld("Infantry %",{type:"num",value:f.inf,get:()=>f.inf,set:v=>f.inf=v,min:0,max:100}),fld("Cavalry %",{type:"num",value:f.cav,get:()=>f.cav,set:v=>f.cav=v,min:0,max:100}),fld("Archers %",{type:"num",value:f.arc,get:()=>f.arc,set:v=>f.arc=v,min:0,max:100})));
+    fm.appendChild(inf); fm.appendChild(fld("Notes",{type:"area",rows:3,value:f.note,set:v=>f.note=v,ph:"e.g. best damage 1.2M on 8 Nov"}));
+    const rf=()=>{ inf.innerHTML=tot()===100?'<span class="ok">Adds up to 100% ✓</span>':`Adds up to <b class="bad">${tot()}%</b> — should be 100%`; }; rf(); return rf; },
+    onDelete:()=>{ const i=state.formations.indexOf(f); if(i>-1) state.formations.splice(i,1); afterEdit(); }, delLabel:"Delete formation"}); }
 function renderHeroRoles(){
   const mine=heroRoster(), gen8=HERO_GEN8.map(heroKey);
   const R=HERO_ROLES.find(([r])=>r===state.ui.roleSel)||HERO_ROLES[0], [role,label]=R;
