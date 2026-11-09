@@ -480,7 +480,7 @@
     }
   ],
   "weekly": {
-    "week": "2026-11-02",
+    "week": "2026-11-09",
     "items": [
       {
         "t": "Bear Hunt — join every rally",
@@ -1620,7 +1620,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1656,14 +1656,14 @@
     "sub": {
       "Rally": "Heroes",
       "Data": "Update all",
-      "Gear": "Charms",
-      "Base": "T11",
+      "Gear": "Pets",
+      "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Formations",
+      "Heroes": "Hero Gear",
       "Shop": "Paid",
-      "Governor": "Pets",
-      "Progress": "Mystic Trials",
-      "Town": "Research"
+      "Governor": "Masters",
+      "Progress": "Overview",
+      "Town": "Buildings"
     },
     "t11Open": {
       "nodes": false,
@@ -1676,11 +1676,11 @@
       "Power": true,
       "Buildings": true,
       "Troops": false,
-      "Shards": true,
+      "Shards": false,
       "Masters": true,
       "Gov": true,
       "Widgets": true,
-      "Charms": true,
+      "Charms": false,
       "T11": false,
       "Mystic": true,
       "Pets": true
@@ -1688,7 +1688,7 @@
     "tierAll": false,
     "progKey": "power",
     "roleOpen": true,
-    "heroAll": false,
+    "heroAll": true,
     "evOpen": true,
     "shSpare": true,
     "petMaxOpen": true,
@@ -1704,10 +1704,19 @@
     ],
     "bvNow": true,
     "freshAll": true,
+    "upF": "Town",
+    "bvAll": true,
+    "roleSel": "arena",
     "bcMore": true,
-    "upF": "Governor",
-    "t11More": false,
-    "roleSel": "arena"
+    "bvSkip": {
+      "2026-11": [
+        "Truegold Weekly Card (week 1)",
+        "Truegold Weekly Card (week 2)",
+        "Truegold Weekly Card (week 3)",
+        "Weekly Benefits — Mythic Governor Charm (week 1)",
+        "Weekly Benefits — Mythic Governor Charm (week 2)"
+      ]
+    }
   },
   "troopCounts": {
     "inf": {
