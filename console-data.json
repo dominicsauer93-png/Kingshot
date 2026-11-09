@@ -1678,7 +1678,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1765,7 +1765,7 @@
     "bcMore": true,
     "upF": "Governor",
     "t11More": false,
-    "roleSel": "arena"
+    "roleSel": "gar"
   },
   "troopCounts": {
     "inf": {
