@@ -3148,7 +3148,7 @@
       "date": "2026-11-09",
       "every": 14,
       "time": "",
-      "note": "12–13 Oct (UTC) confirmed. Small stuff only — save big speedups for KvK. Rewards: Mythic Gear, gems, keys.",
+      "note": "No shop — ranking rewards instead (top 1,000 with 4,000+ points).\nHonor Ranking rewards: 1st 10 General shards · 50K gems · 20× each 1h research/building/training speedups\n2nd 6 shards · 35K · 18 each | 3rd 4 · 25K · 16 each | 4–5: 3 · 16K · 14 each | 6–10: 1 shard · 10K · 12 each\nRank 22 (9 Nov): 4,000 gems · 8 each speedups — top 10 adds a General shard + 6K more gems\nSmall stuff only — save big speedups for KvK.",
       "len": 2
     },
     {
@@ -3759,7 +3759,8 @@
   "noShop": [
     "Sanctuary Battle",
     "Alliance Brawl",
-    "Merchant Empire"
+    "Merchant Empire",
+    "Armament Competition"
   ],
   "research": {
     "battle": {
