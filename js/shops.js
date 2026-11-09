@@ -138,7 +138,7 @@ const EVENT_SHOPS=[
   [/officer project/i,"Officer Project"],[/fishing/i,"Fishing Tournament"],[/sanctuary/i,"Sanctuary Battle"],[/tri-alliance/i,"Tidal Shop"],
   [/alliance mobilization/i,"Alliance Mobilization"],[/armament/i,"Armament Competition"],[/strongest governor/i,"Strongest Governor"],
   [/merchant empire/i,"Merchant Empire"],[/alliance brawl/i,"Alliance Brawl"],[/golden glaives/i,"Golden Glaives"],[/flamedragon|dragon banquet/i,"Flamedragon Tyrant"],
-  [/halloween/i,"Halloween Party"],[/mystic trial/i,"Mystic Trials"],[/finder'?s fortune/i,"Finder's Fortune"]];
+  [/halloween/i,"Halloween Party"],[/mystic trial/i,"Trial Shop"],[/finder'?s fortune/i,"Finder's Fortune"]];
 const evShopSaved=name=>SHOP_DB.some(x=>x.n===name);
 const STALE_DAYS=45; // shop / deal data older than this gets a "check" marker
 const staleDays=d=>d?Math.round((new Date(gameToday())-new Date(d))/864e5):0;
