@@ -1570,10 +1570,10 @@
     }
   ],
   "tg": {
-    "have": 451,
-    "need": 2766,
-    "ttgHave": 11,
-    "ttgNeed": 334
+    "have": 88,
+    "need": 2646,
+    "ttgHave": 1,
+    "ttgNeed": 294
   },
   "govGear": {
     "targetIdx": 18,
@@ -1678,7 +1678,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Upgrade",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1721,7 +1721,7 @@
       "Shop": "Free shops",
       "Governor": "Masters",
       "Progress": "Overview",
-      "Town": "Buildings"
+      "Town": "Resources"
     },
     "t11Open": {
       "nodes": false,
@@ -3139,7 +3139,7 @@
       "n": "Town Center",
       "stepIdx": 4,
       "note": "",
-      "d": false
+      "d": true
     },
     {
       "n": "Range",
