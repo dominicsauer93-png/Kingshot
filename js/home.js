@@ -4,7 +4,7 @@
    ===================================================================== */
 // "have / next step" tile — the small step up front, the end goal as a faint line
 const fmtK=v=>v>=1e4&&v<1e6?fmt(Math.round(v/1e3))+"K":fmtBig(v); // 172,000 → 172K so tiles fit on a phone
-function stepTileH(id,label,h,v,goal,f){ f=f||fmtK; return tileH({id,label,value:f(h),sub:(!v?"not needed next":`next ${f(v)} · `+(v>h?`<span class="bad">${f(v-h)} short</span>`:`<span class="ok">enough ✓</span>`))+(goal?`<br><span class="faint">end goal ${f(goal)}</span>`:""),p:v?pc(h,v):null,cls:v&&h>=v?"ok":""}); }
+function stepTileH(id,label,h,v,goal,f){ f=f||fmtK; return tileH({id,label,value:f(h),sub:(!v?"not needed next":`next ${f(v)} · `+(v>h?`<span class="warn">${f(v-h)} short</span>`:`<span class="ok">enough ✓</span>`))+(goal?`<br><span class="faint">end goal ${f(goal)}</span>`:""),p:v?pc(h,v):null,cls:v&&h>=v?"ok":""}); }
 function tileH({id,label,value,sub,p,cls,txt,color,go,clamp}){
   return `<button class="tile" ${id?`id="${id}"`:""} ${go?`data-go="${esc(go)}"`:""}><span class="l"><span>${label}</span></span><span class="v ${txt?"txt":""} ${clamp?"clamp":""}" ${color?`style="color:${color}"`:""}>${value}</span>${sub!=null?`<span class="s">${sub}</span>`:""}${p!=null?barH(p,cls||""):""}</button>`;
 }

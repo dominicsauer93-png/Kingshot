@@ -256,12 +256,12 @@ function mastPlanH(){ const R=mRes(), U=num(R.emblems), rate=num(R.rate), M=stat
   let cas="";
   if(C){ const cost=mNextCost(C), have=num(C.em)+U, lv=num(C.l);
     cas=`<div class="mp-c"><div><b>Cassia · Lv ${lv} → ${Math.min(100,lv+10)}</b><span>${cost?`${fmt(cost)} Emblems · +${fmt(mTab(C).pw)} power · you have ${fmt(num(C.em))} own + ${fmt(U)} universal`:"Kindred Soul reached"}</span></div>
-      <em class="${cost&&have>=cost?"ok":cost?"bad":"faint"}">${!cost?"cost?":have>=cost?"ready ✓":`${fmt(cost-have)} short${rate>0?` · ${dTxt(cost-have)}`:""}`}</em></div>`; }
+      <em class="${cost&&have>=cost?"ok":cost?"warn":"faint"}">${!cost?"cost?":have>=cost?"ready ✓":`${fmt(cost-have)} short${rate>0?` · ${dTxt(cost-have)}`:""}`}</em></div>`; }
   const side=M.filter(m=>m.n!=="Cassia"&&num(m.l)<100).sort((a,b)=>mastRank(a)-mastRank(b)).map(m=>{ const cost=mNextCost(m), own=num(m.em), useU=Math.max(0,cost-own), lv=num(m.l);
-    const st=!cost?['faint',"cost?"]:useU===0?['ok',"free — own Emblems cover it"]:useU>U?['bad',`${fmt(useU-U)} short`]:['warn',`uses ${fmt(useU)} universal${rate>0?` · delays Cassia ${dTxt(useU)}`:""}`];
+    const st=!cost?['faint',"cost?"]:useU===0?['ok',"free — own Emblems cover it"]:useU>U?['warn',`${fmt(useU-U)} short`]:['warn',`uses ${fmt(useU)} universal${rate>0?` · delays Cassia ${dTxt(useU)}`:""}`];
     return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · Lv ${lv} → ${Math.min(100,lv+10)}</b><span>${fmt(cost)} Emblems · +${fmt(mTab(m).pw)} power · ${fmt(own)} own</span></span><span class="dv ${st[0]}" style="font-size:12.5px;white-space:normal;text-align:right;max-width:46%">${st[1]}</span></button>`; }).join("");
   let left=num(R.books); const bk=M.filter(m=>m.bookNext&&num(m.bookNext.books)).sort((a,b)=>mastRank(a)-mastRank(b)).map(m=>{ const n=num(m.bookNext.books), ok=left>=n; if(ok) left-=n;
-    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · ${esc(m.bookNext.what||"next skill")}</b><span>${fmt(n)} books</span></span><span class="dv ${ok?"ok":"bad"}" style="font-size:12.5px">${ok?"ready ✓":`${fmt(n-left)} short`}</span></button>`; }).join("");
+    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · ${esc(m.bookNext.what||"next skill")}</b><span>${fmt(n)} books</span></span><span class="dv ${ok?"ok":"warn"}" style="font-size:12.5px">${ok?"ready ✓":`${fmt(n-left)} short`}</span></button>`; }).join("");
   return `<div class="card dcard"><div class="dch"><h3>Master plan</h3><button class="link" id="mpRes">Emblems & books ✎</button></div>
     <div class="mp-pool"><span><b>${fmt(U)}</b> universal Emblems</span><span><b>${rate?fmt(rate):"?"}</b> a week</span><span><b>${fmt(num(R.books))}</b> skill books</span></div>
     ${cas}<p class="fmrow">Other masters' levels <span class="faint">· own Emblems never slow Cassia</span></p>${side}

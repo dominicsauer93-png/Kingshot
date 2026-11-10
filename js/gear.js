@@ -75,7 +75,7 @@ function renderHeroGear(){
   else top.forEach(r=>{ const st=hgState(r); if(st.req) Object.entries(st.req).forEach(([k,v])=>n3[k]+=v); });
   const got=hgMonthGot(0);
   const nTile=(k,label,extra)=>{ const h=num(hg.have[k]), v=n3[k];
-    return tileH({id:"hgm_"+k,label,value:fmt(h),sub:v?(v>h?`<span class="bad">${fmtK(v-h)} short</span>`:`<span class="ok">enough ✓</span>`):(extra||"not needed"),p:v?pc(h,v):null,cls:v&&h>=v?"ok":""}); };
+    return tileH({id:"hgm_"+k,label,value:fmt(h),sub:v?(v>h?`<span class="warn">${fmtK(v-h)} short</span>`:`<span class="ok">enough ✓</span>`):(extra||"not needed"),p:v?pc(h,v):null,cls:v&&h>=v?"ok":""}); };
   $("#hgMats").innerHTML=nTile("mg","Mythic Gear")+nTile("mith","Mithril")+nTile("fh","Hammers",`+${fmt(got)} this mo.`);
   $$("#hgMats .tile").forEach(t=>t.onclick=openHgMatsSheet);
   const host=$("#hgBody"); host.innerHTML="";
@@ -86,7 +86,7 @@ function renderHeroGear(){
   const stat=r=>{ const st=hgState(r); if(!st.req) return `<span class="faint">XP first</span>`; // walk the bag down the list so #2 and #3 see what #1 used
     const miss=Object.entries(st.req).filter(([k,v])=>v>bag[k]).map(([k,v])=>`${fmt(v-bag[k])} ${HG_MAT[k][0]}`);
     Object.entries(st.req).forEach(([k,v])=>bag[k]-=v);
-    return miss.length?`<span class="bad">short ${miss.join(" + ")}</span>`:`<span class="ok">ready ✓</span>`; };
+    return miss.length?`<span class="warn">short ${miss.join(" + ")}</span>`:`<span class="ok">ready ✓</span>`; };
   d.innerHTML=(prio.length?`<b>Next up</b>`+top.map((r,i)=>`<br><span class="hgnum${prio.now.has(r)?" go":""}">${i+1}</span> ${esc(r.type)} <b>${esc(slotName(r.slot))}</b> <span class="faint">${hgState(r).cls==="s-block"?"mastery":"imbue"}</span> · ${stat(r)}`).join(""):"<b>All pieces fully imbued ✓</b>")+
     (lack?`<br><span class="faint" style="font-size:13.5px">Get ${MATN[lack]} from ${SRC[lack]}.</span>`:"");
   if(plan.length){ const pb={fh:num(hg.have.fh),mith:num(hg.have.mith),mg:num(hg.have.mg)};
@@ -150,7 +150,7 @@ function renderWidgets(){
   const L=w.rows.slice().sort((a,c)=>(!!c.rally)-(!!a.rally)||num(a.lvl)-num(c.lvl));
   b.className="card dcard mt"; b.removeAttribute("style");
   b.innerHTML=`<div class="dch"><h3>Your heroes</h3><span class="faint" style="font-size:12.5px">rally heroes first · lowest first</span></div>`+L.map(r=>{ const lvl=Math.max(0,Math.min(10,num(r.lvl))), have=num(r.have), next=widNext(lvl);
-    const st=lvl>=10?`<span class="ok">MAX ✓</span> · ${fmt(have)} spare`:have>=next?`<span class="ok">ready</span> · ${fmt(have)} / ${fmt(next)}`:`<span class="bad">${fmt(next-have)} short</span> · ${fmt(have)} / ${fmt(next)}`;
+    const st=lvl>=10?`<span class="ok">MAX ✓</span> · ${fmt(have)} spare`:have>=next?`<span class="ok">ready</span> · ${fmt(have)} / ${fmt(next)}`:`<span class="warn">${fmt(next-have)} short</span> · ${fmt(have)} / ${fmt(next)}`;
     return `<button class="drow vcard wrow${r.rally?"":" dim"}" data-i="${w.rows.indexOf(r)}"><span class="dt"><b>${esc(r.hero||"Hero")}${r.rally?` <span class="faint">${icoI("sword")}</span>`:""}</b><span>${st}</span><span class="pips" aria-hidden="true">${Array.from({length:10},(_,i)=>`<span class="${i<lvl?"on":""}"></span>`).join("")}</span></span><span class="dv">${lvl}<small>/ 10</small></span></button>`; }).join("");
   bindAll(b,".vcard",x=>openWidSheet(w.rows[+x.dataset.i]));
   on("addWid",()=>{ const r={hero:"",lvl:0,have:0}; w.rows.push(r); afterEdit(); openWidSheet(r); });
@@ -182,7 +182,7 @@ function renderCharms(){
   const bag={g:gh,d:dh}, idx=r=>c.rows.filter(x=>x.type===r.type).indexOf(r)+1;
   const nb=$("#charmNext"); nb.innerHTML=next.length?`<b>Next up</b>`+next.map((r,i)=>{ const L=num(r.lvl), k=CHARM_COSTS[L], miss=[];
       if(k[1]>bag.d) miss.push(`${fmt(k[1]-Math.max(0,bag.d))} Designs`); if(k[0]>bag.g) miss.push(`${fmt(k[0]-Math.max(0,bag.g))} Guides`); bag.g-=k[0]; bag.d-=k[1];
-      return `<br><span class="hgnum${miss.length?"":" go"}">${i+1}</span> ${esc(r.type)} <b>Charm ${idx(r)}</b> <span class="faint">Lv ${L} → ${L+1}</span> · ${miss.length?`<span class="bad">short ${miss.join(" + ")}</span>`:'<span class="ok">ready ✓</span>'}`; }).join("")+
+      return `<br><span class="hgnum${miss.length?"":" go"}">${i+1}</span> ${esc(r.type)} <b>Charm ${idx(r)}</b> <span class="faint">Lv ${L} → ${L+1}</span> · ${miss.length?`<span class="warn">short ${miss.join(" + ")}</span>`:'<span class="ok">ready ✓</span>'}`; }).join("")+
     `<br><span class="faint" style="font-size:13.5px">Tiles show what these 3 need. The end goal gets done one level at a time.</span>`:"<b>All charms at target ✓</b>";
   if(cpl.length){ const bag={g:gh,d:dh};
     nb.innerHTML=`<b>Optimiser plan</b> <span class="faint">${c.planDate?"· "+esc(fd(c.planDate)):""}</span>`+cpl.map((x,i)=>{ let what,cost;
@@ -307,7 +307,7 @@ function renderShards(){
         <span class="sh2-who"><span class="sh2-name">${esc(r.n||"Hero")}${r.rally?" "+icoI("sword"):""}</span>
         <span class="sh2-star">${st?`<span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}`:'<span class="faint">tap to set stars</span>'} <span class="sh2-use">· Use ${heroUse(r.n)}</span></span></span></button>
       <label class="sh2-have">Have <input inputmode="numeric" data-i="${i}" value="${h}" aria-label="${esc(r.n)} shards in hand"></label>
-      <span class="sh2-out">${maxed?'<span class="ok">5★ max ✓</span>':!st?"":ready?`<button class="didit sh2-up" data-i="${i}">Upgrade → ${esc(starLabel(p+1))}</button>`:`<span class="bad">${fmt(nx-h)} short</span> of ${fmt(nx)}`}</span>
+      <span class="sh2-out">${maxed?'<span class="ok">5★ max ✓</span>':!st?"":ready?`<button class="didit sh2-up" data-i="${i}">Upgrade → ${esc(starLabel(p+1))}</button>`:`<span class="warn">${fmt(nx-h)} short</span> of ${fmt(nx)}`}</span>
       ${maxed||!st?"":barH(pc(h,nx),ready?"ok":"")}</div>`; };
   const grp=(t,sub)=>`<div class="shgrp"><span>${t}</span><small>${sub}</small></div>`;
   b.innerHTML=(focus.length?grp("Focus now","")+focus.map(row).join(""):"")+
@@ -347,7 +347,7 @@ function openShardSheet(r){
     const inf=infoBox(); f.appendChild(inf);
     const rf=()=>{ if(!hasStars(r)){ inf.innerHTML=`Set the star tier and the shards needed are worked out for you. (Old number: <b>${fmt(num(r.need))}</b>)`; return; }
       const n=shardNeed(r), h=num(r.have), p=num(r.pos), nx=p<SHARD_MAX?SHARD_LEAF[p]:0;
-      inf.innerHTML=p>=SHARD_MAX?"5★ Max ✓":`Next step (${esc(starLabel(p+1))}): <b>${nx}</b> shards<br>To ${esc(starLabel(r.tgt==null?SHARD_MAX:num(r.tgt)))}: <b>${fmt(n)}</b> shards · ${h>=n?'<span class="ok">you have enough ✓</span>':`<span class="bad">${fmt(n-h)} short</span>`}`; };
+      inf.innerHTML=p>=SHARD_MAX?"5★ Max ✓":`Next step (${esc(starLabel(p+1))}): <b>${nx}</b> shards<br>To ${esc(starLabel(r.tgt==null?SHARD_MAX:num(r.tgt)))}: <b>${fmt(n)}</b> shards · ${h>=n?'<span class="ok">you have enough ✓</span>':`<span class="warn">${fmt(n-h)} short</span>`}`; };
     rf(); return rf;
   },onDelete:()=>{ const i=state.goldShards.indexOf(r); if(i>-1) state.goldShards.splice(i,1); }});
 }

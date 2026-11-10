@@ -6,7 +6,7 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const pc=(have,need)=>need>0?Math.max(0,Math.min(100,have/need*100)):100;
 const barH=(p,cls="")=>`<div class="bar ${cls}"><i style="width:${Math.max(0,Math.min(100,p)).toFixed(1)}%"></i></div>`;
 const tagH=(cls,txt)=>`<span class="tag ${cls}">${txt}</span>`;
-const shortTag=(need,have)=>need<=0?tagH("plain","nothing needed"):have>=need?tagH("ok","covered ✓"):tagH("bad",fmt(need-have)+" short");
+const shortTag=(need,have)=>need<=0?tagH("plain","nothing needed"):have>=need?tagH("ok","covered ✓"):tagH("warn",fmt(need-have)+" short");
 const slotName=s=>String(s||"").replace(/ \(.*/,"");
 const slotStat=s=>{ const m=String(s||"").match(/\(([^)]+)\)/); return m?m[1]:""; };
 const EDIT_ICON=`<svg class="vc-edit" aria-hidden="true"><use href="#i-pen"/></svg>`;
@@ -115,7 +115,7 @@ const THEME_KEY="kingshot-theme";
 const getTheme=()=>{ const t=lsGet(THEME_KEY); return t==="light"||t==="auto"?t:"dark"; }; // dark is the default
 function applyTheme(t){
   if(t==="light"||t==="dark"){ document.documentElement.setAttribute("data-theme",t); lsSet(THEME_KEY,t); }
-  else { document.documentElement.removeAttribute("data-theme"); lsSet(THEME_KEY,"auto"); }
+  else { let d=true; try{ d=matchMedia("(prefers-color-scheme: dark)").matches; }catch(e){} document.documentElement.setAttribute("data-theme",d?"dark":"light"); lsSet(THEME_KEY,"auto"); }
   const icon=t==="light"?"#i-sun":t==="dark"?"#i-moon":"#i-auto";
   $$(".themebtn use").forEach(u=>u.setAttribute("href",icon));
   $$(".themebtn").forEach(b=>b.setAttribute("aria-label",`Theme: ${t} — tap to change`));

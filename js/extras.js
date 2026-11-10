@@ -76,7 +76,7 @@ function renderBagCheck(){
     ["Town","flask",[M("Truegold"),M("Tempered TG"),M("TG Dust"),M("Gold")]]];
   const ALL=GROUPS.flatMap(g=>g[2]), val=it=>num(it[1]()[it[2]]);
   const ch=it=>{ const p=prev[it[3]]; if(p==null) return '<span class="faint">—</span>'; const d=val(it)-num(p); return d>0?`<span class="ok">▲ ${fmt(d)}</span>`:d<0?`<span class="bad">▼ ${fmt(-d)}</span>`:'<span class="faint">same</span>'; };
-  const sub=it=>{ const n=need[it[3]]; return n&&n.need?`<small class="${n.short?"bad":"ok"}" title="${esc(n.what)}">${n.short?`${fmt(n.short)} short for next`:"enough for next ✓"}</small>`:""; };
+  const sub=it=>{ const n=need[it[3]]; return n&&n.need?`<small class="${n.short?"warn":"ok"}" title="${esc(n.what)}">${n.short?`${fmt(n.short)} short for next`:"enough for next ✓"}</small>`:""; };
   const row=(it,i)=>`<label class="bcrow"><span class="bcl">${BLK.includes(it[3])?'<i class="bdot"></i>':""}${it[0]}${sub(it)}</span><em data-ch="${i}">${ch(it)}</em><input inputmode="numeric" data-i="${i}" value="${fmt(val(it))}"></label>`;
   let n=0;
   box.innerHTML=`<div class="dch"><h3>My bag</h3>${days==null?'<span class="pill a">not checked yet</span>':days===0?'<span class="pill g">checked today</span>':`<span class="pill${days>2?" a":""}">checked ${days} day${days>1?"s":""} ago</span>`}<button class="link" id="bcSave">Save ✓</button></div>

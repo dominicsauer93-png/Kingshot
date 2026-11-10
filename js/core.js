@@ -530,8 +530,8 @@ function paintForecast(){
   html+=`</div>`;
   html+=`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line)">`;
   if(dNeed<=0&&gNeed<=0) html+=`<b style="color:var(--green)">Both gates met — start the research.</b>`;
-  else if(blocked) html+=`<b style="color:var(--amber)">One gate isn't growing — log more, or lift that rate.</b>`;
-  else html+=`<b style="color:var(--gold)">T11 ${activePhase().n} unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
+  else if(blocked) html+=`<b style="color:var(--amber-text)">One gate isn't growing — log more, or lift that rate.</b>`;
+  else html+=`<b style="color:var(--gold-text)">T11 ${activePhase().n} unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
   html+=`<br><span class="sub">Then ~${Math.round(nodeResDays(coreNodes(state[activePhase().k]||[])))}d research on top (runs once you start it). Based on ${f.days.toFixed(0)}d of history.</span></div>`;
   out.innerHTML=html;
 }
