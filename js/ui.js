@@ -28,6 +28,7 @@ function toast(msg,undoSnap){
   t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),undoSnap?10000:3200);
 }
 function showUndo(msg,snap){ toast(msg,snap); }
+function toastAction(msg,label,fn){ toast(msg); const u=$("#toastUndo"); u.textContent=label; u.onclick=()=>{ $("#toast").classList.remove("show"); fn(); }; clearTimeout(toastTimer); }
 function confirmSheet({title,msg,ok,danger,onOk}){
   openSheet({title,sub:"",noFoot:true,build(f){ f.innerHTML=`<p class="cmsg">${msg}</p><div class="rowb cbtns"><button class="btn" id="cfNo">Cancel</button><button class="btn ${danger?"danger solid":"primary"}" id="cfYes">${esc(ok||"OK")}</button></div>`;
     f.querySelector("#cfNo").onclick=()=>closeSheet(); f.querySelector("#cfYes").onclick=()=>{ closeSheet(); onOk(); }; }}); }

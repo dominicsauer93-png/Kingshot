@@ -31,7 +31,7 @@ function renderFocusHeroes(){ const box=$("#focusHeroes"); if(!box) return;
   const F=G.filter(r=>r.rally||r.focus).sort((a,b)=>heroUse(b.n)-heroUse(a.n));
   const gen=num(state.shardGeneral), gf=genOrder()[0]; // General shards go to this hero
   if(!F.length){ box.innerHTML=""; return; }
-  box.innerHTML=`<div class="card dcard"><div class="dch"><h3>Focus heroes</h3><span class="faint" style="font-size:12.5px">stars · widgets · next step</span></div>`+F.map(r=>{
+  box.innerHTML=`<div class="card dcard"><div class="dch"><h3>Focus heroes</h3><span class="faint fs13">stars · widgets · next step</span></div>`+F.map(r=>{
     const st=hasStars(r), p=num(r.pos), nx=st&&p<SHARD_MAX?SHARD_LEAF[p]:0, h=num(r.have), w=W.find(x=>x.hero===r.n), wl=w?num(w.lvl):null, wn=w&&wl<10?widNext(wl):0;
     const sh=!st?"set stars":p>=SHARD_MAX?'<span class="ok">5★ max</span>':h>=nx?`<span class="ok">${esc(starLabel(p+1))} ready</span>`:gf===r&&h+gen>=nx?`<span class="ok">${esc(starLabel(p+1))} ready with General shards</span>`:`${fmt(nx-h)} shards to ${esc(starLabel(p+1))}${gf===r&&gen?` (${fmt(gen)} General)`:""}`;
     const wd=w==null?"":wl>=10?' · widgets <span class="ok">max</span>':num(w.have)>=wn?` · widgets <span class="ok">Lv ${wl+1} ready</span>`:` · widgets ${fmt(wn-num(w.have))} short`;
@@ -109,7 +109,7 @@ function renderHeroRoles(){
   const hrow=h=>`<div class="drow">${heroAv(h.n)}<span class="dt"><b>${esc(h.n)}${h.rally?` <span class="faint">${icoI("sword")}</span>`:""}</b><span class="gold" style="letter-spacing:1px">${starGlyphs(h.pos)}${wid(h)?` <span class="faint" style="letter-spacing:0">· widget Lv ${wid(h)}</span>`:""}</span></span>${trH(TIER_OF[heroKey(h.n)][role])}</div>`;
   const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
   $("#roleBest").innerHTML=`<div class="rolechips">${HERO_ROLES.map(([r,l,sh])=>`<button class="chip" data-r="${r}" aria-selected="${r===role}">${esc(sh||l)}</button>`).join("")}</div>
-    <div class="card dcard mt"><div class="dch"><h3>${esc(label)}</h3><span class="faint" style="font-size:12.5px">${fr.length?"your best 5 · formation":MARCH.includes(role)?"best of each troop type":"your best 3"}</span></div>${fr.length?`<div class="fmrow">Front row <span class="faint">· Infantry tanks</span></div>${fr.map(hrow).join("")}<div class="fmrow">Back row <span class="faint">· damage</span></div>${bk.map(hrow).join("")}`:L.map(hrow).join("")}
+    <div class="card dcard mt"><div class="dch"><h3>${esc(label)}</h3><span class="faint fs13">${fr.length?"your best 5 · formation":MARCH.includes(role)?"best of each troop type":"your best 3"}</span></div>${fr.length?`<div class="fmrow">Front row <span class="faint">· Infantry tanks</span></div>${fr.map(hrow).join("")}<div class="fmrow">Back row <span class="faint">· damage</span></div>${bk.map(hrow).join("")}`:L.map(hrow).join("")}
     ${soon.length?`<p class="dnote">Gen 8 soon: ${soon.map(esc).join(", ")} (S)</p>`:""}</div>`;
   $$("#roleBest .rolechips .chip").forEach(b=>b.onclick=()=>{ state.ui.roleSel=b.dataset.r; scheduleSave(); renderHeroRoles(); });
   [["#roleFold","roleOpen"],["#tierFold","tierOpen"]].forEach(([id,k])=>{ const d=$(id); d.open=!!state.ui[k]; d.ontoggle=()=>{ if(state.ui[k]!==d.open){ state.ui[k]=d.open; scheduleSave(); } }; });
@@ -119,7 +119,7 @@ function renderHeroRoles(){
   keys.sort((a,b)=>heroUse(TIER_OF[b].name)-heroUse(TIER_OF[a].name)||TIER_OF[a].name.localeCompare(TIER_OF[b].name));
   $("#tierTable").innerHTML=`<thead><tr><th>Hero</th>${HERO_ROLES.map(([,,s])=>`<th>${esc(s)}</th>`).join("")}<th>Use</th></tr></thead><tbody>`+
     keys.map(k=>{ const t=TIER_OF[k], h=mine[k], s8=gen8.includes(k);
-      return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" "+icoI("sword"):""}${s8?' <span class="tag plain" style="padding:2px 6px;font-size:10.5px">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
+      return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" "+icoI("sword"):""}${s8?' <span class="tag plain" style="padding:2px 6px;font-size:12px">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
 }
 
 /* ---------- hero avatar badge: initial, coloured by troop type ---------- */
@@ -150,7 +150,7 @@ function heroCardH(n,rank){ const f=heroFacts(n); // one row: badge, name + star
 function renderHeroCards(){
   const mine=Object.values(heroRoster()).sort((a,b)=>heroUse(b.n)-heroUse(a.n)||b.pos-a.pos), all=!!state.ui.heroAll, L=all?mine:mine.slice(0,6);
   const hc=$("#heroCards"); hc.className="card dcard"; hc.removeAttribute("style");
-  hc.innerHTML=`<div class="dch"><h3>Your heroes</h3><span class="faint" style="font-size:12.5px">most used first</span></div>`+(L.map((h,i)=>heroCardH(h.n,i+1)).join("")||`<p class="dnote">Add heroes on the Shards page.</p>`);
+  hc.innerHTML=`<div class="dch"><h3>Your heroes</h3><span class="faint fs13">most used first</span></div>`+(L.map((h,i)=>heroCardH(h.n,i+1)).join("")||`<p class="dnote">Add heroes on the Shards page.</p>`);
   bindAll($("#heroCards"),".hcard",b=>openHeroSheet(b.dataset.h));
   const m=$("#heroMore"); m.hidden=mine.length<=6; m.textContent=all?"Show top 6":`Show all ${mine.length} heroes`; m.onclick=()=>{ state.ui.heroAll=!all; scheduleSave(); renderHeroCards(); };
 }
@@ -259,10 +259,10 @@ function mastPlanH(){ const R=mRes(), U=num(R.emblems), rate=num(R.rate), M=stat
       <em class="${cost&&have>=cost?"ok":cost?"warn":"faint"}">${!cost?"cost?":have>=cost?"ready ✓":`${fmt(cost-have)} short${rate>0?` · ${dTxt(cost-have)}`:""}`}</em></div>`; }
   const side=M.filter(m=>m.n!=="Cassia"&&num(m.l)<100).sort((a,b)=>mastRank(a)-mastRank(b)).map(m=>{ const cost=mNextCost(m), own=num(m.em), useU=Math.max(0,cost-own), lv=num(m.l);
     const st=!cost?['faint',"cost?"]:useU===0?['ok',"free — own Emblems cover it"]:useU>U?['warn',`${fmt(useU-U)} short`]:['warn',`uses ${fmt(useU)} universal${rate>0?` · delays Cassia ${dTxt(useU)}`:""}`];
-    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · Lv ${lv} → ${Math.min(100,lv+10)}</b><span>${fmt(cost)} Emblems · +${fmt(mTab(m).pw)} power · ${fmt(own)} own</span></span><span class="dv ${st[0]}" style="font-size:12.5px;white-space:normal;text-align:right;max-width:46%">${st[1]}</span></button>`; }).join("");
+    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · Lv ${lv} → ${Math.min(100,lv+10)}</b><span>${fmt(cost)} Emblems · +${fmt(mTab(m).pw)} power · ${fmt(own)} own</span></span><span class="dv ${st[0]}" style="font-size:13px;white-space:normal;text-align:right;max-width:46%">${st[1]}</span></button>`; }).join("");
   let left=num(R.books); const bk=M.filter(m=>m.bookNext&&num(m.bookNext.books)).sort((a,b)=>mastRank(a)-mastRank(b)).map(m=>{ const n=num(m.bookNext.books), ok=left>=n; if(ok) left-=n;
-    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · ${esc(m.bookNext.what||"next skill")}</b><span>${fmt(n)} books</span></span><span class="dv ${ok?"ok":"warn"}" style="font-size:12.5px">${ok?"ready ✓":`${fmt(n-left)} short`}</span></button>`; }).join("");
-  return `<div class="card dcard"><div class="dch"><h3>Master plan</h3><button class="link" id="mpRes">Emblems & books ✎</button></div>
+    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · ${esc(m.bookNext.what||"next skill")}</b><span>${fmt(n)} books</span></span><span class="dv ${ok?"ok":"warn"}" style="font-size:13px">${ok?"ready ✓":`${fmt(n-left)} short`}</span></button>`; }).join("");
+  return `<div class="card dcard"><div class="dch"><h3>Master plan</h3><button class="link" id="mpRes">Emblems & books <svg class="ico-inline" aria-hidden="true"><use href="#i-pen"/></svg></button></div>
     <div class="mp-pool"><span><b>${fmt(U)}</b> universal Emblems</span><span><b>${rate?fmt(rate):"?"}</b> a week</span><span><b>${fmt(num(R.books))}</b> skill books</span></div>
     ${cas}<p class="fmrow">Other masters' levels <span class="faint">· own Emblems never slow Cassia</span></p>${side}
     ${bk?`<p class="fmrow">Skill books <span class="faint">· best master first</span></p>${bk}`:""}

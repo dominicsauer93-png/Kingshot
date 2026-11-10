@@ -113,10 +113,10 @@ function renderTimelines(){
   const box=$("#timelines"); if(!box) return;
   const N=blockerNeeds(), rows=[["threads","Threads"],["mg","Mythic Gear"],["designs","Designs"],["gen","General shards"],["mith","Mithril"]].filter(([k])=>N[k]);
   const days=incomeDays("fh");
-  box.innerHTML=(days<7?`<p class="faint" style="margin:0 0 6px;font-size:13.5px">Learning your income — ${days}/7 days of bag updates.</p>`:"")+
+  box.innerHTML=(days<7?`<p class="faint" style="margin:0 0 6px;font-size:14px">Learning your income — ${days}/7 days of bag updates.</p>`:"")+
     rows.map(([k,l])=>{ const n=N[k], r=incomeRate(k), d=n.short&&r?Math.ceil(n.short/r):null;
       const when=!n.short?'<b class="ok">ready ✓</b>':r==null?'<span class="faint">tracking…</span>':r<=0?'<b class="bad">none coming in</b>':`<b class="${d<=7?"ok":d<=28?"warn":"bad"}">~${d<7?d+" day"+(d>1?"s":""):Math.round(d/7)+" week"+(Math.round(d/7)>1?"s":"")}</b>`;
-      return `<div class="tlrow"><div class="rowb"><span>${esc(n.what)}</span>${when}</div>${barH(pc(n.have,n.need),n.short?"":"ok")}<span class="faint" style="font-size:13px">${fmt(n.have)} / ${fmt(n.need)}${r!=null?` · +${r>=1?fmt(Math.round(r)):r.toFixed(1)} a day`:""}</span></div>`; }).join("");
+      return `<div class="tlrow"><div class="rowb"><span>${esc(n.what)}</span>${when}</div>${barH(pc(n.have,n.need),n.short?"":"ok")}<span class="faint fs13">${fmt(n.have)} / ${fmt(n.need)}${r!=null?` · +${r>=1?fmt(Math.round(r)):r.toFixed(1)} a day`:""}</span></div>`; }).join("");
 }
 
 /* ---------- Shop guide: live advice from the bag ---------- */

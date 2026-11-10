@@ -187,6 +187,6 @@ function renderShopGuide(){
       <h3 class="sgsec">Reference</h3><div class="card dcard sggrp"><details class="fold"><summary><span class="grow">How I pick</span></summary><div class="fbody"><ul class="sgrules">${SHOP_RULES.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></details>
       <details class="fold"><summary><span class="grow">Hero seasons</span></summary><div class="fbody"><table class="gtable"><tbody>${Object.entries(HERO_SEASON).map(([k,v])=>`<tr><td class="mono">${k}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details>
       <details class="fold"><summary><span class="grow">What the icons are</span></summary><div class="fbody"><table class="gtable"><tbody>${ITEM_KEY.map(([k,v])=>`<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("")}</tbody></table></div></details></div>
-      <p class="faint mt" style="font-size:13.5px">New shop or pack? Upload a screenshot from Settings → Sync, or to shops/inbox in the repo.</p>`; }}));
+      <p class="faint mt" style="font-size:14px">New shop or pack? Upload a screenshot from Settings → Sync, or to shops/inbox in the repo.</p>`; }}));
   on("sgSrc",()=>openSheet({title:"Where supplies come from",sub:"Free sources and buy order.",build(f){ const src=$("#srcFold .fbody"); f.innerHTML=src?src.innerHTML:""; }}));
 }

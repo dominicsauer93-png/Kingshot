@@ -71,7 +71,7 @@ function renderShopsPacks(){
   const bought=p=>p.d&&p.kind==="once"; // owned one-off unlocks are hidden in a fold at the bottom
   const rows=P.map((p,i)=>({p,i})), owned=rows.filter(x=>bought(x.p));
   const packRow=({p,i})=>{ const n=packDaysLeft(p), rec=!!PACK_DAYS[p.kind];
-    const sub=p.d&&rec?(p.bought||p.resetDay?packLeftH(n)+(p.resetDay?' <span class="faint">· renews on the 1st</span>':""):'<span class="bad">set the bought date ✎</span>'):esc(p.note||"");
+    const sub=p.d&&rec?(p.bought||p.resetDay?packLeftH(n)+(p.resetDay?' <span class="faint">· renews on the 1st</span>':""):'<span class="bad">set the bought date <svg class="ico-inline" aria-hidden="true"><use href="#i-pen"/></svg></span>'):esc(p.note||"");
     return `<div class="drow"><label class="cbxhit"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}"></label>
       <span class="dt"><b>${esc(p.t)}</b><span>${sub}${p.d&&rec&&(p.bought||p.resetDay)&&n<=3?` <button class="renew" data-i="${i}">Renewed today</button>`:""}</span></span>
       <span class="dv">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${packPrice(p).toFixed(2)}`}<small>${PACK_PER[p.kind]==="one-off"?"":PACK_PER[p.kind]||""}</small></span>

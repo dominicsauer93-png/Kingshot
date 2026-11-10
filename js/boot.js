@@ -72,6 +72,8 @@ const TAB_RENDER={Home:()=>renderHome(),Upgrade:()=>renderUpgrade(),Heroes:()=>{
 const dirtyTabs=new Set();
 function renderPrep(){ migrateEvents(); migrateMasterNotes(); if(!state.ui.sub) state.ui.sub={}; }
 function renderAll(){ renderPrep(); TABS.forEach(t=>TAB_RENDER[t]()); dirtyTabs.clear(); }
+function renderFirst(){ renderActive(); const idle=window.requestIdleCallback||(f=>setTimeout(f,200)); // open tab first, the rest in the background
+  idle(()=>{ if(!dirtyTabs.size) return; renderPrep(); [...dirtyTabs].forEach(t=>{ if(t!==state.ui.tab){ TAB_RENDER[t](); dirtyTabs.delete(t); } }); }); }
 function renderActive(){ // after an edit: redraw only the tab you're looking at; the rest redraw when opened
   renderPrep(); const cur=TABS.includes(state.ui.tab)?state.ui.tab:"Home";
   TAB_RENDER[cur](); TABS.forEach(t=>{ if(t!==cur) dirtyTabs.add(t); else dirtyTabs.delete(t); });
@@ -230,8 +232,8 @@ function initStatic(){
   if(Array.isArray(state.buildings)) state.buildings.forEach(bl=>{ if(bl.stepIdx===undefined) bl.stepIdx=0; delete bl.t; delete bl.tg; delete bl.ttg; delete bl.time; });
   if(state.account && !state.account.dayAnchor){ const d=parseInt(state.account.day)||443; const a=new Date(); a.setUTCDate(a.getUTCDate()-(d-1)); state.account.dayAnchor=a.toISOString().slice(0,10); }
   state.ui.tab=TAB_ALIAS[state.ui.tab]||state.ui.tab;
-  renderAll(); buildSync(); buildUpload(); initCommaFormatting(); initNoDrag();
-  const fromHash=tabFromHash(); setTab(fromHash?fromHash[0]:state.ui.tab, fromHash?fromHash[1]:undefined, false); navReady=true; initDecorate();
+  renderFirst(); buildSync(); buildUpload(); initCommaFormatting(); initNoDrag();
+  const fromHash=tabFromHash(); setTab(fromHash?fromHash[0]:state.ui.tab, fromHash?fromHash[1]:undefined, false); navReady=true; initDecorate(); initUpdateNotice(); if(/\?update/.test(location.hash)){ history.replaceState(null,"",location.hash.replace("?update","")); setTimeout(openQuickSheet,300); }
   const persists=hasStore||lsSet("__probe__","1"); if(!persists) setSaveUI("err","Session only");
   if(syncCfg.on && syncCfg.owner && loadTok()) syncPull(true);
 })();
@@ -270,3 +272,7 @@ function initDecorate(){ const main=$("#main"); if(!main) return; let q=false;
   new MutationObserver(()=>{ if(q) return; q=true; requestAnimationFrame(()=>{ q=false; decorate(main); }); }).observe(main,{childList:true,subtree:true});
   decorate(main);
   document.addEventListener("click",e=>{ const a=e.target.closest&&e.target.closest("abbr[title]"); if(a&&!a.closest("button,a,label")) toast(a.textContent+" = "+a.title); }); }
+
+/* a new version was installed while the app was open: offer a reload */
+function initUpdateNotice(){ if(!("serviceWorker" in navigator)) return; const had=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{ if(!had) return; toastAction("Updated — tap to reload","Reload",()=>location.reload()); }); }

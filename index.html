@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F3EAD7">
+<meta name="theme-color" content="#141311">
 <meta name="description" content="Kingshot Command Console — track your account and see what to upgrade next.">
 <title>Kingshot Command Console</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -17,10 +17,8 @@
   // apply the saved theme before first paint (no flash)
   (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t!=="light"&&t!=="auto") t="dark"; if(t==="auto") t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"; document.documentElement.setAttribute("data-theme",t); }catch(e){ document.documentElement.setAttribute("data-theme","dark"); } })();
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=73">
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/app.css?v=74">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#main">Skip to content</a>
@@ -207,7 +205,7 @@
         <details class="card dcard dfold mt" id="fcFold"><summary class="dch"><h3>Unlock forecast</h3><span class="faint" style="font-size:12.5px">log dust + gold ›</span></summary><div style="padding:0 14px 12px"><div id="fcCard">
           <h3>Forecast — T11 <span class="phName">Infantry</span> unlock date</h3>
           <p class="lead" style="margin:0 0 10px">Log your Dust + Gold once per check-in. After two days it projects your unlock date.</p>
-          <div class="rowb"><button class="btn primary" id="fcLog">＋ Log today's Dust + Gold</button><span class="tag ok" id="fcMsg" hidden></span></div>
+          <div class="rowb"><button class="btn primary" id="fcLog">+ Log today's Dust + Gold</button><span class="tag ok" id="fcMsg" hidden></span></div>
           <div id="fcOut" class="mt"></div>
           <div id="fcHistory" class="mt"></div>
         </div>
@@ -376,16 +374,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=73"></script>
-<script src="js/ui.js?v=73"></script>
-<script src="js/home.js?v=73"></script>
-<script src="js/rally.js?v=73"></script>
-<script src="js/gear.js?v=73"></script>
-<script src="js/base.js?v=73"></script>
-<script src="js/data.js?v=73"></script>
-<script src="js/shops.js?v=73"></script>
-<script src="js/extras.js?v=73"></script>
-<script src="js/value.js?v=73"></script>
-<script src="js/boot.js?v=73"></script>
+<script src="js/core.js?v=74"></script>
+<script src="js/ui.js?v=74"></script>
+<script src="js/home.js?v=74"></script>
+<script src="js/rally.js?v=74"></script>
+<script src="js/gear.js?v=74"></script>
+<script src="js/base.js?v=74"></script>
+<script src="js/data.js?v=74"></script>
+<script src="js/shops.js?v=74"></script>
+<script src="js/extras.js?v=74"></script>
+<script src="js/value.js?v=74"></script>
+<script src="js/boot.js?v=74"></script>
 </body>
 </html>
