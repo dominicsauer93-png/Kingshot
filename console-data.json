@@ -1621,7 +1621,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-11-09",
+    "routineDate": "2026-11-10",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1713,7 +1713,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
+      "Data": "Update all",
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
@@ -1763,9 +1763,9 @@
     "bvNow": true,
     "freshAll": true,
     "bcMore": true,
-    "upF": "All",
+    "upF": "Governor",
     "t11More": false,
-    "roleSel": "arena"
+    "roleSel": "bearLead"
   },
   "troopCounts": {
     "inf": {
@@ -3094,6 +3094,26 @@
     },
     {
       "d": "2026-11-09",
+      "v": {
+        "power": 345186621,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 36.61,
+        "defWR": 91.83,
+        "p:Building": 9650743,
+        "p:Troop": 194666004,
+        "p:Hero": 34434630,
+        "p:Hero Gear": 15386394,
+        "p:Governor Gear": 9461520,
+        "p:Governor Charm": 13021600,
+        "p:Tech": 28960770,
+        "p:Pet": 23577960,
+        "p:Master": 16027000,
+        "stars": 477
+      }
+    },
+    {
+      "d": "2026-11-10",
       "v": {
         "power": 345186621,
         "leth": 74.3,
