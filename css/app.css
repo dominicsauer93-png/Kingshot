@@ -88,6 +88,7 @@
   .sidefoot{margin-top:auto;display:flex;flex-direction:column;gap:8px}
   .sidefoot .row{display:flex;gap:6px;flex-wrap:wrap}
   .main{min-width:0;padding:26px clamp(16px,3vw,40px) 48px}
+  @media (min-width: 900px){ .main{padding-right:96px;padding-bottom:96px} }
   .wrapw{max-width:1180px;margin:0 auto}
   .mtop{display:none}
 /* phone / small tablet */
