@@ -155,7 +155,7 @@ const TAB_ICON={
   Town:'<path d="M4 21V9l4-3 4 3 4-3 4 3v12z"/><path d="M10 21v-5h4v5M4 13h16"/>',
   Shop:'<path d="M5 8h14l-1.2 12.5H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
   Progress:'<path d="M4 20V11M10 20V5M16 20v-6M20 20H3"/>',
-  Data:'<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
+  Data:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
   More:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>'
 };
 const LABEL={Data:"Settings","Free shops":"Coin shops",Paid:"Packs"}, lbl=s=>LABEL[s]||s; // shown names; saved state keeps the old keys
@@ -171,7 +171,7 @@ function setTab(tab,sub,scroll,fromHistory){
   if(navReady&&state.ui.tab) scrollMem[curKey()]=scrollY;
   if(SUBS[tab]){ if(sub&&SUBS[tab].includes(sub)) state.ui.sub[tab]=sub; if(!SUBS[tab].includes(state.ui.sub[tab])) state.ui.sub[tab]=SUBS[tab][0]; }
   const s=SUBS[tab]?state.ui.sub[tab]:null;
-  const changed=state.ui.tab!==tab;
+  const changed=state.ui.tab!==tab, subChanged=!changed&&!!s&&location.hash.split("/")[1]!==slug(lbl(s));
   state.ui.tab=tab;
   $$("#tabnav .tab").forEach(b=>{ const onn=b.dataset.tab===tab||(b.dataset.tab==="More"&&MORE_TABS.includes(tab));
     if(onn) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
@@ -179,12 +179,12 @@ function setTab(tab,sub,scroll,fromHistory){
   if(dirtyTabs.has(tab)){ dirtyTabs.delete(tab); renderPrep(); TAB_RENDER[tab](); }
   const page=$(`.page[data-tab="${tab}"]`);
   if(s){ page.querySelectorAll(".sec[data-sub]").forEach(x=>x.hidden=x.dataset.sub!==s);
-    page.querySelectorAll(".subnav .chip").forEach(c=>c.setAttribute("aria-selected",c.dataset.sub===s?"true":"false")); }
-  const mt=$("#mTitle"); if(mt) mt.textContent=lbl(tab)+(s?" · "+lbl(s):"");
+    page.querySelectorAll(".subnav .chip").forEach(c=>{ if(c.dataset.sub===s) c.setAttribute("aria-current","true"); else c.removeAttribute("aria-current"); }); }
+  const mt=$("#mTitle"); if(mt) mt.textContent=lbl(tab); // the chip row already names the section
   document.title=(tab==="Home"?"":lbl(tab)+(s?" · "+lbl(s):"")+" — ")+"Kingshot Console";
   const hash="#"+slug(lbl(tab))+(s?"/"+slug(lbl(s)):"");
-  if(skipPop) pendingHash={hash,push:changed&&!fromHistory}; // a sheet is still stepping back in history: write the URL after that
-  else if(location.hash!==hash) try{ if(changed&&navReady&&!fromHistory) history.pushState(null,"",hash); else history.replaceState(null,"",hash); }catch(e){}
+  if(skipPop) pendingHash={hash,push:(changed||subChanged)&&!fromHistory}; // a sheet is still stepping back in history: write the URL after that
+  else if(location.hash!==hash) try{ if((changed||subChanged)&&navReady&&!fromHistory) history.pushState(null,"",hash); else history.replaceState(null,"",hash); }catch(e){}
   if(scroll==="restore") window.scrollTo({top:scrollMem[curKey()]||0,behavior:"instant"});
   else if(scroll!==false) window.scrollTo({top:0,behavior:"instant"});
   if(changed&&navReady){ const h=page.querySelector(".phead h1"); if(h){ h.tabIndex=-1; h.focus({preventScroll:true}); } } // screen readers hear the new page
@@ -227,7 +227,7 @@ function buildNav(){
   $$(".setbtn").forEach(b=>b.onclick=()=>setTab("Data",null,"restore"));
   Object.keys(SUBS).forEach(tab=>{
     const page=$(`.page[data-tab="${tab}"]`), sn=page&&page.querySelector(".subnav"); if(!sn) return;
-    sn.innerHTML=SUBS[tab].map(s=>`<button class="chip" role="tab" data-sub="${esc(s)}" aria-selected="false">${esc(lbl(s))}</button>`).join("");
+    sn.innerHTML=SUBS[tab].map(s=>`<button class="chip" data-sub="${esc(s)}">${esc(lbl(s))}</button>`).join("");
     sn.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{ setTab(tab,c.dataset.sub,false);
       const top=sn.getBoundingClientRect().top+scrollY-($(".mtop")?$(".mtop").getBoundingClientRect().height:0)-8; // land at the top of the new section
       if(scrollY>top) window.scrollTo({top,behavior:"instant"});
