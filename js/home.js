@@ -4,6 +4,7 @@
    ===================================================================== */
 // "have / next step" tile — the small step up front, the end goal as a faint line
 const fmtK=v=>v>=1e4&&v<1e6?fmt(Math.round(v/1e3))+"K":fmtBig(v); // 172,000 → 172K so tiles fit on a phone
+const money=v=>{ v=num(v); const a=Math.abs(v); return (v<0?"−":"")+"A$"+(a<100?a.toFixed(2).replace(/\.00$/,""):Math.round(a).toLocaleString("en-US")); };
 function stepTileH(id,label,h,v,goal,f){ f=f||fmtK; return tileH({id,label,value:f(h),sub:(!v?"not needed next":`next ${f(v)} · `+(v>h?`<span class="warn">${f(v-h)} short</span>`:`<span class="ok">enough ✓</span>`))+(goal?`<br><span class="faint">end goal ${f(goal)}</span>`:""),p:v?pc(h,v):null,cls:v&&h>=v?"ok":""}); }
 function tileH({id,label,value,sub,p,cls,txt,color,go,clamp}){
   return `<button class="tile" ${id?`id="${id}"`:""} ${go?`data-go="${esc(go)}"`:""}><span class="l"><span>${label}</span></span><span class="v ${txt?"txt":""} ${clamp?"clamp":""}" ${color?`style="color:${color}"`:""}>${value}</span>${sub!=null?`<span class="s">${sub}</span>`:""}${p!=null?barH(p,cls||""):""}</button>`;
@@ -72,7 +73,7 @@ function renderEventMode(){
     <p class="eey">${ico("bolt")} Live now</p><h2 class="etitle">${esc(e.n||"Event")}</h2>
     ${todayStage?`<p class="eline"><b>Today:</b> ${esc(todayStage)}</p>`:""}
     <div class="echips"><span class="echip">${esc(spendFor(e)||"Tap How to play")}</span>${have.slice(0,2).map(([l,v])=>`<span class="echip">${esc(l)} ${esc(v)}</span>`).join("")}</div>
-    <div class="eacts">${steps.length||stagesH(e)?`<button class="btn sm" id="evHow">How to play ›</button>`:""}${bt?`<button class="btn sm primary" id="evBattle">${icoI("sword")} Battle card</button>`:""}${ncam?`<button class="btn sm" id="evCam">${icoI("camera")} ${ncam}</button>`:""}${live.length>1?`<button class="btn sm" id="evOthers">+${live.length-1} on now</button>`:""}</div>`;
+    <div class="eacts">${steps.length||stagesH(e)?`<button class="btn sm" id="evHow">How to play ›</button>`:""}${bt?`<button class="btn sm primary" id="evBattle">${icoI("sword")} Battle card</button>`:""}${ncam?`<button class="btn sm" id="evCam">${icoI("camera")} ${ncam} shop${ncam>1?"s":""} to capture</button>`:""}${live.length>1?`<button class="btn sm" id="evOthers">${live.length-1} more live ›</button>`:""}</div>`;
   on("evHow",()=>openSheet({title:e.n||"Event",sub:`${cur.a.len>1?`Day ${cur.a.day} of ${cur.a.len} · `:""}${leftTxt(e,cur.a)}`,build(f){ f.innerHTML=`${stagesH(e)}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}`; }}));
   on("evOthers",()=>openSheet({title:"Also on now",sub:"Tap one to see or edit it.",build(f){ f.innerHTML=`<div class="list">${live.slice(1).map(({e:x,a},i)=>`<button class="lrow erow2" data-i="${i+1}"><span style="flex:1;min-width:0"><b>${esc(x.n||"Event")}${(()=>{ const sh=eventShopFor(x); return sh&&!sh.saved?" "+icoI("camera"):""; })()}</b><br><span class="faint" style="font-size:13px">${esc(spendFor(x)||"tap to add what to spend")}</span></span><span class="mono faint">${x.endOpen?`day ${a.day}`:a.len>1?`${a.day}/${a.len}`:"today"}</span></button>`).join("")}</div>`;
     f.querySelectorAll(".erow2").forEach(b=>b.onclick=()=>openEventSheet(live[+b.dataset.i].e)); }}));
@@ -86,8 +87,9 @@ function paintClock(){ const el=$("#clockStrip"); if(!el) return; const d=new Da
   const loc=d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit",second:"2-digit"}), locD=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"});
   const utc=`${p2(d.getUTCHours())}:${p2(d.getUTCMinutes())}:${p2(d.getUTCSeconds())}`, utcD=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});
   const into=d.getUTCHours()*3600+d.getUTCMinutes()*60+d.getUTCSeconds(), left=86400-into, rs=new Date(d.getTime()+left*1000);
-  el.innerHTML=`<div class="clk-c"><span>Your time</span><b>${loc}</b><small>${locD}</small></div><div class="clk-o">${offTxt}</div><div class="clk-c clk-g"><span>Game time (UTC)</span><b>${utc}</b><small>${utcD}</small></div>
-    <div class="clk-r"><span>Daily reset in <b>${Math.floor(left/3600)}h ${p2(Math.floor(left%3600/60))}m ${p2(left%60)}s</b> · ${rs.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})} your time</span><i style="width:${(into/864).toFixed(2)}%"></i></div>`; }
+  const locHM=d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"}), utcHM=utc.slice(0,5);
+  const html=`<span class="clk-main">Reset in <b>${Math.floor(left/3600)}h ${p2(Math.floor(left%3600/60))}m</b></span><span class="clk-sub">game <b>${utcHM}</b> UTC${off?` · you <b>${locHM}</b> (${offTxt})`:""}${utcD!==locD?` · game day ${utcD}`:""}</span><i class="clk-bar" style="width:${(into/864).toFixed(1)}%"></i>`;
+  if(el._h!==html){ el._h=html; el.innerHTML=html; } }
 function renderHome(){
   paintClock(); if(!clockTimer) clockTimer=setInterval(()=>{ if(!document.hidden&&$("#clockStrip")&&$("#clockStrip").offsetParent) paintClock(); },1000);
   const d=new Date();
@@ -103,8 +105,6 @@ function renderHome(){
   // daily + weekly checklists reset here (they live in Data → Checklists now, not on Home)
   const t=state.today; const today=fcToday();
   if(t.routineDate!==today){ t.routine.forEach(r=>r.d=false); t.routineDate=today; scheduleSave(); }
-  const pa=[], al=$("#packAlert"); al.hidden=true; // card renewals now show in "Your plan today"
-  if(pa.length) al.innerHTML=`<b>Card ending:</b> `+pa.map(({p,n})=>`${esc(p.t)} — ${n<0?`ended ${-n} day${n===-1?"":"s"} ago`:n===0?"ends today":`ends in ${n} day${n===1?"":"s"}`}`).join(" · ")+` <span class="faint">→ renew or untick</span>`;
   const w=state.weekly, wk=weekKey();
   if(w.week!==wk){ w.items.forEach(r=>r.d=false); w.week=wk; scheduleSave(); }
   renderEvents();
@@ -115,12 +115,11 @@ function renderKpis(){ const box=$("#kpis"); if(!box) return;
   const A=typeof vPlanAll==="function"?vPlanAll():null, w=typeof weekDelta==="function"?weekDelta("power"):null;
   const nx=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past&&x.o.days>0&&!activeOcc(x.e)&&!(num(x.e.every)&&num(x.e.every)<=2)).sort((a,b)=>a.o.days-b.o.days||eventRank(a.e)-eventRank(b.e))[0];
   const K=[
-    A?{v:`A$${Math.round(A.spare)}`,l:`${A.M.label.slice(0,3)} spare`,c:"y",go:()=>setTab("Shop","Paid")}:null,
+    A?{v:money(A.spare),l:`${A.M.label.slice(0,3)} spare`,c:"y",go:()=>setTab("Shop","Paid")}:null,
     {v:fmtK(num(state.stars)),l:"Stars ⭐",c:"",go:()=>setTab("Shop","Paid")},
     w?{v:`${w.d>=0?"+":"−"}${fmtBig(Math.abs(w.d))}`,l:"power/wk",c:w.d>=0?"g":"r",go:()=>setTab("Progress","Overview")}:{v:"—",l:"power/wk",c:""},
     nx?{v:`${nx.o.days}d`,l:nx.e.n,c:"",go:()=>openEventSheet(nx.e)}:{v:"—",l:"next event",c:""}].filter(Boolean);
-  const bars=[A?Math.min(100,(A.M.bud-A.spare)/A.M.bud*100):0,Math.min(100,num(state.stars)/50),w?Math.min(100,Math.abs(w.d)/Math.max(1,num((state.history||[]).slice(-1)[0]?.v?.power))*1000):0,nx?Math.max(8,100-nx.o.days*7):0];
-  box.innerHTML=K.map((k,i)=>`<button class="kpi ${k.c}" data-i="${i}"><b>${esc(k.v)}</b><span>${esc(k.l)}</span><i class="kbar k${i}"><i style="width:${bars[i]||0}%"></i></i></button>`).join("");
+  box.innerHTML=K.map((k,i)=>`<button class="kpi ${k.c}" data-i="${i}"${k.go?"":" disabled"}><b>${esc(k.v)}</b><span>${esc(k.l)}</span>${k.go?'<i class="kchev" aria-hidden="true">›</i>':""}</button>`).join("");
   bindAll(box,".kpi",b=>{ const k=K[+b.dataset.i]; if(k.go) k.go(); }); }
 
 /* ---------- events ---------- */
@@ -129,7 +128,8 @@ function renderEvents(){
   const up=$("#evUpcoming");
   const tone=e=>/kvk|kingdom of power|eternity|bear|swordland|tri-alliance|championship|sanctuary|brawl/i.test(e.n||"")?"v":/officer|armament|governor|hall of heroes/i.test(e.n||"")?"y":"t";
   const L2=list.filter(x=>!(num(x.e.every)&&num(x.e.every)<=2)).slice(0,6), re=typeof resEnds==="function"?resEnds():null, rc=(state.research||{}).current;
-  up.innerHTML=`<div class="cup">${re&&rc&&rc.n&&re>new Date()?`<button class="cupc y" id="cupRes"><b>${Math.max(0,Math.ceil((re-new Date())/864e5))}d</b><span>${esc(rc.n)} done</span></button>`:""}${L2.map(({e,o})=>`<button class="cupc ${tone(e)} cupev" data-i="${state.events.indexOf(e)}"><b>${o.days===0?"today":o.days+"d"}</b><span>${esc(e.n||"Event")}${e.time?` · ${esc(e.time)}`:""}</span></button>`).join("")}</div>`+(L2.length?"":`<p class="dnote">Nothing new starting soon.</p>`);
+  up.innerHTML=`<div class="cup">${re&&rc&&rc.n&&re>new Date()?`<button class="cupc y" id="cupRes"><b>${Math.max(0,Math.ceil((re-new Date())/864e5))}d</b><span>${esc(rc.n)} done</span></button>`:""}${L2.map(({e,o})=>`<button class="cupc ${tone(e)} cupev" data-i="${state.events.indexOf(e)}"><b>${o.days===0?"today":o.days+"d"}</b><span>${esc(e.n||"Event")}${e.time?` · ${esc(e.time)}`:""}</span></button>`).join("")}</div>`+(L2.length?"":`<p class="dnote">Nothing new starting soon. <button class="link" id="evAdd2">+ Add an event</button></p>`);
+  on("evAdd2",()=>openEventSheet(null));
   on("cupRes",()=>setTab("Town","Research"));
   bindAll(up,".cupev",b=>openEventSheet(state.events[+b.dataset.i]));
   on("evAdd",()=>openEventSheet(null));
@@ -214,7 +214,7 @@ function nextSteps(){
   const hg=state.heroGear||{rows:[],have:{}}, H=hg.have||{};
   const hp=(hg.rows||[]).length?hgPriority(hg.rows):[], top=hp.find(r=>hp.now.has(r)&&hgState(r).req)||hp[0], plan=hgPlanLeft()[0];
   if(plan){ const ready=["fh","mg","mith"].every(k=>num(H[k])>=num(plan[k]));
-    out.push({k:"fh",title:`${esc(plan.type)} ${esc(plan.slot)} ${esc(hgPlanWhat(plan))}`,detail:[["fh","Hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(plan[k])).map(([k,l])=>`<span class="${num(H[k])>=num(plan[k])?"ok":"bad"}">${l} ${fmt(num(H[k]))}/${fmt(num(plan[k]))} ${num(H[k])>=num(plan[k])?"✓":"✗"}</span>`).join(" · ")+(plan.gain?` · <span class="gold">+${plan.gain}%</span>`:""), ready,mats:[["fh","Hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(plan[k])).map(([k,l])=>({l,h:num(H[k]),n:num(plan[k])})),gain:plan.gain?`+${plan.gain}%`:"",open:()=>openHgSheet(hgPlanRow(plan)),key:"Hero Gear",apply:ready?()=>hgPlanApply(plan):null}); }
+    out.push({k:"fh",title:`${esc(plan.type)} ${esc(plan.slot)} ${esc(hgPlanWhat(plan))}`,detail:[["fh","Hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(plan[k])).map(([k,l])=>`<span class="${num(H[k])>=num(plan[k])?"ok":"warn"}">${l} ${fmt(num(H[k]))}/${fmt(num(plan[k]))} ${num(H[k])>=num(plan[k])?"✓":"✗"}</span>`).join(" · ")+(plan.gain?` · <span class="gold">+${plan.gain}%</span>`:""), ready,mats:[["fh","Hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(plan[k])).map(([k,l])=>({l,h:num(H[k]),n:num(plan[k])})),gain:plan.gain?`+${plan.gain}%`:"",open:()=>openHgSheet(hgPlanRow(plan)),key:"Hero Gear",apply:ready?()=>hgPlanApply(plan):null}); }
   else if(top){ const st=hgState(top), nx=HG_IMB.find(x=>x[0]>num(top.lvC)), ready=!!st.req&&hp.now.has(top), block=st.cls==="s-block";
     out.push({k:"fh",title:`${esc(top.type)} ${esc(slotName(top.slot))} ${block?`mastery ${num(top.mC)} → ${nx[1]}`:st.req?`Lv ${nx[0]} imbue`:`XP to Lv ${nx[0]-1}`}`,detail:st.req?hgReqH(st.req):esc(st.line),ready,mats:st.req?Object.entries(st.req).map(([k,v])=>({l:HG_MAT[k][0],h:num(H[HG_MAT[k][1]]),n:v})):[],open:()=>openHgSheet(top),key:"Hero Gear",
       apply:ready?()=>{ Object.entries(st.req).forEach(([k,v])=>H[HG_MAT[k][1]]=num(H[HG_MAT[k][1]])-v); if(block) top.mC=nx[1]; else top.lvC=nx[0]; }:null}); }

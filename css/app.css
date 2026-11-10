@@ -964,3 +964,29 @@
   .fs13{font-size:13px}
   .phead h1:focus{outline:none}
   .lrow:has(> .lico){grid-template-columns:auto minmax(0,1fr) auto;min-height:56px}
+
+/* ================= batch 3: Home ================= */
+  .fs12{font-size:12px}
+  .clk{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;position:relative;overflow:hidden;margin:0 0 12px;padding:10px 14px 12px}
+  .clk-main{font-size:15px;color:var(--text)} .clk-main b{font:700 15px var(--f-mono);font-variant-numeric:tabular-nums}
+  .clk-sub{font-size:13px;color:var(--faint)} .clk-sub b{color:var(--muted);font-variant-numeric:tabular-nums}
+  .clk-bar{position:absolute;left:0;bottom:0;height:3px;background:var(--acc);opacity:.8}
+  #fresh .fresh{margin:0;border:0;border-top:1px solid var(--line-soft);border-radius:0}
+  #fresh .dsub{display:flex;align-items:center;gap:8px;justify-content:space-between;text-transform:none;letter-spacing:0;font-size:13px}
+  .kpi{position:relative}
+  .kpi .kchev{position:absolute;right:9px;top:8px;font-style:normal;font-size:15px;color:var(--faint)}
+  .kpi:disabled{cursor:default}
+  .kpi b{padding-right:12px}
+  .bcall{width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);font:inherit}
+  .bcall .dt b{font-weight:600;color:var(--acc-text)}
+  /* the + is a labelled Update button and slides away while scrolling down */
+  .fab{width:auto;height:52px;padding:0 18px 0 14px;border-radius:999px;display:flex;align-items:center;gap:8px;font:700 15px var(--f-body);background:linear-gradient(180deg,#1A7D72,#14655C);color:#fff;transition:transform .2s ease,opacity .2s ease}
+  .fab svg{width:20px;height:20px}
+  .fab.away{transform:translateY(140%);opacity:0;pointer-events:none}
+  @media (prefers-reduced-motion:reduce){ .fab{transition:none} }
+  /* key text may wrap to 2 lines on phones instead of "…" */
+  @media (max-width: 899px){ .dt > b, .dt > span, .lrow .lt, .tile .s, .tile .l{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .evmode .etitle{font-size:21px} }
+  /* desktop: Coming up as a grid, no sideways scroll */
+  @media (min-width: 900px){ .cup{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));overflow:visible} .cupc{flex:none} }
+  @media (max-width: 520px){ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))} }

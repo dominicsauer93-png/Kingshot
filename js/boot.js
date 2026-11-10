@@ -176,7 +176,7 @@ function initStatic(){
 
 /* ---------- boot ---------- */
 (async function(){
-  initStatic(); buildNav(); initSheet(); initTheme(); initInstall(); initSearch(); on("quickBtn",openQuickSheet);
+  initStatic(); buildNav(); initSheet(); initTheme(); initInstall(); initSearch(); on("quickBtn",openQuickSheet); on("homeUpd",openQuickSheet); initFabScroll();
   const saved=await load();
   if(saved) state=mergeSeed(saved);
   if(Array.isArray(state.nodes)){
@@ -218,3 +218,8 @@ function initStatic(){
   const persists=hasStore||lsSet("__probe__","1"); if(!persists) setSaveUI("err","Session only");
   if(syncCfg.on && syncCfg.owner && loadTok()) syncPull(true);
 })();
+
+/* the floating Update button hides while you scroll down (so it never sits on a number) and comes back when you scroll up */
+function initFabScroll(){ const f=$("#quickBtn"); if(!f) return; let last=scrollY, tick=false;
+  addEventListener("scroll",()=>{ if(tick) return; tick=true; requestAnimationFrame(()=>{ const y=scrollY, d=y-last;
+    if(Math.abs(d)>6){ f.classList.toggle("away",d>0&&y>80); last=y; } tick=false; }); },{passive:true}); }

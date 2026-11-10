@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=70">
+<link rel="stylesheet" href="css/app.css?v=71">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#main">Skip to content</a>
@@ -72,25 +72,23 @@
 
     <!-- ================= HOME ================= -->
     <div class="page" data-tab="Home">
-      <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn sm" data-goto="Update all"><svg width="15" height="15" aria-hidden="true"><use href="#i-pen"/></svg>Update</button></div>
+      <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn sm" id="homeUpd"><svg width="15" height="15" aria-hidden="true"><use href="#i-pen"/></svg>Update</button></div>
       <div class="clk" id="clockStrip" aria-label="Your time and game time"></div>
-      <div class="kpis" id="kpis"></div>
-      <button class="info" id="packAlert" hidden data-goto="Shops &amp; Packs" style="display:block;width:100%;text-align:left;margin-bottom:12px;border-color:var(--amber);background:var(--amber-soft);color:var(--text)"></button>
       <div class="evmode" id="eventMode" hidden></div>
-      <div id="fresh"></div>
-      <div class="cols-3-2 mt2">
+      <div class="cols-3-2">
         <div>
           <section class="sec" data-key="Do next">
-            <div class="card dcard pcard"><div class="dch"><h3>Your plan today <small id="doCount"></small></h3><span class="faint" style="font-size:12px">from your bag + events</span><button class="link" id="doMore">All ›</button></div>
-            <div id="doNext"></div></div>
+            <div class="card dcard pcard"><div class="dch"><h3>Today <small id="doCount"></small></h3><span class="faint fs12">from your bag + events</span><button class="link" id="doMore">All ›</button></div>
+            <div id="doNext"></div><div id="fresh"></div></div>
           </section>
+          <div class="kpis mt" id="kpis"></div>
           <section class="sec" data-key="Upcoming Events">
             <div class="cuphead"><h3>Coming up</h3><button class="link" id="evAll">All ›</button><button class="link" id="evAdd">+ Add</button></div><div id="evUpcoming"></div>
           </section>
         </div>
         <div>
           <section class="sec" data-key="Bag check"><div class="card dcard" id="bagCheck"></div>
-            <details class="card dcard dfold mt" id="tlFold"><summary class="dch"><h3>Forecast</h3><span class="faint" style="font-size:13px">when you reach each goal ›</span></summary><div class="fbody" id="timelines" style="padding:0 14px 12px"></div></details></section>
+            <details class="card dcard dfold mt" id="tlFold"><summary class="dch"><h3>Forecast</h3><span class="faint fs13">when you reach each goal ›</span></summary><div class="fbody" id="timelines" style="padding:0 14px 12px"></div></details></section>
         </div>
       </div>
     </div>
@@ -360,7 +358,7 @@
   </main>
 </div>
 
-<button class="fab" id="quickBtn" aria-label="Quick update" title="Quick update">+</button>
+<button class="fab" id="quickBtn" aria-label="Quick update" title="Quick update"><svg aria-hidden="true"><use href="#i-pen"/></svg><span>Update</span></button>
 <div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-label="Search">
   <div class="srch-box"><input id="srchIn" type="search" placeholder="Search — e.g. mithril, shards, packs, Ava" autocomplete="off" aria-controls="srchList"><ul id="srchList" role="listbox"></ul></div>
 </div>
@@ -376,16 +374,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=70"></script>
-<script src="js/ui.js?v=70"></script>
-<script src="js/home.js?v=70"></script>
-<script src="js/rally.js?v=70"></script>
-<script src="js/gear.js?v=70"></script>
-<script src="js/base.js?v=70"></script>
-<script src="js/data.js?v=70"></script>
-<script src="js/shops.js?v=70"></script>
-<script src="js/extras.js?v=70"></script>
-<script src="js/value.js?v=70"></script>
-<script src="js/boot.js?v=70"></script>
+<script src="js/core.js?v=71"></script>
+<script src="js/ui.js?v=71"></script>
+<script src="js/home.js?v=71"></script>
+<script src="js/rally.js?v=71"></script>
+<script src="js/gear.js?v=71"></script>
+<script src="js/base.js?v=71"></script>
+<script src="js/data.js?v=71"></script>
+<script src="js/shops.js?v=71"></script>
+<script src="js/extras.js?v=71"></script>
+<script src="js/value.js?v=71"></script>
+<script src="js/boot.js?v=71"></script>
 </body>
 </html>

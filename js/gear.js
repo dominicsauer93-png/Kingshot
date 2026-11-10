@@ -20,7 +20,7 @@ function hgState(r){
 // what each next step needs vs what's in the bag, e.g. "Hammers 110/132 ✓ · Mythic 1/2 ✓"
 const HG_MAT={fh:["Hammers","fh"],mith:["Mithril","mith"],mg:["Mythic","mg"]};
 function hgReqH(req){ if(!req) return ""; const H=state.heroGear.have||{};
-  return Object.entries(req).filter(([,v])=>v>0).map(([k,v])=>{ const h=num(H[HG_MAT[k][1]]), ok=h>=v; return `<span class="${ok?"ok":"bad"}">${HG_MAT[k][0]} ${fmt(h)}/${fmt(v)} ${ok?"✓":"✗"}</span>`; }).join(" · "); }
+  return Object.entries(req).filter(([,v])=>v>0).map(([k,v])=>{ const h=num(H[HG_MAT[k][1]]), ok=h>=v; return `<span class="${ok?"ok":"warn"}">${HG_MAT[k][0]} ${fmt(h)}/${fmt(v)} ${ok?"✓":"✗"}</span>`; }).join(" · "); }
 const hgAfford=st=>!!st.req&&Object.entries(st.req).every(([k,v])=>num((state.heroGear.have||{})[HG_MAT[k][1]])>=v);
 // Ranking matches the optimiser's picks (kingshotoptimizer.com weighted stat gain) using simple rules:
 //  1. stat order (HG_STAT_ORDER): Lethality on every troop first, then Infantry Health (front line takes the hits), then Archer, Cavalry Health
@@ -91,7 +91,7 @@ function renderHeroGear(){
     (lack?`<br><span class="faint" style="font-size:13.5px">Get ${MATN[lack]} from ${SRC[lack]}.</span>`:"");
   if(plan.length){ const pb={fh:num(hg.have.fh),mith:num(hg.have.mith),mg:num(hg.have.mg)};
     d.innerHTML=`<b>Optimiser plan</b> <span class="faint">${hg.planDate?"· "+esc(fd(hg.planDate)):""} · checked with Quaad</span>`+plan.map((x,i)=>{
-      const cost=[["fh","hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(x[k])).map(([k,l])=>{ const ok=pb[k]>=num(x[k]); pb[k]-=num(x[k]); return `<span class="${ok?"ok":"bad"}">${fmt(num(x[k]))} ${l} ${ok?"✓":"✗"}</span>`; }).join(" · ");
+      const cost=[["fh","hammers"],["mg","Mythic"],["mith","Mithril"]].filter(([k])=>num(x[k])).map(([k,l])=>{ const ok=pb[k]>=num(x[k]); pb[k]-=num(x[k]); return `<span class="${ok?"ok":"warn"}">${fmt(num(x[k]))} ${l} ${ok?"✓":"✗"}</span>`; }).join(" · ");
       return `<div class="hgplan"><span class="hgnum">${i+1}</span><span class="hgp-t">${esc(x.type)} <b>${esc(x.slot)}</b> <span class="faint">${esc(hgPlanWhat(x))}</span>${x.gain?` <span class="gold">+${x.gain}%</span>`:""}<br><span class="hgp-c">${cost}</span></span><button class="didit hgp-done" data-i="${i}">✓ Done</button></div>`; }).join("")+
       `<span class="faint" style="font-size:13.5px">Tap Done after you do it in game — it spends the materials and updates the piece.</span>`;
     bindAll(d,".hgp-done",b=>{ const x=plan[+b.dataset.i], snap=JSON.stringify(state); hgPlanApply(x); afterEdit(); toast(`${x.type} ${x.slot}: done`,snap); }); }
@@ -129,7 +129,7 @@ function openHgSheet(r){
     const inf=infoBox(), cg=document.createElement("div"); cg.className="costgrid"; f.appendChild(inf); f.appendChild(cg);
     const rf=()=>{ const L=num(r.lvC), M=num(r.mC), nx=HG_IMB.find(x=>x[0]>L), st=hgState(r), c=hgCalcCost(r);
       inf.innerHTML=`Bonus now <b>${hgBonus(L).toFixed(1)}%</b>${L<119?` · at Lv 119: <b>${hgBonus(119).toFixed(1)}%</b>`:""}<br>`+
-        (nx?`Next imbuement <b>Lv ${nx[0]}</b> needs mastery ${nx[1]} ${M>=nx[1]?'<span class="ok">✓</span>':'<span class="bad">✗</span>'} · ${nx[2]?nx[2]+" Mithril + ":""}${nx[3]} Mythic<br>`:"")+`${st.tag} ${st.line}`;
+        (nx?`Next imbuement <b>Lv ${nx[0]}</b> needs mastery ${nx[1]} ${M>=nx[1]?'<span class="ok">✓</span>':'<span class="warn">✗</span>'} · ${nx[2]?nx[2]+" Mithril + ":""}${nx[3]} Mythic<br>`:"")+`${st.tag} ${st.line}`;
       cg.innerHTML=`<div>XP<b>${c.xpExact?"":"~"}${fmtBig(c.xp)}</b></div><div>Hammers<b>${fmt(c.fh)}</b></div><div>Mythic<b>${fmt(c.mg)}</b></div><div>Mithril<b>${fmt(c.mith)}</b></div>`; };
     const note=document.createElement("p"); note.className="lead"; note.style.margin="0"; note.textContent="Costs above are to reach your targets."; f.appendChild(note);
     rf(); return rf; },
@@ -186,9 +186,9 @@ function renderCharms(){
     `<br><span class="faint" style="font-size:13.5px">Tiles show what these 3 need. The end goal gets done one level at a time.</span>`:"<b>All charms at target ✓</b>";
   if(cpl.length){ const bag={g:gh,d:dh};
     nb.innerHTML=`<b>Optimiser plan</b> <span class="faint">${c.planDate?"· "+esc(fd(c.planDate)):""}</span>`+cpl.map((x,i)=>{ let what,cost;
-      if(x.kind==="x"){ what=`<b>Exchange</b> <span class="faint">Guides → Designs (50%)</span>`; const ok=bag.g>=x.g; bag.g-=x.g; bag.d+=x.d; cost=`<span class="${ok?"ok":"bad"}">−${fmt(x.g)} Guides ${ok?"✓":"✗"}</span> · <span class="ok">+${fmt(x.d)} Designs</span>`; }
+      if(x.kind==="x"){ what=`<b>Exchange</b> <span class="faint">Guides → Designs (50%)</span>`; const ok=bag.g>=x.g; bag.g-=x.g; bag.d+=x.d; cost=`<span class="${ok?"ok":"warn"}">−${fmt(x.g)} Guides ${ok?"✓":"✗"}</span> · <span class="ok">+${fmt(x.d)} Designs</span>`; }
       else { const r=charmPlanRow(x); what=`${esc(x.type)} <b>Charm ${x.i}</b> <span class="faint">${charmLvH(r)} → ${x.toS?`Lv ${x.toL} · ${x.toS}/5`:`Lv ${x.toL}`}</span>${x.gain?` <span class="gold">+${x.gain}%</span>`:""}`;
-        cost=[["g","Guides"],["d","Designs"]].map(([k,l])=>{ const ok=bag[k]>=x[k]; bag[k]-=x[k]; return `<span class="${ok?"ok":"bad"}">${fmt(x[k])} ${l} ${ok?"✓":"✗"}</span>`; }).join(" · "); }
+        cost=[["g","Guides"],["d","Designs"]].map(([k,l])=>{ const ok=bag[k]>=x[k]; bag[k]-=x[k]; return `<span class="${ok?"ok":"warn"}">${fmt(x[k])} ${l} ${ok?"✓":"✗"}</span>`; }).join(" · "); }
       return `<div class="hgplan"><span class="hgnum">${i+1}</span><span class="hgp-t">${what}<br><span class="hgp-c">${cost}</span></span><button class="didit chp-done" data-i="${i}">✓ Done</button></div>`; }).join("")+
       `<span class="faint" style="font-size:13.5px">Tap Done after you do it in game — it updates your Guides, Designs and the charm.</span>`;
     bindAll(nb,".chp-done",b=>{ const x=cpl[+b.dataset.i], snap=JSON.stringify(state); charmPlanApply(x); afterEdit(); toast("Charm plan step done",snap); }); }
@@ -382,7 +382,7 @@ function renderGov(){
   const gpl=govPlanLeft();
   if(gpl.length){ const bag={s:num(g.have.satin),t:num(g.have.threads),v:num(g.have.vision)};
     $("#govPlan").innerHTML=`<b>Optimiser plan</b> <span class="faint">${g.planDate?"· "+esc(fd(g.planDate)):""}</span>`+gpl.map((x,i)=>{ const p=govPlanPiece(x), n=govRem(num(p.cur),x.to);
-      const cost=[["s","Satin"],["t","Threads"],["v","Vision"]].filter(([k])=>n[k]).map(([k,l])=>{ const ok=bag[k]>=n[k]; bag[k]-=n[k]; return `<span class="${ok?"ok":"bad"}">${fmtK(n[k])} ${l} ${ok?"✓":"✗"}</span>`; }).join(" · ");
+      const cost=[["s","Satin"],["t","Threads"],["v","Vision"]].filter(([k])=>n[k]).map(([k,l])=>{ const ok=bag[k]>=n[k]; bag[k]-=n[k]; return `<span class="${ok?"ok":"warn"}">${fmtK(n[k])} ${l} ${ok?"✓":"✗"}</span>`; }).join(" · ");
       return `<div class="hgplan"><span class="hgnum">${i+1}</span><span class="hgp-t"><b>${esc(p.name)}</b> <span class="faint">${esc(GOV_TIERS[num(p.cur)][0])} → ${esc(GOV_TIERS[x.to][0])}</span>${x.gain?` <span class="gold">+${x.gain}%</span>`:""}<br><span class="hgp-c">${cost}</span></span><button class="didit gvp-done" data-i="${i}">✓ Done</button></div>`; }).join("")+
       `<span class="faint" style="font-size:13.5px">Tap Done after you do it in game — it spends the materials and updates the piece.</span>`;
     bindAll($("#govPlan"),".gvp-done",bt=>{ const x=gpl[+bt.dataset.i], p=govPlanPiece(x), n=govRem(num(p.cur),x.to), snap=JSON.stringify(state);

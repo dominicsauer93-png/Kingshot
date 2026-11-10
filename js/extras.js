@@ -75,14 +75,17 @@ function renderBagCheck(){
     ["Governor","shield",[T("threads"),M("Satin"),M("Vision"),T("designs"),M("Guides"),M("Master Emblems"),M("Skill books")]],
     ["Town","flask",[M("Truegold"),M("Tempered TG"),M("TG Dust"),M("Gold")]]];
   const ALL=GROUPS.flatMap(g=>g[2]), val=it=>num(it[1]()[it[2]]);
-  const ch=it=>{ const p=prev[it[3]]; if(p==null) return '<span class="faint">—</span>'; const d=val(it)-num(p); return d>0?`<span class="ok">▲ ${fmt(d)}</span>`:d<0?`<span class="bad">▼ ${fmt(-d)}</span>`:'<span class="faint">same</span>'; };
+  const ch=it=>{ const p=prev[it[3]]; if(p==null) return ""; const d=val(it)-num(p); return d>0?`<span class="ok">▲ ${fmt(d)}</span>`:d<0?`<span class="bad">▼ ${fmt(-d)}</span>`:""; };
+  const key=it=>BLK.includes(it[3])||!!(need[it[3]]&&need[it[3]].need), allBag=!!state.ui.bagAll; // short list = what blocks your next upgrades
   const sub=it=>{ const n=need[it[3]]; return n&&n.need?`<small class="${n.short?"warn":"ok"}" title="${esc(n.what)}">${n.short?`${fmt(n.short)} short for next`:"enough for next ✓"}</small>`:""; };
   const row=(it,i)=>`<label class="bcrow"><span class="bcl">${BLK.includes(it[3])?'<i class="bdot"></i>':""}${it[0]}${sub(it)}</span><em data-ch="${i}">${ch(it)}</em><input inputmode="numeric" data-i="${i}" value="${fmt(val(it))}"></label>`;
   let n=0;
   box.innerHTML=`<div class="dch"><h3>My bag</h3>${days==null?'<span class="pill a">not checked yet</span>':days===0?'<span class="pill g">checked today</span>':`<span class="pill${days>2?" a":""}">checked ${days} day${days>1?"s":""} ago</span>`}<button class="link" id="bcSave">Save ✓</button></div>
-    ${GROUPS.map(([t,ic,items])=>`<div class="bcgrp"><div class="bcgh">${icoI(ic)} ${t}</div>${items.map(it=>row(it,n++)).join("")}</div>`).join("")}
+    ${GROUPS.map(([t,ic,items])=>{ const vis=items.map(it=>[it,n++]).filter(([it])=>allBag||key(it)); return vis.length?`<div class="bcgrp"><div class="bcgh">${icoI(ic)} ${t}</div>${vis.map(([it,i])=>row(it,i)).join("")}</div>`:""; }).join("")}
+    <button class="drow bcall" id="bcAll"><span class="dt"><b>${allBag?"Show only what blocks you":`Show all ${ALL.length} items`}</b></span><span class="chev" aria-hidden="true">${allBag?"‹":"›"}</span></button>
     ${(()=>{ const st=staleShops(); return st.length?`<button class="drow" id="bcStale" style="width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text)"><span class="dt"><b>${icoI("camera")} ${st.length} shop${st.length>1?"s":""} not checked for ${STALE_DAYS}+ days</b></span><span class="chev">›</span></button>`:""; })()}`;
   on("bcStale",()=>setTab("Shop","Free shops"));
+  on("bcAll",()=>{ state.ui.bagAll=!allBag; scheduleSave(); renderBagCheck(); });
   box.querySelectorAll("[data-i]").forEach(x=>{ const it=ALL[+x.dataset.i]; x.onfocus=()=>x.select(); x.onkeydown=e=>{ if(e.key==="Enter") x.blur(); };
     x.onchange=()=>{ if(!/\d/.test(x.value)){ x.value=fmt(val(it)); return; } it[1]()[it[2]]=Math.max(0,Math.round(num(x.value))); x.value=fmt(val(it)); box.querySelector(`[data-ch="${x.dataset.i}"]`).innerHTML=ch(it); scheduleSave(); }; });
   on("bcSave",()=>{ state.bagCheck={d:fcToday(),v:Object.fromEntries(ALL.map(it=>[it[3],val(it)]))}; afterEdit(); toast("Bag saved"); });
@@ -102,7 +105,7 @@ function freshList(){ const out=[], bc=state.bagCheck||{}, bd=bc.d?Math.round((n
   return out; }
 function renderFresh(){ const box=$("#fresh"); if(!box) return; const L=freshList(); box.hidden=!L.length; if(!L.length){ box.innerHTML=""; return; }
   const all=!!state.ui.freshAll, show=all?L:L.slice(0,2);
-  box.innerHTML=`<div class="card dcard fresh"><div class="dch"><h3>Needs a check</h3><span class="pill a">${L.length}</span></div>${show.map((x,i)=>`<button class="drow frow2" data-i="${i}"><span class="dt"><b>${esc(x.t)}</b></span><span class="chev" aria-hidden="true">›</span></button>`).join("")}${L.length>2?`<button class="drow" id="freshMore"><span class="dt"><span>${all?"Show less":`+${L.length-2} more`}</span></span></button>`:""}</div>`;
+  box.innerHTML=`<div class="fresh"><div class="dsub">Out of date — confirm these <span class="pill a">${L.length}</span></div>${show.map((x,i)=>`<button class="drow frow2" data-i="${i}"><span class="dt"><b>${esc(x.t)}</b></span><span class="chev" aria-hidden="true">›</span></button>`).join("")}${L.length>2?`<button class="drow" id="freshMore"><span class="dt"><span>${all?"Show less":`+${L.length-2} more`}</span></span></button>`:""}</div>`;
   bindAll(box,".frow2",b=>show[+b.dataset.i].go()); on("freshMore",()=>{ state.ui.freshAll=!all; scheduleSave(); renderFresh(); }); }
 
 /* ---------- Home: timelines ---------- */
