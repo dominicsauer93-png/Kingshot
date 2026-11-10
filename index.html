@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=71">
+<link rel="stylesheet" href="css/app.css?v=72">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#main">Skip to content</a>
@@ -60,7 +60,7 @@
   <header class="mtop">
     <svg class="crest" aria-hidden="true"><use href="#i-crest"/></svg>
     <span class="t"><small id="kTag">KINGDOM</small><span id="mTitle">Home</span></span>
-    <span class="save" aria-hidden="true"><span class="dot" id="saveDotM"></span></span>
+    <span class="offl" id="offBadge" hidden>Offline</span><button class="save savebtn" id="saveBtnM" aria-label="Save status"><span class="dot" id="saveDotM"></span></button>
  <button class="iconbtn" id="searchTop" title="Search" aria-label="Search"><svg aria-hidden="true"><use href="#i-search"/></svg></button>
     <button class="iconbtn" id="mSync" title="Sync with GitHub" aria-label="Sync with GitHub" hidden><svg aria-hidden="true"><use href="#i-sync"/></svg></button>
     <button class="iconbtn themebtn" title="Theme" aria-label="Change theme"><svg aria-hidden="true"><use href="#i-auto"/></svg></button>
@@ -74,6 +74,7 @@
     <div class="page" data-tab="Home">
       <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn sm" id="homeUpd"><svg width="15" height="15" aria-hidden="true"><use href="#i-pen"/></svg>Update</button></div>
       <div class="clk" id="clockStrip" aria-label="Your time and game time"></div>
+      <div class="card dcard firstrun" id="firstRun" hidden></div>
       <div class="evmode" id="eventMode" hidden></div>
       <div class="cols-3-2">
         <div>
@@ -323,8 +324,9 @@
               <label class="f"><span>Device name</span><input id="scDev" placeholder="e.g. PC, Phone, iPad" autocomplete="off"><em>Shown on each sync, so you can tell devices apart. Stays on this device.</em></label>
               <label class="f"><span>Fine-grained token</span><input id="scTok" type="password" placeholder="github_pat_…" autocomplete="off"><em>Contents: Read + Write, this repo only.</em></label>
               <label class="fcheck"><input type="checkbox" class="cbx" id="scOn"> Auto-push my edits</label>
+              <button class="btn danger" id="scForget">Forget token on this device</button>
               </details>
-              <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="scSave">Save &amp; connect</button><button class="btn" id="scPull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Pull now</button><button class="btn" id="scPush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Push now</button><button class="btn danger" id="scForget">Forget token</button></div>
+              <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="scSave">Save &amp; connect</button><button class="btn" id="scPull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Pull now</button><button class="btn" id="scPush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Push now</button></div>
               <div class="info" id="syncStatus" role="status">Not connected</div>
             </div>
           </div>
@@ -374,16 +376,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=71"></script>
-<script src="js/ui.js?v=71"></script>
-<script src="js/home.js?v=71"></script>
-<script src="js/rally.js?v=71"></script>
-<script src="js/gear.js?v=71"></script>
-<script src="js/base.js?v=71"></script>
-<script src="js/data.js?v=71"></script>
-<script src="js/shops.js?v=71"></script>
-<script src="js/extras.js?v=71"></script>
-<script src="js/value.js?v=71"></script>
-<script src="js/boot.js?v=71"></script>
+<script src="js/core.js?v=72"></script>
+<script src="js/ui.js?v=72"></script>
+<script src="js/home.js?v=72"></script>
+<script src="js/rally.js?v=72"></script>
+<script src="js/gear.js?v=72"></script>
+<script src="js/base.js?v=72"></script>
+<script src="js/data.js?v=72"></script>
+<script src="js/shops.js?v=72"></script>
+<script src="js/extras.js?v=72"></script>
+<script src="js/value.js?v=72"></script>
+<script src="js/boot.js?v=72"></script>
 </body>
 </html>

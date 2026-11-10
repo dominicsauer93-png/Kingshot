@@ -5,7 +5,7 @@
 /* ---------- Update everything (one page) ---------- */
 function renderUpdate(){
   const host=$("#qBody"); if(!host||host.contains(document.activeElement)) return; // don't rebuild while typing
-  if(!state.ui.qOpen) state.ui.qOpen={Bag:true};
+  if(!state.ui.qOpen||Object.keys(state.ui.qOpen).filter(k=>state.ui.qOpen[k]).length!==1) state.ui.qOpen={[Object.keys(state.ui.qOpen||{}).find(k=>state.ui.qOpen[k])||"Bag"]:true}; // one group open at a time
   host.innerHTML="";
   const N=(label,obj,key,o)=>fld(label,Object.assign({type:"num",value:obj[key],get:()=>obj[key],set:v=>obj[key]=v},o||{}));
   const S=(label,val,opts,set)=>fld(label,{type:"select",value:String(val),options:opts,set});
@@ -16,7 +16,7 @@ function renderUpdate(){
     d.innerHTML=`<summary><span class="grow">${title}</span><span class="faint" style="font-weight:500;font-size:14px">${hint||""}</span></summary><div class="fbody form"></div>`;
     const body=d.querySelector(".fbody"); let built=false;
     const fill=()=>{ if(built) return; built=true; build(body); };
-    if(d.open) fill(); d.ontoggle=()=>{ state.ui.qOpen[key]=d.open; if(d.open) fill(); scheduleSave(); };
+    if(d.open) fill(); d.ontoggle=()=>{ if(d.open){ state.ui.qOpen={[key]:true}; fill(); host.querySelectorAll("details.fold").forEach(o=>{ if(o!==d) o.open=false; }); } else if(state.ui.qOpen[key]) delete state.ui.qOpen[key]; scheduleSave(); };
     host.appendChild(d); };
   const H=state.heroGear.have, C=state.charms.have, P=state.pets.have, G=state.govGear.have;
   group("Bag","Materials in your bag","dust, gold, gear, charms, pets",b=>{
@@ -176,9 +176,9 @@ function initStatic(){
 
 /* ---------- boot ---------- */
 (async function(){
-  initStatic(); buildNav(); initSheet(); initTheme(); initInstall(); initSearch(); on("quickBtn",openQuickSheet); on("homeUpd",openQuickSheet); initFabScroll();
+  initStatic(); buildNav(); initSheet(); initTheme(); initInstall(); initSearch(); on("quickBtn",openQuickSheet); on("homeUpd",openQuickSheet); initFabScroll(); initStatusUI();
   const saved=await load();
-  if(saved) state=mergeSeed(saved);
+  if(saved) state=mergeSeed(saved); else firstRun=!(syncCfg&&syncCfg.owner);
   if(Array.isArray(state.nodes)){
     state.nodes.forEach(n=>{ if(n.max==null) n.max=/unlock/i.test(n.name)?1:12;
       if(!Array.isArray(n.costs)||!n.costs.length){ const k=Object.keys(NODE_COSTS).find(x=>n.name.toLowerCase().includes(x)); if(k) n.costs=NODE_COSTS[k].slice(); }
@@ -223,3 +223,17 @@ function initStatic(){
 function initFabScroll(){ const f=$("#quickBtn"); if(!f) return; let last=scrollY, tick=false;
   addEventListener("scroll",()=>{ if(tick) return; tick=true; requestAnimationFrame(()=>{ const y=scrollY, d=y-last;
     if(Math.abs(d)>6){ f.classList.toggle("away",d>0&&y>80); last=y; } tick=false; }); },{passive:true}); }
+
+/* first visit on a new device: offer where the data should come from */
+let firstRun=false;
+function renderFirstRun(){ const box=$("#firstRun"); if(!box) return; box.hidden=!firstRun; if(!firstRun) return;
+  box.innerHTML=`<div class="dch"><h3>Welcome — where is your data?</h3></div><p class="dnote">This device has no saved data yet. The numbers you see are examples.</p>
+    <div class="frbtns"><button class="btn primary" id="frPull">Get it from GitHub</button><button class="btn" id="frImport">Import a file</button><button class="btn" id="frFresh">Start fresh</button></div>`;
+  on("frPull",()=>{ firstRun=false; renderFirstRun(); setTab("Data","Sync"); });
+  on("frImport",()=>{ firstRun=false; renderFirstRun(); const fi=$("#importFile"); if(fi) fi.click(); });
+  on("frFresh",()=>{ firstRun=false; renderFirstRun(); scheduleSave(); toast("Starting fresh — fill in your numbers with Update"); }); }
+/* save status: tap the dot to hear it; show Offline when the network is gone */
+function initStatusUI(){
+  on("saveBtnM",()=>{ const t=($("#saveTxt")||{}).textContent||"Saved", s=($("#syncMini")||{}).textContent||""; toast(t+(s?" · "+s:"")); });
+  const off=()=>{ const b=$("#offBadge"); if(b) b.hidden=navigator.onLine!==false; document.body.classList.toggle("is-offline",navigator.onLine===false); };
+  addEventListener("online",off); addEventListener("offline",off); off(); }

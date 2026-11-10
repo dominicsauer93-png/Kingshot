@@ -97,7 +97,7 @@ function renderHome(){
   const gd=new Date(gameToday()+"T00:00:00"), rs=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()+1));
   $("#homeSub").textContent=d.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})+
     (ymd(d)!==gameToday()?` · game day ${gd.toLocaleDateString(undefined,{weekday:"short",day:"numeric",month:"short"})} until ${rs.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})}`:"")+" · Kingdom day "+kingdomDay();
-  paintGoals(); renderPlanToday();
+  renderFirstRun(); paintGoals(); renderPlanToday();
   const kt=$("#kTag"); if(kt) kt.textContent="Kingdom "+((state.account&&state.account.kingdom)||455);
   renderKpis();
   renderEventMode();

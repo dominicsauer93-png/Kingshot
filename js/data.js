@@ -72,7 +72,7 @@ function renderShopsPacks(){
   const rows=P.map((p,i)=>({p,i})), owned=rows.filter(x=>bought(x.p));
   const packRow=({p,i})=>{ const n=packDaysLeft(p), rec=!!PACK_DAYS[p.kind];
     const sub=p.d&&rec?(p.bought||p.resetDay?packLeftH(n)+(p.resetDay?' <span class="faint">· renews on the 1st</span>':""):'<span class="bad">set the bought date ✎</span>'):esc(p.note||"");
-    return `<div class="drow"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}">
+    return `<div class="drow"><label class="cbxhit"><input type="checkbox" class="cbx" data-i="${i}"${p.d?" checked":""} aria-label="Own ${esc(p.t)}"></label>
       <span class="dt"><b>${esc(p.t)}</b><span>${sub}${p.d&&rec&&(p.bought||p.resetDay)&&n<=3?` <button class="renew" data-i="${i}">Renewed today</button>`:""}</span></span>
       <span class="dv">${p.viaStars?`${fmt(starsFor(p.aud))} ⭐`:`A$${packPrice(p).toFixed(2)}`}<small>${PACK_PER[p.kind]==="one-off"?"":PACK_PER[p.kind]||""}</small></span>
       <button class="shr-edit" data-i="${i}" aria-label="Edit ${esc(p.t)}"><svg aria-hidden="true"><use href="#i-pen"/></svg></button></div>`; };
@@ -181,7 +181,7 @@ function buildSync(){
     syncStatus(loadTok()?"Connected — try Pull or Push":"Saved — add a token to connect",loadTok()?"ok":"warn"); paintSyncButtons(); });
   onB.onchange=()=>{ syncCfg.on=onB.checked; saveCfg(syncCfg); };
   on("scPull",()=>syncPull(false)); on("scPush",()=>syncPush(false));
-  on("scForget",()=>{ saveTok(""); tk.value=""; tk.placeholder="github_pat_…"; syncStatus("Token removed from this device","warn"); paintSyncButtons(); });
+  on("scForget",()=>confirmSheet({title:"Forget the token?",msg:"This device stops syncing until you paste a token again. Your data stays here.",ok:"Forget token",danger:true,onOk:()=>{ saveTok(""); tk.value=""; tk.placeholder="github_pat_…"; syncStatus("Token removed from this device","warn"); paintSyncButtons(); }}));
   on("sidePull",()=>syncPull(false)); on("sidePush",()=>syncPush(false));
   on("mSync",()=>{ openSheet({title:"Sync with GitHub",sub:syncCfg.owner+"/"+syncCfg.repo,build(f){
     const r=document.createElement("div"); r.className="frow";

@@ -340,8 +340,9 @@ function exportData(){
 }
 function importData(file){
   const rd=new FileReader();
-  rd.onload=()=>{ try{ const data=JSON.parse(rd.result); state=mergeSeed(data); renderAll(); scheduleSave(); syncStatus("Imported ✓","ok"); }
-    catch(e){ syncStatus("Import failed: bad JSON","err"); } };
+  rd.onload=()=>{ let data; try{ data=JSON.parse(rd.result); }catch(e){ syncStatus("Import failed: bad JSON","err"); return; }
+    confirmSheet({title:"Replace all data?",msg:`Everything in this console will be replaced with <b>${esc(file.name)}</b>${file.lastModified?` (saved ${new Date(file.lastModified).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})})`:""}. You can undo straight after.`,ok:"Replace my data",danger:true,
+      onOk:()=>{ const snap=JSON.stringify(state); state=mergeSeed(data); renderAll(); scheduleSave(); syncStatus("Imported ✓","ok"); toast("Data imported",snap); }}); };
   rd.readAsText(file);
 }
 

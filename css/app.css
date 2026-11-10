@@ -237,7 +237,7 @@
   @media (max-width: 520px){ .tiles.hgt{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
   .tiles.hgt .tile{padding:10px} }
   .tile{display:flex;flex-direction:column;gap:3px;min-width:0;text-align:left;padding:13px 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
-  button.tile:hover{border-color:var(--gold-2);transform:translateY(-1px)}
+  @media (hover:hover){ button.tile:hover{border-color:var(--gold-2);transform:translateY(-1px)} }
   .tile .l{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:6px;min-width:0}
   .tile .l > span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .tile .v{font:700 clamp(20px,2.4vw,26px)/1.15 var(--f-mono);color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -251,7 +251,7 @@
 /* long names can never push a tile past the screen edge */
 /* ================= view cards (tap to edit) ================= */
   .vcard{position:relative;display:flex;flex-direction:column;gap:6px;width:100%;min-width:0;text-align:left;padding:13px 14px;border-radius:var(--r);border:1.5px solid var(--line);background:var(--panel);box-shadow:var(--shadow);transition:border-color .15s,transform .15s,box-shadow .15s}
-  .vcard:hover{border-color:var(--gold-2);transform:translateY(-1px)}
+  @media (hover:hover){ .vcard:hover{border-color:var(--gold-2);transform:translateY(-1px)} }
   .vcard:active{transform:translateY(0)}
   .vcard.s-ready{box-shadow:inset 4px 0 0 var(--green),var(--shadow)}
   .vcard.s-block{box-shadow:inset 4px 0 0 var(--amber),var(--shadow)}
@@ -390,7 +390,7 @@
   .sh-foot{display:flex;gap:10px;padding:12px 18px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line-soft);background:var(--panel)}
   .sh-foot .btn{flex:1}
   .grab{display:none}
-  @media (max-width: 899px){ .sheet{left:0;right:0;top:auto;bottom:0;width:auto;max-height:90vh;border-left:0;border-top:1px solid var(--line);border-radius:20px 20px 0 0;transform:translateY(102%)}
+  @media (max-width: 899px){ .sheet{left:0;right:0;top:auto;bottom:0;width:auto;max-height:90vh;max-height:90dvh;border-left:0;border-top:1px solid var(--line);border-radius:20px 20px 0 0;transform:translateY(102%)}
   .grab{display:block;width:42px;height:5px;border-radius:3px;background:var(--line);margin:8px auto 0}
   .sh-head{padding-top:10px} }
 /* ================= toast ================= */
@@ -473,8 +473,8 @@
   .sglive li{margin:4px 0}
 /* battle card */
   .battle{position:fixed;inset:0;z-index:200;background:var(--bg);overflow:auto;padding:16px}
-  .battle.due{animation:btflash 1s infinite}
-@keyframes btflash{50%{background:color-mix(in srgb,var(--red) 25%,var(--bg))}}
+  .battle.due .bt-arc{animation:btpulse 1s infinite}
+@keyframes btpulse{50%{opacity:.35}}
   .bt-in{max-width:440px;margin:0 auto}
   .bt-big{font:800 56px var(--f-mono);text-align:center;margin:8px 0 0}
   .bt-ring{position:relative;width:190px;height:190px;margin:10px auto}
@@ -990,3 +990,37 @@
   /* desktop: Coming up as a grid, no sideways scroll */
   @media (min-width: 900px){ .cup{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));overflow:visible} .cupc{flex:none} }
   @media (max-width: 520px){ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+/* ================= batch 4: touch, forms, feedback ================= */
+  /* 44px targets on touch screens */
+  @media (max-width: 899px){
+    .btn{min-height:44px}
+    input:not([type=checkbox]):not([type=radio]), select{min-height:44px}
+    .stepper button{width:44px;height:44px}
+    .shr-edit{width:44px;height:44px}
+    #bagCheck .bcrow input{min-height:44px}
+  }
+  .cbxhit{display:grid;place-items:center;width:44px;height:44px;margin:-10px -4px -10px -12px;flex:none;cursor:pointer}
+  /* edit pencil always shows on touch */
+  @media (hover:none){ .vc-edit{opacity:.55} }
+  /* tap feedback */
+  .drow:active, .lrow:active, .pgo:active, button.tile:active, .kpi:active, .cupc:active, .vcard:active{background-color:var(--hover)}
+  /* confirm sheet */
+  .cmsg{margin:0;font-size:15px;line-height:1.5;color:var(--text)}
+  .cbtns{justify-content:flex-end;gap:10px;margin-top:6px}
+  .btn.danger.solid{background:#B03223;border-color:#B03223;color:#fff}
+  /* first run */
+  .firstrun{margin-bottom:12px;border-color:color-mix(in srgb,var(--acc) 45%,var(--line))}
+  .frbtns{display:flex;flex-wrap:wrap;gap:8px;padding:0 14px 14px}
+  /* status */
+  .savebtn{border:0;background:none;padding:0;width:44px;height:44px;display:grid;place-items:center;cursor:pointer}
+  .offl{font:700 11.5px var(--f-body);padding:4px 8px;border-radius:999px;background:var(--amber-soft);color:var(--amber-text)}
+  /* Update all: jump chips are one sticky scrolling row */
+  #qJump{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;position:sticky;top:calc(var(--mtop) + env(safe-area-inset-top));z-index:5;margin:0 -14px 12px;padding:8px 14px;background:var(--bg)}
+  #qJump::-webkit-scrollbar{display:none}
+  #qJump .chip{flex:none}
+  /* toast sits above the bottom bar and the Update button */
+  @media (max-width: 899px){ #toast{bottom:calc(var(--bnav) + 84px + env(safe-area-inset-bottom))} }
+  @media (min-width: 900px){ #qJump{margin:0 0 12px;padding:8px 0} }
+  @media (max-width: 899px){ .page .chip, .page .btn.sm, .page .btn, .page summary, .sheet .btn{min-height:44px} .page summary{display:flex;align-items:center} }
+  @media (max-width: 899px){ .seg button, .nb-buy, .pill, .addrow, button.add{min-height:44px} }

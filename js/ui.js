@@ -25,9 +25,12 @@ function toast(msg,undoSnap){
   const t=$("#toast"); $("#toastMsg").textContent=msg;
   const u=$("#toastUndo"); u.textContent=undoSnap?"Undo":"";
   u.onclick=undoSnap?()=>{ state=JSON.parse(undoSnap); renderAll(); scheduleSave(); t.classList.remove("show"); }:null;
-  t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),undoSnap?6000:2600);
+  t.classList.add("show"); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove("show"),undoSnap?10000:3200);
 }
 function showUndo(msg,snap){ toast(msg,snap); }
+function confirmSheet({title,msg,ok,danger,onOk}){
+  openSheet({title,sub:"",noFoot:true,build(f){ f.innerHTML=`<p class="cmsg">${msg}</p><div class="rowb cbtns"><button class="btn" id="cfNo">Cancel</button><button class="btn ${danger?"danger solid":"primary"}" id="cfYes">${esc(ok||"OK")}</button></div>`;
+    f.querySelector("#cfNo").onclick=()=>closeSheet(); f.querySelector("#cfYes").onclick=()=>{ closeSheet(); onOk(); }; }}); }
 
 /* ---------- edit sheet (bottom sheet on phones, side panel on computers) ---------- */
 let sheetRefresh=null, sheetLastFocus=null;
@@ -37,6 +40,7 @@ function openSheet({title,sub,build,onDelete,delLabel,noFoot}){
   const body=$("#shBody"); body.innerHTML=""; body.scrollTop=0;
   const form=document.createElement("div"); form.className="form"; body.appendChild(form);
   sheetRefresh=build(form)||null;
+  if(!noFoot&&!onDelete&&!form.querySelector("input,select,textarea")) noFoot=true; // info-only sheets need no Done bar
   $("#sheetWrap .sh-foot").hidden=!!noFoot&&!onDelete;
   const del=$("#shDel"); del.hidden=!onDelete; del.textContent=delLabel||"Remove";
   del.onclick=onDelete?()=>{ const snap=JSON.stringify(state); onDelete(); closeSheet(); scheduleSave(); renderAll(); toast(`${title} removed`,snap); }:null;
@@ -54,6 +58,7 @@ function closeSheet(fromHistory){
   sheetRefresh=null; if(sheetLastFocus&&sheetLastFocus.isConnected) sheetLastFocus.focus({preventScroll:true});
 }
 function initSheet(){
+  $("#shBody").addEventListener("focusin",e=>{ if(e.target.matches("input,select,textarea")&&matchMedia("(max-width:899px)").matches) setTimeout(()=>e.target.scrollIntoView({block:"center",behavior:"smooth"}),250); });
   $$("#sheetWrap [data-close]").forEach(b=>b.addEventListener("click",()=>closeSheet()));
   document.addEventListener("keydown",e=>{
     const open=$("#sheetWrap").classList.contains("open"); if(!open) return;
