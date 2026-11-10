@@ -340,8 +340,9 @@ function exportData(){
 }
 function importData(file){
   const rd=new FileReader();
-  rd.onload=()=>{ try{ const data=JSON.parse(rd.result); state=mergeSeed(data); renderAll(); scheduleSave(); syncStatus("Imported ✓","ok"); }
-    catch(e){ syncStatus("Import failed: bad JSON","err"); } };
+  rd.onload=()=>{ let data; try{ data=JSON.parse(rd.result); }catch(e){ syncStatus("Import failed: bad JSON","err"); return; }
+    confirmSheet({title:"Replace all data?",msg:`Everything in this console will be replaced with <b>${esc(file.name)}</b>${file.lastModified?` (saved ${new Date(file.lastModified).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"})})`:""}. You can undo straight after.`,ok:"Replace my data",danger:true,
+      onOk:()=>{ const snap=JSON.stringify(state); state=mergeSeed(data); renderAll(); scheduleSave(); syncStatus("Imported ✓","ok"); toast("Data imported",snap); }}); };
   rd.readAsText(file);
 }
 
@@ -522,7 +523,7 @@ function paintForecast(){
     const when = need<=0 ? `<b style="color:var(--green)">already met</b>` : (isFinite(dys)?`~<b>${addDays(dys)}</b> (${Math.ceil(dys)}d)`:`<b style="color:var(--red)">never at current rate</b>`);
     return `<div style="margin-bottom:4px">${label}: ${rateTxt} · ${when}</div>`;
   };
-  let html=`<div class="mono" style="font-size:13.5px">`;
+  let html=`<div class="mono" style="font-size:14px">`;
   html+=line("Dust",f.dustRate,dNeed,dDays);
   html+=line("Gold",f.goldRate,gNeed,gDays);
   const both=Math.max(isFinite(dDays)?dDays:0, isFinite(gDays)?gDays:0);
@@ -530,8 +531,8 @@ function paintForecast(){
   html+=`</div>`;
   html+=`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line)">`;
   if(dNeed<=0&&gNeed<=0) html+=`<b style="color:var(--green)">Both gates met — start the research.</b>`;
-  else if(blocked) html+=`<b style="color:var(--amber)">One gate isn't growing — log more, or lift that rate.</b>`;
-  else html+=`<b style="color:var(--gold)">T11 ${activePhase().n} unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
+  else if(blocked) html+=`<b style="color:var(--amber-text)">One gate isn't growing — log more, or lift that rate.</b>`;
+  else html+=`<b style="color:var(--gold-text)">T11 ${activePhase().n} unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
   html+=`<br><span class="sub">Then ~${Math.round(nodeResDays(coreNodes(state[activePhase().k]||[])))}d research on top (runs once you start it). Based on ${f.days.toFixed(0)}d of history.</span></div>`;
   out.innerHTML=html;
 }

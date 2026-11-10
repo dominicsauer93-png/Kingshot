@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#F3EAD7">
+<meta name="theme-color" content="#141311">
 <meta name="description" content="Kingshot Command Console — track your account and see what to upgrade next.">
 <title>Kingshot Command Console</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -15,14 +15,13 @@
 <meta name="apple-mobile-web-app-title" content="Kingshot">
 <script>
   // apply the saved theme before first paint (no flash)
-  (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t!=="light"&&t!=="auto") t="dark"; if(t!=="auto") document.documentElement.setAttribute("data-theme",t); }catch(e){} })();
+  (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t!=="light"&&t!=="auto") t="dark"; if(t==="auto") t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"; document.documentElement.setAttribute("data-theme",t); }catch(e){ document.documentElement.setAttribute("data-theme","dark"); } })();
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=68">
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/app.css?v=74">
 </head>
 <body>
+<a class="skip" id="skipLink" href="#main">Skip to content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6D27A"/><stop offset=".55" stop-color="#D9A23A"/><stop offset="1" stop-color="#9A6A22"/></linearGradient>
@@ -42,11 +41,11 @@
   <aside class="side">
     <div class="brand"><svg class="crest" aria-hidden="true"><use href="#i-crest"/></svg><div><span class="k">Kingshot</span><span class="t">Command Console</span></div></div>
     <button class="searchbtn" id="searchSide" aria-label="Search (Ctrl K)"><svg width="17" height="17" aria-hidden="true"><use href="#i-search"/></svg><span>Search</span><kbd>Ctrl K</kbd></button>
-    <nav id="tabnav" role="tablist" aria-label="Main sections"></nav>
+    <nav id="tabnav" aria-label="Main sections"></nav>
     <div class="sidefoot">
       <button class="btn install" id="installBtn"><svg width="18" height="18" aria-hidden="true"><use href="#i-down"/></svg>Install app</button>
       <div class="row" id="sideSync" hidden>
-        <button class="btn sm" id="sidePull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Pull</button><button class="btn sm" id="sidePush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Push</button>
+        <button class="btn sm" id="sidePull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Get</button><button class="btn sm" id="sidePush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Save</button>
       </div>
       <div class="rowb">
         <span class="save" role="status" aria-live="polite"><span class="dot" id="saveDot"></span><span id="saveTxt">Saved</span></span>
@@ -58,8 +57,8 @@
 
   <header class="mtop">
     <svg class="crest" aria-hidden="true"><use href="#i-crest"/></svg>
-    <span class="t"><small id="kTag">KINGDOM</small>Command Console</span>
-    <span class="save" aria-hidden="true"><span class="dot" id="saveDotM"></span></span>
+    <span class="t"><small id="kTag">KINGDOM</small><span id="mTitle">Home</span></span>
+    <span class="offl" id="offBadge" hidden>Offline</span><button class="save savebtn" id="saveBtnM" aria-label="Save status"><span class="dot" id="saveDotM"></span></button>
  <button class="iconbtn" id="searchTop" title="Search" aria-label="Search"><svg aria-hidden="true"><use href="#i-search"/></svg></button>
     <button class="iconbtn" id="mSync" title="Sync with GitHub" aria-label="Sync with GitHub" hidden><svg aria-hidden="true"><use href="#i-sync"/></svg></button>
     <button class="iconbtn themebtn" title="Theme" aria-label="Change theme"><svg aria-hidden="true"><use href="#i-auto"/></svg></button>
@@ -71,25 +70,24 @@
 
     <!-- ================= HOME ================= -->
     <div class="page" data-tab="Home">
-      <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn sm" data-goto="Update all"><svg width="15" height="15" aria-hidden="true"><use href="#i-pen"/></svg>Update</button></div>
+      <div class="phead"><div><h1 id="homeTitle">Home</h1><p id="homeSub"></p></div><button class="btn sm" id="homeUpd"><svg width="15" height="15" aria-hidden="true"><use href="#i-pen"/></svg>Update</button></div>
       <div class="clk" id="clockStrip" aria-label="Your time and game time"></div>
-      <div class="kpis" id="kpis"></div>
-      <button class="info" id="packAlert" hidden data-goto="Shops &amp; Packs" style="display:block;width:100%;text-align:left;margin-bottom:12px;border-color:var(--amber);background:var(--amber-soft);color:var(--text)"></button>
+      <div class="card dcard firstrun" id="firstRun" hidden></div>
       <div class="evmode" id="eventMode" hidden></div>
-      <div id="fresh"></div>
-      <div class="cols-3-2 mt2">
+      <div class="cols-3-2">
         <div>
           <section class="sec" data-key="Do next">
-            <div class="card dcard pcard"><div class="dch"><h3>Your plan today <small id="doCount"></small></h3><span class="faint" style="font-size:12px">from your bag + events</span><button class="link" id="doMore">All ›</button></div>
-            <div id="doNext"></div></div>
+            <div class="card dcard pcard"><div class="dch"><h3>Today <small id="doCount"></small></h3><span class="faint fs12">from your bag + events</span><button class="link" id="doMore">All ›</button></div>
+            <div id="doNext"></div><div id="fresh"></div></div>
           </section>
+          <div class="kpis mt" id="kpis"></div>
           <section class="sec" data-key="Upcoming Events">
             <div class="cuphead"><h3>Coming up</h3><button class="link" id="evAll">All ›</button><button class="link" id="evAdd">+ Add</button></div><div id="evUpcoming"></div>
           </section>
         </div>
         <div>
           <section class="sec" data-key="Bag check"><div class="card dcard" id="bagCheck"></div>
-            <details class="card dcard dfold mt" id="tlFold"><summary class="dch"><h3>Forecast</h3><span class="faint" style="font-size:13px">when you reach each goal ›</span></summary><div class="fbody" id="timelines" style="padding:0 14px 12px"></div></details></section>
+            <details class="card dcard dfold mt" id="tlFold"><summary class="dch"><h3>Forecast</h3><span class="faint fs13">when you reach each goal ›</span></summary><div class="fbody" id="timelines" style="padding:0 14px 12px"></div></details></section>
         </div>
       </div>
     </div>
@@ -207,7 +205,7 @@
         <details class="card dcard dfold mt" id="fcFold"><summary class="dch"><h3>Unlock forecast</h3><span class="faint" style="font-size:12.5px">log dust + gold ›</span></summary><div style="padding:0 14px 12px"><div id="fcCard">
           <h3>Forecast — T11 <span class="phName">Infantry</span> unlock date</h3>
           <p class="lead" style="margin:0 0 10px">Log your Dust + Gold once per check-in. After two days it projects your unlock date.</p>
-          <div class="rowb"><button class="btn primary" id="fcLog">＋ Log today's Dust + Gold</button><span class="tag ok" id="fcMsg" hidden></span></div>
+          <div class="rowb"><button class="btn primary" id="fcLog">+ Log today's Dust + Gold</button><span class="tag ok" id="fcMsg" hidden></span></div>
           <div id="fcOut" class="mt"></div>
           <div id="fcHistory" class="mt"></div>
         </div>
@@ -324,8 +322,9 @@
               <label class="f"><span>Device name</span><input id="scDev" placeholder="e.g. PC, Phone, iPad" autocomplete="off"><em>Shown on each sync, so you can tell devices apart. Stays on this device.</em></label>
               <label class="f"><span>Fine-grained token</span><input id="scTok" type="password" placeholder="github_pat_…" autocomplete="off"><em>Contents: Read + Write, this repo only.</em></label>
               <label class="fcheck"><input type="checkbox" class="cbx" id="scOn"> Auto-push my edits</label>
+              <button class="btn danger" id="scForget">Forget token on this device</button>
               </details>
-              <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="scSave">Save &amp; connect</button><button class="btn" id="scPull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Pull now</button><button class="btn" id="scPush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Push now</button><button class="btn danger" id="scForget">Forget token</button></div>
+              <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="scSave">Save &amp; connect</button><button class="btn" id="scPull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Get latest</button><button class="btn" id="scPush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Save to GitHub</button></div>
               <div class="info" id="syncStatus" role="status">Not connected</div>
             </div>
           </div>
@@ -346,22 +345,22 @@
             <p class="faint mt" style="font-size:13.5px">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
           <div class="card"><h3>2 · Phone notifications (optional)</h3>
             <p class="lead" style="margin:0 0 10px">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app.</p>
-            <ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
+            <details class="dfold"><summary>Show the 4 setup steps ›</summary><ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
               <li>On GitHub: repo → <b>Settings → Secrets and variables → Actions → New repository secret</b>. Name <code>NTFY_TOPIC</code>, value = the same topic name.</li>
-              <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol>
+              <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol></details>
             <p class="faint mt" style="font-size:13.5px">Keep the topic secret: anyone who knows it can read these notes. Nothing is sent until the secret exists.</p></div>
         </div>
       </section>
     </div>
 
-    <p class="foot">Kingshot Command Console · data saved on this device</p>
+    <p class="foot" id="footTxt">Kingshot Command Console · data saved on this device</p>
    </div>
   </main>
 </div>
 
-<button class="fab" id="quickBtn" aria-label="Quick update" title="Quick update">+</button>
+<button class="fab" id="quickBtn" aria-label="Quick update" title="Quick update"><svg aria-hidden="true"><use href="#i-pen"/></svg><span>Update</span></button>
 <div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-label="Search">
-  <div class="srch-box"><input id="srchIn" type="search" placeholder="Search — e.g. mithril, shards, packs, Ava" autocomplete="off" aria-controls="srchList"><ul id="srchList" role="listbox"></ul></div>
+  <div class="srch-box"><div class="srch-in"><input id="srchIn" type="search" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-label="Search" placeholder="Search heroes, packs, events, materials…" autocomplete="off" aria-controls="srchList"><button class="link" id="srchCancel">Cancel</button></div><ul id="srchList" role="listbox" aria-label="Results"></ul></div>
 </div>
 <div class="sheetwrap" id="sheetWrap" aria-hidden="true">
   <div class="scrim" data-close></div>
@@ -375,16 +374,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=68"></script>
-<script src="js/ui.js?v=68"></script>
-<script src="js/home.js?v=68"></script>
-<script src="js/rally.js?v=68"></script>
-<script src="js/gear.js?v=68"></script>
-<script src="js/base.js?v=68"></script>
-<script src="js/data.js?v=68"></script>
-<script src="js/shops.js?v=68"></script>
-<script src="js/extras.js?v=68"></script>
-<script src="js/value.js?v=68"></script>
-<script src="js/boot.js?v=68"></script>
+<script src="js/core.js?v=74"></script>
+<script src="js/ui.js?v=74"></script>
+<script src="js/home.js?v=74"></script>
+<script src="js/rally.js?v=74"></script>
+<script src="js/gear.js?v=74"></script>
+<script src="js/base.js?v=74"></script>
+<script src="js/data.js?v=74"></script>
+<script src="js/shops.js?v=74"></script>
+<script src="js/extras.js?v=74"></script>
+<script src="js/value.js?v=74"></script>
+<script src="js/boot.js?v=74"></script>
 </body>
 </html>

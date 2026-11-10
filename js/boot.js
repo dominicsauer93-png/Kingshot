@@ -5,7 +5,7 @@
 /* ---------- Update everything (one page) ---------- */
 function renderUpdate(){
   const host=$("#qBody"); if(!host||host.contains(document.activeElement)) return; // don't rebuild while typing
-  if(!state.ui.qOpen) state.ui.qOpen={Bag:true};
+  if(!state.ui.qOpen||Object.keys(state.ui.qOpen).filter(k=>state.ui.qOpen[k]).length!==1) state.ui.qOpen={[Object.keys(state.ui.qOpen||{}).find(k=>state.ui.qOpen[k])||"Bag"]:true}; // one group open at a time
   host.innerHTML="";
   const N=(label,obj,key,o)=>fld(label,Object.assign({type:"num",value:obj[key],get:()=>obj[key],set:v=>obj[key]=v},o||{}));
   const S=(label,val,opts,set)=>fld(label,{type:"select",value:String(val),options:opts,set});
@@ -16,7 +16,7 @@ function renderUpdate(){
     d.innerHTML=`<summary><span class="grow">${title}</span><span class="faint" style="font-weight:500;font-size:14px">${hint||""}</span></summary><div class="fbody form"></div>`;
     const body=d.querySelector(".fbody"); let built=false;
     const fill=()=>{ if(built) return; built=true; build(body); };
-    if(d.open) fill(); d.ontoggle=()=>{ state.ui.qOpen[key]=d.open; if(d.open) fill(); scheduleSave(); };
+    if(d.open) fill(); d.ontoggle=()=>{ if(d.open){ state.ui.qOpen={[key]:true}; fill(); host.querySelectorAll("details.fold").forEach(o=>{ if(o!==d) o.open=false; }); } else if(state.ui.qOpen[key]) delete state.ui.qOpen[key]; scheduleSave(); };
     host.appendChild(d); };
   const H=state.heroGear.have, C=state.charms.have, P=state.pets.have, G=state.govGear.have;
   group("Bag","Materials in your bag","dust, gold, gear, charms, pets",b=>{
@@ -72,6 +72,8 @@ const TAB_RENDER={Home:()=>renderHome(),Upgrade:()=>renderUpgrade(),Heroes:()=>{
 const dirtyTabs=new Set();
 function renderPrep(){ migrateEvents(); migrateMasterNotes(); if(!state.ui.sub) state.ui.sub={}; }
 function renderAll(){ renderPrep(); TABS.forEach(t=>TAB_RENDER[t]()); dirtyTabs.clear(); }
+function renderFirst(){ renderActive(); const idle=window.requestIdleCallback||(f=>setTimeout(f,200)); // open tab first, the rest in the background
+  idle(()=>{ if(!dirtyTabs.size) return; renderPrep(); [...dirtyTabs].forEach(t=>{ if(t!==state.ui.tab){ TAB_RENDER[t](); dirtyTabs.delete(t); } }); }); }
 function renderActive(){ // after an edit: redraw only the tab you're looking at; the rest redraw when opened
   renderPrep(); const cur=TABS.includes(state.ui.tab)?state.ui.tab:"Home";
   TAB_RENDER[cur](); TABS.forEach(t=>{ if(t!==cur) dirtyTabs.add(t); else dirtyTabs.delete(t); });
@@ -105,32 +107,49 @@ const SEARCH_KW={
   "Account":"governor town center vip kingdom day power"};
 function searchIndex(){
   const heroes=(state.goldShards||[]).map(r=>r.n).join(" ").toLowerCase();
-  return $$(".sec[data-key]").map(sec=>{ const tab=sec.closest(".page").dataset.tab, sub=sec.dataset.sub||"", key=sec.dataset.key;
+  const out=$$(".sec[data-key]").map(sec=>{ const tab=sec.closest(".page").dataset.tab, sub=sec.dataset.sub||"", key=sec.dataset.key;
     const h=sec.querySelector("h2"), head=h?h.childNodes[0].textContent.trim():"";
     const kw=(SEARCH_KW[key]||"")+(/Shards|Hero Roles/.test(key)?" "+heroes:"");
-    return {tab,sub,key,title:key,hay:[key,head,sub,tab,kw].join(" ").toLowerCase()}; });
+    return {tab:lbl(tab),sub:sub?lbl(sub):"",key,title:key,kind:"Section",hay:[key,head,sub,tab,kw].join(" ").toLowerCase()}; });
+  // rows inside the pages: heroes, masters, events, packs, bag items — jump straight to the row
+  const add=(title,kind,where,go,extra)=>out.push({title,kind,tab:where,sub:"",go,hay:(title+" "+kind+" "+(extra||"")).toLowerCase()});
+  (state.goldShards||[]).forEach(r=>r.n&&add(r.n,"Hero shards","Heroes › Shards",()=>{ setTab("Heroes","Shards"); flashRow(r.n); },"hero"));
+  ((state.widgets&&state.widgets.rows)||[]).forEach(r=>r.hero&&add(r.hero+" widget","Widget","Heroes › Widgets",()=>{ setTab("Heroes","Widgets"); flashRow(r.hero); },"hero"));
+  (state.masters||[]).forEach(m=>m.n&&add(m.n,"Master","Governor › Masters",()=>{ setTab("Governor","Masters"); flashRow(m.n); }));
+  (state.events||[]).forEach(e=>e.n&&add(e.n,"Event","Opens the event",()=>openEventSheet(e)));
+  (typeof VALUE_DB!=="undefined"?VALUE_DB:[]).forEach(d=>add(d.n,"Pack","Shop › Packs",()=>{ setTab("Shop","Paid"); flashRow(d.n); },"buy"));
+  (state.packs||[]).forEach(p=>p.t&&!VALUE_DB.some(d=>d.n===p.t)&&add(p.t,"Your pack","Shop › Packs",()=>{ setTab("Shop","Paid"); flashRow(p.t); }));
+  (typeof BAG_KEYS!=="undefined"?BAG_KEYS.map(b=>b[1]).concat(BAG_MORE.map(b=>b[0])):[]).forEach(n=>add(n,"In my bag","Home › My bag",()=>{ setTab("Home"); if(!state.ui.bagAll){ state.ui.bagAll=true; renderBagCheck(); } flashRow(n,"#bagCheck"); },"material bag"));
+  return out;
 }
+// scroll to the first row on the open page that names it, and flash it
+function flashRow(txt,scope){ setTimeout(()=>{ const host=scope?$(scope):$(".page:not([hidden])"); if(!host) return; const t=String(txt).toLowerCase();
+  const el=[...host.querySelectorAll(".drow,.lrow,.tile,.vcard,.bcrow,.pstep,.sh2row,.shrow2,.hgrow,tr,.card")].filter(e=>e.offsetParent).find(e=>e.textContent.toLowerCase().includes(t));
+  if(!el) return; el.scrollIntoView({block:"center",behavior:"smooth"}); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1800); },120); }
 let srchSel=0, srchRes=[];
 function openSearch(){
-  const w=$("#srch"), inp=$("#srchIn"); w.hidden=false; inp.value=""; paintSearch(); setTimeout(()=>inp.focus(),0);
+  const w=$("#srch"), inp=$("#srchIn"); if(w.hidden) pushOverlay(); setBehind(true); w.hidden=false; inp.value=""; inp.setAttribute("aria-expanded","true"); paintSearch(); setTimeout(()=>inp.focus(),0);
 }
-function closeSearch(){ $("#srch").hidden=true; }
+function closeSearch(fromHistory){ if($("#srch").hidden) return; if(!fromHistory) popOverlay(); setBehind(false); $("#srch").hidden=true; $("#srchIn").setAttribute("aria-expanded","false"); }
 function paintSearch(){
-  const q=$("#srchIn").value.toLowerCase().trim(), words=q.split(/\s+/).filter(Boolean), idx=searchIndex();
+  const q=$("#srchIn").value.toLowerCase().trim(), words=q.split(/\s+/).filter(Boolean), all=searchIndex(), idx=words.length?all:all.filter(x=>x.kind==="Section");
   const rx=words.map(w=>new RegExp("(^|[^a-z0-9])"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
-  const score=x=>x.title.toLowerCase().includes(q)?-1:Math.min(...rx.map(r=>{ const m=x.hay.match(r); return m?m.index:1e9; }));
-  srchRes=!words.length?idx:idx.filter(x=>rx.every(r=>r.test(x.hay))).map(x=>({x,s:score(x)})).sort((a,b)=>a.s-b.s).map(o=>o.x);
+  const score=x=>(x.title.toLowerCase().startsWith(q)?-2:x.title.toLowerCase().includes(q)?-1:Math.min(...rx.map(r=>{ const m=x.hay.match(r); return m?m.index:1e9; })))+(x.kind==="Section"?0:.5);
+  srchRes=(!words.length?idx:idx.filter(x=>rx.every(r=>r.test(x.hay))).map(x=>({x,s:score(x)})).sort((a,b)=>a.s-b.s).map(o=>o.x)).slice(0,40);
   srchSel=Math.min(srchSel,Math.max(0,srchRes.length-1)); if(!q) srchSel=0;
-  $("#srchList").innerHTML=srchRes.length?srchRes.map((r,i)=>`<li><button role="option" data-i="${i}" aria-selected="${i===srchSel}"><span>${esc(r.title)}</span><span class="where">${esc(r.tab)}${r.sub&&r.sub!==r.title?" › "+esc(r.sub):""}</span></button></li>`).join(""):`<li class="none">Nothing found for “${esc(q)}”</li>`;
-  $$("#srchList button").forEach(b=>b.onclick=()=>pickSearch(+b.dataset.i));
+  const inp=$("#srchIn");
+  $("#srchList").innerHTML=srchRes.length?srchRes.map((r,i)=>`<li role="option" id="so-${i}" data-i="${i}" aria-selected="${i===srchSel}"><span class="st"><b>${esc(r.title)}</b>${r.kind!=="Section"?`<small>${esc(r.kind)}</small>`:""}</span><span class="where">${esc(r.tab)}${r.sub&&r.sub!==r.title?" › "+esc(r.sub):""}</span></li>`).join(""):`<li class="none" role="presentation">Nothing found for “${esc(q)}”</li>`;
+  if(srchRes.length) inp.setAttribute("aria-activedescendant","so-"+srchSel); else inp.removeAttribute("aria-activedescendant");
+  $$("#srchList [role=option]").forEach(b=>b.onclick=()=>pickSearch(+b.dataset.i));
 }
-function pickSearch(i){ const r=srchRes[i]; if(!r) return; closeSearch(); goToSection(null,r.key);
+function pickSearch(i){ const r=srchRes[i]; if(!r) return; closeSearch(); if(r.go){ r.go(); return; } goToSection(null,r.key);
   setTimeout(()=>{ const sec=[...$$(".sec[data-key]")].find(x=>x.dataset.key===r.key); if(sec&&!sec.hidden&&!sec.dataset.sub) sec.scrollIntoView({behavior:"smooth",block:"start"}); },80); }
 function initSearch(){
   ["searchSide","searchTop"].forEach(id=>on(id,openSearch));
+  on("srchCancel",()=>closeSearch());
   const inp=$("#srchIn");
   inp.oninput=()=>{ srchSel=0; paintSearch(); };
-  inp.onkeydown=e=>{ if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); srchSel=Math.max(0,Math.min(srchRes.length-1,srchSel+(e.key==="ArrowDown"?1:-1))); paintSearch(); const sb=$(`#srchList button[data-i="${srchSel}"]`); if(sb) sb.scrollIntoView({block:"nearest"}); }
+  inp.onkeydown=e=>{ if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); srchSel=Math.max(0,Math.min(srchRes.length-1,srchSel+(e.key==="ArrowDown"?1:-1))); paintSearch(); const sb=$(`#so-${srchSel}`); if(sb) sb.scrollIntoView({block:"nearest"}); }
     else if(e.key==="Enter"){ e.preventDefault(); pickSearch(srchSel); } else if(e.key==="Escape"){ closeSearch(); } };
   $("#srch").addEventListener("click",e=>{ if(e.target.id==="srch") closeSearch(); });
   document.addEventListener("keydown",e=>{ const t=e.target, typing=t&&(t.isContentEditable||/INPUT|TEXTAREA|SELECT/.test(t.tagName));
@@ -176,9 +195,9 @@ function initStatic(){
 
 /* ---------- boot ---------- */
 (async function(){
-  initStatic(); buildNav(); initSheet(); initTheme(); initInstall(); initSearch(); on("quickBtn",openQuickSheet);
+  initStatic(); buildNav(); initSheet(); initTheme(); initInstall(); initSearch(); on("quickBtn",openQuickSheet); on("homeUpd",openQuickSheet); initFabScroll(); initStatusUI();
   const saved=await load();
-  if(saved) state=mergeSeed(saved);
+  if(saved) state=mergeSeed(saved); else firstRun=!(syncCfg&&syncCfg.owner);
   if(Array.isArray(state.nodes)){
     state.nodes.forEach(n=>{ if(n.max==null) n.max=/unlock/i.test(n.name)?1:12;
       if(!Array.isArray(n.costs)||!n.costs.length){ const k=Object.keys(NODE_COSTS).find(x=>n.name.toLowerCase().includes(x)); if(k) n.costs=NODE_COSTS[k].slice(); }
@@ -213,8 +232,47 @@ function initStatic(){
   if(Array.isArray(state.buildings)) state.buildings.forEach(bl=>{ if(bl.stepIdx===undefined) bl.stepIdx=0; delete bl.t; delete bl.tg; delete bl.ttg; delete bl.time; });
   if(state.account && !state.account.dayAnchor){ const d=parseInt(state.account.day)||443; const a=new Date(); a.setUTCDate(a.getUTCDate()-(d-1)); state.account.dayAnchor=a.toISOString().slice(0,10); }
   state.ui.tab=TAB_ALIAS[state.ui.tab]||state.ui.tab;
-  renderAll(); buildSync(); buildUpload(); initCommaFormatting(); initNoDrag();
-  const fromHash=tabFromHash(); setTab(fromHash?fromHash[0]:state.ui.tab, fromHash?fromHash[1]:undefined, false);
+  renderFirst(); buildSync(); buildUpload(); initCommaFormatting(); initNoDrag();
+  const fromHash=tabFromHash(); setTab(fromHash?fromHash[0]:state.ui.tab, fromHash?fromHash[1]:undefined, false); navReady=true; initDecorate(); initUpdateNotice(); if(/\?update/.test(location.hash)){ history.replaceState(null,"",location.hash.replace("?update","")); setTimeout(openQuickSheet,300); }
   const persists=hasStore||lsSet("__probe__","1"); if(!persists) setSaveUI("err","Session only");
   if(syncCfg.on && syncCfg.owner && loadTok()) syncPull(true);
 })();
+
+/* the floating Update button hides while you scroll down (so it never sits on a number) and comes back when you scroll up */
+function initFabScroll(){ const f=$("#quickBtn"); if(!f) return; let last=scrollY, tick=false;
+  addEventListener("scroll",()=>{ if(tick) return; tick=true; requestAnimationFrame(()=>{ const y=scrollY, d=y-last;
+    if(Math.abs(d)>6){ f.classList.toggle("away",d>0&&y>80); last=y; } tick=false; }); },{passive:true}); }
+
+/* first visit on a new device: offer where the data should come from */
+let firstRun=false;
+function renderFirstRun(){ const box=$("#firstRun"); if(!box) return; box.hidden=!firstRun; if(!firstRun) return;
+  box.innerHTML=`<div class="dch"><h3>Welcome — where is your data?</h3></div><p class="dnote">This device has no saved data yet. The numbers you see are examples.</p>
+    <div class="frbtns"><button class="btn primary" id="frPull">Get it from GitHub</button><button class="btn" id="frImport">Import a file</button><button class="btn" id="frFresh">Start fresh</button></div>`;
+  on("frPull",()=>{ firstRun=false; renderFirstRun(); setTab("Data","Sync"); });
+  on("frImport",()=>{ firstRun=false; renderFirstRun(); const fi=$("#importFile"); if(fi) fi.click(); });
+  on("frFresh",()=>{ firstRun=false; renderFirstRun(); scheduleSave(); toast("Starting fresh — fill in your numbers with Update"); }); }
+/* save status: tap the dot to hear it; show Offline when the network is gone */
+function initStatusUI(){
+  on("saveBtnM",()=>{ const t=($("#saveTxt")||{}).textContent||"Saved", s=($("#syncMini")||{}).textContent||""; toast(t+(s?" · "+s:"")); });
+  const off=()=>{ const b=$("#offBadge"); if(b) b.hidden=navigator.onLine!==false; document.body.classList.toggle("is-offline",navigator.onLine===false); };
+  addEventListener("online",off); addEventListener("offline",off); off(); }
+
+/* tables keep their column names on phones; short game words get a tap-to-explain */
+var ABBR={TTG:"Tempered Truegold",TG:"Truegold",LED:"Legendary Equipment",QUD:"Quick Upgrade",KrJ:"Kingdom vs Kingdom (KvK)",KvK:"Kingdom vs Kingdom",SvS:"State vs State"};
+var ABBR_RX=new RegExp("\\b("+Object.keys(ABBR).join("|")+")\\b");
+function decorate(root){
+  root.querySelectorAll("table.gtable,table.vmath").forEach(t=>{ const H=[...t.querySelectorAll("thead th")].map(th=>th.textContent.trim()); if(!H.length) return;
+    t.querySelectorAll("tbody tr").forEach(tr=>[...tr.children].forEach((td,i)=>{ if(H[i]&&!td.dataset.label) td.dataset.label=H[i]; })); });
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement&&!n.parentElement.closest("abbr,input,textarea,script,style,svg,button.chip,code")&&ABBR_RX.test(n.nodeValue)?1:2});
+  const hits=[]; let n; while((n=w.nextNode())) hits.push(n);
+  hits.forEach(n=>{ const parts=n.nodeValue.split(new RegExp("\\b("+Object.keys(ABBR).join("|")+")\\b")); if(parts.length<2) return;
+    const f=document.createDocumentFragment(); parts.forEach((p,i)=>{ if(i%2){ const a=document.createElement("abbr"); a.title=ABBR[p]; a.textContent=p; f.appendChild(a); } else if(p) f.appendChild(document.createTextNode(p)); });
+    n.parentNode.replaceChild(f,n); }); }
+function initDecorate(){ const main=$("#main"); if(!main) return; let q=false;
+  new MutationObserver(()=>{ if(q) return; q=true; requestAnimationFrame(()=>{ q=false; decorate(main); }); }).observe(main,{childList:true,subtree:true});
+  decorate(main);
+  document.addEventListener("click",e=>{ const a=e.target.closest&&e.target.closest("abbr[title]"); if(a&&!a.closest("button,a,label")) toast(a.textContent+" = "+a.title); }); }
+
+/* a new version was installed while the app was open: offer a reload */
+function initUpdateNotice(){ if(!("serviceWorker" in navigator)) return; const had=!!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{ if(!had) return; toastAction("Updated — tap to reload","Reload",()=>location.reload()); }); }
