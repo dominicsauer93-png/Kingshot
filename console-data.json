@@ -1682,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1721,11 +1721,11 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
+      "Heroes": "Hero Gear",
       "Shop": "Free shops",
-      "Governor": "Masters",
+      "Governor": "Charms",
       "Progress": "Overview",
-      "Town": "Resources"
+      "Town": "Troops"
     },
     "t11Open": {
       "nodes": false,
@@ -1754,7 +1754,7 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "Town",
+    "upF": "All",
     "bvAll": true,
     "roleSel": "arena",
     "bcMore": true,
@@ -2000,8 +2000,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 880,
-      "designs": 312
+      "guides": 888,
+      "designs": 318
     },
     "rows": [
       {
@@ -3692,9 +3692,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 40123
+        "2026-11": 40438
       },
-      "seen": 312
+      "seen": 318
     },
     "fh": {
       "since": "2026-10-26",
@@ -3862,7 +3862,7 @@
           "Defensive Formations": 5,
           "Picket Lines": 5,
           "Bulwark Formations": 6,
-          "Special Defensive Training": 5
+          "Special Defensive Training": 6
         },
         "VI": {
           "Survival Techniques": 1,
@@ -3886,8 +3886,8 @@
       }
     },
     "current": {
-      "n": "Special Defensive Training V",
-      "ends": "2026-11-10T03:59:17.732Z"
+      "n": "",
+      "ends": ""
     },
     "war": {
       "seen": "2026-10-30",
