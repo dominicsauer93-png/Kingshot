@@ -1063,7 +1063,7 @@
     },
     {
       "n": "Aena",
-      "l": "30",
+      "l": "40",
       "note": "Best for Cavalry · Lethality research\nNEXT: level 30 → 40 (needs Emblems)\nSkills: all Growth — low priority",
       "skills": [
         {
@@ -1084,7 +1084,11 @@
         }
       ],
       "em": 4,
-      "lvlCost": ""
+      "lvlCost": "",
+      "bookNext": {
+        "what": "",
+        "books": ""
+      }
     },
     {
       "n": "Isnor",
@@ -1678,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1719,7 +1723,7 @@
       "Plan": "Shop guide",
       "Heroes": "Formations",
       "Shop": "Paid",
-      "Governor": "Pets",
+      "Governor": "Masters",
       "Progress": "Mystic Trials",
       "Town": "Research"
     },
