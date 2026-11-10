@@ -71,9 +71,9 @@ function renderUpdate(){
 const TAB_RENDER={Home:()=>renderHome(),Upgrade:()=>renderUpgrade(),Heroes:()=>{ renderRally(); renderGear(); },Governor:()=>{ renderRally(); renderGear(); },Town:()=>renderBase(),Progress:()=>renderRally(),Shop:()=>renderPlan(),Data:()=>{ renderPlan(); renderData(); renderUpdate(); }};
 const dirtyTabs=new Set();
 function renderPrep(){ migrateEvents(); migrateMasterNotes(); if(!state.ui.sub) state.ui.sub={}; }
-function renderAll(){ renderPrep(); TABS.forEach(t=>TAB_RENDER[t]()); dirtyTabs.clear(); }
+function renderAll(){ renderPrep(); dirtyTabs.clear(); TABS.forEach(t=>TAB_RENDER[t]()); }
 function renderFirst(){ renderActive(); const idle=window.requestIdleCallback||(f=>setTimeout(f,200)); // open tab first, the rest in the background
-  idle(()=>{ if(!dirtyTabs.size) return; renderPrep(); [...dirtyTabs].forEach(t=>{ if(t!==state.ui.tab){ TAB_RENDER[t](); dirtyTabs.delete(t); } }); }); }
+  idle(()=>{ if(!dirtyTabs.size) return; renderPrep(); [...dirtyTabs].forEach(t=>{ if(t!==state.ui.tab){ dirtyTabs.delete(t); TAB_RENDER[t](); } }); }); }
 function renderActive(){ // after an edit: redraw only the tab you're looking at; the rest redraw when opened
   renderPrep(); const cur=TABS.includes(state.ui.tab)?state.ui.tab:"Home";
   TAB_RENDER[cur](); TABS.forEach(t=>{ if(t!==cur) dirtyTabs.add(t); else dirtyTabs.delete(t); });
@@ -125,7 +125,7 @@ function searchIndex(){
 // scroll to the first row on the open page that names it, and flash it
 function flashRow(txt,scope){ setTimeout(()=>{ const host=scope?$(scope):$(".page:not([hidden])"); if(!host) return; const t=String(txt).toLowerCase();
   const el=[...host.querySelectorAll(".drow,.lrow,.tile,.vcard,.bcrow,.pstep,.sh2row,.shrow2,.hgrow,tr,.card")].filter(e=>e.offsetParent).find(e=>e.textContent.toLowerCase().includes(t));
-  if(!el) return; el.scrollIntoView({block:"center",behavior:"smooth"}); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1800); },120); }
+  if(!el) return; el.scrollIntoView({block:"center",behavior:"smooth"}); const fo=el.matches("button,a,input,summary")?el:el.querySelector("button,a,input,summary")||el; if(fo===el&&!el.matches("button,a,input,summary")) el.tabIndex=-1; fo.focus({preventScroll:true}); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1800); },120); }
 let srchSel=0, srchRes=[];
 function openSearch(){
   const w=$("#srch"), inp=$("#srchIn"); if(w.hidden) pushOverlay(); setBehind(true); w.hidden=false; inp.value=""; inp.setAttribute("aria-expanded","true"); paintSearch(); setTimeout(()=>inp.focus(),0);
@@ -143,6 +143,7 @@ function paintSearch(){
   $$("#srchList [role=option]").forEach(b=>b.onclick=()=>pickSearch(+b.dataset.i));
 }
 function pickSearch(i){ const r=srchRes[i]; if(!r) return; closeSearch(); if(r.go){ r.go(); return; } goToSection(null,r.key);
+  setTimeout(()=>{ const h=$(".page:not([hidden]) .phead h1"); if(h&&document.activeElement===document.body){ h.tabIndex=-1; h.focus({preventScroll:true}); } },140);
   setTimeout(()=>{ const sec=[...$$(".sec[data-key]")].find(x=>x.dataset.key===r.key); if(sec&&!sec.hidden&&!sec.dataset.sub) sec.scrollIntoView({behavior:"smooth",block:"start"}); },80); }
 function initSearch(){
   ["searchSide","searchTop"].forEach(id=>on(id,openSearch));
@@ -163,29 +164,39 @@ function parseDur(v){ const t=String(v||"").toLowerCase().trim(); if(!t) return 
   let m=0, ok=false; t.replace(/(\d+(?:\.\d+)?)\s*(d|day|days|h|hr|hrs|hour|hours|m|min|mins|minute|minutes)\b/g,(_,n,u)=>{ ok=true; n=parseFloat(n); m+=u[0]==="d"?n*1440:u[0]==="h"?n*60:n; return ""; });
   return ok?Math.round(m):null; }
 function openQuickSheet(){
-  openSheet({title:"Quick update",sub:"The numbers you change most. Everything else is in Settings → Update all.",build(f){
-    const sub=t=>{ const h=document.createElement("div"); h.className="qsub"; h.textContent=t; f.appendChild(h); };
-    const N=(label,obj,k,o)=>fld(label,Object.assign({type:"num",value:obj[k],get:()=>obj[k],set:v=>obj[k]=v},o||{}));
+  openSheet({title:"Quick update",sub:"What blocks you first. Everything else is under “More numbers”.",build(f){
     const H=state.heroGear.have, G=state.govGear.have||(state.govGear.have={}), C=state.charms.have||(state.charms.have={});
-    sub("Truegold & hero gear");
-    f.appendChild(frow(N("Truegold Dust",state.dust,"current"),N("Truegold",state.tg,"have")));
-    f.appendChild(frow(N("Forgehammers",H,"fh"),N("Mithril",H,"mith")));
-    f.appendChild(frow(N("Mythic Gear",H,"mg"),N("Enhancement XP",H,"xp",{hint:"shorthand works: 1.2m"})));
-    sub("Hero shards");
-    const SH=shardOrder().filter(r=>!/amadeus|helga/i.test(r.n||"")).slice(0,3);
-    f.appendChild(frow(fld("General Mythic shards",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v}),...(SH[0]?[N(SH[0].n+" shards",SH[0],"have")]:[])));
-    if(SH.length>1) f.appendChild(frow(...SH.slice(1).map(r=>N(r.n+" shards",r,"have"))));
-    const W=(state.widgets&&state.widgets.rows)||[];
-    if(W.length){ sub("Widgets in hand"); for(let i=0;i<W.length;i+=2) f.appendChild(frow(...W.slice(i,i+2).map(r=>N(r.hero||"Widget",r,"have")))); }
-    sub("Speedups — type like the game shows: 4d 4h 3m");
-    const R=state.resources||[], SP=[["General","General"],["Soldier Training","Training"],["Construction","Construction"],["Research","Research"],["Soldier Healing","Healing"]];
-    const spF=([k,l])=>{ const r=R.find(x=>x.n.startsWith(k+" speedup")); if(!r) return null;
-      return fld(l,{value:minsTxt(r.h)+(num(r.h)%60?" "+(num(r.h)%60)+"m":""),set:v=>{ const m=parseDur(v); if(m!=null) r.h=String(m); }}); };
-    const sf=SP.map(spF).filter(Boolean); for(let i=0;i<sf.length;i+=2) f.appendChild(frow(...sf.slice(i,i+2)));
-    sub("Governor gear & charms");
-    f.appendChild(frow(N("Satin",G,"satin"),N("Gilded Threads",G,"threads")));
-    f.appendChild(frow(N("Artisan's Vision",G,"vision"),N("Charm Guides",C,"guides")));
-    f.appendChild(frow(N("Charm Designs",C,"designs"),document.createElement("span")));
+    const N=(label,obj,k,o)=>fld(label,Object.assign({type:"num",value:obj[k],get:()=>obj[k],set:v=>obj[k]=v},o||{}));
+    const sub=(host,t)=>{ const h=document.createElement("div"); h.className="qsub"; h.textContent=t; host.appendChild(h); };
+    const pairs=(host,els)=>{ els=els.filter(Boolean); for(let i=0;i<els.length;i+=2) host.appendChild(frow(els[i],els[i+1]||document.createElement("span"))); };
+    // every field, keyed so the ones that block you can come first
+    const need=typeof blockerNeeds==="function"?blockerNeeds():{};
+    const F={
+      dust:()=>N("Truegold Dust",state.dust,"current"), tg:()=>N("Truegold",state.tg,"have"),
+      fh:()=>N("Forgehammers",H,"fh"), mith:()=>N("Mithril",H,"mith"), mg:()=>N("Mythic Gear",H,"mg"), xp:()=>N("Enhancement XP",H,"xp",{hint:"shorthand works: 1.2m"}),
+      gen:()=>fld("General Mythic shards",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v}),
+      satin:()=>N("Satin",G,"satin"), threads:()=>N("Gilded Threads",G,"threads"), vision:()=>N("Artisan's Vision",G,"vision"),
+      guides:()=>N("Charm Guides",C,"guides"), designs:()=>N("Charm Designs",C,"designs")};
+    const blocking=["mg","mith","threads","designs","fh","gen"].filter(k=>need[k]&&need[k].short>0);
+    sub(f,blocking.length?"Blocking your next upgrades":"Your main numbers");
+    const first=blocking.length?blocking:["dust","fh","mith","mg"];
+    pairs(f,first.map(k=>F[k]()));
+    // the rest folds away
+    const more=document.createElement("details"); more.className="fold qmore"; more.innerHTML=`<summary><span class="grow">More numbers</span><span class="faint fs13">shards, widgets, speedups, gear</span></summary><div class="fbody form"></div>`;
+    const m=more.querySelector(".fbody"); f.appendChild(more);
+    let built=false; const fill=()=>{ if(built) return; built=true;
+      sub(m,"Truegold & hero gear"); pairs(m,["dust","tg","fh","mith","mg","xp"].filter(k=>!first.includes(k)).map(k=>F[k]()));
+      sub(m,"Hero shards"); const SH=shardOrder().filter(r=>!/amadeus|helga/i.test(r.n||"")).slice(0,3);
+      pairs(m,[first.includes("gen")?null:F.gen(),...SH.map(r=>N(r.n+" shards",r,"have"))]);
+      const W=(state.widgets&&state.widgets.rows)||[];
+      if(W.length){ sub(m,"Widgets in hand"); pairs(m,W.map(r=>N((r.hero||"Hero")+" widgets",r,"have"))); }
+      sub(m,"Speedups — type like the game shows: 4d 4h 3m");
+      const R=state.resources||[], SP=[["General","General"],["Soldier Training","Training"],["Construction","Construction"],["Research","Research"],["Soldier Healing","Healing"]];
+      const spF=([k,l])=>{ const r=R.find(x=>x.n.startsWith(k+" speedup")); if(!r) return null;
+        return fld(l,{value:minsTxt(r.h)+(num(r.h)%60?" "+(num(r.h)%60)+"m":""),set:v=>{ const mm=parseDur(v); if(mm!=null) r.h=String(mm); }}); };
+      pairs(m,SP.map(spF));
+      sub(m,"Governor gear & charms"); pairs(m,["satin","threads","vision","guides","designs"].filter(k=>!first.includes(k)).map(k=>F[k]())); };
+    more.ontoggle=()=>{ if(more.open) fill(); };
   }});
 }
 function initStatic(){

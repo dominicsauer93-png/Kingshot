@@ -18,7 +18,7 @@
   (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t!=="light"&&t!=="auto") t="dark"; if(t==="auto") t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"; document.documentElement.setAttribute("data-theme",t); }catch(e){ document.documentElement.setAttribute("data-theme","dark"); } })();
 </script>
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=74">
+<link rel="stylesheet" href="css/app.css?v=75">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#main">Skip to content</a>
@@ -101,7 +101,7 @@
     <!-- ================= HEROES ================= -->
     <div class="page" data-tab="Heroes" hidden>
       <div class="phead"><div><h1>Heroes</h1></div></div>
-      <div class="subnav" role="tablist" aria-label="Heroes sections"></div>
+      <nav class="subnav" aria-label="Heroes sections"></nav>
       <section class="sec" data-sub="Formations" data-key="Focus heroes"><div id="focusHeroes"></div></section>
       <section class="sec" data-sub="Formations" data-key="Hero Roles">
         <h2 class="mt2">Best for each battle</h2>
@@ -111,7 +111,7 @@
         <div id="myForms"></div>
         <div class="mt2" id="heroCards"></div>
         <button class="btn sm ghost mt" id="heroMore" hidden></button>
-        <details class="fold" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="faint" style="font-weight:500;font-size:14px">S best → D worst</span></summary>
+        <details class="fold mt" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="faint" style="font-weight:500;font-size:14px">S best → D worst</span></summary>
           <div class="fbody"><div class="seg" id="tierSeg" role="group" aria-label="Which heroes" style="max-width:320px"><button data-v="mine">My heroes</button><button data-v="all">All heroes</button></div>
           <div class="tierwrap mt"><table class="tiert" id="tierTable"></table></div></div></details>
       </section>
@@ -152,7 +152,7 @@
     <!-- ================= GOVERNOR ================= -->
     <div class="page" data-tab="Governor" hidden>
       <div class="phead"><div><h1>Governor</h1></div></div>
-      <div class="subnav" role="tablist" aria-label="Governor sections"></div>
+      <nav class="subnav" aria-label="Governor sections"></nav>
       <section class="sec" data-sub="Gov Gear" data-key="Governor Gear">
         <div class="card rcard" id="govReport"></div>
         <div class="info" id="govPlan"></div>
@@ -197,7 +197,7 @@
     <!-- ================= TOWN ================= -->
     <div class="page" data-tab="Town" hidden>
       <div class="phead"><div><h1>Town</h1></div></div>
-      <div class="subnav" role="tablist" aria-label="Town sections"></div>
+      <nav class="subnav" aria-label="Town sections"></nav>
       <section class="sec" data-sub="Research" data-key="Research"><div id="researchBody"></div></section>
       <section class="sec" data-sub="Research" data-key="T11 Unlocks">
         
@@ -233,7 +233,7 @@
     <!-- ================= PROGRESS ================= -->
     <div class="page" data-tab="Progress" hidden>
       <div class="phead"><div><h1>Progress</h1></div></div>
-      <div class="subnav" role="tablist" aria-label="Progress sections"></div>
+      <nav class="subnav" aria-label="Progress sections"></nav>
       <section class="sec" data-sub="Overview" data-key="This week">
         <h2>This week</h2>
         <div id="weekReport"></div>
@@ -268,7 +268,7 @@
     <!-- ================= PLAN ================= -->
     <div class="page" data-tab="Shop" hidden>
       <div class="phead"><div><h1>Shop</h1></div></div>
-      <div class="subnav" role="tablist" aria-label="Shop sections"></div>
+      <nav class="subnav" aria-label="Shop sections"></nav>
       <section class="sec" data-sub="Free shops" data-key="Shop guide">
         <div id="shopGuide"></div>
         <details class="fold mt" id="srcFold" hidden><summary><span class="grow">Where each supply comes from</span></summary><div class="fbody">
@@ -289,7 +289,7 @@
     <!-- ================= DATA ================= -->
     <div class="page" data-tab="Data" hidden>
       <div class="phead"><div><h1>Settings</h1></div></div>
-      <div class="subnav" role="tablist" aria-label="Data sections"></div>
+      <nav class="subnav" aria-label="Data sections"></nav>
       <section class="sec" data-sub="Update all" data-key="Update all">
         <h2>Update <small>saves as you type</small></h2>
         <div class="qjump" id="qJump" role="toolbar" aria-label="Jump to a group"></div>
@@ -374,16 +374,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=74"></script>
-<script src="js/ui.js?v=74"></script>
-<script src="js/home.js?v=74"></script>
-<script src="js/rally.js?v=74"></script>
-<script src="js/gear.js?v=74"></script>
-<script src="js/base.js?v=74"></script>
-<script src="js/data.js?v=74"></script>
-<script src="js/shops.js?v=74"></script>
-<script src="js/extras.js?v=74"></script>
-<script src="js/value.js?v=74"></script>
-<script src="js/boot.js?v=74"></script>
+<script src="js/core.js?v=75"></script>
+<script src="js/ui.js?v=75"></script>
+<script src="js/home.js?v=75"></script>
+<script src="js/rally.js?v=75"></script>
+<script src="js/gear.js?v=75"></script>
+<script src="js/base.js?v=75"></script>
+<script src="js/data.js?v=75"></script>
+<script src="js/shops.js?v=75"></script>
+<script src="js/extras.js?v=75"></script>
+<script src="js/value.js?v=75"></script>
+<script src="js/boot.js?v=75"></script>
 </body>
 </html>
