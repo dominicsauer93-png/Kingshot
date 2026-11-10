@@ -20,9 +20,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=69">
+<link rel="stylesheet" href="css/app.css?v=70">
 </head>
 <body>
+<a class="skip" id="skipLink" href="#main">Skip to content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6D27A"/><stop offset=".55" stop-color="#D9A23A"/><stop offset="1" stop-color="#9A6A22"/></linearGradient>
@@ -42,7 +43,7 @@
   <aside class="side">
     <div class="brand"><svg class="crest" aria-hidden="true"><use href="#i-crest"/></svg><div><span class="k">Kingshot</span><span class="t">Command Console</span></div></div>
     <button class="searchbtn" id="searchSide" aria-label="Search (Ctrl K)"><svg width="17" height="17" aria-hidden="true"><use href="#i-search"/></svg><span>Search</span><kbd>Ctrl K</kbd></button>
-    <nav id="tabnav" role="tablist" aria-label="Main sections"></nav>
+    <nav id="tabnav" aria-label="Main sections"></nav>
     <div class="sidefoot">
       <button class="btn install" id="installBtn"><svg width="18" height="18" aria-hidden="true"><use href="#i-down"/></svg>Install app</button>
       <div class="row" id="sideSync" hidden>
@@ -58,7 +59,7 @@
 
   <header class="mtop">
     <svg class="crest" aria-hidden="true"><use href="#i-crest"/></svg>
-    <span class="t"><small id="kTag">KINGDOM</small>Command Console</span>
+    <span class="t"><small id="kTag">KINGDOM</small><span id="mTitle">Home</span></span>
     <span class="save" aria-hidden="true"><span class="dot" id="saveDotM"></span></span>
  <button class="iconbtn" id="searchTop" title="Search" aria-label="Search"><svg aria-hidden="true"><use href="#i-search"/></svg></button>
     <button class="iconbtn" id="mSync" title="Sync with GitHub" aria-label="Sync with GitHub" hidden><svg aria-hidden="true"><use href="#i-sync"/></svg></button>
@@ -375,16 +376,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=69"></script>
-<script src="js/ui.js?v=69"></script>
-<script src="js/home.js?v=69"></script>
-<script src="js/rally.js?v=69"></script>
-<script src="js/gear.js?v=69"></script>
-<script src="js/base.js?v=69"></script>
-<script src="js/data.js?v=69"></script>
-<script src="js/shops.js?v=69"></script>
-<script src="js/extras.js?v=69"></script>
-<script src="js/value.js?v=69"></script>
-<script src="js/boot.js?v=69"></script>
+<script src="js/core.js?v=70"></script>
+<script src="js/ui.js?v=70"></script>
+<script src="js/home.js?v=70"></script>
+<script src="js/rally.js?v=70"></script>
+<script src="js/gear.js?v=70"></script>
+<script src="js/base.js?v=70"></script>
+<script src="js/data.js?v=70"></script>
+<script src="js/shops.js?v=70"></script>
+<script src="js/extras.js?v=70"></script>
+<script src="js/value.js?v=70"></script>
+<script src="js/boot.js?v=70"></script>
 </body>
 </html>

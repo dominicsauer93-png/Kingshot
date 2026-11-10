@@ -112,9 +112,9 @@ function searchIndex(){
 }
 let srchSel=0, srchRes=[];
 function openSearch(){
-  const w=$("#srch"), inp=$("#srchIn"); w.hidden=false; inp.value=""; paintSearch(); setTimeout(()=>inp.focus(),0);
+  const w=$("#srch"), inp=$("#srchIn"); if(w.hidden) pushOverlay(); setBehind(true); w.hidden=false; inp.value=""; paintSearch(); setTimeout(()=>inp.focus(),0);
 }
-function closeSearch(){ $("#srch").hidden=true; }
+function closeSearch(fromHistory){ if($("#srch").hidden) return; if(!fromHistory) popOverlay(); setBehind(false); $("#srch").hidden=true; }
 function paintSearch(){
   const q=$("#srchIn").value.toLowerCase().trim(), words=q.split(/\s+/).filter(Boolean), idx=searchIndex();
   const rx=words.map(w=>new RegExp("(^|[^a-z0-9])"+w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
@@ -214,7 +214,7 @@ function initStatic(){
   if(state.account && !state.account.dayAnchor){ const d=parseInt(state.account.day)||443; const a=new Date(); a.setUTCDate(a.getUTCDate()-(d-1)); state.account.dayAnchor=a.toISOString().slice(0,10); }
   state.ui.tab=TAB_ALIAS[state.ui.tab]||state.ui.tab;
   renderAll(); buildSync(); buildUpload(); initCommaFormatting(); initNoDrag();
-  const fromHash=tabFromHash(); setTab(fromHash?fromHash[0]:state.ui.tab, fromHash?fromHash[1]:undefined, false);
+  const fromHash=tabFromHash(); setTab(fromHash?fromHash[0]:state.ui.tab, fromHash?fromHash[1]:undefined, false); navReady=true;
   const persists=hasStore||lsSet("__probe__","1"); if(!persists) setSaveUI("err","Session only");
   if(syncCfg.on && syncCfg.owner && loadTok()) syncPull(true);
 })();

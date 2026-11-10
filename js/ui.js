@@ -31,31 +31,35 @@ function showUndo(msg,snap){ toast(msg,snap); }
 
 /* ---------- edit sheet (bottom sheet on phones, side panel on computers) ---------- */
 let sheetRefresh=null, sheetLastFocus=null;
-function openSheet({title,sub,build,onDelete,delLabel}){
+const setBehind=on=>[".app","#quickBtn","#toast"].forEach(q=>{ const e=$(q); if(e) e.inert=on; }); // block the page behind a sheet or search
+function openSheet({title,sub,build,onDelete,delLabel,noFoot}){
   $("#shTitle").textContent=title; const s=$("#shSub"); s.textContent=sub||""; s.hidden=!sub;
   const body=$("#shBody"); body.innerHTML=""; body.scrollTop=0;
   const form=document.createElement("div"); form.className="form"; body.appendChild(form);
   sheetRefresh=build(form)||null;
+  $("#sheetWrap .sh-foot").hidden=!!noFoot&&!onDelete;
   const del=$("#shDel"); del.hidden=!onDelete; del.textContent=delLabel||"Remove";
   del.onclick=onDelete?()=>{ const snap=JSON.stringify(state); onDelete(); closeSheet(); scheduleSave(); renderAll(); toast(`${title} removed`,snap); }:null;
-  const w=$("#sheetWrap"); sheetLastFocus=document.activeElement;
+  const w=$("#sheetWrap"); const wasOpen=w.classList.contains("open"); if(!wasOpen) sheetLastFocus=document.activeElement;
+  if(!wasOpen) pushOverlay(); setBehind(true);
   w.classList.add("open"); w.setAttribute("aria-hidden","false"); document.body.style.overflow="hidden";
   setTimeout(()=>{ const first=form.querySelector("input:not([type=checkbox]),select,textarea");
     if(first && matchMedia("(min-width:900px)").matches) first.focus({preventScroll:true}); else $("#sheetWrap .sh-head .iconbtn").focus({preventScroll:true}); },80);
 }
-function closeSheet(){
+function closeSheet(fromHistory){
   const w=$("#sheetWrap"); if(!w.classList.contains("open")) return;
+  if(!fromHistory) popOverlay(); setBehind(false);
   if(document.activeElement && w.contains(document.activeElement)) document.activeElement.blur();
   w.classList.remove("open"); w.setAttribute("aria-hidden","true"); document.body.style.overflow="";
   sheetRefresh=null; if(sheetLastFocus&&sheetLastFocus.isConnected) sheetLastFocus.focus({preventScroll:true});
 }
 function initSheet(){
-  $$("#sheetWrap [data-close]").forEach(b=>b.addEventListener("click",closeSheet));
+  $$("#sheetWrap [data-close]").forEach(b=>b.addEventListener("click",()=>closeSheet()));
   document.addEventListener("keydown",e=>{
     const open=$("#sheetWrap").classList.contains("open"); if(!open) return;
     if(e.key==="Escape"){ e.preventDefault(); closeSheet(); }
     if(e.key==="Tab"){ // keep focus inside the sheet
-      const f=[...$("#sheetWrap .sheet").querySelectorAll("button:not([hidden]),input,select,textarea")].filter(x=>x.offsetParent!==null);
+      const f=[...$("#sheetWrap .sheet").querySelectorAll("button:not([hidden]),input,select,textarea,a[href],summary,[tabindex]:not([tabindex=\"-1\"])")].filter(x=>x.offsetParent!==null);
       if(!f.length) return; const a=f[0], z=f[f.length-1];
       if(e.shiftKey&&document.activeElement===a){ z.focus(); e.preventDefault(); } else if(!e.shiftKey&&document.activeElement===z){ a.focus(); e.preventDefault(); }
     }
@@ -132,7 +136,8 @@ function initTheme(){
 /* =====================================================================
    NAVIGATION — 5 tabs, sub-tabs, deep links
    ===================================================================== */
-const TABS=["Home","Upgrade","Heroes","Governor","Town","Shop","Progress","Data"], NAV=TABS.filter(t=>t!=="Data"); // Settings (Data) opens from the ⚙ button
+const TABS=["Home","Upgrade","Heroes","Governor","Town","Shop","Progress","Data"], NAV=TABS; // phones show 5 + More (CSS hides Shop, Progress, Settings there)
+const MORE_TABS=["Shop","Progress","Data"];
 const SUBS={Heroes:["Formations","Shards","Hero Gear","Widgets"],Governor:["Gov Gear","Charms","Pets","Masters"],Town:["Research","Buildings","Troops","Resources"],Shop:["Free shops","Paid"],Progress:["Overview","Mystic Trials"],Data:["Account","Sync","Reminders","Update all"]};
 const TAB_ALIAS={Army:"Town",Build:"Town",Base:"Town",Gear:"Governor",Power:"Progress",Supply:"Heroes",Rally:"Heroes",Plan:"Shop",Events:"Home",Vault:"Data",Settings:"Data"};
 const SUB_ALIAS={Roster:"Formations",Heroes:"Formations",Governor:"Gov Gear",T11:"Research"}; // old tab names
@@ -144,57 +149,90 @@ const TAB_ICON={
   Town:'<path d="M4 21V9l4-3 4 3 4-3 4 3v12z"/><path d="M10 21v-5h4v5M4 13h16"/>',
   Shop:'<path d="M5 8h14l-1.2 12.5H6.2z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/>',
   Progress:'<path d="M4 20V11M10 20V5M16 20v-6M20 20H3"/>',
-  Data:'<path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8 12h8M8 16h6"/>'
+  Data:'<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
+  More:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>'
 };
-const LABEL={Data:"Settings","Free shops":"Coin shops",Paid:"Packs"}, lbl=s=>LABEL[s]||s; // shown names; keys, hashes and saved state keep the old ones
+const LABEL={Data:"Settings","Free shops":"Coin shops",Paid:"Packs"}, lbl=s=>LABEL[s]||s; // shown names; saved state keeps the old keys
 const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
-function setTab(tab,sub,scroll){
+const scrollMem={}; let navReady=false;
+const curKey=()=>{ const t=state.ui.tab; return t+"/"+((SUBS[t]&&state.ui.sub&&state.ui.sub[t])||""); };
+// scroll: undefined = top, false = stay, "restore" = back to where you were on that page
+function setTab(tab,sub,scroll,fromHistory){
   tab=TAB_ALIAS[tab]||tab; if(!TABS.includes(tab)) tab="Home";
   if(!state.ui.sub) state.ui.sub={};
   sub=SUB_ALIAS[sub]||sub;
   if(sub&&!(SUBS[tab]||[]).includes(sub)){ const o=Object.keys(SUBS).find(k=>SUBS[k].includes(sub)); if(o) tab=o; } // section lives on another page now
+  if(navReady&&state.ui.tab) scrollMem[curKey()]=scrollY;
   if(SUBS[tab]){ if(sub&&SUBS[tab].includes(sub)) state.ui.sub[tab]=sub; if(!SUBS[tab].includes(state.ui.sub[tab])) state.ui.sub[tab]=SUBS[tab][0]; }
   const s=SUBS[tab]?state.ui.sub[tab]:null;
   const changed=state.ui.tab!==tab;
   state.ui.tab=tab;
-  $$("#tabnav .tab").forEach(b=>{ const onn=b.dataset.tab===tab; b.setAttribute("aria-selected",onn?"true":"false"); b.tabIndex=onn?0:-1; });
+  $$("#tabnav .tab").forEach(b=>{ const onn=b.dataset.tab===tab||(b.dataset.tab==="More"&&MORE_TABS.includes(tab));
+    if(onn) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
   $$(".page").forEach(p=>p.hidden=p.dataset.tab!==tab);
   if(dirtyTabs.has(tab)){ dirtyTabs.delete(tab); renderPrep(); TAB_RENDER[tab](); }
   const page=$(`.page[data-tab="${tab}"]`);
   if(s){ page.querySelectorAll(".sec[data-sub]").forEach(x=>x.hidden=x.dataset.sub!==s);
     page.querySelectorAll(".subnav .chip").forEach(c=>c.setAttribute("aria-selected",c.dataset.sub===s?"true":"false")); }
-  const hash="#"+slug(tab)+(s?"/"+slug(s):"");
-  if(location.hash!==hash) try{ history.replaceState(null,"",hash); }catch(e){}
-  if(scroll!==false) window.scrollTo({top:0,behavior:"instant"in window?"instant":"auto"});
+  const mt=$("#mTitle"); if(mt) mt.textContent=lbl(tab)+(s?" · "+lbl(s):"");
+  document.title=(tab==="Home"?"":lbl(tab)+(s?" · "+lbl(s):"")+" — ")+"Kingshot Console";
+  const hash="#"+slug(lbl(tab))+(s?"/"+slug(lbl(s)):"");
+  if(skipPop) pendingHash={hash,push:changed&&!fromHistory}; // a sheet is still stepping back in history: write the URL after that
+  else if(location.hash!==hash) try{ if(changed&&navReady&&!fromHistory) history.pushState(null,"",hash); else history.replaceState(null,"",hash); }catch(e){}
+  if(scroll==="restore") window.scrollTo({top:scrollMem[curKey()]||0,behavior:"instant"});
+  else if(scroll!==false) window.scrollTo({top:0,behavior:"instant"});
+  if(changed&&navReady){ const h=page.querySelector(".phead h1"); if(h){ h.tabIndex=-1; h.focus({preventScroll:true}); } } // screen readers hear the new page
   if(changed) scheduleSave();
 }
 function tabFromHash(){
   let [t,s]=(location.hash||"").replace(/^#/,"").split("/");
-  let tab=TABS.find(x=>slug(x)===t)||TAB_ALIAS[Object.keys(TAB_ALIAS).find(k=>slug(k)===t)]; if(!tab) return null;
+  const tabSlug=x=>slug(x)===t||slug(lbl(x))===t;
+  let tab=TABS.find(tabSlug)||TAB_ALIAS[Object.keys(TAB_ALIAS).find(k=>slug(k)===t)]; if(!tab) return null;
   if(s==="heroes"||s==="roster") s="formations"; if(s==="governor") s="gov-gear"; if(s==="t11") s="research"; // old link names
   if(s==="shop-guide") s="free-shops"; if(s==="best-value"||s==="shops-packs") s="paid";
-  let sub=SUBS[tab]&&SUBS[tab].find(x=>slug(x)===s);
-  if(s&&!sub){ const o=Object.keys(SUBS).find(k=>SUBS[k].some(x=>slug(x)===s)); if(o){ tab=o; sub=SUBS[o].find(x=>slug(x)===s); } } // section moved to another tab
+  const subSlug=x=>slug(x)===s||slug(lbl(x))===s;
+  let sub=SUBS[tab]&&SUBS[tab].find(subSlug);
+  if(s&&!sub){ const o=Object.keys(SUBS).find(k=>SUBS[k].some(subSlug)); if(o){ tab=o; sub=SUBS[o].find(subSlug); } } // section moved to another tab
   return [tab,sub];
+}
+/* ---------- history: Back closes a sheet or search before it leaves the page ---------- */
+let overlayPushed=false, skipPop=false, pendingHash=null;
+function pushOverlay(){ if(overlayPushed) return; overlayPushed=true; try{ history.pushState({ov:1},"",location.hash); }catch(e){ overlayPushed=false; } }
+function popOverlay(){ if(!overlayPushed) return; overlayPushed=false; skipPop=true; try{ history.back(); }catch(e){ skipPop=false; } }
+function onHistory(){
+  if(skipPop){ skipPop=false; if(pendingHash){ const p=pendingHash; pendingHash=null; if(location.hash!==p.hash) try{ p.push?history.pushState(null,"",p.hash):history.replaceState(null,"",p.hash); }catch(e){} } return; }
+  if(overlayPushed){ overlayPushed=false; if($("#sheetWrap").classList.contains("open")) closeSheet(true); if(!$("#srch").hidden) closeSearch(true); return; }
+  const r=tabFromHash(); if(r) setTab(r[0],r[1],"restore",true);
+}
+function openMore(){
+  openSheet({title:"More",sub:"",noFoot:true,build(f){
+    const row=(t,sub)=>`<button class="lrow" data-t="${t}"><svg class="lico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span class="grow"><b>${lbl(t)}</b><br><span class="faint fs13">${sub}</span></span><span class="chev">›</span></button>`;
+    f.innerHTML=`<div class="list">${row("Shop","Coin shops, packs and what to buy")}${row("Progress","This week, power chart, grades, Mystic Trials")}${row("Data","Account, sync, reminders, update all")}</div>
+      <div class="f mt"><span>Theme</span><div class="seg" id="moreTheme" role="group" aria-label="Theme">${["auto","light","dark"].map(v=>`<button data-v="${v}" aria-pressed="${getTheme()===v}">${v[0].toUpperCase()+v.slice(1)}</button>`).join("")}</div></div>`;
+    f.querySelectorAll("[data-t]").forEach(x=>x.onclick=()=>{ closeSheet(); setTab(x.dataset.t,null,"restore"); });
+    f.querySelectorAll("#moreTheme button").forEach(b=>b.onclick=()=>{ applyTheme(b.dataset.v); f.querySelectorAll("#moreTheme button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false")); });
+  }});
 }
 function buildNav(){
   const nav=$("#tabnav");
-  nav.innerHTML=NAV.map(t=>`<button class="tab" role="tab" data-tab="${t}" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span>${lbl(t)}</span></button>`).join("");
-  nav.querySelectorAll(".tab").forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
-  // ⚙: on phones Progress lives here too (the bottom bar has room for 6)
-  $$(".setbtn").forEach(b=>b.onclick=()=>{ if(innerWidth>640) return setTab("Data"); openSheet({title:"More",sub:"",build(f){ f.innerHTML=`<div class="list"><button class="lrow" data-t="Progress"><span style="flex:1"><b>Progress</b><br><span class="faint" style="font-size:13px">This week, power chart, grades, Mystic Trials</span></span><span class="chev">›</span></button><button class="lrow" data-t="Data"><span style="flex:1"><b>Settings</b><br><span class="faint" style="font-size:13px">Account, sync, reminders, update all, theme</span></span><span class="chev">›</span></button></div>`; f.querySelectorAll("[data-t]").forEach(x=>x.onclick=()=>{ closeSheet(); setTab(x.dataset.t); }); }}); });
-  nav.addEventListener("keydown",e=>{
-    const k=e.key; if(!["ArrowRight","ArrowLeft","ArrowUp","ArrowDown"].includes(k)) return;
-    const d=(k==="ArrowRight"||k==="ArrowDown")?1:-1, i=NAV.indexOf(state.ui.tab), n=NAV[(i+d+NAV.length)%NAV.length];
-    setTab(n); nav.querySelector(`[data-tab="${n}"]`).focus(); e.preventDefault();
-  });
+  const btn=t=>`<button class="tab" data-tab="${t}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span>${t==="More"?"More":lbl(t)}</span></button>`;
+  nav.innerHTML=NAV.map(btn).join("")+btn("More");
+  nav.querySelectorAll(".tab").forEach(b=>b.onclick=()=>b.dataset.tab==="More"?openMore():setTab(b.dataset.tab,null,state.ui.tab===b.dataset.tab?undefined:"restore"));
+  $$(".setbtn").forEach(b=>b.onclick=()=>setTab("Data",null,"restore"));
   Object.keys(SUBS).forEach(tab=>{
-    const sn=$(`.page[data-tab="${tab}"] .subnav`); if(!sn) return;
+    const page=$(`.page[data-tab="${tab}"]`), sn=page&&page.querySelector(".subnav"); if(!sn) return;
     sn.innerHTML=SUBS[tab].map(s=>`<button class="chip" role="tab" data-sub="${esc(s)}" aria-selected="false">${esc(lbl(s))}</button>`).join("");
-    sn.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{ setTab(tab,c.dataset.sub,false); c.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"}); });
+    sn.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{ setTab(tab,c.dataset.sub,false);
+      const top=sn.getBoundingClientRect().top+scrollY-($(".mtop")?$(".mtop").getBoundingClientRect().height:0)-8; // land at the top of the new section
+      if(scrollY>top) window.scrollTo({top,behavior:"instant"});
+      c.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"}); });
+    // the chip already names the section: hide a heading that only repeats it
+    page.querySelectorAll(".sec[data-sub]").forEach(sec=>{ const h=sec.querySelector(":scope > h2"); if(h&&sec.firstElementChild===h&&h.textContent.trim().toLowerCase()===lbl(sec.dataset.sub).toLowerCase()) h.classList.add("sr-only"); });
   });
   document.addEventListener("click",e=>{ const g=e.target.closest&&e.target.closest("[data-goto]"); if(!g) return; goToSection(null,g.dataset.goto); });
-  window.addEventListener("hashchange",()=>{ const r=tabFromHash(); if(r) setTab(r[0],r[1]); });
+  try{ history.scrollRestoration="manual"; }catch(e){} // we restore each page's own scroll
+  window.addEventListener("popstate",onHistory);
+  const sk=$("#skipLink"); if(sk) sk.onclick=e=>{ e.preventDefault(); const h=$(".page:not([hidden]) .phead h1")||$("#main"); h.tabIndex=-1; h.focus(); };
 }
 // jump to a section by its key (used by Do next and tiles)
 function goToSection(tab,key,thenOpen){
