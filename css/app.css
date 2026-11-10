@@ -10,12 +10,12 @@
     --line:#E0CFAE; --line-soft:#EBDFC6;
     --text:#2E2012; --muted:#4F3E2B; --faint:#65523C;
     --gold:#A86B0C; --gold-2:#B98326; --gold-soft:rgba(168,107,12,.12);
-    --green:#2E7D4F; --green-soft:rgba(46,125,79,.12);
+    --green:#276B43; --green-soft:rgba(46,125,79,.12);
     --red:#C0392B; --red-soft:rgba(192,57,43,.10);
     --amber:#B4650A; --amber-soft:rgba(180,101,10,.12);
     --blue:#2C6E9B;
     --track:#E8DCC3; --sunk:rgba(120,90,40,.06); --hover:rgba(168,107,12,.07);
-    --acc:#1E9486; --acc-2:#36C2B1; --onacc:#FFFFFF; --acc-text:#157A6F; --acc-soft:rgba(30,148,134,.12);
+    --acc:#1E9486; --acc-2:#36C2B1; --onacc:#FFFFFF; --acc-text:#126B61; --acc-soft:rgba(30,148,134,.12);
     --shadow:0 1px 2px rgba(80,55,20,.07), 0 10px 24px -16px rgba(80,55,20,.35);
     --shadow-lg:0 24px 60px -20px rgba(60,40,10,.45);
     --scrim:rgba(40,28,12,.42);
@@ -166,7 +166,7 @@
   .fab:hover{filter:brightness(1.08)}
   body:has(.page[data-tab="Home"]:not([hidden])) .fab{display:none}
   @media (max-width: 899px){ .fab{right:16px;bottom:calc(var(--bnav) + 16px + env(safe-area-inset-bottom))} }
-  .hgnum{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--acc);color:var(--onacc);font:800 12.5px var(--f-body);vertical-align:1px}
+  .hgnum{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#1A7D72;color:#fff;font:800 12.5px var(--f-body);vertical-align:1px}
   .hgnum.go{background:var(--green);color:#fff}
   .hgsum{margin-bottom:4px;line-height:1.7}
   .hgtroop{display:inline-flex;align-items:center;gap:8px}
@@ -576,7 +576,7 @@
 /* navigation: glow on the active tab */
   .side{background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 5%,var(--panel-2)),var(--panel-2))}
   @media (max-width: 899px){ #tabnav{border-top:1px solid color-mix(in srgb,var(--gold) 25%,var(--line));box-shadow:0 -10px 30px -18px rgba(0,0,0,.6)}
-  .tab[aria-selected="true"]{background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 22%,transparent),transparent);color:var(--acc-2)}
+  .tab[aria-selected="true"]{background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 22%,transparent),transparent);color:var(--acc-text)}
   .tab[aria-selected="true"] svg{filter:drop-shadow(0 0 6px var(--acc))}
   .mtop{box-shadow:0 8px 20px -16px rgba(0,0,0,.7)} }
 /* sub-tab chips + shop tiles */
@@ -624,7 +624,9 @@
   .dsub{padding:9px 14px;font:700 12px var(--f-body);text-transform:uppercase;letter-spacing:.05em;color:var(--muted);background:var(--sunk);border-top:1px solid var(--line-soft)}
   .dfold{border-top:1px solid var(--line-soft)}
   .dfold > summary{padding:11px 14px;font-size:13.5px;color:var(--muted);cursor:pointer}
-  .dlinks{display:flex;flex-wrap:wrap;gap:6px 16px;padding:10px 4px 2px}
+  .dlinks{display:flex;flex-wrap:wrap;gap:0 16px;padding:10px 4px 2px}
+  .dlinks .link{margin:0 -8px}
+  .drow .link{margin:0;min-height:0;padding:0;color:var(--acc-text)}
   .meter{padding:2px 14px 12px}
   .meter .big{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
   .meter .big b{font:700 26px var(--f-mono);letter-spacing:-.03em}
@@ -877,8 +879,8 @@
   .drow .dt > b .ptag{margin:0 0 0 4px;vertical-align:1px}
   #bvAll{width:100%;background:none;border-left:0;border-right:0;border-bottom:0;font:inherit}
   .sgtile{position:relative;cursor:pointer}
-  .sgtick{display:block;width:100%;min-height:40px;margin-top:8px;padding:8px;border-radius:10px;border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line));background:var(--acc-soft);color:var(--acc-text);font:700 13px var(--f-body);cursor:pointer;text-align:center}
-  .sgtile.sgdone{opacity:.62}
+  .sgtick{display:block;width:100%;min-height:44px;margin-top:8px;padding:8px;border-radius:10px;border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line));background:var(--acc-soft);color:var(--acc-text);font:700 13px var(--f-body);cursor:pointer;text-align:center}
+  .sgtile.sgdone > :not(.sgtick){opacity:.6}
   .sgtile.sgdone .sgtick{border-style:solid;border-color:transparent;background:var(--green-soft);color:var(--green)}
 /* Formations + Gov Gear v3 */
   .hav{width:40px;height:40px;border-radius:13px;flex:none;display:grid;place-items:center;font:900 17px var(--f-disp);color:#1a1206;background:linear-gradient(145deg,#e9d9b8,#a8977a)}
@@ -955,7 +957,7 @@
 .dv.warn{color:var(--gold,#e9b949)}
 .mp-r .dv{font-family:inherit;font-weight:600}
 /* My formations */
-.fmrow2{width:100%;background:none;border:0;border-top:1px solid var(--line-soft);color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.fmrow2{width:100%;min-height:44px;background:none;border:0;border-top:1px solid var(--line-soft);color:var(--text);font:inherit;text-align:left;cursor:pointer}
 .fmrow2:first-child{border-top:0}
 .fmrow2 .dt small{font-size:12.5px;margin-top:2px}
 .fmr{display:flex;flex-direction:column;align-items:flex-end;gap:4px;min-width:84px}
