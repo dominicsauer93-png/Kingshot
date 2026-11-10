@@ -337,7 +337,8 @@
   .gtable li + li{margin-top:2px}
   @media (max-width: 640px){ .gtable thead{display:none}
   .gtable tr{display:block;padding:8px 0;border-bottom:1px solid var(--line-soft)}
-  .gtable td{display:block;border:0;padding:2px 12px} }
+  .gtable td{display:block;border:0;padding:2px 12px}
+  .gtable td[data-label]::before{content:attr(data-label) ": ";color:var(--faint);font-size:12.5px} }
   .pack{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:4px 12px;align-items:start;padding:11px 14px;border-bottom:1px solid var(--line-soft)}
   .pack:last-child{border-bottom:0}
   .pack .pn{font-weight:700;font-size:14.5px}
@@ -1024,3 +1025,27 @@
   @media (min-width: 900px){ #qJump{margin:0 0 12px;padding:8px 0} }
   @media (max-width: 899px){ .page .chip, .page .btn.sm, .page .btn, .page summary, .sheet .btn{min-height:44px} .page summary{display:flex;align-items:center} }
   @media (max-width: 899px){ .seg button, .nb-buy, .pill, .addrow, button.add{min-height:44px} }
+
+/* ================= batch 5: content, search, copy ================= */
+  .flash{animation:flashrow 1.6s ease}
+  @keyframes flashrow{0%,40%{box-shadow:inset 0 0 0 2px var(--acc);background-color:var(--acc-soft)}100%{box-shadow:none}}
+  .srch-in{display:flex;align-items:center;gap:8px;padding-right:12px;border-bottom:1px solid var(--line)}
+  .srch-in input{flex:1;border:0!important;box-shadow:none!important;background:transparent}
+  #srchList [role=option]{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 12px;border-radius:9px;cursor:pointer;min-height:44px}
+  #srchList [role=option][aria-selected="true"], #srchList [role=option]:hover{background:var(--hover)}
+  #srchList .st{display:flex;flex-direction:column;min-width:0}
+  #srchList .st b{font-weight:600}
+  #srchList .st small{font-size:12px;color:var(--faint)}
+  .nb-math span{display:flex;flex-direction:column;gap:2px;text-align:left}
+  .nb-math small{font-size:12.5px;color:var(--muted);font-weight:500}
+  .bfold > summary{list-style:none;cursor:pointer;width:100%}
+  .bfold > summary::-webkit-details-marker{display:none}
+  .bfold[open] > summary .chev{transform:rotate(90deg)}
+  .rolechips{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none}
+  .rolechips::-webkit-scrollbar{display:none}
+  .rolechips .chip{flex:none}
+  .upsum{margin:-4px 0 12px;font-size:13.5px;color:var(--muted)}
+  .sh2-who .bar{margin-top:6px}
+  .sh2-of{font-size:13px;color:var(--muted)} .sh2-of b{color:var(--text);font-family:var(--f-mono)}
+  abbr[title]{text-decoration:underline dotted;text-underline-offset:3px;cursor:help}
+  .empty{padding:18px 14px;text-align:center;color:var(--muted);font-size:14px}

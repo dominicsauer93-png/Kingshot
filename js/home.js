@@ -11,7 +11,7 @@ function tileH({id,label,value,sub,p,cls,txt,color,go,clamp}){
 }
 function homeList(o){ // Home checklist: next 5 still to do; ticked items slide away
   const arr=o.arr, show=!!state.ui[o.key], n=arr.filter(r=>r.d).length, host=$(o.list);
-  $(o.cnt).textContent=arr.length?(n===arr.length?o.done:`${n} of ${arr.length} done`):"No items yet";
+  $(o.cnt).textContent=arr.length?(n===arr.length?o.done:`${n} of ${arr.length} done`):"Nothing here yet — tap + Add";
   $(o.bar).innerHTML=barH(pc(n,arr.length),n===arr.length&&n?"ok":"");
   const left=arr.filter(r=>!r.d), CAP=5, more=arr.length>Math.min(CAP,left.length);
   const b=$(o.btn); b.hidden=!more; b.textContent=show?"Show less":`Show all ${arr.length}`;
@@ -327,7 +327,7 @@ function renderUpgrade(){ const box=$("#upBody"); if(!box) return; const f=state
   const mat=m=>`<span class="umat${m.h>=m.n?"":" no"}">${esc(m.l)} ${fmtK(m.h)}/${fmtK(m.n)} ${m.h>=m.n?"✓":"✗"}</span>`;
   const row=(g,i,isReady)=>{ const p=upPct(g); return `<div class="urow"><button class="ugo" data-i="${i}" data-r="${isReady?1:0}">${ico(STEP_ICO[g.k],isReady?"g":"")}<span class="dt"><b>${g.title}</b><span>${esc(UP_GROUP[g.k]||"")}${g.gain?` · <span class="ok">${esc(g.gain)}</span>`:""}</span>${PG_AREA[g.k]?(()=>{ const P=pgOf(g.k); return `<span class="upow${P?"":" none"}" data-k="${g.k}">${P?`+${fmtK(P.v)} power <small>${esc(P.src)}</small>`:"+ add power gain"}</span>`; })():""}</span>${p!=null&&!isReady?`<span class="upct"><b>${p}%</b><small>ready</small></span>`:""}</button>
     ${g.mats&&g.mats.length?`<div class="umats">${g.mats.map(mat).join("")}${isReady&&g.apply?`<button class="pdone udo" data-i="${i}">Do it</button>`:""}</div>`:isReady&&g.apply?`<div class="umats"><button class="pdone udo" data-i="${i}">Do it</button></div>`:""}</div>`; };
-  box.innerHTML=`<div class="upf">${["All","Heroes","Governor","Town"].map(x=>`<button class="chip" data-f="${x}" aria-selected="${x===f}">${x}</button>`).join("")}<button class="chip upsort" id="upSort">${byPow?"Sort: most power":"Sort: closest"} ⇅</button></div>
+  box.innerHTML=`<div class="upf">${["All","Heroes","Governor","Town"].map(x=>`<button class="chip" data-f="${x}" aria-selected="${x===f}">${x}</button>`).join("")}<button class="chip upsort" id="upSort" aria-label="${byPow?"Sorted by most power — tap for closest first":"Sorted by closest — tap for most power"}">⇅ ${byPow?"Power":"Closest"}</button></div><p class="upsum">${f==="All"?"Everything":esc(f)} · ${L.length} item${L.length===1?"":"s"}${ready.length?` · <b class="ok">${ready.length} ready</b>`:""}</p>
     <div class="upcols"><div><div class="card dcard"><div class="dch"><h3>Ready now</h3><span class="faint" style="font-size:12.5px">you have the materials</span></div>${ready.map((g,i)=>row(g,i,true)).join("")||'<p class="dnote">Nothing ready yet — see what\'s holding you back below.</p>'}</div>
     ${blk.length?`<div class="cuphead mt"><h3>What's holding you back</h3></div><div class="ublk">${blk.map(k=>`<button class="ubk" data-k="${k}"><b>${fmtK(N[k].short)}</b><span>${UP_SRC[k][0]} short</span><em>${UP_SRC[k][1]} ›</em></button>`).join("")}</div>`:""}
     </div><div><div class="card dcard"><div class="dch"><h3>Next upgrades</h3><span class="faint" style="font-size:12.5px">${byPow?"most power first":"closest first"}</span></div>${next.map((g,i)=>row(g,i,false)).join("")||'<p class="dnote">All caught up ✓</p>'}</div></div></div>`;

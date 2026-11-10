@@ -78,7 +78,7 @@ function renderBagCheck(){
   const ch=it=>{ const p=prev[it[3]]; if(p==null) return ""; const d=val(it)-num(p); return d>0?`<span class="ok">▲ ${fmt(d)}</span>`:d<0?`<span class="bad">▼ ${fmt(-d)}</span>`:""; };
   const key=it=>BLK.includes(it[3])||!!(need[it[3]]&&need[it[3]].need), allBag=!!state.ui.bagAll; // short list = what blocks your next upgrades
   const sub=it=>{ const n=need[it[3]]; return n&&n.need?`<small class="${n.short?"warn":"ok"}" title="${esc(n.what)}">${n.short?`${fmt(n.short)} short for next`:"enough for next ✓"}</small>`:""; };
-  const row=(it,i)=>`<label class="bcrow"><span class="bcl">${BLK.includes(it[3])?'<i class="bdot"></i>':""}${it[0]}${sub(it)}</span><em data-ch="${i}">${ch(it)}</em><input inputmode="numeric" data-i="${i}" value="${fmt(val(it))}"></label>`;
+  const row=(it,i)=>`<label class="bcrow"><span class="bcl">${BLK.includes(it[3])?'<i class="bdot" aria-hidden="true"></i><span class="sr-only">Blocker: </span>':""}${it[0]}${sub(it)}</span><em data-ch="${i}">${ch(it)}</em><input inputmode="numeric" data-i="${i}" value="${fmt(val(it))}"></label>`;
   let n=0;
   box.innerHTML=`<div class="dch"><h3>My bag</h3>${days==null?'<span class="pill a">not checked yet</span>':days===0?'<span class="pill g">checked today</span>':`<span class="pill${days>2?" a":""}">checked ${days} day${days>1?"s":""} ago</span>`}<button class="link" id="bcSave">Save ✓</button></div>
     ${GROUPS.map(([t,ic,items])=>{ const vis=items.map(it=>[it,n++]).filter(([it])=>allBag||key(it)); return vis.length?`<div class="bcgrp"><div class="bcgh">${icoI(ic)} ${t}</div>${vis.map(([it,i])=>row(it,i)).join("")}</div>`:""; }).join("")}

@@ -167,6 +167,7 @@ function openAccountSheet(){ const a=state.account; openSheet({title:"Account",s
 function syncStatus(msg,cls){
   const el=$("#syncStatus"); if(el){ el.textContent=msg; el.style.color=cls==="ok"?"var(--green)":cls==="err"?"var(--red)":cls==="warn"?"var(--amber)":""; }
   const m=$("#syncMini"); if(m) m.textContent=msg;
+  const ft=$("#footTxt"); if(ft) ft.textContent="Kingshot Command Console · "+(syncCfg.owner&&loadTok()?`synced with GitHub · ${msg} · ${new Date().toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"})}`:"data saved on this device");
   if(cls==="err") toast(msg);
 }
 function buildSync(){

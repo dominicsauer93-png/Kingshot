@@ -305,15 +305,14 @@ function renderShards(){
     return `<div class="shrow2 ${maxed?"done":""}" data-i="${i}">
       <button class="sh2-id" data-i="${i}" aria-label="Edit ${esc(r.n||"hero")}"><span class="shr-rank">${rank}</span>
         <span class="sh2-who"><span class="sh2-name">${esc(r.n||"Hero")}${r.rally?" "+icoI("sword"):""}</span>
-        <span class="sh2-star">${st?`<span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}`:'<span class="faint">tap to set stars</span>'} <span class="sh2-use">· Use ${heroUse(r.n)}</span></span></span></button>
+        <span class="sh2-star">${st?`<span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}`:'<span class="faint">tap to set stars</span>'} <span class="sh2-use">· Use ${heroUse(r.n)}</span></span>${maxed||!st?"":barH(pc(h,nx),ready?"ok":"")}</span></button>
       <label class="sh2-have">Have <input inputmode="numeric" data-i="${i}" value="${h}" aria-label="${esc(r.n)} shards in hand"></label>
-      <span class="sh2-out">${maxed?'<span class="ok">5★ max ✓</span>':!st?"":ready?`<button class="didit sh2-up" data-i="${i}">Upgrade → ${esc(starLabel(p+1))}</button>`:`<span class="warn">${fmt(nx-h)} short</span> of ${fmt(nx)}`}</span>
-      ${maxed||!st?"":barH(pc(h,nx),ready?"ok":"")}</div>`; };
+      <span class="sh2-out">${maxed?'<span class="ok">5★ max ✓</span>':!st?"":ready?`<button class="didit sh2-up" data-i="${i}">Upgrade → ${esc(starLabel(p+1))}</button>`:`<span class="sh2-of"><b>${fmt(h)}</b> / ${fmt(nx)}</span>`}</span></div>`; };
   const grp=(t,sub)=>`<div class="shgrp"><span>${t}</span><small>${sub}</small></div>`;
   b.innerHTML=(focus.length?grp("Focus now","")+focus.map(row).join(""):"")+
     (next.length?grp("Next up","")+next.map(row).join(""):"")+
     (spare.length?`<details class="shfold"${state.ui.shSpare?" open":""} data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"")}</summary>${spare.map(row).join("")}</details>`:"")+
-    (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"")}</summary>${done.map(row).join("")}</details>`:"")||`<div class="empty">No heroes yet</div>`;
+    (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"")}</summary>${done.map(row).join("")}</details>`:"")||`<div class="empty">No heroes yet — tap “+ Add hero” below.</div>`;
   b.querySelectorAll("details.shfold").forEach(d=>d.ontoggle=()=>{ state.ui[d.dataset.k]=d.open; scheduleSave(); });
   bindAll(b,".sh2-id",x=>openShardSheet(L[+x.dataset.i]));
   bindAll(b,".sh2-up",x=>{ const r=L[+x.dataset.i], p=num(r.pos), snap=JSON.stringify(state); r.pos=p+1; r.have=Math.max(0,num(r.have)-SHARD_LEAF[p]); afterEdit(); toast(`${r.n}: ${starLabel(p+1)} (−${SHARD_LEAF[p]} shards)`,snap); });

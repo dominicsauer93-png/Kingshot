@@ -315,7 +315,7 @@ function renderMystic(){
     const pts=v.map((x,k)=>`${(k/(v.length-1)*W).toFixed(1)},${(hi===lo?H/2:2+(x-lo)/(hi-lo)*(H-4)).toFixed(1)}`).join(" "); // lower rank = better = higher on the line
     return `<svg class="spark" viewBox="0 0 ${W} ${H}" aria-hidden="true"><polyline points="${pts}" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>`; };
   b.className="card dcard"; b.innerHTML=state.mysticTrials.map((z,i)=>{ const log=(z.log||[]).slice().sort((a,c)=>a.d.localeCompare(c.d)); const d=log.length>1?log[log.length-1].v-log[0].v:0;
-    return `<button class="drow lrow" data-i="${i}"><span class="dt"><b>${esc(z.k||"Zone")}</b><span>${log.length>1?(d<0?`<span class="ok">▼ ${fmt(-d)} better</span>`:d>0?`<span class="bad">▲ ${fmt(d)} worse</span>`:"no change"):"rank logs when you update it"}</span></span><span class="${d<0?"ok":d>0?"bad":"faint"}">${spark(log)}</span><span class="dv">#${esc(String(z.v||"—"))}</span></button>`; }).join("");
+    return `<button class="drow lrow" data-i="${i}"><span class="dt"><b>${esc(z.k||"Zone")}</b><span>${log.length>1?(d<0?`<span class="ok">▲ ${fmt(-d)} places better</span>`:d>0?`<span class="warn">▼ ${fmt(d)} places worse</span>`:"no change"):"rank logs when you update it"}</span></span><span class="${d<0?"ok":d>0?"bad":"faint"}">${spark(log)}</span><span class="dv">#${esc(String(z.v||"—"))}</span></button>`; }).join("");
   bindAll(b,".lrow",x=>openMysticSheet(state.mysticTrials[+x.dataset.i]));
   on("addMystic",()=>{ const z={k:"New zone",v:"",log:[]}; state.mysticTrials.push(z); afterEdit(); openMysticSheet(z); });
   paintMysticChart();
@@ -331,18 +331,18 @@ function paintMysticChart(){
   const css=getComputedStyle(document.documentElement), cv=n=>css.getPropertyValue(n).trim();
   const zones=(state.mysticTrials||[]).map((z,i)=>({z,i,log:(Array.isArray(z.log)?z.log:[]).slice().sort((a,b)=>a.d.localeCompare(b.d))})).filter(x=>x.log.length);
   if(!zones.length){ wrap.innerHTML=`<div class="empty">Update a zone's rank to start the trend.</div>`; return; }
-  const W=300,H=150,pl=40,pr=14,pt=14,pb=26,PW=W-pl-pr,PH=H-pt-pb, line=cv("--line"), faint=cv("--faint"), bg=cv("--panel");
+  const W=300,H=160,pl=52,pr=14,pt=14,pb=28,PW=W-pl-pr,PH=H-pt-pb, line=cv("--line"), faint=cv("--faint"), bg=cv("--panel");
   wrap.innerHTML=`<div class="chartgrid">`+zones.map(({z,i,log})=>{
     const col=cv("--c"+(i%8+1)), vals=log.map(e=>e.v), mn=Math.min(...vals), mx=Math.max(...vals), vp=(mx-mn)*0.15||Math.max(3,mx*0.1,1), lo=mn-vp, hi=mx+vp;
     const t0=new Date(log[0].d).getTime(), t1=new Date(log[log.length-1].d).getTime();
-    const X=d=>t1===t0?pl+PW/2:pl+((new Date(d).getTime()-t0)/(t1-t0))*PW, Y=v=>hi===lo?pt+PH/2:pt+PH-((v-lo)/(hi-lo))*PH;
+    const X=d=>t1===t0?pl+PW/2:pl+((new Date(d).getTime()-t0)/(t1-t0))*PW, Y=v=>hi===lo?pt+PH/2:pt+((v-lo)/(hi-lo))*PH; // rank 1 is best: lower ranks sit higher, so up = better
     const last=log[log.length-1].v, dlt=last-log[0].v;
     let svg=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block" role="img" aria-label="${esc(z.k)} rank trend">`;
-    for(let g=0;g<=2;g++){ const v=lo+(hi-lo)*g/2, y=pt+PH-PH*g/2; svg+=`<line x1="${pl}" y1="${y.toFixed(1)}" x2="${W-pr}" y2="${y.toFixed(1)}" stroke="${line}"/><text x="${pl-6}" y="${(y+3).toFixed(1)}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="10" fill="${faint}">${fmt(Math.round(v))}</text>`; }
+    for(let g=0;g<=2;g++){ const v=lo+(hi-lo)*g/2, y=pt+PH*g/2; svg+=`<line x1="${pl}" y1="${y.toFixed(1)}" x2="${W-pr}" y2="${y.toFixed(1)}" stroke="${line}"/><text x="${pl-6}" y="${(y+3).toFixed(1)}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="12.5" fill="${faint}">${fmt(Math.round(v))}</text>`; }
     if(log.length>1) svg+=`<polyline points="${log.map(e=>X(e.d).toFixed(1)+","+Y(e.v).toFixed(1)).join(" ")}" fill="none" stroke="${col}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
     log.forEach((e,k)=>{ svg+=`<circle cx="${X(e.d).toFixed(1)}" cy="${Y(e.v).toFixed(1)}" r="${k===log.length-1?4.5:3.5}" fill="${k===log.length-1?col:bg}" stroke="${col}" stroke-width="2"><title>${e.d}: #${fmt(e.v)}</title></circle>`; });
-    svg+=`<text x="${pl}" y="${H-6}" font-family="JetBrains Mono,monospace" font-size="9" fill="${faint}">${fd(log[0].d)}</text><text x="${W-pr}" y="${H-6}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="9" fill="${faint}">${fd(log[log.length-1].d)}</text></svg>`;
+    svg+=`<text x="${pl}" y="${H-6}" font-family="JetBrains Mono,monospace" font-size="12" fill="${faint}">${fd(log[0].d)}</text><text x="${W-pr}" y="${H-6}" text-anchor="end" font-family="JetBrains Mono,monospace" font-size="12" fill="${faint}">${fd(log[log.length-1].d)}</text></svg>`;
     return `<div class="chart"><div class="rowb" style="flex-wrap:nowrap"><span style="display:flex;align-items:center;gap:6px;min-width:0"><span style="width:9px;height:9px;border-radius:50%;background:${col};flex:none"></span><b style="font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(z.k)}</b></span><b class="mono gold">#${fmt(last)}</b></div>
-      <div style="font-size:13px;margin:2px 0 4px">${log.length>1?(dlt<0?`<span class="ok">▼ ${fmt(-dlt)} better</span>`:dlt>0?`<span class="bad">▲ ${fmt(dlt)} worse</span>`:`<span class="faint">no change</span>`):`<span class="faint">first log</span>`}</div>${svg}</div>`; }).join("")+`</div>`;
+      <div style="font-size:13px;margin:2px 0 4px">${log.length>1?(dlt<0?`<span class="ok">▲ ${fmt(-dlt)} places better</span>`:dlt>0?`<span class="warn">▼ ${fmt(dlt)} places worse</span>`:`<span class="faint">no change</span>`):`<span class="faint">first log</span>`}</div>${svg}</div>`; }).join("")+`</div>`;
 }
 

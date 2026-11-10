@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/app.css?v=72">
+<link rel="stylesheet" href="css/app.css?v=73">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#main">Skip to content</a>
@@ -47,7 +47,7 @@
     <div class="sidefoot">
       <button class="btn install" id="installBtn"><svg width="18" height="18" aria-hidden="true"><use href="#i-down"/></svg>Install app</button>
       <div class="row" id="sideSync" hidden>
-        <button class="btn sm" id="sidePull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Pull</button><button class="btn sm" id="sidePush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Push</button>
+        <button class="btn sm" id="sidePull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Get</button><button class="btn sm" id="sidePush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Save</button>
       </div>
       <div class="rowb">
         <span class="save" role="status" aria-live="polite"><span class="dot" id="saveDot"></span><span id="saveTxt">Saved</span></span>
@@ -326,7 +326,7 @@
               <label class="fcheck"><input type="checkbox" class="cbx" id="scOn"> Auto-push my edits</label>
               <button class="btn danger" id="scForget">Forget token on this device</button>
               </details>
-              <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="scSave">Save &amp; connect</button><button class="btn" id="scPull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Pull now</button><button class="btn" id="scPush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Push now</button></div>
+              <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="scSave">Save &amp; connect</button><button class="btn" id="scPull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Get latest</button><button class="btn" id="scPush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Save to GitHub</button></div>
               <div class="info" id="syncStatus" role="status">Not connected</div>
             </div>
           </div>
@@ -347,22 +347,22 @@
             <p class="faint mt" style="font-size:13.5px">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
           <div class="card"><h3>2 · Phone notifications (optional)</h3>
             <p class="lead" style="margin:0 0 10px">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app.</p>
-            <ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
+            <details class="dfold"><summary>Show the 4 setup steps ›</summary><ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
               <li>On GitHub: repo → <b>Settings → Secrets and variables → Actions → New repository secret</b>. Name <code>NTFY_TOPIC</code>, value = the same topic name.</li>
-              <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol>
+              <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol></details>
             <p class="faint mt" style="font-size:13.5px">Keep the topic secret: anyone who knows it can read these notes. Nothing is sent until the secret exists.</p></div>
         </div>
       </section>
     </div>
 
-    <p class="foot">Kingshot Command Console · data saved on this device</p>
+    <p class="foot" id="footTxt">Kingshot Command Console · data saved on this device</p>
    </div>
   </main>
 </div>
 
 <button class="fab" id="quickBtn" aria-label="Quick update" title="Quick update"><svg aria-hidden="true"><use href="#i-pen"/></svg><span>Update</span></button>
 <div class="srch" id="srch" hidden role="dialog" aria-modal="true" aria-label="Search">
-  <div class="srch-box"><input id="srchIn" type="search" placeholder="Search — e.g. mithril, shards, packs, Ava" autocomplete="off" aria-controls="srchList"><ul id="srchList" role="listbox"></ul></div>
+  <div class="srch-box"><div class="srch-in"><input id="srchIn" type="search" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-label="Search" placeholder="Search heroes, packs, events, materials…" autocomplete="off" aria-controls="srchList"><button class="link" id="srchCancel">Cancel</button></div><ul id="srchList" role="listbox" aria-label="Results"></ul></div>
 </div>
 <div class="sheetwrap" id="sheetWrap" aria-hidden="true">
   <div class="scrim" data-close></div>
@@ -376,16 +376,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=72"></script>
-<script src="js/ui.js?v=72"></script>
-<script src="js/home.js?v=72"></script>
-<script src="js/rally.js?v=72"></script>
-<script src="js/gear.js?v=72"></script>
-<script src="js/base.js?v=72"></script>
-<script src="js/data.js?v=72"></script>
-<script src="js/shops.js?v=72"></script>
-<script src="js/extras.js?v=72"></script>
-<script src="js/value.js?v=72"></script>
-<script src="js/boot.js?v=72"></script>
+<script src="js/core.js?v=73"></script>
+<script src="js/ui.js?v=73"></script>
+<script src="js/home.js?v=73"></script>
+<script src="js/rally.js?v=73"></script>
+<script src="js/gear.js?v=73"></script>
+<script src="js/base.js?v=73"></script>
+<script src="js/data.js?v=73"></script>
+<script src="js/shops.js?v=73"></script>
+<script src="js/extras.js?v=73"></script>
+<script src="js/value.js?v=73"></script>
+<script src="js/boot.js?v=73"></script>
 </body>
 </html>
