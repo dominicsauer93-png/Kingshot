@@ -1678,7 +1678,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1719,7 +1719,7 @@
       "Plan": "Shop guide",
       "Heroes": "Formations",
       "Shop": "Paid",
-      "Governor": "Masters",
+      "Governor": "Pets",
       "Progress": "Mystic Trials",
       "Town": "Research"
     },
