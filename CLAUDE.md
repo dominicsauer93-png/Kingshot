@@ -23,3 +23,6 @@ Full guide, ranking table and full history: the Eternity's Reach event note in `
 
 ## Releasing code changes
 - Run `node scripts/bump.mjs` before committing any change to js/, css/ or index.html. It bumps the cache name in sw.js and the `?v=` on every file in index.html, so devices load the new files straight away.
+- Do this automatically, without asking, once a change is done and checked: commit, push to the working branch, open a pull request into `main` (or update the open one), and watch it for CI and review comments.
+- If the branch's last PR is already merged, restart the branch from the latest `main` first, then open a new PR.
+- Merge only when the user says so.
