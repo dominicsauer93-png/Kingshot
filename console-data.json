@@ -3803,6 +3803,10 @@
     {
       "d": "2026-11-09",
       "t": "Merchant Empire: no shop"
+    },
+    {
+      "d": "2026-11-10",
+      "t": "Swordland: bought this cycle ✓"
     }
   ],
   "bagCheck": {
@@ -4509,5 +4513,8 @@
       "arc": 90,
       "note": ""
     }
-  ]
+  ],
+  "shopTicks": {
+    "Swordland Shop": "2w1483"
+  }
 }
