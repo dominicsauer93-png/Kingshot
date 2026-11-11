@@ -1721,7 +1721,7 @@
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
+      "Heroes": "Shards",
       "Shop": "Free shops",
       "Governor": "Pets",
       "Progress": "Overview",
@@ -3208,7 +3208,7 @@
         "p:Tech": 28960770,
         "p:Pet": 23577960,
         "p:Master": 16027000,
-        "stars": 477
+        "stars": 478
       }
     }
   ],
