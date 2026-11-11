@@ -72,6 +72,13 @@ const SHOP_DB=[
    skip:["Fishing Pro Set (A$1.49, 2,600%) — under 3,000%","Fishing Pro / Master passes unless budget allows — event ends before 1 Nov"],
    items:[["Fishing Pro pass — +10% tokens/points, 50 Truegold, 5 hammers, 2 General shards, keys, charts","A$7.99","3,000%"],["Fishing Master pass — +20% tokens/points, 75 Truegold, promotion items, charts","A$14.99","4,000%"],["Fishing Pro Set — 500 gems, chart, shell, items","A$1.49","2,600%"],["Sunken Treasure Hunt — 1 hunt",1500,"tokens"],["Sunken Treasure Hunt — 10 hunts",15000,"tokens"]],
    note:"Bait: start 5, +1 every 3 h, max 10. Power Cast multiplies points but uses that many baits. Vouchers add +0.5× each. Every 10 unused tokens → 10K resources at the end. Unused special items carry to the next session."},
+  {n:"Theater Shop (Fantasy Theater)",cur:"Fantasy Tokens (you had 810 on 11 Nov)",when:"Fantasy Theater · shop open until 17 Nov 00:00 UTC (10 am Brisbane) — one day after the missions end",seen:"2026-11-11",
+   best:["Mythic Gear chest? (red/gold chest, 1) — your #1 blocker: 3 at 1,000, then 8 at 1,500, then 10 at 1,800","Mithril? (blue-white crystal, 1) — 6 at 500, then 15 at 750 (you're short of Mithril for the Archer Helm imbue)","Truegold × 36 — 15 at 200 if Truegold is short","Last day: dump leftover tokens on 5 min training speedups (10 each) — unused tokens only become Lv 1 resource chests"],
+   skip:["1 h speedups (general × 30, training × 36) — 200–360 each, poor value next to the chests","Books × 250, blue gem × 4, red bottle × 4 (guess: Elite Spices) unless they become a blocker","Hammers × 12 — only after the chests and Mithril"],
+   items:[["Truegold × 36 (cheapest tier · orange)",200,15],["Mithril? × 1 (cheapest tier)",500,6],["Custom Mythic Hero Gear chest? × 1 (cheapest tier)",1000,3],["Forgehammer × 12 (cheapest tier)",160,19],["blue gem (cap) × 4 (?) (cheapest tier)",120,25],["books × 250 (?) (cheapest tier)",120,25],["red bottle × 4 (Elite Spices?) (cheapest tier)",120,25],["1 h speedups × 30 (cheapest tier)",200,15],["1 h training speedups × 36 (cheapest tier)",200,15],
+     ["Truegold × 36 (middle tier · purple)",300,38],["Mithril? × 1 (middle tier)",750,15],["Custom Mythic Hero Gear chest? × 1 (middle tier)",1500,8],["Forgehammer × 12 (middle tier)",250,45],["blue gem × 4 (middle tier)",180,62],["books × 250 (middle tier)",180,62],["red bottle × 4 (middle tier)",180,62],["1 h speedups × 30 (middle tier)",300,38],["1 h training speedups × 36 (middle tier)",300,38],
+     ["Truegold × 36 (top tier · blue)",360,50],["Mithril? × 1 (top tier)",900,20],["Custom Mythic Hero Gear chest? × 1 (top tier)",1800,10],["Forgehammer × 12 (top tier)",300,60],["blue gem × 4 (top tier)",220,82],["books × 250 (top tier)",220,82],["red bottle × 4 (top tier)",220,82],["1 h speedups × 30 (top tier)",360,60],["1 h training speedups × 36 (top tier)",360,60],["5 min training speedups × 9",10,9999]],
+   note:"Three price tiers of the same items — orange is cheapest, then purple, then blue (guess: the cheaper tier sells out first). Items marked ? weren't named on screen. Unused Fantasy Tokens turn into Lv 1 Custom Secured Resource Chests when the event ends."},
   {n:"Halloween Party",cur:"Halloween Candy",when:"7 days (27 Oct – 2 Nov 2026)",seen:"2026-10-27",
    best:["Daily: reach 300 Prankster Points → 2 General Mythic shards, 3 Forgehammers, 3 h speedup (every day!)","Candy Party Pack I is free — claim it (100 candy, 2 gold keys)","Spend candy in Coven Clash (20 per attack) — Witch hits drop Lucky Hero Gear chests (Mythic chance)","Audacious Adventure free track to level 21: General shards, Truegold, keys, chests","Surprising Symphony missions — finish them all for 20 wands, 70 Truegold, 2 General shards","Prankster King: do each day's stage (1 day each) — Power Boost, Beast Slay, Hero, Training, Hero Gear, Gather, Gov Gear"],
    skip:["Candy Party Pack II (A$7.99, 4,400%) only if you'd use the candy — 1,000 candy + 70 Truegold + 2,500 gems","Top-up Benefits — only counts spending you'd do anyway","Masquerade wands — cosmetic town skins"],
@@ -138,7 +145,7 @@ const EVENT_SHOPS=[
   [/officer project/i,"Officer Project"],[/fishing/i,"Fishing Tournament"],[/sanctuary/i,"Sanctuary Battle"],[/tri-alliance/i,"Tidal Shop"],
   [/alliance mobilization/i,"Alliance Mobilization"],[/armament/i,"Armament Competition"],[/strongest governor/i,"Strongest Governor"],
   [/merchant empire/i,"Merchant Empire"],[/alliance brawl/i,"Alliance Brawl"],[/golden glaives/i,"Golden Glaives"],[/flamedragon|dragon banquet/i,"Flamedragon Tyrant"],
-  [/halloween/i,"Halloween Party"],[/mystic trial/i,"Trial Shop"],[/finder'?s fortune/i,"Finder's Fortune"]];
+  [/halloween/i,"Halloween Party"],[/fantasy theater/i,"Theater Shop (Fantasy Theater)"],[/mystic trial/i,"Trial Shop"],[/finder'?s fortune/i,"Finder's Fortune"]];
 const evShopSaved=name=>SHOP_DB.some(x=>x.n===name);
 const STALE_DAYS=45; // shop / deal data older than this gets a "check" marker
 const staleDays=d=>d?Math.round((new Date(gameToday())-new Date(d))/864e5):0;
@@ -149,7 +156,7 @@ function eventShopProgress(){ const all=[...new Set(EVENT_SHOPS.map(x=>x[1]))]; 
 
 // the page: a simple shopping list first (one tile per shop, what to buy right now), details tucked below
 const SG_REGULAR=[["Trial Shop","Weekly"],["Arena Shop","Weekly"],["Alliance Championship Shop","Weekly"],["KvK Shop (Kingdom of Power)","Weekly"],["Swordland Shop","Every 2 weeks"],["Tidal Shop","Every 2 weeks"],["Alliance Shop — weekly","Weekly"],["Alliance Shop — daily","Daily"]];
-const SG_EVENT=["Halloween Party","Alliance Mobilization","Fishing Tournament","Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
+const SG_EVENT=["Theater Shop (Fantasy Theater)","Halloween Party","Alliance Mobilization","Fishing Tournament","Hall of Heroes","Champagne Fair","Dragon's Caravan","Exclusive Gear Fund"];
 // weekly tick-list: a shop ticked this period shows done; it resets when the shop refreshes
 function shopPeriod(when){ const t=gameToday(); if(/daily/i.test(when)) return t; const wk=weekKey(); if(/2 weeks/i.test(when)){ const n=Math.floor(new Date(wk+"T00:00:00Z").getTime()/(7*864e5)); return "2w"+Math.floor(n/2); } return wk; }
 const shopDone=(n,when)=>(state.shopTicks||{})[n]===shopPeriod(when);

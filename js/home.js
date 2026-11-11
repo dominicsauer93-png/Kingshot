@@ -26,6 +26,7 @@ const EVENT_STEPS=[
   [/officer project/i,["Forgehammers into hero gear mastery","Level widgets (lowest rally hero first)"]],
   [/hall of heroes/i,["Spend Marks of Valor on widgets + shards","General shards into your focus hero"]],
   [/armament/i,["Small speedups only — save the big ones for KvK"]],
+  [/fantasy theater/i,["Daily Theater Notes missions → Fantasy Amulets (reset 00:00 UTC = 10 am Brisbane; at least 40 a day: troop power 10, any purchase 20, Terror rally 5, 5 alliance contributions 5)","Spend Amulets in the Theater: each try climbs or stays — 10% / 30% / 60% / 80%, the 5th try always climbs","Keep climbing — tokens roughly double each floor: 140 · 300 · 850 · 1,600 · 3,000 · 6,800. Claiming resets you to Floor 1","Floor 7 gives 1–5 Fanstars; 5 Fanstars = your next try goes to the Fantasy Fortress (13,000 tokens?)","Shop: Mythic Gear chests? first, then Mithril?, then Truegold — cheapest tier first","Last shop day: spend every token (5 min speedups, 10 each) — leftovers become Lv 1 resource chests"]],
   [/bear/i,["Pet buffs on: Panther, Elephant, Great Moose, Bison, War Bear","Lead rallies with your Bear heroes (Amadeus, Ava, Yang)"]],
   [/strongest governor/i,["Check today's theme — spend only on that"]],
   [/hero roulette/i,["Set the wheel to your focus hero (Change) — Wee & Woo or Ava","Tokens cost 1,500 gems — always Spin 10 (9 tokens)","Reach the chests: 70 spins (30 shards + 30 books + 30 manuals), 120 (50 each)","Skip Lucky Chip packs — under 3,000%"]],
@@ -136,7 +137,7 @@ function renderEvents(){
   on("evAll",openAllEventsSheet);
 }
 // what to spend during each event (your own text wins; these are the defaults)
-const EVENT_SPEND=[[/kvk|kingdom of power/i,"Speedups, training, Gov Gear, pet advances"],[/officer project/i,"Forgehammers + widgets"],[/hall of heroes/i,"Marks of Valor → widgets & shards"],[/armament/i,"Small stuff only — save for KvK"],[/bear/i,"Nothing — just lead rallies"],[/strongest governor/i,"Today's theme items"],[/hero roulette/i,"Gems from the roulette fund — Spin 10 only"],[/voyage/i,"Nothing — keep all 4 sails running"],[/dragon essence/i,"Value Pack only — essence into focus-hero shards"]];
+const EVENT_SPEND=[[/fantasy theater/i,"Amulets → climb to Floor 7 → tokens for Mythic Gear chests"],[/kvk|kingdom of power/i,"Speedups, training, Gov Gear, pet advances"],[/officer project/i,"Forgehammers + widgets"],[/hall of heroes/i,"Marks of Valor → widgets & shards"],[/armament/i,"Small stuff only — save for KvK"],[/bear/i,"Nothing — just lead rallies"],[/strongest governor/i,"Today's theme items"],[/hero roulette/i,"Gems from the roulette fund — Spin 10 only"],[/voyage/i,"Nothing — keep all 4 sails running"],[/dragon essence/i,"Value Pack only — essence into focus-hero shards"]];
 const EVENT_LEN=[[/hall of heroes/i,3],[/armament competition \(type 1\)/i,2]];
 const spendFor=e=>String(e.spend||"").trim()||((EVENT_SPEND.find(([re])=>re.test(e.n||""))||[])[1]||"");
 const evLen=e=>Math.max(1,Math.floor(num(e.len))||((EVENT_LEN.find(([re])=>re.test(e.n||""))||[])[1]||1));
@@ -378,7 +379,8 @@ const GR_PREP=[
     if(w) o.push(`${esc(w.h)} widgets ${grOk(w.have,w.nd)} for Lv ${w.lvl+1}`); return o.length?o:["Forgehammers + widgets"]; }],
   [/bear/i,()=>[(state.formations||[]).length?`Use your saved presets: ${esc(state.formations.map(f=>f.n.replace(/^Bear (lead|join) · ?/,"")).join(" · "))}`:"Lead with Amadeus · Ava · Yang"]],
   [/viking/i,()=>["Send every march to reinforce online members (Bear joiners lead)","Move one Infantry/Cavalry march to the HQ for waves 10 and 20"]],
-  [/armament/i,()=>["Small speedups only — keep big ones for KvK"]]];
+  [/armament/i,()=>["Small speedups only — keep big ones for KvK"]],
+  [/fantasy theater/i,()=>["Do the daily Theater Notes missions (10 am Brisbane reset) → Amulets","Climb before claiming — Floor 7 = 6,800 tokens + Fanstars","Shop: Mythic Gear chest? 1,000 · Mithril? 500 · Truegold 200 (cheapest tier)"]]];
 function renderGetReady(){ setTimeout(()=>{ on("grAll",openAllEventsSheet); on("grAdd",()=>openEventSheet(null)); },0); const box=$("#getReady"); if(!box) return; const t=new Date(gameToday()+"T00:00:00");
   const L=(state.events||[]).map(e=>{ const live=activeOcc(e), o=nextOcc(e); return {e,live,o}; })
     .filter(x=>x.live||(x.o&&!x.o.past&&x.o.days<=30)).sort((a,b)=>(a.live?-1:a.o.days)-(b.live?-1:b.o.days));

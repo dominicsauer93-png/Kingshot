@@ -127,7 +127,8 @@ function liveBuys(shop,N){
   N=N||blockerNeeds();
   const L=(shop.items||[]).filter(it=>typeof it[1]==="number").map(it=>{ const m=ITEM_RES.find(([re])=>re.test(it[0])); return m?{it,k:m[1],sub:m[2]}:null; }).filter(Boolean);
   // Mithril, General shards and Lucky chests are far cheaper in some shops — skip them where they cost over 2× the cheapest
-  const cheap={}; SHOP_DB.forEach(sh=>(sh.items||[]).forEach(it=>{ const m=typeof it[1]==="number"&&ITEM_RES.find(([re])=>re.test(it[0])); if(m) cheap[m[1]+m[2]]=Math.min(cheap[m[1]+m[2]]||Infinity,it[1]); }));
+  // event shops use their own tokens: don't compare their prices with the regular shops
+  const cheap={}; SHOP_DB.filter(sh=>!(typeof SG_EVENT!=="undefined"&&SG_EVENT.includes(sh.n))).forEach(sh=>(sh.items||[]).forEach(it=>{ const m=typeof it[1]==="number"&&ITEM_RES.find(([re])=>re.test(it[0])); if(m) cheap[m[1]+m[2]]=Math.min(cheap[m[1]+m[2]]||Infinity,it[1]); }));
   const pricey=x=>["mith","gen","mg"].includes(x.k)&&x.it[1]>2*cheap[x.k+x.sub];
   const order=["mg","threads","designs","mith","gen","fh"];
   const need=L.filter(x=>N[x.k]&&N[x.k].short>0&&!pricey(x)).sort((a,b)=>order.indexOf(a.k)-order.indexOf(b.k)||a.sub-b.sub||a.it[1]-b.it[1]);
