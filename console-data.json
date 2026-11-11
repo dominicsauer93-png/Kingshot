@@ -1682,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1721,7 +1721,7 @@
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Formations",
+      "Heroes": "Hero Gear",
       "Shop": "Free shops",
       "Governor": "Pets",
       "Progress": "Overview",
