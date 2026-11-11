@@ -1087,3 +1087,10 @@
   @media (min-width: 900px){ .fab{left:16px;right:auto;bottom:150px;width:calc(var(--side) - 32px);height:48px;padding:0 16px;justify-content:center;border-radius:12px} .fab span{position:static;width:auto;height:auto;clip:auto;overflow:visible} .main{padding-right:clamp(16px,3vw,40px)} }
   .qmore{margin-top:4px}
   @media (min-width: 900px) and (max-height: 740px){ .fab{left:auto;right:20px;bottom:24px;width:56px;height:56px;padding:0;border-radius:999px} .fab span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)} .main{padding-right:96px} }
+/* Home: Get ready */
+.gr-r{display:flex;gap:10px;padding:10px 14px;border-top:1px solid var(--line-soft)}
+.gr-w{flex:none;min-width:46px;text-align:center;font:700 12px var(--f-mono);padding:4px 6px;border-radius:8px;border:1px solid var(--line);color:var(--faint);align-self:flex-start}
+.gr-w.ok{color:var(--green,#4cc38a);border-color:currentColor}.gr-w.warn{color:var(--gold,#e9b949);border-color:currentColor}
+.gr-b{min-width:0;flex:1}.gr-b b{font-size:14.5px}
+.gr-b ul{margin:4px 0 0;padding-left:16px;font-size:13.5px;color:var(--faint);line-height:1.45}
+.gr-b li .ok,.gr-b li .bad{font-family:var(--f-mono);font-size:12.5px}
