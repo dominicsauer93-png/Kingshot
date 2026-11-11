@@ -1682,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Upgrade",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1723,7 +1723,7 @@
       "Plan": "Shop guide",
       "Heroes": "Formations",
       "Shop": "Paid",
-      "Governor": "Masters",
+      "Governor": "Pets",
       "Progress": "Mystic Trials",
       "Town": "Research"
     },
@@ -1741,7 +1741,7 @@
     "heroAll": false,
     "evOpen": true,
     "shSpare": true,
-    "petMaxOpen": true,
+    "petMaxOpen": false,
     "weekOpen": false,
     "todayAll": true,
     "tierOpen": false,
