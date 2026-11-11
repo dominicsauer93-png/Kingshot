@@ -4572,7 +4572,7 @@
       "note": "Leads your own Bear rally"
     },
     {
-      "n": "Bear join · QUD",
+      "n": "BT1",
       "heroes": [
         "Vivian",
         "Long Fei",
@@ -4584,7 +4584,7 @@
       "note": ""
     },
     {
-      "n": "Bear join · KrJ",
+      "n": "BT2",
       "heroes": [
         "Chenko",
         "Diana",
@@ -4596,7 +4596,7 @@
       "note": ""
     },
     {
-      "n": "Bear join · ARP",
+      "n": "BT3",
       "heroes": [
         "Yeonwoo",
         "Fahd",
@@ -4608,7 +4608,7 @@
       "note": ""
     },
     {
-      "n": "Bear join · Dav",
+      "n": "BT4",
       "heroes": [
         "Amane",
         "Gordon",
@@ -4620,7 +4620,7 @@
       "note": ""
     },
     {
-      "n": "Bear join · YAY",
+      "n": "BT5",
       "heroes": [
         "Margot",
         "Marlin",
