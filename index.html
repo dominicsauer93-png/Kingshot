@@ -18,7 +18,7 @@
   (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t!=="light"&&t!=="auto") t="dark"; if(t==="auto") t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"; document.documentElement.setAttribute("data-theme",t); }catch(e){ document.documentElement.setAttribute("data-theme","dark"); } })();
 </script>
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=76">
+<link rel="stylesheet" href="css/app.css?v=77">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#main">Skip to content</a>
@@ -84,6 +84,7 @@
           <section class="sec" data-key="Upcoming Events">
             <div class="cuphead"><h3>Coming up</h3><button class="link" id="evAll">All ›</button><button class="link" id="evAdd">+ Add</button></div><div id="evUpcoming"></div>
           </section>
+          <section class="sec" data-key="Get ready"><div class="card dcard" id="getReady"></div></section>
         </div>
         <div>
           <section class="sec" data-key="Bag check"><div class="card dcard" id="bagCheck"></div>
@@ -374,16 +375,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=76"></script>
-<script src="js/ui.js?v=76"></script>
-<script src="js/home.js?v=76"></script>
-<script src="js/rally.js?v=76"></script>
-<script src="js/gear.js?v=76"></script>
-<script src="js/base.js?v=76"></script>
-<script src="js/data.js?v=76"></script>
-<script src="js/shops.js?v=76"></script>
-<script src="js/extras.js?v=76"></script>
-<script src="js/value.js?v=76"></script>
-<script src="js/boot.js?v=76"></script>
+<script src="js/core.js?v=77"></script>
+<script src="js/ui.js?v=77"></script>
+<script src="js/home.js?v=77"></script>
+<script src="js/rally.js?v=77"></script>
+<script src="js/gear.js?v=77"></script>
+<script src="js/base.js?v=77"></script>
+<script src="js/data.js?v=77"></script>
+<script src="js/shops.js?v=77"></script>
+<script src="js/extras.js?v=77"></script>
+<script src="js/value.js?v=77"></script>
+<script src="js/boot.js?v=77"></script>
 </body>
 </html>

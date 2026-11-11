@@ -107,7 +107,7 @@ function renderHome(){
   if(t.routineDate!==today){ t.routine.forEach(r=>r.d=false); t.routineDate=today; scheduleSave(); }
   const w=state.weekly, wk=weekKey();
   if(w.week!==wk){ w.items.forEach(r=>r.d=false); w.week=wk; scheduleSave(); }
-  renderEvents();
+  renderEvents(); renderGetReady();
 }
 
 /* ---------- Home summary strip: the four numbers that matter today ---------- */
@@ -360,3 +360,31 @@ function openPgSheet(k){ const P=pgStore()[k]||(pgStore()[k]={});
     f.appendChild(fld("Power from the game (the “Power +” on the upgrade screen)",{type:"num",allowEmpty:true,value:P.you||"",get:()=>P.you||"",set:v=>{ if(v===""||!num(v)) delete P.you; else P.you=Math.round(num(v)); },hint:"Shorthand works: 45k, 1.2m. Leave empty to use the learned or guide figure."}));
     const i=infoBox(); f.appendChild(i);
     const rf=()=>{ const L=P.learned||[]; i.innerHTML=`Learned from your updates: <b>${L.length?L.map(fmtK).join(", "):"none yet"}</b><br>Guide figure: <b>${num(P.guide)?fmtK(P.guide):"—"}</b><br><span class="faint">Learned figures come from your power grades: tap Done on an upgrade, then update that area's power on Progress → Power grades.</span>`; }; rf(); return rf; }}); }
+
+/* ---------- Home: Get ready — what to save / have ready for the next 30 days, plus your heroes ---------- */
+const grOk=(have,need)=>have>=need?`<span class="ok">${fmt(have)}/${fmt(need)} ✓</span>`:`<span class="bad">${fmt(have)}/${fmt(need)}</span>`;
+function grWidgets(n){ const W=(state.widgets&&state.widgets.rows)||[]; return W.filter(r=>r.rally&&num(r.lvl)<10).map(r=>({h:r.hero,lvl:num(r.lvl),have:num(r.have),nd:widNext(num(r.lvl))})).sort((a,b)=>(b.have/b.nd)-(a.have/a.nd)).slice(0,n||3); }
+const GR_PREP=[
+  [/eternity/i,()=>["Recall 1 march every 60 s — wait for the ring, common veins only","Top 10 needs about 438K (your best: 383,822)"]],
+  [/kvk|kingdom of power/i,()=>{ const out=[], pl=(typeof govPlanLeft==="function"?govPlanLeft():[])[0];
+    if(pl){ const pc=govPlanPiece(pl), need=pc?govRem(num(pc.cur),pl.to):null; if(need) out.push(`Gov Gear day: ${esc(pl.name)} → ${esc((GOV_TIERS[pl.to]||[""])[0])} · Threads ${grOk(num((state.govGear.have||{}).threads),need.t)} · Satin ${grOk(num((state.govGear.have||{}).satin),need.s)}`); }
+    out.push("Save speedups for the matching prep days"); return out; }],
+  [/hall of heroes/i,()=>{ const L=grWidgets(3).map(w=>`${esc(w.h)} widgets ${grOk(w.have,w.nd)} for Lv ${w.lvl+1}`); return ["Spend Marks of Valor on widgets for your rally heroes",...L]; }],
+  [/hero rally/i,()=>["Path of Honor (A$14.99) — pick the 40 General shards · 1.60× value"]],
+  [/generation 8/i,()=>{ const h=state.genHold; return [h?`General shards ${grOk(num(state.shardGeneral),num(h.target))} — saving`:`General shards: ${fmt(num(state.shardGeneral))}`,"Keep Marks of Valor — Season 7 (Ava, Wee & Woo, Charles) shards & widgets unlock in Hall of Heroes"]; }],
+  [/officer project/i,()=>{ const H=state.heroGear.have||{}, t=(typeof hgPlanLeft==="function"?hgPlanLeft():[])[0], w=grWidgets(1)[0]; const o=[];
+    if(t) o.push(`Hero gear: ${esc(t.type)} ${esc(t.slot)} · hammers ${grOk(num(H.fh),num(t.fh))} · Mythic ${grOk(num(H.mg),num(t.mg))}`);
+    if(w) o.push(`${esc(w.h)} widgets ${grOk(w.have,w.nd)} for Lv ${w.lvl+1}`); return o.length?o:["Forgehammers + widgets"]; }],
+  [/bear/i,()=>[(state.formations||[]).length?`Use your saved presets: ${esc(state.formations.map(f=>f.n.replace(/^Bear (lead|join) · ?/,"")).join(" · "))}`:"Lead with Amadeus · Ava · Yang"]],
+  [/viking/i,()=>["Send every march to reinforce online members (Bear joiners lead)","Move one Infantry/Cavalry march to the HQ for waves 10 and 20"]],
+  [/armament/i,()=>["Small speedups only — keep big ones for KvK"]]];
+function renderGetReady(){ const box=$("#getReady"); if(!box) return; const t=new Date(gameToday()+"T00:00:00");
+  const L=(state.events||[]).map(e=>{ const live=activeOcc(e), o=nextOcc(e); return {e,live,o}; })
+    .filter(x=>x.live||(x.o&&!x.o.past&&x.o.days<=30)).sort((a,b)=>(a.live?-1:a.o.days)-(b.live?-1:b.o.days));
+  const rows=L.map(({e,live,o})=>{ const P=GR_PREP.find(([re])=>re.test(e.n||"")), lines=P?P[1](e):[esc(spendFor(e))].filter(Boolean); if(!lines.length) return "";
+    return `<div class="gr-r"><span class="gr-w ${live?"ok":o.days<=3?"warn":""}">${live?"now":o.days===0?"today":o.days===1?"tmrw":`${o.days}d`}</span><div class="gr-b"><b>${esc(e.n)}</b><ul>${lines.map(l=>`<li>${l}</li>`).join("")}</ul></div></div>`; }).filter(Boolean);
+  // heroes: widgets + shards, whatever the calendar says
+  const W=grWidgets(3), sh=(typeof shardOrder==="function"?shardOrder():[]).filter(r=>hasStars(r)&&num(r.pos)<SHARD_MAX).slice(0,2);
+  const hero=[...W.map(w=>`${esc(w.h)} widgets ${grOk(w.have,w.nd)} for Lv ${w.lvl+1}`),...sh.map(r=>`${esc(r.n)} shards ${grOk(num(r.have),SHARD_LEAF[num(r.pos)])} for ${esc(starLabel(num(r.pos)+1))}`)];
+  box.innerHTML=`<div class="dch"><h3>Get ready</h3><span class="faint fs12">next 30 days</span></div>${rows.join("")||'<p class="dnote">Nothing on the calendar for 30 days.</p>'}
+    ${hero.length?`<div class="gr-r"><span class="gr-w">heroes</span><div class="gr-b"><b>Widgets & shards</b><ul>${hero.map(l=>`<li>${l}</li>`).join("")}</ul></div></div>`:""}`; }
