@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 271,
+    "current": 370,
     "target": 6144,
     "gold": 463530
   },
@@ -1574,9 +1574,9 @@
     }
   ],
   "tg": {
-    "have": 71,
+    "have": 143,
     "need": 2586,
-    "ttgHave": 1,
+    "ttgHave": 2,
     "ttgNeed": 289
   },
   "govGear": {
@@ -1682,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1724,7 +1724,7 @@
       "Heroes": "Formations",
       "Shop": "Free shops",
       "Governor": "Pets",
-      "Progress": "Mystic Trials",
+      "Progress": "Overview",
       "Town": "Research"
     },
     "t11Open": {
@@ -1733,7 +1733,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Bag": true
+      "HG": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1780,7 +1780,7 @@
   "heroGear": {
     "have": {
       "xp": 2900,
-      "fh": 209,
+      "fh": 230,
       "mg": 3,
       "mith": 8
     },
@@ -1940,10 +1940,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 209,
+    "fhSeen": 230,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 1053
+      "2026-11": 1281
     },
     "plan": [
       {
@@ -1991,8 +1991,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 888,
-      "designs": 318
+      "guides": 896,
+      "designs": 351
     },
     "rows": [
       {
@@ -2148,7 +2148,7 @@
       {
         "hero": "Amadeus",
         "lvl": 7,
-        "have": 0,
+        "have": 11,
         "rally": true
       },
       {
@@ -3743,17 +3743,17 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 40438
+        "2026-11": 40786
       },
-      "seen": 318
+      "seen": 351
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 1053
+        "2026-11": 1281
       },
-      "seen": 209
+      "seen": 230
     },
     "gen": {
       "since": "2026-10-26",
