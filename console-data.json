@@ -1682,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1722,7 +1722,7 @@
       "Base": "T11",
       "Plan": "Shop guide",
       "Heroes": "Formations",
-      "Shop": "Paid",
+      "Shop": "Free shops",
       "Governor": "Pets",
       "Progress": "Mystic Trials",
       "Town": "Research"
