@@ -144,7 +144,7 @@ function renderWidgets(){
   const R=w.rows.some(r=>r.rally)?w.rows.filter(r=>r.rally):w.rows;
   const total=R.reduce((s,r)=>s+widRem(num(r.lvl)),0), haveSum=R.reduce((s,r)=>s+num(r.have),0);
   const low=widNextRow(); // shared with Home
-  $("#widTiles").innerHTML=low?stepTileH("wTot",`Next: ${esc(low.hero)} Lv ${num(low.lvl)} → ${num(low.lvl)+1}`,num(low.have),widNext(num(low.lvl)),total):tileH({id:"wTot",label:"Widgets (rally heroes)",value:"All maxed",txt:true});
+  $("#widTiles").innerHTML=low?stepTileH("wTot",`Next: ${esc(low.hero)} Lv ${num(low.lvl)} → ${num(low.lvl)+1}`,num(low.have),widNext(num(low.lvl)),total,x=>fmt(x)+" widgets"):tileH({id:"wTot",label:"Widgets (rally heroes)",value:"All maxed",txt:true});
   on("wTot",()=>low&&openWidSheet(low));
   const b=$("#widBody");
   const L=w.rows.slice().sort((a,c)=>(!!c.rally)-(!!a.rally)||num(a.lvl)-num(c.lvl));

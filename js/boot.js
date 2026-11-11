@@ -138,7 +138,7 @@ function paintSearch(){
   srchRes=(!words.length?idx:idx.filter(x=>rx.every(r=>r.test(x.hay))).map(x=>({x,s:score(x)})).sort((a,b)=>a.s-b.s).map(o=>o.x)).slice(0,40);
   srchSel=Math.min(srchSel,Math.max(0,srchRes.length-1)); if(!q) srchSel=0;
   const inp=$("#srchIn");
-  $("#srchList").innerHTML=srchRes.length?srchRes.map((r,i)=>`<li role="option" id="so-${i}" data-i="${i}" aria-selected="${i===srchSel}"><span class="st"><b>${esc(r.title)}</b>${r.kind!=="Section"?`<small>${esc(r.kind)}</small>`:""}</span><span class="where">${esc(r.tab)}${r.sub&&r.sub!==r.title?" › "+esc(r.sub):""}</span></li>`).join(""):`<li class="none" role="presentation">Nothing found for “${esc(q)}”</li>`;
+  $("#srchList").innerHTML=srchRes.length?srchRes.map((r,i)=>`<li role="option" id="so-${i}" data-i="${i}" aria-selected="${i===srchSel}">${/hero|widget/i.test(r.kind)?heroAvSm(r.title.replace(/ widget$/,"")):""}<span class="st"><b>${esc(r.title)}</b>${r.kind!=="Section"?`<small>${esc(r.kind)}</small>`:""}</span><span class="where">${esc(r.tab)}${r.sub&&r.sub!==r.title?" › "+esc(r.sub):""}</span></li>`).join(""):`<li class="none" role="presentation">Nothing found for “${esc(q)}”</li>`;
   if(srchRes.length) inp.setAttribute("aria-activedescendant","so-"+srchSel); else inp.removeAttribute("aria-activedescendant");
   $$("#srchList [role=option]").forEach(b=>b.onclick=()=>pickSearch(+b.dataset.i));
 }
@@ -269,7 +269,7 @@ function initStatusUI(){
   addEventListener("online",off); addEventListener("offline",off); off(); }
 
 /* tables keep their column names on phones; short game words get a tap-to-explain */
-var ABBR={TTG:"Tempered Truegold",TG:"Truegold",LED:"Legendary Equipment",QUD:"Quick Upgrade",KrJ:"Kingdom vs Kingdom (KvK)",KvK:"Kingdom vs Kingdom",SvS:"State vs State"};
+var ABBR={TTG:"Tempered Truegold",TG:"Truegold",KvK:"Kingdom vs Kingdom",SvS:"State vs State"};
 var ABBR_RX=new RegExp("\\b("+Object.keys(ABBR).join("|")+")\\b");
 function decorate(root){
   root.querySelectorAll("table.gtable,table.vmath").forEach(t=>{ const H=[...t.querySelectorAll("thead th")].map(th=>th.textContent.trim()); if(!H.length) return;

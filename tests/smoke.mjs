@@ -19,7 +19,7 @@ for (const [w, h, label] of [[390, 844, "phone"], [1280, 900, "pc"]]) {
   await p.goto("file://" + page + "#home");
   await p.evaluate(d => localStorage.setItem("kingshot-console-v1", d), data);
   await p.reload(); await p.waitForFunction(() => document.querySelector("#doNext .pstep")); await p.waitForTimeout(500);
-  const tabs = await p.evaluate(() => Object.entries({ Home: [], ...SUBS }).flatMap(([t, s]) => s.length ? s.map(x => [t, x]) : [[t, null]]));
+  const tabs = await p.evaluate(() => Object.entries({ Home: [], Upgrade: [], ...SUBS }).flatMap(([t, s]) => s.length ? s.map(x => [t, x]) : [[t, null]]));
   for (const [t, s] of tabs) {
     await p.evaluate(([t, s]) => setTab(t, s), [t, s]); await p.waitForTimeout(120);
     const over = await p.evaluate(() => { if (document.documentElement.scrollWidth <= innerWidth + 1) return "";

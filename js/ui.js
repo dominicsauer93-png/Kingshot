@@ -179,7 +179,8 @@ function setTab(tab,sub,scroll,fromHistory){
   if(dirtyTabs.has(tab)){ dirtyTabs.delete(tab); renderPrep(); TAB_RENDER[tab](); }
   const page=$(`.page[data-tab="${tab}"]`);
   if(s){ page.querySelectorAll(".sec[data-sub]").forEach(x=>x.hidden=x.dataset.sub!==s);
-    page.querySelectorAll(".subnav .chip").forEach(c=>{ if(c.dataset.sub===s) c.setAttribute("aria-current","true"); else c.removeAttribute("aria-current"); }); }
+    page.querySelectorAll(".subnav .chip").forEach(c=>{ if(c.dataset.sub===s) c.setAttribute("aria-current","true"); else c.removeAttribute("aria-current"); });
+    centerChip(page.querySelector(".subnav"),page.querySelector('.subnav .chip[aria-current="true"]')); }
   const mt=$("#mTitle"); if(mt) mt.textContent=lbl(tab); // the chip row already names the section
   document.title=(tab==="Home"?"":lbl(tab)+(s?" · "+lbl(s):"")+" — ")+"Kingshot Console";
   const hash="#"+slug(lbl(tab))+(s?"/"+slug(lbl(s)):"");
@@ -201,6 +202,8 @@ function tabFromHash(){
   if(s&&!sub){ const o=Object.keys(SUBS).find(k=>SUBS[k].some(subSlug)); if(o){ tab=o; sub=SUBS[o].find(subSlug); } } // section moved to another tab
   return [tab,sub];
 }
+// scroll a chip row sideways so the chosen chip is in view (the page itself doesn't move)
+function centerChip(row,c){ if(!row||!c) return; requestAnimationFrame(()=>{ const x=c.offsetLeft-(row.clientWidth-c.offsetWidth)/2; row.scrollLeft=Math.max(0,x); }); }
 /* ---------- history: Back closes a sheet or search before it leaves the page ---------- */
 let overlayPushed=false, skipPop=false, pendingHash=null;
 function pushOverlay(){ if(overlayPushed) return; overlayPushed=true; try{ history.pushState({ov:1},"",location.hash); }catch(e){ overlayPushed=false; } }
@@ -221,7 +224,7 @@ function openMore(){
 }
 function buildNav(){
   const nav=$("#tabnav");
-  const btn=t=>`<button class="tab" data-tab="${t}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span>${t==="More"?"More":lbl(t)}</span></button>`;
+  const btn=t=>`<button class="tab" data-tab="${t}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">${TAB_ICON[t]}</svg><span>${t==="More"?"More":t==="Governor"?'<span class="tl-l">Governor</span><span class="tl-s">Gov</span>':lbl(t)}</span></button>`;
   nav.innerHTML=NAV.map(btn).join("")+btn("More");
   nav.querySelectorAll(".tab").forEach(b=>b.onclick=()=>b.dataset.tab==="More"?openMore():setTab(b.dataset.tab,null,state.ui.tab===b.dataset.tab?undefined:"restore"));
   $$(".setbtn").forEach(b=>b.onclick=()=>setTab("Data",null,"restore"));
