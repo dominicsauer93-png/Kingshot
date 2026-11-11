@@ -875,7 +875,8 @@
   #bvAll{width:100%;background:none;border-left:0;border-right:0;border-bottom:0;font:inherit}
   .sgtile{position:relative;cursor:pointer}
   .sgtick{display:block;width:100%;min-height:44px;margin-top:8px;padding:8px;border-radius:12px;border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line));background:var(--acc-soft);color:var(--acc-text);font:700 13px var(--f-body);cursor:pointer;text-align:center}
-  .sgtile.sgdone > :not(.sgtick){opacity:.6}
+  .sgtile.sgdone{border-style:dashed}
+  .sgtile.sgdone b{color:var(--muted)}
   .sgtile.sgdone .sgtick{border-style:solid;border-color:transparent;background:var(--green-soft);color:var(--green)}
 /* Formations + Gov Gear v3 */
   .hav{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;font:900 18px var(--f-disp);color:#1a1206;background:linear-gradient(145deg,#e9d9b8,#a8977a)}
@@ -1090,7 +1091,7 @@
 /* Home: Get ready */
 .gr-r{display:flex;gap:10px;padding:10px 14px;border-top:1px solid var(--line-soft)}
 .gr-w{flex:none;min-width:46px;text-align:center;font:700 12px var(--f-mono);padding:4px 6px;border-radius:8px;border:1px solid var(--line);color:var(--faint);align-self:flex-start}
-.gr-w.ok{color:var(--green,#4cc38a);border-color:currentColor}.gr-w.warn{color:var(--gold,#e9b949);border-color:currentColor}
+.gr-w.ok{color:var(--green,#4cc38a);border-color:currentColor}.gr-w.warn{color:var(--amber-text);border-color:currentColor}
 .gr-b{min-width:0;flex:1}.gr-b b{font-size:14.5px}
 .gr-b ul{margin:4px 0 0;padding-left:16px;font-size:13.5px;color:var(--faint);line-height:1.45}
 .gr-b li .ok,.gr-b li .bad{font-family:var(--f-mono);font-size:12.5px}
