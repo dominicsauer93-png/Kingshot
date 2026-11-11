@@ -293,7 +293,7 @@ function renderShards(){
   const gstep=genFor&&hasStars(genFor)&&num(genFor.pos)<SHARD_MAX?SHARD_LEAF[num(genFor.pos)]-num(genFor.have):0, genCovers=gstep>0&&gen>=gstep;
   const close=L.filter(r=>hasStars(r)&&num(r.pos)<SHARD_MAX&&(r.rally||r.focus)).map(r=>({r,left:SHARD_LEAF[num(r.pos)]-num(r.have)})).sort((a,b)=>a.left-b.left)[0];
   $("#shardTiles").innerHTML=(close?tileH({id:"shNext",label:`Closest star: ${esc(close.r.n)} → ${esc(starLabel(num(close.r.pos)+1))}`,value:close.left<=0?"Ready":fmt(close.left)+" short",color:close.left<=0?"var(--green)":"",txt:true,sub:`${fmt(num(close.r.have))} / ${fmt(SHARD_LEAF[num(close.r.pos)])} shards`,p:pc(num(close.r.have),SHARD_LEAF[num(close.r.pos)]),cls:close.left<=0?"ok":""}):tileH({label:"Focus heroes",value:"All done",txt:true}))+
-    tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genFor?(genCovers?`<span class="ok">covers ${esc(genFor.n)} → ${esc(starLabel(num(genFor.pos)+1))} ✓</span>`:`use on <b>${esc(genFor.n)}</b>`):"any hero except Amadeus & Helga"});
+    tileH({id:"shGen",label:"General Mythic shards",value:fmt(gen),sub:genHold()?`<span class="ok">saving for ${esc(genHold().for)}</span> · ${fmt(gen)}/${fmt(num(genHold().target))}`:genFor?(genCovers?`<span class="ok">covers ${esc(genFor.n)} → ${esc(starLabel(num(genFor.pos)+1))} ✓</span>`:`use on <b>${esc(genFor.n)}</b>`):"any hero except Amadeus & Helga"});
   on("shNext",()=>close&&openShardSheet(close.r));
   on("shGen",openGeneralShardSheet);
   const b=$("#goldShardBody");
@@ -323,7 +323,10 @@ function renderShards(){
 function shardOrder(){ // every hero still short, most-used first
   return (state.goldShards||[]).filter(r=>shardNeed(r)>num(r.have)&&!(hasStars(r)&&num(r.pos)>=SHARD_MAX)).sort((a,b)=>heroUse(b.n)-heroUse(a.n));
 }
+// saving General shards for a new generation: nothing suggests spending them until the date
+const genHold=()=>{ const h=state.genHold; return h&&h.until&&gameToday()<=h.until?h:null; };
 function genOrder(){ // heroes general shards can go to, most-used first (not Amadeus/Helga, not done)
+  if(genHold()) return [];
   return (state.goldShards||[]).filter(r=>!/amadeus|helga/i.test(r.n||"")&&shardNeed(r)>num(r.have)).sort((a,b)=>heroUse(b.n)-heroUse(a.n));
 }
 function openGeneralShardSheet(){

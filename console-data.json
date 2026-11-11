@@ -3533,7 +3533,7 @@
       "date": "2026-12-07",
       "imp": "top",
       "spend": "Hall of Heroes now sells S7 — Ava / Wee & Woo widgets with Marks",
-      "note": "Diego, Liz, Luna (S8). S7 (Ava, Wee & Woo, Charles) shards + widgets unlock in Hall of Heroes.\nSave Marks of Valor from mid-November."
+      "note": "Diego, Liz, Luna (S8). S7 (Ava, Wee & Woo, Charles) shards + widgets unlock in Hall of Heroes.\nSave Marks of Valor from mid-November.\nSaving ALL General shards for Gen 8 (target ~250 by 7 Dec: VIP 2/day, Kingdom Special 20, Trial Shop 10/week)."
     },
     {
       "n": "Generation 9 Heroes (predicted)",
@@ -4567,5 +4567,10 @@
   ],
   "shopTicks": {
     "Swordland Shop": "2w1483"
+  },
+  "genHold": {
+    "for": "Gen 8",
+    "until": "2026-12-07",
+    "target": 250
   }
 }
