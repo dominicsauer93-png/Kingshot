@@ -124,7 +124,11 @@ function renderHeroRoles(){
 
 /* ---------- hero avatar badge: initial, coloured by troop type ---------- */
 const AV_COL={Infantry:"av-i",Archer:"av-a",Cavalry:"av-c"};
-const heroAv=n=>{ const t=(state.heroInfo&&state.heroInfo[n]&&state.heroInfo[n].type)||""; return `<span class="hav ${AV_COL[t]||""}" aria-hidden="true">${esc(String(n||"?").replace(/[^A-Za-z]/g,"").slice(0,1)||"?")}</span>`; };
+// hero portraits cropped from the game's hero list (heroes/img/<slug>.webp); a letter tile for anyone without one
+const HERO_IMG=new Set(["alcar", "amadeus", "amane", "ava", "charles", "chenko", "diana", "edwin", "eric", "fahd", "forrest", "gordon", "helga", "hilde", "howard", "jabel", "jaeger", "long-fei", "margot", "marlin", "olive", "petra", "quinn", "rosa", "saul", "seth", "sophia", "thrud", "triton", "vivian", "wee-woo", "yang", "yeonwoo", "zoe"]);
+const heroAv=n=>{ const t=(state.heroInfo&&state.heroInfo[n]&&state.heroInfo[n].type)||"", k=slug(n||"");
+  if(HERO_IMG.has(k)) return `<img class="hav ${AV_COL[t]||""}" src="heroes/img/${k}.webp" alt="" width="40" height="40" loading="lazy" decoding="async">`;
+  return `<span class="hav ${AV_COL[t]||""}" aria-hidden="true">${esc(String(n||"?").replace(/[^A-Za-z]/g,"").slice(0,1)||"?")}</span>`; };
 
 /* ---------- hero pages: everything about one hero in one place ---------- */
 const HERO_TYPES=["Infantry","Cavalry","Archer"];
