@@ -765,7 +765,7 @@
       "n": "Marlin",
       "need": 700,
       "have": 73,
-      "pos": 23,
+      "pos": 24,
       "tgt": 23,
       "rally": false,
       "note": "free shards only"
@@ -2192,64 +2192,131 @@
   },
   "heroInfo": {
     "Wee & Woo": {
-      "type": "Archer"
+      "type": "Archer",
+      "power": 6568676
     },
     "Sophia": {
-      "type": "Cavalry"
+      "type": "Cavalry",
+      "power": 2399430
     },
     "Ava": {
-      "type": "Cavalry"
+      "type": "Cavalry",
+      "power": 5766583
     },
     "Yang": {
-      "type": "Archer"
+      "type": "Archer",
+      "power": 2535879
     },
     "Triton": {
-      "type": "Infantry"
+      "type": "Infantry",
+      "power": 1793886
     },
     "Charles": {
-      "type": "Infantry"
+      "type": "Infantry",
+      "power": 6543628
     },
     "Amadeus": {
-      "type": "Infantry"
+      "type": "Infantry",
+      "power": 685050
     },
     "Thrud": {
-      "type": "Cavalry"
+      "type": "Cavalry",
+      "power": 1714572
     },
     "Margot": {
-      "type": "Cavalry"
+      "type": "Cavalry",
+      "power": 1124495
     },
     "Petra": {
-      "type": "Cavalry"
+      "type": "Cavalry",
+      "power": 1087170
     },
     "Vivian": {
-      "type": "Archer"
+      "type": "Archer",
+      "power": 1661070
     },
     "Rosa": {
-      "type": "Archer"
+      "type": "Archer",
+      "power": 1310550,
+      "lvl": 76
     },
     "Long Fei": {
-      "type": "Infantry"
+      "type": "Infantry",
+      "power": 1898814
     },
     "Saul": {
-      "type": "Cavalry"
+      "type": "Cavalry",
+      "power": 302960,
+      "lvl": 2
     },
     "Alcar": {
-      "type": "Infantry"
+      "type": "Infantry",
+      "power": 1248150
     },
     "Hilde": {
-      "type": "Cavalry"
+      "type": "Cavalry",
+      "power": 690780
     },
     "Zoe": {
-      "type": "Infantry"
+      "type": "Infantry",
+      "power": 814230
     },
     "Jaeger": {
-      "type": "Cavalry"
+      "type": "Cavalry",
+      "power": 889410
     },
     "Eric": {
-      "type": "Infantry"
+      "type": "Infantry",
+      "power": 918810
     },
     "Marlin": {
+      "type": "Archer",
+      "power": 726780
+    },
+    "Fahd": {
+      "type": "Cavalry"
+    },
+    "Yeonwoo": {
       "type": "Archer"
+    },
+    "Amane": {
+      "type": "Archer"
+    },
+    "Diana": {
+      "type": "Archer"
+    },
+    "Chenko": {
+      "type": "Cavalry"
+    },
+    "Gordon": {
+      "type": "Cavalry"
+    },
+    "Howard": {
+      "type": "Infantry"
+    },
+    "Quinn": {
+      "type": "Archer",
+      "lvl": 1
+    },
+    "Olive": {
+      "type": "Archer"
+    },
+    "Edwin": {
+      "type": "Cavalry"
+    },
+    "Seth": {
+      "type": "Infantry"
+    },
+    "Forrest": {
+      "type": "Infantry"
+    },
+    "Jabel": {
+      "type": "Cavalry",
+      "lvl": 1
+    },
+    "Helga": {
+      "type": "Infantry",
+      "lvl": 1
     }
   },
   "history": [
@@ -4572,5 +4639,6 @@
     "for": "Gen 8",
     "until": "2026-12-07",
     "target": 250
-  }
+  },
+  "heroCheck": "2026-11-11"
 }
