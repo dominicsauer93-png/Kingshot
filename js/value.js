@@ -202,7 +202,7 @@ function renderBestValue(){
   const doneRows=[...M.fund.map((f,fi)=>[f,fi]).filter(([f])=>f.got).map(([f,fi])=>fundRow(f,fi)),...M.bought.map(boughtRow)];
   const rows=[...M.fund.map((f,fi)=>[f,fi]).filter(([f])=>!f.got).map(([f,fi])=>fundRow(f,fi)),    ...order.map(({p,by},pi)=>`<label class="drow"><input type="checkbox" class="cbx" data-p="${pi}"><span class="dt"><b>${esc(vShort(p))}${isBlk(p)?' <em class="ptag r">blocker</em>':""}${by?` <em class="ptag y">by ${fdD(by)}</em>`:""}</b><span>${sub(p,null)}</span></span><span class="dv">${vPayTxt(p)}</span></label>`)];
   host.innerHTML=
-    `<div class="wallet"><div class="wrow"><div class="wring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="${RR}" fill="none" stroke="var(--track)" stroke-width="13"/>${ring}</svg><div class="wrt"><b>A$${Math.round(spentTot)}</b><small>spent of A$${M.bud}</small></div></div>
+    `<div class="wallet"><div class="wrow"><div class="wring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="${RR}" fill="none" stroke="var(--track)" stroke-width="13"/>${ring}</svg><div class="wrt"><b>A$${Math.round(spentTot)}</b><small>spent<br>of A$${M.bud}</small></div></div>
       <div class="wleg">${seg.map(([l,v,c])=>`<div><span><i style="background:${c}"></i>${l}</span><b>A$${v.toFixed(0)}</b></div>`).join("")}</div></div>
       <div class="wpills"><button class="wp" id="bvStars"><b class="gold">${fmt(M.stars)} ⭐</b><span>Stars <svg class="ico-inline" aria-hidden="true"><use href="#i-pen"/></svg></span></button><button class="wp" id="bvBud"><b class="ok">A$${A.spare.toFixed(2)}</b><span>left <svg class="ico-inline" aria-hidden="true"><use href="#i-pen"/></svg></span></button><div class="wp"><b>${nBought} / ${nAll}</b><span>bought</span></div></div></div>`+
     nextH+

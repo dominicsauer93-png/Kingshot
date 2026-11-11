@@ -326,8 +326,8 @@ function renderUpgrade(){ const box=$("#upBody"); if(!box) return; const f=state
   const L=upgradeList().filter(g=>f==="All"||UP_GROUP[g.k]===f), ready=L.filter(g=>g.ready).sort((a,b)=>byPow?pw(b)-pw(a):0), next=L.filter(g=>!g.ready).sort((a,b)=>byPow?pw(b)-pw(a)||(upPct(b)??-1)-(upPct(a)??-1):(upPct(b)??-1)-(upPct(a)??-1));
   const N=blockerNeeds(), blk=Object.keys(UP_SRC).filter(k=>N[k]&&N[k].short).slice(0,3);
   const mat=m=>`<span class="umat${m.h>=m.n?"":" no"}">${esc(m.l)} ${fmtK(m.h)}/${fmtK(m.n)} ${m.h>=m.n?"✓":"✗"}</span>`;
-  const row=(g,i,isReady)=>{ const p=upPct(g); return `<div class="urow"><button class="ugo" data-i="${i}" data-r="${isReady?1:0}">${ico(STEP_ICO[g.k],isReady?"g":"")}<span class="dt"><b>${g.title}</b><span>${esc(UP_GROUP[g.k]||"")}${g.gain?` · <span class="ok">${esc(g.gain)}</span>`:""}</span></span>${p!=null&&!isReady?`<span class="upct"><b>${p}%</b><small>ready</small></span>`:""}</button>
-    ${(g.mats&&g.mats.length)||(isReady&&g.apply)||PG_AREA[g.k]?`<div class="umats">${(g.mats||[]).map(mat).join("")}${PG_AREA[g.k]?(()=>{ const P=pgOf(g.k); return `<button class="upow${P?"":" none"}" data-k="${g.k}">${P?`+${fmtK(P.v)} power <small>${esc(P.src)}</small>`:"+ add power gain"}</button>`; })():""}${isReady&&g.apply?`<button class="pdone udo" data-i="${i}">Do it</button>`:""}</div>`:""}</div>`; };
+  const row=(g,i,isReady)=>{ const p=upPct(g); return `<div class="urow"><button class="ugo" data-i="${i}" data-r="${isReady?1:0}">${heroIn(g.title)?heroAv(heroIn(g.title).replace(/-/g," ")):ico(STEP_ICO[g.k],isReady?"g":"")}<span class="dt"><b>${g.title}</b><span>${esc(UP_GROUP[g.k]||"")}${g.gain?` · <span class="ok">${esc(g.gain)}</span>`:""}</span></span>${p!=null&&!isReady?`<span class="upct"><b>${p}%</b><small>ready</small></span>`:""}</button>
+    ${(g.mats&&g.mats.length)||(isReady&&g.apply)||PG_AREA[g.k]?`<div class="umats">${(g.mats||[]).map(mat).join("")}${PG_AREA[g.k]?(()=>{ const P=pgOf(g.k); return `<button class="upow${P?"":" none"}" data-k="${g.k}">${P?`+${fmtK(P.v)} power <small>${esc(P.src)}</small>`:"+ add power gain"}</button>`; })():""}${isReady&&g.apply?`<button class="pdone udo" data-i="${i}">Done</button>`:""}</div>`:""}</div>`; };
   box.innerHTML=`<div class="upf">${["All","Heroes","Governor","Town"].map(x=>`<button class="chip" data-f="${x}" aria-pressed="${x===f}">${x}</button>`).join("")}<button class="chip upsort" id="upSort" aria-label="${byPow?"Sorted by most power — tap for closest first":"Sorted by closest — tap for most power"}">⇅ ${byPow?"Power":"Closest"}</button></div><p class="upsum">${f==="All"?"Everything":esc(f)} · ${L.length} item${L.length===1?"":"s"}${ready.length?` · <b class="ok">${ready.length} ready</b>`:""}</p>
     <div class="upcols"><div><div class="card dcard"><div class="dch"><h3>Ready now</h3><span class="faint fs13">you have the materials</span></div>${ready.map((g,i)=>row(g,i,true)).join("")||'<p class="dnote">Nothing ready yet — see what\'s holding you back below.</p>'}</div>
     ${blk.length?`<div class="cuphead mt"><h3>What's holding you back</h3></div><div class="ublk">${blk.map(k=>`<button class="ubk" data-k="${k}"><b>${fmtK(N[k].short)}</b><span>${UP_SRC[k][0]} short</span><em>${UP_SRC[k][1]} ›</em></button>`).join("")}</div>`:""}
@@ -362,10 +362,11 @@ function openPgSheet(k){ const P=pgStore()[k]||(pgStore()[k]={});
     const rf=()=>{ const L=P.learned||[]; i.innerHTML=`Learned from your updates: <b>${L.length?L.map(fmtK).join(", "):"none yet"}</b><br>Guide figure: <b>${num(P.guide)?fmtK(P.guide):"—"}</b><br><span class="faint">Learned figures come from your power grades: tap Done on an upgrade, then update that area's power on Progress → Power grades.</span>`; }; rf(); return rf; }}); }
 
 /* ---------- Home: Get ready — what to save / have ready for the next 30 days, plus your heroes ---------- */
-const grOk=(have,need)=>have>=need?`<span class="ok">${fmt(have)}/${fmt(need)} ✓</span>`:`<span class="bad">${fmt(have)}/${fmt(need)}</span>`;
+const grOk=(have,need)=>have>=need?`<span class="ok">${fmt(have)}/${fmt(need)} ✓</span>`:`<span class="warn">${fmt(have)}/${fmt(need)}</span>`;
 function grWidgets(n){ const W=(state.widgets&&state.widgets.rows)||[]; return W.filter(r=>r.rally&&num(r.lvl)<10).map(r=>({h:r.hero,lvl:num(r.lvl),have:num(r.have),nd:widNext(num(r.lvl))})).sort((a,b)=>(b.have/b.nd)-(a.have/a.nd)).slice(0,n||3); }
 const GR_PREP=[
-  [/eternity/i,()=>["Recall 1 march every 60 s — wait for the ring, common veins only","Top 10 needs about 438K (your best: 383,822)"]],
+  [/eternity/i,e=>{ const n=String((e&&e.note)||""), t=n.match(/Rank 10 needed ([\d.,]+K?)/i), y=n.match(/\(you ([\d.,]+K?)/i);
+    return ["Recall 1 march every 60 s — wait for the ring, common veins only",...(t?[`Top 10 needed ${esc(t[1])} last time${y?` (you ${esc(y[1])})`:""}`]:[])]; }],
   [/kvk|kingdom of power/i,()=>{ const out=[], pl=(typeof govPlanLeft==="function"?govPlanLeft():[])[0];
     if(pl){ const pc=govPlanPiece(pl), need=pc?govRem(num(pc.cur),pl.to):null; if(need) out.push(`Gov Gear day: ${esc(pl.name)} → ${esc((GOV_TIERS[pl.to]||[""])[0])} · Threads ${grOk(num((state.govGear.have||{}).threads),need.t)} · Satin ${grOk(num((state.govGear.have||{}).satin),need.s)}`); }
     out.push("Save speedups for the matching prep days"); return out; }],
@@ -378,13 +379,15 @@ const GR_PREP=[
   [/bear/i,()=>[(state.formations||[]).length?`Use your saved presets: ${esc(state.formations.map(f=>f.n.replace(/^Bear (lead|join) · ?/,"")).join(" · "))}`:"Lead with Amadeus · Ava · Yang"]],
   [/viking/i,()=>["Send every march to reinforce online members (Bear joiners lead)","Move one Infantry/Cavalry march to the HQ for waves 10 and 20"]],
   [/armament/i,()=>["Small speedups only — keep big ones for KvK"]]];
-function renderGetReady(){ const box=$("#getReady"); if(!box) return; const t=new Date(gameToday()+"T00:00:00");
+function renderGetReady(){ setTimeout(()=>{ on("grAll",openAllEventsSheet); on("grAdd",()=>openEventSheet(null)); },0); const box=$("#getReady"); if(!box) return; const t=new Date(gameToday()+"T00:00:00");
   const L=(state.events||[]).map(e=>{ const live=activeOcc(e), o=nextOcc(e); return {e,live,o}; })
     .filter(x=>x.live||(x.o&&!x.o.past&&x.o.days<=30)).sort((a,b)=>(a.live?-1:a.o.days)-(b.live?-1:b.o.days));
-  const rows=L.map(({e,live,o})=>{ const P=GR_PREP.find(([re])=>re.test(e.n||"")), lines=P?P[1](e):[esc(spendFor(e))].filter(Boolean); if(!lines.length) return "";
-    return `<div class="gr-r"><span class="gr-w ${live?"ok":o.days<=3?"warn":""}">${live?"now":o.days===0?"today":o.days===1?"tmrw":`${o.days}d`}</span><div class="gr-b"><b>${esc(e.n)}</b><ul>${lines.map(l=>`<li>${l}</li>`).join("")}</ul></div></div>`; }).filter(Boolean);
+  const banner=(liveEvents()[0]||{}).e, seen=new Set();
+  const rows=L.filter(({e})=>e!==banner).map(({e,live,o})=>{ const P=GR_PREP.find(([re])=>re.test(e.n||"")), lines=(P?P[1](e):[esc(spendFor(e))].filter(Boolean)).filter(l=>{ const k=l.replace(/<[^>]+>/g,""); if(seen.has(k)) return false; seen.add(k); return true; }); if(!lines.length) return "";
+    return `<div class="gr-r"><span class="gr-w ${live?"ok":o.days<=3?"warn":""}">${live?"now":o.days===0?"today":o.days===1?"tmrw":`${o.days}d`}</span><div class="gr-b"><b>${esc(e.n)}</b><ul>${lines.map(l=>`<li>${heroAvSm(heroIn(l).replace(/-/g," "))}${l}</li>`).join("")}</ul></div></div>`; }).filter(Boolean);
   // heroes: widgets + shards, whatever the calendar says
   const W=grWidgets(3), sh=(typeof shardOrder==="function"?shardOrder():[]).filter(r=>hasStars(r)&&num(r.pos)<SHARD_MAX).slice(0,2);
-  const hero=[...W.map(w=>`${esc(w.h)} widgets ${grOk(w.have,w.nd)} for Lv ${w.lvl+1}`),...sh.map(r=>`${esc(r.n)} shards ${grOk(num(r.have),SHARD_LEAF[num(r.pos)])} for ${esc(starLabel(num(r.pos)+1))}`)];
-  box.innerHTML=`<div class="dch"><h3>Get ready</h3><span class="faint fs12">next 30 days</span></div>${rows.join("")||'<p class="dnote">Nothing on the calendar for 30 days.</p>'}
-    ${hero.length?`<div class="gr-r"><span class="gr-w">heroes</span><div class="gr-b"><b>Widgets & shards</b><ul>${hero.map(l=>`<li>${l}</li>`).join("")}</ul></div></div>`:""}`; }
+  const hero=[...W.map(w=>`${esc(w.h)} widgets ${grOk(w.have,w.nd)} for Lv ${w.lvl+1}`),...sh.map(r=>`${esc(r.n)} shards ${grOk(num(r.have),SHARD_LEAF[num(r.pos)])} for ${esc(starLabel(num(r.pos)+1))}`)].filter(l=>!seen.has(l.replace(/<[^>]+>/g,"")));
+  box.innerHTML=`<div class="dch"><h3>Get ready</h3><span class="faint fs12">next 30 days</span><button class="link" id="grAll">All ›</button><button class="link" id="grAdd">+ Add</button></div>${rows.join("")||'<p class="dnote">Nothing on the calendar for 30 days.</p>'}
+    ${hero.length?`<div class="gr-r"><span class="gr-w" title="Heroes">${icoI("star")}</span><div class="gr-b"><b>Widgets & shards</b><ul>${hero.map(l=>`<li>${heroAvSm(heroIn(l).replace(/-/g," "))}${l}</li>`).join("")}</ul></div></div>`:""}`; }
+

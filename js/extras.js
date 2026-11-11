@@ -194,7 +194,7 @@ function renderWeekly(){
       <div class="rcrow"><span>Lethality / Health</span><b class="mono">${sgn(dlt("leth"))} / ${sgn(dlt("hp"))}</b></div>
       ${areas.map(([n,v])=>`<div class="rcrow"><span>${esc(n)} power</span><b class="mono">${sgn(v)}</b></div>`).join("")}
       <div class="rcrow"><span>Spent this month</span><b class="mono">A$${monthSpent(gameToday().slice(0,7)).toFixed(2)}</b></div></div>
-    ${done.length?`<p style="margin:10px 0 4px"><b>Done this week</b></p><ul class="wdone">${done.slice(-8).reverse().map(x=>`<li>${esc(x.t)} <span class="faint">${esc(fd(x.d))}</span></li>`).join("")}</ul>`:'<p class="faint" style="margin:10px 0 0">Upgrades you tick off with ✓ Done show up here.</p>'}
+    ${done.length?`<p style="margin:10px 0 4px"><b>Done this week</b></p><ul class="wdone">${done.slice(-8).reverse().map(x=>`<li><span>${esc(String(x.t).replace(/^Done:\s*/,""))}</span><span class="wd-d">${esc(fd(x.d))}</span></li>`).join("")}</ul>`:'<p class="faint" style="margin:10px 0 0">Upgrades you tick off with ✓ Done show up here.</p>'}
     ${up.length?`<p style="margin:10px 0 4px"><b>Coming next week</b></p><ul class="wdone">${up.map(x=>`<li>${esc(x.e.n)} <span class="faint">${whenTxt(x.o)}</span></li>`).join("")}</ul>`:""}</div>`;
 }
 
@@ -210,7 +210,7 @@ function reportCard(id,{title,pkey,rows,doneRe}){
   box.innerHTML=`<div class="rowb"><b style="font-size:16px">${esc(title)}</b>${w?`<span>${sgn(w.d)} power <span class="faint">this week</span></span>`:""}</div>`+
     (sp.length>1&&hi>lo?`<div class="wspark">${sp.map(v=>`<i style="height:${hi>lo?20+80*(v-lo)/(hi-lo):60}%"></i>`).join("")}</div>`:"")+
     `<div class="rcrows">${rows.filter(Boolean).map(([a,b])=>`<div class="rcrow"><span>${a}</span><b>${b}</b></div>`).join("")}</div>`+
-    (done.length?`<p style="margin:10px 0 4px"><b>Done this week</b></p><ul class="wdone">${done.slice(-5).reverse().map(x=>`<li>${esc(x.t)} <span class="faint">${esc(fd(x.d))}</span></li>`).join("")}</ul>`:""); }
+    (done.length?`<p style="margin:10px 0 4px"><b>Done this week</b></p><ul class="wdone">${done.slice(-5).reverse().map(x=>`<li><span>${esc(String(x.t).replace(/^Done:\s*/,""))}</span><span class="wd-d">${esc(fd(x.d))}</span></li>`).join("")}</ul>`:""); }
 function renderReports(){ // power trend + done list; the tiles and next-up list below carry the numbers
   reportCard("hgReport",{title:"Hero Gear",pkey:"p:Hero Gear",doneRe:/helm|gloves|chest|boots|imbue|mastery/i,rows:[
     (()=>{ const C=hgChests(), R=mythicRate(), n=num(C.lucky)+num(C.custom); return ["Chests to open",`<button class="btn sm${n?" primary":""}" id="hgChests">${n?`${fmt(num(C.lucky))} Lucky${num(C.custom)?` + ${num(C.custom)} Custom`:""} · ~${(num(C.lucky)*R.r+num(C.custom)).toFixed(1)} Mythic`:"Add chests"} ›</button>`]; })()]});

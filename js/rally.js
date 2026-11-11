@@ -81,7 +81,7 @@ function heroRoster(){ // your heroes = the Gold Hero Shards list
 const FORM_SEED=[];
 function renderMyForms(){ const box=$("#myForms"); if(!box) return; if(!state.formations) state.formations=JSON.parse(JSON.stringify(FORM_SEED));
   const F=state.formations, dup={}; F.forEach(f=>new Set(f.heroes.filter(Boolean)).forEach(h=>dup[h]=(dup[h]||0)+1)); const bar=f=>{ const t=Math.max(1,num(f.inf)+num(f.cav)+num(f.arc)); return `<span class="fmix"><i class="mi" style="width:${num(f.inf)/t*100}%"></i><i class="mc" style="width:${num(f.cav)/t*100}%"></i><i class="ma" style="width:${num(f.arc)/t*100}%"></i></span>`; };
-  box.innerHTML=`<div class="card dcard">${F.map((f,i)=>`<button class="drow fmrow2" data-i="${i}"><span class="dt"><b>${esc(f.n||"Formation")}</b><span>${f.heroes.filter(Boolean).map(h=>dup[h]>1?`<b class="bad">${esc(h)} ⚠</b>`:esc(h)).join(" · ")||'<span class="faint">no heroes yet</span>'}</span>${f.note?`<small class="faint">${esc(f.note)}</small>`:""}</span><span class="fmr">${bar(f)}<small>${num(f.inf)}/${num(f.cav)}/${num(f.arc)}</small></span></button>`).join("")||'<p class="dnote">No formations yet.</p>'}
+  box.innerHTML=`<div class="card dcard">${F.map((f,i)=>`<button class="drow fmrow2" data-i="${i}"><span class="favs" aria-hidden="true">${f.heroes.filter(Boolean).slice(0,3).map(heroAvSm).join("")}</span><span class="dt"><b>${esc(f.n||"Formation")}</b><span>${f.heroes.filter(Boolean).map(h=>dup[h]>1?`<b class="bad">${esc(h)} ⚠</b>`:esc(h)).join(" · ")||'<span class="faint">no heroes yet</span>'}</span>${f.note?`<small class="faint">${esc(f.note)}</small>`:""}</span><span class="fmr">${bar(f)}<small>${num(f.inf)}/${num(f.cav)}/${num(f.arc)}</small></span></button>`).join("")||'<p class="dnote">No formations yet.</p>'}
     <button class="drow fmrow2" id="fmAdd"><span class="dt"><span class="link">+ Add formation</span></span></button><p class="dnote">Troop mix = Infantry / Cavalry / Archers %. When joining, only the first hero's skill counts. Heroes used in two formations are flagged.</p></div>`;
   box.querySelectorAll(".fmrow2[data-i]").forEach(b=>b.onclick=()=>openFormSheet(F[+b.dataset.i]));
   on("fmAdd",()=>{ const f={n:"New formation",heroes:["","",""],inf:10,cav:10,arc:80,note:""}; F.push(f); afterEdit(); openFormSheet(f); }); }
@@ -108,9 +108,10 @@ function renderHeroRoles(){
   const fr=role==="arena"?ranked.filter(h=>typ(h)==="Infantry").slice(0,2):[], bk=role==="arena"?ranked.filter(h=>!fr.includes(h)&&typ(h)!=="Infantry").slice(0,5-fr.length):[];
   const hrow=h=>`<div class="drow">${heroAv(h.n)}<span class="dt"><b>${esc(h.n)}${h.rally?` <span class="faint">${icoI("sword")}</span>`:""}</b><span class="gold" style="letter-spacing:1px">${starGlyphs(h.pos)}${wid(h)?` <span class="faint" style="letter-spacing:0">· widget Lv ${wid(h)}</span>`:""}</span></span>${trH(TIER_OF[heroKey(h.n)][role])}</div>`;
   const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
-  $("#roleBest").innerHTML=`<div class="rolechips">${HERO_ROLES.map(([r,l,sh])=>`<button class="chip" data-r="${r}" aria-selected="${r===role}">${esc(sh||l)}</button>`).join("")}</div>
+  $("#roleBest").innerHTML=`<div class="rolechips">${HERO_ROLES.map(([r,l,sh])=>`<button class="chip" data-r="${r}" aria-pressed="${r===role}">${esc(sh||l)}</button>`).join("")}</div>
     <div class="card dcard mt"><div class="dch"><h3>${esc(label)}</h3><span class="faint fs13">${fr.length?"your best 5 · formation":MARCH.includes(role)?"best of each troop type":"your best 3"}</span></div>${fr.length?`<div class="fmrow">Front row <span class="faint">· Infantry tanks</span></div>${fr.map(hrow).join("")}<div class="fmrow">Back row <span class="faint">· damage</span></div>${bk.map(hrow).join("")}`:L.map(hrow).join("")}
     ${soon.length?`<p class="dnote">Gen 8 soon: ${soon.map(esc).join(", ")} (S)</p>`:""}</div>`;
+  centerChip($("#roleBest .rolechips"),$('#roleBest .rolechips .chip[aria-pressed="true"]'));
   $$("#roleBest .rolechips .chip").forEach(b=>b.onclick=()=>{ state.ui.roleSel=b.dataset.r; scheduleSave(); renderHeroRoles(); });
   [["#roleFold","roleOpen"],["#tierFold","tierOpen"]].forEach(([id,k])=>{ const d=$(id); d.open=!!state.ui[k]; d.ontoggle=()=>{ if(state.ui[k]!==d.open){ state.ui[k]=d.open; scheduleSave(); } }; });
   const mode=state.ui.tierAll?"all":"mine";
@@ -126,6 +127,9 @@ function renderHeroRoles(){
 const AV_COL={Infantry:"av-i",Archer:"av-a",Cavalry:"av-c"};
 // hero portraits cropped from the game's hero list (heroes/img/<slug>.webp); a letter tile for anyone without one
 const HERO_IMG=new Set(["alcar", "amadeus", "amane", "ava", "charles", "chenko", "diana", "edwin", "eric", "fahd", "forrest", "gordon", "helga", "hilde", "howard", "jabel", "jaeger", "long-fei", "margot", "marlin", "olive", "petra", "quinn", "rosa", "saul", "seth", "sophia", "thrud", "triton", "vivian", "wee-woo", "yang", "yeonwoo", "zoe"]);
+// the hero a line is about (name at the start), for a portrait next to it
+const heroIn=t=>{ const x=String(t||"").replace(/<[^>]+>/g,"").trim().toLowerCase(); return [...HERO_IMG].map(k=>[k,k.replace(/-/g," ")]).sort((a,b)=>b[1].length-a[1].length).find(([k,n])=>x.startsWith(n)||x.startsWith(n.replace(" "," & ")))?.[0]||""; };
+const heroAvSm=n=>{ const k=slug(n||""); return HERO_IMG.has(k)?`<img class="hav sm" src="heroes/img/${k}.webp" alt="" width="28" height="28" loading="lazy" decoding="async">`:""; };
 const heroAv=n=>{ const t=(state.heroInfo&&state.heroInfo[n]&&state.heroInfo[n].type)||"", k=slug(n||"");
   if(HERO_IMG.has(k)) return `<img class="hav ${AV_COL[t]||""}" src="heroes/img/${k}.webp" alt="" width="40" height="40" loading="lazy" decoding="async">`;
   return `<span class="hav ${AV_COL[t]||""}" aria-hidden="true">${esc(String(n||"?").replace(/[^A-Za-z]/g,"").slice(0,1)||"?")}</span>`; };
