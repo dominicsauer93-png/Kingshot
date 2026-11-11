@@ -1721,7 +1721,7 @@
       "Gear": "Charms",
       "Base": "T11",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
+      "Heroes": "Formations",
       "Shop": "Free shops",
       "Governor": "Pets",
       "Progress": "Overview",
@@ -1788,7 +1788,7 @@
       {
         "type": "Infantry",
         "slot": "Helm (Lethality)",
-        "lvC": 114,
+        "lvC": 119,
         "lvT": 179,
         "mC": 11,
         "mT": 15,
@@ -1824,7 +1824,7 @@
       {
         "type": "Infantry",
         "slot": "Boots (Lethality)",
-        "lvC": 102,
+        "lvC": 105,
         "lvT": 200,
         "mC": 11,
         "mT": 15,
@@ -1836,7 +1836,7 @@
       {
         "type": "Cavalry",
         "slot": "Helm (Lethality)",
-        "lvC": 123,
+        "lvC": 124,
         "lvT": 159,
         "mC": 12,
         "mT": 13,
@@ -1967,7 +1967,7 @@
     ],
     "planDate": "2026-10-23",
     "chests": {
-      "lucky": 22,
+      "lucky": 27,
       "custom": 1,
       "log": [
         {
@@ -3762,7 +3762,7 @@
       }
     ]
   },
-  "shardGeneral": 141,
+  "shardGeneral": 148,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3826,9 +3826,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 175
+        "2026-11": 322
       },
-      "seen": 141
+      "seen": 148
     }
   },
   "battle": {
@@ -4578,9 +4578,9 @@
         "Long Fei",
         "Sophia"
       ],
-      "inf": 4,
-      "cav": 6,
-      "arc": 90,
+      "inf": 5,
+      "cav": 15,
+      "arc": 80,
       "note": ""
     },
     {
@@ -4590,9 +4590,9 @@
         "Diana",
         "Howard"
       ],
-      "inf": 4,
-      "cav": 6,
-      "arc": 90,
+      "inf": 5,
+      "cav": 15,
+      "arc": 80,
       "note": ""
     },
     {
@@ -4602,9 +4602,9 @@
         "Fahd",
         "Eric"
       ],
-      "inf": 4,
-      "cav": 6,
-      "arc": 90,
+      "inf": 5,
+      "cav": 15,
+      "arc": 80,
       "note": ""
     },
     {
@@ -4614,9 +4614,9 @@
         "Gordon",
         "Alcar"
       ],
-      "inf": 4,
-      "cav": 6,
-      "arc": 90,
+      "inf": 5,
+      "cav": 15,
+      "arc": 80,
       "note": ""
     },
     {
@@ -4626,9 +4626,9 @@
         "Marlin",
         "Zoe"
       ],
-      "inf": 4,
-      "cav": 6,
-      "arc": 90,
+      "inf": 5,
+      "cav": 15,
+      "arc": 80,
       "note": ""
     }
   ],
