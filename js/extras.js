@@ -60,7 +60,8 @@ function blockerNeeds(){
   if(req.fh) out.fh={need:req.fh,what:`${label} needs ${req.fh} hammers`};
   const gv=govNextStep(); if(gv) out.threads={need:gv.need.t,what:`${gv.p.name} → ${(GOV_TIERS[gv.to]||[""])[0]} needs ${gv.need.t} Threads`};
   const cn=charmNextList(3), cd=cn.reduce((t,r)=>t+CHARM_COSTS[num(r.lvl)][1],0); if(cd) out.designs={need:cd,what:`next ${cn.length} charm levels need ${fmt(cd)} Designs`};
-  const ava=(state.goldShards||[]).find(r=>r.n==="Ava"); if(ava&&hasStars(ava)&&num(ava.pos)<SHARD_MAX) out.gen={need:Math.max(0,SHARD_LEAF[num(ava.pos)]-num(ava.have)),what:`Ava's next star needs ${SHARD_LEAF[num(ava.pos)]} shards`};
+  const gh=genHold&&genHold(); if(gh) out.gen={need:num(gh.target),what:`saving ${fmt(num(gh.target))} General shards for ${gh.for} (${gh.until})`};
+  const ava=(state.goldShards||[]).find(r=>r.n==="Ava"); if(!gh&&ava&&hasStars(ava)&&num(ava.pos)<SHARD_MAX) out.gen={need:Math.max(0,SHARD_LEAF[num(ava.pos)]-num(ava.have)),what:`Ava's next star needs ${SHARD_LEAF[num(ava.pos)]} shards`};
   Object.entries(out).forEach(([k,o])=>{ o.have=bagVal(k); o.short=Math.max(0,o.need-o.have); });
   return out; }
 
