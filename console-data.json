@@ -1682,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Upgrade",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1755,7 +1755,7 @@
     "bvNow": true,
     "freshAll": true,
     "bcMore": true,
-    "upF": "Town",
+    "upF": "All",
     "t11More": false,
     "roleSel": "bearLead"
   },
