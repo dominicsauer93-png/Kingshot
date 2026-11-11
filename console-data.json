@@ -4560,16 +4560,16 @@
   },
   "formations": [
     {
-      "n": "Bear lead (LED)",
+      "n": "BTR",
       "heroes": [
         "Amadeus",
         "Yang",
         "Ava"
       ],
-      "inf": 4,
-      "cav": 4,
-      "arc": 92,
-      "note": "Leads your own Bear rally — don't use LED to join"
+      "inf": 1,
+      "cav": 1,
+      "arc": 98,
+      "note": "Leads your own Bear rally"
     },
     {
       "n": "Bear join · QUD",
