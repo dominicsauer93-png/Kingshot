@@ -1094,3 +1094,7 @@
 .gr-b{min-width:0;flex:1}.gr-b b{font-size:14.5px}
 .gr-b ul{margin:4px 0 0;padding-left:16px;font-size:13.5px;color:var(--faint);line-height:1.45}
 .gr-b li .ok,.gr-b li .bad{font-family:var(--f-mono);font-size:12.5px}
+/* hero portraits */
+  img.hav{object-fit:cover;background:var(--panel-2);box-shadow:inset 0 0 0 1px var(--line)}
+  .sh2-id .hav, .wrow .hav{width:40px;height:40px}
+  .sh2-id{display:flex;align-items:center;gap:10px}
