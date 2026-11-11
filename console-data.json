@@ -1682,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1722,9 +1722,9 @@
       "Base": "T11",
       "Plan": "Shop guide",
       "Heroes": "Formations",
-      "Shop": "Free shops",
-      "Governor": "Pets",
-      "Progress": "Overview",
+      "Shop": "Paid",
+      "Governor": "Masters",
+      "Progress": "Mystic Trials",
       "Town": "Research"
     },
     "t11Open": {
@@ -1733,7 +1733,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "HG": true
+      "Bag": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1741,7 +1741,7 @@
     "heroAll": false,
     "evOpen": true,
     "shSpare": true,
-    "petMaxOpen": false,
+    "petMaxOpen": true,
     "weekOpen": false,
     "todayAll": true,
     "tierOpen": false,
@@ -1755,9 +1755,9 @@
     "bvNow": true,
     "freshAll": true,
     "bcMore": true,
-    "upF": "All",
+    "upF": "Governor",
     "t11More": false,
-    "roleSel": "bearJoin"
+    "roleSel": "bearLead"
   },
   "troopCounts": {
     "inf": {
