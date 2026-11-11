@@ -3601,10 +3601,10 @@
   "masterNotesV": 2,
   "pets": {
     "have": {
-      "food": 43320,
+      "food": 55310,
       "manuals": 1283,
-      "potions": 19,
-      "tmCommon": 10,
+      "potions": 40,
+      "tmCommon": 46,
       "tmAdv": 2,
       "medals": 0
     },
