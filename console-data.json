@@ -1574,7 +1574,7 @@
     }
   ],
   "tg": {
-    "have": 143,
+    "have": 202,
     "need": 2586,
     "ttgHave": 2,
     "ttgNeed": 289
@@ -2005,8 +2005,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 896,
-      "designs": 351
+      "guides": 719,
+      "designs": 8
     },
     "rows": [
       {
@@ -3803,7 +3803,7 @@
         "2026-10": 608,
         "2026-11": 40786
       },
-      "seen": 351
+      "seen": 8
     },
     "fh": {
       "since": "2026-10-26",
