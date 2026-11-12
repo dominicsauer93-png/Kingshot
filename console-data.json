@@ -1,6 +1,6 @@
 {
   "account": {
-    "tc": "Truegold Lv. 7",
+    "tc": "Truegold Lv. 8",
     "day": "485",
     "power": "345186621",
     "vip": "9",
@@ -1582,9 +1582,9 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 84619,
-      "threads": 411,
-      "vision": 709
+      "satin": 88739,
+      "threads": 464,
+      "vision": 724
     },
     "pieces": [
       {
@@ -1682,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1725,7 +1725,7 @@
       "Shop": "Free shops",
       "Governor": "Charms",
       "Progress": "Overview",
-      "Town": "Troops"
+      "Town": "Research"
     },
     "t11Open": {
       "nodes": false,
@@ -1733,7 +1733,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Bag": true
+      "Shards": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1789,7 +1789,7 @@
   "heroGear": {
     "have": {
       "xp": 6,
-      "fh": 230,
+      "fh": 266,
       "mg": 3,
       "mith": 8
     },
@@ -1949,10 +1949,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 230,
+    "fhSeen": 266,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 1281
+      "2026-11": 1545
     },
     "plan": [
       {
@@ -2095,7 +2095,7 @@
       },
       {
         "type": "Archer",
-        "lvl": 6,
+        "lvl": 7,
         "tgt": 7
       },
       {
@@ -3753,7 +3753,7 @@
       }
     ]
   },
-  "shardGeneral": 148,
+  "shardGeneral": 151,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3793,9 +3793,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 580,
-        "2026-11": 1728
+        "2026-11": 2188
       },
-      "seen": 411
+      "seen": 464
     },
     "designs": {
       "since": "2026-10-26",
@@ -3809,17 +3809,17 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 1281
+        "2026-11": 1545
       },
-      "seen": 230
+      "seen": 266
     },
     "gen": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 322
+        "2026-11": 472
       },
-      "seen": 148
+      "seen": 151
     }
   },
   "battle": {
