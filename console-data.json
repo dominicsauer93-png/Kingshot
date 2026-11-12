@@ -1682,7 +1682,7 @@
     ]
   },
   "ui": {
-    "tab": "Upgrade",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1733,7 +1733,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Power": true
+      "Bag": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -3647,6 +3647,13 @@
       "imp": "top",
       "spend": "Daily missions → Amulets → climb floors → Fantasy Tokens → Mythic Gear chests",
       "note": "Seen live 11 Nov 2026 (start date not confirmed). Missions end 16 Nov 00:00 UTC (10 am Brisbane); Theater Shop open one more day, until 17 Nov 00:00 UTC.\nTheater Notes: daily missions give Fantasy Amulets, reset 00:00 UTC. Seen: +30,000 troop power (10), any purchase (20), rally a Terror (5), 5 alliance contributions (5). Unclaimed rewards are mailed.\nFantasy Theater: 7 floors from Floor 1. Each try costs Amulets (amount depends on the floor). Ascent chance by try: 10% · 30% · 60% · 80% · 100% (5th try always climbs; resets when you climb). Climb +1 floor 80%, +2 19.67%, +3 0.33%.\nFloor rewards (Fantasy Tokens): F2 140 · F3 300 · F4 850 · F5 1,600 · F6 3,000 · F7 6,800 · F8 13,000 (guess: F8 = Fantasy Fortress). Claim = take the floor reward and reset to Floor 1.\nFloor 7 gives 1–5 Fanstars (72% / 14% / 8% / 4% / 2%). 5 Fanstars = next try enters the Fantasy Fortress (uses all Fanstars).\nTheater Shop (Fantasy Tokens): 3 price tiers — Mythic Gear chest? 1,000 / 1,500 / 1,800 · Mithril? 500 / 750 / 900 · Truegold ×36 200 / 300 / 360 · hammers ×12 160 / 250 / 300. Unused tokens become Lv 1 Custom Secured Resource Chests.\n11 Nov: 810 tokens, 6 Amulets, 3× Floor 2 claimed (140 each)."
+    },
+    {
+      "n": "New event",
+      "date": "2026-11-12",
+      "every": 7,
+      "time": "",
+      "note": ""
     }
   ],
   "masterNotesV": 2,
