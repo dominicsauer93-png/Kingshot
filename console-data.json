@@ -1707,7 +1707,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1758,7 +1758,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Masters": true
+      "Power": true
     },
     "tierAll": false,
     "progKey": "power",
