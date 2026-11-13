@@ -585,6 +585,13 @@
       "auto": "2026-11",
       "bought": "2026-11-06",
       "note": "November plan · 4,860% · 1,996 ⭐ + A$7.99 · grand prize: 300 Charm Designs"
+    },
+    {
+      "t": "New pack",
+      "aud": 0,
+      "kind": "once",
+      "note": "",
+      "d": false
     }
   ],
   "trackFarm": [
