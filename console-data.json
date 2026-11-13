@@ -1114,6 +1114,31 @@
       ],
       "em": 0,
       "lvlCost": ""
+    },
+    {
+      "n": "Catherine",
+      "l": "40",
+      "em": 1,
+      "lvlCost": "",
+      "skills": [
+        {
+          "l": 1,
+          "t": "g"
+        },
+        {
+          "l": 1,
+          "t": "g"
+        },
+        {
+          "l": 1,
+          "t": "g"
+        },
+        {
+          "l": 0,
+          "t": "g"
+        }
+      ],
+      "note": "The Countess — reward skills only, low priority for books\n1. Mystic Privileges (unlocks Affinity 10): up to +30% Trial Crystals — best of her skills\n2. Pet Master (Aff 20): +Pet Adventure attempts · 3. Beastly Bounty (Aff 30): Terror chests · 4. Traveler Honors (Aff 40): Journey chests\nTalent Conquest Boons: Countess Chests from Conquest (free, levels with affinity)\nResearch: Squads' Attack + Infantry milestones, 5 Emblems per level\nLv 40 (11 Nov) — skills 1–3 open (assumed Lv 1, fix if higher), skill 4 Traveler Honors still locked"
     }
   ],
   "dustSrc": [
@@ -4570,8 +4595,7 @@
     "emblems": 27,
     "books": 3902,
     "rate": "",
-    "seen": "2026-11-09",
-    "note": "1 Catherine Emblem in bag (master not unlocked/tracked yet)"
+    "seen": "2026-11-09"
   },
   "formations": [
     {
