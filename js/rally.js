@@ -256,8 +256,9 @@ const mRes=()=>state.masterRes||(state.masterRes={emblems:0,books:0,rate:""});
 // Emblem cost to reach each class (Lv 10, 20 … 100) and power per class — three tables from the advancement screens
 const M_TAB={a:{em:[8,16,24,32,40,48,56,64,72,80],pw:86400,buff:"+0.6% Attack + Defense"},
   c:{em:[10,20,30,40,50,60,70,80,90,100],pw:108000,buff:"+0.6% Lethality + Health"},
-  b:{em:[20,40,80,120,160,200,240,280,320,360],pw:144000,buff:"+0.8% Lethality + Health"}};
-const M_TAB_OF={Cassia:"b",Guinevere:"c",Isnor:"c"}; // best guess — others use the 8-step table
+  b:{em:[20,40,80,120,160,200,240,280,320,360],pw:144000,buff:"+0.8% Lethality + Health"},
+  d:{em:[20,40,60,80,100,120,140,160,180,200],pw:144000,buff:"+0.8% Lethality + Health"}};
+const M_TAB_OF={Cassia:"b",Guinevere:"c",Isnor:"c",Olander:"d"}; // best guess — others use the 8-step table
 const mTab=m=>M_TAB[m.ctab||M_TAB_OF[m.n]||"a"];
 const mNextCost=m=>{ if(m.lvlCost!==""&&m.lvlCost!=null&&num(m.lvlCost)) return num(m.lvlCost); const i=Math.floor(num(m.l)/10); return i<10?mTab(m).em[i]:0; };
 function mastPlanH(){ const R=mRes(), U=num(R.emblems), rate=num(R.rate), M=state.masters||[], C=M.find(m=>m.n==="Cassia");
@@ -299,7 +300,7 @@ function openMastSheet(m){
     if(!info) f.appendChild(fld("Name",{value:m.n,set:v=>m.n=v}));
     f.appendChild(fld("Affinity level (0–100)",{type:"num",value:m.l,get:()=>m.l,set:v=>m.l=String(v),min:0,max:100}));
     f.appendChild(frow(fld(`${m.n}'s own Emblems`,{type:"num",value:num(m.em),get:()=>m.em,set:v=>m.em=v}),fld("Emblems for next level",{type:"num",value:m.lvlCost,get:()=>m.lvlCost,allowEmpty:true,ph:String(mNextCost(Object.assign({},m,{lvlCost:""}))),set:v=>m.lvlCost=v,hint:"Leave empty to use the cost table."})));
-    f.appendChild(fld("Cost table",{type:"select",value:m.ctab||M_TAB_OF[m.n]||"a",options:[["a","8 → 80 Emblems · 86,400 power · Attack + Defense"],["c","10 → 100 · 108,000 power · Lethality + Health"],["b","20 → 360 · 144,000 power · Lethality + Health"]],set:v=>m.ctab=v}));
+    f.appendChild(fld("Cost table",{type:"select",value:m.ctab||M_TAB_OF[m.n]||"a",options:[["a","8 → 80 Emblems · 86,400 power · Attack + Defense"],["c","10 → 100 · 108,000 power · Lethality + Health"],["b","20 → 360 · 144,000 power · Lethality + Health"],["d","20 → 200 · 144,000 power · Lethality + Health"]],set:v=>m.ctab=v}));
     const bn=m.bookNext||(m.bookNext={what:"",books:""});
     f.appendChild(frow(fld("Next skill step",{value:bn.what,ph:"e.g. Skill 3 4 → 5",set:v=>bn.what=v}),fld("Books for it",{type:"num",value:bn.books,get:()=>bn.books,allowEmpty:true,set:v=>bn.books=v})));
     const how=infoBox(); f.appendChild(how);
