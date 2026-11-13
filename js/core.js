@@ -698,20 +698,22 @@ const MASTER_INFO={
   Wilson:   {title:"Royal Herald",        talent:"Trade Decree",       research:"Squads' Health",    best:"Infantry",   ks:"+10% Squads' Attack · +10% Squads' Defense", unlock:"Generation 4 Heroes"},
   Aena:     {title:"Caravan Queen",       talent:"Beneficent Mogul",   research:"Squads' Lethality", best:"Cavalry",    ks:"+15% Squads' Attack · +15% Squads' Defense", unlock:"Generation 5 Heroes"},
   Isnor:    {title:"Legendary Explorer",  talent:"Old Hand",           research:"Squads' Attack",    best:"Archers",    ks:"+15% Squads' Lethality · +15% Squads' Health", unlock:"Generation 5 Heroes"},
+  Olander:  {title:"Calculating Strategist",talent:"Battlefield Insight",research:"Squads' Lethality", best:"All squads", ks:"+20% Squads' Lethality · +20% Squads' Health", unlock:"Generation 6 Heroes"},
   Catherine:{title:"The Countess",        talent:"Conquest Boons",     research:"Squads' Attack",    best:"Infantry",   ks:"+15% Squads' Attack · +15% Squads' Defense", unlock:"Generation 6 Heroes"}
 };
 const MAIN_TROOP="Archers";
 // upgrade order for a rally leader chasing Lethality + Health (like PET_SKILL ranks)
 const MASTER_RANK={
   Cassia:[1,"+20% Lethality + Health for all troops · combat skills · +Rally Capacity"],
-  Pan:[2,"10 levels from Kindred Soul → Archer Lethality research"],
-  Guinevere:[3,"+15% Lethality + Health for all troops"],
-  Isnor:[4,"+15% Lethality + Health · Archers · still low level"],
-  Valora:[5,"Infantry Health research · Bear Hunt"],
-  Roman:[6,"Cavalry Attack · Attack/Defense buff"],
-  Wilson:[7,"Infantry · Growth skills only"],
-  Aena:[8,"Cavalry · Growth skills only"],
-  Catherine:[9,"Reward skills only (Trial Crystals, Pet Adventure, Terror, Journeys) · Infantry research"]};
+  Olander:[2,"+20% Lethality + Health for all troops · KvK battle: up to +30% Attack/Defense, +30% Lethality/Health, +150K rally capacity"],
+  Pan:[3,"10 levels from Kindred Soul → Archer Lethality research"],
+  Guinevere:[4,"+15% Lethality + Health for all troops"],
+  Isnor:[5,"+15% Lethality + Health · Archers · still low level"],
+  Valora:[6,"Infantry Health research · Bear Hunt"],
+  Roman:[7,"Cavalry Attack · Attack/Defense buff"],
+  Wilson:[8,"Infantry · Growth skills only"],
+  Aena:[9,"Cavalry · Growth skills only"],
+  Catherine:[10,"Reward skills only (Trial Crystals, Pet Adventure, Terror, Journeys) · Infantry research"]};
 const mastRank=m=>(MASTER_RANK[m.n]||[99])[0];
 function masterHowTo(m,info){
   const lv=Math.max(0,Math.min(100,Math.floor(num(m.l))));
@@ -733,7 +735,7 @@ function paintMastNext(){
                    : `<b>All ${MAIN_TROOP} / all-squad masters are at Kindred Soul.</b>`;
 }
 // max level of each master skill (from the game)
-const MASTER_SKILL_MAX={Pan:[5,5,5,10],Valora:[10,5,5,10],Roman:[10,10,10,10],Cassia:[10,20,20,20],Aena:[10,10,10,10],Guinevere:[10,10,20,20],Isnor:[10,10,10,10],Wilson:[10,10,10,10],Catherine:[5,5,5,10]};
+const MASTER_SKILL_MAX={Pan:[5,5,5,10],Valora:[10,5,5,10],Roman:[10,10,10,10],Cassia:[10,20,20,20],Aena:[10,10,10,10],Guinevere:[10,10,20,20],Isnor:[10,10,10,10],Wilson:[10,10,10,10],Catherine:[5,5,5,10],Olander:[10,10,20,20]};
 const skillCap=(name,i)=>{ const c=MASTER_SKILL_MAX[name]; return c&&c[i]?c[i]:0; };
 const skillIsMax=(sk,cap)=>cap?num(sk&&sk.l)>=cap:!!(sk&&sk.max);
 
