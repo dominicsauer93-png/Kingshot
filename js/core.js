@@ -697,7 +697,8 @@ const MASTER_INFO={
   Guinevere:{title:"Queen of Holy Sword", talent:"Holy Sword Domain",  research:"Squads' Defense",   best:"All squads", ks:"+15% Squads' Lethality · +15% Squads' Health", unlock:"Generation 4 Heroes"},
   Wilson:   {title:"Royal Herald",        talent:"Trade Decree",       research:"Squads' Health",    best:"Infantry",   ks:"+10% Squads' Attack · +10% Squads' Defense", unlock:"Generation 4 Heroes"},
   Aena:     {title:"Caravan Queen",       talent:"Beneficent Mogul",   research:"Squads' Lethality", best:"Cavalry",    ks:"+15% Squads' Attack · +15% Squads' Defense", unlock:"Generation 5 Heroes"},
-  Isnor:    {title:"Legendary Explorer",  talent:"Old Hand",           research:"Squads' Attack",    best:"Archers",    ks:"+15% Squads' Lethality · +15% Squads' Health", unlock:"Generation 5 Heroes"}
+  Isnor:    {title:"Legendary Explorer",  talent:"Old Hand",           research:"Squads' Attack",    best:"Archers",    ks:"+15% Squads' Lethality · +15% Squads' Health", unlock:"Generation 5 Heroes"},
+  Catherine:{title:"The Countess",        talent:"Conquest Boons",     research:"Squads' Attack",    best:"Infantry",   ks:"+15% Squads' Attack · +15% Squads' Defense", unlock:"Generation 6 Heroes"}
 };
 const MAIN_TROOP="Archers";
 // upgrade order for a rally leader chasing Lethality + Health (like PET_SKILL ranks)
@@ -709,7 +710,8 @@ const MASTER_RANK={
   Valora:[5,"Infantry Health research · Bear Hunt"],
   Roman:[6,"Cavalry Attack · Attack/Defense buff"],
   Wilson:[7,"Infantry · Growth skills only"],
-  Aena:[8,"Cavalry · Growth skills only"]};
+  Aena:[8,"Cavalry · Growth skills only"],
+  Catherine:[9,"Reward skills only (Trial Crystals, Pet Adventure, Terror, Journeys) · Infantry research"]};
 const mastRank=m=>(MASTER_RANK[m.n]||[99])[0];
 function masterHowTo(m,info){
   const lv=Math.max(0,Math.min(100,Math.floor(num(m.l))));
@@ -731,7 +733,7 @@ function paintMastNext(){
                    : `<b>All ${MAIN_TROOP} / all-squad masters are at Kindred Soul.</b>`;
 }
 // max level of each master skill (from the game)
-const MASTER_SKILL_MAX={Pan:[5,5,5,10],Valora:[10,5,5,10],Roman:[10,10,10,10],Cassia:[10,20,20,20],Aena:[10,10,10,10],Guinevere:[10,10,20,20],Isnor:[10,10,10,10],Wilson:[10,10,10,10]};
+const MASTER_SKILL_MAX={Pan:[5,5,5,10],Valora:[10,5,5,10],Roman:[10,10,10,10],Cassia:[10,20,20,20],Aena:[10,10,10,10],Guinevere:[10,10,20,20],Isnor:[10,10,10,10],Wilson:[10,10,10,10],Catherine:[5,5,5,10]};
 const skillCap=(name,i)=>{ const c=MASTER_SKILL_MAX[name]; return c&&c[i]?c[i]:0; };
 const skillIsMax=(sk,cap)=>cap?num(sk&&sk.l)>=cap:!!(sk&&sk.max);
 
