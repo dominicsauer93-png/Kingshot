@@ -73,12 +73,13 @@ function renderEventMode(){
     <div class="eringt"><b>${e.endOpen?`D${cur.a.day}`:`${cur.a.day}/${cur.a.len}`}</b><small>${e.endOpen?"end ?":left?"days":"last day"}</small></div>
     <p class="eey">${ico("bolt")} Live now</p><h2 class="etitle">${esc(e.n||"Event")}</h2>
     ${todayStage?`<p class="eline"><b>Today:</b> ${esc(todayStage)}</p>`:""}
-    <div class="echips"><span class="echip">${esc(spendFor(e)||"Tap How to play")}</span>${have.slice(0,2).map(([l,v])=>`<span class="echip">${esc(l)} ${esc(v)}</span>`).join("")}</div>
+    <div class="echips"><button class="echip etip" aria-expanded="false" title="Tap to read it all">${esc(spendFor(e)||"Tap How to play")}</button>${have.slice(0,2).map(([l,v])=>`<span class="echip">${esc(l)} ${esc(v)}</span>`).join("")}</div>
     <div class="eacts">${steps.length||stagesH(e)?`<button class="btn sm" id="evHow">How to play ›</button>`:""}${bt?`<button class="btn sm primary" id="evBattle">${icoI("sword")} Battle card</button>`:""}${ncam?`<button class="btn sm" id="evCam">${icoI("camera")} ${ncam} shop${ncam>1?"s":""} to capture</button>`:""}${live.length>1?`<button class="btn sm" id="evOthers">${live.length-1} more live ›</button>`:""}</div>`;
   on("evHow",()=>openSheet({title:e.n||"Event",sub:`${cur.a.len>1?`Day ${cur.a.day} of ${cur.a.len} · `:""}${leftTxt(e,cur.a)}`,build(f){ f.innerHTML=`${stagesH(e)}${steps.length?`<ul class="etips">${steps.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:""}`; }}));
   on("evOthers",()=>openSheet({title:"Also on now",sub:"Tap one to see or edit it.",build(f){ f.innerHTML=`<div class="list">${live.slice(1).map(({e:x,a},i)=>`<button class="lrow erow2" data-i="${i+1}"><span style="flex:1;min-width:0"><b>${esc(x.n||"Event")}${(()=>{ const sh=eventShopFor(x); return sh&&!sh.saved?" "+icoI("camera"):""; })()}</b><br><span class="faint fs13">${esc(spendFor(x)||"tap to add what to spend")}</span></span><span class="mono faint">${x.endOpen?`day ${a.day}`:a.len>1?`${a.day}/${a.len}`:"today"}</span></button>`).join("")}</div>`;
     f.querySelectorAll(".erow2").forEach(b=>b.onclick=()=>openEventSheet(live[+b.dataset.i].e)); }}));
   on("evBattle",()=>openBattle(e));
+  box.querySelectorAll(".etip").forEach(t=>t.onclick=()=>{ const o=t.classList.toggle("open"); t.setAttribute("aria-expanded",String(o)); });
   on("evCam",()=>openCamSheet(false));
 }
 /* ---------- Home: your time vs game time (UTC), ticking every second ---------- */
@@ -114,12 +115,13 @@ function renderHome(){
 /* ---------- Home summary strip: the four numbers that matter today ---------- */
 function renderKpis(){ const box=$("#kpis"); if(!box) return;
   const A=typeof vPlanAll==="function"?vPlanAll():null, w=typeof weekDelta==="function"?weekDelta("power"):null;
-  const nx=(state.events||[]).map(e=>({e,o:nextOcc(e)})).filter(x=>x.o&&!x.o.past&&x.o.days>0&&!activeOcc(x.e)&&!(num(x.e.every)&&num(x.e.every)<=2)).sort((a,b)=>a.o.days-b.o.days||eventRank(a.e)-eventRank(b.e))[0];
   const K=[
     A?{v:money(A.spare),l:`${A.M.label.slice(0,3)} spare`,c:"y",go:()=>setTab("Shop","Paid")}:null,
     {v:fmtK(num(state.stars)),l:"Stars ⭐",c:"",go:()=>setTab("Shop","Paid")},
     w?{v:`${w.d>=0?"+":"−"}${fmtBig(Math.abs(w.d))}`,l:"power/wk",c:w.d>=0?"g":"r",go:()=>setTab("Progress","Overview")}:{v:"—",l:"power/wk",c:""},
-    nx?{v:`${nx.o.days}d`,l:nx.e.n,c:"",go:()=>openEventSheet(nx.e)}:{v:"—",l:"next event",c:""}].filter(Boolean);
+    (()=>{ const N=typeof blockerNeeds==="function"?blockerNeeds():{}, LB={mg:"Mythic Gear",threads:"Threads",designs:"Designs",mith:"Mithril",gen:"General shards"};
+      const k=["mg","threads","designs","mith","gen"].find(x=>N[x]&&N[x].short>0);
+      return k?{v:fmtK(N[k].short),l:`${LB[k]} short`,c:"r",go:()=>setTab("Upgrade")}:{v:"✓",l:"nothing blocking",c:"g",go:()=>setTab("Upgrade")}; })()].filter(Boolean);
   box.innerHTML=K.map((k,i)=>`<button class="kpi ${k.c}" data-i="${i}"${k.go?"":" disabled"}><b>${esc(k.v)}</b><span>${esc(k.l)}</span>${k.go?'<i class="kchev" aria-hidden="true">›</i>':""}</button>`).join("");
   bindAll(box,".kpi",b=>{ const k=K[+b.dataset.i]; if(k.go) k.go(); }); }
 
