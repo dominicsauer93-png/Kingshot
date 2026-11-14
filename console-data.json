@@ -1682,7 +1682,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-11-13",
+    "routineDate": "2026-11-14",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1739,7 +1739,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1780,9 +1780,9 @@
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
       "Shop": "Free shops",
-      "Governor": "Masters",
+      "Governor": "Charms",
       "Progress": "Overview",
-      "Town": "Research"
+      "Town": "Troops"
     },
     "t11Open": {
       "nodes": false,
@@ -1790,7 +1790,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Power": true
+      "Shards": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -3243,7 +3243,7 @@
       }
     },
     {
-      "d": "2026-11-13",
+      "d": "2026-11-14",
       "v": {
         "power": 345186621,
         "leth": 74.3,
