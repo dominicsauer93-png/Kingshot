@@ -1124,7 +1124,7 @@
     },
     {
       "n": "Catherine",
-      "l": "40",
+      "l": "50",
       "em": 1,
       "lvlCost": "",
       "skills": [
@@ -1790,7 +1790,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "T11": true
+      "Masters": true
     },
     "tierAll": false,
     "progKey": "power",
