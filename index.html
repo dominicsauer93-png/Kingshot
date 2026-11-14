@@ -18,7 +18,7 @@
   (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t!=="light"&&t!=="auto") t="dark"; if(t==="auto") t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"; document.documentElement.setAttribute("data-theme",t); }catch(e){ document.documentElement.setAttribute("data-theme","dark"); } })();
 </script>
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=84">
+<link rel="stylesheet" href="css/app.css?v=85">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#main">Skip to content</a>
@@ -74,22 +74,18 @@
       <div class="clk" id="clockStrip" aria-label="Your time and game time"></div>
       <div class="card dcard firstrun" id="firstRun" hidden></div>
       <div class="evmode" id="eventMode" hidden></div>
-      <div class="cols-3-2">
-        <div>
-          <section class="sec" data-key="Do next">
+      <div class="hgrid">
+          <section class="sec h-today" data-key="Do next">
             <div class="card dcard pcard"><div class="dch"><h3>Today <small id="doCount"></small></h3><span class="faint fs12">from your bag + events</span><button class="link" id="doMore">All ›</button></div>
             <div id="doNext"></div><div id="fresh"></div></div>
           </section>
-          <div class="kpis mt" id="kpis"></div>
+          <div class="kpis h-kpis" id="kpis"></div>
+          <section class="sec h-ready" data-key="Get ready"><div class="card dcard" id="getReady"></div></section>
+          <section class="sec h-bag" data-key="Bag check"><div class="card dcard" id="bagCheck"></div>
+            <details class="card dcard dfold mt" id="tlFold"><summary class="dch"><h3>Forecast</h3><span class="faint fs13">when you reach each goal ›</span></summary><div class="fbody" id="timelines" style="padding:0 14px 12px"></div></details></section>
           <section class="sec" data-key="Upcoming Events" hidden>
             <div class="cuphead"><h3>Coming up</h3><button class="link" id="evAll">All ›</button><button class="link" id="evAdd">+ Add</button></div><div id="evUpcoming"></div>
           </section>
-        </div>
-        <div>
-          <section class="sec" data-key="Get ready"><div class="card dcard" id="getReady"></div></section>
-          <section class="sec" data-key="Bag check"><div class="card dcard" id="bagCheck"></div>
-            <details class="card dcard dfold mt" id="tlFold"><summary class="dch"><h3>Forecast</h3><span class="faint fs13">when you reach each goal ›</span></summary><div class="fbody" id="timelines" style="padding:0 14px 12px"></div></details></section>
-        </div>
       </div>
     </div>
 
@@ -105,11 +101,14 @@
       <nav class="subnav" aria-label="Heroes sections"></nav>
       <section class="sec" data-sub="Formations" data-key="Focus heroes"><div id="focusHeroes"></div></section>
       <section class="sec" data-sub="Formations" data-key="Hero Roles">
+        <div class="fmgrid"><div class="fmcol">
         <h2 class="mt2">Best for each battle</h2>
         <div id="roleBest"></div>
         <details id="roleFold" hidden></details>
+        </div><div class="fmcol">
         <h2 class="mt2">My formations</h2>
         <div id="myForms"></div>
+        </div></div>
         <div class="mt2" id="heroCards"></div>
         <button class="btn sm ghost mt" id="heroMore" hidden></button>
         <details class="fold mt" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="faint" style="font-weight:500;font-size:14px">S best → D worst</span></summary>
@@ -140,7 +139,7 @@
       </section>
 
       <section class="sec" data-sub="Widgets" data-key="Widgets">
-        <div class="tiles t2" id="widTiles" style="grid-template-columns:1fr"></div>
+        <div class="tiles t2" id="widTiles"></div>
         <div class="grid mt" style="--min:200px" id="widBody"></div>
         <button class="add" id="addWid">+ Add hero</button>
         <details class="fold mt"><summary>Where to get Widgets</summary><div class="fbody howto">
@@ -307,12 +306,17 @@
       </section>
       <section class="sec" data-sub="Sync" data-key="Data &amp; Sync">
         <div class="cols">
-          <div class="card">
+          <div class="colstack"><div class="card">
             <h3>File backup</h3>
             <p class="lead" style="margin:0 0 10px">Works everywhere, no token needed.</p>
             <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="exportBtn"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Export JSON</button><button class="btn" id="importBtn"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Import JSON</button></div>
             <input type="file" id="importFile" accept="application/json,.json" hidden>
           </div>
+          <div class="card mt" id="upCard"><h3><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg> Upload screenshots</h3>
+          <p class="lead" style="margin:0 0 10px">For anything — research trees, packs, events. Name it, pick the screenshots, then tell Claude "uploaded".</p>
+          <div class="form"><label class="f"><span>What is it?</span><input id="upLabel" placeholder="e.g. research academy" autocomplete="off"></label>
+          <label class="btn primary" style="align-self:flex-start"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg> Choose screenshots<input type="file" id="upFiles" accept="image/*" multiple hidden></label>
+          <div class="faint" id="upStatus" role="status"></div></div></div></div>
           <div class="card">
             <h3>GitHub sync</h3>
             <p class="lead" style="margin:0 0 10px">Reads and writes a JSON file in your repo. The token stays on this device and is never committed.</p>
@@ -330,11 +334,6 @@
             </div>
           </div>
         </div>
-        <div class="card mt" id="upCard"><h3><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg> Upload screenshots</h3>
-          <p class="lead" style="margin:0 0 10px">For anything — research trees, packs, events. Name it, pick the screenshots, then tell Claude "uploaded".</p>
-          <div class="form"><label class="f"><span>What is it?</span><input id="upLabel" placeholder="e.g. research academy" autocomplete="off"></label>
-          <label class="btn primary" style="align-self:flex-start"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg> Choose screenshots<input type="file" id="upFiles" accept="image/*" multiple hidden></label>
-          <div class="faint" id="upStatus" role="status"></div></div></div>
       </section>
       <section class="sec" data-sub="Reminders" data-key="Reminders">
         <h2>Reminders</h2>
@@ -375,16 +374,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=84"></script>
-<script src="js/ui.js?v=84"></script>
-<script src="js/home.js?v=84"></script>
-<script src="js/rally.js?v=84"></script>
-<script src="js/gear.js?v=84"></script>
-<script src="js/base.js?v=84"></script>
-<script src="js/data.js?v=84"></script>
-<script src="js/shops.js?v=84"></script>
-<script src="js/extras.js?v=84"></script>
-<script src="js/value.js?v=84"></script>
-<script src="js/boot.js?v=84"></script>
+<script src="js/core.js?v=85"></script>
+<script src="js/ui.js?v=85"></script>
+<script src="js/home.js?v=85"></script>
+<script src="js/rally.js?v=85"></script>
+<script src="js/gear.js?v=85"></script>
+<script src="js/base.js?v=85"></script>
+<script src="js/data.js?v=85"></script>
+<script src="js/shops.js?v=85"></script>
+<script src="js/extras.js?v=85"></script>
+<script src="js/value.js?v=85"></script>
+<script src="js/boot.js?v=85"></script>
 </body>
 </html>

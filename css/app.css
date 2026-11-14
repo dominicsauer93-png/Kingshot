@@ -1133,3 +1133,37 @@
   /* B12: Done this week */
   .wdone li{display:flex;justify-content:space-between;gap:12px}
   .wdone .wd-d{flex:none;font-size:12px;color:var(--faint)}
+
+/* ================= round 5: desktop layout ================= */
+  /* Home: one grid — KPIs across the top, Today + My bag on the left, Get ready on the right; phones keep the source order */
+  .hgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;align-items:start}
+  .hgrid > .sec, .hgrid > .kpis{margin:0;min-width:0}
+  @media (min-width:1000px){
+    .hgrid{gap:16px;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto auto 1fr;
+      grid-template-areas:"kpis kpis" "today ready" "bag ready" ". ready"}
+    .h-kpis{grid-area:kpis}.h-today{grid-area:today}.h-ready{grid-area:ready}.h-bag{grid-area:bag}
+  }
+  @media (min-width:1600px){ body:has(.page[data-tab="Home"]:not([hidden])) .wrapw{max-width:1360px} }
+  .kpi.r b{color:var(--amber-text)}
+  /* Upgrade: narrower left column that stays in view */
+  @media (min-width:900px){ .upcols{grid-template-columns:minmax(0,2fr) minmax(0,3fr)} .upcols > div:first-child{position:sticky;top:16px} }
+  /* Formations: two blocks side by side, your heroes in two columns */
+  .page .fmcol > h2{font:700 13px var(--f-body);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:22px 2px 8px}
+  @media (min-width:1100px){
+    .fmgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+    #heroCards{display:grid;grid-template-columns:1fr 1fr} #heroCards > .dch{grid-column:1/-1}
+  }
+  /* Hero Gear: troop cards side by side on wide screens */
+  @media (min-width:1500px){ #hgBody{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start} #hgBody > .card{margin:0} }
+  /* lists of short rows don't need the full width */
+  @media (min-width:1100px){ #goldShardBody, #petBody, #mastBody, #govBody, #buildBody, #charmBody{max-width:880px} }
+  .note-line, .info, .howto, #govPlan{max-width:75ch}
+  #themeSeg{max-width:360px}
+  /* Sync: left column stacks File backup + Upload */
+  .colstack{display:flex;flex-direction:column;gap:12px;min-width:0}
+  .colstack > .card{margin:0}
+  /* weekly bars: fixed width, start at the left */
+  .wspark{justify-content:flex-start} .wspark i{flex:0 1 24px;max-width:24px}
+  /* event banner tip: tap to read it all */
+  .echip.etip{cursor:pointer;font:inherit;font-weight:700;font-size:12px;text-align:left;color:var(--text)}
+  .evmode .echip.etip.open{white-space:normal;overflow:visible}

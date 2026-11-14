@@ -322,13 +322,16 @@ window.addEventListener("pagehide",()=>flushSync(true));
 /* ---------- local save (drives local persistence + optional sync) ---------- */
 let saveTimer=null;
 function setSaveUI(cls,txt){ ["saveDot","saveDotM"].forEach(id=>{ const d=document.getElementById(id); if(d) d.className="dot"+(cls?" "+cls:""); }); const t=document.getElementById("saveTxt"); if(t) t.textContent=txt; }
-function scheduleSave(){
-  try{ takeSnapshot(); }catch(e){}
-  try{ trackHammers(); }catch(e){}
-  try{ trackIncome(); }catch(e){}
-  setSaveUI("busy","Saving…");
+let saveLoud=false;
+function scheduleSave(quiet){ // quiet = only UI state changed (tab, scroll): save locally, no status flash, no GitHub push
+  if(!quiet){ saveLoud=true;
+    try{ takeSnapshot(); }catch(e){}
+    try{ trackHammers(); }catch(e){}
+    try{ trackIncome(); }catch(e){}
+    setSaveUI("busy","Saving…"); }
   clearTimeout(saveTimer);
-  saveTimer=setTimeout(async()=>{ const ok=await persistLocal(); setSaveUI(ok?"":"err",ok?"Saved":"Session only"); scheduleSyncPush(); },400);
+  saveTimer=setTimeout(async()=>{ const ok=await persistLocal(), loud=saveLoud; saveLoud=false;
+    if(loud||!ok) setSaveUI(ok?"":"err",ok?"Saved":"Session only"); if(loud) scheduleSyncPush(); },400);
 }
 
 /* ---------- export / import ---------- */

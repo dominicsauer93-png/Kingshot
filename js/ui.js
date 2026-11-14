@@ -189,7 +189,7 @@ function setTab(tab,sub,scroll,fromHistory){
   if(scroll==="restore") window.scrollTo({top:scrollMem[curKey()]||0,behavior:"instant"});
   else if(scroll!==false) window.scrollTo({top:0,behavior:"instant"});
   if(changed&&navReady){ const h=page.querySelector(".phead h1"); if(h){ h.tabIndex=-1; h.focus({preventScroll:true}); } } // screen readers hear the new page
-  if(changed) scheduleSave();
+  if(changed) scheduleSave(true);
 }
 function tabFromHash(){
   let [t,s]=(location.hash||"").replace(/^#/,"").split("/");
