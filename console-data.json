@@ -1631,9 +1631,9 @@
     }
   ],
   "tg": {
-    "have": 667,
+    "have": 820,
     "need": 2586,
-    "ttgHave": 2,
+    "ttgHave": 4,
     "ttgNeed": 289
   },
   "govGear": {
@@ -1739,7 +1739,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Progress",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1774,14 +1774,14 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Update all",
+      "Data": "Account",
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
       "Shop": "Free shops",
       "Governor": "Charms",
-      "Progress": "Overview",
+      "Progress": "Mystic Trials",
       "Town": "Troops"
     },
     "t11Open": {
@@ -1790,7 +1790,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Mystic": true
+      "Bag": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1845,7 +1845,7 @@
   },
   "heroGear": {
     "have": {
-      "xp": 6,
+      "xp": 4,
       "fh": 308,
       "mg": 3,
       "mith": 8
