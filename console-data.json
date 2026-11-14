@@ -1739,7 +1739,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1790,7 +1790,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Masters": true
+      "Mystic": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -3830,7 +3830,7 @@
       }
     ]
   },
-  "shardGeneral": 181,
+  "shardGeneral": 189,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3894,9 +3894,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 652
+        "2026-11": 660
       },
-      "seen": 181
+      "seen": 189
     }
   },
   "battle": {
@@ -4000,25 +4000,25 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-11-10",
+    "d": "2026-11-14",
     "v": {
-      "gen": 141,
+      "gen": 189,
       "mg": 3,
       "mith": 8,
-      "fh": 209,
-      "m:Gear XP": 2900,
-      "m:Lucky chests": 22,
+      "fh": 308,
+      "m:Gear XP": 6,
+      "m:Lucky chests": 0,
       "m:Custom Mythic chests": 1,
-      "threads": 411,
-      "m:Satin": 84619,
-      "m:Vision": 709,
-      "designs": 312,
-      "m:Guides": 880,
-      "m:Master Emblems": 27,
-      "m:Skill books": 3902,
-      "m:Truegold": 71,
-      "m:Tempered TG": 1,
-      "m:TG Dust": 271,
+      "threads": 189,
+      "m:Satin": 64400,
+      "m:Vision": 695,
+      "designs": 51,
+      "m:Guides": 727,
+      "m:Master Emblems": 28,
+      "m:Skill books": 6352,
+      "m:Truegold": 667,
+      "m:Tempered TG": 2,
+      "m:TG Dust": 49,
       "m:Gold": 463530
     }
   },
