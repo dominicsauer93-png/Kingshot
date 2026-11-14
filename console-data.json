@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 61,
+    "current": 49,
     "target": 5820,
     "gold": 463530
   },
@@ -1631,17 +1631,17 @@
     }
   ],
   "tg": {
-    "have": 369,
+    "have": 667,
     "need": 2586,
-    "ttgHave": 6,
+    "ttgHave": 2,
     "ttgNeed": 289
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 93415,
-      "threads": 484,
-      "vision": 744
+      "satin": 64400,
+      "threads": 189,
+      "vision": 695
     },
     "pieces": [
       {
@@ -1654,7 +1654,7 @@
       },
       {
         "name": "Inf 1",
-        "cur": 19
+        "cur": 20
       },
       {
         "name": "Inf 2",
@@ -1739,7 +1739,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1790,7 +1790,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Shards": true
+      "T11": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1846,7 +1846,7 @@
   "heroGear": {
     "have": {
       "xp": 6,
-      "fh": 280,
+      "fh": 308,
       "mg": 3,
       "mith": 8
     },
@@ -2006,10 +2006,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 280,
+    "fhSeen": 308,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 1823
+      "2026-11": 2128
     },
     "plan": [
       {
@@ -2062,8 +2062,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 723,
-      "designs": 39
+      "guides": 727,
+      "designs": 51
     },
     "rows": [
       {
@@ -3738,9 +3738,9 @@
     "have": {
       "food": 55310,
       "manuals": 1283,
-      "potions": 40,
-      "tmCommon": 46,
-      "tmAdv": 2,
+      "potions": 56,
+      "tmCommon": 71,
+      "tmAdv": 3,
       "medals": 0
     },
     "rows": [
@@ -3870,25 +3870,25 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 580,
-        "2026-11": 2668
+        "2026-11": 2856
       },
-      "seen": 484
+      "seen": 189
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 40822
+        "2026-11": 40868
       },
-      "seen": 39
+      "seen": 51
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 1823
+        "2026-11": 2128
       },
-      "seen": 280
+      "seen": 308
     },
     "gen": {
       "since": "2026-10-26",
