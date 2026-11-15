@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 49,
+    "current": 38,
     "target": 5820,
     "gold": 463530
   },
@@ -1631,17 +1631,17 @@
     }
   ],
   "tg": {
-    "have": 820,
+    "have": 908,
     "need": 2586,
-    "ttgHave": 4,
+    "ttgHave": 6,
     "ttgNeed": 289
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 64400,
-      "threads": 189,
-      "vision": 695
+      "satin": 90785,
+      "threads": 462,
+      "vision": 710
     },
     "pieces": [
       {
@@ -1739,7 +1739,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1774,7 +1774,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
+      "Data": "Update all",
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
@@ -1790,7 +1790,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Bag": true
+      "T11": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1845,10 +1845,10 @@
   },
   "heroGear": {
     "have": {
-      "xp": 4,
-      "fh": 308,
-      "mg": 3,
-      "mith": 8
+      "xp": 0,
+      "fh": 318,
+      "mg": 4,
+      "mith": 16
     },
     "rows": [
       {
@@ -1890,7 +1890,7 @@
       {
         "type": "Infantry",
         "slot": "Boots (Lethality)",
-        "lvC": 105,
+        "lvC": 112,
         "lvT": 200,
         "mC": 11,
         "mT": 15,
@@ -2006,10 +2006,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 308,
+    "fhSeen": 318,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 2128
+      "2026-11": 2443
     },
     "plan": [
       {
@@ -2062,8 +2062,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 727,
-      "designs": 51
+      "guides": 789,
+      "designs": 145
     },
     "rows": [
       {
@@ -3756,11 +3756,11 @@
   "masterNotesV": 2,
   "pets": {
     "have": {
-      "food": 55310,
-      "manuals": 1283,
-      "potions": 56,
-      "tmCommon": 71,
-      "tmAdv": 3,
+      "food": 30760,
+      "manuals": 1635,
+      "potions": 71,
+      "tmCommon": 17,
+      "tmAdv": 4,
       "medals": 0
     },
     "rows": [
@@ -3820,7 +3820,7 @@
       },
       {
         "n": "Alpha Black Panther",
-        "lvl": 80,
+        "lvl": 84,
         "tgt": 0,
         "max": 100
       },
@@ -3844,7 +3844,7 @@
       },
       {
         "n": "Ironclad War Bear",
-        "lvl": 56,
+        "lvl": 60,
         "tgt": 0,
         "max": 100
       }
@@ -3874,41 +3874,41 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 6,
-        "2026-11": 3
+        "2026-11": 4
       },
-      "seen": 3
+      "seen": 4
     },
     "mith": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 3,
-        "2026-11": 3
+        "2026-11": 18
       },
-      "seen": 8
+      "seen": 16
     },
     "threads": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 580,
-        "2026-11": 2856
+        "2026-11": 3314
       },
-      "seen": 189
+      "seen": 462
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 40868
+        "2026-11": 41012
       },
-      "seen": 51
+      "seen": 145
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 2128
+        "2026-11": 2443
       },
-      "seen": 308
+      "seen": 318
     },
     "gen": {
       "since": "2026-10-26",
