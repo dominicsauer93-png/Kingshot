@@ -1775,7 +1775,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1814,7 +1814,7 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Shards",
+      "Heroes": "Hero Gear",
       "Shop": "Free shops",
       "Governor": "Charms",
       "Progress": "Overview",
@@ -2070,8 +2070,8 @@
     ],
     "planDate": "2026-10-23",
     "chests": {
-      "lucky": 0,
-      "custom": 1,
+      "lucky": 35,
+      "custom": 0,
       "log": [
         {
           "d": "2026-10-27",
