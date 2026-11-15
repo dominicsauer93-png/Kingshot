@@ -1775,7 +1775,7 @@
     ]
   },
   "ui": {
-    "tab": "Progress",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1859,7 +1859,8 @@
         "Weekly Benefits — Mythic Governor Charm (week 1)",
         "Weekly Benefits — Mythic Governor Charm (week 2)"
       ]
-    }
+    },
+    "progRange": "all"
   },
   "troopCounts": {
     "inf": {
