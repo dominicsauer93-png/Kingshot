@@ -11,7 +11,7 @@
   "dust": {
     "current": 38,
     "target": 5820,
-    "gold": 463530
+    "gold": 851390
   },
   "nodes": [
     {
@@ -687,47 +687,55 @@
   "resources": [
     {
       "n": "General speedup (min)",
-      "h": "17076"
+      "h": "15568"
     },
     {
       "n": "Soldier Training speedup (min)",
-      "h": "8036"
+      "h": "5983"
     },
     {
       "n": "Construction speedup (min)",
-      "h": "13913"
+      "h": "4528"
     },
     {
       "n": "Research speedup (min)",
-      "h": "2387"
+      "h": "6339"
     },
     {
       "n": "Learning speedup (min)",
-      "h": "1560"
+      "h": "100"
     },
     {
       "n": "Soldier Healing speedup (min)",
-      "h": "28874"
+      "h": "39680"
     },
     {
       "n": "Bread",
-      "h": "1660000000"
+      "h": "1820000000"
     },
     {
       "n": "Wood",
-      "h": "1340000000"
+      "h": "1240000000"
     },
     {
       "n": "Stone",
-      "h": "52070000"
+      "h": "268410000"
     },
     {
       "n": "Iron",
-      "h": "157290000"
+      "h": "82330000"
     },
     {
       "n": "Gold",
-      "h": "1030000"
+      "h": "851390"
+    },
+    {
+      "n": "Hero XP",
+      "h": "208980"
+    },
+    {
+      "n": "Governor Stamina",
+      "h": "254"
     }
   ],
   "goldShards": [
