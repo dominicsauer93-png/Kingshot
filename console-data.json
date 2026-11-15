@@ -1814,7 +1814,7 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
+      "Heroes": "Widgets",
       "Shop": "Free shops",
       "Governor": "Charms",
       "Progress": "Overview",
@@ -2250,7 +2250,7 @@
       {
         "hero": "Yang",
         "lvl": 9,
-        "have": 26,
+        "have": 33,
         "rally": true
       },
       {
@@ -2294,6 +2294,11 @@
         "lvl": 2,
         "have": 0,
         "rally": true
+      },
+      {
+        "hero": "Thrud",
+        "lvl": 3,
+        "have": 9
       }
     ],
     "rallySet": true
