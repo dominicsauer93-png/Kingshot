@@ -2,10 +2,10 @@
   "account": {
     "tc": "Truegold Lv. 8",
     "day": "485",
-    "power": "345186621",
+    "power": "352615714",
     "vip": "9",
     "spender": "Low–mid",
-    "goal": "Main - all out attack ",
+    "goal": "Main",
     "dayAnchor": "2025-06-14"
   },
   "dust": {
@@ -607,16 +607,16 @@
   "pillars": [
     {
       "name": "Building",
-      "v": 9650743,
-      "b": 8097059,
+      "v": 9728483,
+      "b": 8537269,
       "g": "S",
       "pct": 97
     },
     {
       "name": "Troop",
-      "v": 194666004,
-      "b": 188581313,
-      "g": "S",
+      "v": 199332818,
+      "b": 226297575,
+      "g": "A",
       "pct": 95
     },
     {
@@ -635,9 +635,9 @@
     },
     {
       "name": "Governor Gear",
-      "v": 9461520,
-      "b": 9567008,
-      "g": "S",
+      "v": 9522720,
+      "b": 11480409,
+      "g": "A",
       "pct": 96
     },
     {
@@ -1775,7 +1775,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Progress",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1810,14 +1810,14 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Update all",
+      "Data": "Account",
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
+      "Heroes": "Shards",
       "Shop": "Free shops",
       "Governor": "Charms",
-      "Progress": "Mystic Trials",
+      "Progress": "Overview",
       "Town": "Troops"
     },
     "t11Open": {
@@ -1826,7 +1826,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Res": true
+      "Bag": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1847,7 +1847,7 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "All",
+    "upF": "Town",
     "bvAll": true,
     "roleSel": "arena",
     "bcMore": true,
@@ -3301,16 +3301,16 @@
     {
       "d": "2026-11-16",
       "v": {
-        "power": 345186621,
+        "power": 352615714,
         "leth": 74.3,
         "hp": 69.1,
         "attWR": 36.61,
         "defWR": 91.83,
-        "p:Building": 9650743,
-        "p:Troop": 194666004,
+        "p:Building": 9728483,
+        "p:Troop": 199332818,
         "p:Hero": 34434630,
         "p:Hero Gear": 15386394,
-        "p:Governor Gear": 9461520,
+        "p:Governor Gear": 9522720,
         "p:Governor Charm": 13021600,
         "p:Tech": 28960770,
         "p:Pet": 23577960,
@@ -3886,7 +3886,7 @@
       }
     ]
   },
-  "shardGeneral": 189,
+  "shardGeneral": 211,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3950,9 +3950,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 660
+        "2026-11": 1068
       },
-      "seen": 189
+      "seen": 211
     }
   },
   "battle": {
