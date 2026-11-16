@@ -480,7 +480,7 @@
     }
   ],
   "weekly": {
-    "week": "2026-11-09",
+    "week": "2026-11-16",
     "items": [
       {
         "t": "Bear Hunt — join every rally",
@@ -1775,7 +1775,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
