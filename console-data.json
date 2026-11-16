@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 38,
+    "current": 117,
     "target": 5820,
     "gold": 851390
   },
@@ -1133,11 +1133,11 @@
     {
       "n": "Catherine",
       "l": "50",
-      "em": 1,
-      "lvlCost": "",
+      "em": 0,
+      "lvlCost": 40,
       "skills": [
         {
-          "l": 1,
+          "l": 2,
           "t": "g"
         },
         {
@@ -1153,7 +1153,11 @@
           "t": "g"
         }
       ],
-      "note": "The Countess — reward skills only, low priority for books\n1. Mystic Privileges (unlocks Affinity 10): up to +30% Trial Crystals — best of her skills\n2. Pet Master (Aff 20): +Pet Adventure attempts · 3. Beastly Bounty (Aff 30): Terror chests · 4. Traveler Honors (Aff 40): Journey chests\nTalent Conquest Boons: Countess Chests from Conquest (free, levels with affinity)\nResearch: Squads' Attack + Infantry milestones, 5 Emblems per level\nLv 40 (11 Nov) — skills 1–3 open (assumed Lv 1, fix if higher), skill 4 Traveler Honors still locked"
+      "note": "The Countess — reward skills only, low priority for books\n1. Mystic Privileges (unlocks Affinity 10): up to +30% Trial Crystals — best of her skills\n2. Pet Master (Aff 20): +Pet Adventure attempts · 3. Beastly Bounty (Aff 30): Terror chests · 4. Traveler Honors (Aff 40): Journey chests\nTalent Conquest Boons: Countess Chests from Conquest (free, levels with affinity)\nResearch: Squads' Attack + Infantry milestones, 5 Emblems per level\nLv 40 (11 Nov) — skills 1–3 open (assumed Lv 1, fix if higher), skill 4 Traveler Honors still locked",
+      "bookNext": {
+        "what": "",
+        "books": ""
+      }
     },
     {
       "n": "Olander",
@@ -1178,7 +1182,11 @@
           "t": "c"
         }
       ],
-      "note": "Calculating Strategist — KvK master\nTalent Battlefield Insight: KvK battle phase +2% → +30% Attack/Defense (free, levels with affinity)\n1. Oration (Aff 10, max 10): +KvK prep points, extra daily reward tiers\n2. Meritocracy (Aff 20, max 10): +Kingdom Coins, extra KvK shop items\n3. Combat Fervor (Aff 30, max 20): KvK battle +1.5% → +30% Lethality/Health — books here first (150K manuscripts to max)\n4. Combined Arms (Aff 40, max 20): KvK battle rally capacity +7,500 → +150,000\nResearch: Squads' Lethality, 5 Emblems per level\nSet his level, skills and own Emblems from the game"
+      "note": "Calculating Strategist — KvK master\nTalent Battlefield Insight: KvK battle phase +2% → +30% Attack/Defense (free, levels with affinity)\n1. Oration (Aff 10, max 10): +KvK prep points, extra daily reward tiers\n2. Meritocracy (Aff 20, max 10): +Kingdom Coins, extra KvK shop items\n3. Combat Fervor (Aff 30, max 20): KvK battle +1.5% → +30% Lethality/Health — books here first (150K manuscripts to max)\n4. Combined Arms (Aff 40, max 20): KvK battle rally capacity +7,500 → +150,000\nResearch: Squads' Lethality, 5 Emblems per level\nSet his level, skills and own Emblems from the game",
+      "bookNext": {
+        "what": "",
+        "books": ""
+      }
     }
   ],
   "dustSrc": [
@@ -1667,17 +1675,17 @@
     }
   ],
   "tg": {
-    "have": 908,
+    "have": 340,
     "need": 2310,
-    "ttgHave": 6,
+    "ttgHave": 3,
     "ttgNeed": 260
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 90785,
-      "threads": 462,
-      "vision": 710
+      "satin": 91065,
+      "threads": 509,
+      "vision": 715
     },
     "pieces": [
       {
@@ -1775,7 +1783,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1818,7 +1826,7 @@
       "Shop": "Free shops",
       "Governor": "Masters",
       "Progress": "Overview",
-      "Town": "Buildings"
+      "Town": "Research"
     },
     "t11Open": {
       "nodes": false,
@@ -1826,7 +1834,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Bag": true
+      "HG": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1882,9 +1890,9 @@
   "heroGear": {
     "have": {
       "xp": 0,
-      "fh": 318,
-      "mg": 4,
-      "mith": 16
+      "fh": 348,
+      "mg": 6,
+      "mith": 18
     },
     "rows": [
       {
@@ -2042,10 +2050,10 @@
       "Cavalry": true,
       "Infantry": true
     },
-    "fhSeen": 318,
+    "fhSeen": 348,
     "fhGot": {
       "2026-10": 2486,
-      "2026-11": 2443
+      "2026-11": 2788
     },
     "plan": [
       {
@@ -2098,8 +2106,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 789,
-      "designs": 145
+      "guides": 781,
+      "designs": 181
     },
     "rows": [
       {
@@ -3838,10 +3846,10 @@
   "pets": {
     "have": {
       "food": 30760,
-      "manuals": 1635,
-      "potions": 71,
-      "tmCommon": 17,
-      "tmAdv": 4,
+      "manuals": 1660,
+      "potions": 74,
+      "tmCommon": 25,
+      "tmAdv": 5,
       "medals": 0
     },
     "rows": [
@@ -3955,41 +3963,41 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 6,
-        "2026-11": 4
+        "2026-11": 6
       },
-      "seen": 4
+      "seen": 6
     },
     "mith": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 3,
-        "2026-11": 18
+        "2026-11": 35
       },
-      "seen": 16
+      "seen": 18
     },
     "threads": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 580,
-        "2026-11": 3314
+        "2026-11": 3818
       },
-      "seen": 462
+      "seen": 509
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 41012
+        "2026-11": 41192
       },
-      "seen": 145
+      "seen": 181
     },
     "fh": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 564,
-        "2026-11": 2443
+        "2026-11": 2788
       },
-      "seen": 318
+      "seen": 348
     },
     "gen": {
       "since": "2026-10-26",
@@ -4725,8 +4733,8 @@
   "pgPending": [],
   "webMonthly": true,
   "masterRes": {
-    "emblems": 28,
-    "books": 6352,
+    "emblems": 17,
+    "books": 7956,
     "rate": "",
     "seen": "2026-11-09"
   },
