@@ -93,7 +93,12 @@ function openBuildingSheet(bl){
   openSheet({title:bl.n||"Building",sub:"Current tier and progress.",build(f){
     f.appendChild(fld("Building",{value:bl.n,set:v=>bl.n=v}));
     const B=BUILD_TIERS[bl.n];
-    if(B) f.appendChild(fld("Currently at",{type:"select",value:String(bl.stepIdx||0),options:[["0",B.from+" (start)"]].concat(B.steps.map((st,k)=>[String(k+1),st.to])),set:v=>bl.stepIdx=parseInt(v,10)}));
+    // only the level you're at and the ones ahead — past levels drop off as you move up
+    if(B){ const cur=bl.stepIdx||0, all=[["0",B.from+" (start)"]].concat(B.steps.map((st,k)=>[String(k+1),st.to]));
+      f.appendChild(fld("Currently at",{type:"select",value:String(cur),options:all.slice(cur),set:v=>bl.stepIdx=parseInt(v,10)}));
+      if(cur>0){ const u=document.createElement("button"); u.type="button"; u.className="link fs13"; u.textContent="Went too far? Show earlier levels";
+        u.onclick=()=>{ const sel=u.previousElementSibling&&u.previousElementSibling.querySelector("select"); if(!sel) return; const v=sel.value; sel.innerHTML=all.map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join(""); sel.value=v; u.remove(); };
+        f.appendChild(u); } }
     f.appendChild(fld("Note",{value:bl.note,set:v=>bl.note=v}));
     f.appendChild(fld("Done",{type:"check",value:bl.d,set:v=>bl.d=v}));
     const inf=infoBox(); f.appendChild(inf);
