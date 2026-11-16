@@ -1230,7 +1230,7 @@
   "mysticTrials": [
     {
       "k": "Mystic Trial (overall)",
-      "v": "50",
+      "v": "49",
       "log": [
         {
           "d": "2026-09-15",
@@ -1299,12 +1299,16 @@
         {
           "d": "2026-11-16",
           "v": 50
+        },
+        {
+          "d": "2026-11-17",
+          "v": 49
         }
       ]
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "49",
+      "v": "44",
       "log": [
         {
           "d": "2026-09-15",
@@ -1373,6 +1377,10 @@
         {
           "d": "2026-11-16",
           "v": 49
+        },
+        {
+          "d": "2026-11-17",
+          "v": 44
         }
       ]
     },
@@ -1436,7 +1444,7 @@
     },
     {
       "k": "Crystal Cave (Charms)",
-      "v": "33",
+      "v": "32",
       "log": [
         {
           "d": "2026-09-15",
@@ -1493,12 +1501,16 @@
         {
           "d": "2026-11-16",
           "v": 33
+        },
+        {
+          "d": "2026-11-17",
+          "v": 32
         }
       ]
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "84",
+      "v": "83",
       "log": [
         {
           "d": "2026-09-15",
@@ -1551,12 +1563,16 @@
         {
           "d": "2026-11-16",
           "v": 84
+        },
+        {
+          "d": "2026-11-17",
+          "v": 83
         }
       ]
     },
     {
       "k": "Molten Fort (Gov Gear)",
-      "v": "99",
+      "v": "98",
       "log": [
         {
           "d": "2026-09-15",
@@ -1613,12 +1629,16 @@
         {
           "d": "2026-11-16",
           "v": 99
+        },
+        {
+          "d": "2026-11-17",
+          "v": 98
         }
       ]
     },
     {
       "k": "Radiant Spire (ALL stats — full power)",
-      "v": "49",
+      "v": "48",
       "log": [
         {
           "d": "2026-09-15",
@@ -1667,6 +1687,10 @@
         {
           "d": "2026-11-16",
           "v": 49
+        },
+        {
+          "d": "2026-11-17",
+          "v": 48
         }
       ]
     }
@@ -1780,7 +1804,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1831,7 +1855,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "HG": true
+      "Mystic": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1869,15 +1893,15 @@
   },
   "troopCounts": {
     "inf": {
-      "cur": 464738,
+      "cur": 489762,
       "tgt": 1500000
     },
     "arc": {
-      "cur": 774014,
+      "cur": 822289,
       "tgt": 1500000
     },
     "cav": {
-      "cur": 414728,
+      "cur": 432744,
       "tgt": 500000
     }
   },
@@ -1889,7 +1913,7 @@
     "have": {
       "xp": 0,
       "fh": 348,
-      "mg": 6,
+      "mg": 5,
       "mith": 18
     },
     "rows": [
@@ -3929,7 +3953,7 @@
       }
     ]
   },
-  "shardGeneral": 211,
+  "shardGeneral": 231,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -3955,7 +3979,7 @@
         "2026-10": 6,
         "2026-11": 6
       },
-      "seen": 6
+      "seen": 5
     },
     "mith": {
       "since": "2026-10-26",
@@ -3993,9 +4017,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 1068
+        "2026-11": 1297
       },
-      "seen": 211
+      "seen": 231
     }
   },
   "battle": {
@@ -4103,26 +4127,26 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-11-14",
+    "d": "2026-11-17",
     "v": {
-      "gen": 189,
-      "mg": 3,
-      "mith": 8,
-      "fh": 308,
-      "m:Gear XP": 6,
-      "m:Lucky chests": 0,
-      "m:Custom Mythic chests": 1,
-      "threads": 189,
-      "m:Satin": 64400,
-      "m:Vision": 695,
-      "designs": 51,
-      "m:Guides": 727,
-      "m:Master Emblems": 28,
-      "m:Skill books": 6352,
-      "m:Truegold": 667,
-      "m:Tempered TG": 2,
-      "m:TG Dust": 49,
-      "m:Gold": 463530
+      "gen": 231,
+      "mg": 5,
+      "mith": 18,
+      "fh": 348,
+      "m:Gear XP": 0,
+      "m:Lucky chests": 35,
+      "m:Custom Mythic chests": 0,
+      "threads": 509,
+      "m:Satin": 91065,
+      "m:Vision": 715,
+      "designs": 181,
+      "m:Guides": 781,
+      "m:Master Emblems": 17,
+      "m:Skill books": 3756,
+      "m:Truegold": 340,
+      "m:Tempered TG": 3,
+      "m:TG Dust": 117,
+      "m:Gold": 851390
     }
   },
   "noShop": [
