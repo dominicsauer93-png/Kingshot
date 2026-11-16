@@ -82,7 +82,7 @@ function renderBuildings(){
   $("#tgNote").innerHTML=ttgShort?`<details class="dfold tgfold"><summary>Refining ${fmt(ttgShort)} TTG needs <b>${fmt(avgP.total)} TG</b> on average (~${avgP.weeks} weeks) ›</summary><p class="faint" style="margin:6px 0 0">Worst luck: ${fmt(minP.total)} TG (~${minP.weeks} weeks). ${fmt(tgShort)} TG for buildings + refining at Tier 1 only (20 refines a week, 20 TG each, first of the day half price; 1–3 TTG each). Tier 2+ is 50–160 TG a refine — only worth it if you're in a hurry.</p></details>`
     :"Tempered Truegold covered ✓ — keep refining Tier 1 weekly for the next tier. Defer Stable &amp; Infirmary.";
   $("#buildBody").innerHTML=state.buildings.map((bl,k)=>{ const r=bldRem(bl);
-    return `<button class="lrow${bl.d?" is-done":""}" data-i="${k}"><span style="min-width:0"><span class="lt" style="display:block"><span class="faint mono">${k+1}.</span> ${esc(bl.n)}</span><span class="ls">${bl.d?"done ✓":`${esc(r.cur)} → TG 8`}</span></span><span class="lv">${bl.d?tagH("ok","done"):`${fmt(r.tg)} TG<br><span class="faint" style="font-weight:500">${fmt(r.ttg)} TTG</span>`}</span></button>`; }).join("");
+    return `<button class="lrow${bldDone(bl)?" is-done":""}" data-i="${k}"><span style="min-width:0"><span class="lt" style="display:block"><span class="faint mono">${k+1}.</span> ${esc(bl.n)}</span><span class="ls">${bldDone(bl)?`${esc(bldTop(bl))} ✓ · max for now`:`${esc(r.cur)} → TG 8`}</span></span><span class="lv">${bldDone(bl)?tagH("ok","max"):`${fmt(r.tg)} TG<br><span class="faint" style="font-weight:500">${fmt(r.ttg)} TTG</span>`}</span></button>`; }).join("");
   bindAll($("#buildBody"),".lrow",b=>openBuildingSheet(state.buildings[+b.dataset.i]));
   $("#bldTotals").innerHTML=`<span>Wood <b>${fmtBig(w)}</b></span><span>Bread <b>${fmtBig(w)}</b></span><span>Stone <b>${fmtBig(s)}</b></span><span>Iron <b>${fmtBig(i)}</b></span><span>Truegold <b class="gold">${fmt(tg)}</b></span><span>Tempered TG <b class="gold">${fmt(ttg)}</b></span>`;
   on("addBuild",()=>{ const bl={n:"New building",stepIdx:0,note:"",d:false}; state.buildings.push(bl); afterEdit(); openBuildingSheet(bl); });
@@ -94,15 +94,15 @@ function openBuildingSheet(bl){
     f.appendChild(fld("Building",{value:bl.n,set:v=>bl.n=v}));
     const B=BUILD_TIERS[bl.n];
     // only the level you're at and the ones ahead — past levels drop off as you move up
-    if(B){ const cur=bl.stepIdx||0, all=[["0",B.from+" (start)"]].concat(B.steps.map((st,k)=>[String(k+1),st.to]));
-      f.appendChild(fld("Currently at",{type:"select",value:String(cur),options:all.slice(cur),set:v=>bl.stepIdx=parseInt(v,10)}));
+    if(B){ const cur=Math.min(B.steps.length,bl.stepIdx||0), all=bldOptions({n:bl.n,stepIdx:0});
+      f.appendChild(fld("Currently at",{type:"select",value:String(cur),options:bldOptions(bl),set:v=>bl.stepIdx=parseInt(v,10)}));
       if(cur>0){ const u=document.createElement("button"); u.type="button"; u.className="link fs13"; u.textContent="Went too far? Show earlier levels";
         u.onclick=()=>{ const sel=u.previousElementSibling&&u.previousElementSibling.querySelector("select"); if(!sel) return; const v=sel.value; sel.innerHTML=all.map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join(""); sel.value=v; u.remove(); };
         f.appendChild(u); } }
     f.appendChild(fld("Note",{value:bl.note,set:v=>bl.note=v}));
-    f.appendChild(fld("Done",{type:"check",value:bl.d,set:v=>bl.d=v}));
+    if(!B) f.appendChild(fld("Done",{type:"check",value:bl.d,set:v=>bl.d=v})); // buildings with a ladder are done when they reach its top
     const inf=infoBox(); f.appendChild(inf);
-    const rf=()=>{ const r=bldRem(bl); inf.innerHTML=bl.d?"Marked done.":B?`To TG 8: <b>${fmt(r.tg)}</b> TG · <b>${fmt(r.ttg)}</b> TTG · Wood ${fmtBig(r.w)} · Stone ${fmtBig(r.s)} · Iron ${fmtBig(r.i)}`:"No cost table for this building name."; }; rf(); return rf; },
+    const rf=()=>{ const r=bldRem(bl); inf.innerHTML=bldDone(bl)?(B?`At ${esc(bldTop(bl))} — the highest level out so far. When a new level comes out it shows up here.`:"Marked done."):B?`To ${esc(bldTop(bl))}: <b>${fmt(r.tg)}</b> TG · <b>${fmt(r.ttg)}</b> TTG · Wood ${fmtBig(r.w)} · Stone ${fmtBig(r.s)} · Iron ${fmtBig(r.i)}`:"No cost table for this building name."; }; rf(); return rf; },
     onDelete:()=>{ const i=state.buildings.indexOf(bl); if(i>-1) state.buildings.splice(i,1); }});
 }
 function renderRes(){
@@ -122,7 +122,7 @@ function openResSheet(r){ openSheet({title:r.n||"Material",build(f){
 
 /* ---------- War Academy: every node with the building tier it needs (TG5–TG8) ---------- */
 const TIER_N=t=>parseFloat(String(t).replace(/[^\d.]/g,""))||0;
-function warTierNow(){ const b=(state.buildings||[]).find(x=>x.n==="War Academy"), B=BUILD_TIERS["War Academy"]; if(!b||!B) return "TG ?"; const i=b.stepIdx||0; return b.d?"TG 8":i?B.steps[i-1].to:B.from; }
+function warTierNow(){ const b=(state.buildings||[]).find(x=>x.n==="War Academy"), B=BUILD_TIERS["War Academy"]; if(!b||!B) return "TG ?"; const i=b.stepIdx||0; return i?B.steps[Math.min(i,B.steps.length)-1].to:B.from; }
 function warState(){ const W=(state.research||{}).war||{}, mx=W.max||10, have=TIER_N(warTierNow()), lv=W.started||{};
   const all=(W.nodes||[]).map((x,i)=>({n:x.n,req:x.req,lv:num(lv[x.n]),max:i===(W.nodes||[]).length-1&&/Provisions III/.test(x.n)?100:mx,ok:TIER_N(x.req)<=have}));
   const open=all.filter(x=>x.ok), locked=all.filter(x=>!x.ok), nt=locked.length?locked.map(x=>TIER_N(x.req)).sort((a,b)=>a-b)[0]:0;

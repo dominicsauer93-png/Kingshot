@@ -52,7 +52,7 @@ function renderUpdate(){
   group("Troops","Troops","current counts",b=>{
     b.append(grid([["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]].map(([k,l])=>N(l,state.troopCounts[k]||(state.troopCounts[k]={cur:0,tgt:0}),"cur")))); });
   group("Buildings","Buildings","current tier",b=>{
-    b.append(grid(state.buildings.map(bl=>{ const B=BUILD_TIERS[bl.n]; return B?S(bl.n,bl.stepIdx||0,[["0",B.from]].concat(B.steps.map((st,k)=>[String(k+1),st.to])),v=>bl.stepIdx=parseInt(v,10)):null; }).filter(Boolean))); });
+    b.append(grid(state.buildings.map(bl=>{ const B=BUILD_TIERS[bl.n]; return B?S(bl.n,Math.min(B.steps.length,bl.stepIdx||0),bldOptions(bl),v=>bl.stepIdx=parseInt(v,10)):null; }).filter(Boolean))); });
   group("Power","Power & combat","pillars, wins, Lethality, Health",b=>{
     b.append(sub("Power pillars"),grid(state.pillars.map(p=>N(p.name,p,"v"))));
     const c=state.combat;
@@ -237,6 +237,7 @@ function initStatic(){
   if(!state.charms||!Array.isArray(state.charms.rows)||!state.charms.rows[0]||state.charms.rows[0].type===undefined) state.charms=structuredClone(SEED.charms);
   if(!state.widgets||!Array.isArray(state.widgets.rows)) state.widgets=structuredClone(SEED.widgets);
   if(!state.pets||!Array.isArray(state.pets.rows)) state.pets={have:{food:0,manuals:0,potions:0,medals:0,tmCommon:0,tmAdv:0},rows:[]};
+  (state.buildings||[]).forEach(b=>{ const B=BUILD_TIERS[b.n]; if(B&&b.d&&(b.stepIdx||0)<B.steps.length) b.stepIdx=B.steps.length; if(B) delete b.d; }); // "done" now comes from the level
   if(!Array.isArray(state.goldShards)) state.goldShards=structuredClone(SEED.goldShards);
   if(!Array.isArray(state.events)) migrateEvents();
   if(Array.isArray(state.resources)) state.resources.forEach(r=>{ delete r.need; delete r.s; delete r.use; });

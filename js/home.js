@@ -209,7 +209,7 @@ function govNextStep(){ const g=state.govGear; if(!g||!g.pieces) return null; co
   if(pl){ const p=govPlanPiece(pl); return {p,P,to:num(p.cur)+1,need:govRem(num(p.cur),num(p.cur)+1)}; }
   if(!P.cur||!P.step.length) return null;
   const p=P.step.slice().sort((a,b)=>num(a.cur)-num(b.cur))[0]; return {p,P,to:num(p.cur)+1,need:govRem(num(p.cur),num(p.cur)+1)}; }
-function bldNextStep(){ const bl=(state.buildings||[]).find(b=>!b.d&&BUILD_TIERS[b.n]&&(b.stepIdx||0)<BUILD_TIERS[b.n].steps.length); return bl?{bl,st:BUILD_TIERS[bl.n].steps[bl.stepIdx||0]}:null; }
+function bldNextStep(){ const bl=(state.buildings||[]).find(b=>!bldDone(b)&&BUILD_TIERS[b.n]); return bl?{bl,st:BUILD_TIERS[bl.n].steps[bl.stepIdx||0]}:null; }
 const STEP_ORDER=["fh","wid","shard","charm","gov","mast","bld","pet","t11","troop"]; // main heroes, then whole-army stats
 function nextSteps(){
   const out=[], have=(o,k)=>num(o&&o[k]);

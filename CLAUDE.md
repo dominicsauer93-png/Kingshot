@@ -22,6 +22,10 @@ Full guide, ranking table and full history: the Eternity's Reach event note in `
 - Hall of Heroes sells every season except the newest. Seasons: S7 Ava, Wee & Woo, Charles · S6 Triton, Sophia, Yang · S5 Long Fei, Thrud, Vivian · S4 Margot, Rosa, Alcar · S3 Eric, Petra, Jaeger · S2 Zoe, Hilde, Marlin · S1 Helga, Jabel, Amadeus, Saul.
 - Only use confirmed numbers; mark guesses.
 
+## Truegold building levels
+- Every building's level ladder lives in `BUILD_TIERS` in `js/core.js`; the top step listed is the highest level out so far ("max for now").
+- When TG 9 / TG 10 come out, append their steps (to, wood, stone, iron, TG, TTG) to each building there. Buildings at the old top then continue automatically — nothing else to change. Only use confirmed costs; mark guesses.
+
 ## Releasing code changes
 - Run `node scripts/bump.mjs` before committing any change to js/, css/ or index.html. It bumps the cache name in sw.js and the `?v=` on every file in index.html, so devices load the new files straight away.
 - Do this automatically, without asking, once a change is done and checked: commit, push to the working branch, open a pull request into `main` (or update the open one), and watch it for CI and review comments.
