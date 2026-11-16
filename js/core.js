@@ -586,7 +586,12 @@ function hgCalcCost(r){
 }
 
 /* ---------- hero gear (per-troop drop-downs of piece cards) ---------- */
-const HG_TYPES=["Archer","Infantry","Cavalry"]; // main troop first
+// one troop order everywhere the app lists the three troop types
+const TROOP_ORDER=["Infantry","Cavalry","Archer"];
+const TROOP_KEYS=[["inf","Infantry"],["cav","Cavalry"],["arc","Archer"]];
+const troopOf=s=>TROOP_ORDER.find(t=>new RegExp("^"+t.slice(0,3)+"|\\b"+t.slice(0,3),"i").test(String(s||"")))||"";
+const byTroop=(a,b,f)=>{ const i=x=>{ const k=TROOP_ORDER.indexOf(troopOf(f(x))); return k<0?9:k; }; return i(a)-i(b); };
+const HG_TYPES=TROOP_ORDER;
 const HG_KEYS=[["xp","hgXp","XP"],["fh","hgFh","FH"],["mg","hgMg","Myth"],["mith","hgMith","Mith"]];
 // imbuement milestones: [level, mastery needed, mithril, mythic gear] (optimizer "Imbuement Costs" table)
 const HG_IMB=HG_ASCEND_STEPS.map((x,i)=>[x.lv,10+i,x.mith,x.myth]);
@@ -640,7 +645,6 @@ const CHARM_COSTS=[
 function charmRem(cur,tgt,st){ let g=0,d=0; for(let i=Math.max(0,cur);i<Math.min(22,tgt);i++){ g+=CHARM_COSTS[i][0]; d+=CHARM_COSTS[i][1]; }
   if(st&&cur<tgt&&CHARM_COSTS[cur]){ g-=Math.round(CHARM_COSTS[cur][0]*st/5); d-=Math.round(CHARM_COSTS[cur][1]*st/5); } // each level is 5 stages
   return {g,d}; }
-const CHARM_TYPES=["Archer","Infantry","Cavalry"]; // main troop first
 
 /* ---------- widgets ---------- */
 const WID_COSTS=[5,10,15,20,25,30,35,40,45,50];
@@ -750,6 +754,8 @@ const _troop=[ // Barracks/Stable/Range, from TG6
   _bstep("TG 7",38e6,7.6e6,1.9e6,54,13),
   _bstep("TG 7.1",46e6,9.3e6,2.3e6,108,9),_bstep("TG 7.2",46e6,9.3e6,2.3e6,108,9),_bstep("TG 7.3",46e6,9.3e6,2.3e6,108,9),_bstep("TG 7.4",46e6,9.3e6,2.3e6,108,9),
   _bstep("TG 8",46e6,9.3e6,2.3e6,54,18)];
+// Building ladders, one step per sub-level. When TG 9 / TG 10 come out, append their steps to each building
+// here: a building at the old top level then simply continues — "done" always means "at the last step listed".
 const BUILD_TIERS={
   "Town Center":{from:"TG 7",steps:[_bstep("TG 7.1",130e6,26e6,6.6e6,240,20),_bstep("TG 7.2",130e6,26e6,6.6e6,240,20),_bstep("TG 7.3",130e6,26e6,6.6e6,240,20),_bstep("TG 7.4",130e6,26e6,6.6e6,240,20),_bstep("TG 8",130e6,26e6,6.6e6,120,40)]},
   "Barracks":{from:"TG 6",steps:_troop}, "Stable":{from:"TG 6",steps:_troop}, "Range":{from:"TG 6",steps:_troop},
@@ -758,8 +764,12 @@ const BUILD_TIERS={
   "War Academy":{from:"TG 5",steps:[_bstep("TG 5.1",48e6,9.6e6,2.4e6,90,4),_bstep("TG 5.2",48e6,9.6e6,2.4e6,90,4),_bstep("TG 5.3",48e6,9.6e6,2.4e6,90,4),_bstep("TG 5.4",48e6,9.6e6,2.4e6,90,4),_bstep("TG 6",48e6,9.6e6,2.4e6,45,9),_bstep("TG 6.1",54e6,10e6,2.7e6,108,6),_bstep("TG 6.2",54e6,10e6,2.7e6,108,6),_bstep("TG 6.3",54e6,10e6,2.7e6,108,6),_bstep("TG 6.4",54e6,10e6,2.7e6,108,6),_bstep("TG 7",54e6,10e6,2.7e6,54,13),_bstep("TG 7.1",66e6,13e6,3.3e6,108,9),_bstep("TG 7.2",66e6,13e6,3.3e6,108,9),_bstep("TG 7.3",66e6,13e6,3.3e6,108,9),_bstep("TG 7.4",66e6,13e6,3.3e6,108,9),_bstep("TG 8",66e6,13e6,3.3e6,54,18)]},
   "Embassy":{from:"TG 6",steps:[_bstep("TG 6.1",21e6,4.3e6,1.0e6,60,3),_bstep("TG 6.2",21e6,4.3e6,1.0e6,60,3),_bstep("TG 6.3",21e6,4.3e6,1.0e6,60,3),_bstep("TG 6.4",21e6,4.3e6,1.0e6,60,3),_bstep("TG 7",21e6,4.3e6,1.0e6,30,7),_bstep("TG 7.1",26e6,5.3e6,1.3e6,60,5),_bstep("TG 7.2",26e6,5.3e6,1.3e6,60,5),_bstep("TG 7.3",26e6,5.3e6,1.3e6,60,5),_bstep("TG 7.4",26e6,5.3e6,1.3e6,60,5),_bstep("TG 8",26e6,5.3e6,1.3e6,30,10)]}
 };
+const bldTop=bl=>{ const B=BUILD_TIERS[bl.n]; return B?(B.steps.length?B.steps[B.steps.length-1].to:B.from):""; }; // highest level the game has so far
+const bldDone=bl=>{ const B=BUILD_TIERS[bl.n]; return B?(bl.stepIdx||0)>=B.steps.length:!!bl.d; };
+const bldOptions=bl=>{ const B=BUILD_TIERS[bl.n]; if(!B) return []; const cur=Math.min(B.steps.length,bl.stepIdx||0);
+  return [["0",B.from+" (start)"]].concat(B.steps.map((st,k)=>[String(k+1),st.to+(k===B.steps.length-1?" (max for now)":"")])).slice(cur); }; // only where you are + what's ahead
 function bldRem(bl){
-  const B=BUILD_TIERS[bl.n]; if(!B||bl.d) return {w:0,s:0,i:0,tg:0,ttg:0,cur:bl.d?"Done":"—"};
+  const B=BUILD_TIERS[bl.n]; if(!B||bldDone(bl)) return {w:0,s:0,i:0,tg:0,ttg:0,cur:bldDone(bl)?(B?bldTop(bl):"Done"):"—"};
   const idx=Math.max(0,Math.min(B.steps.length,bl.stepIdx||0));
   let w=0,s=0,i=0,tg=0,ttg=0;
   for(let k=idx;k<B.steps.length;k++){ const st=B.steps[k]; w+=st.w; s+=st.s; i+=st.i; tg+=st.tg; ttg+=st.ttg; }

@@ -209,7 +209,7 @@ function govNextStep(){ const g=state.govGear; if(!g||!g.pieces) return null; co
   if(pl){ const p=govPlanPiece(pl); return {p,P,to:num(p.cur)+1,need:govRem(num(p.cur),num(p.cur)+1)}; }
   if(!P.cur||!P.step.length) return null;
   const p=P.step.slice().sort((a,b)=>num(a.cur)-num(b.cur))[0]; return {p,P,to:num(p.cur)+1,need:govRem(num(p.cur),num(p.cur)+1)}; }
-function bldNextStep(){ const bl=(state.buildings||[]).find(b=>!b.d&&BUILD_TIERS[b.n]&&(b.stepIdx||0)<BUILD_TIERS[b.n].steps.length); return bl?{bl,st:BUILD_TIERS[bl.n].steps[bl.stepIdx||0]}:null; }
+function bldNextStep(){ const bl=(state.buildings||[]).find(b=>!bldDone(b)&&BUILD_TIERS[b.n]); return bl?{bl,st:BUILD_TIERS[bl.n].steps[bl.stepIdx||0]}:null; }
 const STEP_ORDER=["fh","wid","shard","charm","gov","mast","bld","pet","t11","troop"]; // main heroes, then whole-army stats
 function nextSteps(){
   const out=[], have=(o,k)=>num(o&&o[k]);
@@ -253,7 +253,7 @@ function nextSteps(){
   // progress goals (no materials to spend)
   const tgt=computeTarget(), cur=num(state.dust.current), cn=closestNode();
   if(tgt>cur) out.push({k:"t11",title:`Unlock T11 ${activePhase().n}`,detail:`${fmt(tgt-cur)} Dust to go`+(cn?` · closest node: ${esc(cn.n.name.replace(/ \(.*/,""))}`:""),mats:[{l:"Dust",h:cur,n:tgt}],key:"T11 Unlocks"});
-  const tc=state.troopCounts||{}; const tr=[["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]].map(([k,l])=>({k,l,c:num(tc[k]&&tc[k].cur),t:num(tc[k]&&tc[k].tgt)})).filter(x=>x.t>0&&x.c<x.t).sort((a,b)=>a.c/a.t-b.c/b.t)[0];
+  const tc=state.troopCounts||{}; const tr=TROOP_KEYS.map(([k,l])=>({k,l,c:num(tc[k]&&tc[k].cur),t:num(tc[k]&&tc[k].tgt)})).filter(x=>x.t>0&&x.c<x.t).sort((a,b)=>a.c/a.t-b.c/b.t)[0];
   if(tr) out.push({k:"troop",title:`Train ${tr.l}`,detail:`${fmt(tr.t-tr.c)} to reach ${fmt(tr.t)}`,mats:[{l:tr.l,h:tr.c,n:tr.t}],open:()=>openTroopSheet(tr.k,tr.l),key:"Troop Plan"});
   const mc=(state.masters||[]).map(m=>({m,info:MASTER_INFO[m.n],lv:num(m.l)})).filter(x=>x.info&&x.lv<100&&(x.info.best===MAIN_TROOP||x.info.best==="All squads")).sort((a,b)=>b.lv-a.lv)[0];
   if(mc){ const n2=Math.min(100,(Math.floor(mc.lv/10)+1)*10); out.push({k:"mast",title:`${esc(mc.m.n)} affinity ${mc.lv} → ${n2}`,detail:n2===100?"Kindred Soul unlocks the research tree":"Emblems needed at the breakpoint",open:()=>openMastSheet(mc.m),key:"Masters"}); }

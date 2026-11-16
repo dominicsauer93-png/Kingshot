@@ -4,66 +4,92 @@
    ===================================================================== */
 /* ---------- Update everything (one page) ---------- */
 function renderUpdate(){
-  const host=$("#qBody"); if(!host||host.contains(document.activeElement)) return; // don't rebuild while typing
-  if(!state.ui.qOpen||Object.keys(state.ui.qOpen).filter(k=>state.ui.qOpen[k]).length!==1) state.ui.qOpen={[Object.keys(state.ui.qOpen||{}).find(k=>state.ui.qOpen[k])||"Bag"]:true}; // one group open at a time
+  const host=$("#qBody"); if(!host||host.contains(document.activeElement)) return;
+  if(!state.ui.qOpen||Object.keys(state.ui.qOpen).filter(k=>state.ui.qOpen[k]).length!==1) state.ui.qOpen={[Object.keys(state.ui.qOpen||{}).find(k=>state.ui.qOpen[k])||"Bag"]:true};
   host.innerHTML="";
-  const N=(label,obj,key,o)=>fld(label,Object.assign({type:"num",value:obj[key],get:()=>obj[key],set:v=>obj[key]=v},o||{}));
-  const S=(label,val,opts,set)=>fld(label,{type:"select",value:String(val),options:opts,set});
-  const grid=(...els)=>{ const g=document.createElement("div"); g.className="qgrid"; els.flat(3).forEach(e=>g.appendChild(e)); return g; };
+  // ---- one input, no label box (the table/row gives the label); d = digits wide
+  const box=(o)=>{ const el=fld("",o).querySelector("input,select"); el.setAttribute("aria-label",o.aria);
+    if(o.d) el.style.setProperty("--d",o.d); if(o.max!=null&&o.type==="num"){ el.title=`${o.aria} (max ${o.max})`; const mark=()=>el.classList.toggle("atmax",num(o.get())>=o.max); mark(); el.addEventListener("input",mark); }
+    el.setAttribute("enterkeyhint","next"); return el; };
+  const n=(aria,obj,key,o)=>Object.assign({type:"num",aria,value:obj[key],get:()=>obj[key],set:v=>obj[key]=v},o||{});
+  // ---- pattern 1: matrix — one header, one row per thing, same columns
+  const mx=(head,rows,cls)=>{ const t=document.createElement("table"); t.className="qmx"+(cls?" "+cls:"");
+    t.innerHTML=`<thead>${head.map(r=>`<tr><td></td>${r.map(c=>`<th scope="col"${c.span?` colspan="${c.span}"`:""}${c.gs?' class="gs"':""}>${c.h}</th>`).join("")}</tr>`).join("")}</thead><tbody></tbody>`;
+    rows.forEach(r=>{ const tr=t.tBodies[0].insertRow(), th=document.createElement("th"); th.scope="row"; th.innerHTML=r.h; tr.appendChild(th);
+      r.cells.forEach((c,i)=>{ const td=tr.insertCell(); if(r.gs&&r.gs.includes(i)) td.className="gs"; if(c) td.appendChild(box(c)); }); });
+    t.addEventListener("keydown",e=>{ if(e.target.tagName!=="INPUT"||!/^(Enter|ArrowDown|ArrowUp)$/.test(e.key)) return; // Enter / ↓ = next row, same column
+      const td=e.target.closest("td"), rows=[...t.tBodies[0].rows], r=rows.indexOf(td.parentElement)+(e.key==="ArrowUp"?-1:1);
+      const nx=rows[r]&&rows[r].cells[td.cellIndex]&&rows[r].cells[td.cellIndex].querySelector("input,select"); if(nx){ e.preventDefault(); nx.focus(); } });
+    const w=document.createElement("div"); w.className="qmxw"; w.appendChild(t); return w; };
+  // ---- pattern 2: list — label left, sized input right, two columns on wide screens
+  const ls=(items)=>{ const g=document.createElement("div"); g.className="qlist"; items=items.filter(Boolean);
+    const dmax=Math.max(...items.map(o=>o.d||0)); items.forEach(o=>{ if(o.type!=="select") o.d=dmax; }); // one width per list = one clean right edge
+    items.forEach(o=>{ const row=document.createElement("label"); row.className="qrow";
+      row.innerHTML=`<span class="ql">${esc(o.label)}${o.note?` <small>${esc(o.note)}</small>`:""}</span>`; const el=box(Object.assign({aria:o.label},o)); row.appendChild(el);
+      if(o.unit) row.insertAdjacentHTML("beforeend",`<small class="qu">${esc(o.unit)}</small>`); g.appendChild(row); }); return g; };
+  const L=(label,obj,key,o)=>Object.assign(n(label,obj,key),{label},o||{});
   const sub=t=>{ const h=document.createElement("div"); h.className="qsub"; h.textContent=t; return h; };
+  const ti=t=>`<span class="qti">${hgIcon(TROOP_ICON[t])}<span class="full">${t}</span><span class="abbr" aria-hidden="true">${t.slice(0,3)}</span></span>`;
   const groups=[];
   const group=(key,title,hint,build)=>{ groups.push([key,title]); const d=document.createElement("details"); d.className="fold"; d.dataset.k=key; if(state.ui.qOpen[key]) d.open=true;
     d.innerHTML=`<summary><span class="grow">${title}</span><span class="faint" style="font-weight:500;font-size:14px">${hint||""}</span></summary><div class="fbody form"></div>`;
-    const body=d.querySelector(".fbody"); let built=false;
-    const fill=()=>{ if(built) return; built=true; build(body); };
+    const body=d.querySelector(".fbody"); let built=false; const fill=()=>{ if(built) return; built=true; build(body); };
     if(d.open) fill(); d.ontoggle=()=>{ if(d.open){ state.ui.qOpen={[key]:true}; fill(); host.querySelectorAll("details.fold").forEach(o=>{ if(o!==d) o.open=false; }); } else if(state.ui.qOpen[key]) delete state.ui.qOpen[key]; scheduleSave(); };
     host.appendChild(d); };
   const H=state.heroGear.have, C=state.charms.have, P=state.pets.have, G=state.govGear.have;
   group("Bag","Materials in your bag","dust, gold, gear, charms, pets",b=>{
-    b.append(sub("T11 & buildings"),grid(N("Truegold Dust",state.dust,"current"),N("Gold",state.dust,"gold"),N("Truegold",state.tg,"have"),N("Tempered Truegold",state.tg,"ttgHave")));
-    b.append(sub("Hero Gear"),grid(N("Enhancement XP",H,"xp"),N("Forgehammers",H,"fh"),N("Mythic Gear",H,"mg"),N("Mithril",H,"mith")));
-    b.append(sub("Charms"),grid(N("Charm Guides",C,"guides"),N("Charm Designs",C,"designs")));
-    b.append(sub("Pets"),grid(N("Pet Food",P,"food"),N("Growth Manuals",P,"manuals"),N("Nutrient Potions",P,"potions"),N("Medallions",P,"medals"),N("Common Taming Marks",P,"tmCommon"),N("Advanced Taming Marks",P,"tmAdv")));
-    b.append(sub("Governor Gear"),grid(N("Satin",G,"satin"),N("Gilded Threads",G,"threads"),N("Artisan's Vision",G,"vision")));
+    b.append(sub("T11 & buildings"),ls([L("Truegold Dust",state.dust,"current",{d:7}),L("Gold",state.dust,"gold",{d:11}),L("Truegold",state.tg,"have",{d:6}),L("Tempered Truegold",state.tg,"ttgHave",{d:6})]));
+    b.append(sub("Hero Gear"),ls([L("Enhancement XP",H,"xp",{d:11}),L("Forgehammers",H,"fh",{d:6}),L("Mythic Gear",H,"mg",{d:4}),L("Mithril",H,"mith",{d:4})]));
+    b.append(sub("Charms"),ls([L("Charm Guides",C,"guides",{d:6}),L("Charm Designs",C,"designs",{d:6})]));
+    b.append(sub("Pets"),ls([L("Pet Food",P,"food",{d:9}),L("Growth Manuals",P,"manuals",{d:6}),L("Nutrient Potions",P,"potions",{d:6}),L("Medallions",P,"medals",{d:5}),L("Common Taming Marks",P,"tmCommon",{d:6}),L("Advanced Taming Marks",P,"tmAdv",{d:6})]));
+    b.append(sub("Governor Gear"),ls([L("Satin",G,"satin",{d:7}),L("Gilded Threads",G,"threads",{d:6}),L("Artisan's Vision",G,"vision",{d:5})]));
   });
   group("Widgets","Widgets","level + in hand per hero",b=>{
-    state.widgets.rows.forEach(r=>b.append(sub(r.hero||"Hero"),grid(N("Level",r,"lvl",{min:0,max:10}),N("Widgets in hand",r,"have")))); });
+    b.append(mx([[{h:"Level <small>/10</small>"},{h:"In hand"}]],state.widgets.rows.map(r=>({h:`${heroAvSm(r.hero)}<span>${esc(r.hero||"Hero")}</span>`,
+      cells:[n(`${r.hero} widget level`,r,"lvl",{min:0,max:10,d:2}),n(`${r.hero} widgets in hand`,r,"have",{d:4})]}))),"hero"); });
   group("HG","Hero Gear","level + mastery per piece",b=>{
-    HG_TYPES.forEach(t=>{ const ps=state.heroGear.rows.filter(r=>r.type===t); if(!ps.length) return; b.append(sub(t));
-      b.append(grid(ps.map(r=>[N(`${slotName(r.slot)} level`,r,"lvC",{min:0,max:200}),N(`${slotName(r.slot)} mastery`,r,"mC",{min:0,max:20})]))); }); });
+    const rows=state.heroGear.rows, T=TROOP_ORDER.filter(t=>rows.some(r=>r.type===t)), S=[...new Set(rows.map(r=>slotName(r.slot)))];
+    b.append(mx([T.map((t,i)=>({h:ti(t),span:2,gs:i>0})), T.flatMap((t,i)=>[{h:"Lv",gs:i>0},{h:`M<span class="wide">astery</span>`}])],
+      S.map(s=>({h:`${hgIcon(SLOT_ICON[s.toLowerCase()]||SLOT_ICON.helm)}<span>${esc(s)}</span>`, gs:T.map((_,i)=>i*2).filter(i=>i>0),
+        cells:T.flatMap(t=>{ const r=rows.find(x=>x.type===t&&slotName(x.slot)===s); return r?[n(`${t} ${s} level`,r,"lvC",{min:0,max:200,d:3}),n(`${t} ${s} mastery`,r,"mC",{min:0,max:20,d:2})]:[null,null]; })})),"hg"));
+    const p=document.createElement("p"); p.className="qnote"; p.textContent="Lv = gear level (max 200) · M = mastery (max 20) · Enter or ↓ moves down a column."; b.append(p); });
   group("Charms","Charms","current level of each charm",b=>{
-    const opts=Array.from({length:23},(_,i)=>[String(i),"Lv "+i]);
-    ["Infantry","Archer","Cavalry"].forEach(t=>{ const rs=state.charms.rows.filter(r=>r.type===t); if(!rs.length) return; b.append(sub(t));
-      b.append(grid(rs.map((r,i)=>S(`Charm ${i+1}`,r.lvl,opts,v=>r.lvl=parseInt(v,10))))); }); });
+    const T=TROOP_ORDER.filter(t=>state.charms.rows.some(r=>r.type===t)), k=Math.max(...T.map(t=>state.charms.rows.filter(r=>r.type===t).length));
+    b.append(mx([Array.from({length:k},(_,i)=>({h:String(i+1)}))],T.map(t=>({h:ti(t),cells:Array.from({length:k},(_,i)=>{ const r=state.charms.rows.filter(x=>x.type===t)[i]; return r?n(`${t} charm ${i+1} level`,r,"lvl",{min:0,max:22,d:2,set:v=>{ if(num(v)!==num(r.lvl)) r.st=0; r.lvl=v; }}):null; })})),"charm"));
+    const p=document.createElement("p"); p.className="qnote"; p.textContent="Charm level, 0–22."; b.append(p); });
   group("Pets","Pets","level of each pet",b=>{
-    b.append(grid(state.pets.rows.slice().sort((a,c)=>petRank(a)-petRank(c)).map(r=>N(r.n||"Pet",r,"lvl",{min:0})))); });
+    b.append(ls(state.pets.rows.slice().sort((a,c)=>petRank(a)-petRank(c)).map(r=>L(r.n||"Pet",r,"lvl",{min:0,max:r.max||undefined,d:3,unit:r.max?"/"+r.max:""})))); });
   group("Gov","Governor Gear","tier of each piece",b=>{
-    b.append(grid(state.govGear.pieces.map(p=>S(p.name||"Piece",p.cur,govOpts(),v=>p.cur=parseInt(v,10))))); });
+    b.append(ls(state.govGear.pieces.slice().sort((a,c)=>byTroop(a,c,p=>p.name)).map(p=>({type:"select",label:p.name||"Piece",aria:p.name,value:String(p.cur),options:govOpts(),set:v=>p.cur=parseInt(v,10)})))); });
   group("T11","T11 nodes","level of each node",b=>{
-    PHASES.forEach(ph=>{ const L=sortTree(state[ph.k],ph.k); b.append(sub(ph.n));
-      b.append(grid(L.map(nd=>N(`${nd.name.replace(/^Truegold /,"").replace(/ \(unlock\)/," unlock")} (max ${nd.max||12})`,nd,"cur",{min:0,max:nd.max||12})))); }); });
+    PHASES.slice().sort((a,c)=>byTroop(a,c,p=>p.n)).forEach(ph=>{ const Ls=sortTree(state[ph.k],ph.k); b.append(sub(ph.n));
+      b.append(ls(Ls.map(nd=>{ const m=nd.name.replace(/^Truegold /,"").replace(/ \(unlock\)/," unlock").match(/^(.*?)(?: \((.*)\))?$/);
+        return L(m[1],nd,"cur",{note:m[2]||"",min:0,max:nd.max||12,d:2,unit:"/"+(nd.max||12)}); }))); }); });
   group("Masters","Masters","affinity + skill levels",b=>{
-    state.masters.slice().sort((a,c)=>mastRank(a)-mastRank(c)).forEach(m=>{ if(!Array.isArray(m.skills)) m.skills=[{l:0},{l:0},{l:0},{l:0}];
-      b.append(sub(m.n),grid(fld("Affinity",{type:"num",value:m.l,get:()=>m.l,set:v=>m.l=String(v),min:0,max:100}),
-        [0,1,2,3].map(i=>{ const sk=m.skills[i]||(m.skills[i]={l:0}), cap=skillCap(m.n,i); return N(`Skill ${i+1}${cap?` (max ${cap})`:""}`,sk,"l",{min:0,max:cap||99}); }))); }); });
+    const M=state.masters.slice().sort((a,c)=>mastRank(a)-mastRank(c)); M.forEach(m=>{ if(!Array.isArray(m.skills)) m.skills=[{l:0},{l:0},{l:0},{l:0}]; });
+    b.append(mx([[{h:"Affinity"},{h:"S1"},{h:"S2"},{h:"S3"},{h:"S4"}]],M.map(m=>({h:esc(m.n),cells:[{type:"num",aria:`${m.n} affinity`,value:m.l,get:()=>m.l,set:v=>m.l=String(v),min:0,max:100,d:3},
+      ...[0,1,2,3].map(i=>{ const sk=m.skills[i]||(m.skills[i]={l:0}), cap=skillCap(m.n,i); return n(`${m.n} skill ${i+1}`,sk,"l",{min:0,max:cap||99,d:2}); })]})),"mast"));
+    const p=document.createElement("p"); p.className="qnote"; p.textContent="Gold number = at max. Hover or long-press a box to see its max."; b.append(p); });
   group("Shards","Gold hero shards","shards in hand",b=>{
-    b.append(grid(fld("General Mythic shards",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v})));
-    state.goldShards.forEach(r=>b.append(sub(r.n||"Hero"),grid(S("Star tier",hasStars(r)?num(r.pos):"",(hasStars(r)?[]:[["","— not set —"]]).concat(STAR_OPTS),v=>{ r.pos=v===""?null:parseInt(v,10); if(r.tgt==null) r.tgt=SHARD_MAX; }),N("Hero shards",r,"have")))); });
+    b.append(ls([{type:"num",label:"General Mythic shards",aria:"General Mythic shards",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v,d:4}]));
+    b.append(mx([[{h:"Stars"},{h:"Shards"}]],state.goldShards.map(r=>({h:`${heroAvSm(r.n)}<span>${esc(r.n||"Hero")}</span>`,cells:[
+      {type:"select",aria:`${r.n} star tier`,value:hasStars(r)?String(num(r.pos)):"",options:(hasStars(r)?[]:[["","—"]]).concat(STAR_OPTS),set:v=>{ r.pos=v===""?null:parseInt(v,10); if(r.tgt==null) r.tgt=SHARD_MAX; }},
+      n(`${r.n} shards`,r,"have",{d:4})]})),"hero")); });
   group("Troops","Troops","current counts",b=>{
-    b.append(grid([["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]].map(([k,l])=>N(l,state.troopCounts[k]||(state.troopCounts[k]={cur:0,tgt:0}),"cur")))); });
+    b.append(ls(TROOP_KEYS.map(([k,l])=>L(l,state.troopCounts[k]||(state.troopCounts[k]={cur:0,tgt:0}),"cur",{d:9})))); });
   group("Buildings","Buildings","current tier",b=>{
-    b.append(grid(state.buildings.map(bl=>{ const B=BUILD_TIERS[bl.n]; return B?S(bl.n,bl.stepIdx||0,[["0",B.from]].concat(B.steps.map((st,k)=>[String(k+1),st.to])),v=>bl.stepIdx=parseInt(v,10)):null; }).filter(Boolean))); });
+    b.append(ls(state.buildings.map(bl=>{ const B=BUILD_TIERS[bl.n]; return B?{type:"select",label:bl.n,aria:bl.n,value:String(Math.min(B.steps.length,bl.stepIdx||0)),options:bldOptions(bl),set:v=>bl.stepIdx=parseInt(v,10)}:null; }))); });
   group("Power","Power & combat","pillars, wins, Lethality, Health",b=>{
-    b.append(sub("Power pillars"),grid(state.pillars.map(p=>N(p.name,p,"v"))));
+    b.append(sub("Power pillars"),ls(state.pillars.map(p=>L(p.name,p,"v",{d:11}))));
     const c=state.combat;
-    b.append(sub("Combat"),grid(N("Attacker wins",c,"attW"),N("Attacker losses",c,"attL"),N("Defender wins",c,"defW"),N("Defender losses",c,"defL"),N("Lethality %",c,"leth",{decimal:true}),N("Health %",c,"hp",{decimal:true})));
-    b.append(sub("Account"),grid(fld("Total power",{type:"num",value:state.account.power,get:()=>state.account.power,set:v=>state.account.power=String(v)}),fld("VIP",{value:state.account.vip,set:v=>state.account.vip=v}),fld("Town Center",{value:state.account.tc,set:v=>state.account.tc=v})));
-  });
-  group("Res","Resources & speedups","speedups in minutes",b=>{
-    b.append(grid(state.resources.map(r=>fld(r.n||"Material",{type:"num",value:r.h,get:()=>r.h,allowEmpty:true,set:v=>r.h=v===""?"":String(v)})))); });
+    b.append(sub("Combat"),ls([L("Attacker wins",c,"attW",{d:5}),L("Attacker losses",c,"attL",{d:5}),L("Defender wins",c,"defW",{d:5}),L("Defender losses",c,"defL",{d:5}),L("Lethality",c,"leth",{decimal:true,d:6,unit:"%"}),L("Health",c,"hp",{decimal:true,d:6,unit:"%"})]));
+    b.append(sub("Account"),ls([{type:"num",label:"Total power",value:state.account.power,get:()=>state.account.power,set:v=>state.account.power=String(v),d:11},{label:"VIP",value:state.account.vip,set:v=>state.account.vip=v,d:3},{label:"Town Center",value:state.account.tc,set:v=>state.account.tc=v,d:14}])); });
+  group("Res","Resources & speedups","type speedups like 4d 4h",b=>{
+    const R=state.resources, sp=r=>/\(min\)/.test(r.n), dur=r=>minsTxt(r.h)+(num(r.h)%60?" "+(num(r.h)%60)+"m":"");
+    b.append(sub("Speedups — type like the game shows: 4d 4h 3m"),ls(R.filter(sp).map(r=>({label:r.n.replace(/ speedup \(min\)$/i,"").replace(/ \(min\)$/,""),aria:r.n,value:dur(r),set:v=>{ const m=parseDur(v); if(m!=null) r.h=String(m); },d:12}))));
+    b.append(sub("Resources"),ls(R.filter(r=>!sp(r)).map(r=>({type:"num",label:r.n,value:r.h,get:()=>r.h,allowEmpty:true,set:v=>r.h=v===""?"":String(v),d:13})))); });
   group("Mystic","Mystic Trials","rank per zone",b=>{
-    b.append(grid(state.mysticTrials.map(z=>fld(z.k||"Zone",{type:"num",value:z.v,get:()=>z.v,allowEmpty:true,set:v=>{ z.v=v===""?"":String(v); if(v!=="") mysticLogEntry(z); }})))); });
-  // jump bar: open one group, fold the rest, scroll to it
+    b.append(ls(state.mysticTrials.map(z=>{ const m=(z.k||"Zone").match(/^(.*?)(?: \((.*)\))?$/); return {type:"num",label:m[1],note:m[2]||"",value:z.v,get:()=>z.v,allowEmpty:true,set:v=>{ z.v=v===""?"":String(v); if(v!=="") mysticLogEntry(z); },d:4,unit:"rank"}; }))); });
   $("#qJump").innerHTML=groups.map(([k,t])=>`<button class="chip" data-k="${esc(k)}">${esc(t)}</button>`).join("");
   $$("#qJump .chip").forEach(c=>c.onclick=()=>{ host.querySelectorAll("details.fold").forEach(d=>{ d.open=d.dataset.k===c.dataset.k; });
     const d=host.querySelector(`details.fold[data-k="${c.dataset.k}"]`); if(d) setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"start"}),30); });
@@ -168,16 +194,17 @@ function openQuickSheet(){
     const H=state.heroGear.have, G=state.govGear.have||(state.govGear.have={}), C=state.charms.have||(state.charms.have={});
     const N=(label,obj,k,o)=>fld(label,Object.assign({type:"num",value:obj[k],get:()=>obj[k],set:v=>obj[k]=v},o||{}));
     const sub=(host,t)=>{ const h=document.createElement("div"); h.className="qsub"; h.textContent=t; host.appendChild(h); };
-    const pairs=(host,els)=>{ els=els.filter(Boolean); for(let i=0;i<els.length;i+=2) host.appendChild(frow(els[i],els[i+1]||document.createElement("span"))); };
+    const pairs=(host,els)=>{ els=els.filter(Boolean); const g=document.createElement("div"); g.className="qpairs"; els.forEach(e=>g.appendChild(e)); host.appendChild(g); }; // even grid: no half-empty rows
     // every field, keyed so the ones that block you can come first
     const need=typeof blockerNeeds==="function"?blockerNeeds():{};
     const F={
       dust:()=>N("Truegold Dust",state.dust,"current"), tg:()=>N("Truegold",state.tg,"have"),
-      fh:()=>N("Forgehammers",H,"fh"), mith:()=>N("Mithril",H,"mith"), mg:()=>N("Mythic Gear",H,"mg"), xp:()=>N("Enhancement XP",H,"xp",{hint:"shorthand works: 1.2m"}),
+      fh:()=>N("Forgehammers",H,"fh"), mith:()=>N("Mithril",H,"mith"), mg:()=>N("Mythic Gear",H,"mg"), xp:()=>N("Enhancement XP",H,"xp",{ph:"e.g. 1.2m"}),
       gen:()=>fld("General Mythic shards",{type:"num",value:state.shardGeneral||0,get:()=>state.shardGeneral||0,set:v=>state.shardGeneral=v}),
       satin:()=>N("Satin",G,"satin"), threads:()=>N("Gilded Threads",G,"threads"), vision:()=>N("Artisan's Vision",G,"vision"),
       guides:()=>N("Charm Guides",C,"guides"), designs:()=>N("Charm Designs",C,"designs")};
     const blocking=["mg","mith","threads","designs","fh","gen"].filter(k=>need[k]&&need[k].short>0);
+    if(blocking.includes("designs")) blocking.splice(blocking.indexOf("designs")+1,0,"guides"); // Designs and Guides belong together
     sub(f,blocking.length?"Blocking your next upgrades":"Your main numbers");
     const first=blocking.length?blocking:["dust","fh","mith","mg"];
     pairs(f,first.map(k=>F[k]()));
@@ -189,11 +216,12 @@ function openQuickSheet(){
       sub(m,"Hero shards"); const SH=shardOrder().filter(r=>!/amadeus|helga/i.test(r.n||"")).slice(0,3);
       pairs(m,[first.includes("gen")?null:F.gen(),...SH.map(r=>N(r.n+" shards",r,"have"))]);
       const W=(state.widgets&&state.widgets.rows)||[];
-      if(W.length){ sub(m,"Widgets in hand"); pairs(m,W.map(r=>N((r.hero||"Hero")+" widgets",r,"have"))); }
-      sub(m,"Speedups — type like the game shows: 4d 4h 3m");
-      const R=state.resources||[], SP=[["General","General"],["Soldier Training","Training"],["Construction","Construction"],["Research","Research"],["Soldier Healing","Healing"]];
+      const WR=W.some(r=>r.rally)?W.filter(r=>r.rally):W.slice(0,4); // rally heroes only — the rest are in Update all
+      if(WR.length){ sub(m,"Widgets in hand"); pairs(m,WR.map(r=>N((r.hero||"Hero")+" widgets",r,"have"))); }
+      sub(m,"Speedups");
+      const R=state.resources||[], SP=[["General","General"],["Soldier Training","Training"],["Construction","Construction"],["Research","Research"],["Soldier Healing","Healing"],["Learning","Learning"]];
       const spF=([k,l])=>{ const r=R.find(x=>x.n.startsWith(k+" speedup")); if(!r) return null;
-        return fld(l,{value:minsTxt(r.h)+(num(r.h)%60?" "+(num(r.h)%60)+"m":""),set:v=>{ const mm=parseDur(v); if(mm!=null) r.h=String(mm); }}); };
+        return fld(l,{value:minsTxt(r.h)+(num(r.h)%60?" "+(num(r.h)%60)+"m":""),ph:"4d 4h 3m",set:v=>{ const mm=parseDur(v); if(mm!=null) r.h=String(mm); }}); };
       pairs(m,SP.map(spF));
       sub(m,"Governor gear & charms"); pairs(m,["satin","threads","vision","guides","designs"].filter(k=>!first.includes(k)).map(k=>F[k]())); };
     more.ontoggle=()=>{ if(more.open) fill(); };
@@ -237,6 +265,7 @@ function initStatic(){
   if(!state.charms||!Array.isArray(state.charms.rows)||!state.charms.rows[0]||state.charms.rows[0].type===undefined) state.charms=structuredClone(SEED.charms);
   if(!state.widgets||!Array.isArray(state.widgets.rows)) state.widgets=structuredClone(SEED.widgets);
   if(!state.pets||!Array.isArray(state.pets.rows)) state.pets={have:{food:0,manuals:0,potions:0,medals:0,tmCommon:0,tmAdv:0},rows:[]};
+  (state.buildings||[]).forEach(b=>{ const B=BUILD_TIERS[b.n]; if(B&&b.d&&(b.stepIdx||0)<B.steps.length) b.stepIdx=B.steps.length; if(B) delete b.d; }); // "done" now comes from the level
   if(!Array.isArray(state.goldShards)) state.goldShards=structuredClone(SEED.goldShards);
   if(!Array.isArray(state.events)) migrateEvents();
   if(Array.isArray(state.resources)) state.resources.forEach(r=>{ delete r.need; delete r.s; delete r.use; });

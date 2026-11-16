@@ -61,7 +61,7 @@ function vBuyBy(d){ const x=vLiveFor(d); if(!x||x.e.endOpen) return null; const 
 // what you're short of — the next few steps, so the plan closes real gaps instead of chasing end goals
 function vNeeds(){
   const N=blockerNeeds(), out={};
-  const B=(state.buildings||[]).filter(b=>!b.d&&BUILD_TIERS[b.n]); let tg=0, n=0;
+  const B=(state.buildings||[]).filter(b=>!bldDone(b)&&BUILD_TIERS[b.n]); let tg=0, n=0;
   for(const b of B){ const st=BUILD_TIERS[b.n].steps; for(let i=b.stepIdx||0;i<st.length&&n<3;i++,n++) tg+=st[i].tg; if(n>=3) break; }
   out.tg=Math.max(0,tg-num(state.tg.have));
   out.designs=N.designs?N.designs.short:0;
@@ -75,7 +75,7 @@ function vPlanNeeds(){ const out={}, sh=(k,v,have)=>out[k]=Math.max(0,Math.round
   let g=0,d=0; ((state.charms&&state.charms.rows)||[]).forEach(r=>{ for(let l=num(r.lvl);l<Math.min(num(r.tgt),22);l++){ const c=CHARM_COSTS[l]; if(c){ g+=c[0]; d+=c[1]; } } });
   const CH=state.charms.have||{}; sh("designs",d,CH.designs); sh("guides",g,CH.guides);
   const G=state.govGear||{}, gT=num(G.targetIdx); let t=0; (G.pieces||[]).forEach(pc=>{ if(gT>num(pc.cur)) t+=govRem(num(pc.cur),gT).t; }); sh("threads",t,(G.have||{}).threads); // every piece to your target tier
-  let tg=0; (state.buildings||[]).filter(b=>!b.d&&BUILD_TIERS[b.n]).forEach(b=>BUILD_TIERS[b.n].steps.slice(b.stepIdx||0).forEach(st=>tg+=num(st.tg))); sh("tg",tg,state.tg.have);
+  let tg=0; (state.buildings||[]).filter(b=>!bldDone(b)&&BUILD_TIERS[b.n]).forEach(b=>BUILD_TIERS[b.n].steps.slice(b.stepIdx||0).forEach(st=>tg+=num(st.tg))); sh("tg",tg,state.tg.have);
   const H=state.heroGear.have||{}, HR=state.heroGear.rows||[]; ["mg","mith","fh"].forEach(k=>sh(k,HR.reduce((a,r)=>a+num(r[k]),0),H[k])); // every hero gear piece to its target
   out.lucky=out.mg?Math.max(0,Math.round(out.mg/mythicRate().r)-num(hgChests().lucky)):0;
   const ava=(state.goldShards||[]).find(r=>r.n==="Ava"); let gs=0; if(ava&&hasStars(ava)) for(let i=num(ava.pos);i<Math.min(num(ava.tgt)||SHARD_MAX,SHARD_MAX);i++) gs+=SHARD_LEAF[i]; sh("gen",gs-num(ava&&ava.have),state.shardGeneral);

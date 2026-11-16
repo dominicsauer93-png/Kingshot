@@ -171,7 +171,7 @@ function renderCharms(){
   c.rows.forEach(r=>{ if(r.tgt==null) r.tgt=c.targetLvl; });
   let G=0,D=0; c.rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt,num(r.st)); G+=m.g; D+=m.d; });
   const gh=num(c.have.guides), dh=num(c.have.designs);
-  const order=["Infantry","Archer","Cavalry"]; // Quaad: Infantry first
+  const order=TROOP_ORDER;
   // next 3 upgrades: one level each, Infantry first, lowest charm first — small steps instead of the whole end goal
   const next=charmNextList(3); // shared with Home
   const cpl=charmPlanLeft(), n3={g:0,d:0};
@@ -215,7 +215,7 @@ function openCharmSheet(type){
     f.appendChild(all);
     const list=document.createElement("div"); list.className="stack"; f.appendChild(list);
     const inf=infoBox(); f.appendChild(inf);
-    const draw=()=>{ list.innerHTML=""; rows.forEach((r,i)=>{ list.appendChild(frow(fld(`Charm ${i+1} now`,{type:"select",value:String(r.lvl),options:opts,set:v=>r.lvl=parseInt(v,10)}),fld(`Charm ${i+1} target`,{type:"select",value:String(r.tgt),options:opts,set:v=>r.tgt=parseInt(v,10)}))); }); };
+    const draw=()=>{ list.innerHTML=""; rows.forEach((r,i)=>{ list.appendChild(frow(fld(`Charm ${i+1} now`,{type:"select",value:String(r.lvl),options:opts,set:v=>{ const nv=parseInt(v,10); if(nv!==num(r.lvl)) r.st=0; r.lvl=nv; }}),fld(`Charm ${i+1} target`,{type:"select",value:String(r.tgt),options:opts,set:v=>r.tgt=parseInt(v,10)}))); }); };
     let lastT=rows.map(r=>r.tgt).join();
     const rf=()=>{ let g=0,d=0; rows.forEach(r=>{ const m=charmRem(r.lvl,r.tgt,num(r.st)); g+=m.g; d+=m.d; }); inf.innerHTML=`To reach your targets: <b>${fmt(g)}</b> Guides · <b>${fmt(d)}</b> Designs`;
       const t=rows.map(r=>r.tgt).join(); if(t!==lastT){ lastT=t; draw(); } };
@@ -396,7 +396,7 @@ function renderGov(){
   on("gvT",()=>P.step[0]&&openGovPieceSheet(P.step[0])); ["gvS","gvG","gvV"].forEach(id=>on(id,openGovMatsSheet));
   const b=$("#govBody");
   b.className="card dcard mt"; b.removeAttribute("style");
-  b.innerHTML=`<div class="dch"><h3>Your pieces</h3><span class="faint fs13">tap to update</span></div>`+g.pieces.map((p,i)=>({p,i})).sort((x,y)=>(x.p.cur>=P.tgtOf(x.p))-(y.p.cur>=P.tgtOf(y.p))||num(x.p.cur)-num(y.p.cur)).map(({p,i})=>{ const tgt=P.tgtOf(p), done=p.cur>=tgt, nx=np===p;
+  b.innerHTML=`<div class="dch"><h3>Your pieces</h3><span class="faint fs13">tap to update</span></div>`+g.pieces.map((p,i)=>({p,i})).sort((x,y)=>byTroop(x.p,y.p,q=>q.name)||(x.p.cur>=P.tgtOf(x.p))-(y.p.cur>=P.tgtOf(y.p))||num(x.p.cur)-num(y.p.cur)).map(({p,i})=>{ const tgt=P.tgtOf(p), done=p.cur>=tgt, nx=np===p;
     return `<button class="drow vcard" data-i="${i}">${ico("shield",done?"g":nx?"y":"")}<span class="dt"><b>${esc(p.name||"Piece")}</b><span>${done?'<span class="ok">at target ✓</span>':nx?'<span class="gold">next to upgrade</span>':govIsCav(p)?"waits for Inf + Archer":`→ ${esc((GOV_TIERS[tgt]||[""])[0])}`}</span><span class="pbar"><i class="${done?"ok":""}" style="width:${tgt>0?pc(p.cur,tgt):100}%"></i></span></span><span class="dv" style="font-family:var(--f-body);font-weight:700">${esc(GOV_TIERS[p.cur]?GOV_TIERS[p.cur][0]:"—")}</span></button>`; }).join("");
   bindAll(b,".vcard",x=>openGovPieceSheet(g.pieces[+x.dataset.i]));
   $("#govNote").innerHTML=""; // the Next row and the piece rows say it

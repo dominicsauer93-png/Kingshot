@@ -135,7 +135,7 @@ const heroAv=n=>{ const t=(state.heroInfo&&state.heroInfo[n]&&state.heroInfo[n].
   return `<span class="hav ${AV_COL[t]||""}" aria-hidden="true">${esc(String(n||"?").replace(/[^A-Za-z]/g,"").slice(0,1)||"?")}</span>`; };
 
 /* ---------- hero pages: everything about one hero in one place ---------- */
-const HERO_TYPES=["Infantry","Cavalry","Archer"];
+const HERO_TYPES=TROOP_ORDER;
 const heroInfo=n=>{ if(!state.heroInfo) state.heroInfo={}; return state.heroInfo[n]||(state.heroInfo[n]={}); };
 const shardRow=n=>(state.goldShards||[]).find(r=>heroKey(r.n)===heroKey(n));
 const widRow=n=>((state.widgets&&state.widgets.rows)||[]).find(r=>heroKey(r.hero)===heroKey(n));

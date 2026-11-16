@@ -20,7 +20,8 @@ let stepFocus=null;
 function renderT11(){
   const act=activePhase(), tgt=computeTarget(), cur=num(state.dust.current), gold=num(state.dust.gold), gT=goldTarget();
   if(!state.ui.t11Open) state.ui.t11Open={};
-  const open=PHASES.filter(ph=>phaseRem(ph)>0&&ph!==act), done=PHASES.filter(ph=>phaseRem(ph)<=0&&ph!==act);
+  const PH=PHASES.slice().sort((a,b)=>byTroop(a,b,p=>p.n)); // display order only — PHASES order still decides which phase is active
+  const open=PH.filter(ph=>phaseRem(ph)>0&&ph!==act), done=PH.filter(ph=>phaseRem(ph)<=0&&ph!==act);
   const core=ph=>sortTree(coreNodes(state[ph.k]),ph.k);
   const tot=ph=>{ const t=phaseTotals(coreNodes(state[ph.k])); return `<div class="kv mt"><span>Dust <b class="gold">${fmt(phaseRem(ph))}</b></span><span>Gold <b>${fmtBig(t.gold)}</b></span><span>Research <b>~${Math.round(t.days)}d</b></span><span>Bread <b>${fmtBig(t.res)}</b></span><span>Wood <b>${fmtBig(t.res)}</b></span><span>Stone <b>${fmtBig(t.stone)}</b></span><span>Iron <b>${fmtBig(t.iron)}</b></span></div>`; };
   const gap=Math.max(0,tgt-cur);
@@ -58,7 +59,7 @@ function buildForecast(){
   paintForecast();
 }
 function renderTroops(){
-  const tc=state.troopCounts; const L=[["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]];
+  const tc=state.troopCounts; const L=TROOP_KEYS;
   $("#troopBody").innerHTML=L.map(([k,l])=>{ const t=tc[k]||{cur:0,tgt:0}, p=pc(num(t.cur),num(t.tgt)), done=num(t.tgt)>0&&num(t.cur)>=num(t.tgt);
     return `<button class="lrow" data-k="${k}" data-l="${l}" style="grid-template-columns:1fr auto"><span style="min-width:0;display:flex;flex-direction:column;gap:6px"><span class="rowb"><span class="lt">${l}</span><span class="mono muted" style="font-size:14px">${fmt(num(t.cur))} / ${fmt(num(t.tgt))}</span></span>${barH(p,done?"ok":"big")}</span><span class="lv">${p.toFixed(0)}%</span></button>`; }).join("");
   bindAll($("#troopBody"),".lrow",b=>openTroopSheet(b.dataset.k,b.dataset.l));
@@ -82,7 +83,7 @@ function renderBuildings(){
   $("#tgNote").innerHTML=ttgShort?`<details class="dfold tgfold"><summary>Refining ${fmt(ttgShort)} TTG needs <b>${fmt(avgP.total)} TG</b> on average (~${avgP.weeks} weeks) ›</summary><p class="faint" style="margin:6px 0 0">Worst luck: ${fmt(minP.total)} TG (~${minP.weeks} weeks). ${fmt(tgShort)} TG for buildings + refining at Tier 1 only (20 refines a week, 20 TG each, first of the day half price; 1–3 TTG each). Tier 2+ is 50–160 TG a refine — only worth it if you're in a hurry.</p></details>`
     :"Tempered Truegold covered ✓ — keep refining Tier 1 weekly for the next tier. Defer Stable &amp; Infirmary.";
   $("#buildBody").innerHTML=state.buildings.map((bl,k)=>{ const r=bldRem(bl);
-    return `<button class="lrow${bl.d?" is-done":""}" data-i="${k}"><span style="min-width:0"><span class="lt" style="display:block"><span class="faint mono">${k+1}.</span> ${esc(bl.n)}</span><span class="ls">${bl.d?"done ✓":`${esc(r.cur)} → TG 8`}</span></span><span class="lv">${bl.d?tagH("ok","done"):`${fmt(r.tg)} TG<br><span class="faint" style="font-weight:500">${fmt(r.ttg)} TTG</span>`}</span></button>`; }).join("");
+    return `<button class="lrow${bldDone(bl)?" is-done":""}" data-i="${k}"><span style="min-width:0"><span class="lt" style="display:block"><span class="faint mono">${k+1}.</span> ${esc(bl.n)}</span><span class="ls">${bldDone(bl)?`${esc(bldTop(bl))} ✓ · max for now`:`${esc(r.cur)} → TG 8`}</span></span><span class="lv">${bldDone(bl)?tagH("ok","max"):`${fmt(r.tg)} TG<br><span class="faint" style="font-weight:500">${fmt(r.ttg)} TTG</span>`}</span></button>`; }).join("");
   bindAll($("#buildBody"),".lrow",b=>openBuildingSheet(state.buildings[+b.dataset.i]));
   $("#bldTotals").innerHTML=`<span>Wood <b>${fmtBig(w)}</b></span><span>Bread <b>${fmtBig(w)}</b></span><span>Stone <b>${fmtBig(s)}</b></span><span>Iron <b>${fmtBig(i)}</b></span><span>Truegold <b class="gold">${fmt(tg)}</b></span><span>Tempered TG <b class="gold">${fmt(ttg)}</b></span>`;
   on("addBuild",()=>{ const bl={n:"New building",stepIdx:0,note:"",d:false}; state.buildings.push(bl); afterEdit(); openBuildingSheet(bl); });
@@ -93,11 +94,16 @@ function openBuildingSheet(bl){
   openSheet({title:bl.n||"Building",sub:"Current tier and progress.",build(f){
     f.appendChild(fld("Building",{value:bl.n,set:v=>bl.n=v}));
     const B=BUILD_TIERS[bl.n];
-    if(B) f.appendChild(fld("Currently at",{type:"select",value:String(bl.stepIdx||0),options:[["0",B.from+" (start)"]].concat(B.steps.map((st,k)=>[String(k+1),st.to])),set:v=>bl.stepIdx=parseInt(v,10)}));
+    // only the level you're at and the ones ahead — past levels drop off as you move up
+    if(B){ const cur=Math.min(B.steps.length,bl.stepIdx||0), all=bldOptions({n:bl.n,stepIdx:0});
+      f.appendChild(fld("Currently at",{type:"select",value:String(cur),options:bldOptions(bl),set:v=>bl.stepIdx=parseInt(v,10)}));
+      if(cur>0){ const u=document.createElement("button"); u.type="button"; u.className="link fs13"; u.textContent="Went too far? Show earlier levels";
+        u.onclick=()=>{ const sel=u.previousElementSibling&&u.previousElementSibling.querySelector("select"); if(!sel) return; const v=sel.value; sel.innerHTML=all.map(([k,t])=>`<option value="${k}">${esc(t)}</option>`).join(""); sel.value=v; u.remove(); };
+        f.appendChild(u); } }
     f.appendChild(fld("Note",{value:bl.note,set:v=>bl.note=v}));
-    f.appendChild(fld("Done",{type:"check",value:bl.d,set:v=>bl.d=v}));
+    if(!B) f.appendChild(fld("Done",{type:"check",value:bl.d,set:v=>bl.d=v})); // buildings with a ladder are done when they reach its top
     const inf=infoBox(); f.appendChild(inf);
-    const rf=()=>{ const r=bldRem(bl); inf.innerHTML=bl.d?"Marked done.":B?`To TG 8: <b>${fmt(r.tg)}</b> TG · <b>${fmt(r.ttg)}</b> TTG · Wood ${fmtBig(r.w)} · Stone ${fmtBig(r.s)} · Iron ${fmtBig(r.i)}`:"No cost table for this building name."; }; rf(); return rf; },
+    const rf=()=>{ const r=bldRem(bl); inf.innerHTML=bldDone(bl)?(B?`At ${esc(bldTop(bl))} — the highest level out so far. When a new level comes out it shows up here.`:"Marked done."):B?`To ${esc(bldTop(bl))}: <b>${fmt(r.tg)}</b> TG · <b>${fmt(r.ttg)}</b> TTG · Wood ${fmtBig(r.w)} · Stone ${fmtBig(r.s)} · Iron ${fmtBig(r.i)}`:"No cost table for this building name."; }; rf(); return rf; },
     onDelete:()=>{ const i=state.buildings.indexOf(bl); if(i>-1) state.buildings.splice(i,1); }});
 }
 function renderRes(){
@@ -117,7 +123,7 @@ function openResSheet(r){ openSheet({title:r.n||"Material",build(f){
 
 /* ---------- War Academy: every node with the building tier it needs (TG5–TG8) ---------- */
 const TIER_N=t=>parseFloat(String(t).replace(/[^\d.]/g,""))||0;
-function warTierNow(){ const b=(state.buildings||[]).find(x=>x.n==="War Academy"), B=BUILD_TIERS["War Academy"]; if(!b||!B) return "TG ?"; const i=b.stepIdx||0; return b.d?"TG 8":i?B.steps[i-1].to:B.from; }
+function warTierNow(){ const b=(state.buildings||[]).find(x=>x.n==="War Academy"), B=BUILD_TIERS["War Academy"]; if(!b||!B) return "TG ?"; const i=b.stepIdx||0; return i?B.steps[Math.min(i,B.steps.length)-1].to:B.from; }
 function warState(){ const W=(state.research||{}).war||{}, mx=W.max||10, have=TIER_N(warTierNow()), lv=W.started||{};
   const all=(W.nodes||[]).map((x,i)=>({n:x.n,req:x.req,lv:num(lv[x.n]),max:i===(W.nodes||[]).length-1&&/Provisions III/.test(x.n)?100:mx,ok:TIER_N(x.req)<=have}));
   const open=all.filter(x=>x.ok), locked=all.filter(x=>!x.ok), nt=locked.length?locked.map(x=>TIER_N(x.req)).sort((a,b)=>a-b)[0]:0;
@@ -140,6 +146,15 @@ function resNodes(){ const R=state.research||{}, out=[];
   const B=R.battle; if(B&&B.tiers) Object.entries(B.tiers).forEach(([t,o])=>Object.keys(o).forEach(n=>out.push({tree:"battle",group:"Battle — tier "+t,label:`${n} ${t}`,lv:num(o[n]),max:B.max||6,obj:o,key:n})));
   ["growth","economy"].forEach(k=>{ const T=R[k]; if(T&&T.nodes) Object.keys(T.nodes).forEach(n=>out.push({tree:k,group:k==="growth"?"Growth":"Economy",label:n,lv:num(T.nodes[n]),max:T.max||3,obj:T.nodes,key:n})); });
   return out; }
+// game-style timer text → milliseconds: "5d 16:23:18", "16:23:18", "23:18" (m:s? no — h:m), "2d 4h 30m 10s"; a plain number = days
+function parseLeft(v){ const t=String(v||"").toLowerCase().replace(/,/g,"").trim(); if(!t) return null;
+  if(/^\d+(\.\d+)?$/.test(t)) return Math.round(parseFloat(t)*864e5);
+  let ms=0, ok=false; const d=t.match(/(\d+(?:\.\d+)?)\s*d/); if(d){ ms+=parseFloat(d[1])*864e5; ok=true; }
+  const clk=t.match(/(\d+):(\d{1,2})(?::(\d{1,2}))?/);
+  if(clk){ ms+=(+clk[1])*36e5+(+clk[2])*6e4+(clk[3]?+clk[3]*1e3:0); ok=true; }
+  else { t.replace(/(\d+(?:\.\d+)?)\s*(h|hr|hrs|hour|hours|m|min|mins|minute|minutes|s|sec|secs|seconds?)\b/g,(_,n,u)=>{ ok=true; n=parseFloat(n); ms+=u[0]==="h"?n*36e5:u[0]==="m"?n*6e4:n*1e3; return ""; }); }
+  return ok?Math.round(ms):null; }
+const msToGame=ms=>{ const s=Math.round(ms/1e3), d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60), x=s%60, p=n=>String(n).padStart(2,"0"); return `${d?d+"d ":""}${p(h)}:${p(m)}:${p(x)}`; };
 function resEnds(){ const c=(state.research||{}).current; return c&&c.ends?new Date(c.ends):null; }
 const resLeftTxt=ms=>{ if(ms<=0) return "done"; const m=Math.floor(ms/6e4), d=Math.floor(m/1440), h=Math.floor(m%1440/60); return d?`${d}d ${h}h`:`${h}h ${m%60}m`; };
 function resNextPick(){ const c=((state.research||{}).current||{}).n||"", N=resNodes().filter(x=>x.lv<x.max&&x.label!==c);
@@ -157,7 +172,15 @@ function openResCurrentSheet(){ const R=state.research||(state.research={}), c=R
   const opts=resNodes().filter(x=>x.lv<x.max).map(x=>[x.label,x.label]);
   openSheet({title:"Researching now",sub:"Set what's researching and when it finishes.",build(f){
     f.appendChild(fld("Research",{type:"select",value:c.n,options:[["","— none —"]].concat(opts),set:v=>c.n=v}));
-    f.appendChild(fld("Time left (days)",{type:"num",decimal:true,value:"",allowEmpty:true,ph:"e.g. 5.7",set:v=>{ if(v!=="") c.ends=new Date(Date.now()+num(v)*864e5).toISOString(); },hint:"Or tick below when it's done."}));
+    // type the timer exactly as the game shows it: "5d 16:23:18", "16:23:18", "2d 4h 30m" (a plain number = days)
+    const end=resEnds(), left=end&&end>Date.now()?end-Date.now():0;
+    const when=ms=>new Date(Date.now()+ms).toLocaleString(undefined,{weekday:"short",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
+    const tf=fld("Time left — type it like the game shows",{value:left?msToGame(left):"",ph:"e.g. 5d 16:23:18",set:v=>{ const ms=parseLeft(v);
+        if(ms!=null&&ms>0){ c.ends=new Date(Date.now()+ms).toISOString(); hint.innerHTML=`Finishes <b>${esc(when(ms))}</b> your time`; }
+        else hint.textContent=String(v).trim()?"Type it like 5d 16:23:18, 16:23:18 or 2d 4h 30m":"Or tick below when it's done."; }});
+    const hint=document.createElement("em"); hint.innerHTML=left?`Finishes <b>${esc(when(left))}</b> your time`:"Or tick below when it's done."; tf.appendChild(hint);
+    const ti=tf.querySelector("input"); ti.inputMode="text"; ti.autocapitalize="off"; ti.spellcheck=false;
+    f.appendChild(tf);
     f.appendChild(fld("It's finished — add +1 level",{type:"check",value:false,set:v=>{ if(!v) return; const x=resNodes().find(y=>y.label===c.n); if(x) x.obj[x.key]=Math.min(x.max,x.lv+1); c.n=""; c.ends=""; }}));
   }}); }
 function renderResearch(){ const box=$("#researchBody"); if(!box) return; const R=state.research||{};
