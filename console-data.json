@@ -1668,9 +1668,9 @@
   ],
   "tg": {
     "have": 908,
-    "need": 2526,
+    "need": 2310,
     "ttgHave": 6,
-    "ttgNeed": 284
+    "ttgNeed": 260
   },
   "govGear": {
     "targetIdx": 18,
@@ -1775,7 +1775,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1818,7 +1818,7 @@
       "Shop": "Free shops",
       "Governor": "Masters",
       "Progress": "Overview",
-      "Town": "Research"
+      "Town": "Buildings"
     },
     "t11Open": {
       "nodes": false,
@@ -1826,7 +1826,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Power": true
+      "Bag": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -3461,9 +3461,9 @@
     },
     {
       "n": "Infirmary",
-      "stepIdx": 5,
+      "stepIdx": 10,
       "note": "Healing sustain — defer, big",
-      "d": false
+      "d": true
     }
   ],
   "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
