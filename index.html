@@ -18,11 +18,11 @@
   (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t!=="light"&&t!=="auto") t="dark"; if(t==="auto") t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"; document.documentElement.setAttribute("data-theme",t); }catch(e){ document.documentElement.setAttribute("data-theme","dark"); } })();
 </script>
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=89">
+<link rel="stylesheet" href="css/app.css?v=90">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#main">Skip to content</a>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<svg class="u-position-absolute" width="0" height="0" aria-hidden="true">
   <defs>
     <linearGradient id="gGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6D27A"/><stop offset=".55" stop-color="#D9A23A"/><stop offset="1" stop-color="#9A6A22"/></linearGradient>
     <symbol id="i-crest" viewBox="0 0 48 48"><path d="M24 3l17 6v12c0 11-7.5 19-17 24C14.5 40 7 32 7 21V9z" fill="#2A2219" stroke="url(#gGold)" stroke-width="2.5"/><path d="M14 29l2.5-11 5 5L24 15l2.5 8 5-5L34 29z" fill="url(#gGold)"/><rect x="14" y="31" width="20" height="3.5" rx="1" fill="url(#gGold)"/></symbol>
@@ -51,7 +51,7 @@
         <span class="save" role="status" aria-live="polite"><span class="dot" id="saveDot"></span><span id="saveTxt">Saved</span></span>
         <span><button class="iconbtn setbtn" title="Settings" aria-label="Settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button> <button class="iconbtn themebtn" title="Theme" aria-label="Change theme"><svg aria-hidden="true"><use href="#i-auto"/></svg></button></span>
       </div>
-      <div class="faint" id="syncMini" style="font-size:13px"></div>
+      <div class="u-font-size-13px faint" id="syncMini"></div>
     </div>
   </aside>
 
@@ -82,7 +82,7 @@
           <div class="kpis h-kpis" id="kpis"></div>
           <section class="sec h-ready" data-key="Get ready"><div class="card dcard" id="getReady"></div></section>
           <section class="sec h-bag" data-key="Bag check"><div class="card dcard" id="bagCheck"></div>
-            <details class="card dcard dfold mt" id="tlFold"><summary class="dch"><h3>Forecast</h3><span class="faint fs13">when you reach each goal ›</span></summary><div class="fbody" id="timelines" style="padding:0 14px 12px"></div></details></section>
+            <details class="card dcard dfold mt" id="tlFold"><summary class="dch"><h3>Forecast</h3><span class="faint fs13">when you reach each goal ›</span></summary><div class="u-padding-0-14px-12px fbody" id="timelines"></div></details></section>
           <section class="sec" data-key="Upcoming Events" hidden>
             <div class="cuphead"><h3>Coming up</h3><button class="link" id="evAll">All ›</button><button class="link" id="evAdd">+ Add</button></div><div id="evUpcoming"></div>
           </section>
@@ -111,8 +111,8 @@
         </div></div>
         <div class="mt2" id="heroCards"></div>
         <button class="btn sm ghost mt" id="heroMore" hidden></button>
-        <details class="fold mt" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="faint" style="font-weight:500;font-size:14px">S best → D worst</span></summary>
-          <div class="fbody"><div class="seg" id="tierSeg" role="group" aria-label="Which heroes" style="max-width:320px"><button data-v="mine">My heroes</button><button data-v="all">All heroes</button></div>
+        <details class="fold mt" id="tierFold"><summary><span class="grow">Every role at a glance</span><span class="u-font-weight-500-font-size-14px faint">S best → D worst</span></summary>
+          <div class="fbody"><div class="u-max-width-320px seg" id="tierSeg" role="group" aria-label="Which heroes"><button data-v="mine">My heroes</button><button data-v="all">All heroes</button></div>
           <div class="tierwrap mt"><table class="tiert" id="tierTable"></table></div></div></details>
       </section>
       <section class="sec" data-sub="Shards" data-key="Gold Hero Shards">
@@ -140,7 +140,7 @@
 
       <section class="sec" data-sub="Widgets" data-key="Widgets">
         <div class="tiles t2" id="widTiles"></div>
-        <div class="grid mt" style="--min:200px" id="widBody"></div>
+        <div class="u-min-200px grid mt" id="widBody"></div>
         <button class="add" id="addWid">+ Add hero</button>
         <details class="fold mt"><summary>Where to get Widgets</summary><div class="fbody howto">
           <ul><li><b>Chests:</b> Custom Hero Widget Chest (Buccaneer Bounty, Champagne Fair)</li><li><b>Shops:</b> Mystery Shop</li><li><b>Other:</b> Hall of Heroes, event rewards, packs</li></ul>
@@ -157,7 +157,7 @@
         <div class="card rcard" id="govReport"></div>
         <div class="info" id="govPlan"></div>
         <div class="tiles mt" id="govTiles"></div>
-        <div class="grid mt" style="--min:170px" id="govBody"></div>
+        <div class="u-min-170px grid mt" id="govBody"></div>
         <p class="note-line" id="govNote"></p>
       </section>
       <section class="sec" data-sub="Charms" data-key="Charms">
@@ -174,7 +174,7 @@
         <div class="tiles" id="petMats"></div>
         <div class="info mt" id="petNext"></div>
         <p class="note-line" id="petKvk"></p>
-        <div class="grid mt" style="--min:240px" id="petBody"></div>
+        <div class="u-min-240px grid mt" id="petBody"></div>
         <details class="fold mt" id="petMaxed" hidden></details>
         <button class="add" id="addPet">+ Add pet</button>
         <details class="fold mt"><summary>How pets level up</summary><div class="fbody howto">
@@ -189,7 +189,7 @@
         <h2>Masters</h2>
         <div id="mastPlan"></div>
         <div class="info" id="mastNext"></div>
-        <div class="grid mt" style="--min:300px" id="mastBody"></div>
+        <div class="u-min-300px grid mt" id="mastBody"></div>
         <button class="add" id="addMast">+ Add master</button>
       </section>
     </div>
@@ -202,9 +202,9 @@
       <section class="sec" data-sub="Research" data-key="T11 Unlocks">
         
         <div id="t11Body"></div>
-        <details class="card dcard dfold mt" id="fcFold"><summary class="dch"><h3>Unlock forecast</h3><span class="faint" style="font-size:12.5px">log dust + gold ›</span></summary><div style="padding:0 14px 12px"><div id="fcCard">
+        <details class="card dcard dfold mt" id="fcFold"><summary class="dch"><h3>Unlock forecast</h3><span class="u-font-size-12-5px faint">log dust + gold ›</span></summary><div><div id="fcCard">
           <h3>Forecast — T11 <span class="phName">Infantry</span> unlock date</h3>
-          <p class="lead" style="margin:0 0 10px">Log your Dust + Gold once per check-in. After two days it projects your unlock date.</p>
+          <p class="u-margin-0-0-10px lead">Log your Dust + Gold once per check-in. After two days it projects your unlock date.</p>
           <div class="rowb"><button class="btn primary" id="fcLog">+ Log today's Dust + Gold</button><span class="tag ok" id="fcMsg" hidden></span></div>
           <div id="fcOut" class="mt"></div>
           <div id="fcHistory" class="mt"></div>
@@ -225,7 +225,7 @@
       </section>
       <section class="sec" data-sub="Resources" data-key="Resources &amp; Speedups">
         <h2>Resources &amp; speedups</h2>
-        <div class="grid" style="--min:240px" id="resBody"></div>
+        <div class="u-min-240px grid" id="resBody"></div>
         <button class="add" id="addRes">+ Add material</button>
       </section>
     </div>
@@ -246,7 +246,7 @@
         <h2>Progress</h2>
         <div class="card">
           <div class="chips-row" id="progMetric" role="group" aria-label="What to chart"></div>
-          <div class="rowb mt" style="align-items:flex-end"><div id="progHead"></div><div class="seg" id="progRange" role="group" aria-label="Time range"><button data-v="30">30d</button><button data-v="90">90d</button><button data-v="all">All</button></div></div>
+          <div class="u-align-items-flex-end rowb mt"><div id="progHead"></div><div class="seg" id="progRange" role="group" aria-label="Time range"><button data-v="30">30d</button><button data-v="90">90d</button><button data-v="all">All</button></div></div>
           <div class="pchart mt" id="progChart"></div>
           <details class="fold mt" id="progTblWrap"><summary><span class="grow">Show the numbers</span></summary><div class="fbody" id="progTbl"></div></details>
         </div>
@@ -254,7 +254,7 @@
       <section class="sec" data-sub="Overview" data-key="Power Grades">
         <h2>Power grades</h2>
         <div class="card dcard" id="pillars"></div>
-        <div class="legend"><span><span class="sw" style="background:var(--green)"></span>Ahead</span><span><span class="sw" style="background:var(--amber)"></span>Slightly behind</span><span><span class="sw" style="background:var(--red)"></span>Well behind</span><span><span class="sw" style="background:var(--text);opacity:.55"></span>Benchmark</span></div>
+        <div class="legend"><span><span class="u-background-green sw"></span>Ahead</span><span><span class="u-background-amber sw"></span>Slightly behind</span><span><span class="u-background-red sw"></span>Well behind</span><span><span class="u-background-text-opacity-55 sw"></span>Benchmark</span></div>
       </section>
       <section class="sec" data-sub="Mystic Trials" data-key="Mystic Trials">
         <h2>Mystic Trials</h2>
@@ -272,9 +272,9 @@
       <section class="sec" data-sub="Free shops" data-key="Shop guide">
         <div id="shopGuide"></div>
         <details class="fold mt" id="srcFold" hidden><summary><span class="grow">Where each supply comes from</span></summary><div class="fbody">
-        <div class="card" style="padding:0;overflow:hidden"><table class="gtable" id="srcTable"></table></div>
+        <div class="u-padding-0-overflow-hidden card"><table class="gtable" id="srcTable"></table></div>
         <h2 class="h2 mt2">Buy order</h2>
-        <div class="card" style="padding:0;overflow:hidden"><table class="gtable" id="shopTable"></table></div>
+        <div class="u-padding-0-overflow-hidden card"><table class="gtable" id="shopTable"></table></div>
         <div class="info mt"><b>Gems:</b> save them for Hero Roulette when Wee &amp; Woo is featured. Don't spend gems on resources or speedups. <b>Speedups:</b> save for the matching event day.</div>
         </div></details>
       </section>
@@ -300,26 +300,26 @@
         <div class="kvgrid" id="idstrip"></div>
         <h2 class="h2 mt2">Appearance</h2>
         <div class="card"><div class="seg" id="themeSeg" role="group" aria-label="Theme"><button data-v="auto">Auto</button><button data-v="light">Light</button><button data-v="dark">Dark</button></div>
-          <p class="lead" style="margin:10px 0 0">Auto follows your phone or computer setting.</p>
+          <p class="u-margin-10px-0-0 lead">Auto follows your phone or computer setting.</p>
           <button class="btn mt install" id="installBtn2"><svg width="18" height="18" aria-hidden="true"><use href="#i-down"/></svg>Install as app</button>
-          <p class="lead" id="installHint" style="margin:10px 0 0"></p></div>
+          <p class="u-margin-10px-0-0 lead" id="installHint"></p></div>
       </section>
       <section class="sec" data-sub="Sync" data-key="Data &amp; Sync">
         <div class="cols">
           <div class="colstack"><div class="card">
             <h3>File backup</h3>
-            <p class="lead" style="margin:0 0 10px">Works everywhere, no token needed.</p>
-            <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="exportBtn"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Export JSON</button><button class="btn" id="importBtn"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Import JSON</button></div>
+            <p class="u-margin-0-0-10px lead">Works everywhere, no token needed.</p>
+            <div class="u-justify-content-flex-start rowb"><button class="btn primary" id="exportBtn"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Export JSON</button><button class="btn" id="importBtn"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Import JSON</button></div>
             <input type="file" id="importFile" accept="application/json,.json" hidden>
           </div>
           <div class="card mt" id="upCard"><h3><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg> Upload screenshots</h3>
-          <p class="lead" style="margin:0 0 10px">For anything — research trees, packs, events. Name it, pick the screenshots, then tell Claude "uploaded".</p>
+          <p class="u-margin-0-0-10px lead">For anything — research trees, packs, events. Name it, pick the screenshots, then tell Claude "uploaded".</p>
           <div class="form"><label class="f"><span>What is it?</span><input id="upLabel" placeholder="e.g. research academy" autocomplete="off"></label>
-          <label class="btn primary" style="align-self:flex-start"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg> Choose screenshots<input type="file" id="upFiles" accept="image/*" multiple hidden></label>
+          <label class="u-align-self-flex-start btn primary"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.5"/></svg> Choose screenshots<input type="file" id="upFiles" accept="image/*" multiple hidden></label>
           <div class="faint" id="upStatus" role="status"></div></div></div></div>
           <div class="card">
             <h3>GitHub sync</h3>
-            <p class="lead" style="margin:0 0 10px">Reads and writes a JSON file in your repo. The token stays on this device and is never committed.</p>
+            <p class="u-margin-0-0-10px lead">Reads and writes a JSON file in your repo. The token stays on this device and is never committed.</p>
             <div class="form">
               <details class="dfold" id="scSetup"><summary>Connection settings ›</summary>
               <div class="frow"><label class="f"><span>Owner</span><input id="scOwner" placeholder="your-username" autocomplete="off"></label><label class="f"><span>Repo</span><input id="scRepo" autocomplete="off"></label></div>
@@ -329,7 +329,7 @@
               <label class="fcheck"><input type="checkbox" class="cbx" id="scOn"> Auto-push my edits</label>
               <button class="btn danger" id="scForget">Forget token on this device</button>
               </details>
-              <div class="rowb" style="justify-content:flex-start"><button class="btn primary" id="scSave">Save &amp; connect</button><button class="btn" id="scPull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Get latest</button><button class="btn" id="scPush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Save to GitHub</button></div>
+              <div class="u-justify-content-flex-start rowb"><button class="btn primary" id="scSave">Save &amp; connect</button><button class="btn" id="scPull"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 20h14"/></svg> Get latest</button><button class="btn" id="scPush"><svg class="icoi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V9M7 13.5l5-5 5 5M5 4h14"/></svg> Save to GitHub</button></div>
               <div class="info" id="syncStatus" role="status">Not connected</div>
             </div>
           </div>
@@ -339,16 +339,16 @@
         <h2>Reminders</h2>
         <div class="cols">
           <div class="card"><h3>1 · Add to your calendar</h3>
-            <p class="lead" style="margin:0 0 10px">Works now, nothing to set up. Your phone's calendar reminds you.</p>
+            <p class="u-margin-0-0-10px lead">Works now, nothing to set up. Your phone's calendar reminds you.</p>
             <div id="icsWrap"></div>
             <button class="btn primary mt" id="icsBtn">Download calendar file</button>
-            <p class="faint mt" style="font-size:13.5px">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
+            <p class="u-font-size-13-5px faint mt">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
           <div class="card"><h3>2 · Phone notifications (optional)</h3>
-            <p class="lead" style="margin:0 0 10px">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app.</p>
+            <p class="u-margin-0-0-10px lead">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app.</p>
             <details class="dfold"><summary>Show the 4 setup steps ›</summary><ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
               <li>On GitHub: repo → <b>Settings → Secrets and variables → Actions → New repository secret</b>. Name <code>NTFY_TOPIC</code>, value = the same topic name.</li>
               <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol></details>
-            <p class="faint mt" style="font-size:13.5px">Keep the topic secret: anyone who knows it can read these notes. Nothing is sent until the secret exists.</p></div>
+            <p class="u-font-size-13-5px faint mt">Keep the topic secret: anyone who knows it can read these notes. Nothing is sent until the secret exists.</p></div>
         </div>
       </section>
     </div>
@@ -374,16 +374,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=89"></script>
-<script src="js/ui.js?v=89"></script>
-<script src="js/home.js?v=89"></script>
-<script src="js/rally.js?v=89"></script>
-<script src="js/gear.js?v=89"></script>
-<script src="js/base.js?v=89"></script>
-<script src="js/data.js?v=89"></script>
-<script src="js/shops.js?v=89"></script>
-<script src="js/extras.js?v=89"></script>
-<script src="js/value.js?v=89"></script>
-<script src="js/boot.js?v=89"></script>
+<script src="js/core.js?v=90"></script>
+<script src="js/ui.js?v=90"></script>
+<script src="js/home.js?v=90"></script>
+<script src="js/rally.js?v=90"></script>
+<script src="js/gear.js?v=90"></script>
+<script src="js/base.js?v=90"></script>
+<script src="js/data.js?v=90"></script>
+<script src="js/shops.js?v=90"></script>
+<script src="js/extras.js?v=90"></script>
+<script src="js/value.js?v=90"></script>
+<script src="js/boot.js?v=90"></script>
 </body>
 </html>

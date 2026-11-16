@@ -32,7 +32,7 @@ function renderUpdate(){
   const ti=t=>`<span class="qti">${hgIcon(TROOP_ICON[t])}<span class="full">${t}</span><span class="abbr" aria-hidden="true">${t.slice(0,3)}</span></span>`;
   const groups=[];
   const group=(key,title,hint,build)=>{ groups.push([key,title]); const d=document.createElement("details"); d.className="fold"; d.dataset.k=key; if(state.ui.qOpen[key]) d.open=true;
-    d.innerHTML=`<summary><span class="grow">${title}</span><span class="faint" style="font-weight:500;font-size:14px">${hint||""}</span></summary><div class="fbody form"></div>`;
+    d.innerHTML=`<summary><span class="grow">${title}</span><span class="u-font-weight-500-font-size-14px faint">${hint||""}</span></summary><div class="fbody form"></div>`;
     const body=d.querySelector(".fbody"); let built=false; const fill=()=>{ if(built) return; built=true; build(body); };
     if(d.open) fill(); d.ontoggle=()=>{ if(d.open){ state.ui.qOpen={[key]:true}; fill(); host.querySelectorAll("details.fold").forEach(o=>{ if(o!==d) o.open=false; }); } else if(state.ui.qOpen[key]) delete state.ui.qOpen[key]; scheduleSave(); };
     host.appendChild(d); };

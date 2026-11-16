@@ -15,7 +15,7 @@ function renderRally(){
   // pillars
   const pl=$("#pillars");
   const prow=(p,i)=>{ const ratio=p.b>0?p.v/p.b:1, cls=ratio>=1?"ok":ratio>=0.85?"warn":"bad";
-    return `<button class="lrow" data-i="${i}" style="grid-template-columns:1fr"><span class="pillar"><span class="pn">${esc(p.name)}</span>
+    return `<button class="u-grid-template-columns-1fr lrow" data-i="${i}"><span class="pillar"><span class="pn">${esc(p.name)}</span>
       <span class="bar ${cls}"><i style="width:${Math.min(100,ratio*100).toFixed(1)}%"></i>${p.b>0?`<span class="bench" style="left:${Math.min(99,p.b/Math.max(p.v,p.b)*100).toFixed(1)}%"></span>`:""}</span>
       <span class="pv">${fmtBig(p.v)} / ${fmtBig(p.b)}</span><span class="grade g-${esc(p.g||"")}">${esc(p.g)||"–"}</span></span></button>`; };
   // behind the benchmark first; areas you're ahead in fold away
@@ -35,7 +35,7 @@ function renderFocusHeroes(){ const box=$("#focusHeroes"); if(!box) return;
     const st=hasStars(r), p=num(r.pos), nx=st&&p<SHARD_MAX?SHARD_LEAF[p]:0, h=num(r.have), w=W.find(x=>x.hero===r.n), wl=w?num(w.lvl):null, wn=w&&wl<10?widNext(wl):0;
     const sh=!st?"set stars":p>=SHARD_MAX?'<span class="ok">5★ max</span>':h>=nx?`<span class="ok">${esc(starLabel(p+1))} ready</span>`:gf===r&&h+gen>=nx?`<span class="ok">${esc(starLabel(p+1))} ready with General shards</span>`:`${fmt(nx-h)} shards to ${esc(starLabel(p+1))}${gf===r&&gen?` (${fmt(gen)} General)`:""}`;
     const wd=w==null?"":wl>=10?' · widgets <span class="ok">max</span>':num(w.have)>=wn?` · widgets <span class="ok">Lv ${wl+1} ready</span>`:` · widgets ${fmt(wn-num(w.have))} short`;
-    return `<button class="drow fhrow" data-n="${esc(r.n)}">${heroAv(r.n)}<span class="dt"><b>${esc(r.n)} <span class="gold" style="font-weight:500">${st?starGlyphs(p):""}</span></b><span>${sh}${wd}</span></span><span class="dv">${st?esc(starLabel(p)):"—"}<small>${w?`widgets ${wl}/10`:""}</small></span></button>`; }).join("")+`</div>`;
+    return `<button class="drow fhrow" data-n="${esc(r.n)}">${heroAv(r.n)}<span class="dt"><b>${esc(r.n)} <span class="u-font-weight-500 gold">${st?starGlyphs(p):""}</span></b><span>${sh}${wd}</span></span><span class="dv">${st?esc(starLabel(p)):"—"}<small>${w?`widgets ${wl}/10`:""}</small></span></button>`; }).join("")+`</div>`;
   bindAll(box,".fhrow",b=>openShardSheet(G.find(x=>x.n===b.dataset.n))); }
 function openCombatSheet(){
   const c=state.combat;
@@ -106,7 +106,7 @@ function renderHeroRoles(){
   // Arena: 5 heroes — 2 Infantry tanks in front, the 3 best others behind
   const typ=h=>(state.heroInfo&&state.heroInfo[h.n]&&state.heroInfo[h.n].type)||"";
   const fr=role==="arena"?ranked.filter(h=>typ(h)==="Infantry").slice(0,2):[], bk=role==="arena"?ranked.filter(h=>!fr.includes(h)&&typ(h)!=="Infantry").slice(0,5-fr.length):[];
-  const hrow=h=>`<div class="drow">${heroAv(h.n)}<span class="dt"><b>${esc(h.n)}${h.rally?` <span class="faint">${icoI("sword")}</span>`:""}</b><span class="gold" style="letter-spacing:1px">${starGlyphs(h.pos)}${wid(h)?` <span class="faint" style="letter-spacing:0">· widget Lv ${wid(h)}</span>`:""}</span></span>${trH(TIER_OF[heroKey(h.n)][role])}</div>`;
+  const hrow=h=>`<div class="drow">${heroAv(h.n)}<span class="dt"><b>${esc(h.n)}${h.rally?` <span class="faint">${icoI("sword")}</span>`:""}</b><span class="u-letter-spacing-1px gold">${starGlyphs(h.pos)}${wid(h)?` <span class="u-letter-spacing-0 faint">· widget Lv ${wid(h)}</span>`:""}</span></span>${trH(TIER_OF[heroKey(h.n)][role])}</div>`;
   const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
   $("#roleBest").innerHTML=`<div class="rolechips">${HERO_ROLES.map(([r,l,sh])=>`<button class="chip" data-r="${r}" aria-pressed="${r===role}">${esc(sh||l)}</button>`).join("")}</div>
     <div class="card dcard mt"><div class="dch"><h3>${esc(label)}</h3><span class="faint fs13">${fr.length?"your best 5 · formation":MARCH.includes(role)?"best of each troop type":"your best 3"}</span></div>${fr.length?`<div class="fmrow">Front row <span class="faint">· Infantry tanks</span></div>${fr.map(hrow).join("")}<div class="fmrow">Back row <span class="faint">· damage</span></div>${bk.map(hrow).join("")}`:L.map(hrow).join("")}
@@ -120,7 +120,7 @@ function renderHeroRoles(){
   keys.sort((a,b)=>heroUse(TIER_OF[b].name)-heroUse(TIER_OF[a].name)||TIER_OF[a].name.localeCompare(TIER_OF[b].name));
   $("#tierTable").innerHTML=`<thead><tr><th>Hero</th>${HERO_ROLES.map(([,,s])=>`<th>${esc(s)}</th>`).join("")}<th>Use</th></tr></thead><tbody>`+
     keys.map(k=>{ const t=TIER_OF[k], h=mine[k], s8=gen8.includes(k);
-      return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" "+icoI("sword"):""}${s8?' <span class="tag plain" style="padding:2px 6px;font-size:12px">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
+      return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" "+icoI("sword"):""}${s8?' <span class="u-padding-2px-6px-font-size-12px tag plain">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
 }
 
 /* ---------- hero avatar badge: initial, coloured by troop type ---------- */
@@ -182,7 +182,7 @@ function openHeroSheet(n){
       inf.innerHTML=`<b>Next:</b> ${x.next}<br>`+
         (x.sr&&x.st!=null?`<b>Shards:</b> ${x.st>=SHARD_MAX?"5★ max ✓":`next step ${x.nextCost} · to ${esc(starLabel(x.sr.tgt==null?SHARD_MAX:num(x.sr.tgt)))}: ${fmt(x.shortAll)} short`}<br>`:"")+
         (x.gear?`<b>${esc(x.info.type)} hero gear:</b> avg Lv ${x.gear.avg}, ${x.gear.red}/${x.gear.n} red · lowest ${esc(x.gear.low.slot)} Lv ${num(x.gear.low.lvC)}<br>`:"")+
-        `<b>Use score:</b> ${x.use}/40<div class="hroles" style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">${HERO_ROLES.map(([r,,sh])=>`<span style="display:inline-flex;align-items:center;gap:4px;font-size:13px">${trH(x.t[r])} ${esc(sh)}</span>`).join("")}</div>`; };
+        `<b>Use score:</b> ${x.use}/40<div class="u-7a6ae2 hroles">${HERO_ROLES.map(([r,,sh])=>`<span>${trH(x.t[r])} ${esc(sh)}</span>`).join("")}</div>`; };
     rf(); return rf; }});
 }
 
@@ -226,8 +226,8 @@ function renderProgress(){
   const t=e=>new Date(e.d+"T00:00:00").getTime(), t0=t(first), t1=t(last);
   const X=e=>t1===t0?pl+PW/2:pl+(t(e)-t0)/(t1-t0)*PW, Y=v=>pt+PH-(v-lo)/(hi-lo)*PH, col=cv("--acc"), grid=cv("--line-soft"), ink=cv("--faint"), bg=cv("--panel");
   let g=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(M[1])} over time">`;
-  for(let v=lo;v<=hi+step/2;v+=step){ const y=Y(v); g+=`<line x1="${pl}" x2="${W-pr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${grid}"/><text x="${pl-8}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="12.5" font-family="Inter,system-ui,sans-serif" style="font-variant-numeric:tabular-nums" fill="${ink}">${esc(F(v))}</text>`; }
-  g+=`<text x="${pl}" y="${H-8}" font-size="12.5" font-family="Inter,system-ui,sans-serif" style="font-variant-numeric:tabular-nums" fill="${ink}">${esc(fd(first.d))}</text>`+(S.length>1?`<text x="${W-pr}" y="${H-8}" text-anchor="end" font-size="12.5" font-family="Inter,system-ui,sans-serif" style="font-variant-numeric:tabular-nums" fill="${ink}">${esc(fd(last.d))}</text>`:"");
+  for(let v=lo;v<=hi+step/2;v+=step){ const y=Y(v); g+=`<line x1="${pl}" x2="${W-pr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${grid}"/><text class="u-f77025" x="${pl-8}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="12.5" font-family="Inter,system-ui,sans-serif" fill="${ink}">${esc(F(v))}</text>`; }
+  g+=`<text class="u-f77025" x="${pl}" y="${H-8}" font-size="12.5" font-family="Inter,system-ui,sans-serif" fill="${ink}">${esc(fd(first.d))}</text>`+(S.length>1?`<text class="u-f77025" x="${W-pr}" y="${H-8}" text-anchor="end" font-size="12.5" font-family="Inter,system-ui,sans-serif" fill="${ink}">${esc(fd(last.d))}</text>`:"");
   if(S.length>1) g+=`<polyline points="${S.map(e=>X(e).toFixed(1)+","+Y(e.v).toFixed(1)).join(" ")}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
   S.forEach((e,k)=>{ if(k>0&&k<S.length-1&&e.v!==S[k-1].v) g+=`<circle cx="${X(e).toFixed(1)}" cy="${Y(e.v).toFixed(1)}" r="3.5" fill="${bg}" stroke="${col}" stroke-width="2"/>`; }); // a dot wherever the number changed
   g+=`<circle cx="${X(last).toFixed(1)}" cy="${Y(last.v).toFixed(1)}" r="5" fill="${col}" stroke="${bg}" stroke-width="2"/>`;
@@ -269,9 +269,9 @@ function mastPlanH(){ const R=mRes(), U=num(R.emblems), rate=num(R.rate), M=stat
       <em class="${cost&&have>=cost?"ok":cost?"warn":"faint"}">${!cost?"cost?":have>=cost?"ready ✓":`${fmt(cost-have)} short${rate>0?` · ${dTxt(cost-have)}`:""}`}</em></div>`; }
   const side=M.filter(m=>m.n!=="Cassia"&&num(m.l)<100).sort((a,b)=>mastRank(a)-mastRank(b)).map(m=>{ const cost=mNextCost(m), own=num(m.em), useU=Math.max(0,cost-own), lv=num(m.l);
     const st=!cost?['faint',"cost?"]:useU===0?['ok',"free — own Emblems cover it"]:useU>U?['warn',`${fmt(useU-U)} short`]:['warn',`uses ${fmt(useU)} universal${rate>0?` · delays Cassia ${dTxt(useU)}`:""}`];
-    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · Lv ${lv} → ${Math.min(100,lv+10)}</b><span>${fmt(cost)} Emblems · +${fmt(mTab(m).pw)} power · ${fmt(own)} own</span></span><span class="dv ${st[0]}" style="font-size:13px;white-space:normal;text-align:right;max-width:46%">${st[1]}</span></button>`; }).join("");
+    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · Lv ${lv} → ${Math.min(100,lv+10)}</b><span>${fmt(cost)} Emblems · +${fmt(mTab(m).pw)} power · ${fmt(own)} own</span></span><span class="u-fa370f dv ${st[0]}">${st[1]}</span></button>`; }).join("");
   let left=num(R.books); const bk=M.filter(m=>m.bookNext&&num(m.bookNext.books)).sort((a,b)=>mastRank(a)-mastRank(b)).map(m=>{ const n=num(m.bookNext.books), ok=left>=n; if(ok) left-=n;
-    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · ${esc(m.bookNext.what||"next skill")}</b><span>${fmt(n)} books</span></span><span class="dv ${ok?"ok":"warn"}" style="font-size:13px">${ok?"ready ✓":`${fmt(n-left)} short`}</span></button>`; }).join("");
+    return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · ${esc(m.bookNext.what||"next skill")}</b><span>${fmt(n)} books</span></span><span class="u-font-size-13px dv ${ok?"ok":"warn"}">${ok?"ready ✓":`${fmt(n-left)} short`}</span></button>`; }).join("");
   return `<div class="card dcard"><div class="dch"><h3>Master plan</h3><button class="link" id="mpRes">Emblems & books <svg class="ico-inline" aria-hidden="true"><use href="#i-pen"/></svg></button></div>
     <div class="mp-pool"><span><b>${fmt(U)}</b> universal Emblems</span><span><b>${rate?fmt(rate):"?"}</b> a week</span><span><b>${fmt(num(R.books))}</b> skill books</span></div>
     ${cas}<p class="fmrow">Other masters' levels <span class="faint">· own Emblems never slow Cassia</span></p>${side}
@@ -288,7 +288,7 @@ function renderMasters(){
   const mb=$("#mastBody"); mb.className="card dcard mt"; mb.removeAttribute("style");
   mb.innerHTML=L.map((m,i)=>{ const info=MASTER_INFO[m.n], rk=MASTER_RANK[m.n], lv=num(m.l);
     return `<button class="drow vcard" data-i="${state.masters.indexOf(m)}">${rk?`<span class="dn${rk[0]===1?" go":""}">${rk[0]}</span>`:'<span class="dn">·</span>'}
-      <span class="dt"><b>${esc(m.n)}${info?` <span class="faint" style="font-weight:500">· ${esc(info.best)}</span>`:""}</b><span>${esc(mastSkillLine(m))}</span><span class="pbar"><i class="${lv>=100?"ok":""}" style="width:${Math.min(100,lv)}%"></i></span></span>
+      <span class="dt"><b>${esc(m.n)}${info?` <span class="u-font-weight-500 faint">· ${esc(info.best)}</span>`:""}</b><span>${esc(mastSkillLine(m))}</span><span class="pbar"><i class="${lv>=100?"ok":""}" style="width:${Math.min(100,lv)}%"></i></span></span>
       <span class="dv">${lv}<small>/ 100</small></span></button>`; }).join("");
   bindAll($("#mastBody"),".vcard",b=>openMastSheet(state.masters[+b.dataset.i]));
   const mp=$("#mastPlan"); if(mp){ mp.innerHTML=mastPlanH(); on("mpRes",openMastResSheet); mp.querySelectorAll(".mp-r").forEach(b=>b.onclick=()=>{ const m=state.masters.find(x=>x.n===b.dataset.n); if(m) openMastSheet(m); }); }
@@ -313,7 +313,7 @@ function openMastSheet(m){
       sk.appendChild(row); });
     if(info){ const facts=infoBox(); facts.innerHTML=`<b>Talent:</b> ${esc(info.talent)}<br><b>Research:</b> ${esc(info.research)} · best for ${esc(info.best)}<br><b>Kindred Soul:</b> ${esc(info.ks)}<br><b>Unlocks with:</b> ${esc(info.unlock)}`; f.appendChild(facts); }
     f.appendChild(fld("Your note",{type:"area",rows:5,value:m.note,set:v=>m.note=v}));
-    const r=()=>{ how.innerHTML=`<ol style="margin:0;padding-left:18px">${masterHowTo(m,info)}</ol><div style="margin-top:6px">${esc(mastSkillLine(m))}</div>`; };
+    const r=()=>{ how.innerHTML=`<ol>${masterHowTo(m,info)}</ol><div>${esc(mastSkillLine(m))}</div>`; };
     r(); return r; },
     onDelete:()=>{ const i=state.masters.indexOf(m); if(i>-1) state.masters.splice(i,1); }});
 }
@@ -347,12 +347,12 @@ function paintMysticChart(){
     const t0=new Date(log[0].d).getTime(), t1=new Date(log[log.length-1].d).getTime();
     const X=d=>t1===t0?pl+PW/2:pl+((new Date(d).getTime()-t0)/(t1-t0))*PW, Y=v=>hi===lo?pt+PH/2:pt+((v-lo)/(hi-lo))*PH; // rank 1 is best: lower ranks sit higher, so up = better
     const last=log[log.length-1].v, dlt=last-log[0].v;
-    let svg=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block" role="img" aria-label="${esc(z.k)} rank trend">`;
-    for(let g=0;g<=2;g++){ const v=lo+(hi-lo)*g/2, y=pt+PH*g/2; svg+=`<line x1="${pl}" y1="${y.toFixed(1)}" x2="${W-pr}" y2="${y.toFixed(1)}" stroke="${line}"/><text x="${pl-6}" y="${(y+3).toFixed(1)}" text-anchor="end" font-family="Inter,system-ui,sans-serif" style="font-variant-numeric:tabular-nums" font-size="12.5" fill="${faint}">${fmt(Math.round(v))}</text>`; }
+    let svg=`<svg class="u-e6aaf2" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(z.k)} rank trend">`;
+    for(let g=0;g<=2;g++){ const v=lo+(hi-lo)*g/2, y=pt+PH*g/2; svg+=`<line x1="${pl}" y1="${y.toFixed(1)}" x2="${W-pr}" y2="${y.toFixed(1)}" stroke="${line}"/><text class="u-f77025" x="${pl-6}" y="${(y+3).toFixed(1)}" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12.5" fill="${faint}">${fmt(Math.round(v))}</text>`; }
     if(log.length>1) svg+=`<polyline points="${log.map(e=>X(e.d).toFixed(1)+","+Y(e.v).toFixed(1)).join(" ")}" fill="none" stroke="${col}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
     log.forEach((e,k)=>{ svg+=`<circle cx="${X(e.d).toFixed(1)}" cy="${Y(e.v).toFixed(1)}" r="${k===log.length-1?4.5:3.5}" fill="${k===log.length-1?col:bg}" stroke="${col}" stroke-width="2"><title>${e.d}: #${fmt(e.v)}</title></circle>`; });
-    svg+=`<text x="${pl}" y="${H-6}" font-family="Inter,system-ui,sans-serif" style="font-variant-numeric:tabular-nums" font-size="12" fill="${faint}">${fd(log[0].d)}</text><text x="${W-pr}" y="${H-6}" text-anchor="end" font-family="Inter,system-ui,sans-serif" style="font-variant-numeric:tabular-nums" font-size="12" fill="${faint}">${fd(log[log.length-1].d)}</text></svg>`;
-    return `<div class="chart"><div class="rowb" style="flex-wrap:nowrap"><span style="display:flex;align-items:center;gap:6px;min-width:0"><span style="width:9px;height:9px;border-radius:50%;background:${col};flex:none"></span><b style="font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(z.k)}</b></span><b class="mono gold">#${fmt(last)}</b></div>
-      <div style="font-size:13px;margin:2px 0 4px">${log.length>1?(dlt<0?`<span class="ok">▲ ${fmt(-dlt)} places better</span>`:dlt>0?`<span class="warn">▼ ${fmt(dlt)} places worse</span>`:`<span class="faint">no change</span>`):`<span class="faint">first log</span>`}</div>${svg}</div>`; }).join("")+`</div>`;
+    svg+=`<text class="u-f77025" x="${pl}" y="${H-6}" font-family="Inter,system-ui,sans-serif" font-size="12" fill="${faint}">${fd(log[0].d)}</text><text class="u-f77025" x="${W-pr}" y="${H-6}" text-anchor="end" font-family="Inter,system-ui,sans-serif" font-size="12" fill="${faint}">${fd(log[log.length-1].d)}</text></svg>`;
+    return `<div class="chart"><div class="u-flex-wrap-nowrap rowb"><span><span style="width:9px;height:9px;border-radius:50%;background:${col};flex:none"></span><b>${esc(z.k)}</b></span><b class="mono gold">#${fmt(last)}</b></div>
+      <div>${log.length>1?(dlt<0?`<span class="ok">▲ ${fmt(-dlt)} places better</span>`:dlt>0?`<span class="warn">▼ ${fmt(dlt)} places worse</span>`:`<span class="faint">no change</span>`):`<span class="faint">first log</span>`}</div>${svg}</div>`; }).join("")+`</div>`;
 }
 
