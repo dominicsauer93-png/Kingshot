@@ -978,7 +978,7 @@
       "note": "Best for Cavalry · Attack research\nNEXT: level 60 → 70 (needs Emblems)\nSkills: all 4 at Lv7 / 10 — Combat skills 1 + 4 first",
       "skills": [
         {
-          "l": 7,
+          "l": 8,
           "t": "c"
         },
         {
@@ -995,7 +995,11 @@
         }
       ],
       "em": 17,
-      "lvlCost": ""
+      "lvlCost": "",
+      "bookNext": {
+        "what": "",
+        "books": ""
+      }
     },
     {
       "n": "Wilson",
@@ -1824,7 +1828,7 @@
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
       "Shop": "Free shops",
-      "Governor": "Masters",
+      "Governor": "Charms",
       "Progress": "Overview",
       "Town": "Research"
     },
@@ -4734,7 +4738,7 @@
   "webMonthly": true,
   "masterRes": {
     "emblems": 17,
-    "books": 7956,
+    "books": 3756,
     "rate": "",
     "seen": "2026-11-09"
   },
