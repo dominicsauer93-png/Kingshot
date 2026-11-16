@@ -1680,9 +1680,9 @@
   ],
   "tg": {
     "have": 340,
-    "need": 2310,
+    "need": 2202,
     "ttgHave": 3,
-    "ttgNeed": 260
+    "ttgNeed": 251
   },
   "govGear": {
     "targetIdx": 18,
@@ -1787,7 +1787,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1830,7 +1830,7 @@
       "Shop": "Free shops",
       "Governor": "Charms",
       "Progress": "Overview",
-      "Town": "Research"
+      "Town": "Buildings"
     },
     "t11Open": {
       "nodes": false,
@@ -1871,7 +1871,8 @@
         "Weekly Benefits — Mythic Governor Charm (week 1)",
         "Weekly Benefits — Mythic Governor Charm (week 2)"
       ]
-    }
+    },
+    "t11More": false
   },
   "troopCounts": {
     "inf": {
@@ -3443,7 +3444,7 @@
     },
     {
       "n": "War Academy",
-      "stepIdx": 10,
+      "stepIdx": 11,
       "note": "Research speed + T11 gate",
       "d": false
     },
@@ -4193,8 +4194,8 @@
       }
     },
     "current": {
-      "n": "",
-      "ends": ""
+      "n": "Regimental Expansion VI",
+      "ends": "2026-11-20T23:22:10.374Z"
     },
     "war": {
       "seen": "2026-10-30",
