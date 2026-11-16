@@ -585,13 +585,6 @@
       "auto": "2026-11",
       "bought": "2026-11-06",
       "note": "November plan · 4,860% · 1,996 ⭐ + A$7.99 · grand prize: 300 Charm Designs"
-    },
-    {
-      "t": "New pack",
-      "aud": 0,
-      "kind": "once",
-      "note": "",
-      "d": false
     }
   ],
   "trackFarm": [
@@ -1787,7 +1780,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1827,7 +1820,7 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
-      "Shop": "Free shops",
+      "Shop": "Paid",
       "Governor": "Charms",
       "Progress": "Overview",
       "Town": "Buildings"
@@ -4111,6 +4104,10 @@
     {
       "d": "2026-11-11",
       "t": "Logged 27 chests → 0 Mythic"
+    },
+    {
+      "d": "2026-11-16",
+      "t": "New pack removed"
     }
   ],
   "bagCheck": {
