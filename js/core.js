@@ -523,19 +523,19 @@ function paintForecast(){
   const gDays = f.goldRate>0 ? gNeed/f.goldRate : Infinity;
   const line=(label,rate,need,dys)=>{
     const rateTxt=rate>0?fmt(Math.round(rate))+"/day":"no gain logged";
-    const when = need<=0 ? `<b style="color:var(--green)">already met</b>` : (isFinite(dys)?`~<b>${addDays(dys)}</b> (${Math.ceil(dys)}d)`:`<b style="color:var(--red)">never at current rate</b>`);
-    return `<div style="margin-bottom:4px">${label}: ${rateTxt} · ${when}</div>`;
+    const when = need<=0 ? `<b>already met</b>` : (isFinite(dys)?`~<b>${addDays(dys)}</b> (${Math.ceil(dys)}d)`:`<b>never at current rate</b>`);
+    return `<div>${label}: ${rateTxt} · ${when}</div>`;
   };
-  let html=`<div class="mono" style="font-size:14px">`;
+  let html=`<div class="u-font-size-14px mono">`;
   html+=line("Dust",f.dustRate,dNeed,dDays);
   html+=line("Gold",f.goldRate,gNeed,gDays);
   const both=Math.max(isFinite(dDays)?dDays:0, isFinite(gDays)?gDays:0);
   const blocked=(!isFinite(dDays)&&dNeed>0)||(!isFinite(gDays)&&gNeed>0);
   html+=`</div>`;
-  html+=`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--line)">`;
-  if(dNeed<=0&&gNeed<=0) html+=`<b style="color:var(--green)">Both gates met — start the research.</b>`;
-  else if(blocked) html+=`<b style="color:var(--amber-text)">One gate isn't growing — log more, or lift that rate.</b>`;
-  else html+=`<b style="color:var(--gold-text)">T11 ${activePhase().n} unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
+  html+=`<div>`;
+  if(dNeed<=0&&gNeed<=0) html+=`<b>Both gates met — start the research.</b>`;
+  else if(blocked) html+=`<b>One gate isn't growing — log more, or lift that rate.</b>`;
+  else html+=`<b>T11 ${activePhase().n} unlockable ~${addDays(both)}</b> (whichever gate lands last).`;
   html+=`<br><span class="sub">Then ~${Math.round(nodeResDays(coreNodes(state[activePhase().k]||[])))}d research on top (runs once you start it). Based on ${f.days.toFixed(0)}d of history.</span></div>`;
   out.innerHTML=html;
 }
