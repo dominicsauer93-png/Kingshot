@@ -35,6 +35,19 @@ for (const [w, h, label] of [[390, 844, "phone"], [1280, 900, "pc"]]) {
   await p.evaluate(() => openSearch()); await p.fill("#srchIn", "shards"); await p.waitForTimeout(100);
   check(await p.locator("#srchList [role=option]").count() > 0, `${label}: search finds sections`);
   await p.evaluate(() => closeSearch());
+  // troops are always listed Infantry → Cavalry → Archer
+  const troopOrder = await p.evaluate(async () => {
+    const want = "Infantry,Cavalry,Archer", got = {};
+    got.const = TROOP_ORDER.join(",");
+    setTab("Data", "Update all"); const d = document.querySelector('#qBody details.fold[data-k="HG"]'); if (d) d.open = true;
+    await new Promise(r => setTimeout(r, 50));
+    got.updateAll = [...document.querySelectorAll("#qBody .qmx.hg thead .qti .full")].map(x => x.textContent).join(",");
+    setTab("Heroes", "Hero Gear"); await new Promise(r => setTimeout(r, 50));
+    got.heroGear = [...document.querySelectorAll("#hgBody h3")].map(x => (x.textContent.match(/Infantry|Cavalry|Archer/) || [""])[0]).filter(Boolean).join(",");
+    return Object.entries(got).filter(([, v]) => v !== want).map(([k, v]) => `${k}=${v}`).join(" ");
+  });
+  check(!troopOrder, `${label}: troops listed Infantry → Cavalry → Archer${troopOrder ? " — " + troopOrder : ""}`);
+  await p.evaluate(() => setTab("Home"));
   check(await p.evaluate(() => /BEGIN:VCALENDAR[\s\S]*END:VCALENDAR/.test(icsText())), `${label}: calendar file builds`);
   check(errs.length === 0, `${label}: no page errors${errs.length ? " — " + errs.join(" | ") : ""}`);
   await p.close();

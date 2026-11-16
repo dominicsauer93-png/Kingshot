@@ -41,7 +41,13 @@ function trackIncome(){
   const I=state.income||(state.income={}), m=gameToday().slice(0,7);
   BAG_KEYS.forEach(([k])=>{ const h=bagVal(k), r=I[k]||(I[k]={since:gameToday(),got:{}});
     if(r.seen!=null&&h>num(r.seen)) r.got[m]=num(r.got[m])+h-num(r.seen);
-    r.seen=h; }); }
+    r.seen=h;
+    const L=r.log||(r.log={}); L[gameToday()]=h; const ks=Object.keys(L).sort(); ks.slice(0,Math.max(0,ks.length-90)).forEach(x=>delete L[x]); }); } // daily amount in your bag, last 90 days
+// small trend line of a material in your bag (needs 2+ days of updates)
+function bagSpark(k){ const L=(state.income&&state.income[k]&&state.income[k].log)||{}, ks=Object.keys(L).sort(); if(ks.length<2) return "";
+  const v=ks.map(x=>num(L[x])), lo=Math.min(...v), hi=Math.max(...v), W=120, H=28, t0=new Date(ks[0]).getTime(), t1=new Date(ks[ks.length-1]).getTime();
+  const pts=ks.map((x,i)=>`${(t1===t0?W/2:(new Date(x).getTime()-t0)/(t1-t0)*W).toFixed(1)},${(hi===lo?H/2:H-2-(v[i]-lo)/(hi-lo)*(H-4)).toFixed(1)}`).join(" ");
+  return `<svg class="bspark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${esc(RES_LABEL[k]||k)} in your bag over ${ks.length} days"><polyline points="${pts}" fill="none" stroke="var(--acc)" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>`; }
 // average gained per day since tracking started (null until a week of data)
 function incomeRate(k){ const r=state.income&&state.income[k]; if(!r) return null;
   const days=Math.round((new Date(gameToday())-new Date(r.since))/864e5); if(days<7) return null;
@@ -117,7 +123,7 @@ function renderTimelines(){
   box.innerHTML=(days<7?`<p class="faint" style="margin:0 0 6px;font-size:14px">Learning your income — ${days}/7 days of bag updates.</p>`:"")+
     rows.map(([k,l])=>{ const n=N[k], r=incomeRate(k), d=n.short&&r?Math.ceil(n.short/r):null;
       const when=!n.short?'<b class="ok">ready ✓</b>':r==null?'<span class="faint">tracking…</span>':r<=0?'<b class="bad">none coming in</b>':`<b class="${d<=7?"ok":d<=28?"warn":"bad"}">~${d<7?d+" day"+(d>1?"s":""):Math.round(d/7)+" week"+(Math.round(d/7)>1?"s":"")}</b>`;
-      return `<div class="tlrow"><div class="rowb"><span>${esc(n.what)}</span>${when}</div>${barH(pc(n.have,n.need),n.short?"":"ok")}<span class="faint fs13">${fmt(n.have)} / ${fmt(n.need)}${r!=null?` · +${r>=1?fmt(Math.round(r)):r.toFixed(1)} a day`:""}</span></div>`; }).join("");
+      return `<div class="tlrow"><div class="rowb"><span>${esc(n.what)}</span>${when}</div>${barH(pc(n.have,n.need),n.short?"":"ok")}${bagSpark(k)}<span class="faint fs13">${fmt(n.have)} / ${fmt(n.need)}${r!=null?` · +${r>=1?fmt(Math.round(r)):r.toFixed(1)} a day`:""}${(()=>{ const g=state.income&&state.income[k]&&state.income[k].got&&state.income[k].got[gameToday().slice(0,7)]; return g?` · +${fmt(num(g))} this month`:""; })()}</span></div>`; }).join("");
 }
 
 /* ---------- Shop guide: live advice from the bag ---------- */

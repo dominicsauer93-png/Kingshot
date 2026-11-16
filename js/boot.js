@@ -13,7 +13,8 @@ function renderUpdate(){
     el.setAttribute("enterkeyhint","next"); return el; };
   const n=(aria,obj,key,o)=>Object.assign({type:"num",aria,value:obj[key],get:()=>obj[key],set:v=>obj[key]=v},o||{});
   // ---- pattern 1: matrix — one header, one row per thing, same columns
-  const mx=(head,rows,cls)=>{ const t=document.createElement("table"); t.className="qmx"+(cls?" "+cls:"");
+  const mx=(head,rows,cls)=>{ if(rows.length>=10&&matchMedia("(min-width:1100px)").matches){ const h=Math.ceil(rows.length/2), w=document.createElement("div"); w.className="qmx2"; w.append(mx1(head,rows.slice(0,h),cls),mx1(head,rows.slice(h),cls)); return w; } return mx1(head,rows,cls); };
+  const mx1=(head,rows,cls)=>{ const t=document.createElement("table"); t.className="qmx"+(cls?" "+cls:"");
     t.innerHTML=`<thead>${head.map(r=>`<tr><td></td>${r.map(c=>`<th scope="col"${c.span?` colspan="${c.span}"`:""}${c.gs?' class="gs"':""}>${c.h}</th>`).join("")}</tr>`).join("")}</thead><tbody></tbody>`;
     rows.forEach(r=>{ const tr=t.tBodies[0].insertRow(), th=document.createElement("th"); th.scope="row"; th.innerHTML=r.h; tr.appendChild(th);
       r.cells.forEach((c,i)=>{ const td=tr.insertCell(); if(r.gs&&r.gs.includes(i)) td.className="gs"; if(c) td.appendChild(box(c)); }); });
@@ -32,7 +33,9 @@ function renderUpdate(){
   const ti=t=>`<span class="qti">${hgIcon(TROOP_ICON[t])}<span class="full">${t}</span><span class="abbr" aria-hidden="true">${t.slice(0,3)}</span></span>`;
   const groups=[];
   const group=(key,title,hint,build)=>{ groups.push([key,title]); const d=document.createElement("details"); d.className="fold"; d.dataset.k=key; if(state.ui.qOpen[key]) d.open=true;
-    d.innerHTML=`<summary><span class="grow">${title}</span><span class="u-font-weight-500-font-size-14px faint">${hint||""}</span></summary><div class="fbody form"></div>`;
+    d.innerHTML=`<summary><span class="grow">${title}</span><span class="qsaved" aria-live="polite"></span><span class="u-font-weight-500-font-size-14px faint">${hint||""}</span></summary><div class="fbody form"></div>`;
+    { let t=null; const ok=()=>{ const q=d.querySelector(".qsaved"); q.textContent="Saved ✓"; q.classList.add("on"); clearTimeout(t); t=setTimeout(()=>q.classList.remove("on"),1600); };
+      d.addEventListener("input",ok); d.addEventListener("change",ok); } // confirm each edit right where you typed
     const body=d.querySelector(".fbody"); let built=false; const fill=()=>{ if(built) return; built=true; build(body); };
     if(d.open) fill(); d.ontoggle=()=>{ if(d.open){ state.ui.qOpen={[key]:true}; fill(); host.querySelectorAll("details.fold").forEach(o=>{ if(o!==d) o.open=false; }); } else if(state.ui.qOpen[key]) delete state.ui.qOpen[key]; scheduleSave(); };
     host.appendChild(d); };

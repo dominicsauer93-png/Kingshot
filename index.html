@@ -18,7 +18,7 @@
   (function(){ try{ var t=localStorage.getItem("kingshot-theme"); if(t!=="light"&&t!=="auto") t="dark"; if(t==="auto") t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"; document.documentElement.setAttribute("data-theme",t); }catch(e){ document.documentElement.setAttribute("data-theme","dark"); } })();
 </script>
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/app.css?v=90">
+<link rel="stylesheet" href="css/app.css?v=91">
 </head>
 <body>
 <a class="skip" id="skipLink" href="#main">Skip to content</a>
@@ -344,7 +344,7 @@
             <button class="btn primary mt" id="icsBtn">Download calendar file</button>
             <p class="u-font-size-13-5px faint mt">Open the file on your phone and tap “Add all”. Re-download after you renew a card or change an event.</p></div>
           <div class="card"><h3>2 · Phone notifications (optional)</h3>
-            <p class="u-margin-0-0-10px lead">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app.</p>
+            <p class="u-margin-0-0-10px lead">A daily 8:50 am check runs on GitHub and pings your phone through the free <b>ntfy</b> app: events on today, shops about to close (with hours left) and cards ending.</p>
             <details class="dfold"><summary>Show the 4 setup steps ›</summary><ol class="tight"><li>Install <b>ntfy</b> (App Store / Google Play).</li><li>Tap <b>+</b> and subscribe to a long random topic name only you know, e.g. <code id="ntfyTopic"></code></li>
               <li>On GitHub: repo → <b>Settings → Secrets and variables → Actions → New repository secret</b>. Name <code>NTFY_TOPIC</code>, value = the same topic name.</li>
               <li>Done — you'll get a note on event days and 3 days before a card ends.</li></ol></details>
@@ -374,16 +374,16 @@
 
 <div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button class="btn" id="toastUndo"></button></div>
 
-<script src="js/core.js?v=90"></script>
-<script src="js/ui.js?v=90"></script>
-<script src="js/home.js?v=90"></script>
-<script src="js/rally.js?v=90"></script>
-<script src="js/gear.js?v=90"></script>
-<script src="js/base.js?v=90"></script>
-<script src="js/data.js?v=90"></script>
-<script src="js/shops.js?v=90"></script>
-<script src="js/extras.js?v=90"></script>
-<script src="js/value.js?v=90"></script>
-<script src="js/boot.js?v=90"></script>
+<script src="js/core.js?v=91"></script>
+<script src="js/ui.js?v=91"></script>
+<script src="js/home.js?v=91"></script>
+<script src="js/rally.js?v=91"></script>
+<script src="js/gear.js?v=91"></script>
+<script src="js/base.js?v=91"></script>
+<script src="js/data.js?v=91"></script>
+<script src="js/shops.js?v=91"></script>
+<script src="js/extras.js?v=91"></script>
+<script src="js/value.js?v=91"></script>
+<script src="js/boot.js?v=91"></script>
 </body>
 </html>
