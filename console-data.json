@@ -1804,7 +1804,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -3734,8 +3734,7 @@
       "date": "2026-10-26",
       "len": 4,
       "guess": true,
-      "imp": "top",
-      "endOpen": true
+      "imp": "top"
     },
     {
       "n": "Fishing Tournament",
