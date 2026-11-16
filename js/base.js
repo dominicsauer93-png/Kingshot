@@ -140,6 +140,15 @@ function resNodes(){ const R=state.research||{}, out=[];
   const B=R.battle; if(B&&B.tiers) Object.entries(B.tiers).forEach(([t,o])=>Object.keys(o).forEach(n=>out.push({tree:"battle",group:"Battle — tier "+t,label:`${n} ${t}`,lv:num(o[n]),max:B.max||6,obj:o,key:n})));
   ["growth","economy"].forEach(k=>{ const T=R[k]; if(T&&T.nodes) Object.keys(T.nodes).forEach(n=>out.push({tree:k,group:k==="growth"?"Growth":"Economy",label:n,lv:num(T.nodes[n]),max:T.max||3,obj:T.nodes,key:n})); });
   return out; }
+// game-style timer text → milliseconds: "5d 16:23:18", "16:23:18", "23:18" (m:s? no — h:m), "2d 4h 30m 10s"; a plain number = days
+function parseLeft(v){ const t=String(v||"").toLowerCase().replace(/,/g,"").trim(); if(!t) return null;
+  if(/^\d+(\.\d+)?$/.test(t)) return Math.round(parseFloat(t)*864e5);
+  let ms=0, ok=false; const d=t.match(/(\d+(?:\.\d+)?)\s*d/); if(d){ ms+=parseFloat(d[1])*864e5; ok=true; }
+  const clk=t.match(/(\d+):(\d{1,2})(?::(\d{1,2}))?/);
+  if(clk){ ms+=(+clk[1])*36e5+(+clk[2])*6e4+(clk[3]?+clk[3]*1e3:0); ok=true; }
+  else { t.replace(/(\d+(?:\.\d+)?)\s*(h|hr|hrs|hour|hours|m|min|mins|minute|minutes|s|sec|secs|seconds?)\b/g,(_,n,u)=>{ ok=true; n=parseFloat(n); ms+=u[0]==="h"?n*36e5:u[0]==="m"?n*6e4:n*1e3; return ""; }); }
+  return ok?Math.round(ms):null; }
+const msToGame=ms=>{ const s=Math.round(ms/1e3), d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60), x=s%60, p=n=>String(n).padStart(2,"0"); return `${d?d+"d ":""}${p(h)}:${p(m)}:${p(x)}`; };
 function resEnds(){ const c=(state.research||{}).current; return c&&c.ends?new Date(c.ends):null; }
 const resLeftTxt=ms=>{ if(ms<=0) return "done"; const m=Math.floor(ms/6e4), d=Math.floor(m/1440), h=Math.floor(m%1440/60); return d?`${d}d ${h}h`:`${h}h ${m%60}m`; };
 function resNextPick(){ const c=((state.research||{}).current||{}).n||"", N=resNodes().filter(x=>x.lv<x.max&&x.label!==c);
@@ -157,7 +166,15 @@ function openResCurrentSheet(){ const R=state.research||(state.research={}), c=R
   const opts=resNodes().filter(x=>x.lv<x.max).map(x=>[x.label,x.label]);
   openSheet({title:"Researching now",sub:"Set what's researching and when it finishes.",build(f){
     f.appendChild(fld("Research",{type:"select",value:c.n,options:[["","— none —"]].concat(opts),set:v=>c.n=v}));
-    f.appendChild(fld("Time left (days)",{type:"num",decimal:true,value:"",allowEmpty:true,ph:"e.g. 5.7",set:v=>{ if(v!=="") c.ends=new Date(Date.now()+num(v)*864e5).toISOString(); },hint:"Or tick below when it's done."}));
+    // type the timer exactly as the game shows it: "5d 16:23:18", "16:23:18", "2d 4h 30m" (a plain number = days)
+    const end=resEnds(), left=end&&end>Date.now()?end-Date.now():0;
+    const when=ms=>new Date(Date.now()+ms).toLocaleString(undefined,{weekday:"short",day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
+    const tf=fld("Time left — type it like the game shows",{value:left?msToGame(left):"",ph:"e.g. 5d 16:23:18",set:v=>{ const ms=parseLeft(v);
+        if(ms!=null&&ms>0){ c.ends=new Date(Date.now()+ms).toISOString(); hint.innerHTML=`Finishes <b>${esc(when(ms))}</b> your time`; }
+        else hint.textContent=String(v).trim()?"Type it like 5d 16:23:18, 16:23:18 or 2d 4h 30m":"Or tick below when it's done."; }});
+    const hint=document.createElement("em"); hint.innerHTML=left?`Finishes <b>${esc(when(left))}</b> your time`:"Or tick below when it's done."; tf.appendChild(hint);
+    const ti=tf.querySelector("input"); ti.inputMode="text"; ti.autocapitalize="off"; ti.spellcheck=false;
+    f.appendChild(tf);
     f.appendChild(fld("It's finished — add +1 level",{type:"check",value:false,set:v=>{ if(!v) return; const x=resNodes().find(y=>y.label===c.n); if(x) x.obj[x.key]=Math.min(x.max,x.lv+1); c.n=""; c.ends=""; }}));
   }}); }
 function renderResearch(){ const box=$("#researchBody"); if(!box) return; const R=state.research||{};
