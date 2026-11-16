@@ -20,7 +20,8 @@ let stepFocus=null;
 function renderT11(){
   const act=activePhase(), tgt=computeTarget(), cur=num(state.dust.current), gold=num(state.dust.gold), gT=goldTarget();
   if(!state.ui.t11Open) state.ui.t11Open={};
-  const open=PHASES.filter(ph=>phaseRem(ph)>0&&ph!==act), done=PHASES.filter(ph=>phaseRem(ph)<=0&&ph!==act);
+  const PH=PHASES.slice().sort((a,b)=>byTroop(a,b,p=>p.n)); // display order only — PHASES order still decides which phase is active
+  const open=PH.filter(ph=>phaseRem(ph)>0&&ph!==act), done=PH.filter(ph=>phaseRem(ph)<=0&&ph!==act);
   const core=ph=>sortTree(coreNodes(state[ph.k]),ph.k);
   const tot=ph=>{ const t=phaseTotals(coreNodes(state[ph.k])); return `<div class="kv mt"><span>Dust <b class="gold">${fmt(phaseRem(ph))}</b></span><span>Gold <b>${fmtBig(t.gold)}</b></span><span>Research <b>~${Math.round(t.days)}d</b></span><span>Bread <b>${fmtBig(t.res)}</b></span><span>Wood <b>${fmtBig(t.res)}</b></span><span>Stone <b>${fmtBig(t.stone)}</b></span><span>Iron <b>${fmtBig(t.iron)}</b></span></div>`; };
   const gap=Math.max(0,tgt-cur);
@@ -58,7 +59,7 @@ function buildForecast(){
   paintForecast();
 }
 function renderTroops(){
-  const tc=state.troopCounts; const L=[["inf","Infantry"],["arc","Archer"],["cav","Cavalry"]];
+  const tc=state.troopCounts; const L=TROOP_KEYS;
   $("#troopBody").innerHTML=L.map(([k,l])=>{ const t=tc[k]||{cur:0,tgt:0}, p=pc(num(t.cur),num(t.tgt)), done=num(t.tgt)>0&&num(t.cur)>=num(t.tgt);
     return `<button class="lrow" data-k="${k}" data-l="${l}" style="grid-template-columns:1fr auto"><span style="min-width:0;display:flex;flex-direction:column;gap:6px"><span class="rowb"><span class="lt">${l}</span><span class="mono muted" style="font-size:14px">${fmt(num(t.cur))} / ${fmt(num(t.tgt))}</span></span>${barH(p,done?"ok":"big")}</span><span class="lv">${p.toFixed(0)}%</span></button>`; }).join("");
   bindAll($("#troopBody"),".lrow",b=>openTroopSheet(b.dataset.k,b.dataset.l));

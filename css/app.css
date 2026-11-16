@@ -26,7 +26,7 @@
     --c1:#A86B0C; --c2:#2E7D4F; --c3:#2C6E9B; --c4:#C0392B; --c5:#7B4FC9; --c6:#C2416B; --c7:#B4650A; --c8:#6E5A43;}
 /* Dark */
   :root[data-theme="dark"]{color-scheme:dark;
-    --bg:#141311; --panel:#201E1A; --panel-2:#282521; --field:#191714; --field-line:#6B604F;
+    --bg:#141311; --panel:#201E1A; --panel-2:#282521; --field:#191714; --field-line:#857864;
     --line:#463F35; --line-soft:#332D26;
     --text:#F7F1E6; --muted:#DED4C3; --faint:#BCB19D;
     --gold:#F0B940; --gold-text:#F0B940; --gold-2:#C6922C; --gold-soft:rgba(240,185,64,.13);
@@ -1167,3 +1167,43 @@
   /* event banner tip: tap to read it all */
   .echip.etip{cursor:pointer;font:inherit;font-weight:700;font-size:12px;text-align:left;color:var(--text)}
   .evmode .echip.etip.open{white-space:normal;overflow:visible}
+
+/* ================= round 6: Update all — matrix + aligned list ================= */
+/* ---- Update all: matrix (one header, one row per thing) ---- */
+.qmxw{overflow-x:auto}
+.qmx{border-collapse:collapse}
+.qmx th,.qmx td{padding:3px 4px;text-align:center;vertical-align:middle}
+.qmx thead th{font:600 13px var(--f-body);color:var(--muted);white-space:nowrap;padding-bottom:6px}
+.qmx thead th small{font-weight:500;color:var(--faint)}
+.qmx thead tr:first-child:not(:last-child) th{color:var(--text);font-size:14px;padding-bottom:2px}
+.qmx tbody th{text-align:left;font:600 14px var(--f-body);color:var(--text);white-space:nowrap;padding-right:12px}
+.qmx tbody tr + tr > *{border-top:1px solid var(--line-soft)}
+.qmx svg{width:18px;height:18px;flex:none;color:var(--gold-text)}
+.qmx tbody th, .qti{display:flex;align-items:center;gap:8px}
+.qmx thead .qti{justify-content:center}
+.qmx tbody th{display:table-cell}.qmx tbody th > *{vertical-align:middle}.qmx tbody th svg,.qmx tbody th .hav{margin-right:8px}
+.qmx .gs{border-left:1px solid var(--line);padding-left:12px}
+.qmx input,.qmx select,.qlist input,.qlist select{min-height:40px;padding:6px 8px;border-radius:10px;border:1px solid var(--field-line);background:var(--field);color:var(--text);font-size:16px}
+.qmx input,.qlist input{width:calc(var(--d,3) * 1ch + 20px);font-family:var(--f-mono);font-weight:700;text-align:right}
+.qmx input{text-align:center}
+.qmx select,.qlist select{padding-right:8px}
+.qmx input.atmax,.qlist input.atmax{color:var(--gold-text);border-color:color-mix(in srgb,var(--gold) 45%,var(--field-line))}
+.qnote{margin:8px 0 0;font-size:13px;color:var(--faint)}
+/* ---- Update all: list (label left, input right) ---- */
+.qlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));column-gap:28px}
+.qrow{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid var(--line-soft);min-width:0}
+.qrow .ql{flex:1;min-width:0;font-size:15px;font-weight:600;color:var(--text)}
+.qrow .ql small{display:block;font-weight:500;font-size:13px;color:var(--faint)}
+.qrow input,.qrow select{flex:none}
+.qrow .qu{flex:none;width:34px;font:600 13px var(--f-mono);color:var(--faint)}
+.qlist:has(.qu) .qrow:not(:has(.qu))::after{content:"";width:34px;flex:none}
+@media (max-width:700px){ .qmx .wide{display:none} }
+@media (max-width:400px){ .qmx.hg tbody th span, .qmx.charm tbody th span:not(.qti){display:none} .qmx .gs{padding-left:6px} .qmx th,.qmx td{padding:3px 2px} .qmx tbody th{padding-right:6px} .qmx input{padding:6px 5px;width:calc(var(--d,3) * 1ch + 12px)} .qmx thead .qti{gap:4px} }
+.qlist input:not(.num){text-align:left;font-family:var(--f-body);font-weight:600}
+@media (max-width:360px){ details.fold > .fbody{padding:0 10px 14px} .qmx th,.qmx td{padding:3px 1px} .qmx .gs{padding-left:4px} .qmx tbody th{padding-right:4px} }
+.qmx .abbr{display:none} @media (max-width:360px){ .qmx .full{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)} .qmx .abbr{display:inline} }
+@media (max-width:360px){ .qmx input{padding:6px 4px;width:calc(var(--d,3) * 1ch + 10px)} .qmx tbody th{padding-right:2px} }
+.qmx tbody th .hav{display:inline-block;vertical-align:middle}
+
+  .qpairs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px}
+  @media (max-width:340px){ .qpairs{grid-template-columns:1fr} }

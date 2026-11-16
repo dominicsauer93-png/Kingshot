@@ -586,7 +586,12 @@ function hgCalcCost(r){
 }
 
 /* ---------- hero gear (per-troop drop-downs of piece cards) ---------- */
-const HG_TYPES=["Archer","Infantry","Cavalry"]; // main troop first
+// one troop order everywhere the app lists the three troop types
+const TROOP_ORDER=["Infantry","Cavalry","Archer"];
+const TROOP_KEYS=[["inf","Infantry"],["cav","Cavalry"],["arc","Archer"]];
+const troopOf=s=>TROOP_ORDER.find(t=>new RegExp("^"+t.slice(0,3)+"|\\b"+t.slice(0,3),"i").test(String(s||"")))||"";
+const byTroop=(a,b,f)=>{ const i=x=>{ const k=TROOP_ORDER.indexOf(troopOf(f(x))); return k<0?9:k; }; return i(a)-i(b); };
+const HG_TYPES=TROOP_ORDER;
 const HG_KEYS=[["xp","hgXp","XP"],["fh","hgFh","FH"],["mg","hgMg","Myth"],["mith","hgMith","Mith"]];
 // imbuement milestones: [level, mastery needed, mithril, mythic gear] (optimizer "Imbuement Costs" table)
 const HG_IMB=HG_ASCEND_STEPS.map((x,i)=>[x.lv,10+i,x.mith,x.myth]);
@@ -640,7 +645,6 @@ const CHARM_COSTS=[
 function charmRem(cur,tgt,st){ let g=0,d=0; for(let i=Math.max(0,cur);i<Math.min(22,tgt);i++){ g+=CHARM_COSTS[i][0]; d+=CHARM_COSTS[i][1]; }
   if(st&&cur<tgt&&CHARM_COSTS[cur]){ g-=Math.round(CHARM_COSTS[cur][0]*st/5); d-=Math.round(CHARM_COSTS[cur][1]*st/5); } // each level is 5 stages
   return {g,d}; }
-const CHARM_TYPES=["Archer","Infantry","Cavalry"]; // main troop first
 
 /* ---------- widgets ---------- */
 const WID_COSTS=[5,10,15,20,25,30,35,40,45,50];
