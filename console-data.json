@@ -3426,50 +3426,42 @@
     {
       "n": "Town Center",
       "stepIdx": 5,
-      "note": "",
-      "d": true
+      "note": ""
     },
     {
       "n": "Range",
       "stepIdx": 5,
-      "note": "Archer line — your main combat",
-      "d": false
+      "note": "Archer line — your main combat"
     },
     {
       "n": "War Academy",
       "stepIdx": 11,
-      "note": "Research speed + T11 gate",
-      "d": false
+      "note": "Research speed + T11 gate"
     },
     {
       "n": "Embassy",
       "stepIdx": 7,
-      "note": "Rally/garrison capacity — events",
-      "d": false
+      "note": "Rally/garrison capacity — events"
     },
     {
       "n": "Command Center",
       "stepIdx": 5,
-      "note": "March capacity — rally contribution",
-      "d": false
+      "note": "March capacity — rally contribution"
     },
     {
       "n": "Barracks",
       "stepIdx": 5,
-      "note": "Infantry tanks",
-      "d": false
+      "note": "Infantry tanks"
     },
     {
       "n": "Stable",
       "stepIdx": 5,
-      "note": "Cavalry (off-focus) — defer",
-      "d": false
+      "note": "Cavalry (off-focus) — defer"
     },
     {
       "n": "Infirmary",
       "stepIdx": 10,
-      "note": "Healing sustain — defer, big",
-      "d": true
+      "note": "Healing sustain — defer, big"
     }
   ],
   "resGoal": "T11 Archer promote — 642,962 T10→T11 @ TG6 · 14-day target · short ~124h (5d 4h 17m) combined General+Soldier Training speedup",
