@@ -11,7 +11,7 @@
   "dust": {
     "current": 150,
     "target": 5820,
-    "gold": 851390
+    "gold": 1000000
   },
   "nodes": [
     {
@@ -1804,7 +1804,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1844,7 +1844,7 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Widgets",
-      "Shop": "Free shops",
+      "Shop": "Paid",
       "Governor": "Charms",
       "Progress": "Overview",
       "Town": "Troops"
@@ -1889,7 +1889,8 @@
         "Weekly Benefits — Mythic Governor Charm (week 2)"
       ]
     },
-    "progRange": "all"
+    "progRange": "all",
+    "bagAll": false
   },
   "troopCounts": {
     "inf": {
@@ -3932,7 +3933,7 @@
       }
     ]
   },
-  "shardGeneral": 260,
+  "shardGeneral": 256,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -4018,9 +4019,9 @@
         "2026-10": 358,
         "2026-11": 1555
       },
-      "seen": 260,
+      "seen": 256,
       "log": {
-        "2026-11-17": 260,
+        "2026-11-17": 256,
         "2026-11-16": 231
       }
     }
@@ -4132,24 +4133,24 @@
   "bagCheck": {
     "d": "2026-11-17",
     "v": {
-      "gen": 231,
+      "gen": 256,
       "mg": 5,
-      "mith": 18,
-      "fh": 348,
+      "mith": 19,
+      "fh": 423,
       "m:Gear XP": 0,
-      "m:Lucky chests": 35,
+      "m:Lucky chests": 46,
       "m:Custom Mythic chests": 0,
-      "threads": 509,
-      "m:Satin": 91065,
-      "m:Vision": 715,
-      "designs": 181,
-      "m:Guides": 781,
+      "threads": 549,
+      "m:Satin": 95451,
+      "m:Vision": 725,
+      "designs": 261,
+      "m:Guides": 849,
       "m:Master Emblems": 17,
       "m:Skill books": 3756,
-      "m:Truegold": 340,
-      "m:Tempered TG": 3,
-      "m:TG Dust": 117,
-      "m:Gold": 851390
+      "m:Truegold": 467,
+      "m:Tempered TG": 1,
+      "m:TG Dust": 150,
+      "m:Gold": 1000000
     }
   },
   "noShop": [
