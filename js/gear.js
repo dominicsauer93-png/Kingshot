@@ -145,6 +145,7 @@ function renderWidgets(){
   const total=R.reduce((s,r)=>s+widRem(num(r.lvl)),0), haveSum=R.reduce((s,r)=>s+num(r.have),0);
   const low=widNextRow(); // shared with Home
   $("#widTiles").innerHTML=low?stepTileH("wTot",`Next: ${esc(low.hero)} Lv ${num(low.lvl)} → ${num(low.lvl)+1}`,num(low.have),widNext(num(low.lvl)),total,x=>fmt(x)+" widgets"):tileH({id:"wTot",label:"Widgets (rally heroes)",value:"All maxed",txt:true});
+  $("#widTiles").insertAdjacentHTML("beforeend",tileH({id:"wHave",label:"In hand · rally heroes",value:`${fmt(haveSum)} widgets`,sub:`still needed ${fmt(Math.max(0,total))}`,p:total>0?pc(haveSum,haveSum+total):100}));
   on("wTot",()=>low&&openWidSheet(low));
   const b=$("#widBody");
   const L=w.rows.slice().sort((a,c)=>(!!c.rally)-(!!a.rally)||num(a.lvl)-num(c.lvl));
@@ -244,7 +245,7 @@ function renderPets(){
   const sorted=P.rows.slice().sort((a,c)=>petRank(a)-petRank(c)), act=sorted.filter(r=>!atGoal(r)), mxd=sorted.filter(atGoal);
   b.className="card dcard mt"; b.removeAttribute("style");
   b.innerHTML=`<div class="dch"><h3>Your pets</h3><span class="faint fs13">ranked for a rally leader · tap to edit</span></div>`+act.map(row).join("")+
-    (mxd.length?`<details class="dfold"${state.ui.petMaxOpen?" open":""} id="petMaxFold"><summary>At target (${mxd.length}) ›</summary>${mxd.map(row).join("")}</details>`:"");
+    (mxd.length?`<details class="dfold"${state.ui.petMaxOpen?" open":""} id="petMaxFold"><summary>At target (${mxd.length}) ›</summary><div class="p2grid">${mxd.map(row).join("")}</div></details>`:"");
   const mh=$("#petMaxed"); mh.hidden=true; mh.innerHTML="";
   const pf=$("#petMaxFold"); if(pf) pf.ontoggle=()=>{ state.ui.petMaxOpen=pf.open; scheduleSave(); };
   bindAll(b,".prow",x=>openPetSheet(P.rows[+x.dataset.i]));
@@ -302,17 +303,18 @@ function renderShards(){
   const open=order.filter(x=>!isDone(x.r)), pin=open.filter(x=>x.r.focus), rest=open.filter(x=>!x.r.focus), focus=pin.concat(rest.slice(0,3)), next=rest.slice(3).filter(x=>heroUse(x.r.n)>=15), spare=rest.slice(3).filter(x=>heroUse(x.r.n)<15), done=order.filter(x=>isDone(x.r));
   let rank=0;
   const row=({r,i})=>{ rank++; const h=num(r.have),st=hasStars(r),p=num(r.pos),maxed=st&&p>=SHARD_MAX,nx=st&&!maxed?SHARD_LEAF[p]:0,ready=nx&&h>=nx;
-    return `<div class="shrow2 ${maxed?"done":""}" data-i="${i}">
+    // one tight row: rank · portrait · name + stars over the bar and its count · Have box (Upgrade button when ready)
+    return `<div class="shrow3 ${maxed?"done":""}" data-i="${i}">
       <button class="sh2-id" data-i="${i}" aria-label="Edit ${esc(r.n||"hero")}"><span class="shr-rank">${rank}</span>${heroAv(r.n)}
-        <span class="sh2-who"><span class="sh2-name">${esc(r.n||"Hero")}${r.rally?" "+icoI("sword"):""}</span>
-        <span class="sh2-star">${st?`<span class="gold">${starGlyphs(p)}</span> ${esc(starLabel(p))}`:'<span class="faint">tap to set stars</span>'} <span class="sh2-use">· Use ${heroUse(r.n)}</span></span>${maxed||!st?"":barH(pc(h,nx),ready?"ok":"")}</span></button>
-      <label class="sh2-have">Have <input inputmode="numeric" data-i="${i}" value="${h}" aria-label="${esc(r.n)} shards in hand"></label>
-      <span class="sh2-out">${maxed?'<span class="ok">5★ max ✓</span>':!st?"":ready?`<button class="didit sh2-up" data-i="${i}">Upgrade → ${esc(starLabel(p+1))}</button>`:`<span class="sh2-of"><b>${fmt(h)}</b> / ${fmt(nx)}</span>`}</span></div>`; };
+        <span class="sh3-main"><span class="sh3-top"><b>${esc(r.n||"Hero")}</b>${r.rally?" "+icoI("sword"):""} ${st?`<span class="gold sh3-st">${starGlyphs(p)}</span> <span class="sh3-lb">${esc(starLabel(p))}</span>`:'<span class="faint">tap to set stars</span>'}</span>
+        ${maxed?'<span class="sh3-prog"><span class="ok">5★ max ✓</span></span>':st?`<span class="sh3-prog">${barH(pc(h,nx),ready?"ok":"")}<span class="sh3-of"><b>${fmt(h)}</b>/${fmt(nx)}</span></span>`:""}</span></button>
+      <span class="sh3-act">${ready&&!maxed?`<button class="didit sh2-up" data-i="${i}">→ ${esc(starLabel(p+1))}</button>`:""}<label class="sh2-have"><span class="sr-only">Have</span><input inputmode="numeric" data-i="${i}" value="${h}" aria-label="${esc(r.n)} shards in hand"></label></span></div>`; };
   const grp=(t,sub)=>`<div class="shgrp"><span>${t}</span><small>${sub}</small></div>`;
-  b.innerHTML=(focus.length?grp("Focus now","")+focus.map(row).join(""):"")+
-    (next.length?grp("Next up","")+next.map(row).join(""):"")+
-    (spare.length?`<details class="shfold"${state.ui.shSpare?" open":""} data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"")}</summary>${spare.map(row).join("")}</details>`:"")+
-    (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"")}</summary>${done.map(row).join("")}</details>`:"")||`<div class="empty">No heroes yet — tap “+ Add hero” below.</div>`;
+  const rows=L2=>`<div class="sh3grid">${L2.map(row).join("")}</div>`;
+  b.innerHTML=(focus.length?grp("Focus now","")+rows(focus):"")+
+    (next.length?grp("Next up","")+rows(next):"")+
+    (spare.length?`<details class="shfold"${state.ui.shSpare?" open":""} data-k="shSpare"><summary>${grp(`Spare shards only (${spare.length})`,"")}</summary>${rows(spare)}</details>`:"")+
+    (done.length?`<details class="shfold"${state.ui.shDone?" open":""} data-k="shDone"><summary>${grp(`Done (${done.length})`,"")}</summary>${rows(done)}</details>`:"")||`<div class="empty">No heroes yet — tap “+ Add hero” below.</div>`;
   b.querySelectorAll("details.shfold").forEach(d=>d.ontoggle=()=>{ state.ui[d.dataset.k]=d.open; scheduleSave(); });
   bindAll(b,".sh2-id",x=>openShardSheet(L[+x.dataset.i]));
   bindAll(b,".sh2-up",x=>{ const r=L[+x.dataset.i], p=num(r.pos), snap=JSON.stringify(state); r.pos=p+1; r.have=Math.max(0,num(r.have)-SHARD_LEAF[p]); afterEdit(); toast(`${r.n}: ${starLabel(p+1)} (−${SHARD_LEAF[p]} shards)`,snap); });
