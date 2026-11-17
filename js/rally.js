@@ -260,7 +260,9 @@ const M_TAB={a:{em:[8,16,24,32,40,48,56,64,72,80],pw:86400,buff:"+0.6% Attack + 
   d:{em:[20,40,60,80,100,120,140,160,180,200],pw:144000,buff:"+0.8% Lethality + Health"}};
 const M_TAB_OF={Cassia:"b",Guinevere:"c",Isnor:"c",Olander:"d"}; // best guess — others use the 8-step table
 const mTab=m=>M_TAB[m.ctab||M_TAB_OF[m.n]||"a"];
-const mNextCost=m=>{ if(m.lvlCost!==""&&m.lvlCost!=null&&num(m.lvlCost)) return num(m.lvlCost); const i=Math.floor(num(m.l)/10); return i<10?mTab(m).em[i]:0; };
+// em[k] = Emblems to break through level 10·(k+1). A master sitting on a breakpoint (20, 50 …) still has to break it,
+// so the next cost belongs to that breakpoint: Lv 20 → em[1], Lv 25 → em[2] (break 30). Checked: Catherine Lv 50 = 40, Olander Lv 20 = 40.
+const mNextCost=m=>{ if(m.lvlCost!==""&&m.lvlCost!=null&&num(m.lvlCost)) return num(m.lvlCost); const l=num(m.l); if(l>=100) return 0; const i=Math.max(0,Math.ceil(l/10)-1); return mTab(m).em[i]||0; };
 function mastPlanH(){ const R=mRes(), U=num(R.emblems), rate=num(R.rate), M=state.masters||[], C=M.find(m=>m.n==="Cassia");
   const days=n=>rate>0?Math.ceil(n/rate*7):null, dTxt=n=>{ const x=days(n); return x==null?"set your weekly rate":x<=1?"about 1 day":`about ${x} days`; };
   let cas="";
