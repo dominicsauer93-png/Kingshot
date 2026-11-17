@@ -370,7 +370,7 @@ const grOk=(have,need)=>have>=need?`<span class="ok">${fmt(have)}/${fmt(need)} �
 function grWidgets(n){ const W=(state.widgets&&state.widgets.rows)||[]; return W.filter(r=>r.rally&&num(r.lvl)<10).map(r=>({h:r.hero,lvl:num(r.lvl),have:num(r.have),nd:widNext(num(r.lvl))})).sort((a,b)=>(b.have/b.nd)-(a.have/a.nd)).slice(0,n||3); }
 const GR_PREP=[
   [/eternity/i,e=>{ const n=String((e&&e.note)||""), t=n.match(/Rank 10 needed ([\d.,]+K?)/i), y=n.match(/\(you ([\d.,]+K?)/i);
-    return ["Recall 1 march every 60 s — wait for the ring, common veins only",...(t?[`Top 10 needed ${esc(t[1])} last time${y?` (you ${esc(y[1])})`:""}`]:[])]; }],
+    return ["Recall 1 march every 60 s — wait for the ring, common veins only","Hit Cesares hard and grab every Scattered Copper Ore — that's where rank 10 beat you",...(t?[`Top 10 needed ${esc(t[1])} last time${y?` (you ${esc(y[1])})`:""}`]:[])]; }],
   [/kvk|kingdom of power/i,()=>{ const out=[], pl=(typeof govPlanLeft==="function"?govPlanLeft():[])[0];
     if(pl){ const pc=govPlanPiece(pl), need=pc?govRem(num(pc.cur),pl.to):null; if(need) out.push(`Gov Gear day: ${esc(pl.name)} → ${esc((GOV_TIERS[pl.to]||[""])[0])} · Threads ${grOk(num((state.govGear.have||{}).threads),need.t)} · Satin ${grOk(num((state.govGear.have||{}).satin),need.s)}`); }
     out.push("Save speedups for the matching prep days"); return out; }],
