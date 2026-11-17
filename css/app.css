@@ -1250,7 +1250,7 @@
   }
   /* lists of short rows don't need the full width */
   @media (min-width:1100px){
-    #goldShardBody, #petBody, #mastBody, #govBody, #buildBody, #charmBody{max-width:880px}
+    #govBody, #buildBody, #charmBody{max-width:880px}
   }
   .note-line, .info, .howto, #govPlan{max-width:75ch}
   #themeSeg{max-width:360px}
@@ -1380,3 +1380,31 @@
   .qsaved{font:700 12.5px var(--f-body);color:var(--green);opacity:0;transition:opacity .2s;margin-right:10px}
   .qsaved.on{opacity:1}
   .qmx2{display:grid;grid-template-columns:repeat(2,max-content);gap:0 40px;align-items:start}
+
+/* ================= hero pages: tight rows, two columns on wide screens ================= */
+  .shrow3{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:8px 14px;border-top:1px solid var(--line-soft);min-width:0}
+  .shrow3.done{opacity:.75}
+  .shrow3 .sh2-id{display:flex;align-items:center;gap:10px;min-width:0}
+  .sh3-main{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+  .sh3-top{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;min-width:0;font-size:15px}
+  .sh3-top b{font-weight:700}
+  .sh3-st{font-size:12px;letter-spacing:1px}
+  .sh3-lb{font-size:13px;color:var(--muted)}
+  .sh3-prog{display:flex;align-items:center;gap:8px;min-width:0}
+  .sh3-prog .bar{flex:1;margin:0;min-width:60px}
+  .sh3-of{flex:none;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .sh3-of b{color:var(--text)}
+  .sh3-act{display:flex;align-items:center;gap:8px}
+  .sh3-act .sh2-have input{width:64px;min-height:40px;padding:6px 8px}
+  .sh3-act .didit{padding:6px 10px;min-height:40px;font-size:13px}
+  .shr-rank{flex:none;width:18px;font-size:13px;color:var(--faint);text-align:right}
+  @media (min-width:1100px){
+    .sh3grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px}
+    .sh3grid .shrow3:nth-child(2){border-top:1px solid var(--line-soft)}
+    #widBody, #petBody, #mastBody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px}
+    #widBody > .dch, #petBody > .dch, #petBody > details, #mastBody > .dch{grid-column:1/-1}
+    .p2grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px}
+    #hgBody{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:12px;align-items:start}
+    #hgBody > .card{margin:0} #hgBody > .info{grid-column:1/-1}
+  }
+  details.shfold > summary .shgrp{flex:1}
