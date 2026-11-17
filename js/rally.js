@@ -325,8 +325,8 @@ function mastPlanH(){ const R=mRes(), U=num(R.emblems), rate=num(R.rate), M=stat
     return `<button class="drow mp-r" data-n="${esc(m.n)}"><span class="dt"><b>${esc(m.n)} · ${esc(m.bookNext.what||"next skill")}</b><span>${fmt(n)} books</span></span><span class="u-font-size-13px dv ${ok?"ok":"warn"}">${ok?"ready ✓":`${fmt(n-left)} short`}</span></button>`; }).join("");
   return `<div class="card dcard"><div class="dch"><h3>Master plan</h3><button class="link" id="mpRes">Emblems & books <svg class="ico-inline" aria-hidden="true"><use href="#i-pen"/></svg></button></div>
     <div class="mp-pool"><span><b>${fmt(U)}</b> universal Emblems</span><span><b>${rate?fmt(rate):"?"}</b> a week</span><span><b>${fmt(num(R.books))}</b> skill books</span></div>
-    ${cas}<p class="fmrow">Other masters' levels <span class="faint">· own Emblems never slow Cassia</span></p>${side}
-    ${bk?`<p class="fmrow">Skill books <span class="faint">· best master first</span></p>${bk}`:""}
+    ${cas}<p class="fmrow">Other masters' levels <span class="faint">· own Emblems never slow Cassia</span></p><div class="mpgrid">${side}</div>
+    ${bk?`<p class="fmrow">Skill books <span class="faint">· best master first</span></p><div class="mpgrid">${bk}</div>`:""}
     <p class="dnote">Tap a master to set its own Emblems, next level cost and next book step.</p></div>`; }
 function openMastResSheet(){ const R=mRes(); openSheet({title:"Emblems & books",sub:"Shared master materials.",build(f){
   f.appendChild(fld("Universal Master Emblems",{type:"num",value:R.emblems,get:()=>R.emblems,set:v=>R.emblems=v}));

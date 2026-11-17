@@ -1399,7 +1399,7 @@
   .sh3-act .didit{padding:6px 10px;min-height:40px;font-size:13px}
   .shr-rank{flex:none;width:18px;font-size:13px;color:var(--faint);text-align:right}
   @media (min-width:1100px){
-    .sh3grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px}
+    .sh3grid, .mpgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px}
     .sh3grid .shrow3:nth-child(2){border-top:1px solid var(--line-soft)}
     #widBody, #petBody, #mastBody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:24px}
     #widBody > .dch, #petBody > .dch, #petBody > details, #mastBody > .dch{grid-column:1/-1}
