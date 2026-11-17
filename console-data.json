@@ -753,7 +753,7 @@
     {
       "n": "Charles",
       "need": 463,
-      "have": 0,
+      "have": 8,
       "pos": 22,
       "tgt": 24,
       "rally": false,
@@ -763,7 +763,7 @@
     {
       "n": "Hilde",
       "need": 740,
-      "have": 10,
+      "have": 11,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -772,7 +772,7 @@
     {
       "n": "Marlin",
       "need": 700,
-      "have": 73,
+      "have": 76,
       "pos": 24,
       "tgt": 23,
       "rally": false,
@@ -781,7 +781,7 @@
     {
       "n": "Zoe",
       "need": 600,
-      "have": 13,
+      "have": 16,
       "pos": 24,
       "tgt": 24,
       "rally": false
@@ -789,7 +789,7 @@
     {
       "n": "Jaeger",
       "need": 700,
-      "have": 39,
+      "have": 42,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -798,7 +798,7 @@
     {
       "n": "Eric",
       "need": 700,
-      "have": 29,
+      "have": 30,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -807,7 +807,7 @@
     {
       "n": "Rosa",
       "need": 500,
-      "have": 39,
+      "have": 44,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -815,7 +815,7 @@
     {
       "n": "Petra",
       "need": 500,
-      "have": 40,
+      "have": 52,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -832,7 +832,7 @@
     {
       "n": "Alcar",
       "need": 600,
-      "have": 51,
+      "have": 54,
       "pos": 24,
       "tgt": 24,
       "rally": false
@@ -840,9 +840,9 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 79,
-      "pos": 25,
-      "tgt": 25,
+      "have": 27,
+      "pos": 26,
+      "tgt": 30,
       "rally": false
     },
     {
@@ -873,7 +873,7 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 49,
+      "have": 95,
       "pos": 27,
       "tgt": 27,
       "rally": false
@@ -889,17 +889,17 @@
     {
       "n": "Wee & Woo",
       "need": 0,
-      "have": 1,
-      "pos": 26,
-      "tgt": 24,
+      "have": 95,
+      "pos": 27,
+      "tgt": 30,
       "rally": true
     },
     {
       "n": "Vivian",
       "need": 0,
-      "have": 95,
-      "pos": 24,
-      "tgt": 24,
+      "have": 20,
+      "pos": 25,
+      "tgt": 30,
       "rally": false
     }
   ],
@@ -1843,9 +1843,9 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Shards",
+      "Heroes": "Hero Gear",
       "Shop": "Paid",
-      "Governor": "Masters",
+      "Governor": "Pets",
       "Progress": "Overview",
       "Town": "Buildings"
     },
@@ -1863,7 +1863,7 @@
     "heroAll": true,
     "evOpen": true,
     "shSpare": true,
-    "petMaxOpen": true,
+    "petMaxOpen": false,
     "weekOpen": false,
     "todayAll": true,
     "tierOpen": false,
@@ -3390,7 +3390,7 @@
         "p:Tech": 28960770,
         "p:Pet": 23577960,
         "p:Master": 16027000,
-        "stars": 478
+        "stars": 481
       }
     }
   ],
@@ -3952,7 +3952,7 @@
       }
     ]
   },
-  "shardGeneral": 231,
+  "shardGeneral": 260,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -4036,12 +4036,12 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 1297
+        "2026-11": 1555
       },
-      "seen": 231,
+      "seen": 260,
       "log": {
         "2026-11-16": 231,
-        "2026-11-17": 231
+        "2026-11-17": 260
       }
     }
   },
