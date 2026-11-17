@@ -2387,7 +2387,7 @@
       "power": 1898814
     },
     "Saul": {
-      "type": "Cavalry",
+      "type": "Archer",
       "power": 302960,
       "lvl": 2
     },
@@ -2404,7 +2404,7 @@
       "power": 814230
     },
     "Jaeger": {
-      "type": "Cavalry",
+      "type": "Archer",
       "power": 889410
     },
     "Eric": {
