@@ -85,7 +85,7 @@ function renderMyForms(){ const box=$("#myForms"); if(!box) return; if(!state.fo
     <button class="drow fmrow2" id="fmAdd"><span class="dt"><span class="link">+ Add formation</span></span></button><p class="dnote">Troop mix = Infantry / Cavalry / Archers %. When joining, only the first hero's skill counts. Heroes used in two formations are flagged.</p></div>`;
   box.querySelectorAll(".fmrow2[data-i]").forEach(b=>b.onclick=()=>openFormSheet(F[+b.dataset.i]));
   on("fmAdd",()=>{ const f={n:"New formation",heroes:["","",""],inf:10,cav:10,arc:80,note:""}; F.push(f); afterEdit(); openFormSheet(f); }); }
-function openFormSheet(f){ const mine=[...new Set([...(state.goldShards||[]).map(r=>r.n),...Object.values(TIER_OF).map(t=>t.name),...f.heroes])].filter(Boolean).sort(), opts=[["","— none —"]].concat(mine.map(n=>[n,n+((state.heroInfo&&state.heroInfo[n]&&state.heroInfo[n].type)?` (${state.heroInfo[n].type})`:"")]));
+function openFormSheet(f){ const mine=[...new Set([...(state.goldShards||[]).map(r=>r.n),...Object.values(TIER_OF).map(t=>t.name),...f.heroes])].filter(Boolean).sort(), opts=[["","— none —"]].concat(mine.map(n=>[n,n+(heroType(n)?` (${heroType(n)})`:"")]));
   openSheet({title:f.n||"Formation",sub:"Your lineup and troop mix.",build(fm){
     fm.appendChild(fld("Name",{value:f.n,set:v=>f.n=v,ph:"e.g. Bear lead"}));
     [0,1,2].map(j=>fm.appendChild(fld(j?`Hero ${j+1}`:"Hero 1 — the one whose skill counts when joining",{type:"select",value:f.heroes[j]||"",options:opts,set:v=>f.heroes[j]=v})));
@@ -101,10 +101,10 @@ function renderHeroRoles(){
   const wid=h=>{ const w=((state.widgets&&state.widgets.rows)||[]).find(x=>x.hero===h.n); return w?num(w.lvl):0; }, score=h=>h.pos+2*wid(h);
   const ranked=Object.values(mine).filter(h=>TIER_OF[heroKey(h.n)][role]).sort((a,b)=>TIER_PTS[TIER_OF[heroKey(b.n)][role]]-TIER_PTS[TIER_OF[heroKey(a.n)][role]]||score(b)-score(a));
   // a march takes one hero per troop type — best Infantry, Cavalry and Archer (joiner roles: just the best 3, only their first skill counts)
-  const MARCH=["kvkLead","gar","gar64","bearLead","solo"], tOf=h=>(state.heroInfo&&state.heroInfo[h.n]&&state.heroInfo[h.n].type)||"";
+  const MARCH=["kvkLead","gar","gar64","bearLead","solo"], tOf=h=>heroType(h.n);
   const L=MARCH.includes(role)?HERO_TYPES.map(t=>ranked.find(h=>tOf(h)===t)).filter(Boolean):ranked.slice(0,3);
   // Arena: 5 heroes — 2 Infantry tanks in front, the 3 best others behind
-  const typ=h=>(state.heroInfo&&state.heroInfo[h.n]&&state.heroInfo[h.n].type)||"";
+  const typ=h=>heroType(h.n);
   const fr=role==="arena"?ranked.filter(h=>typ(h)==="Infantry").slice(0,2):[], bk=role==="arena"?ranked.filter(h=>!fr.includes(h)&&typ(h)!=="Infantry").slice(0,5-fr.length):[];
   const hrow=h=>`<div class="drow">${heroAv(h.n)}<span class="dt"><b>${esc(h.n)}${h.rally?` <span class="faint">${icoI("sword")}</span>`:""}</b><span class="u-letter-spacing-1px gold">${starGlyphs(h.pos)}${wid(h)?` <span class="u-letter-spacing-0 faint">· widget Lv ${wid(h)}</span>`:""}</span></span>${trH(TIER_OF[heroKey(h.n)][role])}</div>`;
   const soon=gen8.filter(k=>TIER_OF[k][role]==="S"&&!mine[k]).map(k=>TIER_OF[k].name);
@@ -123,6 +123,51 @@ function renderHeroRoles(){
       return `<tr><td><b>${esc(t.name)}</b>${h&&h.rally?" "+icoI("sword"):""}${s8?' <span class="u-padding-2px-6px-font-size-12px tag plain">soon</span>':""}</td>${HERO_ROLES.map(([r])=>`<td>${trH(t[r])}</td>`).join("")}<td class="cnt">${heroUse(t.name)}</td></tr>`; }).join("")+`</tbody>`;
 }
 
+/* ---------- hero facts: rarity, troop type, generation, what they're for, and their first Expedition skill (the one a joiner adds to a rally).
+   Facts checked against kingshot.net hero pages, 17 Nov 2026 — written in our own words; no images or text copied. ---------- */
+const HERO_DB={ // name: [rarity, troop type, generation, what they're for, joiner skill]
+  "Alcar":["Mythic","Infantry",4,"Hard-hitting infantry; anchors 60/40 garrisons","Every 5 turns: Infantry and Archers take 70% less damage for 2 turns"],
+  "Amadeus":["Mythic","Infantry",1,"VIP hero; the strongest Bear Hunt rally leader","+25% Lethality"],
+  "Amane":["Epic","Archer",1,"Growth hero; worth it as a Bear Hunt joiner","+25% Attack"],
+  "Ava":["Mythic","Cavalry",7,"All-out attack cavalry; leads or joins Bear Hunt","Enemy Defence −25%"],
+  "Charles":["Mythic","Infantry",7,"Defensive infantry; two weak skills — invest with care","Enemy Lethality −20%"],
+  "Chenko":["Epic","Cavalry",1,"Free cavalry; a joiner every alliance wants","+25% Lethality"],
+  "Diana":["Epic","Archer",1,"Free archer; cheaper Stamina for hunting","Governor Stamina cost −20%"],
+  "Diego":["Mythic","Infantry",8,"Hero Roulette infantry; strong skills and a top joiner","+15% Defence, +10% Health"],
+  "Edwin":["Rare","Cavalry",1,"Growth hero for stone; no combat use","Town Quarry output +25%"],
+  "Eric":["Mythic","Infantry",3,"Tank infantry; best garrison leader of his generation","Enemy Attack −20%"],
+  "Fahd":["Epic","Cavalry",1,"Niche cavalry for PvP joining","Enemy damage dealt −20%"],
+  "Forrest":["Rare","Infantry",1,"Growth hero for wood; no combat use","Town Sawmill output +25%"],
+  "Gordon":["Epic","Cavalry",1,"Free cavalry; Health joiner for holding castles","+25% Health"],
+  "Helga":["Mythic","Infantry",1,"VIP hero; second-best Bear Hunt infantry leader","40% chance: 50% less damage taken"],
+  "Hilde":["Mythic","Cavalry",2,"Cavalry healer; a bit better than Jabel","+15% Attack, +10% Defence"],
+  "Howard":["Epic","Infantry",1,"Free infantry; first rally leader and early tank","20% less damage taken"],
+  "Jabel":["Mythic","Cavalry",1,"Free mythic; good in garrisons and early Arena","40% chance: 50% less damage taken"],
+  "Jaeger":["Mythic","Archer",3,"Defensive archer for garrisons; Arena disruptor","20% chance: +40% damage for 3 turns"],
+  "Liz":["Mythic","Cavalry",8,"Cavalry for 60/40 garrisons; area damage in Arena","50% chance each turn: +50% Lethality"],
+  "Long Fei":["Mythic","Infantry",5,"Free infantry for garrisons, PvP rallies, Arena front","40% chance: 50% less damage taken"],
+  "Luna":["Mythic","Archer",8,"Archer for PvP attack rallies, Bear Hunt and Arena","+25% Attack"],
+  "Margot":["Mythic","Cavalry",4,"Cavalry for 60/40 garrisons; Attack joiner","+25% Attack"],
+  "Marlin":["Mythic","Archer",2,"Attack archer; lifts Bear Hunt scores","40% chance: +50% damage"],
+  "Olive":["Rare","Archer",1,"Growth hero for bread","Town Mill output +25%"],
+  "Petra":["Mythic","Cavalry",3,"Free cavalry; Evil Eye keeps her in Bear Hunt","50% chance: enemy takes +50% damage"],
+  "Quinn":["Epic","Archer",1,"Free archer for solo marches and Arena burst","20% less damage taken"],
+  "Rosa":["Mythic","Archer",4,"Free archer; Bear Hunt leader of her generation","40% chance: +50% damage"],
+  "Saul":["Mythic","Archer",1,"Growth hero; faster building all game","+10% Defence, +15% Health"],
+  "Seth":["Rare","Infantry",1,"Growth hero for iron; early second tank","Town Iron output +25%"],
+  "Sophia":["Mythic","Cavalry",6,"Free cavalry for 60/40 garrisons; Arena control","40% chance each turn: 50% less damage taken"],
+  "Thrud":["Mythic","Cavalry",5,"Attack cavalry; her charge hits every troop type","Infantry and Archers: −15% damage taken, +15% dealt"],
+  "Triton":["Mythic","Infantry",6,"Tank infantry; big stats, plain skills","+25% Defence"],
+  "Vivian":["Mythic","Archer",5,"Defensive archer; rare joiner skill","Enemy takes +25% damage"],
+  "Wee & Woo":["Mythic","Archer",7,"Must-have Roulette pair: garrisons, joining, Arena","+15% Attack, +10% Lethality"],
+  "Yang":["Mythic","Archer",6,"Attack archer; leads Bear Hunt, carries Arena back row","Every 4 turns: an extra 100% strike"],
+  "Yeonwoo":["Epic","Archer",1,"Free archer; faster research and a Lethality joiner","+25% Lethality"],
+  "Zoe":["Mythic","Infantry",2,"First free mythic infantry; top garrison leader","20% chance: Sunder (damage over 3 turns)"]
+};
+const heroDb=n=>{ const x=HERO_DB[n]||Object.entries(HERO_DB).find(([k])=>heroKey(k)===heroKey(n))?.[1]; return x?{rarity:x[0],type:x[1],gen:x[2],role:x[3],join:x[4]}:null; };
+// troop type: your own setting first, else the hero's known type
+const heroType=n=>(state.heroInfo&&state.heroInfo[n]&&state.heroInfo[n].type)||(heroDb(n)||{}).type||"";
+
 /* ---------- hero avatar badge: initial, coloured by troop type ---------- */
 const AV_COL={Infantry:"av-i",Archer:"av-a",Cavalry:"av-c"};
 // hero portraits cropped from the game's hero list (heroes/img/<slug>.webp); a letter tile for anyone without one
@@ -130,7 +175,7 @@ const HERO_IMG=new Set(["alcar", "amadeus", "amane", "ava", "charles", "chenko",
 // the hero a line is about (name at the start), for a portrait next to it
 const heroIn=t=>{ const x=String(t||"").replace(/<[^>]+>/g,"").trim().toLowerCase(); return [...HERO_IMG].map(k=>[k,k.replace(/-/g," ")]).sort((a,b)=>b[1].length-a[1].length).find(([k,n])=>x.startsWith(n)||x.startsWith(n.replace(" "," & ")))?.[0]||""; };
 const heroAvSm=n=>{ const k=slug(n||""); return HERO_IMG.has(k)?`<img class="hav sm" src="heroes/img/${k}.webp" alt="" width="28" height="28" loading="lazy" decoding="async">`:""; };
-const heroAv=n=>{ const t=(state.heroInfo&&state.heroInfo[n]&&state.heroInfo[n].type)||"", k=slug(n||"");
+const heroAv=n=>{ const t=heroType(n), k=slug(n||"");
   if(HERO_IMG.has(k)) return `<img class="hav ${AV_COL[t]||""}" src="heroes/img/${k}.webp" alt="" width="40" height="40" loading="lazy" decoding="async">`;
   return `<span class="hav ${AV_COL[t]||""}" aria-hidden="true">${esc(String(n||"?").replace(/[^A-Za-z]/g,"").slice(0,1)||"?")}</span>`; };
 
@@ -151,21 +196,25 @@ function heroFacts(n){
   else if(wr&&wNext&&wHave>=wNext) next=`<span class="ok">Ready:</span> widget Lv ${wl} → ${wl+1}`;
   else { const opts=[]; if(st!=null&&nextCost) opts.push([nextCost-have,`${fmt(nextCost-have)} shards to ${esc(starLabel(st+1))}`]); if(wr&&wNext) opts.push([wNext-wHave,`${fmt(wNext-wHave)} widgets to Lv ${wl+1}`]);
     opts.sort((a,b)=>a[0]-b[0]); next=opts.length?"Closest: "+opts[0][1]:st!=null&&st>=SHARD_MAX?"5★ max ✓":"Set stars on the Shards page"; }
-  return {sr,wr,t,info,st,have,nextCost,shortAll,wl,wNext,wHave,S,next,use:heroUse(n),gear:info.type?heroGearSum(info.type):null};
+  const type=heroType(n);
+  return {sr,wr,t,info,type,db:heroDb(n),st,have,nextCost,shortAll,wl,wNext,wHave,S,next,use:heroUse(n),gear:type?heroGearSum(type):null};
 }
 function heroCardH(n,rank){ const f=heroFacts(n); // one row: badge, name + stars, the one next thing, use score
-  return `<button class="drow hrow hcard" data-h="${esc(n)}">${heroAv(n)}<span class="dt"><b>${esc(n)}${f.sr&&f.sr.rally?` <span class="faint">${icoI("sword")}</span>`:""} <span class="gold hstars">${f.st!=null?starGlyphs(f.st):""}</span></b><span>${f.st!=null?esc(starLabel(f.st)):"stars not set"}${f.info.type?` · ${esc(f.info.type)}`:""}${f.wr?` · widget ${f.wl}`:""}</span><span class="hnext2">${f.next}</span></span><span class="dv${f.use>=25?" ok":""}">${f.use}<small>use</small></span></button>`; }
+  return `<button class="drow hrow hcard" data-h="${esc(n)}">${heroAv(n)}<span class="dt"><b>${esc(n)}${f.sr&&f.sr.rally?` <span class="faint">${icoI("sword")}</span>`:""} <span class="gold hstars">${f.st!=null?starGlyphs(f.st):""}</span></b><span>${f.st!=null?esc(starLabel(f.st)):"stars not set"}${f.type?` · ${esc(f.type)}`:""}${f.db?` · Gen ${f.db.gen}`:""}${f.wr?` · widget ${f.wl}`:""}</span><span class="hnext2">${f.next}</span></span><span class="dv${f.use>=25?" ok":""}">${f.use}<small>use</small></span></button>`; }
 function renderHeroCards(){
   const mine=Object.values(heroRoster()).sort((a,b)=>heroUse(b.n)-heroUse(a.n)||b.pos-a.pos), all=!!state.ui.heroAll, L=all?mine:mine.slice(0,6);
   const hc=$("#heroCards"); hc.className="card dcard"; hc.removeAttribute("style");
   hc.innerHTML=`<div class="dch"><h3>Your heroes</h3><span class="faint fs13">most used first</span></div>`+(L.map((h,i)=>heroCardH(h.n,i+1)).join("")||`<p class="dnote">Add heroes on the Shards page.</p>`);
+  const g8=HERO_GEN8.filter(n=>!heroRoster()[heroKey(n)]).map(n=>[n,heroDb(n)]).filter(([,d])=>d);
+  if(g8.length) hc.innerHTML+=`<div class="dch mt"><h3>Coming in Gen 8</h3><span class="faint fs13">~7 Dec 2026</span></div>`+g8.map(([n,d])=>`<div class="drow">${heroAv(n)}<span class="dt"><b>${esc(n)}</b><span>${esc(d.rarity)} ${esc(d.type)} · ${esc(d.role)}</span><span class="faint">Joiner skill: ${esc(d.join)}</span></span></div>`).join("");
   bindAll($("#heroCards"),".hcard",b=>openHeroSheet(b.dataset.h));
   const m=$("#heroMore"); m.hidden=mine.length<=6; m.textContent=all?"Show top 6":`Show all ${mine.length} heroes`; m.onclick=()=>{ state.ui.heroAll=!all; scheduleSave(); renderHeroCards(); };
 }
 function openHeroSheet(n){
   openSheet({title:n,sub:"Stars, shards, widget and troop type — all in one place.",build(f){
-    const info=heroInfo(n), sr=shardRow(n);
-    f.appendChild(frow(fld("Troop type",{type:"select",value:info.type||"",options:[["","— not set —"]].concat(HERO_TYPES.map(t=>[t,t])),set:v=>{ if(v) info.type=v; else delete info.type; }}),
+    const info=heroInfo(n), sr=shardRow(n), db=heroDb(n);
+    if(db){ const ab=infoBox(); ab.innerHTML=`<b>${esc(db.rarity)} ${esc(db.type)} · Gen ${db.gen}</b> — ${esc(db.role)}.<br><b>Joiner skill:</b> ${esc(db.join)}`; f.appendChild(ab); }
+    f.appendChild(frow(fld("Troop type",{type:"select",value:info.type||"",options:[["",db?`Auto: ${db.type}`:"— not set —"]].concat(HERO_TYPES.map(t=>[t,t])),set:v=>{ if(v) info.type=v; else delete info.type; }}),
       sr?fld("Rally hero ⚔",{type:"check",value:sr.rally,set:v=>sr.rally=v}):document.createElement("span")));
     if(sr){ f.appendChild(frow(fld("Star tier now",{type:"select",value:hasStars(sr)?String(num(sr.pos)):"",options:(hasStars(sr)?[]:[["","— not set —"]]).concat(STAR_OPTS),set:v=>{ sr.pos=v===""?null:parseInt(v,10); if(sr.tgt==null) sr.tgt=SHARD_MAX; }}),
       fld("Hero shards in hand",{type:"num",value:sr.have,get:()=>sr.have,set:v=>sr.have=v}))); }
@@ -181,7 +230,7 @@ function openHeroSheet(n){
     const rf=()=>{ const x=heroFacts(n);
       inf.innerHTML=`<b>Next:</b> ${x.next}<br>`+
         (x.sr&&x.st!=null?`<b>Shards:</b> ${x.st>=SHARD_MAX?"5★ max ✓":`next step ${x.nextCost} · to ${esc(starLabel(x.sr.tgt==null?SHARD_MAX:num(x.sr.tgt)))}: ${fmt(x.shortAll)} short`}<br>`:"")+
-        (x.gear?`<b>${esc(x.info.type)} hero gear:</b> avg Lv ${x.gear.avg}, ${x.gear.red}/${x.gear.n} red · lowest ${esc(x.gear.low.slot)} Lv ${num(x.gear.low.lvC)}<br>`:"")+
+        (x.gear?`<b>${esc(x.type)} hero gear:</b> avg Lv ${x.gear.avg}, ${x.gear.red}/${x.gear.n} red · lowest ${esc(x.gear.low.slot)} Lv ${num(x.gear.low.lvC)}<br>`:"")+
         `<b>Use score:</b> ${x.use}/40<div class="u-7a6ae2 hroles">${HERO_ROLES.map(([r,,sh])=>`<span>${trH(x.t[r])} ${esc(sh)}</span>`).join("")}</div>`; };
     rf(); return rf; }});
 }
