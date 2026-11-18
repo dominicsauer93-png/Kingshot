@@ -9,9 +9,9 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 150,
+    "current": 217,
     "target": 5820,
-    "gold": 1000000
+    "gold": 1040000
   },
   "nodes": [
     {
@@ -753,7 +753,7 @@
     {
       "n": "Charles",
       "need": 463,
-      "have": 8,
+      "have": 10,
       "pos": 22,
       "tgt": 24,
       "rally": false,
@@ -840,7 +840,7 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 27,
+      "have": 29,
       "pos": 26,
       "tgt": 30,
       "rally": false
@@ -889,8 +889,8 @@
     {
       "n": "Wee & Woo",
       "need": 0,
-      "have": 95,
-      "pos": 27,
+      "have": 1,
+      "pos": 28,
       "tgt": 30,
       "rally": true
     },
@@ -1108,7 +1108,7 @@
       "note": "Best for Archers · Attack research\nKindred Soul: +15% Lethality + Health\nNEXT: level 40 → 50 (needs Emblems)\nSkills: Combat skill 2 still locked",
       "skills": [
         {
-          "l": 5,
+          "l": 7,
           "t": "g"
         },
         {
@@ -1116,7 +1116,7 @@
           "t": "c"
         },
         {
-          "l": 1,
+          "l": 3,
           "t": "g"
         },
         {
@@ -1125,7 +1125,11 @@
         }
       ],
       "em": 0,
-      "lvlCost": ""
+      "lvlCost": "",
+      "bookNext": {
+        "what": "",
+        "books": ""
+      }
     },
     {
       "n": "Catherine",
@@ -1146,7 +1150,7 @@
           "t": "g"
         },
         {
-          "l": 0,
+          "l": 1,
           "t": "g"
         }
       ],
@@ -1696,17 +1700,17 @@
     }
   ],
   "tg": {
-    "have": 467,
+    "have": 624,
     "need": 2202,
-    "ttgHave": 1,
+    "ttgHave": 3,
     "ttgNeed": 251
   },
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 95451,
-      "threads": 549,
-      "vision": 725
+      "satin": 113395,
+      "threads": 691,
+      "vision": 765
     },
     "pieces": [
       {
@@ -1843,11 +1847,11 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Formations",
+      "Heroes": "Shards",
       "Shop": "Paid",
-      "Governor": "Masters",
+      "Governor": "Gov Gear",
       "Progress": "Overview",
-      "Town": "Buildings"
+      "Town": "Resources"
     },
     "t11Open": {
       "nodes": false,
@@ -1855,7 +1859,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Mystic": true
+      "Buildings": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1863,7 +1867,7 @@
     "heroAll": true,
     "evOpen": true,
     "shSpare": true,
-    "petMaxOpen": false,
+    "petMaxOpen": true,
     "weekOpen": false,
     "todayAll": true,
     "tierOpen": false,
@@ -1876,9 +1880,9 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "All",
+    "upF": "Town",
     "bvAll": true,
-    "roleSel": "gar64",
+    "roleSel": "arena",
     "bcMore": true,
     "bvSkip": {
       "2026-11": [
@@ -1889,7 +1893,8 @@
         "Weekly Benefits — Mythic Governor Charm (week 2)"
       ]
     },
-    "t11More": false
+    "progRange": "all",
+    "bagAll": false
   },
   "troopCounts": {
     "inf": {
@@ -2128,8 +2133,8 @@
   "charms": {
     "targetLvl": 10,
     "have": {
-      "guides": 849,
-      "designs": 261
+      "guides": 768,
+      "designs": 61
     },
     "rows": [
       {
@@ -2168,63 +2173,63 @@
       {
         "type": "Infantry",
         "lvl": 7,
-        "tgt": 7,
+        "tgt": 9,
         "st": 1
       },
       {
         "type": "Infantry",
         "lvl": 7,
-        "tgt": 7
+        "tgt": 9
       },
       {
         "type": "Infantry",
         "lvl": 7,
-        "tgt": 7
+        "tgt": 9
       },
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 7
+        "tgt": 9
       },
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 7
+        "tgt": 9
       },
       {
         "type": "Infantry",
         "lvl": 6,
-        "tgt": 7
+        "tgt": 9
       },
       {
         "type": "Archer",
         "lvl": 6,
-        "tgt": 7
+        "tgt": 9
       },
       {
         "type": "Archer",
         "lvl": 6,
-        "tgt": 7
+        "tgt": 9
       },
       {
         "type": "Archer",
         "lvl": 6,
-        "tgt": 7
+        "tgt": 9
       },
       {
         "type": "Archer",
         "lvl": 9,
-        "tgt": 10
+        "tgt": 9
       },
       {
         "type": "Archer",
         "lvl": 7,
-        "tgt": 7
+        "tgt": 9
       },
       {
         "type": "Archer",
         "lvl": 6,
-        "tgt": 7
+        "tgt": 9
       }
     ],
     "plan": [
@@ -3314,27 +3319,7 @@
       }
     },
     {
-      "d": "2026-11-13",
-      "v": {
-        "power": 345186621,
-        "leth": 74.3,
-        "hp": 69.1,
-        "attWR": 36.61,
-        "defWR": 91.83,
-        "p:Building": 9650743,
-        "p:Troop": 194666004,
-        "p:Hero": 34434630,
-        "p:Hero Gear": 15386394,
-        "p:Governor Gear": 9461520,
-        "p:Governor Charm": 13021600,
-        "p:Tech": 28960770,
-        "p:Pet": 23577960,
-        "p:Master": 16027000,
-        "stars": 478
-      }
-    },
-    {
-      "d": "2026-11-15",
+      "d": "2026-11-14",
       "v": {
         "power": 345186621,
         "leth": 74.3,
@@ -3356,16 +3341,16 @@
     {
       "d": "2026-11-16",
       "v": {
-        "power": 345186621,
+        "power": 352615714,
         "leth": 74.3,
         "hp": 69.1,
         "attWR": 36.61,
         "defWR": 91.83,
-        "p:Building": 9650743,
-        "p:Troop": 194666004,
+        "p:Building": 9728483,
+        "p:Troop": 199332818,
         "p:Hero": 34434630,
         "p:Hero Gear": 15386394,
-        "p:Governor Gear": 9461520,
+        "p:Governor Gear": 9522720,
         "p:Governor Charm": 13021600,
         "p:Tech": 28960770,
         "p:Pet": 23577960,
@@ -3410,7 +3395,7 @@
         "p:Tech": 28960770,
         "p:Pet": 23577960,
         "p:Master": 16027000,
-        "stars": 481
+        "stars": 482
       }
     }
   ],
@@ -3878,11 +3863,11 @@
   "masterNotesV": 2,
   "pets": {
     "have": {
-      "food": 30760,
-      "manuals": 1660,
-      "potions": 74,
-      "tmCommon": 25,
-      "tmAdv": 5,
+      "food": 0,
+      "manuals": 1706,
+      "potions": 80,
+      "tmCommon": 0,
+      "tmAdv": 0,
       "medals": 0
     },
     "rows": [
@@ -3942,7 +3927,7 @@
       },
       {
         "n": "Alpha Black Panther",
-        "lvl": 84,
+        "lvl": 87,
         "tgt": 0,
         "max": 100
       },
@@ -3972,7 +3957,7 @@
       }
     ]
   },
-  "shardGeneral": 256,
+  "shardGeneral": 270,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -4000,8 +3985,8 @@
       },
       "seen": 5,
       "log": {
-        "2026-11-16": 5,
         "2026-11-17": 5,
+        "2026-11-16": 5,
         "2026-11-18": 5
       }
     },
@@ -4013,8 +3998,8 @@
       },
       "seen": 19,
       "log": {
-        "2026-11-16": 18,
         "2026-11-17": 19,
+        "2026-11-16": 18,
         "2026-11-18": 19
       }
     },
@@ -4022,26 +4007,26 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 580,
-        "2026-11": 4362
+        "2026-11": 5047
       },
-      "seen": 549,
+      "seen": 691,
       "log": {
-        "2026-11-16": 509,
         "2026-11-17": 549,
-        "2026-11-18": 549
+        "2026-11-16": 509,
+        "2026-11-18": 691
       }
     },
     "designs": {
       "since": "2026-10-26",
       "got": {
         "2026-10": 608,
-        "2026-11": 41646
+        "2026-11": 41701
       },
-      "seen": 261,
+      "seen": 61,
       "log": {
-        "2026-11-16": 181,
         "2026-11-17": 261,
-        "2026-11-18": 261
+        "2026-11-16": 181,
+        "2026-11-18": 61
       }
     },
     "fh": {
@@ -4052,8 +4037,8 @@
       },
       "seen": 423,
       "log": {
-        "2026-11-16": 348,
         "2026-11-17": 423,
+        "2026-11-16": 348,
         "2026-11-18": 423
       }
     },
@@ -4061,13 +4046,13 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 1555
+        "2026-11": 1823
       },
-      "seen": 256,
+      "seen": 270,
       "log": {
-        "2026-11-16": 231,
         "2026-11-17": 256,
-        "2026-11-18": 256
+        "2026-11-16": 231,
+        "2026-11-18": 270
       }
     }
   },
@@ -4800,8 +4785,8 @@
   "pgPending": [],
   "webMonthly": true,
   "masterRes": {
-    "emblems": 17,
-    "books": 3756,
+    "emblems": 13,
+    "books": 1976,
     "rate": "",
     "seen": "2026-11-09"
   },
