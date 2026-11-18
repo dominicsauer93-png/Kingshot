@@ -1751,7 +1751,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-11-18",
+    "routineDate": "2026-11-19",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1843,14 +1843,14 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
+      "Data": "Update all",
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
-      "Shop": "Free shops",
+      "Heroes": "Widgets",
+      "Shop": "Paid",
       "Governor": "Charms",
-      "Progress": "Mystic Trials",
+      "Progress": "Overview",
       "Town": "Troops"
     },
     "t11Open": {
@@ -1880,7 +1880,7 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "All",
+    "upF": "Town",
     "bvAll": true,
     "roleSel": "arena",
     "bcMore": true,
@@ -1892,7 +1892,9 @@
         "Weekly Benefits — Mythic Governor Charm (week 1)",
         "Weekly Benefits — Mythic Governor Charm (week 2)"
       ]
-    }
+    },
+    "progRange": "all",
+    "bagAll": false
   },
   "troopCounts": {
     "inf": {
@@ -3342,18 +3344,18 @@
       }
     },
     {
-      "d": "2026-11-15",
+      "d": "2026-11-16",
       "v": {
-        "power": 345186621,
+        "power": 352615714,
         "leth": 74.3,
         "hp": 69.1,
         "attWR": 36.61,
         "defWR": 91.83,
-        "p:Building": 9650743,
-        "p:Troop": 194666004,
+        "p:Building": 9728483,
+        "p:Troop": 199332818,
         "p:Hero": 34434630,
         "p:Hero Gear": 15386394,
-        "p:Governor Gear": 9461520,
+        "p:Governor Gear": 9522720,
         "p:Governor Charm": 13021600,
         "p:Tech": 28960770,
         "p:Pet": 23577960,
@@ -3362,7 +3364,27 @@
       }
     },
     {
-      "d": "2026-11-18",
+      "d": "2026-11-17",
+      "v": {
+        "power": 352615714,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 36.61,
+        "defWR": 91.83,
+        "p:Building": 9728483,
+        "p:Troop": 199332818,
+        "p:Hero": 34434630,
+        "p:Hero Gear": 15386394,
+        "p:Governor Gear": 9522720,
+        "p:Governor Charm": 13021600,
+        "p:Tech": 28960770,
+        "p:Pet": 23577960,
+        "p:Master": 16027000,
+        "stars": 481
+      }
+    },
+    {
+      "d": "2026-11-19",
       "v": {
         "power": 352615714,
         "leth": 74.3,
@@ -3968,9 +3990,9 @@
       },
       "seen": 7,
       "log": {
-        "2026-11-18": 7,
         "2026-11-17": 5,
-        "2026-11-16": 5
+        "2026-11-16": 5,
+        "2026-11-18": 7
       }
     },
     "mith": {
@@ -3981,9 +4003,9 @@
       },
       "seen": 19,
       "log": {
-        "2026-11-18": 19,
         "2026-11-17": 19,
-        "2026-11-16": 18
+        "2026-11-16": 18,
+        "2026-11-18": 19
       }
     },
     "threads": {
@@ -3994,9 +4016,9 @@
       },
       "seen": 691,
       "log": {
-        "2026-11-18": 691,
         "2026-11-17": 549,
-        "2026-11-16": 509
+        "2026-11-16": 509,
+        "2026-11-18": 691
       }
     },
     "designs": {
@@ -4007,9 +4029,9 @@
       },
       "seen": 61,
       "log": {
-        "2026-11-18": 61,
         "2026-11-17": 261,
-        "2026-11-16": 181
+        "2026-11-16": 181,
+        "2026-11-18": 61
       }
     },
     "fh": {
@@ -4020,9 +4042,9 @@
       },
       "seen": 423,
       "log": {
-        "2026-11-18": 423,
         "2026-11-17": 423,
-        "2026-11-16": 348
+        "2026-11-16": 348,
+        "2026-11-18": 423
       }
     },
     "gen": {
@@ -4033,9 +4055,9 @@
       },
       "seen": 270,
       "log": {
-        "2026-11-18": 270,
         "2026-11-17": 256,
-        "2026-11-16": 231
+        "2026-11-16": 231,
+        "2026-11-18": 270
       }
     }
   },
