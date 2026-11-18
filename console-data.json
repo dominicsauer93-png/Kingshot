@@ -1747,7 +1747,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-11-17",
+    "routineDate": "2026-11-18",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1804,7 +1804,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1843,11 +1843,11 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
+      "Heroes": "Formations",
       "Shop": "Paid",
-      "Governor": "Charms",
+      "Governor": "Masters",
       "Progress": "Overview",
-      "Town": "Troops"
+      "Town": "Buildings"
     },
     "t11Open": {
       "nodes": false,
@@ -1855,7 +1855,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Bag": true
+      "Mystic": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -1863,7 +1863,7 @@
     "heroAll": true,
     "evOpen": true,
     "shSpare": true,
-    "petMaxOpen": true,
+    "petMaxOpen": false,
     "weekOpen": false,
     "todayAll": true,
     "tierOpen": false,
@@ -1876,9 +1876,9 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "Town",
+    "upF": "All",
     "bvAll": true,
-    "roleSel": "arena",
+    "roleSel": "gar64",
     "bcMore": true,
     "bvSkip": {
       "2026-11": [
@@ -1889,8 +1889,7 @@
         "Weekly Benefits — Mythic Governor Charm (week 2)"
       ]
     },
-    "progRange": "all",
-    "bagAll": false
+    "t11More": false
   },
   "troopCounts": {
     "inf": {
@@ -3315,7 +3314,27 @@
       }
     },
     {
-      "d": "2026-11-14",
+      "d": "2026-11-13",
+      "v": {
+        "power": 345186621,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 36.61,
+        "defWR": 91.83,
+        "p:Building": 9650743,
+        "p:Troop": 194666004,
+        "p:Hero": 34434630,
+        "p:Hero Gear": 15386394,
+        "p:Governor Gear": 9461520,
+        "p:Governor Charm": 13021600,
+        "p:Tech": 28960770,
+        "p:Pet": 23577960,
+        "p:Master": 16027000,
+        "stars": 478
+      }
+    },
+    {
+      "d": "2026-11-15",
       "v": {
         "power": 345186621,
         "leth": 74.3,
@@ -3337,6 +3356,26 @@
     {
       "d": "2026-11-16",
       "v": {
+        "power": 345186621,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 36.61,
+        "defWR": 91.83,
+        "p:Building": 9650743,
+        "p:Troop": 194666004,
+        "p:Hero": 34434630,
+        "p:Hero Gear": 15386394,
+        "p:Governor Gear": 9461520,
+        "p:Governor Charm": 13021600,
+        "p:Tech": 28960770,
+        "p:Pet": 23577960,
+        "p:Master": 16027000,
+        "stars": 478
+      }
+    },
+    {
+      "d": "2026-11-17",
+      "v": {
         "power": 352615714,
         "leth": 74.3,
         "hp": 69.1,
@@ -3351,11 +3390,11 @@
         "p:Tech": 28960770,
         "p:Pet": 23577960,
         "p:Master": 16027000,
-        "stars": 478
+        "stars": 481
       }
     },
     {
-      "d": "2026-11-17",
+      "d": "2026-11-18",
       "v": {
         "power": 352615714,
         "leth": 74.3,
@@ -3961,8 +4000,9 @@
       },
       "seen": 5,
       "log": {
+        "2026-11-16": 5,
         "2026-11-17": 5,
-        "2026-11-16": 5
+        "2026-11-18": 5
       }
     },
     "mith": {
@@ -3973,8 +4013,9 @@
       },
       "seen": 19,
       "log": {
+        "2026-11-16": 18,
         "2026-11-17": 19,
-        "2026-11-16": 18
+        "2026-11-18": 19
       }
     },
     "threads": {
@@ -3985,8 +4026,9 @@
       },
       "seen": 549,
       "log": {
+        "2026-11-16": 509,
         "2026-11-17": 549,
-        "2026-11-16": 509
+        "2026-11-18": 549
       }
     },
     "designs": {
@@ -3997,8 +4039,9 @@
       },
       "seen": 261,
       "log": {
+        "2026-11-16": 181,
         "2026-11-17": 261,
-        "2026-11-16": 181
+        "2026-11-18": 261
       }
     },
     "fh": {
@@ -4009,8 +4052,9 @@
       },
       "seen": 423,
       "log": {
+        "2026-11-16": 348,
         "2026-11-17": 423,
-        "2026-11-16": 348
+        "2026-11-18": 423
       }
     },
     "gen": {
@@ -4021,8 +4065,9 @@
       },
       "seen": 256,
       "log": {
+        "2026-11-16": 231,
         "2026-11-17": 256,
-        "2026-11-16": 231
+        "2026-11-18": 256
       }
     }
   },
