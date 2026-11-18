@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Upgrade",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1848,7 +1848,7 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Widgets",
-      "Shop": "Paid",
+      "Shop": "Free shops",
       "Governor": "Gov Gear",
       "Progress": "Overview",
       "Town": "Resources"
@@ -1880,7 +1880,7 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "Town",
+    "upF": "All",
     "bvAll": true,
     "roleSel": "arena",
     "bcMore": true,
