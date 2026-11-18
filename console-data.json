@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1847,7 +1847,7 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
+      "Heroes": "Hero Gear",
       "Shop": "Free shops",
       "Governor": "Gov Gear",
       "Progress": "Overview",
@@ -1880,7 +1880,7 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "All",
+    "upF": "Town",
     "bvAll": true,
     "roleSel": "arena",
     "bcMore": true,
@@ -1918,7 +1918,7 @@
     "have": {
       "xp": 0,
       "fh": 423,
-      "mg": 5,
+      "mg": 7,
       "mith": 19
     },
     "rows": [
@@ -2104,7 +2104,7 @@
     ],
     "planDate": "2026-10-23",
     "chests": {
-      "lucky": 46,
+      "lucky": 0,
       "custom": 0,
       "log": [
         {
@@ -2126,6 +2126,11 @@
           "d": "2026-11-11",
           "opened": 27,
           "mythic": 0
+        },
+        {
+          "d": "2026-11-18",
+          "opened": 63,
+          "mythic": 2
         }
       ]
     }
@@ -3981,13 +3986,13 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 6,
-        "2026-11": 6
+        "2026-11": 8
       },
-      "seen": 5,
+      "seen": 7,
       "log": {
         "2026-11-17": 5,
         "2026-11-16": 5,
-        "2026-11-18": 5
+        "2026-11-18": 7
       }
     },
     "mith": {
@@ -4158,6 +4163,10 @@
     {
       "d": "2026-11-16",
       "t": "New pack removed"
+    },
+    {
+      "d": "2026-11-18",
+      "t": "Logged 63 chests → 2 Mythic"
     }
   ],
   "bagCheck": {
