@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1851,7 +1851,7 @@
       "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Overview",
-      "Town": "Buildings"
+      "Town": "Troops"
     },
     "t11Open": {
       "nodes": false,
