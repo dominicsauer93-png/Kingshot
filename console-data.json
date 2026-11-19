@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1847,9 +1847,9 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Widgets",
+      "Heroes": "Hero Gear",
       "Shop": "Paid",
-      "Governor": "Gov Gear",
+      "Governor": "Masters",
       "Progress": "Overview",
       "Town": "Buildings"
     },
@@ -1918,7 +1918,7 @@
     "have": {
       "xp": 0,
       "fh": 674,
-      "mg": 7,
+      "mg": 9,
       "mith": 21
     },
     "rows": [
@@ -2130,6 +2130,11 @@
         {
           "d": "2026-11-18",
           "opened": 63,
+          "mythic": 2
+        },
+        {
+          "d": "2026-11-19",
+          "opened": 149,
           "mythic": 2
         }
       ]
@@ -3986,14 +3991,14 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 6,
-        "2026-11": 8
+        "2026-11": 10
       },
-      "seen": 7,
+      "seen": 9,
       "log": {
         "2026-11-17": 5,
         "2026-11-16": 5,
         "2026-11-18": 7,
-        "2026-11-19": 7
+        "2026-11-19": 9
       }
     },
     "mith": {
@@ -4173,6 +4178,10 @@
     {
       "d": "2026-11-18",
       "t": "Logged 63 chests → 2 Mythic"
+    },
+    {
+      "d": "2026-11-19",
+      "t": "Logged 149 chests → 2 Mythic"
     }
   ],
   "bagCheck": {
