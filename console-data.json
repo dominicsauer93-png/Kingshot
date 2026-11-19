@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Governor",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1849,7 +1849,7 @@
       "Plan": "Shop guide",
       "Heroes": "Widgets",
       "Shop": "Paid",
-      "Governor": "Charms",
+      "Governor": "Masters",
       "Progress": "Overview",
       "Town": "Troops"
     },
@@ -4176,26 +4176,26 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-11-17",
+    "d": "2026-11-19",
     "v": {
-      "gen": 256,
-      "mg": 5,
-      "mith": 19,
-      "fh": 423,
+      "gen": 270,
+      "mg": 7,
+      "mith": 21,
+      "fh": 457,
       "m:Gear XP": 0,
-      "m:Lucky chests": 46,
+      "m:Lucky chests": 0,
       "m:Custom Mythic chests": 0,
-      "threads": 549,
-      "m:Satin": 95451,
-      "m:Vision": 725,
-      "designs": 261,
-      "m:Guides": 849,
-      "m:Master Emblems": 17,
-      "m:Skill books": 3756,
-      "m:Truegold": 467,
-      "m:Tempered TG": 1,
-      "m:TG Dust": 150,
-      "m:Gold": 1000000
+      "threads": 775,
+      "m:Satin": 122395,
+      "m:Vision": 766,
+      "designs": 349,
+      "m:Guides": 788,
+      "m:Master Emblems": 13,
+      "m:Skill books": 1976,
+      "m:Truegold": 676,
+      "m:Tempered TG": 5,
+      "m:TG Dust": 217,
+      "m:Gold": 1040000
     }
   },
   "noShop": [
