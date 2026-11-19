@@ -1751,7 +1751,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-11-19",
+    "routineDate": "2026-11-20",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1848,10 +1848,10 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
-      "Shop": "Paid",
-      "Governor": "Masters",
-      "Progress": "Overview",
-      "Town": "Buildings"
+      "Shop": "Free shops",
+      "Governor": "Charms",
+      "Progress": "Mystic Trials",
+      "Town": "Troops"
     },
     "t11Open": {
       "nodes": false,
@@ -1880,7 +1880,7 @@
     ],
     "bvNow": true,
     "freshAll": true,
-    "upF": "Heroes",
+    "upF": "All",
     "bvAll": true,
     "roleSel": "arena",
     "bcMore": true,
@@ -1892,9 +1892,7 @@
         "Weekly Benefits — Mythic Governor Charm (week 1)",
         "Weekly Benefits — Mythic Governor Charm (week 2)"
       ]
-    },
-    "progRange": "all",
-    "bagAll": false
+    }
   },
   "troopCounts": {
     "inf": {
@@ -3349,18 +3347,18 @@
       }
     },
     {
-      "d": "2026-11-16",
+      "d": "2026-11-15",
       "v": {
-        "power": 352615714,
+        "power": 345186621,
         "leth": 74.3,
         "hp": 69.1,
         "attWR": 36.61,
         "defWR": 91.83,
-        "p:Building": 9728483,
-        "p:Troop": 199332818,
+        "p:Building": 9650743,
+        "p:Troop": 194666004,
         "p:Hero": 34434630,
         "p:Hero Gear": 15386394,
-        "p:Governor Gear": 9522720,
+        "p:Governor Gear": 9461520,
         "p:Governor Charm": 13021600,
         "p:Tech": 28960770,
         "p:Pet": 23577960,
@@ -3369,7 +3367,7 @@
       }
     },
     {
-      "d": "2026-11-17",
+      "d": "2026-11-18",
       "v": {
         "power": 352615714,
         "leth": 74.3,
@@ -3385,11 +3383,11 @@
         "p:Tech": 28960770,
         "p:Pet": 23577960,
         "p:Master": 16027000,
-        "stars": 481
+        "stars": 482
       }
     },
     {
-      "d": "2026-11-19",
+      "d": "2026-11-20",
       "v": {
         "power": 352615714,
         "leth": 74.3,
@@ -3995,9 +3993,9 @@
       },
       "seen": 9,
       "log": {
+        "2026-11-18": 7,
         "2026-11-17": 5,
         "2026-11-16": 5,
-        "2026-11-18": 7,
         "2026-11-19": 9
       }
     },
@@ -4009,9 +4007,9 @@
       },
       "seen": 21,
       "log": {
+        "2026-11-18": 19,
         "2026-11-17": 19,
         "2026-11-16": 18,
-        "2026-11-18": 19,
         "2026-11-19": 21
       }
     },
@@ -4023,9 +4021,9 @@
       },
       "seen": 951,
       "log": {
+        "2026-11-18": 691,
         "2026-11-17": 549,
         "2026-11-16": 509,
-        "2026-11-18": 691,
         "2026-11-19": 951
       }
     },
@@ -4037,9 +4035,9 @@
       },
       "seen": 388,
       "log": {
+        "2026-11-18": 61,
         "2026-11-17": 261,
         "2026-11-16": 181,
-        "2026-11-18": 61,
         "2026-11-19": 388
       }
     },
@@ -4051,9 +4049,9 @@
       },
       "seen": 674,
       "log": {
+        "2026-11-18": 423,
         "2026-11-17": 423,
         "2026-11-16": 348,
-        "2026-11-18": 423,
         "2026-11-19": 674
       }
     },
@@ -4065,9 +4063,9 @@
       },
       "seen": 302,
       "log": {
+        "2026-11-18": 270,
         "2026-11-17": 256,
         "2026-11-16": 231,
-        "2026-11-18": 270,
         "2026-11-19": 302
       }
     }
