@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Governor",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1851,7 +1851,7 @@
       "Shop": "Paid",
       "Governor": "Masters",
       "Progress": "Overview",
-      "Town": "Troops"
+      "Town": "Buildings"
     },
     "t11Open": {
       "nodes": false,
@@ -1898,15 +1898,15 @@
   },
   "troopCounts": {
     "inf": {
-      "cur": 489762,
+      "cur": 493831,
       "tgt": 1500000
     },
     "arc": {
-      "cur": 822289,
+      "cur": 832314,
       "tgt": 1500000
     },
     "cav": {
-      "cur": 432744,
+      "cur": 437648,
       "tgt": 500000
     }
   },
