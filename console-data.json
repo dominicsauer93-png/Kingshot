@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1859,7 +1859,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Bag": true
+      "HG": true
     },
     "tierAll": false,
     "progKey": "power",
