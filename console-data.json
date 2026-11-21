@@ -2084,25 +2084,52 @@
     },
     "plan": [
       {
-        "type": "Infantry",
-        "slot": "Gloves",
-        "mTo": 14,
-        "fh": 140,
-        "mg": 4,
+        "type": "Archer",
+        "slot": "Helm",
+        "mTo": 13,
+        "fh": 130,
+        "mg": 3,
         "mith": 0,
-        "gain": 10.4
+        "gain": 8.3
       },
       {
-        "type": "Cavalry",
+        "type": "Infantry",
+        "slot": "Helm",
+        "mTo": 12,
+        "fh": 120,
+        "mg": 2,
+        "mith": 0,
+        "gain": 6.5
+      },
+      {
+        "type": "Infantry",
         "slot": "Boots",
         "mTo": 12,
         "fh": 120,
         "mg": 2,
         "mith": 0,
-        "gain": 7.1
+        "gain": 6.5
+      },
+      {
+        "type": "Archer",
+        "slot": "Gloves",
+        "mTo": 11,
+        "fh": 110,
+        "mg": 1,
+        "mith": 0,
+        "gain": 3.0
+      },
+      {
+        "type": "Archer",
+        "slot": "Chest",
+        "mTo": 11,
+        "fh": 110,
+        "mg": 1,
+        "mith": 0,
+        "gain": 3.0
       }
     ],
-    "planDate": "2026-10-23",
+    "planDate": "2026-11-21",
     "chests": {
       "lucky": 0,
       "custom": 0,
