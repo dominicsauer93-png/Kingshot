@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1851,7 +1851,7 @@
       "Shop": "Paid",
       "Governor": "Gov Gear",
       "Progress": "Overview",
-      "Town": "Buildings"
+      "Town": "Research"
     },
     "t11Open": {
       "nodes": false,
@@ -4318,8 +4318,8 @@
       }
     },
     "current": {
-      "n": "Regimental Expansion VI",
-      "ends": "2026-11-20T23:22:10.374Z"
+      "n": "Defensive Formations V",
+      "ends": "2026-12-01T05:34:31.432Z"
     },
     "war": {
       "seen": "2026-10-30",
