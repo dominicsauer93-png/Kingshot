@@ -1708,18 +1708,18 @@
   "govGear": {
     "targetIdx": 18,
     "have": {
-      "satin": 163817,
-      "threads": 1125,
-      "vision": 811
+      "satin": 51817,
+      "threads": 5,
+      "vision": 641
     },
     "pieces": [
       {
         "name": "Cav 1",
-        "cur": 15
+        "cur": 16
       },
       {
         "name": "Cav 2",
-        "cur": 14
+        "cur": 15
       },
       {
         "name": "Inf 1",
@@ -1727,11 +1727,11 @@
       },
       {
         "name": "Inf 2",
-        "cur": 19
+        "cur": 20
       },
       {
         "name": "Archer 1",
-        "cur": 19
+        "cur": 20
       },
       {
         "name": "Archer 2",
@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1849,7 +1849,7 @@
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
       "Shop": "Paid",
-      "Governor": "Masters",
+      "Governor": "Gov Gear",
       "Progress": "Overview",
       "Town": "Buildings"
     },
@@ -2117,7 +2117,7 @@
         "fh": 110,
         "mg": 1,
         "mith": 0,
-        "gain": 3.0
+        "gain": 3
       },
       {
         "type": "Archer",
@@ -2126,7 +2126,7 @@
         "fh": 110,
         "mg": 1,
         "mith": 0,
-        "gain": 3.0
+        "gain": 3
       }
     ],
     "planDate": "2026-11-21",
@@ -4070,13 +4070,13 @@
         "2026-10": 580,
         "2026-11": 7881
       },
-      "seen": 1125,
+      "seen": 5,
       "log": {
         "2026-11-17": 549,
         "2026-11-16": 509,
         "2026-11-18": 691,
         "2026-11-19": 951,
-        "2026-11-21": 1125
+        "2026-11-21": 5
       }
     },
     "designs": {
