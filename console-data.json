@@ -9,7 +9,7 @@
     "dayAnchor": "2025-06-14"
   },
   "dust": {
-    "current": 217,
+    "current": 23,
     "target": 5820,
     "gold": 1040000
   },
@@ -1700,9 +1700,9 @@
     }
   ],
   "tg": {
-    "have": 706,
+    "have": 894,
     "need": 2202,
-    "ttgHave": 5,
+    "ttgHave": 4,
     "ttgNeed": 251
   },
   "govGear": {
@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1843,7 +1843,7 @@
     },
     "sub": {
       "Rally": "Heroes",
-      "Data": "Account",
+      "Data": "Update all",
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
