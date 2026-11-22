@@ -3946,10 +3946,10 @@
   "pets": {
     "have": {
       "food": 0,
-      "manuals": 1706,
-      "potions": 80,
-      "tmCommon": 0,
-      "tmAdv": 0,
+      "manuals": 1860,
+      "potions": 98,
+      "tmCommon": 36,
+      "tmAdv": 2,
       "medals": 0
     },
     "rows": [
@@ -4039,7 +4039,7 @@
       }
     ]
   },
-  "shardGeneral": 302,
+  "shardGeneral": 364,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -4143,16 +4143,16 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 1855
+        "2026-11": 1917
       },
-      "seen": 302,
+      "seen": 364,
       "log": {
         "2026-11-17": 256,
         "2026-11-16": 231,
         "2026-11-18": 270,
         "2026-11-19": 302,
         "2026-11-21": 302,
-        "2026-11-22": 302
+        "2026-11-22": 364
       }
     }
   },
@@ -4277,25 +4277,25 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-11-19",
+    "d": "2026-11-22",
     "v": {
-      "gen": 302,
-      "mg": 7,
-      "mith": 21,
-      "fh": 674,
-      "m:Gear XP": 0,
+      "gen": 364,
+      "mg": 12,
+      "mith": 27,
+      "fh": 985,
+      "m:Gear XP": 4920,
       "m:Lucky chests": 0,
       "m:Custom Mythic chests": 0,
-      "threads": 951,
-      "m:Satin": 147365,
-      "m:Vision": 807,
-      "designs": 388,
-      "m:Guides": 800,
+      "threads": 6,
+      "m:Satin": 51925,
+      "m:Vision": 641,
+      "designs": 451,
+      "m:Guides": 1104,
       "m:Master Emblems": 13,
       "m:Skill books": 1976,
-      "m:Truegold": 706,
-      "m:Tempered TG": 5,
-      "m:TG Dust": 217,
+      "m:Truegold": 898,
+      "m:Tempered TG": 6,
+      "m:TG Dust": 122,
       "m:Gold": 1040000
     }
   },
