@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Home",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -4248,6 +4248,10 @@
     {
       "d": "2026-11-22",
       "t": "Logged 123 chests → 3 Mythic"
+    },
+    {
+      "d": "2026-11-22",
+      "t": "Trial: bought this week ✓"
     }
   ],
   "bagCheck": {
@@ -4955,7 +4959,8 @@
     }
   ],
   "shopTicks": {
-    "Swordland Shop": "2w1483"
+    "Swordland Shop": "2w1483",
+    "Trial Shop": "2026-11-16"
   },
   "genHold": {
     "for": "Gen 8",
