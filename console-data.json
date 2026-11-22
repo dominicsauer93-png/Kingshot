@@ -1808,7 +1808,7 @@
     ]
   },
   "ui": {
-    "tab": "Home",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1847,7 +1847,7 @@
       "Gear": "Pets",
       "Base": "Troops",
       "Plan": "Shop guide",
-      "Heroes": "Hero Gear",
+      "Heroes": "Shards",
       "Shop": "Free shops",
       "Governor": "Charms",
       "Progress": "Mystic Trials",
