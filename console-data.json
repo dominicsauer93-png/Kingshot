@@ -1312,7 +1312,7 @@
     },
     {
       "k": "Coliseum (Heroes + Hero Gear)",
-      "v": "44",
+      "v": "46",
       "log": [
         {
           "d": "2026-09-15",
@@ -1385,12 +1385,16 @@
         {
           "d": "2026-11-17",
           "v": 44
+        },
+        {
+          "d": "2026-11-24",
+          "v": 46
         }
       ]
     },
     {
       "k": "Forest of Life (Pets)",
-      "v": "44",
+      "v": "42",
       "log": [
         {
           "d": "2026-09-15",
@@ -1443,12 +1447,16 @@
         {
           "d": "2026-11-16",
           "v": 44
+        },
+        {
+          "d": "2026-11-24",
+          "v": 42
         }
       ]
     },
     {
       "k": "Crystal Cave (Charms)",
-      "v": "32",
+      "v": "29",
       "log": [
         {
           "d": "2026-09-15",
@@ -1509,12 +1517,16 @@
         {
           "d": "2026-11-17",
           "v": 32
+        },
+        {
+          "d": "2026-11-24",
+          "v": 29
         }
       ]
     },
     {
       "k": "Knowledge Nexus (Techs)",
-      "v": "83",
+      "v": "82",
       "log": [
         {
           "d": "2026-09-15",
@@ -1571,12 +1583,16 @@
         {
           "d": "2026-11-17",
           "v": 83
+        },
+        {
+          "d": "2026-11-24",
+          "v": 82
         }
       ]
     },
     {
       "k": "Molten Fort (Gov Gear)",
-      "v": "98",
+      "v": "88",
       "log": [
         {
           "d": "2026-09-15",
@@ -1637,12 +1653,16 @@
         {
           "d": "2026-11-17",
           "v": 98
+        },
+        {
+          "d": "2026-11-24",
+          "v": 88
         }
       ]
     },
     {
       "k": "Radiant Spire (ALL stats — full power)",
-      "v": "48",
+      "v": "46",
       "log": [
         {
           "d": "2026-09-15",
@@ -1695,6 +1715,10 @@
         {
           "d": "2026-11-17",
           "v": 48
+        },
+        {
+          "d": "2026-11-24",
+          "v": 46
         }
       ]
     }
@@ -1808,7 +1832,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1850,7 +1874,7 @@
       "Heroes": "Hero Gear",
       "Shop": "Free shops",
       "Governor": "Charms",
-      "Progress": "Mystic Trials",
+      "Progress": "Overview",
       "Town": "Troops"
     },
     "t11Open": {
@@ -1859,7 +1883,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Shards": true
+      "Mystic": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -3540,7 +3564,7 @@
     },
     {
       "n": "Range",
-      "stepIdx": 5,
+      "stepIdx": 6,
       "note": "Archer line — your main combat"
     },
     {
@@ -3550,7 +3574,7 @@
     },
     {
       "n": "Embassy",
-      "stepIdx": 7,
+      "stepIdx": 9,
       "note": "Rally/garrison capacity — events"
     },
     {
