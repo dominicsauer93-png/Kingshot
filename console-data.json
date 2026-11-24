@@ -753,8 +753,8 @@
     {
       "n": "Charles",
       "need": 463,
-      "have": 10,
-      "pos": 22,
+      "have": 4,
+      "pos": 23,
       "tgt": 24,
       "rally": false,
       "note": "Hero Rally shop — spend Hero Rally points here",
@@ -781,7 +781,7 @@
     {
       "n": "Zoe",
       "need": 600,
-      "have": 16,
+      "have": 19,
       "pos": 24,
       "tgt": 24,
       "rally": false
@@ -789,7 +789,7 @@
     {
       "n": "Jaeger",
       "need": 700,
-      "have": 42,
+      "have": 43,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -798,7 +798,7 @@
     {
       "n": "Eric",
       "need": 700,
-      "have": 30,
+      "have": 31,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -807,7 +807,7 @@
     {
       "n": "Rosa",
       "need": 500,
-      "have": 44,
+      "have": 46,
       "pos": 25,
       "tgt": 25,
       "rally": false
@@ -823,7 +823,7 @@
     {
       "n": "Margot",
       "need": 700,
-      "have": 60,
+      "have": 61,
       "pos": 23,
       "tgt": 23,
       "rally": false,
@@ -840,7 +840,7 @@
     {
       "n": "Thrud",
       "need": 800,
-      "have": 29,
+      "have": 49,
       "pos": 26,
       "tgt": 30,
       "rally": false
@@ -849,7 +849,7 @@
       "n": "Triton",
       "need": 700,
       "have": 0,
-      "pos": 25,
+      "pos": 24,
       "tgt": 24,
       "rally": true
     },
@@ -873,8 +873,8 @@
     {
       "n": "Long Fei",
       "need": 400,
-      "have": 95,
-      "pos": 27,
+      "have": 4,
+      "pos": 28,
       "tgt": 27,
       "rally": false
     },
@@ -889,7 +889,7 @@
     {
       "n": "Wee & Woo",
       "need": 0,
-      "have": 1,
+      "have": 2,
       "pos": 28,
       "tgt": 30,
       "rally": true
@@ -897,7 +897,7 @@
     {
       "n": "Vivian",
       "need": 0,
-      "have": 20,
+      "have": 36,
       "pos": 25,
       "tgt": 30,
       "rally": false
@@ -1859,7 +1859,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Masters": true
+      "Shards": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -3476,7 +3476,7 @@
         "p:Tech": 28960770,
         "p:Pet": 23577960,
         "p:Master": 16027000,
-        "stars": 482
+        "stars": 483
       }
     }
   ],
