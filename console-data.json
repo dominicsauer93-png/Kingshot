@@ -1883,7 +1883,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Widgets": true
+      "Mystic": true
     },
     "tierAll": false,
     "progKey": "power",
@@ -2361,7 +2361,7 @@
       {
         "hero": "Ava",
         "lvl": 8,
-        "have": 36,
+        "have": 45,
         "rally": true
       },
       {
@@ -4052,7 +4052,7 @@
       },
       {
         "n": "Alpha Black Panther",
-        "lvl": 89,
+        "lvl": 90,
         "tgt": 0,
         "max": 100
       },
@@ -4082,7 +4082,7 @@
       }
     ]
   },
-  "shardGeneral": 400,
+  "shardGeneral": 404,
   "shardRallySet": true,
   "eventTicks": {
     "key": "Wavebound Voyage|2026-10-20",
@@ -4201,9 +4201,9 @@
       "since": "2026-10-26",
       "got": {
         "2026-10": 358,
-        "2026-11": 1953
+        "2026-11": 2353
       },
-      "seen": 400,
+      "seen": 404,
       "log": {
         "2026-11-18": 270,
         "2026-11-17": 256,
@@ -4213,7 +4213,7 @@
         "2026-11-21": 302,
         "2026-11-23": 364,
         "2026-11-24": 400,
-        "2026-11-25": 400
+        "2026-11-25": 404
       }
     }
   },
