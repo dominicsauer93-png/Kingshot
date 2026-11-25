@@ -2206,7 +2206,7 @@
         "type": "Cavalry",
         "lvl": 5,
         "tgt": 6,
-        "st": 1
+        "st": 0
       },
       {
         "type": "Cavalry",
@@ -2236,17 +2236,17 @@
       },
       {
         "type": "Infantry",
-        "lvl": 6,
+        "lvl": 7,
         "tgt": 9
       },
       {
         "type": "Infantry",
-        "lvl": 6,
+        "lvl": 7,
         "tgt": 9
       },
       {
         "type": "Infantry",
-        "lvl": 6,
+        "lvl": 7,
         "tgt": 9
       },
       {
@@ -2283,49 +2283,43 @@
     ],
     "plan": [
       {
-        "kind": "x",
-        "g": 686,
-        "d": 343,
-        "done": true
-      },
-      {
-        "type": "Cavalry",
-        "i": 2,
-        "toL": 6,
-        "toS": 0,
-        "g": 120,
-        "d": 300,
-        "gain": 5
-      },
-      {
-        "type": "Cavalry",
-        "i": 3,
-        "toL": 6,
-        "toS": 0,
-        "g": 120,
-        "d": 300,
-        "gain": 5
+        "type": "Infantry",
+        "i": 6,
+        "toL": 7,
+        "toS": 1,
+        "g": 40,
+        "d": 80,
+        "gain": 1
       },
       {
         "type": "Cavalry",
         "i": 4,
         "toL": 5,
-        "toS": 1,
-        "g": 24,
-        "d": 60,
-        "gain": 1
+        "toS": 3,
+        "g": 72,
+        "d": 180,
+        "gain": 3
       },
       {
-        "type": "Infantry",
-        "i": 1,
-        "toL": 6,
-        "toS": 1,
-        "g": 28,
-        "d": 80,
-        "gain": 1
+        "type": "Cavalry",
+        "i": 5,
+        "toL": 5,
+        "toS": 3,
+        "g": 72,
+        "d": 180,
+        "gain": 3
+      },
+      {
+        "type": "Cavalry",
+        "i": 6,
+        "toL": 5,
+        "toS": 4,
+        "g": 96,
+        "d": 240,
+        "gain": 4
       }
     ],
-    "planDate": "2026-10-23"
+    "planDate": "2026-11-25"
   },
   "widgets": {
     "have": 0,
