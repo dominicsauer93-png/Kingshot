@@ -39,6 +39,7 @@ const EVENT_STEPS=[
   [/golden glaives/i,["Do Watchtower Intel missions for Dim Goldstone","Redeem in order: gold Truegold item (20) → 5 Truegold (5) → 1 h speedups (4) → 10K XP (3)","Skip the resource carts"]],
   [/dragon essence/i,["Claim the free Ashen Bounty","Value Pack (1 a day) is the cheapest essence per $","Store: focus-hero shards 20 each · Mithril 160 · 28 Hammers 200 · 32 Charm Designs 80 · 20 Truegold 40"]]];
 const minsTxt=m=>{ m=num(m); const d=Math.floor(m/1440), h=Math.floor(m%1440/60); return d?`${fmt(d)}d ${h}h`:`${h}h`; };
+const durTxt=m=>{ m=Math.round(num(m)); const d=Math.floor(m/1440), h=Math.floor(m%1440/60), mi=m%60; return [d?`${fmt(d)}d`:"",h?`${h}h`:"",mi||(!d&&!h)?`${mi}m`:""].filter(Boolean).join(" "); }; // 5969 → "4d 3h 29m"
 function eventHave(e){ const n=e.n||"", R=state.resources||[], rv=k=>{ const r=R.find(x=>new RegExp(k,"i").test(x.n)); return r?num(r.h):0; }, out=[];
   if(/kvk|kingdom of power|armament/i.test(n)){ [["General","General speedups"],["Training","Training"],["Construction","Construction"],["Research","Research"],["Healing","Healing"]].forEach(([k,l])=>{ const v=rv(k); if(v) out.push([l,minsTxt(v)]); }); }
   if(/kvk|kingdom of power/i.test(n)){ const G=(state.govGear&&state.govGear.have)||{}; if(num(G.satin)) out.push(["Satin",fmtBig(num(G.satin))]); if(num(G.threads)) out.push(["Threads",fmt(num(G.threads))]); if(num(G.vision)) out.push(["Artisan's Vision",fmt(num(G.vision))]);

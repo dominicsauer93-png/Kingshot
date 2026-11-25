@@ -109,7 +109,7 @@ function openBuildingSheet(bl){
 function renderRes(){
   migrateResources();
   const rb=$("#resBody"); rb.className="card dcard"; rb.removeAttribute("style");
-  const isSp=r=>/\(min\)/.test(r.n||""), rrow=(r,i)=>`<button class="drow resrow" data-i="${i}"><span class="dt"><b>${esc(String(r.n||"Material").replace(/ speedup \(min\)/," speedups"))}</b>${isSp(r)&&num(r.h)?`<span>${minsTxt(r.h)}</span>`:""}</span><span class="dv">${String(r.h||"").trim()===""?"—":fmtBig(num(r.h))}<small>${isSp(r)?"min":""}</small></span></button>`;
+  const isSp=r=>/\(min\)/.test(r.n||""), rrow=(r,i)=>`<button class="drow resrow" data-i="${i}"><span class="dt"><b>${esc(String(r.n||"Material").replace(/ speedup \(min\)/," speedups"))}</b></span><span class="dv">${String(resGet(r)||"").trim()===""?"—":isSp(r)?durTxt(r.h):fmtBig(num(resGet(r)))}</span></button>`;
   const R=state.resources.map((r,i)=>({r,i}));
   rb.innerHTML=`<div class="dch"><h3>Speedups</h3></div>${R.filter(x=>isSp(x.r)).map(x=>rrow(x.r,x.i)).join("")}<div class="dsub">Resources</div>${R.filter(x=>!isSp(x.r)).map(x=>rrow(x.r,x.i)).join("")}`;
   bindAll(rb,".resrow",b=>openResSheet(state.resources[+b.dataset.i]));
@@ -117,7 +117,8 @@ function renderRes(){
 }
 function openResSheet(r){ openSheet({title:r.n||"Material",build(f){
   f.appendChild(fld("Name",{value:r.n,set:v=>r.n=v}));
-  f.appendChild(fld("Amount",{type:"num",value:r.h,get:()=>r.h,allowEmpty:true,set:v=>r.h=v===""?"":String(v),hint:"Shorthand works: 2.5b, 300m. Speedups in minutes."})); },
+  if(/\(min\)/.test(r.n||"")) f.appendChild(fld("Time",{value:String(r.h||"").trim()===""?"":durTxt(r.h),ph:"4d 3h 29m",set:v=>{ const m=parseDur(v); if(m!=null) r.h=String(m); },hint:"Type it like the game shows, e.g. 4d 3h 29m."}));
+  else f.appendChild(fld("Amount",{type:"num",value:resGet(r),get:()=>resGet(r),allowEmpty:true,set:v=>resSet(r,v===""?"":String(v)),hint:"Shorthand works: 2.5b, 300m."+(resIsGold(r)?" Same Gold as My bag and T11.":"")})); },
   onDelete:()=>{ const i=state.resources.indexOf(r); if(i>-1) state.resources.splice(i,1); }}); }
 
 

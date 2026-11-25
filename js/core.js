@@ -674,6 +674,10 @@ function govRem(curIdx,tgtIdx){ let s=0,t=0,v=0; for(let i=Math.max(0,curIdx+1);
 
 /* ---------- resources ---------- */
 // one-time tidy: speedups in minutes only (old "(hrs)" rows converted/removed), game order first
+// Gold lives in one place (state.dust.gold, used by My bag and T11); the Town "Gold" row reads and writes it
+const resIsGold=r=>/^gold$/i.test(String((r&&r.n)||"").trim());
+const resGet=r=>resIsGold(r)?(state.dust&&state.dust.gold!=null&&state.dust.gold!==""?String(state.dust.gold):""):r.h;
+const resSet=(r,v)=>{ if(resIsGold(r)){ (state.dust||(state.dust={})).gold=v===""?0:num(v); r.h=v===""?"":String(num(v)); } else r.h=v; };
 function migrateResources(){
   const R=state.resources; if(!Array.isArray(R)) return;
   const fix={"learning speedup (min":"Learning speedup (min)"};
