@@ -90,7 +90,7 @@ function renderUpdate(){
   group("Res","Resources & speedups","type speedups like 4d 4h",b=>{
     const R=state.resources, sp=r=>/\(min\)/.test(r.n), dur=r=>minsTxt(r.h)+(num(r.h)%60?" "+(num(r.h)%60)+"m":"");
     b.append(sub("Speedups — type like the game shows: 4d 4h 3m"),ls(R.filter(sp).map(r=>({label:r.n.replace(/ speedup \(min\)$/i,"").replace(/ \(min\)$/,""),aria:r.n,value:dur(r),set:v=>{ const m=parseDur(v); if(m!=null) r.h=String(m); },d:12}))));
-    b.append(sub("Resources"),ls(R.filter(r=>!sp(r)).map(r=>({type:"num",label:r.n,value:r.h,get:()=>r.h,allowEmpty:true,set:v=>r.h=v===""?"":String(v),d:13})))); });
+    b.append(sub("Resources"),ls(R.filter(r=>!sp(r)).map(r=>({type:"num",label:r.n,value:resGet(r),get:()=>resGet(r),allowEmpty:true,set:v=>resSet(r,v===""?"":String(v)),d:13})))); });
   group("Mystic","Mystic Trials","rank per zone",b=>{
     b.append(ls(state.mysticTrials.map(z=>{ const m=(z.k||"Zone").match(/^(.*?)(?: \((.*)\))?$/); return {type:"num",label:m[1],note:m[2]||"",value:z.v,get:()=>z.v,allowEmpty:true,set:v=>{ z.v=v===""?"":String(v); if(v!=="") mysticLogEntry(z); },d:4,unit:"rank"}; }))); });
   $("#qJump").innerHTML=groups.map(([k,t])=>`<button class="chip" data-k="${esc(k)}">${esc(t)}</button>`).join("");
@@ -190,7 +190,7 @@ function initSearch(){
 /* ---------- quick update: the numbers you change most, one sheet ---------- */
 function parseDur(v){ const t=String(v||"").toLowerCase().trim(); if(!t) return null;
   if(/^[\d,.]+$/.test(t)) return Math.round(num(t)); // plain number = minutes
-  let m=0, ok=false; t.replace(/(\d+(?:\.\d+)?)\s*(d|day|days|h|hr|hrs|hour|hours|m|min|mins|minute|minutes)\b/g,(_,n,u)=>{ ok=true; n=parseFloat(n); m+=u[0]==="d"?n*1440:u[0]==="h"?n*60:n; return ""; });
+  let m=0, ok=false; t.replace(/(\d+(?:\.\d+)?)\s*(days|day|d|hours|hour|hrs|hr|h|minutes|minute|mins|min|m)(?![a-z])/g,(_,n,u)=>{ ok=true; n=parseFloat(n); m+=u[0]==="d"?n*1440:u[0]==="h"?n*60:n; return ""; });
   return ok?Math.round(m):null; }
 function openQuickSheet(){
   openSheet({title:"Quick update",sub:"What blocks you first. Everything else is under “More numbers”.",build(f){
