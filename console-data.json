@@ -1832,7 +1832,7 @@
     ]
   },
   "ui": {
-    "tab": "Shop",
+    "tab": "Data",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1875,7 +1875,7 @@
       "Shop": "Free shops",
       "Governor": "Charms",
       "Progress": "Overview",
-      "Town": "Troops"
+      "Town": "Resources"
     },
     "t11Open": {
       "nodes": false,
@@ -1883,7 +1883,7 @@
     },
     "doAll": true,
     "qOpen": {
-      "Bag": true
+      "Res": true
     },
     "tierAll": false,
     "progKey": "power",
