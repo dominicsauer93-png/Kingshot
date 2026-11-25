@@ -3836,12 +3836,11 @@
     },
     {
       "n": "Alliance Mobilization",
-      "every": 0,
+      "every": 28,
       "time": "",
-      "note": "",
-      "date": "2026-10-26",
-      "len": 4,
-      "guess": true,
+      "note": "Confirmed 23 Nov 00:00 – 28 Nov 24:00 UTC (6 days). Repeats every 28 days (last 26 Oct).",
+      "date": "2026-11-23",
+      "len": 6,
       "imp": "top"
     },
     {
