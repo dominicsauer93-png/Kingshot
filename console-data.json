@@ -1775,7 +1775,7 @@
     "log": []
   },
   "today": {
-    "routineDate": "2026-11-25",
+    "routineDate": "2026-11-26",
     "kvkDate": "",
     "bearDate": "2026-09-15",
     "kvkPeriod": 14,
@@ -3483,6 +3483,26 @@
     },
     {
       "d": "2026-11-25",
+      "v": {
+        "power": 352615714,
+        "leth": 74.3,
+        "hp": 69.1,
+        "attWR": 36.61,
+        "defWR": 91.83,
+        "p:Building": 9728483,
+        "p:Troop": 199332818,
+        "p:Hero": 34434630,
+        "p:Hero Gear": 15386394,
+        "p:Governor Gear": 9522720,
+        "p:Governor Charm": 13021600,
+        "p:Tech": 28960770,
+        "p:Pet": 23577960,
+        "p:Master": 16027000,
+        "stars": 483
+      }
+    },
+    {
+      "d": "2026-11-26",
       "v": {
         "power": 352615714,
         "leth": 74.3,
