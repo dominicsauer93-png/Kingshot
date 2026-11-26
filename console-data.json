@@ -1832,7 +1832,7 @@
     ]
   },
   "ui": {
-    "tab": "Heroes",
+    "tab": "Shop",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1875,7 +1875,7 @@
       "Shop": "Paid",
       "Governor": "Charms",
       "Progress": "Overview",
-      "Town": "Research"
+      "Town": "Troops"
     },
     "t11Open": {
       "nodes": false,
@@ -4942,7 +4942,7 @@
       }
     }
   },
-  "stars": 107,
+  "stars": 8,
   "webOnceDone": true,
   "webOnceMonth": "2026-11",
   "webMonth": "2026-11",
