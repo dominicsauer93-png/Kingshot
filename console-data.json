@@ -1832,7 +1832,7 @@
     ]
   },
   "ui": {
-    "tab": "Town",
+    "tab": "Heroes",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -2174,6 +2174,11 @@
           "d": "2026-11-22",
           "opened": 123,
           "mythic": 3
+        },
+        {
+          "d": "2026-11-26",
+          "opened": 37,
+          "mythic": 0
         }
       ]
     }
@@ -4338,6 +4343,10 @@
     {
       "d": "2026-11-22",
       "t": "Trial: bought this week ✓"
+    },
+    {
+      "d": "2026-11-26",
+      "t": "Logged 37 chests → 0 Mythic"
     }
   ],
   "bagCheck": {
