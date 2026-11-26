@@ -1832,7 +1832,7 @@
     ]
   },
   "ui": {
-    "tab": "Data",
+    "tab": "Town",
     "collapsed": {
       "Hero Gear": false,
       "Build Order — TG6→TG8": false,
@@ -1872,7 +1872,7 @@
       "Base": "Troops",
       "Plan": "Shop guide",
       "Heroes": "Hero Gear",
-      "Shop": "Free shops",
+      "Shop": "Paid",
       "Governor": "Charms",
       "Progress": "Overview",
       "Town": "Research"
@@ -4394,8 +4394,8 @@
           "Reprisal Tactics": 6,
           "Precision Targeting": 6,
           "Cavalry Charge": 6,
-          "Defensive Formations": 5,
-          "Picket Lines": 5,
+          "Defensive Formations": 6,
+          "Picket Lines": 6,
           "Bulwark Formations": 6,
           "Special Defensive Training": 6
         },
@@ -4421,8 +4421,8 @@
       }
     },
     "current": {
-      "n": "Defensive Formations V",
-      "ends": "2026-12-01T05:34:31.432Z"
+      "n": "Survival Techniques V",
+      "ends": "2026-12-06T15:53:05.480Z"
     },
     "war": {
       "seen": "2026-10-30",
