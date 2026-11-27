@@ -4358,26 +4358,26 @@
     }
   ],
   "bagCheck": {
-    "d": "2026-11-24",
+    "d": "2026-11-28",
     "v": {
-      "gen": 400,
+      "gen": 430,
       "mg": 13,
-      "mith": 27,
-      "fh": 1022,
-      "m:Gear XP": 4920,
+      "mith": 40,
+      "fh": 1096,
+      "m:Gear XP": 6390,
       "m:Lucky chests": 0,
       "m:Custom Mythic chests": 0,
-      "threads": 56,
-      "m:Satin": 51925,
-      "m:Vision": 641,
-      "designs": 466,
-      "m:Guides": 1104,
+      "threads": 208,
+      "m:Satin": 61077,
+      "m:Vision": 698,
+      "designs": 732,
+      "m:Guides": 1354,
       "m:Master Emblems": 13,
       "m:Skill books": 1976,
-      "m:Truegold": 898,
-      "m:Tempered TG": 6,
-      "m:TG Dust": 122,
-      "m:Gold": 1040000
+      "m:Truegold": 966,
+      "m:Tempered TG": 26,
+      "m:TG Dust": 1013,
+      "m:Gold": 993930
     }
   },
   "noShop": [
