@@ -544,24 +544,27 @@ function paintForecast(){
 // XP: exact at every listed level; the site's own table only samples every 5th level past 10,
 // so between two knots we linearly interpolate (flagged ~ in the UI) — not a guess, a defined,
 // reproducible calc using the site's own checkpoints.
+// Levels 101-200: the source table left out one level cost per 20-level step (101,120,140,160,180,200 = 0), so cumulative XP
+// there was too low. Those costs are ESTIMATED from the pattern (2,450 / 3,400 / 4,400 / 5,400 / 7,400 / 9,400) and added back;
+// anything above Lv 100 is shown as "~" until confirmed in game. Lv 0-100 is exact.
 const HG_XP_KNOTS=[[0,0],[1,10],[2,25],[3,45],[4,70],[5,100],[6,135],[7,175],[8,220],[9,270],[10,325],
  [15,675],[20,1150],[25,1750],[30,2480],[35,3430],[40,4640],[45,6290],[50,8440],[55,11090],[60,14250],
- [65,18100],[70,22710],[75,28260],[80,34820],[85,42570],[90,51570],[95,61820],[100,73320],[105,83620],
- [110,97620],[115,112870],[120,125970],[125,143720],[130,162720],[135,182970],[140,200070],[145,222820],
- [150,246820],[155,272070],[160,293170],[165,321670],[170,352670],[175,386170],[180,414770],[185,453270],
- [190,494270],[195,537770],[200,574370]];
+ [65,18100],[70,22710],[75,28260],[80,34820],[85,42570],[90,51570],[95,61820],[100,73320],[105,86070],
+ [110,100070],[115,115320],[120,131820],[125,149570],[130,168570],[135,188820],[140,210320],[145,233070],
+ [150,257070],[155,282320],[160,308820],[165,337320],[170,368320],[175,401820],[180,437820],[185,476320],
+ [190,517320],[195,560820],[200,606820]];
 function hgXpCumulative(lv){
   lv=Math.max(0,Math.min(200,lv));
   for(let i=0;i<HG_XP_KNOTS.length-1;i++){
     const [l0,c0]=HG_XP_KNOTS[i], [l1,c1]=HG_XP_KNOTS[i+1];
     if(lv>=l0&&lv<=l1){
-      if(lv===l0) return {v:c0,exact:true};
-      if(lv===l1) return {v:c1,exact:true};
+      if(lv===l0) return {v:c0,exact:lv<=100};
+      if(lv===l1) return {v:c1,exact:lv<=100};
       const t=(lv-l0)/(l1-l0);
       return {v:c0+t*(c1-c0), exact:false};
     }
   }
-  return {v:HG_XP_KNOTS[HG_XP_KNOTS.length-1][1], exact:true};
+  return {v:HG_XP_KNOTS[HG_XP_KNOTS.length-1][1], exact:false};
 }
 // Forgehammers: exact formula, Mastery 0-20 → 10 per level, verified against the site's table (cumulative 2100 @ M20).
 function hgFhCumulative(m){ m=Math.max(0,Math.min(20,m)); return 10*m*(m+1)/2; }
